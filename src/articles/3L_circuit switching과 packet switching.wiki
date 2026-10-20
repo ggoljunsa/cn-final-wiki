@@ -1,0 +1,46 @@
+key: circuit switching과 packet switching
+title: Circuit switching과 packet switching (회선 교환과 패킷 교환)
+category: 3강 CDMA–4G, 용어
+---
+'''circuit switching''' 은 통신을 시작하기 전에 양 끝 사이에 '''전용 경로(회선)를 잡아 두고''' 끝날 때까지 독점하는 방식, '''packet switching''' 은 데이터를 '''패킷으로 잘라''' 각 패킷이 공유된 망을 따로 지나가게 하는 방식이다. 셀룰러 세대 흐름에서 1G·2G 음성은 circuit, '''3G 는 둘 다''', '''4G 는 packet 만'''([[all-IP]])이다. L10 p.33, p.36. (두 방식의 정의 자체는 Forouzan 보충 — 슬라이드는 용어만 쓴다.)
+
+{def}"Support for '''packet-switched and circuit-switched''' data services" (p.33, 3G IMT-2000)
+"'''All IP, packet-switched''', networks" (p.36, 4G){/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''circuit''' = 회로, 한 바퀴 이어진 길 → 양 끝을 '''전선 한 가닥으로 쭉 이은''' 것처럼 경로를 고정.
+* '''packet''' = 소포, 작은 꾸러미 → 데이터를 '''꾸러미로 나눠''' 보낸다.
+* '''switching''' = 교환 — 망 중간의 교환기(switch)가 무엇을 기준으로 길을 정하느냐.
+
+== 비교 (Forouzan 보충) ==
+{|
+! || '''circuit switching''' || '''packet switching'''
+|-
+| 자원 예약 || 통화 시작 시 '''경로·대역 예약''' || 예약 없음, '''필요할 때만''' 사용
+|-
+| 단계 || setup → 데이터 전송 → teardown || 패킷마다 헤더(주소)로 독립 전달
+|-
+| 말 안 할 때 || 자원이 '''놀아도''' 점유 || 다른 사용자가 씀 → '''효율적'''
+|-
+| 지연 || 일정(통화 품질 안정) || 혼잡 시 변동(큐 대기)
+|-
+| 대표 || 전통 전화망 [[PSTN]], 1G·2G 음성 || 인터넷([[mid:IP|IP]]), 3G 데이터, '''4G 전부'''
+|}
+
+<pre class="txt">
+세대별 흐름
+  1G·2G : circuit (음성 통화 = 회선 하나 점유)
+  3G    : circuit (음성) + '''packet''' (인터넷 데이터)       ← IMT-2000 p.33
+  4G    : '''packet only''' — 음성도 IP 패킷 (All IP)          ← p.36
+</pre>
+1강의 [[통화 발신 과정]] 에서 MSC 가 "unused voice channel 을 할당" 하고 통화가 끝날 때까지 그 채널을 쓰는 것이 바로 circuit switching 의 모습이다.
+
+[[anim:generations_timeline|3G 칸의 "packet + circuit" 이 4G 칸에서 "all-IP packet-switched" 로 바뀌는 지점을 보라]]
+
+{analogy}🎭 circuit switching 은 '''전세 버스'''다 — 우리 일행만을 위해 버스 한 대를 출발부터 도착까지 빌린다. 아무도 안 타는 좌석이 있어도 남에게 못 준다. packet switching 은 '''택배'''다 — 짐을 상자로 나눠 부치면 각 상자가 다른 사람 짐과 섞여 트럭을 나눠 타고 간다. 트럭은 늘 꽉 차지만, 상자가 도착하는 시각은 조금씩 다를 수 있다.{/analogy}
+
+{quiz}IMT-2000(3G)과 4G 의 교환 방식 차이를 쓰시오.{/quiz}
+{answer}3G(IMT-2000): '''packet-switched 와 circuit-switched''' 를 '''모두''' 지원. 4G: '''All IP, packet-switched''' — circuit 없이 packet 만.{/answer}
+
+== 관련 문서 ==
+* [[all-IP]] · [[3G]] · [[4G]] · [[IMT-2000]] · [[PSTN]] · [[mid:IP]]

@@ -1,0 +1,46 @@
+key: frequency reuse
+title: Frequency Reuse (주파수 재사용)
+category: 1강 셀룰러 동작, 용어
+---
+'''Frequency reuse''' 는 셀룰러의 첫 번째 운영 원칙이다: '''이웃한 cell 은 같은 frequency set 을 쓰면 안 되고''', 충분히 떨어진 cell 끼리는 같은 set 을 '''다시 쓴다'''. N 개 cell 이 한 패턴(frequency reuse pattern)을 이루고, 그 N 이 '''[[reuse factor]]''' 다. L10 p.11 "Operation: Frequency Reuse Principle".
+
+{def}"'''Neighboring cells cannot use the same set of frequencies''' for communication — '''Interference''' for the users located near the cell boundaries. A '''frequency reuse pattern''' is a configuration of N cells. '''N is the reuse factor'''." (p.11)
+이웃 cell 은 같은 주파수 set 을 쓸 수 없다 — cell 경계 근처 사용자에게 간섭이 생기기 때문. frequency reuse pattern 은 N 개 cell 의 배치이고, N 을 reuse factor 라 한다.{/def}
+
+[[img:L10-11.png|p.11 (a) Reuse factor of 4 — cell 1·2·3·4 가 한 패턴으로 반복 (b) Reuse factor of 7 — 가운데 1, 둘레 2–7. 필기 "각 숫자가 frequency 하나", 붙은 두 '1' 에 ✗ "??" (필기본)|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''frequency''' — 셀룰러 사업자가 쓸 수 있는 주파수 대역은 '''한정'''돼 있다(면허 대역, 예: AMPS 25 MHz → [[AMPS 대역과 채널]]).
+* '''reuse''' — 그 한정된 대역을 '''여러 번 다시 쓴다'''. 어디서? 서로 간섭하지 않을 만큼 '''멀리 떨어진 cell''' 에서.
+* 왜 필요한가: 재사용 없이 지역 전체에 채널을 한 번씩만 주면 동시 통화 수 = 채널 수 로 끝난다. cell 로 쪼개고 재사용하면 패턴이 반복될 때마다 같은 채널을 또 쓰니 '''수용 인원이 cell 수에 비례해 늘어난다'''. 이것이 "'''cell'''ular" 로 쪼개는 진짜 이유다.
+
+<pre class="ascii">
+  N = 4 패턴 (p.11 a)              N = 7 패턴 (p.11 b)
+     ⬡2                                ⬡2
+  ⬡4    ⬡3                          ⬡7    ⬡3
+     ⬡1                                ⬡1
+  (이 4개 묶음이 반복)             ⬡6    ⬡4
+                                       ⬡5
+  같은 숫자 = 같은 frequency set. 같은 숫자 cell 은 '''절대 이웃하지 않는다'''
+</pre>
+
+{tip}'''필기 속 질문: "각 숫자가 frequency 하나" / 붙어 있는 두 '1' 육각형 ✗ "??"''' (p.11)
+① 숫자는 주파수 '''한 개'''가 아니라 '''frequency set 하나'''(여러 채널의 묶음, 즉 한 대역)다. 슬라이드도 "the same '''set''' of frequencies" 라고 쓰고, 교수도 "the number represents a '''frequency band''' — you can think of this one as f1, f4, f3, f2"(10/20 녹음 11:37)라고 했다(슬라이드 위 필기 f1–f4 의 출처). cell 1 에 배정된 set 안의 채널들을 cell 1 의 사용자들이 나눠 쓴다(1G 는 [[FDMA]], 2G 는 그 위에 [[TDMA]]).
+② 같은 번호 cell 두 개가 '''붙어 있으면 안 되는 것이 맞다(✗)'''. 두 cell 경계에 선 사용자는 두 BS 가 보내는 '''같은 주파수 신호를 동시에''' 받으니 둘이 섞여 구분할 수 없다 — 슬라이드의 "Interference for the users located near the cell boundaries", 교수: "some '''edge devices on the border of cell''' could suffer from interferences from '''two base stations'''. It's very difficult to handle"(녹음 12:15). 그래서 패턴은 같은 번호 사이에 반드시 다른 번호 cell 들을 끼워 넣어 거리를 벌린다. 그래도 멀리 있는 같은 번호 cell 에서 약하게 새어 오는 간섭이 남는데, 이것이 [[co-channel interference]] 다.{/tip}
+
+[[anim:frequency_reuse_hex|이웃 cell 이 같은 주파수면 경계에 빨간 ✗ → N=4 색칠 → N=7 색칠 → 마지막 IS-95(N=1, 코드로 구분)까지 보고, 같은 색 cell 사이 거리를 비교하라]]
+
+[[sim:reuse_pattern]]
+
+{analogy}🎭 '''학교 방송실 주파수 나눠 쓰기.''' 붙어 있는 교실 두 곳이 같은 무선 마이크 주파수를 쓰면 벽 근처에 앉은 학생은 두 선생님 목소리가 섞여 들린다. 그래서 옆 교실끼리는 다른 주파수, 복도 끝 멀리 떨어진 교실은 같은 주파수를 다시 쓴다. 마이크 주파수가 4 개뿐이어도 학교 전체 교실 수만큼 수업이 가능하다.{/analogy}
+
+{info}'''예고 — IS-95(CDMA)는 N = 1.''' CDMA 는 사용자를 주파수가 아니라 '''코드'''로 구분하므로 모든 cell 이 같은 대역을 쓴다 → [[IS-95 frequency reuse]] · [[CDMA]].{/info}
+
+{exam}🎯 교수(10/20): "It looks complicated because it has some weird name, but '''it is very simple''' … just to avoid interference between neighbors." 정의 두 문장을 그대로: "Neighboring cells '''cannot''' use the same set of frequencies (→ '''interference''' near the cell boundaries)", "A frequency reuse pattern is a configuration of N cells. '''N is the reuse factor'''." 그림 a = '''4''', b = '''7'''.{/exam}
+
+{quiz}Frequency reuse 원칙에서 이웃 cell 이 같은 frequency set 을 쓰면 안 되는 이유는? 그림 (b) 의 reuse factor 는?{/quiz}
+{answer}cell '''경계 근처 사용자'''가 두 BS 의 같은 주파수 신호를 동시에 받아 '''interference''' 가 생기기 때문(p.11). (b) 는 7 개 cell 이 한 패턴이므로 '''N = 7'''.{/answer}
+
+== 관련 문서 ==
+* [[reuse factor]] · [[co-channel interference]] · [[IS-95 frequency reuse]] · [[cell]] · [[CDMA]]
+* [[FDMA]] · [[mid:channelization]] · [[mid:FDM]]

@@ -1,0 +1,42 @@
+key: roaming
+title: Roaming (로밍)
+category: 1강 셀룰러 동작, 용어
+---
+'''Roaming''' 은 내 통신사(home provider)의 coverage 밖으로 나갔을 때 '''이웃 통신사(neighbor provider)''' 가 '''roaming contract''' 에 따라 대신 서비스해 주는 것이다. 통신사 하나의 coverage 는 한정돼 있으므로, 통신사들끼리 계약으로 서로의 망을 빌려 coverage 를 넓힌다. L10 p.17 "Operation: Roaming".
+
+{def}"A user can have access to communication or can be reached '''where there is coverage'''. A service provider usually has '''limited coverage'''. '''Neighboring service providers''' can provide '''extended coverage''' through a '''roaming contract'''." (p.17)
+사용자는 coverage 가 있는 곳에서만 통신하거나 연락받을 수 있다. 통신사 하나의 coverage 는 보통 제한적이다. 이웃 통신사들이 roaming contract 를 통해 확장된 coverage 를 제공할 수 있다.{/def}
+
+[[img:L10-17.png|p.17 Roaming — 왼쪽 Provider A (home) 의 cell 들(노랑, MSC A), 오른쪽 Provider B (neighbor) 의 cell 들(초록, MSC B). "User moves" 점선으로 MS 가 B 쪽으로, MSC A ↔ MSC B 사이 빨간 점선 "Roaming contract" (필기본)|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''roam''' = (정처 없이) '''돌아다니다, 배회하다'''. 내 집(home) 밖을 돌아다니는 사용자를 남의 집(neighbor)이 받아 준다.
+* 정의의 두 동사 "'''have access to communication'''"(내가 걸 수 있음)과 "'''can be reached'''"(남이 나에게 걸 수 있음) — 발신·수신 둘 다 이어진다는 뜻.
+* '''contract''' — 기술이 아니라 '''사업 계약'''이 핵심이다. 그림에서도 연결선은 '''MSC A ↔ MSC B''' 사이(통신사 본부끼리)에 그어져 있다.
+
+== handoff 와 roaming 구분 ⭐⭐ ==
+{|
+! || [[handoff]] || roaming
+|-
+| 무엇을 넘나 || cell → cell (BS → BS) || '''provider → provider''' (통신사 → 통신사)
+|-
+| 같은 통신사? || 같은 통신사(같은 MSC 아래, p.16 그림) || '''다른''' 통신사 (MSC A ≠ MSC B)
+|-
+| 근거 || MSC 가 신호 세기 감시 (기술) || '''roaming contract''' (계약)
+|-
+| 예 || 통화하며 동네를 걸어감 || 해외 여행에서 현지 통신사 망 사용
+|}
+
+[[anim:roaming_anim|MS 가 Provider A(home) cell 들을 벗어나 Provider B(neighbor) cell 로 들어가는 순간, MSC A ↔ MSC B 의 roaming contract 선이 켜지며 서비스가 이어지는 것을 보라]]
+
+{analogy}🎭 '''도서관 상호대차 협약.''' 우리 학교 도서관 회원증(home provider)은 우리 학교에서만 통한다(limited coverage). 그런데 옆 대학 도서관과 협약(roaming contract)을 맺어 두면, 옆 대학에 가서도 같은 회원증으로 책을 빌릴 수 있다(extended coverage). 대출 기록은 두 도서관 본부(MSC A·B)가 서로 주고받는다.{/analogy}
+
+{exam}🎯 교수(10/20 녹음 33:23–35:56): "we have to rely upon this one when we are about to '''travel'''." service provider 의 예로 '''LG U+, SK Telecom''' 등을 들고, "even if … under different service providers, we can enjoy our communication if they have some '''roaming contract'''" — 해외에서는 eSIM 을 설치하는 정도로 쓸 수 있지만 속도·효율은 home 망과 다를 수 있다.{/exam}
+
+{info}(Forouzan 보충 — 슬라이드에 없음) 로밍 사용자가 neighbor 망에 들어오면 neighbor 의 MSC 는 사용자의 home 망 데이터베이스(GSM 의 [[HLR]])에 "이 사용자가 지금 우리 쪽에 있다"고 알려 준다. 그래야 누군가 이 사용자에게 전화를 걸었을 때 home 망이 neighbor 쪽으로 연결해 줄 수 있다("can be reached").{/info}
+
+{quiz}Roaming 이 필요한 이유와, 그것을 가능하게 하는 수단을 슬라이드 표현으로 쓰시오.{/quiz}
+{answer}"A service provider usually has '''limited coverage'''" 이기 때문. "Neighboring service providers can provide '''extended coverage''' through a '''roaming contract'''" (p.17).{/answer}
+
+== 관련 문서 ==
+* [[handoff]] · [[MSC]] · [[HLR]] · [[CH05 셀룰러 동작]]

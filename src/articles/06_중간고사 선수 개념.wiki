@@ -1,0 +1,36 @@
+key: 중간고사 선수 개념
+title: 중간고사 선수 개념 — CH05 를 읽기 전에 다시 볼 것
+category: 안내
+---
+CH05 셀룰러는 중간고사 범위에서 배운 도구를 '''그대로 다시 쓴다'''. 1G 는 FDM 을, 2G 는 TDM 을, Bluetooth 에서 본 FHSS 의 사촌이 IS-95 의 DSSS 다. 아래 표에서 기억이 흐린 줄만 골라 중간고사 위키(↗중간)로 넘어가 복습하고 돌아온다.
+
+{|
+! 중간고사에서 배운 것 || 어디서 배웠나 || CH05 에서 어디에 쓰이나
+|-
+| [[mid:WAN|WAN]] · [[mid:LAN|LAN]] || CH01 || [[WAN 분류]] — 이번 장 전체의 출발점
+|-
+| [[mid:FDM|FDM]] · [[mid:guard band|guard band]] || CH02 Multiplexing || [[FDMA]] — [[AMPS]] 의 30 kHz 채널, [[GSM 대역]] 200 kHz, [[IS-95 대역과 채널]] 1.228 MHz 사이의 guard band
+|-
+| [[mid:TDM|TDM]] || CH02 Multiplexing || [[TDMA]] — [[D-AMPS]] 3 슬롯, [[GSM 프레임 구조]] 8 슬롯
+|-
+| [[mid:channelization|channelization]] (FDMA/TDMA/CDMA) || CH03 MAC || 세대 구분 그 자체: 1G=FDMA, 2G=TDMA/CDMA
+|-
+| [[mid:duplexing과 multiple access|duplexing과 multiple access]] · [[mid:TDD-TDMA|TDD-TDMA]] || CH04 Bluetooth || 셀룰러는 '''두 대역'''(uplink/downlink)으로 duplex: [[uplink와 downlink]]
+|-
+| [[mid:FSK|FSK]] · [[mid:PSK|PSK]] · [[mid:modulation|modulation]] || CH02 Analog Transmission || [[AMPS control channel]]=FSK, [[FM]], [[QPSK]], [[GMSK]]
+|-
+| [[mid:PCM|PCM]] · [[mid:sampling|sampling]] || CH02 Digital Transmission || 음성 디지털화: [[7.95 kbps 디지털 음성]], IS-95 의 9.6 kbps digitizer
+|-
+| [[mid:FHSS|FHSS]] || CH04 Bluetooth || [[spread spectrum]]의 다른 방식 → [[DSSS]]
+|-
+| [[mid:bit rate|bit rate]] · [[mid:bandwidth|bandwidth]] || CH02 || [[GSM channel bit rate]], [[chip rate]]
+|-
+| [[mid:station mobility|station mobility]] · [[mid:BSS|BSS]] · [[mid:distribution system|distribution system]] || CH04 WiFi || [[셀룰러와 WiFi 비교]] — cell ↔ BSS, MSC ↔ distribution system, handoff ↔ BSS-transition
+|}
+
+{analogy}
+선수 개념은 '''레고 블록'''이다. 중간고사 때 FDM·TDM·FSK 블록을 만들어 뒀고, CH05 는 그 블록을 조립해 "휴대폰 세대"라는 완성품을 보여 준다. 블록 모양이 기억 안 나면 조립 설명서(↗중간)로 돌아간다.
+{/analogy}
+
+== 관련 문서 ==
+* [[읽는 순서]] · [[셀룰러 세대 비교표]] · [[FDMA]] · [[TDMA]] · [[CDMA]]

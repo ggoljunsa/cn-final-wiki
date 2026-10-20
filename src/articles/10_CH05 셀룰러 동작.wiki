@@ -1,0 +1,269 @@
+key: CH05 셀룰러 동작
+title: CH05 셀룰러 동작 (1강 — WAN 분류와 Cellular Telephony 의 기본 동작)
+category: 1강 셀룰러 동작, 메인
+---
+'''CH05 셀룰러 동작''' 은 L10 덱(`CH05_Wide Area Networks (1).pdf`, 36쪽) 중 p.1–17 이다. 10/20(화) 수업의 앞 절반(녹음 0:35 ~ 약 34분)이 여기다. p.18 부터의 세대(1G~4G) 이야기는 [[CH05 1G–2G 셀룰러]]·[[CH05 IS-95·3G·4G]] 로 이어진다.
+
+이 덱이 던지는 질문은 — '''"LAN 보다 훨씬 넓은 지역(도시·나라·세계)을, 그것도 무선으로 덮으려면 어떻게 해야 하나? 사용자가 움직이면?"'''
+답: 넓은 지역을 육각형 '''[[cell]]''' 로 잘게 나누고, cell 마다 '''[[base station]]'''(BS)을 하나 세운다. BS 들은 '''[[MSC]]''' 가 묶어서 지휘하고, MSC 는 유선 전화망 '''[[PSTN]]''' 에 붙는다. 이웃 cell 은 서로 다른 주파수를 써야 간섭이 없다('''[[frequency reuse]]''', 패턴 크기 = '''[[reuse factor]]''' N). 전화를 걸 때(발신)와 받을 때(수신, '''[[paging]]''')의 절차가 다르고, 통화 중에 cell 경계를 넘으면 MSC 가 통화를 옆 BS 로 넘긴다('''[[handoff]]''' — [[hard handoff]] / [[soft handoff]]). 내 통신사 영역 밖으로 나가면 이웃 통신사가 계약으로 서비스해 준다('''[[roaming]]''').
+
+페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다. 이 PDF 는 수강생의 GoodNotes 필기본이라 슬라이드마다 빨간 녹음 타임스탬프와 메모가 있다.
+
+== 한눈에 보기 ==
+기호를 까먹었을 때 이 절만 다시 읽으면 된다. 등장인물: '''MS = 내 폰, BS = 기지국(탑), MSC = BS 들의 지휘소, central office = 유선 전화국, PSTN = 유선 전화망.'''
+
+=== ① 구조 ===
+<pre class="ascii">
+   (육각형 '''[[cell]]''')          (유선)                 (유선)
+   ┌─────────────┐
+   │  '''[[mobile station|MS]]''' ))) '''[[base station|BS]]''' ├─────── '''[[MSC]]''' ─────── '''[[PSTN]]''' ──── stationary phone
+   └─────────────┘           │  (모든 BS 와
+   ┌─────────────┐           │   central office
+   │  MS ))) BS  ├───────────┘   사이를 조정)
+   └─────────────┘
+  무선 구간은 MS ↔ BS 한 hop 뿐. 그 뒤는 전부 '''유선 infrastructure'''.
+</pre>
+
+=== ② 동작 다섯 가지 (p.11–17) ===
+{|
+! 동작 || 한 줄 요약 || 키워드 || 슬라이드
+|-
+| [[frequency reuse]] || 이웃 cell 은 다른 주파수 set, 멀리 떨어진 cell 은 같은 set 재사용 || reuse factor N (4, 7) || p.11
+|-
+| [[통화 발신 과정|Transmitting]] || MS → 가장 강한 setup channel → BS → MSC → central office → 상대 || strongest setup channel, unused voice channel || p.12
+|-
+| [[통화 수신 과정|Receiving]] || central office → MSC → '''모든 cell 에 paging''' → MS 응답 → ringing → voice channel || [[paging]] || p.13
+|-
+| [[handoff]] || 통화 중 cell 을 넘으면 MSC 가 통화를 새 BS 로 넘김 || every few seconds, hard / soft || p.14–16
+|-
+| [[roaming]] || 내 통신사 coverage 밖에서 이웃 통신사가 서비스 || roaming contract || p.17
+|}
+
+{exam}🎯 출제 예상 자리
+* 구성 요소 4개의 역할: '''cell'''(작은 영역) · '''BS'''·'''MS'''(cell 의 구성원) · '''MSC'''("coordinates communication between all BSs and the central office").
+* '''Frequency reuse''': "Neighboring cells '''cannot''' use the same set of frequencies" — 이유 = cell 경계 사용자의 '''interference'''. "N is the '''reuse factor'''" (그림 N=4, N=7).
+* '''발신 ①–⑦ vs 수신 ①–⑦''' 의 차이: 수신에는 '''paging'''(MSC 가 MS 위치를 모르니 모든 cell 에 query)이 있다.
+* '''Hard handoff = 한 BS 와만 = break before make (early systems)''' vs '''soft handoff = 동시에 두 BS = make before break'''.
+* 이 모든 동작이 '''infrastructure 에 heavily dependent''' — 교수가 발신·수신 두 번 다 강조(🎙 절, p.12 필기 "통신을 위해 BS, MSC, central office 등 infrastructure 필요").
+* '''"Every transition decision is made by MSC, not by MS"''' (🎙 33:09) · "nowadays we never use hard handoff … always soft handoff" (🎙 29:54).{/exam}
+
+{analogy}🎭 '''택배 회사의 지역 영업소 체계.''' 전국(서비스 지역)을 동네 단위 구역(cell)으로 나누고 구역마다 영업소(BS)를 둔다. 영업소들은 지역 본부(MSC)가 총괄하고, 본부는 다른 회사·우체국망(PSTN)과 연결된다. 내가 물건을 보낼 때는 가장 가까운 영업소에 맡기면 되지만(발신), 나한테 온 물건은 본부가 내가 어느 구역에 있는지 몰라서 모든 영업소에 "장민준 씨 거기 있어요?" 하고 방송한다(paging). 배달 중에 내가 이사를 가면 담당 영업소가 바뀐다(handoff). 해외로 가면 현지 제휴 택배사가 대신 배달한다(roaming).{/analogy}
+
+[[anim:cellular_architecture|cell 이 깔리고 → 각 cell 에 BS·MS → BS 들이 MSC 로 유선 연결 → MSC 가 PSTN 에 연결되는 순서로 구성 요소 4개를 머릿속에 그려라]]
+
+== p.2–4 — What we learned so far, Recap: WAN ==
+* p.2–3: 지금까지 배운 것 = [[mid:physical layer|Physical layer]](신호를 채널로 보냄) + [[mid:data-link layer|Data-link layer]]([[mid:DLC]] 오류 검출·정정, [[mid:MAC sublayer|MAC]] 매체 공유) → 그 두 계층 위의 실제 망 = '''[[mid:LAN|LAN]]'''([[mid:CH04 Ethernet|Ethernet]], [[mid:CH04 WiFi|WiFi]], [[mid:CH04 Bluetooth|Bluetooth]]). "Another important network types?" → '''Wide Area Networks (WANs)'''.
+* p.4 Recap: WAN = "An interconnection of devices capable of communication". LAN 과의 차이는 '''규모''' — "A WAN has a '''wider geographical span''', spanning a town, a state, a country, or even the world" → [[mid:WAN]].
+* p.4 왼쪽 그림(Forouzan)은 LAN 들이 '''point-to-point WAN'''(router–router, modem–modem)과 '''switched WAN''' 으로 이어진 모습, 오른쪽은 "LAN — WAN(구름) — LAN".
+
+{info}이번 챕터도 [[mid:physical layer|physical]]·[[mid:data-link layer|data-link]] 두 계층 이야기다. 교수: "Of course, there are upper layers involved in WANs, but today we're going to focus on these two." 다음 주부터 network layer.{/info}
+
+== p.5–7 — Two broad categories ⭐ ==
+[[img:L10-07.png|p.7 Two broad categories — Wired WANs(telephone/cable) 와 Wireless WANs(cellular telephony 4G/5G · satellite networks Starlink/Starshield). 파란 상자 "Focus of this lecture" (필기본)|large]]
+
+LAN 에 wired(Ethernet)·wireless(WiFi) 가 있듯 WAN 도 둘로 나뉜다 → [[WAN 분류]].
+{|
+! 분류 || instance || 슬라이드 그림
+|-
+| '''Wired WANs''' || [[telephone network|Telephone networks]] · [[cable network|Cable networks]] || local loop → end offices → trunk → tandem offices → trunk → regional offices
+|-
+| '''Wireless WANs''' || [[cellular telephony|Cellular telephony]] (4G / '''5G''') · [[satellite network|Satellite networks]] ([[Starlink]] / Starshield) || macro BS·femto cell·D2D·M2M 이 섞인 5G 셀 그림, BBC "How SpaceX satellites are used on the battlefield"
+|}
+'''이번 강의의 focus 는 Wireless WANs''' (p.7 파란 상자).
+
+[[anim:wan_categories|WAN 이 wired(telephone·cable)와 wireless(cellular·satellite)로 갈라지는 트리를 따라가고, 마지막에 "이번 강의 focus: wireless WAN" 을 확인하라]]
+
+== p.8 — 1. Cellular Telephony ==
+{def}"A '''wireless''' WAN that provides '''any type''' of communication." (p.8){/def}
+* any type = '''voice, text, data'''(image, video …) — 필기 그대로. 처음엔 voice 만, 그다음 text, 지금은 모든 종류 → [[cellular telephony]].
+
+== p.9–10 — Cellular system: cell · BS · MS · MSC ⭐⭐ ==
+[[img:L10-10.png|p.10 Cellular system — MS 와 BS 가 있는 cell(노란 육각형) → MSC → PSTN → stationary phone. 필기 "wired phone도 wireless에 연결 가능" (필기본)|large]]
+
+{def}"Each cellular service area is divided into small regions called '''cells''' that consist of: '''Base Station (BS)''' · '''Mobile Station (MS)'''." (p.9)
+"'''Mobile Switching Center (MSC)''' — Coordinates communication between '''all BSs and the central office'''." (p.10){/def}
+
+* '''[[cell]]''' — 서비스 지역을 잘게 나눈 작은 영역. 그래서 "'''cell'''ular" 다. 그림에서는 육각형.
+* '''[[base station]] (BS)''' — cell 안의 탑. 무선으로 MS 를 서비스하고, 유선으로 MSC 에 붙는다.
+* '''[[mobile station]] (MS)''' — 개별 사용자 기기(스마트폰).
+* '''[[MSC]]''' — 모든 BS 와 (유선 전화망의) central office 사이를 조정. 통화 연결·채널 할당·handoff 판단을 하는 '''두뇌'''.
+* '''[[PSTN]]''' (Public Switched Telephone Network) — MSC 가 붙는 기존 유선 전화망. 그래서 '''유선 전화(stationary phone)와 휴대폰이 서로 통화된다'''(p.10 필기 "wired phone도 wireless에 연결 가능").
+
+{tip}'''필기 속 질문: "BS ↔ AP: Access point (동일 개념??)"''' (p.9)
+'''역할로는 같은 개념이 맞다.''' 교수도 수업에서 "The other name of base station could be '''AP, access point'''. … It is the same … '''interchangeable'''" 라고 했다(🎙 8:26). 둘 다 ① 무선 단말(MS/station)이 붙는 '''고정된 접속점'''이고 ② 뒤쪽은 '''유선 infrastructure'''(BS → MSC, AP → [[mid:distribution system]])에 연결된다.
+다만 '''규모와 표준이 다르다''': AP 는 [[mid:IEEE 802.11]] WiFi 의 [[mid:BSS]] 중심(방·건물 하나, 수십 m), BS 는 cellular 표준(AMPS·GSM·4G…)의 cell 중심(수백 m~수 km). 그리고 셀룰러에는 BS 들 위에 '''MSC''' 라는 지휘소가 있어 handoff 를 '''이음새 없이''' 해 주지만, 802.11 은 BSS 사이 이동의 연속성을 보장하지 않는다 → 자세한 비교는 [[셀룰러와 WiFi 비교]].{/tip}
+
+== p.11 — Operation: Frequency Reuse Principle ⭐⭐⭐ ==
+[[img:L10-11.png|p.11 Frequency Reuse — (a) reuse factor 4, (b) reuse factor 7. 같은 번호 = 같은 frequency set. 필기 "각 숫자가 frequency 하나", 이웃한 두 '1' cell 에 ✗ (필기본)|large]]
+
+{def}"'''Neighboring cells cannot use the same set of frequencies''' for communication — '''Interference''' for the users located near the cell boundaries. A '''frequency reuse pattern''' is a configuration of N cells. '''N is the reuse factor'''." (p.11){/def}
+
+* 그림의 숫자 1, 2, 3, … = '''frequency set'''(채널 묶음) 번호. 같은 번호 cell 끼리는 '''절대 붙어 있지 않다'''.
+* (a) N = 4: 4개 cell(1·2·3·4)이 한 패턴, 이 패턴이 바둑판처럼 반복. (b) N = 7: 7개 cell 이 한 패턴(가운데 1, 둘레 2–7).
+* 같은 set 을 쓰는 먼 cell 끼리 남는 약한 간섭 = [[co-channel interference]]. N 이 크면 같은 번호 cell 이 더 멀어져 간섭↓, 대신 cell 하나가 쓸 수 있는 채널 수(전체 ÷ N)↓ → [[reuse factor]].
+
+{tip}'''필기 속 질문: "각 숫자가 frequency 하나" / 붙어 있는 두 '1' 육각형에 ✗ "??"''' (p.11)
+① 숫자 하나는 주파수 '''한 개'''가 아니라 '''frequency set(주파수 대역, 즉 채널 여러 개의 묶음)''' 하나다. 교수: "the number represents a '''frequency band''' — you can think of this one as f1, f4, f3, f2"(🎙 11:37). 그 set 안의 채널들을 cell 안 사용자들이 나눠 쓴다.
+② 같은 번호 cell 두 개가 '''붙어 있으면 안 된다(✗ 가 맞다)'''. 경계에 선 사용자는 두 BS 의 같은 주파수 신호를 동시에 받아 섞이기 때문 — 교수: "some '''edge devices on the border of cell''' could suffer from interferences from two base stations. It's very difficult to handle"(🎙 12:15). 그래서 reuse 패턴은 같은 번호 사이에 반드시 다른 번호 cell 을 끼워 놓는다.{/tip}
+
+[[anim:frequency_reuse_hex|이웃 cell 이 같은 주파수를 쓰면 경계에서 ✗ → N=4 패턴 → N=7 패턴 → (예고) IS-95 는 N=1 로 넘어가는 순서를 보고, 같은 색 cell 사이 거리가 N 에 따라 어떻게 변하는지 보라]]
+
+[[sim:reuse_pattern]]
+
+== p.12 — Operation: Transmitting (making a call) ⭐⭐⭐ ==
+[[img:L10-12.png|p.12 Transmitting — MS → BS → MSC → Telephone central office → Called party, ⑦ Voice channel(초록). 필기 "closest base station", "통신을 위해 BS, MSC, central office 등 infrastructure 필요" (필기본)|large]]
+
+<pre class="txt">
+① MS scans the band and sends the number on the '''strongest setup channel'''
+② BS relays the number to the MSC
+③ MSC forwards it to the telephone central office
+④ Central office connects the called party (if available)
+⑤ Result is relayed back to the MSC
+⑥ MSC assigns an '''unused voice channel'''; MS retunes
+⑦ Communication begins
+</pre>
+* ① "strongest setup channel" = 보통 '''가장 가까운 BS''' (p.12 필기 "closest base station"). 교수: "'''This is very important — closest one.''' … the strongest channel, which is mostly the closest one"(🎙 16:10).
+* ④ 상대가 통화 중이면 연결 안 됨("if available").
+* ⑥ MS 는 setup channel 에서 할당받은 voice channel 로 주파수를 '''바꾼다(retunes)'''.
+→ 상세: [[통화 발신 과정]]
+
+[[anim:call_transmit|①–⑦ 을 따라 번호가 MS → BS → MSC → central office → 상대로 가고, 결과가 돌아와 ⑥ voice channel 이 할당되는 순간을 보라]]
+
+== p.13 — Operation: Receiving ⭐⭐⭐ ==
+[[img:L10-13.png|p.13 Receiving — Caller → central office → MSC → ② Paging(빨간 점선이 모든 cell 의 BS 로) → MS ③⑤ / ④⑥ → ⑦ Voice channel. 필기 "위의 5~6번 과정이랑 다른 거임?" (필기본)|large]]
+
+<pre class="txt">
+① Central office sends the called number to the MSC
+② MSC sends query signals to '''every cell''' ('''[[paging]]''')
+③ MS responds; its location is found
+④ MSC transmits a ringing signal
+⑤ MS answers
+⑥ MSC assigns a voice channel
+⑦ Communication begins
+</pre>
+* 핵심 차이: 발신은 MS 가 '''자기 위치에서''' 시작하지만, 수신은 MSC 가 '''MS 가 어느 cell 에 있는지 모른다''' → 모든 cell 에 query = paging. 교수: "at this moment, MSC is '''not aware of where the corresponding receiver is located'''"(🎙 21:39).
+→ 상세: [[통화 수신 과정]] (필기 질문 "위의 5~6번 과정이랑 다른 거임?" 은 그 문서에서 답함)
+
+[[anim:call_receive|central office → MSC 다음에 paging 파동이 모든 cell 로 퍼지고, MS 가 응답해 위치가 확인된 뒤에야 ringing → voice channel 로 가는 순서를 보라]]
+
+[[sim:call_flow]]
+
+{|
+! 단계 || 발신 (p.12) || 수신 (p.13)
+|-
+| 시작 || ① MS 가 strongest setup channel 로 번호 송신 || ① central office 가 번호를 MSC 로
+|-
+| 위치 || MS 가 스스로 BS 를 고름 (위치 문제 없음) || ② '''paging''' — 모든 cell 에 query, ③ MS 응답으로 위치 확인
+|-
+| 상대 확인 || ③④ central office 가 상대 연결 (if available), ⑤ 결과가 MSC 로 || ④ ringing signal, ⑤ MS answers
+|-
+| 채널 || ⑥ MSC 가 '''unused voice channel''' 할당, MS retunes || ⑥ MSC 가 voice channel 할당
+|-
+| 끝 || ⑦ Communication begins || ⑦ Communication begins
+|}
+
+== p.14–16 — Operation: Handoff ⭐⭐⭐ ==
+{def}"Definition: Process of '''transferring an active call from one BS to another''' '''without interrupting service''' as a user moves across cells." (p.14)
+"To this end: '''MSC monitors the level of the signal every few seconds'''. If the strength of the signal diminishes: The MSC '''seeks a new cell''' that can better accommodate the communication. Then it '''changes the channel''' carrying the call." (p.15)
+"'''Hard handoff''' — An MS only communicates '''with one BS'''. Used in '''early systems'''. '''Soft handoff''' — An MS can communicate '''with two BSs at the same time'''." (p.16){/def}
+
+[[img:L10-16.png|p.16 Hard handoff(Break before make — BS1 막대가 끝난 뒤 빨간 틈, 그다음 BS2) vs Soft handoff(Make before break — 초록 구간에서 두 막대 겹침). 필기 "SRT, KTX ??", "break off connection ??" (필기본)|large]]
+
+* 누가? '''MSC''' 가. 언제? '''every few seconds''' 신호 세기를 감시하다가 약해지면. 무엇을? 더 좋은 cell 을 찾아 '''통화를 싣는 채널을 바꾼다'''.
+* [[hard handoff]]: 한 번에 BS 하나 → 옛 BS 를 끊고(break) 새 BS 에 붙음(make). 1G 같은 '''early systems'''. 교수: "'''nowadays we never use hard handoff'''"(🎙 29:54).
+* [[soft handoff]]: 잠시 두 BS 와 동시에 통신 → 새 BS 에 먼저 붙고(make) 옛 BS 를 끊음(break). 2G [[IS-95]](CDMA) 부터 → [[IS-95 soft handoff]].
+
+{tip}'''필기 속 질문: "Hand over (동일 개념)"''' (p.14) — '''맞다, 같은 개념이다.''' 교수: "in Korea it is also called hand-over. '''It is interchangeable''' … I prefer hand-off because it is easy to pronounce"(🎙 26:17). handoff 는 북미식(AMPS·IS-95, Forouzan) 용어, '''handover''' 는 유럽·3GPP 식(GSM·LTE·5G 표준 문서) 용어다. → [[handoff]]{/tip}
+
+{tip}'''필기 속 질문: "SRT, KTX ??" (31:00 필기)''' — 교수(🎙 31:17): "You may have some experience of '''slow communication speed while you are in KTX or SRT'''. This is because the trains are so fast that '''maintaining soft handoff is very difficult technically'''. And the coverage of base stations could be limited to some few kilometers, so it happens a lot … That is why you often experience some breakup of your connection." 즉 몇 km 짜리 cell 을 시속 300 km 로 지나면 handoff 가 '''아주 자주''' 일어난다. 그때 handoff 가 늦거나 실패하면 통화가 끊기거나 데이터가 느려진다. 교수는 10/6 (WiFi station mobility) 에서도 "You may have some experience of disconnected or slow communication while you are in fast transportation such as '''KTX or SRT'''" 라고 하며, 4G/5G 는 가장 가까운 BS 로 '''seamless''' 하게 넘겨 주는 매우 복잡한 표준(soft handoff)을 갖는다고 했다 → [[mid:station mobility]].{/tip}
+
+{tip}'''필기 속 질문: "break off connection ??"''' — "break before make" 의 '''break''' 가 바로 "연결을 끊는다(break off the connection)"는 뜻이다. Hard handoff 에서는 '''BS1 과의 연결을 먼저 끊고(break), 그다음 BS2 와 연결한다(make)''' → 그림의 빨간 틈 = 아주 짧은 끊김. Soft handoff 는 순서가 반대(make before break)라 틈이 없다 → [[hard handoff]].{/tip}
+
+[[anim:handoff_hard_soft|MS 가 BS1 → BS2 로 이동할 때 위 줄(hard: 막대 사이 빨간 틈)과 아래 줄(soft: 두 막대 겹침)을 비교하라]]
+
+[[sim:handoff_signal]]
+
+{info}슬라이드 순서는 p.14 → 15 → 16 이지만 필기 타임스탬프는 p.14(26:15) → p.16(27:15, 31:00) → p.15(32:30) 이다 — 교수가 "it is more helpful to firstly see the illustration"(🎙 26:55)이라며 hard/soft 그림을 먼저 설명하고 "MSC monitors … every few seconds" 로 돌아왔다. 그리고 "'''every transition decision is made by MSC, not by MS'''"(🎙 33:09).{/info}
+
+== p.17 — Operation: Roaming ⭐⭐ ==
+[[img:L10-17.png|p.17 Roaming — Provider A(home) 의 cell 에서 Provider B(neighbor) 의 cell 로 User moves, MSC A ↔ MSC B 사이 "Roaming contract" (필기본)|medium]]
+
+{def}"A user can have access to communication or can be reached '''where there is coverage'''. A service provider usually has '''limited coverage'''. '''Neighboring service providers''' can provide '''extended coverage''' through a '''roaming contract'''." (p.17){/def}
+* handoff = 같은 통신사 안에서 cell → cell, roaming = '''통신사(provider) → 통신사'''. 해외 로밍이 대표적 → [[roaming]].
+
+[[anim:roaming_anim|MS 가 Provider A(home) cell 들을 벗어나 Provider B(neighbor) cell 로 들어갈 때 MSC A ↔ MSC B 사이 roaming contract 선이 켜지며 서비스가 이어지는 것을 보라]]
+
+== 🎙 실제 수업 기록 (10/20 화, 녹음본 기준) ==
+{info}녹음본 `1020_컴네.txt`(73분, whisper 영어 전사) 중 '''0:00 ~ 36:00''' 이 이 문서 범위(p.2–17)다. 36:06 부터는 1G 이후 세대 → [[CH05 1G–2G 셀룰러]]. 전사에서 깨진 용어는 슬라이드 기준으로 복원했다("WANN"=WAN, "Starship"=Starlink/Starshield, "MSG"/"MST"/"MHC"=MSC, "Handle"/"handbook"=handoff, "frequency review/view spectrum"=frequency reuse/reuse factor, "E2"=D2D, "PS"/"VS"=BS).{/info}
+
+=== 시작 공지 (0:00~) ===
+* "I'm planning to '''finish chapter 5 during this week''', and from the next week we'll move on to the third layer, which is the '''network layer''', one of the most important parts."
+* 중간고사 범위(physical·data-link 두 계층 + 그 위의 LAN: Ethernet·WiFi·Bluetooth)를 짚고, "there are upper layers involved in WANs, but today we're going to focus on '''these two'''" — 오늘도 두 계층으로 WAN 을 본다.
+
+=== WAN recap · 분류 (p.4–7, 1:40~6:00) ===
+* "One important distinction to LAN is about its '''scale''', the physical scale … WAN is a wider geographical span. '''This is why we call it WAN'''." — 이름에서 개념(Wide Area). "sometimes it spans a town, or a state, or even the world."
+* p.4 그림: "connecting some distant LANs by deploying some point-to-point networks".
+* "Like LANs that have wired and wireless instances, WAN also has two broad categories of wired and wireless." wired = telephone·cable networks, wireless = cellular telephony·satellite networks.
+* Cellular: 이 방의 거의 모두가 '''5G''' 를 쓴다 — 교수 본인은 아직 4G 인데 불편이 없다며, 4G 도 advanced communication system 의 한 instance 라고.
+* Satellite: Starlink/Starshield 가 중요한 통신 시스템으로 쓰인다(슬라이드 BBC 전장 그림).
+* '''"In this chapter, I would like to focus on this wireless WANs"'''. Forouzan 교재는 두 가지 다 다루지만 '''오래된 책이라 4G·5G·Starlink 의 세부가 없다''' → "I would like to present you about the '''trend of evolution of cellular systems''', then you would understand how 4G, or 5G, or beyond forms." (= p.18 이후 세대 파트의 목적)
+
+=== Cellular telephony · 구성 요소 (p.8–10, 6:00~10:20) ===
+* "Any type means '''voice, text, or data''' … data can contain images, or video" (p.8 필기와 일치). 처음엔 voice 중심 → text 등으로 확장 → "Now, we can use all types of communication."
+* BS·MS: "You would be familiar with these terminologies … in our wireless LANs, such as Wi-Fi and Bluetooth. Here, we use the '''same terminologies''' — base station, that serves some managing operations or communication, and mobile station, that represents an '''individual user'''."
+* '''"The other name of base station could be AP, access point. … It is the same … interchangeable."''' 이 강의실 천장의 AP 가 "the station that serves everyone in this room" 이라고 예를 들었다 (8:26) → p.9 필기 질문 "AP (동일 개념??)" 의 답.
+* MSC: "located in the middle of this illustration … serves to '''coordinate communication between base stations and the central office''' … organizing and managing devices in cellular systems." "There are many different cellular systems, but they '''fundamentally have these kinds of structures'''." (9:06)
+* '''강조''': "I would like to emphasize that '''even a wired phone can be connected to this wireless network'''. This is why we can receive some phone calls from some wired phone. They are physically connected to this cellular system." (9:48, p.10 필기)
+
+=== Frequency reuse (p.11, 10:20~14:40) ===
+* "It looks complicated because it has some '''weird name''', but '''it is very simple'''." 무선 통신에는 interference 가 있으니 한 망이 어떤 frequency band 를 쓰면 다른 망은 '''다른 대역이나 다른 time slot''' 을 써야 한다 — 유선과 대비되는 무선의 fundamental property.
+* "Here '''the number represents a frequency band''' — you can think of this one as f1, f4, f3, f2 …" (11:37, 슬라이드 위 필기 f1–f4 의 출처). "The important rule is that '''neighboring cells should use different frequency bands''' to avoid interference between cells."
+* "Suppose that two cells use the same frequency band, then some '''edge devices on the border of cell''' could suffer from interferences from '''two base stations'''. It's very difficult to handle" (12:15) → p.11 필기 ✗ "??" 의 답.
+* 왼쪽 그림: 대역 4 개 → N = 4, 오른쪽(더 큰 망): 7 개 → N = 7. "Large networks could require larger frequency reuse [factor]." (14:12)
+
+=== 발신 (p.12, 14:40~21:15) ===
+* 010-… 번호를 누르면 "under the hood" 에서: ① "it firstly scans the frequency band, and sends the phone number to our '''closest base station'''. '''This is very important — closest one.''' In other words, … the '''strongest channel''', which is mostly the closest one." (15:53–16:28)
+* ② "All base stations have their corresponding mobile switching center" → BS 가 번호를 MSC 로 relay ③ MSC → central office ④ "connects … if he or she is available" — 상대가 통화 중이면 안 됨 ⑤ 결과가 MSC 로 ⑥ "MSC assigns a channel, a '''voice channel, or it can be data channel in current''' cellular systems, and the mobile station '''tunes or switches its frequency band''' to the assigned one" ⑦ communication begins.
+* '''강조 — infrastructure 의존''' (19:00): "This connection is '''heavily dependent on the infrastructure'''. … Even if they look like operable without any infrastructure because we access them via wireless, their performance is heavily dependent on this infrastructure. … Without that, those services are almost impossible." 그래서 ad-hoc network 상의 무선 통신은 매우 어렵다.
+* 예: '''Ukraine''' 이 최근 미국의 정책 때문에 Starlink/Starshield 연결이 제한돼 데이터 통신과 '''드론 제어'''에 어려움을 겪고 있다 — infrastructure 의 제약이 곧 서비스의 제약 (20:21).
+
+=== 수신 (p.13, 21:15~25:10) ===
+* ① caller 의 central office 가 번호를 MSC 로. ② "MSC sends query signals to every cell '''because at this moment, MSC is not aware of where the corresponding receiver is located'''." "This is often called '''paging'''. Think about when you are trying to find something in your book, you keep '''forwarding your book pages'''." (22:09)
+* ③ MS 가 응답 → "Now MSC realized that this MS is included in this base station." ④ "MSC transmits a '''ringing signal''', which is a '''control signal''' to make a connection" ⑤ MS answers ⑥ "similar to the transmission procedure, MSC assigns a voice channel".
+* '''다시 강조''': "This reception is also heavily depending on the existence of infrastructure. '''Without this infrastructure, you cannot make even a single phone call.'''" "In cellular system, '''we never communicate device to device'''; we always make a communication via this infrastructure."
+* 기기끼리 직접 하는 특수한 통신 = '''D2D(device-to-device)''' — 예: Apple 기기 사이 mirroring. "'''It is very inefficient''' compared to this infra-using communication." (24:13–24:57)
+
+=== Handoff (p.14 → p.16 → p.15, 25:10~33:20) ===
+* "I think we studied handoff before our midterm" — 10/6 [[mid:station mobility]] 에서 언급.
+* (26:17) "This is handoff; in Korea it is also called '''hand-over'''. '''It is interchangeable''', hand-over or hand-off, but I prefer hand-off because it is easy to pronounce." → p.14 필기 "Hand over (동일 개념)" 확인.
+* "It is more helpful to firstly see the illustration" — 그래서 p.16 그림을 먼저 설명(필기 타임스탬프 p.14 26:15 → p.16 27:15 → p.15 32:30 와 일치). 질문: "how we can experience '''contiguous seamless communication''' without any interruptions while moving around?" → handoff 가 그것을 구현.
+* '''Hard handoff''' (28:02): "if this mobile station moves from BS1 to BS2, then it firstly '''experiences a break of communication'''. … because in these cellular systems, MS can only communicate with one base station … it is '''inevitable''' … this is not that great. … often used in some early systems."
+* '''"But nowadays, we never use hard handoff. In today's advanced communication systems, people always implement soft handoff"''' (29:54) — MS 가 "more than one BS at the same time" 와 통신. 경계 지역에서 두 BS 와 연결을 맺어 두고, 전환이 일어나면 BS1 과의 채널을 끊는다. "It is very hard to detect or experience some break of communication … almost agnostic to people."
+* '''KTX·SRT''' (31:17): "You may have some experience of '''slow communication speed while you are in KTX or SRT'''. This is because the trains are so fast that '''maintaining soft handoff is very difficult technically'''. And the coverage of base stations could be limited to '''some few kilometers''', so it happens a lot when you are in some fast transportation. That is why you often experience some breakup of your connection." → p.16 필기 "SRT, KTX ??" 의 답.
+* p.15 (32:29): "MSC monitors the signal level of each MS every few seconds … if the strength diminishes, MSC finds a new cell that can better serve … and changes the channel." '''"Every transition decision is made by mobile switching center, not by mobile station."''' (33:09) ← 시험 포인트.
+
+=== Roaming (p.17, 33:23~36:00) ===
+* "Everyone would have heard about roaming because we have to rely upon this one when we are about to '''travel'''."
+* home → neighbor 이동: neighbor 는 다른 service provider — "instances of service provider can be '''LG U+, SK Telecom''' or AT&T". "Even if … under different service providers, we can enjoy our communication if they have some '''roaming contract'''. You can use the infra of another service provider."
+* 그래서 해외에서도 폰을 쓴다 — "almost every big service provider has their roaming contract. All you have to do is just switching … or installing some '''eSIM''' … but some communication speed or efficiency could differ from your own network."
+* 36:06 "From now on, I would like to present some specific cellular systems starting from the '''first generation'''" → [[CH05 1G–2G 셀룰러]].
+
+== 시험 대비 핵심 요약 ==
+# '''WAN''' = LAN 보다 wider geographical span(town·state·country·world). 분류: '''Wired'''(telephone networks, cable networks) / '''Wireless'''(cellular telephony 4G/5G, satellite networks Starlink/Starshield). 이번 강의 focus = '''wireless WAN'''.
+# '''Cellular telephony''' = "a wireless WAN that provides any type of communication"(voice·text·data).
+# 서비스 지역 → '''cells''', 각 cell = '''BS + MS'''. '''MSC''' = "coordinates communication between all BSs and the central office". MSC 는 '''PSTN''' 에 연결 → 유선 전화와도 통화.
+# '''Frequency reuse''': "Neighboring cells cannot use the same set of frequencies" (경계 사용자 interference). 패턴 = N cells, '''N = reuse factor''' (그림 4, 7). N↑ → 간섭↓, cell 당 채널↓.
+# '''발신''': ① strongest setup channel(≈closest BS)로 번호 → ② BS→MSC → ③ MSC→central office → ④ 상대 연결(if available) → ⑤ 결과→MSC → ⑥ '''unused voice channel''' 할당, MS retunes → ⑦ 통화.
+# '''수신''': ① central office→MSC → ② '''paging'''(모든 cell 에 query; MSC 는 위치를 모름) → ③ MS 응답·위치 확인 → ④ ringing → ⑤ MS answers → ⑥ voice channel → ⑦ 통화.
+# '''Handoff''' = active call 을 BS → BS 로 "without interrupting service". '''MSC 가 every few seconds 신호 세기 감시''' → 약해지면 새 cell 탐색 → 채널 변경.
+# '''Hard handoff''' = MS 가 '''한 BS 와만''', early systems, '''break before make'''. '''Soft handoff''' = '''두 BS 와 동시에''', '''make before break'''.
+# '''Roaming''' = 통신사 coverage 는 제한적 → 이웃 통신사가 '''roaming contract''' 로 extended coverage.
+# 교수 강조: 셀룰러 통신은 '''infrastructure(BS·MSC·central office)에 heavily dependent''' — "without this infrastructure, you cannot make even a single phone call". 기기끼리 직접(D2D)은 비효율적.
+# 교수 강조: handoff 결정은 '''MSC''' 가 한다(MS 가 아님). 요즘 시스템은 '''항상 soft handoff'''.
+
+== 관련 문서 ==
+* 구조: [[WAN 분류]] · [[cellular telephony]] · [[cell]] · [[base station]] · [[mobile station]] · [[MSC]] · [[PSTN]] · [[uplink와 downlink]]
+* 동작: [[frequency reuse]] · [[reuse factor]] · [[co-channel interference]] · [[통화 발신 과정]] · [[통화 수신 과정]] · [[paging]] · [[handoff]] · [[hard handoff]] · [[soft handoff]] · [[roaming]]
+* 다른 WAN: [[telephone network]] · [[cable network]] · [[satellite network]] · [[Starlink]]
+* 비교: [[셀룰러와 WiFi 비교]] · [[mid:station mobility]] · [[mid:BSS]]
+* 다음: [[CH05 1G–2G 셀룰러]] → [[CH05 IS-95·3G·4G]] · [[셀룰러 세대]]

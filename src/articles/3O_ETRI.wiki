@@ -1,0 +1,29 @@
+key: ETRI
+title: ETRI (한국전자통신연구원)
+category: 3강 CDMA–4G, 용어
+---
+'''ETRI (Electronics and Telecommunications Research Institute, 한국전자통신연구원)''' 는 대전에 있는 정부출연 연구기관으로, 1990 년대 미국 Qualcomm 과 함께 '''CDMA([[IS-95]]) 상용 시스템을 개발'''해 한국이 '''1996 년 세계 최초로 CDMA 를 상용화'''하는 데 핵심 역할을 했다. 슬라이드 본문에는 없고, 내 필기 "ETRI가 개발?"(p.27) 에서 온 문서다. (전체 내용이 슬라이드 밖 배경 지식)
+
+{def}(슬라이드 정의 없음) p.27 "One of the dominant 2G standards in North America '''(and South Korea)'''" — 필기: "'''ETRI가 개발?'''"
+→ 한국이 IS-95 의 주요 사용국이 된 배경에 ETRI 가 있다.{/def}
+
+[[img:L10-27.png|p.27 — "South Korea" 빨간 상자와 왼쪽 필기 "ETRI가 개발?" (필기본)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Electronics and Telecommunications Research Institute''' — 전자 + 통신 + 연구소. 이름 그대로 한국의 국책 전자·통신 연구소.
+
+{tip}💡 '''필기 속 질문: "ETRI가 개발?"''' — '''절반은 맞다.'''
+* '''CDMA 원천 기술''': 미국 '''Qualcomm''' (IS-95 는 미국 TIA 의 표준).
+* '''상용 시스템 개발''': ETRI 가 1991 년 Qualcomm 과 공동 개발 계약 → 국내 제조사들과 교환기·기지국·단말을 개발.
+* '''상용화''': 1996 년 한국이 '''세계 최초'''로 CDMA 이동통신 서비스 시작.
+그래서 "IS-95 를 ETRI 가 발명했다"는 틀리고, "'''ETRI 가 CDMA 상용화를 주도했다'''"가 맞다. '''교수(10/20, 59:55)''': "one interesting fact is that '''Koreans contributed a lot to invent CDMA''', you may have heard of an institution called '''ETRI'''. It's '''government research institute''' that contributed a lot in inventing CDMA, and they '''earned money a lot'''." — 교수는 "invent" 라고 했지만 원천 기술은 Qualcomm 이므로, 답안에는 '''"한국 정부출연 연구소 ETRI 가 CDMA 개발·상용화에 크게 기여"''' 로 쓰면 어느 쪽에도 안전하다.{/tip}
+
+{info}이 경험 덕분에 한국은 3G 에서도 IS-95 의 진화형 [[CDMA 2000]] 을 먼저 도입했고, 이후 [[W-CDMA]] 로도 3G 를 전개했다 → [[IMT-2000 표준]] 의 "South Korea 3G".{/info}
+
+{analogy}🎭 Qualcomm 이 '''레시피'''(CDMA 원천 기술)를 썼다면, ETRI 는 그 레시피로 '''세계 최초의 식당을 차려 손님을 받게''' 만든 셰프 팀이다.{/analogy}
+
+{quiz}"IS-95 is a 2G standard dominant in North America and ___." (p.27){/quiz}
+{answer}'''South Korea'''.{/answer}
+
+== 관련 문서 ==
+* [[IS-95]] · [[CDMA]] · [[CDMA 2000]] · [[CH05 IS-95·3G·4G]]

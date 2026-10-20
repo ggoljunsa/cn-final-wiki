@@ -1,0 +1,35 @@
+key: CDMA 2000
+title: CDMA 2000 (IMT-MC)
+category: 3강 CDMA–4G, 용어
+---
+'''CDMA 2000''' 은 [[IMT-2000 표준]] 중 '''IMT-MC (Multicarrier)''' 에 해당하는 3G 표준으로, '''[[IS-95]] 의 CDMA 를 진화시킨''' 것이다. 새 '''wideband(15 MHz)''' spread spectrum 과 IS-95 의 '''narrowband(1.25 MHz)''' CDMA 를 결합했고, '''북미'''에서 개발됐다. L10 p.35.
+
+{def}"'''IMT-MC''': An '''evolution of CDMA used in IS-95''' channels: '''CDMA 2000'''. Combine the new '''wideband (15 MHz)''' spread spectrum with the '''narrowband (1.25 MHz) CDMA of IS-95'''. Developed in '''North America'''." (p.35){/def}
+
+[[img:L10-35.png|p.35 IMT-MC = CDMA 2000 (빨간 상자)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''CDMA 2000''' — "CDMA 를 IMT-'''2000''' 용으로". IS-95(cdmaOne)의 3G 판.
+* '''Multicarrier''' (IMT-MC) — 반송파(carrier)를 '''여러 개''' 묶는다. IS-95 의 1.25 MHz 채널을 여러 개 나란히 묶어 넓게 쓰는 방식이라 이 이름이다 (예: 1.25 × 3 = 3.75 MHz 묶음 — 보충, 슬라이드에 없음).
+* '''narrowband 1.25 MHz''' = IS-95 채널 폭(p.28 의 1.228 MHz 를 반올림한 값). 이 폭을 그대로 유지하므로 '''IS-95 와 호환'''된다 — 기존 2G 망에서 부드럽게 넘어갈 수 있다.
+
+== W-CDMA 와 비교 ==
+{|
+! || [[W-CDMA]] (IMT-DS) || '''CDMA 2000''' (IMT-MC)
+|-
+| 출신 || 새로 설계 (유럽, GSM 진영) || '''IS-95 의 진화''' (북미)
+|-
+| 대역폭 || 5 MHz || wideband 15 MHz + narrowband 1.25 MHz
+|-
+| IS-95 호환 || 아니오 || '''예''' (1.25 MHz 채널 유지)
+|}
+
+{info}한국은 2G 가 IS-95 였기 때문에 3G 초기에 CDMA 2000 계열(1x, EV-DO)을 먼저 깔았다 (보충 — 슬라이드에 없음). → [[IMT-2000 표준]] 의 "South Korea 3G" 박스.{/info}
+
+{analogy}🎭 W-CDMA 가 '''새로 지은 집'''이라면 CDMA 2000 은 '''기존 IS-95 집을 증축'''한 것이다. 원래 방(1.25 MHz)은 그대로 두고 옆에 큰 방(wideband)을 붙여서, 원래 살던 사람(IS-95 단말)도 계속 살 수 있다.{/analogy}
+
+{quiz}CDMA 2000 이 "an evolution of CDMA used in IS-95" 라는 근거를 슬라이드 문장에서 찾아 쓰시오.{/quiz}
+{answer}"Combine the new wideband (15 MHz) spread spectrum with the '''narrowband (1.25 MHz) CDMA of IS-95'''" — IS-95 의 1.25 MHz CDMA 를 그대로 품고 있다.{/answer}
+
+== 관련 문서 ==
+* [[IS-95]] · [[W-CDMA]] · [[IMT-2000 표준]] · [[IMT-2000]] · [[3G]]

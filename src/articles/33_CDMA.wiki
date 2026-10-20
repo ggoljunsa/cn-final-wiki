@@ -1,0 +1,59 @@
+key: CDMA
+title: CDMA (Code-Division Multiple Access)
+category: 3강 CDMA–4G, 용어
+---
+'''CDMA (code-division multiple access)''' 는 여러 사용자가 '''같은 시간에 같은 주파수 대역 전체'''를 쓰면서, 사용자마다 다른 '''코드'''로 서로를 구분하는 다중 접속 방식이다. [[FDMA]](주파수로 나눔), [[TDMA]](시간으로 나눔)에 이은 세 번째 방식이고, [[DSSS]] 를 기반으로 한다. [[IS-95]] 와 3G([[W-CDMA]], [[CDMA 2000]])의 핵심. L10 p.27, p.29, p.31.
+
+{def}"'''CDMA (Code-Division Multiple Access)''': an '''MA method based on DSSS'''." (p.27)
+"Forward Link: a '''composite signal''' which is transmitted to all users and '''differentiated by codes'''." (p.27 그림)
+→ DSSS 에 기반한 다중 접속. 모두에게 하나의 합성 신호를 보내고, 각자 코드로 자기 몫을 구분한다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''Code-Division''' — '''코드로 나눈다'''. FDMA 의 Frequency-Division, TDMA 의 Time-Division 과 정확히 같은 짜임이다 → 무엇으로 나누는지가 이름에 있다.
+* '''Multiple Access''' — 여러 사용자가 하나의 매체에 접근. 중간고사 [[mid:channelization|channelization]] 의 세 방식(FDMA, TDMA, CDMA) 그대로.
+
+[[img:L10-27.png|p.27 오른쪽 — FDMA(주파수 띠) · TDMA(시간 슬롯, 필기 user 1·2·3) · CDMA(전 시간·전 주파수에 code 층이 쌓임, 필기 code 1·2·3) (필기본)|large]]
+
+[[anim:access_methods|세 그림에서 "칸막이"가 각각 주파수·시간·코드인 것을 확인하라 — CDMA 만 시간과 주파수를 전혀 자르지 않는다]]
+
+{exam}🎯 교수(10/20): "'''divided by code, not frequency, nor time'''" (59:43) · "shared by users at the '''same time and same frequency'''" (58:34) · "you have to remember that '''the medium is shared across so-called codes''', to '''spread the spectrum wide to avoid interference'''" (64:55). 세부 기술은 "you don't have to understand".{/exam}
+
+== 원리 — 직교 코드 ==
+<pre class="txt">
+1. 사용자 i 에게 코드 c_i (칩열, [[Walsh code]]) 를 준다. 서로 다른 코드끼리 내적 = 0 (직교)
+2. 보낼 때: d_i × c_i              (비트 1 → +1, 0 → −1, 말 안 함 → 0)
+3. 공중에서: 모두의 신호가 '''더해짐'''   S = Σ d_j·c_j
+4. 받을 때: S · c_i ÷ N  =  d_i   (남의 d_j·c_j 는 c_j·c_i = 0 이라 사라짐)
+</pre>
+예 (Forouzan 보충 — 슬라이드에 없음): 4 스테이션, 채널 합 [−1 −1 −3 +1] → 스테이션 2 복원 = (−1+1−3−1)/4 = '''−1''' (bit 0).
+
+[[anim:cdma_spreading|합쳐진 하나의 파형에 수신자 2 가 자기 code 를 곱하는 순간, 다른 스테이션 몫이 0 으로 상쇄되는 것을 보라]]
+
+[[sim:cdma_walsh]]
+
+{warn}⚠️ '''"다시" 표시한 곳 — 한 번 더 쉽게.''' FDMA·TDMA 는 '''자원을 쪼개서''' 나눠 준다(주파수 띠, 시간 슬롯). CDMA 는 '''아무것도 쪼개지 않는다''' — 모두가 대역 전체를 항상 쓴다. 대신 각자의 신호에 '''서로 직교하는 무늬(코드)'''를 입혀서, 섞여도 무늬로 다시 걸러 낼 수 있게 한다. 그래서 "같은 시간·같은 주파수·다른 코드".{/warn}
+
+== IS-95 에서의 CDMA ==
+* forward(p.29): 한 1.228 MHz 채널 안에서 '''Walsh code W0–W63''' 으로 64 digital channel 을 구분 — 점선 상자 "CDMA". W0 = [[pilot channel]].
+* 바깥은 여전히 FDMA: 25 MHz 를 1.228 MHz × 20 채널로 → [[IS-95 대역과 채널]].
+* 결과: 이웃 cell 의 간섭은 코드가 달라 잡음처럼 퍼짐 → '''reuse factor normally 1''' ([[IS-95 frequency reuse]]) → 이웃 BS 도 같은 주파수라 '''soft handoff''' ([[IS-95 soft handoff]]).
+
+{|
+! || [[FDMA]] || [[TDMA]] || '''CDMA'''
+|-
+| 나누는 것 || 주파수 || 시간 || '''코드'''
+|-
+| 사용자가 쓰는 대역 || 일부 || 전체(차례로) || '''전체(동시에)'''
+|-
+| 이 덱의 예 || AMPS || D-AMPS, GSM || IS-95, W-CDMA, CDMA 2000
+|-
+| reuse factor || 7 (AMPS) || > 1 || '''1'''
+|}
+
+{analogy}🎭 '''한 방, 여러 언어.''' 파티장(대역) 하나에서 모두가 동시에 말한다. 한국어 쌍은 한국어만, 영어 쌍은 영어만 알아듣는다. 다른 언어는 그냥 배경 소음. 방을 나누지도(FDMA), 시간을 나누지도(TDMA) 않았는데 대화가 된다.{/analogy}
+
+{quiz}CDMA 가 "an MA method based on DSSS" 인 이유를 설명하시오.{/quiz}
+{answer}CDMA 는 각 사용자의 신호를 '''사용자 고유의 칩열로 퍼뜨린(DSSS)''' 뒤 같은 대역에서 더해 보내고, 수신자가 자기 칩열로 '''역확산'''해 자기 신호만 꺼낸다. 즉 DSSS(퍼뜨리는 변조)가 있어야 코드로 나누는 다중 접속(CDMA)이 가능하다.{/answer}
+
+== 관련 문서 ==
+* [[DSSS]] · [[Walsh code]] · [[FDMA]] · [[TDMA]] · [[IS-95]] · [[spread spectrum]] · [[mid:channelization]] · [[IS-95 frequency reuse]]

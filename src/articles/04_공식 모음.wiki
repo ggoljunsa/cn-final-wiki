@@ -1,0 +1,65 @@
+key: 공식 모음
+title: 공식 모음 — CH05 의 계산과 참고 수치
+category: 안내
+---
+CH05 (1)은 공식이 많은 장이 아니다. 계산은 '''[[GSM channel bit rate]]''' 하나가 슬라이드에 식으로 나오고, 나머지는 "대역 ÷ 채널 폭" 같은 나눗셈이다.
+
+{exam}
+🎙 10/20 수업 41:54 — "I'm not going to recommend you to memorize all these specific numbers, but instead, I would recommend you to '''understand how communication systems evolve across generations'''. That trend is important. … But I would recommend you to '''memorize uplink and downlink'''."
+→ 아래 수치는 '''암기 대상이 아니라 세대 차이를 이해하는 재료'''다. 반대로 [[uplink와 downlink]](= reverse / forward, 누가 보내는가)는 반드시 외운다.
+{/exam}
+
+== 계산 ==
+{|
+! 무엇 || 식 || 값 || 시뮬레이터
+|-
+| [[GSM channel bit rate]] || $\frac{1}{120\text{ ms}} \times 26 \times 8 \times 156.25$ || '''270.8 kbps''' || `sim:gsm_bitrate`
+|-
+| GSM 사용자 1명(slot 1개) || $270.8 / 8$ || ≈ 33.85 kbps || `sim:gsm_bitrate`
+|-
+| GSM 순수 user data || $65 \times 24 / 120\text{ ms}$ || 13 kbps (p.25 그림의 Digitizer 값; 65×24/120 ms 로 검산) || `sim:gsm_bitrate`
+|-
+| [[AMPS 대역과 채널|AMPS 채널 수]] || $25\text{ MHz} / 30\text{ kHz} \approx 833$ || 832 채널 → provider 당 416 (control 21, voice 395) || `sim:band_channels`
+|-
+| GSM 채널 수 || $25\text{ MHz} / 200\text{ kHz} = 125$ || 124 채널 (방향당) || `sim:band_channels`
+|-
+| [[D-AMPS]] 한 채널 || $3 \times 7.95\text{ kbps} = 23.85\text{ kbps}$ || overhead 포함 48.6 kbps || `sim:damps_tdma`
+|-
+| [[IS-95 forward 전송|IS-95 forward]] [[chip rate]] || $19.2\text{ ksps} \times 64$ || 1.2288 Mcps ≈ 1.228 Mcps || `sim:is95_rates`
+|-
+| [[IS-95 reverse 전송|IS-95 reverse]] chip rate || $28.8 \to 307.2\text{ kcps} \times 4$ || 1.2288 Mcps || `sim:is95_rates`
+|-
+| cell 당 채널 ([[reuse factor]] N) || $\text{전체 채널} / N$ || AMPS voice 395/7 ≈ 56 (파생값, 슬라이드에 없음) || `sim:reuse_pattern`
+|}
+
+<pre class="txt">
+GSM channel bit rate — 손으로 푸는 순서
+1. slot 1개 = '''156.25 bits'''
+2. frame 1개 = 8 slots      → 8 × 156.25 = 1250 bits
+3. multiframe = 26 frames   → 26 × 1250 = 32,500 bits
+4. multiframe 길이 = 120 ms → 32,500 / 0.120 s = 270,833 bps ≈ '''270.8 kbps'''
+</pre>
+
+== 참고 수치 (암기 불필요 — trend 이해용) ==
+{|
+! 세대 || 수치
+|-
+| AMPS || 824–849 MHz (MS→BS, reverse/uplink) · 869–894 MHz (BS→MS, forward/downlink) · 각 25 MHz · 30 kHz · 832 채널 · 416/provider · control 21 · reuse factor 7
+|-
+| D-AMPS || 7.95 kbps · 3 채널 TDMA · 48.6 kbps
+|-
+| GSM || 890–915 MHz (uplink) · 935–960 MHz (downlink) · 200 kHz · 124 채널 · 156.25 bits · 8 slot · 26 frame (24 traffic + 2 control) · 120 ms · 270.8 kbps
+|-
+| IS-95 || 800 MHz · 1,900 MHz ISM · 1.228 MHz × 20 채널 · 10/provider · reuse factor 1 · GPS 동기화 · Walsh code 64 개 (W0 = pilot)
+|-
+| IMT-2000 || 144 kbps (차량) · 384 kbps (보행) · 2 Mbps (정지) · 2 GHz 대역 · 2 MHz 대역폭 · W-CDMA 5 MHz · CDMA 2000 15 MHz + 1.25 MHz
+|-
+| 4G || 100 Mbps (이동) · 1 Gbps (정지) · 어디서든 100 Mbps 이상
+|}
+
+{analogy}
+이 표는 '''역사책의 연표'''다. 연도를 하나하나 외우는 것보다 "아날로그 → 디지털 → 데이터 → all-IP" 라는 흐름을 아는 게 시험에 더 쓸모 있다. 숫자는 그 흐름을 실감하는 재료로만 쓴다(채널 폭 30 kHz → 200 kHz → 1.228 MHz → 5 MHz 처럼 '''점점 넓어진다''').
+{/analogy}
+
+== 관련 문서 ==
+* [[셀룰러 세대 비교표]] · [[GSM multiframe]] · [[AMPS 대역과 채널]] · [[자주 틀리는 함정 모음]]

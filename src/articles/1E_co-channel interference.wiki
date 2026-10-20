@@ -1,0 +1,41 @@
+key: co-channel interference
+title: Co-channel Interference (동일 채널 간섭)
+category: 1강 셀룰러 동작, 용어
+---
+'''Co-channel interference''' 는 '''같은 frequency set(같은 채널)을 쓰는 서로 다른 cell''' 의 신호가 서로에게 섞여 드는 간섭이다. [[frequency reuse]] 를 하는 한 피할 수 없고, [[reuse factor]] N 을 키워 같은 set cell 사이 거리를 벌려 줄인다. 슬라이드(p.11)는 이 용어 대신 "'''Interference''' for the users located near the cell boundaries" 라고만 썼다 — 용어는 '''(교재 표준 용어 보충)'''.
+
+{def}"Neighboring cells cannot use the same set of frequencies for communication — '''Interference''' for the users located near the cell boundaries." (p.11)
+같은 주파수 set 을 쓰는 cell 들 사이의 간섭. 이웃 cell 이 같은 set 을 쓰면 경계 사용자에게 심하고, 떨어뜨려 놓아도 약하게 남는다.{/def}
+
+[[img:L10-11.png|p.11 — 같은 번호(같은 frequency set) cell 사이의 거리가 co-channel interference 의 크기를 정한다. 필기: 붙은 두 '1' cell 에 ✗ (필기본)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''co-''' = 함께, 같은. '''co-channel''' = '''같은 채널'''을 쓰는 (cell 들). → "같은 채널끼리의 간섭".
+* 반대말 격: '''adjacent-channel interference'''(인접 채널 간섭) — 주파수가 바로 옆인 채널끼리 새는 간섭. [[mid:guard band]] 로 막는다. co-channel 은 '''주파수가 똑같아서''' guard band 로는 못 막고 '''거리'''로만 막는다.
+
+<pre class="ascii">
+   cell 1 (BS_a)        cell 2,3,…         cell 1 (BS_b)
+     ))) f1            (다른 set)            f1 (((
+          ↘                                ↙  약하게 새어 옴
+            MS ← 자기 BS_a 의 f1 + 먼 BS_b 의 f1 = co-channel interference
+   거리 D 가 클수록(= N 이 클수록) 새어 오는 신호가 약해진다
+</pre>
+
+{|
+! 상황 || 간섭
+|-
+| 이웃 cell 이 같은 set (✗, p.11 필기) || 경계 사용자에게 '''심각''' — 통신 불가 수준
+|-
+| N = 4 패턴 || 같은 set cell 이 비교적 가까움 → 약간
+|-
+| N = 7 패턴 || 더 멀다 → 더 작음
+|-
+| N = 1 (IS-95 CDMA) || 모든 cell 이 같은 대역 — 대신 '''코드'''로 분리, 다른 사용자 신호는 잡음처럼 보임 → [[IS-95 frequency reuse]]
+|}
+
+{analogy}🎭 '''같은 노래를 트는 두 매장.''' 바로 옆 매장이 같은 라디오 채널을 크게 틀면 경계에 선 손님은 두 소리가 섞여 엉망이다. 몇 블록 떨어진 매장이면 아주 희미하게만 들린다. 소리를 막는 벽(guard band)은 다른 채널 소리엔 효과가 있지만, '''같은 채널'''은 거리만이 답이다.{/analogy}
+
+[[sim:reuse_pattern]]
+
+== 관련 문서 ==
+* [[frequency reuse]] · [[reuse factor]] · [[IS-95 frequency reuse]] · [[CDMA]] · [[mid:guard band]]

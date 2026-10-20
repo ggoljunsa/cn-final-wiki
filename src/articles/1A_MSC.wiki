@@ -1,0 +1,40 @@
+key: MSC
+title: MSC (Mobile Switching Center, 이동 교환국)
+category: 1강 셀룰러 동작, 용어
+---
+'''MSC(Mobile Switching Center)''' 는 셀룰러망의 '''두뇌'''다. 여러 [[base station]] 을 유선으로 묶고, 유선 전화망([[PSTN]])의 central office 와 연결한다. 통화 연결·voice channel 할당·[[paging]]·[[handoff]] 결정이 전부 MSC 의 일이다. L10 p.10.
+
+{def}"'''Mobile Switching Center (MSC)''' — '''Coordinates communication between all BSs and the central office'''." (p.10)
+MSC 는 모든 BS 와 (유선 전화망의) central office 사이의 통신을 조정한다.{/def}
+
+[[img:L10-10.png|p.10 Cellular system — 가운데 연두색 Mobile switching center(MSC): 오른쪽 cell 의 BS 와, 아래 PSTN 과 연결. 필기 "wired phone도 wireless에 연결 가능" (필기본)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Mobile''' — 이동 사용자(MS)를 위한.
+* '''Switching''' — '''교환'''. 전화망에서 switch 는 "누구와 누구를 연결할지 회선을 바꿔 끼우는 것"이다. MSC 는 MS 의 통화를 알맞은 BS·central office 로 바꿔 끼운다.
+* '''Center''' — 여러 BS 의 '''중심'''. 그림에서도 BS 들과 PSTN 사이 한가운데 있다.
+
+슬라이드에서 MSC 가 하는 일 (전부 모으면)
+{|
+! 동작 || MSC 의 역할 || 슬라이드
+|-
+| 발신 || BS 가 relay 한 번호를 central office 로 forward ③ → 결과 수신 ⑤ → '''unused voice channel 할당''' ⑥ || p.12
+|-
+| 수신 || central office 에서 번호 받음 ① → '''모든 cell 에 query(paging)''' ② → ringing ④ → voice channel 할당 ⑥ || p.13
+|-
+| handoff || '''every few seconds 신호 세기 감시''' → 약해지면 새 cell 탐색 → 통화 채널 변경 || p.15
+|-
+| hard/soft || 그림에서 BS1·BS2 둘 다 같은 MSC 아래 || p.16
+|-
+| roaming || MSC A ↔ MSC B 가 roaming contract 로 연결 || p.17
+|}
+
+{analogy}🎭 '''항공 관제탑.''' 각 활주로(BS)는 비행기(MS)와 직접 교신하지만, 누가 어느 활주로·어느 주파수를 쓸지, 관할 구역을 넘는 비행기를 옆 관제 구역에 넘길지(handoff)는 관제탑(MSC)이 정한다. 다른 공항(PSTN·다른 통신사 MSC)과의 연락도 관제탑이 맡는다.{/analogy}
+
+[[anim:cellular_architecture|BS 들이 유선으로 MSC 에 모이고, MSC 가 PSTN 에 연결되는 순간 — "MSC = 모든 BS 와 central office 사이의 조정자" 를 확인하라]]
+
+{exam}🎯 정의 문장 "coordinates communication between '''all BSs''' and the '''central office'''" 는 그대로 외운다. 시험에서 "handoff 를 결정하는 주체", "paging 을 보내는 주체", "voice channel 을 할당하는 주체" 를 물으면 답은 모두 '''MSC'''.{/exam}
+
+== 관련 문서 ==
+* [[base station]] · [[PSTN]] · [[paging]] · [[handoff]] · [[roaming]] · [[통화 발신 과정]] · [[통화 수신 과정]]
+* [[HLR]] (GSM 에서 MSC 가 가입자 위치를 찾는 데이터베이스)

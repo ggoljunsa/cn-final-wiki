@@ -1,0 +1,361 @@
+key: CH05 1G–2G 셀룰러
+title: CH05 1G–2G 셀룰러 (2강 — AMPS · D-AMPS · GSM: FDMA 에서 TDMA 로)
+category: 2강 1G–2G, 메인
+---
+'''CH05 1G–2G 셀룰러'''는 L10 덱(`CH05_Wide Area Networks (1).pdf`) p.18–26 이다. 앞 절([[CH05 셀룰러 동작]])에서 [[cell]] · [[base station]] · [[MSC]] · [[frequency reuse]] · [[handoff]] 로 '''셀룰러가 어떻게 돌아가는지'''를 봤다면, 이 절이 던지는 질문은 — '''"한 cell 안의 여러 사용자가 같은 25 MHz 대역을 어떻게 나눠 쓰나? 그리고 세대가 바뀌면서 그 나누는 방법이 어떻게 진화했나?"'''
+답: '''1G [[AMPS]]''' 는 아날로그 음성을 [[FM]] 으로 실어 '''주파수로만''' 나눴다([[FDMA]] — 30 kHz 채널 하나 = 사용자 한 명). '''2G''' 는 음성을 '''디지털'''로 바꾼 덕분에 한 주파수 채널을 '''시간으로 또 쪼갤''' 수 있게 됐다([[TDMA]]): [[D-AMPS]] 는 같은 30 kHz 채널에 3명, [[GSM]] 은 200 kHz 채널에 8명. (2G 의 또 다른 길 [[CDMA]] 기반 [[IS-95]] 는 다음 절 [[CH05 IS-95·3G·4G]].)
+
+페이지 번호는 PDF 페이지(= `_slides/L10-NN.png` 번호)다. 이 덱은 '''사용자의 GoodNotes 필기본'''이라 슬라이드마다 빨간 녹음 타임스탬프와 메모가 있다 — p.19(AMPS Bands)와 p.25(GSM Transmission)에 '''"다시"''', p.21(D-AMPS)의 7.95 kbps 옆에 '''"기억 x"''', p.19 의 416 channels 아래 '''"? 다시"''', p.25 에 '''"analog? digital?"''' 이 적혀 있다. 이 문서는 그 표시마다 쉬운 재설명과 답을 달았다.
+
+{exam}🎯 교수가 10/20 에 직접 정해 준 공부법 (녹음 41:33–42:57, 45:50–46:59)
+* '''숫자를 외우지 말고 trend 를 이해하라''': "I'm not going to recommend you to memorize all these specific numbers … I would recommend you to understand '''how communication systems evolve across generations'''. That trend is important." (41:54) / "'''You will not see some OX quizzes that ask these kind of specific numbers.'''" (46:00)
+* 교수가 꼽은 '''세 가지 trend''' (46:34): '''analog → digital''' · '''voice → data''' · '''narrowband → wideband'''.
+* 단 '''uplink / downlink 는 외워라''': "I would recommend you to memorize uplink and downlink" (42:20) · "You should memorize this terminology." (42:57) — '''downlink = BS → MS'''(송신 BS, 수신 MS) = forward, '''uplink = MS → BS''' = reverse. "imagining this illustration" — 아래로(down) BS→MS, 위로(up) MS→BS (40:00).
+* "leading '''analog''', this is important" (37:40) — 1G = analog. "In 2G, almost all cellular systems are built upon '''digital''' communication" (51:52).
+* 세대 × 접근 방식: 1G AMPS = analog + '''FDMA''' · 2G D-AMPS·GSM = digital + '''TDMA 와 FDMA 의 hybrid''' (53:41–54:28) · 2G IS-95 = '''CDMA'''.
+* AMPS 변조: voice = '''FM''' · control = '''FSK''' ("they use digital communication for control", 44:09).{/exam}
+
+{info}아래 본문의 채널 수(832/416/21/395)·bit rate(48.6, 270.8 kbps) 계산은 '''구조를 이해하기 위한 풀이'''로 남겨 둔다. 교수 말대로 수치 자체를 묻는 OX 는 나오지 않을 것이니 외우기보다 "왜 이런 구조인가"(대역 둘 = uplink/downlink, 디지털화 → TDMA → 채널당 사용자 증가)를 잡을 것.{/info}
+
+{analogy}🎭 '''아파트 단지의 공용 회의실(= 25 MHz 대역)을 나눠 쓰는 법.'''
+* '''1G (FDMA)''': 회의실을 칸막이로 832 칸 나누고 '''한 칸에 한 팀'''. 팀이 말을 안 하고 있어도 칸은 비워 둬야 한다.
+* '''2G (TDMA)''': 칸막이는 그대로 두되, 한 칸을 '''시간표'''로 나눈다 — "0–1분 A팀, 1–2분 B팀, 2–3분 C팀, 다시 A팀…". 각 팀이 하고 싶은 말을 '''녹음해서 압축'''(digitize)해 두었다가 자기 차례에 빨리 틀기 때문에 가능하다. 아날로그 생목소리는 압축도, 끊어서 몰아 보내기도 안 된다 — 그래서 '''디지털화가 TDMA 의 전제'''다.
+* '''2G CDMA (다음 절)''': 칸막이도 시간표도 없이 모두가 동시에 말하되 '''팀마다 다른 언어'''를 쓴다.{/analogy}
+
+[[anim:access_methods|FDMA(주파수 띠) → TDMA(같은 띠 안의 시간 슬롯) → CDMA(같은 시간·같은 주파수, code 로 구분) 순서로 그림이 바뀌는 동안, 각 장면이 어느 세대·어느 시스템인지(아래 요점 줄) 짝지어 보라]]
+
+== p.18 — 1st Generation (1G): AMPS ⭐ ==
+
+{def}"1st Generation (1G): '''AMPS (Advanced Mobile Phone System)'''
+* One of the leading '''analog cellular systems''' in North America
+* AMPS uses '''FDMA''' to separate channels in a link" (p.18){/def}
+
+[[img:L10-18.png|p.18 1G AMPS — cell tower 와 phone 사이는 "just a regular radio, on a specific frequency (or range)", tower 들은 cell carrier 망을 거쳐 일반 전화망에 유선 연결 (필기본: 36:05~)|medium]]
+
+* '''analog''': 음성 파형을 숫자로 바꾸지 않고 그대로 반송파([[mid:carrier|carrier]])에 싣는다 → [[FM]].
+* '''FDMA''': 링크(BS ↔ MS) 안의 채널들을 '''주파수로''' 분리한다. 그림 설명 그대로 — 폰과 tower 의 연결은 "'''just a regular radio, on a specific frequency'''". 라디오 방송국마다 주파수가 다르듯, 통화마다 30 kHz 주파수가 다르다. 자세히는 [[FDMA]], 선수 개념 [[mid:FDM]] · [[mid:channelization]].
+* 그림 위쪽 말풍선: "When you move from one cell's range to another, the towers hand off your connection. Sometimes, this doesn't work and your call gets dropped." — 1G 의 [[handoff]] 는 [[hard handoff]] 였다(→ [[CH05 셀룰러 동작]] p.16).
+* 오른쪽: "The towers are all wired directly to the cell carrier's network, which is bridged to the standard phone system" — tower = [[base station]], 그 망의 중심 = [[MSC]], standard phone system = [[PSTN]].
+
+자세히는 [[1G]] · [[AMPS]].
+
+== p.19 — AMPS (1G): Bands ⭐⭐⭐ (필기 "다시") ==
+
+[[img:L10-19.png|p.19 AMPS Bands — MS band 824–849 MHz(reverse = uplink), BS band 869–894 MHz(forward = downlink), 각 25 MHz = 832 × 30 kHz (필기본: "다시", "416 channels ? 다시")|large]]
+
+{def}"Each band is '''25 MHz''', made of '''832 30-kHz''' analog channels.
+Forward communication: '''base to mobile''' · Reverse communication: '''mobile to base'''
+Two providers can share an area, which means '''416 channels''' in each cell for each provider. Among 416, '''21 channels''' are used for control.
+AMPS has a frequency '''reuse factor of 7'''." (p.19){/def}
+
+[[anim:amps_bands|MS band(824–849, uplink)과 BS band(869–894, downlink)에서 한 MS 가 채널을 하나씩 짝으로 잡는 순간을 보고, "왜 대역이 두 개인가"를 한 문장으로 말해 보라]]
+
+{exam}🎯 '''uplink / downlink — 교수가 "외워라" 고 한 유일한 항목''' (40:00, 42:20, 42:57)
+* '''downlink''' = forward communication = '''BS → MS''' (transmitter BS, receiver MS). 교수: "people in wireless communication prefer to call this one downlink."
+* '''uplink''' = reverse communication = '''MS → BS''' (transmitter MS, receiver BS).
+* 외우는 법(교수): 그림을 떠올려라 — 기지국 탑이 위, 폰이 아래. '''위에서 아래로 = down''', '''아래에서 위로 = up'''. (사용자 필기의 △BS / □MS 그림이 바로 이것.)
+* "Almost every communication system operates two different frequency bands for downlink and uplink." (40:28) → [[uplink와 downlink]]{/exam}
+
+{warn}'''"다시" 표시 — 처음부터 쉽게.'''
+# AMPS 는 '''대역(band)을 두 개''' 쓴다. 하나는 MS 가 말하는 용도(824–849 MHz), 하나는 BS 가 말하는 용도(869–894 MHz). 이름 붙이는 기준은 '''"누가 보내나"''' — '''Mobile station band''' = mobile 이 송신하는 대역 = '''reverse = [[uplink와 downlink|uplink]]''', '''Base station band''' = base 가 송신하는 대역 = '''forward = downlink'''. (필기: "Downlink = Forward: base to mobile", "uplink = Reverse: mobile to base", 그리고 오른쪽 위 △BS–□MS 그림의 Down ↓ / up ↑.)
+# 대역이 둘인 이유: 통화는 동시에 말하고 듣는 '''full-duplex''' 다. 같은 주파수로 동시에 주고받으면 섞이니, 방향마다 다른 대역을 준다(주파수로 duplex — [[mid:duplexing과 multiple access|duplexing]]).
+# 각 대역 25 MHz 를 30 kHz 씩 자르면 832 칸. 통화 하나는 '''uplink 칸 1개 + downlink 칸 1개를 짝으로''' 쓴다. 그래서 "832 채널" = 양방향 짝 832 쌍.
+# 이후 계산(416 → 21 → 395)은 아래 표.{/warn}
+
+<pre class="txt">
+'''AMPS 채널 수 — 손으로 푸는 순서'''
+1. 한 대역 폭           = 849 − 824 = 25 MHz   (BS 쪽도 894 − 869 = 25 MHz)
+2. 채널 폭              = 30 kHz
+3. 25 MHz ÷ 30 kHz      = 25,000 kHz ÷ 30 kHz = 833.3…  → 정수 칸 '''832''' 채널 (방향당)
+4. 한 지역을 '''2 provider''' 가 나눔 → 832 ÷ 2 = '''416''' 채널 / provider
+5. 그중 '''control 21''' 개        → voice = 416 − 21 = '''395''' 채널
+6. [[reuse factor]] N = '''7'''   → 한 cell 이 실제로 쓰는 voice ≈ 395 ÷ 7 ≈ 56   ← 슬라이드에 없는 파생값
+</pre>
+
+[[sim:band_channels]]
+
+{tip}'''필기 속 질문: "416 channels ? 다시" — 416 은 어디서 나온 숫자이고, 왜 "in each cell" 인가?'''
+* '''416 = 832 ÷ 2'''. 한 지역에 이동통신사(provider) '''두 곳'''이 경쟁하도록 미국 규제가 대역을 반으로 나눴다(A 사업자 / B 사업자 — Forouzan 보충). 832 개 양방향 채널을 반씩 → 사업자당 416.
+* 416 에는 '''control 21 + voice 395''' 가 다 들어 있다. control channel 은 통화 내용이 아니라 '''통화 설정·paging''' 용이다 → [[AMPS control channel]].
+* "416 channels in each cell" 이라는 슬라이드 표현은 '''"한 사업자가 그 지역에서 가진 채널 총량"''' 으로 읽어야 한다. reuse factor 7 이라 인접한 7 개 cell 이 이 416 개를 '''나눠''' 가지므로, 실제로 한 cell 에서 동시에 쓸 수 있는 voice 채널은 대략 395 / 7 ≈ 56 개다(Forouzan 도 "only one-seventh of these 395 traffic channels are actually available in a cell" 이라고 쓴다 — 보충). → [[frequency reuse]], [[reuse factor]]{/tip}
+
+자세히는 [[AMPS 대역과 채널]].
+
+== p.20 — AMPS (1G): Transmission ⭐⭐ ==
+
+{def}"'''Voice''' channels are modulated using '''FM'''.
+'''Control''' channels use '''FSK''' to create 30 kHz analog signals." (p.20){/def}
+
+[[img:L10-20.png|p.20 AMPS Transmission — 3 kHz voice → FM → 30 kHz analog / 10 kbps control → FSK → 30 kHz analog, 832 channels 를 25-MHz band 안에 FDMA 로 나란히 (필기본: control 쪽에 "Digital communication")|large]]
+
+{|
+! 채널 종류 || 입력 || 변조 || 출력 || 변환 종류
+|-
+| Voice || '''3 kHz''' 아날로그 음성 || [[FM]] || 30 kHz analog || analog → analog
+|-
+| Control || '''10 kbps''' 디지털 데이터 || [[mid:FSK|FSK]] || 30 kHz analog || '''digital''' → analog ([[mid:digital-to-analog conversion|digital-to-analog]])
+|}
+
+* 그림 오른쪽 회색 상자가 '''FDMA''': 25-MHz band 를 30 kHz 칸으로 나눈 줄에서, 위 사용자는 첫 칸, 다음 사용자는 둘째 칸… 사용자마다 '''다른 칸(주파수)'''이 칠해져 있다.
+* 3 kHz 음성이 30 kHz 를 차지하는 이유: FM 은 진폭을 주파수 변화로 바꾸므로 원래 신호보다 '''훨씬 넓은 대역'''이 필요하다(FM bandwidth ≈ 원 신호의 수 배 — [[mid:변조 대역폭]] 참고).
+* 필기 "'''Digital communication'''"(control 쪽 빨간 상자): 맞다. AMPS 는 "analog system" 이지만 control channel 만은 '''10 kbps 비트'''를 보낸다. 통화 설정 명령(번호, 채널 할당 등)은 '''정확해야''' 하니 디지털로 보내고, 무선으로 내보낼 때만 FSK 로 아날로그 파형을 만든다. → [[AMPS control channel]]
+* 필기 "Voice" 네모 강조: '''FM 은 voice 에만''' 쓴다는 것이 출제 포인트. "AMPS = FM" 이라고 뭉뚱그리지 말 것.
+
+{warn}"AMPS 는 analog 시스템이니까 모든 채널이 analog 데이터" — '''틀림'''. 출력 신호는 전부 30 kHz analog 지만, '''control 채널의 입력은 10 kbps digital''' 이다. "voice = FM, control = FSK" 를 짝으로 외울 것.{/warn}
+
+== p.21 — 2nd Generation (2G): Digital AMPS (D-AMPS) ⭐⭐ ==
+
+{def}"The evolution of the '''analog AMPS into a digital system'''.
+Band: The '''same bands and channels''' as AMPS
+Transmission: Voice channel is '''digitized''' to 7.95 kbps. '''Three''' digital voice channels are combined using '''TDMA''' (48.6 kbps with overhead)." (p.21){/def}
+
+* '''같은 대역·같은 채널''' — 824–849 / 869–894 MHz, 30 kHz × 832 를 그대로 쓴다. 그래서 기지국 무선 설비·주파수 면허를 바꾸지 않고 디지털로 갈아탈 수 있었다(이름이 "Digital AMPS" 인 이유).
+* 바뀐 것은 '''채널 안을 쓰는 방법''': 음성을 digitize → 3명을 TDMA 로 합침.
+
+{info}'''필기 "기억 x" (7.95 kbps 옆) — 녹음으로 확정: 수치 암기 불필요.''' 교수는 AMPS Bands 에서 이미 "I'm not going to recommend you to memorize all these specific numbers"(41:54)라고 했고, 바로 이 D-AMPS 슬라이드에서 다시 "'''I would not recommend you to memorize these specific numbers. You will not see some OX quizzes that ask these kind of specific numbers'''"(45:50–46:07)라고 못 박았다. 외울 것은 수치가 아니라 '''trend''': "Evolving from '''analog''' communication to '''digital'''" — voice 를 digitize → TDMA 로 합침 → 같은 30 kHz 채널. → [[7.95 kbps 디지털 음성]]{/info}
+
+== p.22 — D-AMPS (2G): Transmission ⭐⭐⭐ ==
+
+[[img:L10-22.png|p.22 AMPS(왼쪽, voice: analog) vs D-AMPS(오른쪽, voice: digitized) — 3 kHz voice × 3 → Digitizer 7.95 kbps → TDMA 슬롯 1 2 3 1 2 3 → 48.6 kbps → QPSK → 30 kHz, Channel 001–832 를 FDMA (필기본)|large]]
+
+[[anim:damps_tdma_anim|왼쪽(AMPS)에서 음성 하나가 30 kHz 칸 하나를 차지하는 것과, 오른쪽(D-AMPS)에서 음성 셋이 슬롯 1·2·3 으로 끼워져 '같은' 30 kHz 칸에 들어가는 것을 비교하라]]
+
+<pre class="txt">
+'''D-AMPS 한 채널 — 왼쪽에서 오른쪽으로'''
+1. 사용자 음성          3 kHz analog            × 3 명
+2. Digitizer           3 kHz → '''7.95 kbps'''        (사용자당)
+3. 3 명 합계            3 × 7.95 = 23.85 kbps
+4. TDMA 로 섞기         슬롯 1 2 3 1 2 3 …  + overhead(동기·제어 비트)
+                        → '''48.6 kbps'''              (overhead ≈ 48.6 − 23.85 = 24.75 kbps)
+5. [[QPSK]]              48.6 kbps digital → 30 kHz analog   (2 bits/symbol → 24.3 ksymbol/s — 파생값)
+6. FDMA                이런 채널이 Channel 001 … '''832'''
+→ 결과: 같은 30 kHz 채널에 '''3 명''' (AMPS 의 3 배)
+</pre>
+
+[[sim:damps_tdma]]
+
+* 필기 "voice: analog"(왼쪽) ↔ "voice: digitized"(오른쪽) ↔ '''TDMA''' 동그라미: 이 슬라이드의 요점 셋이 정확히 이 필기다. '''음성을 디지털로 바꾸니 → 시간으로 나눌(TDMA) 수 있고 → 같은 대역에 3배 사용자'''.
+* D-AMPS 는 TDMA '''만''' 쓰는 게 아니다. 오른쪽 아래 회색 상자에 여전히 '''FDMA''' 가 있다 — 832 개 주파수 채널(FDMA) 각각을 다시 3 개 시간 슬롯(TDMA)으로 쪼갠 '''FDMA + TDMA''' 이중 구조다. GSM 도 같다(p.25).
+* QPSK 는 [[mid:PSK|PSK]] 의 일종(위상 4 개, 심볼당 2 비트) — 자세히는 [[QPSK]] (IS-95 에서도 쓴다).
+
+{warn}"2G D-AMPS = TDMA" 로 외우되, '''FDMA 를 버린 게 아니라 FDMA 위에 TDMA 를 얹었다'''는 점을 서술형에서 놓치지 말 것. "D-AMPS 는 832 개 30 kHz 채널을 FDMA 로 나누고, 각 채널을 TDMA 로 3 사용자가 공유한다."{/warn}
+
+자세히는 [[D-AMPS]] · [[TDMA]] · [[2G]].
+
+== p.23 — 2nd Generation: GSM ⭐ ==
+
+{def}"'''GSM (Global System for Mobile Communication)''' — A '''European''' standard for a common 2G technology '''for all Europe'''." (p.23){/def}
+
+[[img:L10-23.png|p.23 GSM 구성 — Mobile Station(Phone) · Base Station (= cell, 필기 빨간 원) → MSC(Mobile-Services Switching Center) → PSTN → Telephone, MSC 에 HLR(Home Location Register) 연결 (필기본: 48:40~)|medium]]
+
+* 이름: '''Global''' System — 원래 목표는 "유럽 전체의 공통 2G". 당시 유럽은 나라마다 1G 방식이 달라 국경을 넘으면 폰이 안 됐다. 하나로 통일하자는 것이 출발점이고, 결과적으로 전 세계 표준이 되어 이름값을 했다(보충).
+* 그림의 구성은 [[CH05 셀룰러 동작]] p.9–10 과 같다: [[mobile station]] · [[base station]] 이 한 [[cell]](필기의 빨간 원 "Cell"), BS 들 → [[MSC]] → [[PSTN]] → 일반 전화.
+* 새로 등장한 것: '''[[HLR]] (Home Location Register)''' — MSC 옆의 데이터베이스(그림에는 "HRL- Home Loaction Register" 로 '''오타'''). 가입자 정보와 현재 위치를 저장 → [[paging]] · [[roaming]] 때 "이 사용자가 지금 어디 있나"를 찾는 곳.
+
+자세히는 [[GSM]].
+
+== p.24 — GSM (2G): Bands ⭐⭐ ==
+
+{def}"Use two bands for (half) duplex communication
+* Forward ('''Downlink'''): BS → MS
+* Reverse ('''Uplink'''): BS ← MS
+Band = 25 MHz = 124 channels · Channel: 200 kHz · Reverse band 890–915 MHz · Forward band 935–960 MHz" (p.24){/def}
+
+[[img:L10-24.png|p.24 GSM Bands — Reverse band(uplink) 890–915 MHz, Forward band(downlink) 935–960 MHz, 각 25 MHz = 124 × 200 kHz (필기본: uplink / downlink)|medium]]
+
+<pre class="txt">
+'''GSM 채널 수'''
+1. 한 대역 폭      = 915 − 890 = 25 MHz   (forward: 960 − 935 = 25 MHz)
+2. 채널 폭         = 200 kHz
+3. 25 MHz ÷ 200 kHz = 25,000 ÷ 200 = 125
+4. 양 끝 [[mid:guard band|guard band]] 몫을 빼고 '''124''' 채널   ← 슬라이드 값
+5. 채널당 TDMA 8 slot → 124 × 8 = 992 사용자(통화)   ← 파생값 (Forouzan 보충)
+</pre>
+
+* AMPS 와 비교: AMPS 는 '''좁은 칸(30 kHz) × 많이(832)''', GSM 은 '''넓은 칸(200 kHz) × 적게(124)''' — 대신 GSM 은 한 칸을 8 명이 시간으로 나눠 쓴다.
+* 슬라이드의 "(half) duplex" 괄호: 방향마다 다른 대역을 쓰니 대역 차원에서는 duplex 지만, GSM 폰은 uplink 슬롯과 downlink 슬롯이 '''시간상 엇갈리도록'''(3 slot 차이) 짜여 있어 한 순간에 송신과 수신을 동시에 하지는 않는다(Forouzan 이외 보충 — 슬라이드에 설명 없음). 시험에서는 "두 대역(uplink 890–915 / downlink 935–960)을 쓴다"가 핵심.
+
+자세히는 [[GSM 대역]].
+
+== p.25 — GSM (2G): Transmission ⭐⭐ (필기 "다시") ==
+
+{def}"Each slot carries '''156.25 bits'''. # of slots: '''8''' · # of frames: '''26''' · MultiFrame duration: '''120 ms''' · Channel bit rate: $(1/120\text{ms}) \times 26 \times 8 \times 156.25 = 270.8\text{ kbps}$" (p.25){/def}
+
+[[img:L10-25.png|p.25 GSM Transmission — 8 Users: 3 kHz voice → Digitizer 13 kbps → time slot → frame(8 slots) → 1 multiframe = 26 frames, Duration = 120 ms → 270.8 kbps → GMSK → 200 kHz, Channel 001–124 FDMA (필기본: "52:15까지 다시", "analog? digital?", time slot / frame / multiframe / TDMA / FDMA)|large]]
+
+{warn}'''"다시" 표시 — 그림을 왼쪽에서 오른쪽으로 한 번에 한 칸씩.'''
+# '''8 Users''': 사용자 8명이 각자 3 kHz 음성을 '''Digitizer''' 로 13 kbps 비트열로 만든다.
+# '''time slot''' (필기): 사용자 한 명의 비트 덩어리가 들어가는 '''칸 하나'''. 크기 156.25 bits.
+# '''frame''' (필기): 8 명의 slot 을 한 줄로 세운 것 = '''8 slots'''. "8 명이 한 번씩 돌아가며 말하는 한 바퀴".
+# '''multiframe''' (필기): frame 26 개를 묶은 것 = 노란 상자. 걸리는 시간이 '''120 ms'''.
+# 이 비트열이 '''270.8 kbps''' 로 흘러 [[GMSK]] 변조기로 들어가 '''200 kHz''' 아날로그 신호가 된다.
+# 그런 200 kHz 채널이 Channel 001 … '''124''' — 이 바깥 층이 '''FDMA''' (필기 동그라미). 교수: "It uses a '''hybrid of TDMA and FDMA'''" (54:05). GMSK 는 "we did not discuss the detailed mechanism" — 원리는 범위 밖.
+즉 '''안쪽 TDMA(8 명) + 바깥쪽 FDMA(124 채널)''' — D-AMPS 와 같은 구조에 숫자만 다르다.{/warn}
+
+[[anim:gsm_multiframe_anim|65 → 114 → 156.25 bits 로 slot 이 부풀고, slot 8 개가 frame, frame 26 개가 120 ms multiframe 이 되는 순서를 따라가면서, 아래에 완성되는 270.8 kbps 식의 각 숫자가 어느 층에서 왔는지 짚어 보라]]
+
+<pre class="txt">
+'''GSM channel bit rate — 손으로 푸는 순서'''
+1. slot 하나              = 156.25 bits
+2. frame 하나 = 8 slots    = 8 × 156.25            = 1,250 bits
+3. multiframe = 26 frames = 26 × 1,250            = 32,500 bits
+4. multiframe 시간         = 120 ms = 0.12 s
+5. bit rate               = 32,500 bits ÷ 0.12 s  = 270,833.3 bps
+                          ≈ '''270.8 kbps'''
+   (한 줄 식: (1/120 ms) × 26 × 8 × 156.25 = 270.8 kbps)
+</pre>
+
+[[sim:gsm_bitrate]]
+
+{tip}'''필기 속 질문: "analog? digital?" — GSM 은 아날로그인가 디지털인가?'''
+'''디지털 시스템이다.''' 교수(51:41–52:14): "Here we see digitization of voice channel — in other words, it is '''digital''' communication cellular systems, not analog communication. In 2G, almost all cellular systems are built upon digital communication." 정보(음성)가 Digitizer 에서 '''비트'''(13 kbps)로 바뀐 뒤, TDMA 로 섞이는 것도, 270.8 kbps 로 흐르는 것도 전부 비트다. 그림 맨 끝 [[GMSK]] 에서 200 kHz '''아날로그 파형'''으로 바뀌는 것은 '''전파로 내보내려면 어떤 시스템이든 아날로그 파형이 필요'''하기 때문이다([[mid:digital-to-analog conversion|digital-to-analog conversion]] — 중간고사 범위의 ASK/FSK/PSK 와 같은 단계).
+"digital/analog 시스템" 을 가르는 기준은 '''무선 신호의 모양이 아니라 정보를 무엇으로 표현하나'''다:
+* AMPS voice: 3 kHz 음성 → (FM) → 30 kHz — 정보가 '''처음부터 끝까지 연속 파형''' → analog
+* GSM: 3 kHz 음성 → '''13 kbps 비트''' → TDMA → (GMSK) → 200 kHz — 중간이 비트 → digital
+* D-AMPS 도 마찬가지(7.95 kbps → QPSK). AMPS 의 control channel(10 kbps → FSK)이 "Digital communication" 인 것도 같은 이유.{/tip}
+
+{info}슬라이드 그림의 Digitizer 출력 "13 kbps" 는 p.26 의 '''user data 65 bits''' 와 맞물린다: 한 사용자는 multiframe 마다 traffic frame 24 개에서 slot 1 개씩 → 65 × 24 = 1,560 bits / 120 ms = '''13 kbps'''. 나머지(114 − 65 = 49 bits error control, 156.25 − 114 = 42.25 bits TDMA control, 2 개 control frame)는 overhead 다. sim 의 "순수 user data rate" 옵션으로 확인.{/info}
+
+== p.26 — GSM (2G): Transmission – Multiframe components ⭐ ==
+
+[[img:L10-26.png|p.26 Multiframe components — 65 bits user data → 114 bits(+ error control) → 156.25 bits(+ TDMA control) = slot, Frame = 8 slots, 1 multiframe = 26 frames(24 traffic + 2 control) = 120 ms (54:30~)|large]]
+
+{|
+! 층 || 크기 || 무엇이 더해졌나
+|-
+| user data || 65 bits || 디지털 음성 그 자체
+|-
+| + error control || 114 bits || 오류 검출·정정용 redundancy (49 bits)
+|-
+| + TDMA control = '''slot''' || '''156.25 bits''' || 동기·guard 등 TDMA 운영 비트 (42.25 bits)
+|-
+| '''frame''' || 8 slots || 8 사용자가 한 바퀴
+|-
+| '''multiframe''' || 26 frames = '''24 traffic + 2 control''' || 120 ms
+|}
+
+* '''bits 가 왜 0.25 같은 소수?''' slot 끝의 guard period 가 8.25 bit 시간이라 평균이 156.25 가 된다(보충 — 슬라이드는 값만). 시험에서는 "156.25 bits" 그대로.
+* 65 → 156.25: 한 slot 의 비트 중 사용자 음성은 65 / 156.25 ≈ '''42 %''' 뿐 — 나머지는 오류 제어와 TDMA 제어. 중간고사 위키의 "10 Gbps 는 체감 속도가 아니다" 와 같은 이야기([[mid:throughput|throughput]] vs bit rate).
+
+자세히는 [[GSM 프레임 구조]] · [[GSM multiframe]] · [[GSM channel bit rate]].
+
+{quiz}GSM 의 multiframe 은 26 개 frame, frame 은 8 개 slot, slot 은 156.25 bits 이고 multiframe 의 길이는 120 ms 다. (a) channel bit rate 를 구하시오. (b) 사용자 한 명(slot 하나)이 차지하는 rate 는? (c) 순수 user data rate 는? (user data 65 bits, traffic frame 24 개){/quiz}
+{answer}<pre class="txt">
+(a) 26 × 8 × 156.25 = 32,500 bits / 120 ms → 32,500 / 0.12 = 270,833 bps ≈ '''270.8 kbps'''
+(b) 270.8 kbps ÷ 8 slot = '''33.85 kbps'''    (= 26 × 156.25 / 0.12)
+(c) 65 bits × 24 frames / 0.12 s = 1,560 / 0.12 = '''13 kbps'''   (= p.25 Digitizer 출력)
+</pre>{/answer}
+
+== 정리: AMPS · D-AMPS · GSM 한눈에 ==
+
+{|
+! || [[AMPS]] (1G) || [[D-AMPS]] (2G) || [[GSM]] (2G)
+|-
+| 지역 || North America || North America || Europe (→ 전 세계)
+|-
+| 음성 || analog || '''digitized''' (7.95 kbps) || '''digitized''' (13 kbps)
+|-
+| 대역 (uplink / downlink) || 824–849 / 869–894 MHz || AMPS 와 같음 || 890–915 / 935–960 MHz
+|-
+| 채널 폭 × 개수 || 30 kHz × 832 || 30 kHz × 832 || 200 kHz × 124
+|-
+| 접근 방식 || [[FDMA]] || FDMA + [[TDMA]] (3 slot) || FDMA + TDMA (8 slot)
+|-
+| 채널당 사용자 || 1 || 3 || 8
+|-
+| 변조 || voice [[FM]] · control [[mid:FSK|FSK]] || [[QPSK]] || [[GMSK]]
+|-
+| 채널 bit rate || — (analog) || 48.6 kbps || 270.8 kbps
+|}
+
+[[anim:generations_timeline|1G → 4G 가 쌓이는 동안 이 절이 다룬 1G·2G 칸에서 '아날로그 → 디지털' 화살표가 어디서 꺾이는지 보라]]
+
+== 공식 모음 ==
+
+{|
+! 대상 || 식 || 값 || 슬라이드
+|-
+| AMPS 채널 수 (방향당) || $\lfloor 25\text{ MHz} / 30\text{ kHz} \rfloor$ → 832 || 832 || p.19
+|-
+| AMPS provider 당 || $832 / 2$ || 416 || p.19
+|-
+| AMPS voice 채널 || $416 - 21$ || 395 || p.19
+|-
+| AMPS cell 당 voice (파생) || $395 / 7$ || ≈ 56 || (p.19 에서 파생)
+|-
+| D-AMPS 채널 rate || $3 \times 7.95 = 23.85$ kbps + overhead || 48.6 kbps || p.21–22
+|-
+| GSM 채널 수 || $25\text{ MHz} / 200\text{ kHz} = 125$ → guard 제외 || 124 || p.24
+|-
+| GSM channel bit rate || $\frac{1}{120\text{ ms}} \times 26 \times 8 \times 156.25$ || 270.8 kbps || p.25
+|-
+| GSM 사용자당 rate (파생) || $270.8 / 8$ || 33.85 kbps || (p.25 에서 파생)
+|-
+| GSM user data rate (파생) || $65 \times 24 / 120\text{ ms}$ || 13 kbps || (p.25–26)
+|}
+
+== 🎙 실제 수업 기록 (10/20 화, 녹음본 기준) ==
+
+녹음 약 36:06–54:49 (p.18–26). 슬라이드 위 손글씨 타임스탬프: p.18 AMPS 36:05~ · p.19 Bands 38:25~ · p.20 Transmission 43:05~ · p.21 D-AMPS 44:45~ · p.22 D-AMPS Transmission 47:10~ · p.23 GSM 48:40~ · p.24 GSM Bands 50:20~ · p.25 GSM Transmission 51:05~ · p.26 Multiframe 54:30~. 영어 ASR 이라 숫자가 깨진 곳("30 GHz"=30 kHz, "460 channels"=416, "300 kHz"=200 kHz, "36 frames"=26)은 슬라이드 값으로 바로잡았다.
+
+=== 1G 도입 (36:06–38:32, p.18) ===
+* "From now on, I would like to present some specific cellular systems starting from the first generation." 지금의 4G·5G 는 매우 빠르고 편리하지만 초기 시스템은 "very slow … people require some '''patience''' to use them."
+* "There are more than one standard for each generation, but in this course, I would like to emphasize some few instances." — 세대마다 표준이 여럿이지만 대표 몇 개만 본다.
+* AMPS 이름에 대한 농담: "Advanced Mobile Phone System. '''It is not advanced, but it is named''' (so)."
+* ⭐ "So leading '''analog''', '''this is important'''. Earlier ones, there are always something about analog. Today we are using digital communication systems, but previous ones are not identical to digital." (37:40) → 1G = analog.
+* "an analog cellular system famously used in North America, and it deployed FDMA" — 각 시스템마다 고유한 frequency band 와 transmission strategy 가 있다.
+
+=== AMPS Bands — uplink/downlink 를 외워라 (38:32–43:01, p.19) ===
+* 두 개의 band 를 쓴다. Forward communication = BS → MS, "another interchangeable name … is '''downlink''' … people in wireless communication prefer to call this one downlink." Reverse communication(MS → BS) = '''uplink'''.
+* ⭐ "'''I recommend you to memorize these uplink and downlink by imagining this illustration.''' Down from BS to MS, and up from MS to BS." (40:00) — 사용자 필기의 △BS–□MS 화살표 그림.
+* "Almost every communication system operates two different frequency bands for downlink and uplink." (40:28)
+* 채널 수·control 21·reuse factor 7 을 읽은 뒤 바로: ⭐ "Now you see many different numbers in this illustration, but I would recommend you to grasp or to understand the '''trends of evolution''' of communication systems. '''I'm not going to recommend you to memorize all these specific numbers''' … That trend is important. You don't have to memorize these … number of channels, or something else. '''But I would recommend you to memorize uplink and downlink.'''" (41:33–42:26)
+* "Downlink … the transmitter is BS and receiver is MS. On the other hand, uplink, transmitter is MS while the receiver is BS. '''You should memorize this terminology.'''" (42:26–43:01)
+* → 사용자 필기 "416 channels ? 다시" 에 대해: 교수는 416 의 유래를 따로 설명하지 않고 '''숫자는 외우지 말라'''고 넘어갔다. 유래는 위 p.19 절의 "필기 속 질문" 박스 참고(832 ÷ 2 provider).
+
+=== AMPS Transmission (43:01–44:41, p.20) ===
+* "All communication is about '''voice''' communication" — 처음엔 통신이 voice 중심이었고, 점점 text·media 로 확장됐다(→ trend '''voice → data''').
+* Voice 는 FM. "Control channels use FSK, meaning frequency shift keying that encodes some bits to analog signal. In other words, control signals are made of some '''digital''' information … '''they use digital communication for control'''." — 사용자 필기 "Digital communication" 이 이 말.
+* 채널 bandwidth 30 kHz 로 비교적 작고, 매체는 '''FDMA''' 로 사용자 간에 공유.
+
+=== D-AMPS — analog → digital trend (44:41–48:32, p.21–22) ===
+* "As we can see from its name, it is an evolution, an improved version of AMPS, which is an analog one, into a digital system." 대역·채널은 AMPS 와 같고, 다른 점은 transmission — voice channel 이 '''digitized'''.
+* ⭐ "'''I would not recommend you to memorize these specific numbers. You will not see some OX quizzes that ask these kind of specific numbers.''' Again, I ask you to understand the trend of evolution." (45:50–46:12) — 사용자 필기 "기억 x" 의 근거.
+* ⭐ 교수가 정리한 '''세 가지 key trend''' (46:12–46:59): "Evolving from '''analog''' communication to '''digital''' … This is one big trend that is shared across every cellular system: from analog to digital, and from '''voice communication to data communication''', and from '''narrowband to wideband'''. These are key trends that we commonly see in wireless design."
+* p.22: 왼쪽 AMPS 의 voice 는 analog, 오른쪽 D-AMPS 의 voice 는 digital — "These are key differences compared to AMPS." 또 하나의 차이는 변조가 '''QPSK''' 라는 것. 대역은 AMPS 와 같은 25 MHz / 30 kHz. "It employs '''TDMA''' for sharing the medium across voice users."
+
+=== GSM (48:32–50:20, p.23) ===
+* "Very famous standard … followed by Europe, specifically for Europe, and AMPS is specifically for North America. '''Different regions employ different standards.'''" 매우 성공했지만 "'''this one is not used in Korea''' — Korean version is IS-95" (다음 절 [[IS-95]]).
+* 구성도: 앞에서 본 것과 비슷한 구조(BS, MSC, telephone network). "Almost every cellular system, '''even nowadays''', shares this fundamental architecture."
+
+=== GSM Bands · Transmission (50:20–54:49, p.24–26) ===
+* GSM 도 두 band(uplink, downlink), band 당 25 MHz, 채널 200 kHz — "larger than AMPS that uses 30 kHz" (→ trend '''narrowband → wideband''').
+* TDMA frame 의 각 time slot 이 '''사용자 한 명'''에게 할당된다.
+* ⭐ 사용자 필기 "analog? digital?" / "52:15까지 다시" 의 답: "Here we see digitization of voice channel — in other words, it is '''digital''' communication cellular systems, not analog communication. '''In 2G, almost all cellular systems are built upon digital communication''' instead of analog communication, as you saw in D-AMPS, which is contrary to AMPS that uses analog communication." (51:41–52:14)
+* slot 하나가 약 156.25 bits("almost 160 bits"), slot 8 개 = 8 사용자가 공유 = frame, frame 26 개 = multiframe, 그리고 multiframe duration 으로 bit rate 를 계산하는 식을 짚었다(전사로는 계산을 칠판에서 따로 풀었는지 불분명).
+* "This frame is converted to an analog signal by using '''GMSK''', '''which we did not discuss the detailed mechanism''', that is assigned to 200 kHz" — GMSK 의 원리는 다루지 않음. 200 kHz 채널이 124 개.
+* ⭐ "The medium of GSM is firstly shared with TDMA among 8 users … and has 124 different channels. It uses a '''hybrid of TDMA and FDMA'''. And this kind of multiple access was used in D-AMPS, right? It also uses a hybrid of TDMA and FDMA." (53:41–54:28)
+* p.26: 각 slot 에는 user data, error control bits, control information 이 들어 있다. 이후 54:49 부터 IS-95 → [[CH05 IS-95·3G·4G]].
+
+== 시험 대비 핵심 요약 ==
+
+# '''교수 지시: 숫자 말고 trend.''' 세대 진화의 세 trend = '''analog → digital''' · '''voice → data''' · '''narrowband → wideband''' (46:34). 채널 수·kbps 같은 specific number 는 OX 로 묻지 않는다고 했다(46:00).
+# '''uplink / downlink 는 외워라''' (42:20, 42:57): '''downlink = forward = BS → MS''' (송신 BS), '''uplink = reverse = MS → BS''' (송신 MS). 거의 모든 시스템이 두 방향에 '''서로 다른 frequency band''' 를 쓴다(AMPS·GSM 모두 band 2 개).
+# '''1G AMPS''' = North America 의 '''analog''' cellular("leading analog, this is important"), '''FDMA''' 로 채널 분리. voice = '''FM''', control = '''FSK'''(control 만 digital).
+# '''2G D-AMPS''' = AMPS 의 '''digital''' 진화. '''대역·채널은 AMPS 와 같고''', voice 를 '''digitize''' 해서 여러 사용자를 '''TDMA''' 로 한 채널에 → '''TDMA + FDMA hybrid''', 변조 QPSK.
+# '''2G GSM''' = '''European''' 공통 2G 표준(한국은 GSM 이 아니라 IS-95). 채널이 AMPS 보다 넓다(200 kHz vs 30 kHz → narrowband → wideband).
+# GSM 구조를 말로: '''time slot''' 하나 = 사용자 한 명(user data + error control + TDMA control) → slot 8 개 = '''frame''' → frame 26 개(24 traffic + 2 control) = '''multiframe''' → channel bit rate = multiframe 하나의 비트 수 ÷ multiframe 시간 → '''GMSK''' 로 아날로그 신호. 역시 '''TDMA + FDMA hybrid'''.
+# "'''In 2G, almost all cellular systems are built upon digital communication'''" (51:52). digital/analog 구분은 정보를 비트로 다루는가 — 무선으로 나갈 때는 모두 아날로그 파형(FM/FSK/QPSK/GMSK).
+# 디지털화가 '''TDMA 의 전제''': 비트로 바꿔야 압축해서 짧은 slot 에 몰아 보낼 수 있다 → 같은 대역에 더 많은 사용자.
+# (참고, 외울 필요 없음) AMPS 832 → 416 → 21/395, reuse 7 · D-AMPS 48.6 kbps · GSM 124 채널, 270.8 kbps.
+
+== 관련 문서 ==
+
+* 앞 절: [[CH05 셀룰러 동작]] · 다음 절: [[CH05 IS-95·3G·4G]]
+* 세대: [[셀룰러 세대]] · [[1G]] · [[2G]] · [[셀룰러 세대 비교표]]
+* 1G: [[AMPS]] · [[AMPS 대역과 채널]] · [[AMPS control channel]] · [[FDMA]] · [[FM]]
+* 2G TDMA 계열: [[D-AMPS]] · [[7.95 kbps 디지털 음성]] · [[TDMA]] · [[GSM]] · [[GSM 대역]] · [[GSM 프레임 구조]] · [[GSM multiframe]] · [[GSM channel bit rate]] · [[GMSK]] · [[HLR]]
+* 2G CDMA 계열: [[IS-95]] · [[CDMA]]
+* 셀룰러 기초: [[cell]] · [[base station]] · [[MSC]] · [[frequency reuse]] · [[reuse factor]] · [[uplink와 downlink]] · [[handoff]]
+* 중간고사 선수 개념: [[mid:FDM|FDM]] · [[mid:TDM|TDM]] · [[mid:channelization|channelization]] · [[mid:FSK|FSK]] · [[mid:PSK|PSK]] · [[mid:guard band|guard band]] · [[mid:duplexing과 multiple access|duplexing과 multiple access]]
+* [[공식 모음]] · [[시험 정보]]

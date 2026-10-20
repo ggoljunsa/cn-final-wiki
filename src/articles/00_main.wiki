@@ -1,0 +1,52 @@
+key: main
+title: 컴네위키 기말 — DGIST CSE403 Computer Network 기말고사
+category: 안내
+---
+'''컴네위키 기말'''은 DGIST [CSE403] Computer Network (Prof. Soobin Um, 2026 Fall) '''기말고사 범위''' — 지금은 '''CH05 Wide Area Networks (1) Cellular Telephony''' — 를 나무위키 스타일로 정리한 학습 위키다. 중간고사 범위(CH01–CH04)는 전편 [[mid:main|컴네위키]]에 있고, 이 위키에서 보라색 ↗중간 표시가 붙은 링크는 그쪽 문서로 넘어간다(새 탭).
+
+중간고사 위키와 똑같이 세 가지를 약속한다.
+
+# '''용어를 까먹으면 클릭한다.''' [[cell]], [[MSC]], [[reuse factor]], [[handoff]], [[GSM multiframe]] 같은 말에는 전부 사전 문서가 있다.
+# '''계산이 나오면 옆에서 값이 바뀌는 걸 본다.''' GSM 270.8 kbps, AMPS 832→416 채널, IS-95 1.228 Mcps, CDMA 복원 과정을 한 단계씩 밟는 '''시뮬레이터'''(◀ ▶).
+# '''보고만 있어도 흐름이 들어온다.''' 발신·수신, hard/soft handoff, frequency reuse, FDMA/TDMA/CDMA 를 '''움직이는 그림'''과 실제 슬라이드 캡처로 보여 준다.
+
+[[anim:generations_timeline|이 강의의 지도. 1G 아날로그 FDMA → 2G 디지털 TDMA/CDMA → 3G IMT-2000 → 4G all-IP. 세대마다 "무엇으로 사용자를 나누는가"를 기억하면 덱 전체가 정리된다]]
+
+== 어디서부터 읽나 ==
+
+* 처음이면 → [[읽는 순서]] (슬라이드 순서대로, 메인 문서 3편 + 딸린 사전 문서)
+* 세대가 헷갈리면 → [[셀룰러 세대 비교표]] (1G–4G 를 한 장에)
+* 시험이 코앞이면 → [[공식 모음]] → [[자주 틀리는 함정 모음]]
+* FDM·TDM·FSK·FHSS 가 기억 안 나면 → [[중간고사 선수 개념]]
+* 시험 날짜·범위 → [[시험 정보]] (기말 비중 40%, 날짜·범위 미공지)
+
+== 강의별 메인 문서 ==
+
+{|
+! 구간 || 메인 문서 || 한 줄 요약 || 핵심 시뮬레이터 / 그림
+|-
+| CH05 (1) p.1–17 || [[CH05 셀룰러 동작]] || WAN 분류, [[cell]]·[[base station]]·[[mobile station]]·[[MSC]], '''[[frequency reuse]]'''([[reuse factor]]), [[통화 발신 과정]]·[[통화 수신 과정]]([[paging]]), '''[[handoff]]'''([[hard handoff]]/[[soft handoff]]), [[roaming]] || `sim:call_flow` · `sim:handoff_signal` · `sim:reuse_pattern` · `anim:cellular_architecture` · `anim:handoff_hard_soft`
+|-
+| CH05 (1) p.18–26 || [[CH05 1G–2G 셀룰러]] || [[1G]] [[AMPS]]([[FDMA]], 832 채널, reuse 7), [[2G]] [[D-AMPS]]([[TDMA]] 3 사용자), '''[[GSM]]'''([[GSM multiframe]] → 270.8 kbps) || `sim:band_channels` · `sim:gsm_bitrate` · `sim:damps_tdma` · `anim:amps_bands` · `anim:gsm_multiframe_anim`
+|-
+| CH05 (1) p.27–36 || [[CH05 IS-95·3G·4G]] || '''[[IS-95]]'''([[DSSS]]·[[CDMA]], [[Walsh code]], reuse factor 1, [[pilot channel]]로 soft handoff), [[3G]] [[IMT-2000]]([[W-CDMA]]·[[CDMA 2000]]), [[4G]]([[all-IP]]) || `sim:is95_rates` · `sim:cdma_walsh` · `anim:cdma_spreading` · `anim:access_methods`
+|}
+
+== 이 위키를 읽는 법 ==
+
+{tip}
+* 📖 '''정의 박스'''는 슬라이드 영어 원문이 먼저 온다. "정의 → 용어 이름" 유형에 대비해 영어 문장을 그대로 외운다.
+* 🎯 '''출제 포인트 박스'''는 교수가 수업(10/20 녹음)에서 강조한 것이다.
+* ✍️ 슬라이드 캡처에는 '''내 GoodNotes 필기'''(빨간 글씨)가 그대로 있다. 필기에 "??"로 남긴 질문은 해당 문서의 💡 "필기 속 질문" 박스에서 답했고, "다시" 표시한 곳은 ⚠️ 박스로 쉽게 다시 설명했다.
+* 🎭 '''비유 박스'''는 이해가 안 될 때 먼저 읽는다.
+* ❓ '''예상문제'''는 정답이 접혀 있다. 먼저 답을 써 보고 펼친다.
+* 시뮬레이터는 ◀ ▶ 또는 키보드 ← → 로 한 단계씩 넘긴다. 움직이는 그림은 슬라이더로 멈춰 놓고 자막을 읽는다.
+{/tip}
+
+{analogy}
+셀룰러 망은 '''전국에 깔린 동네 우체국망'''이다. 동네(cell)마다 우체국(base station)이 있고, 우체국들은 중앙 집배센터(MSC)에 묶여 있다. 이웃 동네는 같은 배달 차량 번호(주파수)를 쓰면 헷갈리니 몇 동네 건너서만 다시 쓰고(frequency reuse), 내가 이사 가는 중에도 편지가 끊기지 않게 담당 우체국을 넘겨준다(handoff). 다른 회사 우체국 구역에 가도 제휴 덕분에 받을 수 있다(roaming).
+{/analogy}
+
+== 관련 문서 ==
+* [[읽는 순서]] · [[시험 정보]] · [[공식 모음]] · [[셀룰러 세대 비교표]] · [[중간고사 선수 개념]]
+* 전편: [[mid:main|컴네위키 (중간고사)]] · [[mid:WAN|WAN (CH01)]] · [[mid:LAN|LAN]]

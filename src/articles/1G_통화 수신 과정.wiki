@@ -1,0 +1,61 @@
+key: 통화 수신 과정
+title: 통화 수신 과정 (Receiving, ①–⑦)
+category: 1강 셀룰러 동작, 용어
+---
+'''통화 수신 과정''' 은 누군가 내 휴대폰(MS)으로 전화를 '''걸어올 때''' 의 7 단계다. L10 p.13 "Operation: Receiving". 발신과 결정적으로 다른 점은 ② '''[[paging]]''' — MSC 는 MS 가 어느 cell 에 있는지 모르므로 '''모든 cell''' 에 query 를 보내 찾는다.
+
+{def}"① Central office sends the called number to the MSC ② MSC sends '''query signals to every cell''' ('''paging''') ③ MS responds; '''its location is found''' ④ MSC transmits a '''ringing signal''' ⑤ MS answers ⑥ MSC assigns a voice channel ⑦ Communication begins" (p.13){/def}
+
+[[img:L10-13.png|p.13 Receiving — Caller → Telephone central office →① MSC →② Paging(빨간 점선, 세 cell 의 BS 모두로) ; MS ↔ MSC 사이 화살표 ③⑤(MS→MSC) / ④⑥(MSC→MS), ⑦ Voice channel. 필기 "위의 5~6번 과정이랑 다른 거임?" (필기본)|large]]
+
+== 단계별 풀이 ⭐⭐⭐ ==
+<pre class="txt">
+단계  누가 → 누구           무엇을                          방향(그림)
+ ①   central off. → MSC    called number 전달              ←
+ ②   MSC → '''모든 cell'''    query signal = '''[[paging]]'''    빨간 점선 (전부)
+ ③   MS → MSC              응답 → '''위치(cell) 확인'''        MS → MSC   ┐ 그림의 "③ ⑤"
+ ④   MSC → MS              '''ringing signal''' (벨 울림)      MSC → MS   ┐ 그림의 "④ ⑥"
+ ⑤   MS → MSC              사용자가 받음 (answers)          MS → MSC   ┘
+ ⑥   MSC → MS              voice channel 할당               MSC → MS   ┘
+ ⑦   MS ↔ caller           Communication begins            초록 voice channel
+</pre>
+
+{tip}'''필기 속 질문: "위의 5~6번 과정이랑 다른 거임?"''' (p.13)
+두 가지로 읽을 수 있어 둘 다 답한다.
+'''(1) 그림의 "③ ⑤" / "④ ⑥" 화살표가 무슨 뜻이냐''' — 화살표 두 개를 '''네 단계가 같이 쓰는''' 것이다. MS → MSC 방향 화살표 하나에 ③(paging 응답)과 ⑤(전화 받음)를, MSC → MS 방향 화살표 하나에 ④(ringing)와 ⑥(voice channel 할당)을 적었다. 단계는 ③④⑤⑥ 각각 다른 메시지다: ③ "저 여기 있어요"(위치) → ④ "띠리링"(벨) → ⑤ "여보세요"(사용자가 받음) → ⑥ "이 채널로 통화하세요".
+'''(2) 발신(p.12)의 ⑤⑥ 과 같은 거냐''' — '''⑥ 은 같고 ⑤ 는 다르다.'''
+{|
+! 단계 || 발신 (p.12) || 수신 (p.13) || 같은가
+|-
+| ⑤ || Result is relayed back to the MSC (central office → MSC: 상대 연결 결과) || MS answers (MS → MSC: 사용자가 전화를 받음) || '''다름''' — 보내는 쪽도 내용도 다름
+|-
+| ⑥ || MSC assigns an unused voice channel; MS retunes || MSC assigns a voice channel || '''같음''' — 둘 다 MSC 가 voice channel 할당
+|}
+즉 두 과정 모두 "'''상대가 받을 수 있는지 확인(⑤) → MSC 가 voice channel 할당(⑥) → 통화(⑦)'''" 로 끝나는 모양은 같지만, 발신에서 "확인"은 상대 쪽 central office 가 알려 주고, 수신에서는 내 MS 가 직접 답한다.{/tip}
+
+{exam}🎯 교수(10/20 녹음 21:39–23:52): "MSC sends query signals to every cell '''because at this moment, MSC is not aware of where the corresponding receiver is located'''." ringing 은 "'''a control signal''' to make a connection". 그리고 "'''Without this infrastructure, you cannot make even a single phone call.'''" — 셀룰러에서는 device-to-device 로 직접 통신하지 않는다.{/exam}
+
+== 발신 vs 수신 ==
+{|
+! || [[통화 발신 과정|발신 (p.12)]] || 수신 (p.13)
+|-
+| 시작점 || MS (내가 검) || central office (상대가 검)
+|-
+| MS 위치 || MS 가 strongest setup channel 의 BS 를 '''스스로''' 고름 || MSC 가 '''모름''' → ② '''paging''' 으로 모든 cell 에 질의, ③ 응답으로 확인
+|-
+| 상대 확인 || ④ central office 가 상대 연결 → ⑤ 결과가 MSC 로 || ④ ringing → ⑤ MS answers
+|-
+| 채널 || ⑥ MSC 가 unused voice channel 할당, MS retunes || ⑥ MSC 가 voice channel 할당
+|}
+
+[[anim:call_receive|① 다음 paging 파동이 모든 cell 로 퍼지고, ③ 응답으로 위치가 잡힌 뒤 ④ ringing → ⑤ answer → ⑥ voice channel 이 오가는 순서를 보라. "발신과 달리 MS 위치를 모르니 paging 이 필요" 를 확인]]
+
+[[sim:call_flow]]
+
+{analogy}🎭 '''백화점 미아 찾기 방송.''' 안내데스크(MSC)는 엄마(caller)의 연락을 받았지만(①) 아이(MS)가 몇 층에 있는지 모른다. 그래서 '''전 층에''' 방송한다(② paging). 아이가 "저 여기요!"(③) → 직원이 "엄마가 찾으셔"(④ ringing) → 아이가 "네"(⑤) → "3번 데스크로 가렴"(⑥ voice channel) → 상봉(⑦).{/analogy}
+
+{quiz}수신 과정에 있고 발신 과정에는 없는 단계는? 왜 필요한가?{/quiz}
+{answer}② '''paging''' — MSC 가 '''모든 cell''' 에 query signal 을 보낸다. 수신 시점에 MSC 는 MS 가 어느 cell 에 있는지 '''모르기''' 때문에, 모든 cell 에 물어 ③ MS 의 응답으로 위치를 찾는다(p.13). 발신은 MS 가 스스로 BS 에 접속하므로 필요 없다.{/answer}
+
+== 관련 문서 ==
+* [[paging]] · [[통화 발신 과정]] · [[MSC]] · [[mobile station]] · [[CH05 셀룰러 동작]]

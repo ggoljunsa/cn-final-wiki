@@ -1,0 +1,24 @@
+key: HLR
+title: HLR (Home Location Register)
+category: 2강 1G–2G, 용어
+---
+'''HLR(Home Location Register)'''은 [[GSM]] 망에서 [[MSC]] 에 붙어 있는 '''가입자 데이터베이스'''다. 가입자의 정보(번호, 가입 서비스)와 '''현재 어디에 있는지'''(어느 MSC 관할인지)를 저장한다. L10 p.23 그림에 등장한다 — 그림에는 '''"HRL- Home Loaction Register"''' 로 두 군데 오타가 있다(HRL → HLR, Loaction → Location).
+
+{def}p.23 그림: MSC(Mobile-Services Switching Center) 위에 원통(데이터베이스) 기호로 "'''HLR - Home Location Register'''" (슬라이드 표기는 "HRL- Home Loaction Register"). 슬라이드에 별도 설명은 없다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''Home''' — 가입자가 계약한 "본거지" 망.
+* '''Location''' — 그 가입자가 지금 있는 위치.
+* '''Register''' — 기록부(데이터베이스).
+→ "본거지 망이 갖고 있는, 내 가입자들의 위치 기록부". (Forouzan·GSM 표준 보충 — 슬라이드는 그림뿐)
+
+{analogy}🎭 '''본가의 주소록.''' 자취하는 학생(MS)이 어디로 이사 가든(다른 cell·다른 망으로 [[roaming]]), 본가(HLR)에 "지금 여기 산다" 고 알려 둔다. 누가 그 학생을 찾으면(수신 전화) 먼저 본가에 물어본다.{/analogy}
+
+[[img:L10-23.png|p.23 GSM 구성 — MSC 위 원통이 HLR (그림 표기 "HRL- Home Loaction Register" 는 오타)|medium]]
+
+== 어디에 쓰이나 ==
+* '''수신 전화''' ([[통화 수신 과정]]): 전화가 오면 망은 HLR 에서 그 가입자가 지금 어느 MSC 관할에 있는지 찾고, 그 MSC 가 관할 cell 들에 [[paging]] 한다. HLR 덕분에 '''전국의 모든 cell 에 paging 할 필요가 없다'''.
+* '''[[roaming]]''': 다른 provider 망에 들어간 사용자의 위치를 home 망의 HLR 이 기록해 두어 전화가 따라갈 수 있다. (방문한 망 쪽 임시 기록부 VLR 도 있다 — 보충.)
+
+== 관련 문서 ==
+* [[GSM]] · [[MSC]] · [[paging]] · [[roaming]] · [[통화 수신 과정]]

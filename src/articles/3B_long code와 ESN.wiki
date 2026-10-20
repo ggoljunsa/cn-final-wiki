@@ -1,0 +1,37 @@
+key: long code와 ESN
+title: Long code와 ESN (Electronic Serial Number)
+category: 3강 CDMA–4G, 용어
+---
+'''long code''' 는 [[IS-95]] 에서 '''단말 고유 번호 ESN''' 으로부터 만들어지는 '''아주 긴 의사난수 칩열'''(1.228 Mcps)이다. forward 에서는 사용자 데이터를 뒤섞는(scramble) 데, reverse 에서는 사용자 신호를 퍼뜨려([[DSSS]]) 구분하는 데 쓰인다. L10 p.29–30 의 "ESN → Long code generator" 상자.
+
+{def}p.29 (forward): "'''ESN''' → '''Long code generator''' → 1.228 Mcps → '''Decimator''' → 19.2 ksps → ⊕" (빨간 상자 강조)
+p.30 (reverse): "'''ESN''' → '''Long code generator''' → 1.228 Mcps → ⊕ (307.2 kcps 와)"{/def}
+
+[[img:L10-29.png|p.29 — 빨간 상자: ESN → Long code generator(1.228 Mcps) → Decimator(19.2 ksps) (필기본)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''ESN (Electronic Serial Number)''' — 휴대폰마다 공장에서 박는 '''전자 일련번호'''. 이름 그대로 "전자적 시리얼 넘버" (풀이는 Forouzan 보충 — 슬라이드엔 약어만).
+* '''long code''' — 반복 주기가 '''아주 길어서'''(약 $2^{42}-1$ 칩, 보충) 사실상 반복되지 않는 코드. Walsh code(64 칩, 짧음)와 대비되는 이름.
+* '''Decimator''' — decimate = 10 개 중 1 개를 솎아 내다 → '''칩을 솎아 속도를 낮추는''' 상자. 여기서는 64 개 중 1 개: $1.2288\text{ M} / 64 = 19.2\text{ k}$.
+
+== forward 와 reverse 에서의 역할 ==
+{|
+! || forward (p.29) || reverse (p.30)
+|-
+| 속도 || decimator 로 19.2 ksps 로 낮춤 || 1.228 Mcps 그대로
+|-
+| 하는 일 || 데이터 '''scramble''' (도청 방지, privacy) || '''DSSS 확산 + 사용자 구분''' (307.2 k × 4)
+|-
+| 사용자 구분 담당 || Walsh code 가 함 || '''long code 가 함'''
+|}
+* ESN 이 사람마다 다르니 long code 도 사람마다 다르다 → 남의 ESN 을 모르면 데이터를 풀 수 없음(scramble 의 목적: privacy, Forouzan 보충).
+
+[[sim:is95_rates]]
+
+{analogy}🎭 '''주민번호로 만든 암호표.''' 각자의 주민번호(ESN)로 끝없이 이어지는 난수표(long code)를 만든다. forward 에서는 이 난수표로 편지를 뒤섞어 남이 못 읽게 하고, reverse 에서는 이 난수표로 목소리 억양을 입혀 기지국이 누구 목소리인지 구별하게 한다.{/analogy}
+
+{quiz}IS-95 forward 에서 long code 경로에 decimator 가 있는 이유는?{/quiz}
+{answer}long code 는 1.228 Mcps 로 나오지만 더할 데이터는 19.2 ksps 다. 64 칩 중 1 개만 남겨($1.2288\text{ M} / 64 = 19.2\text{ k}$) '''속도를 맞추기''' 위해서다.{/answer}
+
+== 관련 문서 ==
+* [[IS-95 forward 전송]] · [[IS-95 reverse 전송]] · [[DSSS]] · [[Walsh code]] · [[chip rate]]

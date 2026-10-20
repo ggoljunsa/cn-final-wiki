@@ -1,0 +1,35 @@
+key: pilot channel
+title: Pilot channel (파일럿 채널)
+category: 3강 CDMA–4G, 용어
+---
+'''pilot channel''' 은 [[IS-95]] 의 모든 기지국(BS)이 '''데이터 없이 계속 방송하는 기준 신호'''다. forward 링크의 '''digital channel 0''' 으로, 내용은 '''all 1s''', 코드는 '''W0'''. MS 는 자기 cell 과 '''이웃 cell 의 pilot''' 을 들으며 신호 세기를 재고, 이것으로 [[IS-95 soft handoff|soft handoff]] 를 한다. L10 p.29, p.32.
+
+{def}"Digital channel 0 ('''Pilot channel''') '''all 1s'''" × W0 (p.29)
+"Every BS '''continuously broadcasts''' signals using its '''pilot channel'''. MS can detect the pilot signal from its cell and neighboring cells. → '''Enabling an MS to do a soft handoff'''." (p.32){/def}
+
+[[img:L10-32.png|p.32 Soft handoff — 모든 BS 가 pilot channel 로 계속 방송, MS 가 이웃 cell pilot 감지|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''pilot''' = '''도선사·길잡이'''. 큰 배가 항구에 들어올 때 길을 안내하는 작은 배처럼, pilot 신호는 MS 에게 "여기 BS 가 있고, 이 정도 세기로 들린다" 를 알려 주는 '''길잡이 신호'''다. 데이터는 없다(all 1s).
+
+== 하는 일 ==
+<pre class="txt">
+1. 존재 알림   : BS 가 늘 방송 → MS 가 켜지면 주변 BS 를 찾을 수 있음
+2. 세기 측정   : MS 가 자기 cell + 이웃 cell pilot 세기를 계속 비교       (p.32)
+3. soft handoff: 이웃 pilot 이 충분히 세지면 (MS 보고를 바탕으로) MSC 가 그 BS 를 추가 → 둘 다 연결 → 옛 BS 해제
+4. 기준 신호   : 위상·타이밍 기준으로 써서 다른 채널을 복조 (Forouzan 보충 — 슬라이드에 없음)
+</pre>
+* W0 은 Walsh 표의 첫 행 '''[+1 +1 … +1]''' 이고 데이터도 all 1s 라, 곱한 결과가 아주 단순한 신호가 된다 → 찾기 쉽다.
+* 1강의 [[handoff]] 는 MSC 가 "every few seconds" 신호 세기를 감시했다. IS-95 에서는 '''MS 가 pilot 으로 직접''' 이웃 BS 세기를 잰다 — 다만 재는 것(측정)과 정하는 것(결정)은 다르다.
+
+{info}⚠️ MS 는 pilot 세기를 '''감지·측정해 보고'''할 뿐이다(p.32 "MS can detect"). BS 를 추가·해제하고 채널을 바꾸는 '''결정은 여전히 망(MSC)'''이 한다 — 교수 33:09 "every transition decision is made by MSC, not by MS". "IS-95 에서는 MS 가 handoff 를 결정한다"는 OX 는 ✗.{/info}
+
+[[anim:handoff_hard_soft|아래 줄 soft handoff 의 두 막대가 겹치는 구간 — 그 겹침을 가능하게 하는 것이 이웃 BS 의 pilot 이다]]
+
+{analogy}🎭 '''등대.''' 모든 항구(BS)가 등대(pilot)를 밤새 켜 둔다. 배(MS)는 지금 항구의 등대가 흐려지고 다음 항구의 등대가 밝아지는 것을 보고, 두 등대를 모두 보면서 천천히 다음 항구로 옮겨 간다 — 한순간도 어둠 속에 있지 않다(soft handoff).{/analogy}
+
+{quiz}IS-95 에서 MS 가 soft handoff 를 할 수 있게 해 주는 채널의 이름과, 그 채널이 실어 보내는 데이터는?{/quiz}
+{answer}'''pilot channel''' (digital channel 0, Walsh code W0). 데이터는 '''all 1s''' — 정보 없이 계속 방송되는 기준 신호.{/answer}
+
+== 관련 문서 ==
+* [[IS-95 soft handoff]] · [[soft handoff]] · [[handoff]] · [[Walsh code]] · [[IS-95 forward 전송]]

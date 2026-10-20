@@ -1,0 +1,46 @@
+key: reuse factor
+title: Reuse Factor (N, 재사용 계수)
+category: 1강 셀룰러 동작, 용어
+---
+'''Reuse factor N''' 은 [[frequency reuse]] 패턴 하나를 이루는 cell 의 개수다. 전체 채널을 N 개 frequency set 으로 나눠 패턴 안의 cell 마다 하나씩 주고, 이 패턴을 지역 전체에 반복한다. 슬라이드 그림은 '''N = 4''' 와 '''N = 7''' (L10 p.11). 1G AMPS 는 7, IS-95 는 1.
+
+{def}"A frequency reuse pattern is a configuration of '''N cells'''. '''N is the reuse factor'''." (p.11)
+frequency reuse 패턴은 N 개 cell 의 배치이며, N 을 reuse factor 라 한다.{/def}
+
+[[img:L10-11.png|p.11 a. Reuse factor of 4, b. Reuse factor of 7 — 필기 "N=4", "N=7" (필기본)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''reuse factor''' = "몇 cell 마다 같은 주파수가 '''다시''' 나오나". N = 7 이면 7 개 cell 을 지나야 같은 set 이 또 나온다.
+* 그래서 N 은 '''주파수를 몇 조각으로 나누나'''와 같다: 전체 채널 수를 $C$ 라 하면 cell 하나가 쓰는 채널은
+$$\text{cell 당 채널 수} = \frac{C}{N}$$
+
+== N 의 trade-off ⭐⭐ ==
+{|
+! || N 작다 (예: 4) || N 크다 (예: 7)
+|-
+| cell 당 채널 수 $C/N$ || '''많다''' → 수용 인원↑ || 적다
+|-
+| 같은 set cell 사이 거리 || 가깝다 || '''멀다'''
+|-
+| [[co-channel interference]] || 크다 || '''작다'''
+|}
+* N 을 키우면 간섭은 줄지만 채널이 잘게 쪼개져 cell 당 사용자가 준다. 이 균형점을 고르는 것이 셀 설계다. (Forouzan 보충: 1G [[AMPS]] 는 N = 7, CDMA 인 [[IS-95]] 는 N = 1 — 코드로 구분하니 쪼갤 필요가 없다 → [[IS-95 frequency reuse]].)
+
+예 — AMPS voice channel 395 개(→ [[AMPS 대역과 채널]])를 나누면:
+<pre class="txt">
+N = 7 : 395 / 7 = 56.4  → cell 당 약 56 voice channel
+N = 4 : 395 / 4 = 98.75 → cell 당 약 98 voice channel
+N = 1 : 395 / 1 = 395   → (FDMA 로는 불가능 — 이웃 cell 이 같은 주파수. CDMA 라야 가능)
+※ 395/7 ≈ 56 은 슬라이드에 없는 파생값(설명용)
+</pre>
+[[sim:reuse_pattern]]
+
+대역 → 채널 수 계산 자체(25 MHz ÷ 30 kHz = 832 …)는 [[AMPS 대역과 채널]] 의 `band_channels` 시뮬레이터에서 단계별로 볼 수 있다.
+
+{analogy}🎭 '''색연필 N 자루로 벌집 칠하기.''' 이웃한 칸은 같은 색이면 안 된다. 색연필이 4 자루면(N=4) 같은 색이 꽤 가까이 다시 나오고, 7 자루면(N=7) 훨씬 멀리서 나온다. 대신 색연필 한 자루(=frequency set)가 맡는 채널 수는 전체를 7 로 나눈 만큼으로 줄어든다.{/analogy}
+
+{quiz}전체 voice channel 이 395 개이고 reuse factor 가 7 이면 cell 하나가 쓸 수 있는 voice channel 은 대략 몇 개인가? N 을 4 로 줄이면 무엇이 좋아지고 무엇이 나빠지는가?{/quiz}
+{answer}$395/7 \approx 56$ 개. N=4 로 줄이면 cell 당 채널이 약 98 개로 '''늘어나지만''', 같은 frequency set 을 쓰는 cell 사이 거리가 가까워져 '''co-channel interference 가 커진다'''.{/answer}
+
+== 관련 문서 ==
+* [[frequency reuse]] · [[co-channel interference]] · [[IS-95 frequency reuse]] · [[AMPS 대역과 채널]] · [[cell]]

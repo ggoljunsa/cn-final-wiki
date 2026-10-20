@@ -1,0 +1,53 @@
+key: IS-95 soft handoff
+title: IS-95 soft handoff (pilot channel 로 make before break)
+category: 3강 CDMA–4G, 용어
+---
+[[IS-95]] 는 '''[[soft handoff]]''' 를 한다 — 새 BS 와 먼저 연결한 뒤 옛 BS 를 끊는 '''make before break'''. 이를 가능하게 하는 것은 모든 BS 가 계속 방송하는 '''[[pilot channel]]''' 과, 이웃 cell 도 같은 주파수를 쓰는 '''[[IS-95 frequency reuse|reuse factor 1]]''' 이다. L10 p.32.
+
+{def}"'''Soft handoff''': Every BS '''continuously broadcasts''' signals using its '''pilot channel'''. MS can '''detect the pilot signal from its cell and neighboring cells'''. → '''Enabling an MS to do a soft handoff'''." (p.32){/def}
+
+[[img:L10-32.png|p.32 IS-95 Frequency Reuse Factor and Handoff — 위: reuse factor normally 1, 아래: soft handoff 와 pilot channel|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''hand off''' = 손에서 손으로 '''넘겨준다''' (1강 [[handoff]]).
+* '''soft''' = 부드럽게 — 끊김 없이. 반대 [[hard handoff]] 는 '''딱 끊고''' 넘어간다(break before make).
+
+== 순서 ==
+<pre class="txt">
+1. 모든 BS 가 pilot channel(W0, all 1s) 을 계속 방송
+2. MS 가 자기 cell + 이웃 cell 의 pilot 세기를 계속 측정
+3. 이웃 BS2 의 pilot 이 충분히 세짐 → BS2 '''추가''' 연결 (이제 BS1 + BS2 동시)   ← make
+4. BS1 pilot 이 충분히 약해짐 → BS1 '''해제'''                                  ← break
+⇒ 연결 상태: {BS1} → {BS1, BS2} → {BS2}   (끊기는 순간 없음)
+</pre>
+
+[[anim:handoff_hard_soft|위 줄 hard handoff 의 빨간 틈(끊김)과 아래 줄 soft handoff 의 두 막대 겹침을 비교하라 — IS-95 는 아래 줄이다]]
+
+== 왜 IS-95 는 되고 AMPS·GSM 은 안 되나 ⭐⭐⭐ ==
+{|
+! || AMPS / D-AMPS / GSM || '''IS-95'''
+|-
+| 이웃 cell 주파수 || '''다름''' (reuse factor > 1) || '''같음''' (reuse factor 1)
+|-
+| 이웃 BS 를 동시에 듣기 || 무선기를 새 주파수로 '''갈아타야''' 함 → 동시 불가 || 주파수 그대로, '''코드만 다르게''' 받으면 됨
+|-
+| 이웃 BS 감지 || MSC 가 신호 세기 감시 || '''MS 가 pilot 으로 감지·보고''' → 결정은 MSC
+|-
+| handoff || '''hard''' (break before make) || '''soft''' (make before break)
+|}
+{info}⚠️ MS 는 pilot 세기를 '''감지·측정해 보고'''할 뿐이다(p.32 "MS can detect"). BS 를 추가·해제하고 채널을 바꾸는 '''결정은 여전히 망(MSC)'''이 한다 — 교수 33:09 "every transition decision is made by MSC, not by MS". "IS-95 에서는 MS 가 handoff 를 결정한다"는 OX 는 ✗.{/info}
+
+p.31(reuse factor 1)과 p.32(soft handoff)가 '''같은 제목 "Frequency Reuse Factor and Handoff"''' 로 묶인 이유가 이 인과관계다: '''reuse 1 → 이웃도 같은 주파수 → 동시에 들을 수 있음 → soft handoff'''.
+
+{info}동시에 두 BS 와 연결된 동안 BS 들의 시각이 맞아야 MS 가 두 신호를 합칠 수 있다 → BS 들의 [[GPS 동기화]] 도 soft handoff 의 바탕이다 (보충 — 슬라이드에 없음).{/info}
+
+{analogy}🎭 '''징검다리 vs 점프.''' hard handoff 는 개울을 '''점프'''로 건넌다 — 공중에 떠 있는 순간(끊김)이 있다. soft handoff 는 한 발을 다음 돌에 '''먼저 올려놓고''' 뒷발을 뗀다. 다음 돌이 어디 있는지 보이게 해 주는 등불이 pilot channel 이다.{/analogy}
+
+{exam}🎯 "IS-95 에서 soft handoff 를 가능하게 하는 것은?" → 모든 BS 가 '''pilot channel''' 로 계속 방송하고, MS 가 '''자기 cell 과 이웃 cell 의 pilot''' 을 감지할 수 있기 때문 (p.32). + 이웃 cell 이 같은 주파수(reuse factor 1)라는 배경.{/exam}
+
+{quiz}soft handoff 의 연결 BS 집합 변화를 {BS1} 에서 시작해 쓰고, hard handoff 와 비교하시오.{/quiz}
+{answer}* soft: {BS1} → '''{BS1, BS2}''' → {BS2} (겹침, make before break)
+* hard: {BS1} → '''{ }''' → {BS2} (짧은 끊김, break before make){/answer}
+
+== 관련 문서 ==
+* [[soft handoff]] · [[hard handoff]] · [[handoff]] · [[pilot channel]] · [[IS-95 frequency reuse]] · [[GPS 동기화]]

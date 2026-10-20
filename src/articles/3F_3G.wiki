@@ -1,0 +1,39 @@
+key: 3G
+title: 3G (3rd Generation, 3세대 셀룰러)
+category: 3강 CDMA–4G, 용어
+---
+'''3G (third generation)''' 는 음성 중심이던 2G 에 '''인터넷 데이터'''(packet-switched)를 본격적으로 얹은 세대다. 기준은 [[ITU]] 가 낸 청사진 '''[[IMT-2000]]''' 이고, 그것을 만족하는 실제 표준이 5 개([[IMT-2000 표준]]) 있다 — 대표가 [[W-CDMA]](유럽)와 [[CDMA 2000]](북미). 데이터율 '''144 kbps(차) / 384 kbps(보행) / 2 Mbps(정지)'''. L10 p.33–35.
+
+{def}"3rd Generation: '''IMT-2000''' — '''A blueprint of 3G''' issued by ITU. … Data rate: 144 kbps (moving vehicle), 384 kbps (pedestrians), 2 Mbps (stationary). Support for '''packet-switched and circuit-switched''' data services. … Main goal: provision of '''universal personal communication'''." (p.33){/def}
+
+[[img:L10-33.png|p.33 3rd Generation: IMT-2000 Key Features (필기본: "blue print, not actual standard")|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''3rd Generation''' — [[셀룰러 세대]] 의 세 번째. 세대가 바뀔 때마다 "무엇이 새로 됐나"를 한 단어로: 1G analog voice → 2G digital voice → '''3G data''' → 4G all-IP.
+
+[[anim:generations_timeline|3G 칸이 쌓일 때 "144 k / 384 k / 2 M bps" 와 "packet + circuit" 이 함께 나타나는 것을 보라 — 2G 와의 차이가 데이터다]]
+
+== 2G → 3G 에서 바뀐 것 ==
+{|
+! || [[2G]] || '''3G'''
+|-
+| 주 서비스 || digital voice || voice + '''인터넷 데이터'''
+|-
+| 교환 방식 || circuit-switched || '''packet-switched + circuit-switched'''
+|-
+| 데이터율 || 수십 kbps (GSM 사용자 1 명 몫 약 33.85 kbps) || '''144 k / 384 k / 2 M bps'''
+|-
+| 대역 || 800 / 900 / 1,900 MHz 대 || '''2 GHz'''
+|-
+| 주류 접근 방식 || TDMA(D-AMPS, GSM) / CDMA(IS-95) || '''CDMA''' (5 표준 중 3 개에 CDMA)
+|-
+| 인터넷 || — || '''Interface to the Internet'''
+|}
+
+{analogy}🎭 2G 가 '''전화 전용 도로'''였다면 3G 는 그 도로에 '''택배 트럭 차선(packet data)'''을 추가한 것이다. 전화(circuit)는 여전히 다니지만 이제 인터넷 짐도 실어 나른다. 4G 에서는 아예 모든 차선이 택배 트럭 차선이 된다(all-IP).{/analogy}
+
+{quiz}IMT-2000 이 정한 3G 데이터율 세 가지를 사용자 상태와 함께 쓰시오.{/quiz}
+{answer}moving vehicle(car) '''144 kbps''' · pedestrians(walking) '''384 kbps''' · stationary(office/home) '''2 Mbps'''.{/answer}
+
+== 관련 문서 ==
+* [[IMT-2000]] · [[IMT-2000 표준]] · [[W-CDMA]] · [[CDMA 2000]] · [[2G]] · [[4G]] · [[셀룰러 세대]] · [[CH05 IS-95·3G·4G]]

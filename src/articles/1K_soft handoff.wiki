@@ -1,0 +1,55 @@
+key: soft handoff
+title: Soft Handoff (make before break)
+category: 1강 셀룰러 동작, 용어
+---
+'''Soft handoff''' 는 MS 가 '''두 BS 와 동시에''' 통신할 수 있는 [[handoff]] 방식이다. 새 BS 와 '''먼저 연결(make)''' 한 뒤 옛 BS 와의 연결을 '''끊는다(break)''' — '''make before break'''. 겹치는 구간 동안 두 BS 가 함께 통화를 지탱하므로 끊김이 없다. CDMA 인 [[IS-95]] 부터 쓰였다 → [[IS-95 soft handoff]]. L10 p.16 (b).
+
+{def}"'''Soft handoff''' — An MS can communicate '''with two BSs at the same time'''." (p.16)
+그림 (b) 아래 문구: "'''Make before break'''".
+MS 가 두 BS 와 동시에 통신할 수 있는 handoff. 새 연결을 맺은 뒤 옛 연결을 끊는다.{/def}
+
+[[img:L10-16.png|p.16 (b) Soft handoff — MS 가 BS1·BS2 둘 다와 선으로 연결, 아래 BS1·BS2 막대가 초록 구간에서 겹침 "Make before break" (필기본)|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''soft''' = 부드러운. 연결이 '''뚝 바뀌지 않고 서서히 옮겨 간다''' — BS1 만 → BS1+BS2 → BS2 만.
+* '''make before break''' — 새 접점에 '''먼저 붙이고(make)''' 옛 접점을 '''뗀다(break)'''. 연결이 0 개가 되는 순간이 없다.
+
+<pre class="txt">
+시간 →      t0 ─────────── t1 ▓▓▓▓▓▓ t2 ─────────── t3
+BS1 연결 :  ████████████████████████                  ← t2 에서 끊음 (break)
+BS2 연결 :                 ███████████████████████    ← t1 에서 붙음 (make)
+                          ↑ t1~t2 : '''두 BS 와 동시에''' (초록 겹침)
+연결 BS 집합 :  {BS1}  →  {BS1, BS2}  →  {BS2}
+</pre>
+
+{tip}'''필기 속 질문: "SRT, KTX ??"''' (p.16) — 시속 300 km 로 달리면 cell 경계를 아주 자주 넘는다. hard handoff 면 넘을 때마다 짧은 틈과 call drop 위험이 생기지만, soft handoff 는 경계 구간에서 '''두 BS 가 동시에''' 통화를 잡고 있다가 넘겨 주므로 끊김이 없다. 교수(10/20 녹음 31:17): "You may have some experience of slow communication speed while you are in KTX or SRT. This is because the trains are so fast that '''maintaining soft handoff is very difficult technically'''." 기지국 coverage 가 몇 km 에 불과해 handoff 가 너무 자주 일어나기 때문. 10/6 수업에서도 "KTX 나 SRT 에서 끊기거나 느려지는 경험" 을 들며 4G/5G 는 매우 복잡한 표준으로 seamless 한 soft handoff 를 해낸다고 한 그 이야기다 → [[mid:station mobility]]. 다만 기차처럼 빠르면 soft 로도 완벽하진 않아 여전히 끊김을 느낄 수 있다.{/tip}
+
+{|
+! || [[hard handoff]] || soft handoff
+|-
+| 동시에 통신하는 BS 수 || 1 || '''2'''
+|-
+| 순서 || break before make || '''make before break'''
+|-
+| 끊김 || 짧은 틈 || '''없음'''
+|-
+| 대가 || — || 경계 구간에서 채널(자원)을 두 BS 가 '''동시에''' 씀
+|-
+| 시스템 || early systems || [[CDMA]] — [[IS-95]], 3G
+|}
+
+{info}(Forouzan 보충) 왜 CDMA 라야 soft 가 쉬운가: CDMA([[IS-95 frequency reuse|IS-95 는 N = 1]])는 '''모든 cell 이 같은 주파수'''를 쓰고 사용자를 '''코드'''로 구분한다. 그래서 MS 는 주파수를 바꾸지 않고도 BS1·BS2 의 신호를 동시에 받을 수 있다. IS-95 에서는 MS 가 각 BS 의 '''[[pilot channel]]''' 세기를 재서 handoff 를 돕는다 → [[IS-95 soft handoff]].{/info}
+
+[[anim:handoff_hard_soft|아래 줄(soft)에서 BS1·BS2 막대가 겹치는 초록 구간 — 그동안 MS 가 두 BS 와 동시에 연결돼 있음을 보라]]
+
+[[sim:handoff_signal]]
+
+{analogy}🎭 '''그네에서 그네로 건너가기 (서커스 공중그네).''' 다음 그네(BS2)를 '''먼저 한 손으로 잡고''', 그다음 원래 그네(BS1)를 놓는다. 양손으로 두 그네를 잡은 순간이 있으니 떨어질 일이 없다. hard 는 손을 놓고 날아가서 잡는 방식이다.{/analogy}
+
+{exam}🎯 교수(10/20 녹음 29:54): "In today's advanced communication systems, people '''always implement soft handoff''' … it is very hard to detect or experience some break of communication." "An MS can communicate with '''two BSs at the same time'''" + "'''Make before break'''". 비교 문제: hard = one BS · early systems · break before make / soft = two BSs · make before break. 3강의 [[IS-95 soft handoff]] 와 연결해서 출제될 수 있다.{/exam}
+
+{quiz}Soft handoff 에서 MS 가 연결된 BS 집합은 시간에 따라 어떻게 변하는가? hard handoff 와 비교하시오.{/quiz}
+{answer}soft: {BS1} → '''{BS1, BS2}''' → {BS2} (make before break, 끊김 없음). hard: {BS1} → '''{}''' → {BS2} (break before make, 짧은 끊김).{/answer}
+
+== 관련 문서 ==
+* [[handoff]] · [[hard handoff]] · [[IS-95 soft handoff]] · [[pilot channel]] · [[CDMA]] · [[IS-95]]

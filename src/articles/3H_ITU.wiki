@@ -1,0 +1,34 @@
+key: ITU
+title: ITU (International Telecommunication Union, 국제전기통신연합)
+category: 3강 CDMA–4G, 용어
+---
+'''ITU (International Telecommunication Union)''' 는 전 세계의 '''전기통신 표준과 주파수 배분'''을 조율하는 국제기구다. 이 덱에서는 3G 청사진 [[IMT-2000]] 을 발표한 주체로 나온다. L10 p.33.
+
+{def}"A blueprint of 3G issued by '''ITU (International Telecommunication Union)'''." (p.33)
+→ IMT-2000 은 ITU 가 낸 3G 청사진.{/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''International''' — 국제. '''Telecommunication''' — tele(멀리) + communication = 원거리 통신. '''Union''' — 연합.
+* → "멀리 통신하는 일을 나라들이 함께 정하는 연합". 전파는 국경을 넘으니 주파수를 나라끼리 맞춰야 한다.
+
+== 알아 둘 것 (보충 — 슬라이드에 없음) ==
+* '''UN 산하''' 전문기구, 본부 스위스 제네바. 1865 년 국제전신연합에서 출발한 가장 오래된 국제기구 중 하나.
+* 부문: ITU-T(표준화), ITU-R(전파·주파수), ITU-D(개발). IMT-2000·IMT-Advanced(4G) 같은 이동통신 요구 사항은 ITU-R 이 정한다.
+* ITU 는 '''요구 사항(청사진)'''을 정하고, 실제 기술 표준은 지역 단체(유럽 ETSI/3GPP, 북미 TIA/3GPP2 등)가 만든다 → 필기 "blue print, not actual standard" 의 배경 → [[IMT-2000 표준]].
+
+<pre class="ascii">
+        ITU (청사진: "3G 라면 이래야 한다")
+                 │  IMT-2000 요구사항: 144k / 384k / 2M bps, 2 GHz 대역 …
+     ┌───────────┴───────────┐
+  유럽·아시아 (3GPP)       북미 (3GPP2)
+     │                       │
+  [[W-CDMA]] (IMT-DS)       [[CDMA 2000]] (IMT-MC)      ← 실제 기술 표준
+</pre>
+
+{analogy}🎭 '''국제 올림픽 위원회.''' IOC 는 "100 m 트랙은 이래야 한다"는 규정만 정하고, 경기장은 각 나라가 짓는다. ITU 는 "3G 라면 이래야 한다"(IMT-2000)만 정하고, 실제 시스템(W-CDMA, CDMA 2000)은 각 지역이 만든다.{/analogy}
+
+{quiz}IMT-2000 을 발표한 기구의 full name 은?{/quiz}
+{answer}'''International Telecommunication Union (ITU)'''.{/answer}
+
+== 관련 문서 ==
+* [[IMT-2000]] · [[IMT-2000 표준]] · [[3G]]

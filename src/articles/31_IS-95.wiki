@@ -1,0 +1,55 @@
+key: IS-95
+title: IS-95 (Interim Standard 95)
+category: 3강 CDMA–4G, 용어
+---
+'''IS-95 (Interim Standard 95)''' 는 '''북미와 한국'''에서 쓰인 [[2G]] 셀룰러 표준으로, [[DSSS]] 로 신호를 퍼뜨리고 [[CDMA]] 로 사용자를 나눈다. 같은 2G 인 [[D-AMPS]]·[[GSM]] 이 시간([[TDMA]])으로 나눈 것과 달리 '''코드'''로 나눈다는 점이 핵심이다. L10 p.27–32.
+
+{def}"'''IS-95 (Interim Standard 95)''': One of the dominant 2G standards in '''North America (and South Korea)'''. Based on '''DSSS and CDMA'''. DSSS (Direct-Sequence Spread Spectrum): a signal-spreading modulation technique. CDMA (Code-Division Multiple Access): an MA method based on DSSS." (p.27)
+→ 북미·한국의 대표 2G 표준. DSSS(퍼뜨리는 변조) + CDMA(코드로 나누는 다중 접속).{/def}
+
+[[img:L10-27.png|p.27 IS-95 — forward link 는 code 로 구분되는 합성 신호, 오른쪽 FDMA/TDMA/CDMA 비교 (필기본)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Interim''' = '''임시의, 잠정적인'''. 미국 TIA(통신산업협회)가 정식 표준이 확정되기 전 "임시 표준 95 번"으로 낸 이름이다 (Forouzan 보충 — 슬라이드에 없음). 이름은 임시였지만 북미·한국 2G 의 주력이 됐다.
+* 다른 이름으로 '''cdmaOne''' 이라고도 부른다 (보충). 한국에서 "CDMA 폰" 이라고 하면 이것.
+
+== 한 장 요약 ==
+{|
+! 항목 || 값 || 문서
+|-
+| 기술 || DSSS + CDMA || [[DSSS]], [[CDMA]]
+|-
+| 대역 || 두 대역(duplex): ISM 800 MHz, ISM 1,900 MHz || [[IS-95 대역과 채널]]
+|-
+| 채널 || 1.228 MHz × 20 (guard band), provider 당 10 || [[IS-95 대역과 채널]]
+|-
+| 동기화 || BS 가 GPS 사용 || [[GPS 동기화]]
+|-
+| forward (BS→MS) || Walsh code 64 개로 구분, W0 = pilot || [[IS-95 forward 전송]], [[Walsh code]], [[pilot channel]]
+|-
+| reverse (MS→BS) || long code 로 DSSS || [[IS-95 reverse 전송]], [[long code와 ESN]]
+|-
+| chip rate || 1.228 Mcps || [[chip rate]]
+|-
+| 변조 || QPSK || [[QPSK]]
+|-
+| reuse factor || normally 1 || [[IS-95 frequency reuse]]
+|-
+| handoff || soft || [[IS-95 soft handoff]]
+|}
+
+[[anim:cdma_spreading|IS-95 의 핵심 원리 — 여러 사용자의 비트가 코드와 곱해져 더해지고, 수신자가 자기 코드로 자기 비트만 꺼내는 장면을 보라]]
+
+{tip}💡 '''필기 속 질문: "ETRI가 개발?"''' — 원천 기술은 미국 '''Qualcomm''', 한국 '''[[ETRI]]''' 가 Qualcomm 과 공동으로 '''상용 시스템을 개발'''해 한국이 1996 년 세계 최초로 CDMA 를 상용화했다. 그래서 슬라이드가 "North America '''(and South Korea)'''" 라고 쓴다. (슬라이드에 없는 배경){/tip}
+
+{analogy}🎭 2G 의 세 표준을 식당 좌석으로 보면: [[D-AMPS]] 는 작은 테이블(30 kHz) 하나를 3 명이 '''교대로''' 쓰고, [[GSM]] 은 조금 큰 테이블(200 kHz)을 8 명이 교대로 쓴다. IS-95 는 '''큰 홀(1.228 MHz) 하나에 수십 명이 동시에''' 앉되, 테이블마다 '''다른 언어'''로 말해서 서로 방해가 안 된다.{/analogy}
+
+{exam}🎯 "IS-95 is based on ___ and ___" → '''DSSS, CDMA'''. DSSS 와 CDMA 중 어느 것이 '''modulation technique''' 이고 어느 것이 '''MA method''' 인지 바꿔 내는 O/X 가 나오기 좋다 (DSSS = modulation, CDMA = MA).{/exam}
+
+{quiz}IS-95 가 같은 2G 인 GSM 과 다른 점을 '''multiple access 방식, reuse factor, handoff''' 세 측면에서 쓰시오.{/quiz}
+{answer}* multiple access: GSM = '''TDMA'''(200 kHz 채널을 8 slot 으로) / IS-95 = '''CDMA'''(1.228 MHz 채널을 Walsh code 64 개로)
+* reuse factor: GSM 은 1 보다 큼(이웃 cell 은 다른 주파수) / IS-95 는 '''normally 1'''(이웃 cell 도 같은 대역)
+* handoff: GSM 은 hard / IS-95 는 pilot channel 덕분에 '''soft handoff'''{/answer}
+
+== 관련 문서 ==
+* [[CH05 IS-95·3G·4G]] · [[CDMA]] · [[DSSS]] · [[2G]] · [[GSM]] · [[D-AMPS]] · [[CDMA 2000]] (IS-95 의 3G 진화형)

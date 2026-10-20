@@ -1,0 +1,28 @@
+key: Starlink
+title: Starlink / Starshield (SpaceX 위성망)
+category: 1강 셀룰러 동작, 용어
+---
+'''Starlink''' 는 SpaceX 가 운영하는 저궤도(LEO) [[satellite network]] 다. 슬라이드 p.6 은 Satellite Networks 의 예로 "'''Starlink'''" 를, p.7 은 "'''Starlink / Starshield'''" 를 적었다. '''Starshield''' 는 같은 기술의 정부·군용 버전이다. 슬라이드에는 이름과 BBC 그림만 있고, 아래 수치는 '''(일반 보충 — 슬라이드에 없음)'''.
+
+{def}"Satellite Networks — '''Starlink''' / '''Starshield'''." (p.6–7)
+BBC 그림 제목: "How SpaceX satellites are used on the battlefield" — ① Spotter drone sends location of enemy tank ② Command centre alerts battlefield unit (Starlink/Starshield 경유) ③ Drone operator flies killer drone to target.{/def}
+
+[[img:L10-07.png|p.7 오른쪽 BBC 그림 — 드론 → Starlink/Starshield → 지휘소 → 부대. Satellite Networks 의 예 (필기본)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Star + link''' — 별(하늘의 위성)들로 만든 연결. 수천 개의 작은 위성이 '''별자리(constellation)'''처럼 하늘을 덮는다.
+* '''Star + shield''' — 방패. 군·정부용(보안 강화) 버전이라 shield.
+* 녹음 전사에는 "Starship"(SpaceX 로켓 이름)으로 깨져 있지만, 슬라이드 기준으로 '''Starlink/Starshield''' 다.
+
+(보충) 특징
+* 고도 약 550 km 의 '''LEO''' — GEO(약 36,000 km)보다 수십 배 가까워 지연이 짧다.
+* 위성이 빠르게 지나가므로 사용자 단말은 몇 분마다 다른 위성으로 넘어간다 — 셀룰러의 [[handoff]] 를 하늘에서 하는 셈.
+* 지상 infrastructure 가 없거나 파괴된 곳에서도 접속이 된다 → 전쟁·재난 지역.
+
+{info}교수(10/20 녹음 19:00–21:04)는 발신 절차 뒤에 "wireless communications … are '''heavily dependent on this infrastructure'''" 라고 강조하며, '''Ukraine''' 이 최근 미국의 정책 때문에 Starlink/Starshield 연결이 제한돼 데이터 통신과 '''드론 제어'''에 어려움을 겪는다는 예를 들었다. 슬라이드 BBC 그림(드론-위성-지휘소)과 같은 맥락이다.{/info}
+
+{analogy}🎭 '''하늘을 지나가는 기지국 행렬.''' 셀룰러는 기지국이 땅에 고정되고 내가 움직이지만, Starlink 는 '''기지국(위성)이 머리 위를 줄지어 지나간다'''. 한 위성이 지평선 너머로 사라지기 전에 다음 위성이 와서 통신을 이어받는다.{/analogy}
+
+
+== 관련 문서 ==
+* [[satellite network]] · [[WAN 분류]] · [[handoff]] · [[CH05 셀룰러 동작]]

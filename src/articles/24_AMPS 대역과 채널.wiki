@@ -1,0 +1,51 @@
+key: AMPS 대역과 채널
+title: AMPS 대역과 채널 (824–849 / 869–894 MHz, 832 → 416 → 395)
+category: 2강 1G–2G, 용어
+---
+'''AMPS 대역과 채널'''은 [[AMPS]] 가 주파수를 어떻게 잘라 쓰는지에 대한 L10 p.19 의 내용이다. 방향마다 25 MHz 대역 하나씩(두 대역), 각 대역을 30 kHz 채널 832 개로 나누고, 한 지역의 두 provider 가 반씩(416) 가져가며, 그중 21 개는 control 용이다. 사용자가 '''"다시"''' 와 '''"416 channels ? 다시"''' 를 적어 둔 슬라이드다.
+
+{def}"Each band is '''25 MHz''', made of '''832 30-kHz analog channels'''.
+Forward communication: base to mobile. Reverse communication: mobile to base.
+Two providers can share an area, which means '''416 channels in each cell for each provider'''. Among 416, '''21 channels are used for control'''.
+AMPS has a frequency '''reuse factor of 7'''." (p.19){/def}
+
+[[img:L10-19.png|p.19 AMPS Bands — Mobile station band 824–849 MHz, Base station band 869–894 MHz, 채널 30 kHz (필기본: Downlink = Forward, uplink = Reverse, "다시", "416 channels ? 다시")|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Mobile station band''' — 이름이 "누가 '''송신'''하나"를 말한다: mobile 이 보내는 대역 → '''reverse''' = [[uplink와 downlink|uplink]].
+* '''Base station band''' — base 가 보내는 대역 → '''forward''' = downlink.
+* '''forward / reverse''' 는 '''기지국 관점'''의 이름이다: 망(기지국)에서 사용자 쪽으로 "앞으로" 내보내는 게 forward, 사용자에서 망으로 "거꾸로" 올라오는 게 reverse. ([[GSM 대역]] · IS-95 에서도 같은 이름을 쓴다.)
+
+{analogy}🎭 '''왕복 2 차선 도로.''' 하행선(downlink, 869–894)과 상행선(uplink, 824–849)이 따로 있고, 각 도로에 30 kHz 폭 차선이 832 개. 통화 한 건 = '''상행 차선 하나 + 하행 차선 하나'''를 짝으로 빌리는 것. 이 도로를 두 회사(provider)가 차선을 반씩(416) 나눠 운영하고, 각 회사는 21 개 차선을 '''안내 방송용'''(control)으로 남겨 둔다.{/analogy}
+
+[[anim:amps_bands|MS band(uplink)과 BS band(downlink)가 나란히 그려진 뒤 한 MS 가 두 대역에서 채널을 하나씩 짝으로 잡는 것을 보고, 각 대역이 25 MHz = 832 × 30 kHz 임을 확인하라]]
+
+{exam}교수(10/20, 40:00 · 42:20 · 42:57): "'''I recommend you to memorize these uplink and downlink by imagining this illustration.''' Down from BS to MS, and up from MS to BS." / "You should memorize this terminology." — downlink: 송신 BS, 수신 MS · uplink: 송신 MS, 수신 BS. "Almost every communication system operates two different frequency bands for downlink and uplink."{/exam}
+
+{info}아래 채널 수 계산은 구조 이해용이다. 교수: "Now you see many different numbers … I'm not going to recommend you to memorize all these specific numbers … You don't have to memorize these number of channels"(41:33–42:20). 필기 "416 channels ? 다시" 도 수업에서는 따로 설명 없이 이 말로 넘어갔다.{/info}
+
+== 계산 ==
+<pre class="txt">
+1. 대역 폭          849 − 824 = 25 MHz        (869–894 도 25 MHz)
+2. 채널 수          25,000 kHz ÷ 30 kHz = 833.3  → '''832''' 채널 (방향당; 남는 조각은 guard)
+3. provider 2 곳    832 ÷ 2 = '''416''' / provider
+4. control          '''21'''  →  voice = 416 − 21 = '''395'''
+5. reuse factor 7   cell 당 voice ≈ 395 ÷ 7 ≈ '''56'''   ← 파생값 (슬라이드에 없음)
+</pre>
+
+[[sim:band_channels]]
+
+{warn}'''"다시" — 헷갈리는 두 군데만.'''
+# '''방향 이름''': 슬라이드 그림에서 "Forward: base to mobile" 화살표가 BS 대역(오른쪽)에서 '''출발'''해 MS 로 간다. 즉 869–894 는 '''BS 가 보내는''' 대역 = downlink. 824–849 는 '''MS 가 보내는''' 대역 = uplink. 주파수가 낮은 쪽이 uplink 라고 외워도 된다(GSM 도 890–915 가 uplink).
+# '''832 는 "한 방향" 개수''': 양쪽 대역에 832 개씩 있고, 통화는 둘을 짝으로 쓴다. "832 × 2 = 1664 통화" 가 '''아니다''' — 양방향 통화 832 개.{/warn}
+
+{tip}'''필기 속 질문: "416 channels ? 다시"'''
+416 = 832 ÷ 2. 미국은 한 지역에 이동통신 사업자를 '''두 곳'''(A/B) 허가해 경쟁시켰고, 각자 대역의 절반을 받았다(보충). 그래서 '''한 provider 가 가진 채널 = 416'''. 416 안에서 21 개는 [[AMPS control channel|control]](통화 설정·[[paging]]), 395 개는 voice.
+슬라이드의 "in each cell" 은 느슨한 표현이다: reuse factor 7 이므로 이 416(정확히는 voice 395)을 '''인접한 7 개 cell 이 나눠''' 쓴다. 한 cell 이 동시에 쓸 수 있는 voice 채널은 대략 395 / 7 ≈ 56 개. → [[frequency reuse]], [[reuse factor]]{/tip}
+
+{quiz}AMPS 의 각 대역은 25 MHz, 채널 폭은 30 kHz 다. 두 provider 가 한 지역을 나눠 쓰고, provider 당 21 개 채널이 control 용이다. provider 당 voice 채널 수는?{/quiz}
+{answer}25 MHz / 30 kHz = 833.3 → 832 채널. 832 / 2 = 416. 416 − 21 = '''395''' voice 채널. (reuse factor 7 을 적용하면 cell 당 약 56 개 — 묻는다면 395/7.){/answer}
+
+== 관련 문서 ==
+* [[AMPS]] · [[AMPS control channel]] · [[FDMA]] · [[uplink와 downlink]] · [[reuse factor]]
+* 비교: [[GSM 대역]] · [[IS-95 대역과 채널]] · 전체: [[CH05 1G–2G 셀룰러]]

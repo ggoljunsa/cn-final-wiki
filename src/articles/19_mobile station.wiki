@@ -1,0 +1,33 @@
+key: mobile station
+title: Mobile Station (MS, 이동국)
+category: 1강 셀룰러 동작, 용어
+---
+'''Mobile station(MS)''' 은 셀룰러망의 '''사용자 기기'''(휴대폰·스마트폰)다. 자기가 있는 [[cell]] 의 [[base station]] 과 무선으로 통신하고, 움직이면 BS 가 바뀐다([[handoff]]). L10 p.9 (p.12 필기 "스마트폰").
+
+{def}"Each cellular service area is divided into small regions called cells that consist of: Base Station (BS) · '''Mobile Station (MS)'''." (p.9)
+"① '''MS scans the band''' and sends the number on the strongest setup channel … ⑥ MSC assigns an unused voice channel; '''MS retunes'''" (p.12)
+cell 은 BS 와 MS 로 구성된다. MS 는 대역을 scan 해 가장 강한 setup channel 로 번호를 보내고, 할당받은 voice channel 로 주파수를 다시 맞춘다.{/def}
+
+[[img:L10-12.png|p.12 Transmitting — 육각 cell 안의 MS(필기 "스마트폰")가 ① closest base station 으로 번호 송신, ⑥ MSC 가 voice channel 할당 (필기본)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''mobile''' = 움직이는. 고정된 [[base station]] 과의 대비. 셀룰러가 해결하려는 문제 자체가 "'''움직이는''' station 을 어떻게 계속 서비스하나"다 → [[handoff]] · [[roaming]].
+* '''station''' = 통신 장치. 교수(10/20): MS 는 "'''individual user'''" 를 나타낸다 — WiFi·Bluetooth 의 station 과 같은 용어.
+
+MS 가 하는 일
+{|
+! 상황 || MS 의 동작 || 슬라이드
+|-
+| 발신 || 대역 scan → '''strongest setup channel''' 로 번호 송신 → 할당된 voice channel 로 '''retune''' || p.12 ①⑥
+|-
+| 수신 || paging 에 '''응답'''(위치가 알려짐) → ringing 에 '''answer''' || p.13 ③⑤
+|-
+| 이동 || 신호 세기가 MSC 에 감시되고, MSC 지시로 채널 변경(handoff) || p.15
+|-
+| 통신사 영역 밖 || 이웃 통신사 cell 에서 roaming || p.17
+|}
+
+{analogy}🎭 '''택시 승객.''' 승객(MS)은 어디든 돌아다니고, 지역마다 그 지역 배차센터(BS)가 담당한다. 승객은 "가장 잘 들리는" 배차센터에 콜을 넣고(strongest setup channel), 배정받은 택시 번호(voice channel)로 갈아탄다(retune).{/analogy}
+
+== 관련 문서 ==
+* [[base station]] · [[cell]] · [[통화 발신 과정]] · [[통화 수신 과정]] · [[handoff]] · [[uplink와 downlink]]

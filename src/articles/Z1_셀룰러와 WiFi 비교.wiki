@@ -1,0 +1,59 @@
+key: 셀룰러와 WiFi 비교
+title: 셀룰러와 WiFi 비교 (BS vs AP · cell vs BSS · handoff vs BSS-transition)
+category: 용어, 1강 셀룰러 동작
+---
+기말 범위의 [[cellular telephony|셀룰러]](wireless '''WAN''')와 중간고사 범위의 [[mid:CH04 WiFi|WiFi]](wireless '''LAN''', [[mid:IEEE 802.11]])는 그림이 놀랄 만큼 닮았다: 고정된 접속점(BS / AP) 하나가 일정 영역(cell / BSS)의 이동 단말(MS / station)을 서비스하고, 그 접속점들은 뒤에서 유선으로 묶인다(MSC / distribution system). 수강생 필기 "'''BS ↔ AP: Access point (동일 개념??)'''"(L10 p.9)이 바로 이 닮음에서 나온 질문이다. 이 문서는 무엇이 같고 무엇이 다른지 한 장으로 정리한다.
+
+{tip}'''필기 속 질문: "BS ↔ AP (동일 개념??)"''' (p.9) — '''역할은 같다.''' 교수(10/20 녹음 8:26): "The other name of base station could be '''AP, access point''' … It is the same … '''interchangeable'''." 강의실 천장의 AP 를 가리키며 "the station that serves everyone in this room" 이라고 했다. 다만 아래 표처럼 '''규모·표준·이동 지원'''이 다르다. "같은 역할의 다른 규모"로 기억하면 된다.{/tip}
+
+[[img:L10-09.png|L10 p.9 셀룰러: Cell 안의 BS·MS → MSC → PSTN. 필기 "AP: Access point (동일 개념??)" — 중간고사 L8 p.7–8 의 BSS(AP + stations) → distribution system 그림과 같은 모양 (필기본)|medium]]
+
+== 대응표 ⭐⭐ ==
+{|
+! 역할 || 셀룰러 (CH05) || WiFi 802.11 (CH04, 중간고사)
+|-
+| 망 종류 || wireless '''WAN''' (town·country) || wireless '''LAN''' (방·건물·캠퍼스)
+|-
+| 고정 접속점 || [[base station]] (BS) || AP (access point) — [[mid:BSS]] 의 중심
+|-
+| 이동 단말 || [[mobile station]] (MS) || station
+|-
+| 서비스 영역 || [[cell]] (수백 m ~ 수 km, 육각형으로 그림) || [[mid:BSS|BSS]] (수십 m)
+|-
+| 접속점을 묶는 유선 뒷단 || [[MSC]] → [[PSTN]] || [[mid:distribution system]] → [[mid:ESS|ESS]]
+|-
+| 중앙 지휘 || '''MSC''' 가 채널 할당·paging·handoff 결정 || 중앙 지휘자 없음(DCF 는 분산, AP 는 자기 BSS 만)
+|-
+| 주파수 || 면허 대역, [[frequency reuse]] 로 계획 배치 (N = 4, 7 …) || 비면허 ISM 대역(2.4/5 GHz), 겹치는 BSS 는 다른 채널을 고르는 정도
+|-
+| 매체 접근 || FDMA → TDMA → CDMA (BS/MSC 가 채널을 '''할당''') || [[mid:CSMA/CA]] (station 들이 '''경쟁'''), PCF 는 선택
+|-
+| 경계 이동 || [[handoff]] — MSC 가 every few seconds 감시, hard / soft, '''서비스 중단 없이''' || [[mid:station mobility|BSS-transition]] — 연속성 '''보장 안 함'''
+|-
+| 사업자 경계 || [[roaming]] (roaming contract) || [[mid:station mobility|ESS-transition]] (보장 없음)
+|-
+| infrastructure 없이 || D2D 만 가능 — "very inefficient" (교수) || [[mid:ad-hoc과 infrastructure|ad-hoc]] BSS 가 표준에 있음
+|}
+
+== 가장 큰 차이: 이동 중 연속성 ==
+* 셀룰러의 handoff 정의 자체가 "'''without interrupting service''' as a user moves across cells"(L10 p.14)이다. 그걸 위해 MSC 가 "monitors the level of the signal '''every few seconds'''"(p.15)하고, 요즘은 두 BS 와 동시에 붙는 [[soft handoff]] 를 쓴다.
+* WiFi 는 반대로 "IEEE 802.11 '''does not guarantee''' that communication is continuous during the move"(L8 p.12) — [[mid:station mobility]].
+* 교수는 두 수업에서 같은 예를 들었다: 10/6 "disconnected or slow communication while you are in fast transportation such as '''KTX or SRT'''", 10/20 "maintaining soft handoff is very difficult technically" on KTX/SRT.
+
+<pre class="ascii">
+  셀룰러                                  WiFi (802.11)
+  [BS1 cell] ──MS 이동──▶ [BS2 cell]      [AP1 BSS] ──station 이동──▶ [AP2 BSS]
+        └──── '''MSC''' 가 감시·결정 ────┘          (중앙 결정자 없음)
+  soft: {BS1}→{BS1,BS2}→{BS2}  끊김 없음      재연결(association) 동안 끊길 수 있음
+</pre>
+
+[[anim:handoff_hard_soft|셀룰러 handoff 에서 MSC 가 신호를 감시하며 BS1 → BS2 로 넘기는 장면 — WiFi 의 BSS-transition 에는 이런 지휘자가 없다는 점과 비교하라]]
+
+{analogy}🎭 '''시내버스 노선망 vs 동네 카페 와이파이.''' 셀룰러는 한 회사(통신사)가 도시 전체에 정류장(BS)을 계획적으로 깔고, 관제센터(MSC)가 버스를 보며 "다음 정류장 담당으로 넘겨"를 지휘한다 — 갈아타도 요금(통화)이 끊기지 않는다. WiFi 는 카페마다 각자 공유기(AP)를 달아 둔 것 — 옆 카페로 옮기면 다시 접속해야 하고 그동안 끊길 수 있다. 둘 다 "가까운 접속점에 무선으로 붙는다"는 점은 같다.{/analogy}
+
+{quiz}셀룰러의 BS 와 WiFi 의 AP 의 공통점 하나와 차이점 두 가지를 쓰시오.{/quiz}
+{answer}공통점: 무선 단말(MS/station)이 붙는 '''고정 접속점'''이고, 뒤쪽은 유선망(MSC / distribution system)에 연결된다(교수: "interchangeable"). 차이점: ① 규모 — BS 의 cell 은 수백 m~수 km(WAN), AP 의 BSS 는 수십 m(LAN). ② 이동 — 셀룰러는 MSC 가 결정하는 '''handoff''' 로 서비스 중단 없이 넘기지만, 802.11 은 BSS 사이 이동의 연속성을 '''보장하지 않는다'''. (그 밖에: 면허 대역 + frequency reuse vs 비면허 ISM + CSMA/CA){/answer}
+
+== 관련 문서 ==
+* [[base station]] · [[cell]] · [[MSC]] · [[handoff]] · [[soft handoff]] · [[roaming]] · [[CH05 셀룰러 동작]]
+* [[mid:BSS]] · [[mid:ESS]] · [[mid:distribution system]] · [[mid:station mobility]] · [[mid:ad-hoc과 infrastructure]] · [[mid:CSMA/CA]] · [[mid:IEEE 802.11]]

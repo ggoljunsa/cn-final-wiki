@@ -1,0 +1,54 @@
+key: D-AMPS
+title: D-AMPS (Digital AMPS — 2G, TDMA)
+category: 2강 1G–2G, 용어
+---
+'''D-AMPS(Digital AMPS)'''는 [[AMPS]] 를 디지털로 진화시킨 북미의 [[2G]] 시스템이다. AMPS 와 '''같은 대역·같은 30 kHz 채널'''을 그대로 쓰면서, 음성을 디지털화해 '''3 명을 [[TDMA]] 로''' 한 채널에 넣는다(48.6 kbps → [[QPSK]] → 30 kHz). L10 p.21–22.
+
+{def}"2nd Generation (2G): Digital AMPS (D-AMPS) — The '''evolution of the analog AMPS into a digital system'''.
+Band: The '''same bands and channels''' as AMPS.
+Transmission: Voice channel is '''digitized''' to 7.95 kbps. '''Three''' digital voice channels are combined using '''TDMA''' (48.6 kbps with overhead)." (p.21){/def}
+
+== 이름에서 개념 끌어내기 ==
+'''D'''igital + '''AMPS''' — 이름이 정의 그 자체다. "AMPS 인데 디지털". AMPS 의 무엇을 그대로 두고 무엇을 바꿨는지가 이름에 다 들어 있다: '''AMPS'''(대역·채널·cell 구조 유지) + '''Digital'''(채널 안의 음성 처리 방식 변경). 기존 기지국 주파수 면허와 대역 계획을 버리지 않고 용량을 3 배로 올리는 '''점진적 업그레이드'''.
+
+{analogy}🎭 '''같은 차선, 버스 전용 차로화.''' 30 kHz 차선(채널)은 그대로인데, 승용차(아날로그 통화) 한 대가 달리던 차선에 3 명을 태운 버스(TDMA 프레임)를 다니게 했다. 도로 공사(대역 변경) 없이 수송량 3 배.{/analogy}
+
+[[anim:damps_tdma_anim|왼쪽 AMPS(음성 1 → FM → 30 kHz)와 오른쪽 D-AMPS(음성 3 → digitizer → 슬롯 1·2·3 → QPSK → 같은 30 kHz)를 나란히 보고 '같은 대역에서 3 배 사용자'를 확인하라]]
+
+[[img:L10-22.png|p.22 D-AMPS Transmission — 3 kHz Voice → Digitizer 7.95 kbps × 3 → TDMA(1 2 3 1 2 3) 48.6 kbps → QPSK → 30 kHz, Channel 001 … 832 FDMA (필기본: "voice: digitized", TDMA 동그라미)|large]]
+
+== 전송 과정 ⭐⭐ ==
+<pre class="txt">
+1. 3 kHz analog 음성 × 3 사용자
+2. Digitizer            → 사용자당 7.95 kbps        ([[7.95 kbps 디지털 음성]])
+3. 3 명 합              → 3 × 7.95 = 23.85 kbps
+4. [[TDMA]] (+ overhead) → '''48.6 kbps'''              (슬롯 1 2 3 1 2 3 …)
+5. [[QPSK]]              → '''30 kHz''' analog 신호
+6. FDMA                 → Channel 001 … 832 중 하나
+</pre>
+
+[[sim:damps_tdma]]
+
+{|
+! || [[AMPS]] (1G) || D-AMPS (2G)
+|-
+| 대역·채널 || 824–849 / 869–894 MHz, 30 kHz × 832 || '''같음'''
+|-
+| 음성 || analog || '''digitized''' (7.95 kbps)
+|-
+| 채널당 사용자 || 1 || '''3'''
+|-
+| 다중 접속 || [[FDMA]] || FDMA + '''TDMA'''
+|-
+| 변조 || voice [[FM]] / control FSK || [[QPSK]]
+|}
+
+{warn}D-AMPS 는 "TDMA 시스템" 이지만 FDMA 를 버리지 않았다. '''832 개 30 kHz 채널(FDMA) 각각을 3 개 시간 슬롯(TDMA)으로''' 나눈다.{/warn}
+
+{info}필기 "기억 x"(7.95 kbps 옆) — '''녹음으로 확정''': "I would not recommend you to memorize these specific numbers. You will not see some OX quizzes that ask these kind of specific numbers." (10/20, 45:50–46:07; AMPS Bands 에서도 41:54). 기억할 것은 trend — "Evolving from '''analog''' communication to '''digital'''" — 와 "같은 대역 · voice digitized · TDMA".{/info}
+
+{exam}교수(10/20): D-AMPS 는 "an evolution … of AMPS, which is an analog one, into a '''digital''' system". AMPS 대비 key differences = voice 가 digital · 변조 QPSK · '''TDMA''' 로 voice user 공유(FDMA 와 hybrid). 대역은 AMPS 와 같다.{/exam}
+
+== 관련 문서 ==
+* [[AMPS]] · [[TDMA]] · [[7.95 kbps 디지털 음성]] · [[QPSK]] · [[2G]]
+* 같은 TDMA 계열: [[GSM]] · 전체: [[CH05 1G–2G 셀룰러]]

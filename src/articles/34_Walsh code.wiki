@@ -1,0 +1,62 @@
+key: Walsh code
+title: Walsh code (월시 코드)
+category: 3강 CDMA–4G, 용어
+---
+'''Walsh code''' 는 서로 '''직교(orthogonal)'''하는 ±1 칩열의 집합이다. [[CDMA]] 에서 사용자마다 하나씩 주어, 섞인 신호에서 자기 몫만 꺼내게 한다. [[IS-95]] forward 링크는 '''64 칩짜리 Walsh code W0–W63''' 으로 한 채널 안의 64 digital channel 을 구분한다. L10 p.29 (W0 … W63), p.30 (6 to 64).
+
+{def}p.29 블록도: "Digital channel 0 ('''Pilot channel''') all 1s" × '''W0''', … , Digital channel 63 × '''W63''' → Σ → 1.228 Mcps.
+→ 64 개 digital channel 각각에 서로 다른 Walsh code 를 곱해 더한다. W0 은 pilot channel.{/def}
+
+[[img:L10-29.png|p.29 — 점선 상자 "CDMA" 안의 W0, W1, …, W63 곱셈기 (필기본: "64 user")|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* 수학자 Joseph L. '''Walsh''' 가 정리한 Walsh 함수에서 온 이름이다 (Forouzan 보충 — 슬라이드에 없음). 이름 자체에 동작 설명은 없으니 '''"직교하는 칩열 표"''' 로 외운다.
+
+== 만드는 법 (Forouzan 보충 — 슬라이드에 없음) ==
+<pre class="txt">
+W_1 = [ +1 ]
+
+W_2N = | W_N   W_N |       (위 반은 그대로 두 번, 아래 반은 뒤쪽을 부호 반전)
+       | W_N  −W_N |
+
+W_2 = | +1 +1 |        W_4 = | +1 +1 +1 +1 |   ← c1
+      | +1 −1 |              | +1 −1 +1 −1 |   ← c2
+                             | +1 +1 −1 −1 |   ← c3
+                             | +1 −1 −1 +1 |   ← c4
+… 이렇게 2 배씩 키우면 W_64 = 64 × 64 → 행 64 개 = IS-95 의 W0 … W63
+</pre>
+* 첫 행은 '''전부 +1''' — IS-95 에서 W0 이 pilot channel("all 1s")에 쓰이는 이유와 연결된다.
+
+== 직교성 ==
+<pre class="txt">
+같은 코드:  c2 · c2 = (+1)(+1) + (−1)(−1) + (+1)(+1) + (−1)(−1) = 4 = N
+다른 코드:  c2 · c3 = (+1)(+1) + (−1)(+1) + (+1)(−1) + (−1)(−1) = 1 − 1 − 1 + 1 = 0
+</pre>
+→ 수신자가 합쳐진 신호에 자기 코드를 곱하면 자기 몫은 $N \cdot d_i$, 남의 몫은 0. $N$ 으로 나누면 $d_i$.
+
+[[anim:cdma_spreading|각 스테이션의 비트가 서로 다른 Walsh code 칩열과 곱해지는 장면에서 칩열 무늬가 서로 어떻게 다른지 보라]]
+
+[[sim:cdma_walsh]]
+
+== IS-95 에서의 두 가지 쓰임 ==
+{|
+! || forward (p.29) || reverse (p.30)
+|-
+| 역할 || '''사용자(digital channel) 구분''' || '''6 to 64 symbol modulation''' — 6 비트 묶음을 64 칩 코드 하나로 표현
+|-
+| 계산 || 19.2 ksps × 64 = 1.228 Mcps || 28.8 ksps ÷ 6 × 64 = 307.2 kcps
+|}
+reverse 에서는 MS 마다 도착 시각이 달라 Walsh code 의 직교성이 깨지므로 사용자 구분은 [[long code와 ESN|long code]] 가 맡는다 (Forouzan 보충).
+
+{tip}💡 '''필기 속 질문: "64 user"''' — Walsh code 64 개 = digital channel 64 개다. 그중 '''W0 은 pilot channel''' 이라 사용자 몫이 아니고, 표준에서는 sync·paging 에도 몇 개를 써서 음성 traffic 은 약 55 개다 (보충). → [[pilot channel]]{/tip}
+
+{analogy}🎭 '''박자표 합주.''' 64 명의 연주자에게 서로 다른 박자 무늬(짝·짝·쉼·짝 …)를 주고 동시에 친다. 귀가 특정 무늬에 맞춰 박수를 따라 치면 그 무늬의 연주자만 크게 들리고 나머지는 서로 엇박이라 상쇄된다.{/analogy}
+
+{quiz}c3 = [+1 +1 −1 −1], 채널 합 = [−1 −1 −3 +1] 일 때 스테이션 3 의 데이터는?{/quiz}
+{answer}<pre class="txt">
+(−1)(+1) + (−1)(+1) + (−3)(−1) + (+1)(−1) = −1 − 1 + 3 − 1 = 0
+0 ÷ 4 = 0  → 스테이션 3 은 아무것도 보내지 않음(silent)
+</pre>{/answer}
+
+== 관련 문서 ==
+* [[CDMA]] · [[DSSS]] · [[chip rate]] · [[pilot channel]] · [[IS-95 forward 전송]] · [[IS-95 reverse 전송]]

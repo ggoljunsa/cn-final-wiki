@@ -1,0 +1,38 @@
+key: AMPS control channel
+title: AMPS control channel (21 개, 10 kbps → FSK)
+category: 2강 1G–2G, 용어
+---
+'''AMPS control channel'''은 [[AMPS]] 에서 provider 당 416 채널 중 '''21 개'''를 차지하는 제어 전용 채널이다. 음성이 아니라 통화 설정·[[paging]]·채널 할당 같은 '''명령'''을 나르며, 10 kbps '''디지털''' 데이터를 [[mid:FSK|FSK]] 로 30 kHz 아날로그 신호로 만들어 보낸다. L10 p.19–20.
+
+{def}"Among 416, '''21 channels are used for control'''." (p.19)
+"'''Control channels use FSK''' to create 30kHz analog signals." (p.20) — 그림: "10 kbps control → [FSK] → 30 kHz Analog"{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''control''' = 대화 내용이 아니라 대화를 '''관리'''하는 신호. 셀룰러 동작에서 MS 가 "가장 강한 '''setup channel'''" 을 scan 해 번호를 보내고([[통화 발신 과정]]), MSC 가 모든 cell 에 query 를 날리는 것([[통화 수신 과정]], [[paging]])이 바로 이 채널 위에서 일어난다. voice channel 은 그 뒤 MSC 가 '''할당'''해 준다.
+
+{analogy}🎭 '''식당의 카운터(control)와 테이블(voice).''' 손님(MS)은 먼저 카운터에 가서 "2 명이요"(번호) 라고 말하고, 직원(MSC)이 빈 테이블(unused voice channel)을 배정한다. 식사(통화)는 테이블에서 한다. 카운터는 21 개뿐이지만 짧은 대화만 하니 충분하다.{/analogy}
+
+[[img:L10-20.png|p.20 아래 두 줄 — 10 kbps control → FSK → 30 kHz Analog (필기본: 빨간 상자 "Digital communication")|medium]]
+
+== 왜 control 만 디지털인가 ==
+* 필기 "'''Digital communication'''" 이 핵심. AMPS 는 "analog system" 이지만 control 정보(전화번호, 채널 번호, 명령)는 '''비트'''다. 음성은 조금 찌그러져도 알아듣지만, 채널 번호가 한 자리 틀리면 통화가 엉뚱한 채널로 간다 → '''정확성이 중요한 정보는 디지털'''.
+* 비트를 무선으로 보내려면 [[mid:digital-to-analog conversion|digital-to-analog conversion]] 이 필요하다 → [[mid:FSK|FSK]](0/1 을 두 주파수로).
+* 출력은 voice 채널과 같은 '''30 kHz''' 칸 — FDMA 격자 안에 그대로 들어간다.
+
+{|
+! || voice channel || control channel
+|-
+| 개수 (provider 당) || 395 || '''21'''
+|-
+| 입력 || 3 kHz analog 음성 || '''10 kbps digital'''
+|-
+| 변조 || [[FM]] || [[mid:FSK|FSK]]
+|-
+| 출력 || 30 kHz analog || 30 kHz analog
+|-
+| 용도 || 통화 내용 || 통화 설정, paging, 채널 할당
+|}
+
+== 관련 문서 ==
+* [[AMPS]] · [[AMPS 대역과 채널]] · [[FM]]
+* [[통화 발신 과정]] · [[통화 수신 과정]] · [[paging]]

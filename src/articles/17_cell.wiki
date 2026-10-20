@@ -1,0 +1,36 @@
+key: cell
+title: Cell (셀)
+category: 1강 셀룰러 동작, 용어
+---
+'''Cell''' 은 셀룰러 서비스 지역을 잘게 나눈 '''작은 영역'''이다. 각 cell 에는 [[base station]](BS) 하나와 그 안의 [[mobile station]](MS)들이 있다. 그림에서는 '''육각형'''으로 그린다. L10 p.9.
+
+{def}"Each cellular service area is divided into '''small regions called cells''' that consist of: Base Station (BS) · Mobile Station (MS)." (p.9)
+셀룰러 서비스 지역은 cell 이라는 작은 영역들로 나뉘고, 각 cell 은 BS 와 MS 로 구성된다.{/def}
+
+[[img:L10-09.png|p.9 Cellular system — 노란 육각형 Cell 안에 BS(탑)와 MS(폰), BS 는 MSC 에 유선 연결. 필기 "AP: Access point (동일 개념??)" (필기본)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''cell''' = 세포, 벌집의 방. 큰 몸(서비스 지역)을 이루는 '''작은 단위'''. 여기서 "'''cell'''ular" 라는 이름이 나왔다.
+* 왜 '''육각형'''? 원은 빈틈 없이 깔 수 없고, 정사각형은 꼭짓점 쪽이 BS 에서 너무 멀다. 육각형은 빈틈 없이 깔리면서 원에 가장 가깝다(실제 전파 범위는 대략 원). 그림의 관례이고 실제 cell 은 지형 따라 찌그러져 있다.
+* 왜 작게 나누나? 각 cell 의 BS 출력을 낮추고, 같은 주파수를 '''떨어진 cell 에서 다시 쓸 수 있게''' — [[frequency reuse]]. cell 이 작을수록 같은 주파수를 더 여러 번 재사용 → 수용 인원↑.
+
+{|
+! || cell (셀룰러) || [[mid:BSS|BSS]] (WiFi)
+|-
+| 중심 장비 || [[base station]] || AP (access point)
+|-
+| 크기 (대략) || 수백 m ~ 수 km || 수십 m (방·건물)
+|-
+| 이웃과의 관계 || 이웃 cell 은 다른 frequency set ([[reuse factor]] 패턴) || 겹치는 BSS 는 다른 채널을 고르는 것이 관례
+|-
+| 경계를 넘으면 || MSC 가 [[handoff]] || [[mid:station mobility|BSS-transition]] — 연속성 보장 안 함
+|}
+→ [[셀룰러와 WiFi 비교]]
+
+{analogy}🎭 '''학교의 반 편성.''' 전교생(서비스 지역의 사용자)을 반(cell)으로 나누고 반마다 담임(BS)을 배정한다. 학생(MS)은 자기 반 담임에게만 말한다. 학년주임(MSC)이 모든 담임을 조정한다. 전학(cell 이동)하면 담임이 바뀐다(handoff).{/analogy}
+
+[[anim:frequency_reuse_hex|육각 cell 이 바둑판처럼 깔리고, 이웃 cell 끼리 같은 주파수를 쓰면 경계에서 간섭이 생기는 장면부터 보라]]
+
+== 관련 문서 ==
+* [[cellular telephony]] · [[base station]] · [[mobile station]] · [[frequency reuse]] · [[handoff]]
+* [[셀룰러와 WiFi 비교]] · [[mid:BSS]]

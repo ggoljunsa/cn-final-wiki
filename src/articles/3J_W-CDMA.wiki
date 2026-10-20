@@ -1,0 +1,38 @@
+key: W-CDMA
+title: W-CDMA (Wideband CDMA, IMT-DS)
+category: 3강 CDMA–4G, 용어
+---
+'''W-CDMA (wideband CDMA)''' 는 [[IMT-2000 표준]] 중 '''IMT-DS (Direct Sequence)''' 에 해당하는 3G 표준이다. [[CDMA]] 의 한 버전으로 '''5 MHz''' 대역폭을 쓰며 '''유럽'''에서 개발됐다. L10 p.35.
+
+{def}"'''IMT-DS''': Use a version of CDMA: '''wideband CDMA (W-CDMA)'''. Use a '''5 MHz bandwidth'''. Developed in '''Europe'''." (p.35){/def}
+
+[[img:L10-35.png|p.35 IMT-DS = W-CDMA (빨간 상자, 필기본: "South Korea 3G")|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Wideband''' — 넓은 대역. IS-95 의 1.228 MHz 보다 약 4 배 넓은 '''5 MHz'''. 넓게 퍼뜨릴수록 chip rate 가 높아져 더 많은 데이터를 실을 수 있다.
+* '''Direct Sequence''' (IMT-DS) — [[DSSS]] 의 그 DS. 칩열을 직접 곱해 퍼뜨리는 방식이라는 뜻.
+
+<pre class="txt">
+IS-95 채널 1.228 MHz  →  W-CDMA 5 MHz       5 / 1.228 ≈ 4.07 배
+(참고: W-CDMA chip rate 3.84 Mcps — 보충, 슬라이드에 없음)
+</pre>
+
+{|
+! || [[IS-95]] (2G) || '''W-CDMA''' (3G) || [[CDMA 2000]] (3G)
+|-
+| 대역폭 || 1.228 MHz || '''5 MHz''' || 15 MHz + 1.25 MHz
+|-
+| 개발 || 북미 || '''유럽''' || 북미
+|-
+| IMT 이름 || — || '''IMT-DS''' || IMT-MC
+|}
+
+{info}W-CDMA 는 GSM 을 쓰던 유럽·아시아 사업자가 3G 로 넘어가는 길이었고, 이후 UMTS 라는 이름으로 널리 퍼졌다 (보충 — 슬라이드에 없음). 한국도 SK텔레콤·KT 가 W-CDMA 로 3G 를 본격 전개했다 → 필기 "South Korea 3G".{/info}
+
+{analogy}🎭 2 차선 도로(IS-95, 1.228 MHz)를 '''8 차선 고속도로(5 MHz)'''로 넓힌 것. 같은 "언어로 구분하기(CDMA)" 규칙을 쓰지만 길이 넓어 더 많은 짐(데이터)을 나른다.{/analogy}
+
+{quiz}IMT-DS 의 실제 표준 이름, 대역폭, 개발 지역은?{/quiz}
+{answer}'''W-CDMA''' (wideband CDMA), '''5 MHz''', '''Europe'''.{/answer}
+
+== 관련 문서 ==
+* [[IMT-2000 표준]] · [[CDMA 2000]] · [[CDMA]] · [[IMT-2000]] · [[3G]]

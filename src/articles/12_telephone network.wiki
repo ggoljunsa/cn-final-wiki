@@ -1,0 +1,35 @@
+key: telephone network
+title: Telephone Network (전화망)
+category: 1강 셀룰러 동작, 용어
+---
+'''Telephone network''' 는 [[WAN 분류|Wired WAN]] 의 첫 번째 instance 다. 원래 '''음성'''을 나르려고 100 년 넘게 깔아 온 유선 전화망이고, 슬라이드 p.5–7 오른쪽 위 그림이 그 계층 구조(local loop → end offices → trunk → tandem offices → trunk → regional offices)를 보여 준다. 셀룰러망의 [[MSC]] 가 연결되는 '''[[PSTN]]''' 이 바로 이것이다.
+
+{def}"Wired WANs — '''Telephone networks''' · Cable networks." (p.5) 그림 라벨: "'''Local loop''' · '''End offices''' · '''Trunk''' · '''Tandem offices''' · '''Regional offices'''".
+유선 WAN 의 하나인 전화망. 가입자 전화는 local loop 로 end office 에, office 들끼리는 trunk 로 계층적으로 연결된다.{/def}
+
+[[img:L10-05.png|p.5 Wired WANs — Telephone networks 그림: 전화기들 →(Local loop)→ End offices →(Trunk)→ Tandem offices →(Trunk)→ Regional offices|medium]]
+
+== 이름에서 개념 끌어내기 (그림의 라벨 읽기) ==
+{|
+! 라벨 || 뜻
+|-
+| '''Local loop''' || 가입자 전화기와 가장 가까운 전화국(end office)을 잇는 선. 집마다 하나씩 "고리(loop)" 처럼 나가는 구리선
+|-
+| '''End office''' || 가입자가 직접 붙는 동네 전화국(= central office). 셀룰러 슬라이드 p.12–13 의 '''telephone central office''' 가 이 자리
+|-
+| '''Trunk''' || 전화국과 전화국 사이 굵은 간선. 여러 통화를 [[mid:multiplexing|multiplexing]] 해서 한꺼번에 나름 (나무의 '''줄기''')
+|-
+| '''Tandem office''' || end office 들 사이를 중계하는 교환국 ("tandem" = 앞뒤로 이어서)
+|-
+| '''Regional office''' || 지역 단위 최상위 교환국. 그림에서 가장 큰 원
+|}
+* 계층이 올라갈수록 원이 커진다 — 더 많은 통화를 모아서 처리한다는 뜻.
+* (Forouzan 보충 — 슬라이드에 없음) 전화망은 원래 '''circuit-switched'''(통화 동안 경로 하나를 독점)이고 음성 대역(약 4 kHz)용이다. 데이터를 싣기 위해 dial-up modem, DSL 이 나왔다 → [[circuit switching과 packet switching]].
+
+{analogy}🎭 '''강의 지류와 본류.''' 집집마다 나온 작은 시냇물(local loop)이 동네 저수지(end office)에 모이고, 굵은 강(trunk)을 따라 중계 댐(tandem office)을 거쳐 큰 호수(regional office)로 간다. 물(통화)이 많이 모일수록 강폭이 넓어진다.{/analogy}
+
+{info}셀룰러와의 관계: 휴대폰 통화도 결국 [[MSC]] 를 거쳐 이 유선 전화망([[PSTN]])의 central office 로 들어간다(p.12 ③). 그래서 '''유선 전화(stationary phone)와 휴대폰이 서로 통화된다'''(p.10 필기 "wired phone도 wireless에 연결 가능").{/info}
+
+== 관련 문서 ==
+* [[PSTN]] · [[WAN 분류]] · [[cable network]] · [[통화 발신 과정]] · [[MSC]]
+* [[mid:multiplexing]] · [[mid:TDM]]

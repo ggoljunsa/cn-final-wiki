@@ -1,0 +1,32 @@
+key: cable network
+title: Cable Network (케이블망)
+category: 1강 셀룰러 동작, 용어
+---
+'''Cable network''' 는 [[WAN 분류|Wired WAN]] 의 두 번째 instance 다. 슬라이드(p.5–7)에는 이름만 나오고 그림·설명은 없다 — 이번 강의의 focus 는 wireless WAN 이라 넘어갔다. 아래 설명은 '''(Forouzan 보충 — 슬라이드에 없음)'''.
+
+{def}"Wired WANs — Telephone networks · '''Cable networks'''." (p.5)
+유선 WAN 의 하나인 케이블망. 원래 케이블 TV 방송을 나르던 동축 케이블망을 양방향 데이터망으로 쓴다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''cable''' = 케이블 '''TV''' 의 그 케이블(동축 케이블, coaxial cable). 전화망이 "음성"용으로 태어났다면, 케이블망은 "'''TV 방송'''"용으로 태어났다.
+* 그래서 원래는 '''한 방향'''(방송국 → 집)이었다. 데이터(인터넷)를 싣기 위해 양방향으로 바꾼 것이 오늘날의 케이블 인터넷.
+
+{|
+! || [[telephone network]] || cable network
+|-
+| 원래 목적 || 음성 통화 (양방향, 1:1) || TV 방송 (단방향, 1:다)
+|-
+| 매체 || 꼬임쌍선(local loop) || 동축 케이블 (+ 광섬유)
+|-
+| 대역폭 || 좁음 (음성 대역) || 넓음 (TV 채널 수백 개)
+|-
+| 데이터용 기술 (보충) || dial-up modem, DSL || cable modem (DOCSIS)
+|}
+
+* (Forouzan 보충) 1세대는 전부 동축 케이블이었고, 2세대 '''HFC(Hybrid Fiber-Coaxial)''' 는 방송국(head end)에서 동네까지는 광섬유, 동네에서 집까지만 동축을 쓴다. 넓은 대역을 [[mid:FDM]] 으로 잘라 TV 채널·하향 데이터·상향 데이터에 나눠 준다.
+
+{analogy}🎭 '''원래 수도관이던 것을 양방향 파이프로 개조.''' 정수장(방송국)에서 집으로만 물(TV 신호)을 보내던 굵은 관에, 집에서 위로 올려 보내는 가는 관을 덧붙여 양쪽으로 쓰게 만든 것이 케이블 인터넷이다.{/analogy}
+
+== 관련 문서 ==
+* [[WAN 분류]] · [[telephone network]] · [[CH05 셀룰러 동작]]
+* [[mid:FDM]] · [[mid:bandwidth]]

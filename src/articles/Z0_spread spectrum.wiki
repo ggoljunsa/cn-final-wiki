@@ -1,0 +1,51 @@
+key: spread spectrum
+title: Spread spectrum (대역 확산)
+category: 용어, 3강 CDMA–4G
+---
+'''spread spectrum''' 은 원래 신호에 필요한 대역보다 '''훨씬 넓은 대역으로 신호를 퍼뜨려''' 보내는 기법의 총칭이다. 대표 방식이 두 가지 — 주파수를 뛰어다니는 '''[[mid:FHSS|FHSS]]'''(중간고사 Bluetooth)와 칩열을 곱하는 '''[[DSSS]]'''(이번 [[IS-95]]). 간섭·도청에 강하고, DSSS 는 [[CDMA]] 의 기반이 된다. 이름은 L10 p.27 의 "DSSS (Direct-Sequence '''Spread Spectrum''')" 에 나온다.
+
+{def}"DSSS (Direct-Sequence '''Spread Spectrum'''): a '''signal-spreading''' modulation technique" (L10 p.27)
+"FHSS (frequency-hopping '''spread spectrum''')" — Use FHSS method to avoid interference from other devices or networks. (L9 p.18, 중간고사)
+→ 신호를 넓게 퍼뜨리는 변조 기법들.{/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''spectrum''' — 신호가 차지하는 주파수 폭([[mid:bandwidth|bandwidth]]).
+* '''spread''' — 퍼뜨린다. 필기 스케치 "'''W1 ≪ W2'''"(p.27): 원래 폭 W1 의 신호가 W2 로 퍼진다.
+
+== 두 방식 비교 ⭐⭐ ==
+{|
+! || [[mid:FHSS|FHSS]] || '''[[DSSS]]'''
+|-
+| 풀네임 || Frequency-Hopping Spread Spectrum || Direct-Sequence Spread Spectrum
+|-
+| 퍼뜨리는 방법 || 반송파 주파수를 '''시간마다 바꿈''' (hop) || 비트마다 '''칩열을 곱함''' (칩 n 개)
+|-
+| 한 순간에 쓰는 대역 || 좁음 (한 채널) || '''넓음''' (전체)
+|-
+| 길게 보면 || 대역 전체에 퍼짐 || 대역 전체에 퍼짐
+|-
+| 이 과목의 예 || Bluetooth 1600 hops/s, dwell 625 μs (L9) || IS-95 1.228 Mcps, 확산 64 배 (L10)
+|-
+| 다중 접속으로 || (hop 순서로 piconet 구분) || '''CDMA''' (코드로 사용자 구분)
+|}
+
+<pre class="txt">
+FHSS :  시간 →   [f3]   [f0]   [f2]   [f1]   …     (좁은 띠가 여기저기로 뜀)
+DSSS :  시간 →   [=========== 전체 대역 ===========]  (늘 넓게 깔림, 칩으로 쪼갬)
+</pre>
+
+[[anim:cdma_spreading|비트 하나가 칩열로 잘게 쪼개지며 넓게 퍼지는 것이 DSSS — FHSS 의 "주파수 뛰기"와 어떻게 다른지 비교하라]]
+
+== 왜 퍼뜨리나 (Forouzan 보충 — 슬라이드에 없음) ==
+* Forouzan 의 두 원칙: ① 퍼진 대역 $B_{SS} \gg B$ (원래 필요 대역), ② 퍼뜨리는 과정은 원래 신호와 '''독립적인''' 코드로 한다.
+* 간섭에 강함: 좁은 띠에 들어온 잡음·간섭은 역확산 후 넓게 흩어져 약해진다 → IS-95 [[IS-95 frequency reuse|reuse factor 1]] 의 근거.
+* 보안: 코드(또는 hop 순서)를 모르면 신호가 잡음처럼 보인다. 원래 군사 통신에서 나왔다.
+* 대가: 대역을 넓게 쓴다 — 그래서 여러 사용자가 같은 넓은 대역을 '''코드로 나눠''' 함께 써야(CDMA) 낭비가 아니다.
+
+{analogy}🎭 '''FHSS 는 장소를 계속 옮기며 하는 밀담''', '''DSSS 는 한자리에서 하되 둘만 아는 암호 억양으로 길게 늘여 말하는 밀담'''이다. 둘 다 엿듣는 사람(간섭·도청)에게는 소음처럼 들린다.{/analogy}
+
+{quiz}spread spectrum 의 두 방식의 full name 을 쓰고, 각각 이 과목의 어느 기술에서 나왔는지 쓰시오.{/quiz}
+{answer}'''FHSS''' (Frequency-Hopping Spread Spectrum) — Bluetooth radio layer (CH04). '''DSSS''' (Direct-Sequence Spread Spectrum) — IS-95 (CH05), CDMA 의 기반.{/answer}
+
+== 관련 문서 ==
+* [[DSSS]] · [[mid:FHSS]] · [[CDMA]] · [[chip rate]] · [[IS-95]] · [[mid:bandwidth]]

@@ -1,0 +1,51 @@
+key: 셀룰러 세대 비교표
+title: 셀룰러 세대 비교표 — 1G부터 4G까지 한 장에
+category: 안내
+---
+CH05 (1) p.18–36 을 표 하나로 압축했다. 시험 직전에 이 표만 보고 각 칸을 설명할 수 있으면 세대 부분은 끝난 것이다. 칸마다 사전 문서로 들어갈 수 있다.
+
+[[anim:access_methods|FDMA(주파수로 나눔) → TDMA(시간으로 나눔) → CDMA(코드로 나눔). 표의 "다중 접속" 열이 이 그림이다]]
+
+== 세대별 표준 비교 ==
+{|
+! 세대 || 표준 || 아날로그/디지털 || 다중 접속 || 대역·채널 || 핵심 수치 || 슬라이드
+|-
+| [[1G]] || [[AMPS]] (북미) || 아날로그 || [[FDMA]] || 824–849 / 869–894 MHz, 30 kHz 채널 832 개 || provider 당 416 채널(control 21), reuse factor 7, voice=[[FM]], control=[[mid:FSK|FSK]] || p.18–20
+|-
+| [[2G]] || [[D-AMPS]] (북미) || 디지털 || [[TDMA]] (+FDMA) || AMPS 와 같은 대역·채널 || 음성 7.95 kbps × 3 → 48.6 kbps (overhead 포함) || p.21–22
+|-
+| 2G || [[GSM]] (유럽) || 디지털 || TDMA (+FDMA) || 890–915 / 935–960 MHz, 200 kHz 채널 124 개 || slot 156.25 bits, 8 slot/frame, 26 frame/multiframe = 120 ms → '''270.8 kbps''' || p.23–26
+|-
+| 2G || [[IS-95]] (북미·한국) || 디지털 || '''[[CDMA]]''' ([[DSSS]]) (+FDMA) || 800 / 1,900 MHz, 1.228 MHz 채널 20 개, provider 당 10 || '''reuse factor 1''', GPS 동기화, [[pilot channel]] → soft handoff || p.27–32
+|-
+| [[3G]] || [[IMT-2000]] (ITU 청사진) || 디지털 || 표준마다 다름 ([[W-CDMA]]·[[CDMA 2000]] 등 5종) || 2 GHz 대역, 2 MHz 대역폭 || 144 kbps(차량) / 384 kbps(보행) / 2 Mbps(정지), packet+circuit || p.33–35
+|-
+| [[4G]] || (요구사항) || 디지털 || — || — || 100 Mbps(이동) / 1 Gbps(정지), '''[[all-IP]]''' packet-switched || p.36
+|}
+
+== handoff·reuse 비교 ==
+{|
+! || FDMA/TDMA 계열 (AMPS, D-AMPS, GSM) || CDMA 계열 (IS-95)
+|-
+| [[reuse factor]] || 7 같은 값 — 이웃 cell 은 다른 주파수 || '''1''' — 이웃 cell 이 같은 대역을 써도 된다
+|-
+| 이유 || 같은 주파수면 경계에서 [[co-channel interference]] || 이웃 cell 의 간섭이 CDMA/DSSS 전송에 영향을 못 준다
+|-
+| [[handoff]] || [[hard handoff]] (BS 하나와만 통신, 초기 시스템) || [[soft handoff]] — pilot channel 로 이웃 BS 를 미리 감지
+|}
+
+{analogy}
+세대 변화는 '''한 강의실을 여러 명이 쓰는 방법'''의 변화다. 1G 는 강의실을 칸막이로 나눠 각자 한 칸(FDMA), 2G TDMA 는 한 칸을 시간표로 돌려 씀, CDMA 는 칸막이 없이 모두 동시에 말하되 각자 다른 언어로 말해서 자기 언어만 알아듣는 것. 그래서 CDMA 는 옆 강의실과 같은 방을 써도(reuse factor 1) 괜찮다.
+{/analogy}
+
+{quiz}
+① 1G 와 2G 를 가르는 가장 큰 차이는? ② IS-95 의 reuse factor 가 1 일 수 있는 이유는? ③ GSM 의 channel bit rate 270.8 kbps 를 계산식으로 쓰라.
+{/quiz}
+{answer}
+① 아날로그 → 디지털 (AMPS 는 analog, D-AMPS 는 AMPS 를 digital 로 진화시킨 것).
+② 이웃 cell 에서 오는 간섭이 CDMA/DSSS 전송에 영향을 주지 못하기 때문 (사용자를 주파수가 아니라 code 로 구분).
+③ $\frac{1}{120\text{ ms}} \times 26 \times 8 \times 156.25 = 270.8\text{ kbps}$ (26 frame × 8 slot × 156.25 bits 가 120 ms 마다).
+{/answer}
+
+== 관련 문서 ==
+* [[셀룰러 세대]] · [[CH05 1G–2G 셀룰러]] · [[CH05 IS-95·3G·4G]] · [[공식 모음]]

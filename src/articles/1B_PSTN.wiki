@@ -1,0 +1,23 @@
+key: PSTN
+title: PSTN (Public Switched Telephone Network, 공중 교환 전화망)
+category: 1강 셀룰러 동작, 용어
+---
+'''PSTN''' 은 전 세계의 기존 '''유선 전화망'''이다 — 바로 [[telephone network]](local loop–end office–trunk–tandem–regional office). 셀룰러망의 [[MSC]] 는 PSTN 에 연결돼 있어서 '''휴대폰과 유선 전화(stationary phone)가 서로 통화'''할 수 있다. L10 p.9–10 그림.
+
+{def}그림 라벨: "'''Public switched telephone network (PSTN)'''" — MSC 와 '''Stationary phone''' 사이 (p.9–10).
+p.12–13 의 "'''Telephone central office'''" 가 PSTN 쪽 입구다.
+공중 교환 전화망. MSC 와 유선 전화기를 잇는 기존 전화망이며, 셀룰러 통화는 central office 를 통해 이 망으로 들어간다.{/def}
+
+[[img:L10-10.png|p.10 MSC 아래 타원 "Public switched telephone network (PSTN)" — 왼쪽 Stationary phone 과 연결. 필기 "wired phone도 wireless에 연결 가능" (필기본)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Public''' — 누구나 쓰는 공중망 (사설 내선망이 아님).
+* '''Switched''' — '''회선 교환(circuit switching)''' 망. 통화마다 교환기가 경로를 연결해 통화 동안 유지한다 → [[circuit switching과 packet switching]].
+* '''Telephone Network''' — 원래 음성용.
+
+{info}필기 "'''wired phone도 wireless에 연결 가능'''" (p.10) — 그림에서 stationary phone → PSTN → MSC → BS → MS 가 한 줄로 이어진다. 유선 전화로 휴대폰에 걸 수 있는 이유다. 수신(p.13)에서 "Caller → Telephone central office → MSC" 로 시작하는 것도 이 경로.{/info}
+
+{analogy}🎭 '''오래된 고속도로망에 새 진입로를 연결.''' 유선 전화망(PSTN)은 이미 전국에 깔린 고속도로다. 셀룰러는 새로 만든 동네 길(cell·BS)이고, MSC 가 그 동네 길을 고속도로에 잇는 IC 다. 덕분에 새 길에서 출발한 차(휴대폰 통화)도 고속도로를 타고 어디든 간다.{/analogy}
+
+== 관련 문서 ==
+* [[telephone network]] · [[MSC]] · [[통화 발신 과정]] · [[통화 수신 과정]] · [[cellular telephony]]

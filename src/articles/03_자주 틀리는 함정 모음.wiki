@@ -1,0 +1,78 @@
+key: 자주 틀리는 함정 모음
+title: 자주 틀리는 함정 모음 — CH05 셀룰러
+category: 안내
+---
+OX·객관식에서 헷갈리기 쉬운 짝을 모았다. 각 줄의 '''틀린 생각 → 맞는 사실''' 을 읽고, 이유가 바로 떠오르지 않으면 링크된 문서로 간다. 교수는 "숫자를 묻는 OX 는 안 낸다"(46:00)고 했으니, 함정은 대부분 '''개념의 방향·짝짓기'''에서 나온다.
+
+{analogy}
+함정 문제는 '''쌍둥이 구별하기'''다. uplink 와 downlink, hard 와 soft, FDMA 와 TDMA 는 얼굴이 닮았지만 "누가 보내나", "끊고 잇나 / 잇고 끊나", "무엇으로 나누나" 같은 점 하나로 구별된다. 그 점 하나만 정확히 기억하면 된다.
+{/analogy}
+
+== 방향과 이름 ==
+{|
+! 틀린 생각 || 맞는 사실 || 문서
+|-
+| downlink = MS 가 BS 로 보내는 것 || '''downlink = forward = BS → MS''', uplink = reverse = MS → BS. 교수: "uplink/downlink 는 외워라" || [[uplink와 downlink]]
+|-
+| AMPS 의 824–849 MHz 는 BS 가 쓰는 대역 || 824–849 MHz 는 '''Mobile station band'''(MS 가 송신 = reverse). BS 는 869–894 MHz 로 송신 || [[AMPS 대역과 채널]]
+|-
+| handoff 와 handover 는 다른 절차 || 같은 개념이다 (교수 26:27) || [[handoff]]
+|-
+| base station 과 WiFi 의 AP 는 전혀 다른 것 || 역할은 같다 — 교수: "interchangeable"(8:39). 규모·표준·MSC 유무가 다를 뿐 || [[셀룰러와 WiFi 비교]]
+|}
+
+== 구조와 동작 ==
+{|
+! 틀린 생각 || 맞는 사실 || 문서
+|-
+| handoff 를 결정하는 것은 MS || '''MSC''' 가 every few seconds 신호 세기를 감시하고 새 cell 을 찾아 채널을 바꾼다 (교수 33:09 "made by MSC, not by MS") || [[handoff]] · [[MSC]]
+|-
+| 전화를 받을 때도 걸 때처럼 MS 가 먼저 신호를 보낸다 || 수신은 MS 위치를 모르므로 MSC 가 '''모든 cell 에 paging''' 을 보내야 한다 || [[통화 수신 과정]] · [[paging]]
+|-
+| 발신 때 MS 는 아무 BS 에나 번호를 보낸다 || 대역을 scan 해 '''가장 강한(closest) setup channel''' 로 보낸다 — 교수 "very important"(16:10) || [[통화 발신 과정]]
+|-
+| hard handoff 는 두 BS 와 동시에 통신 || 반대다. hard = '''BS 하나와만''' (break before make), soft = '''두 BS 와 동시에''' (make before break) || [[hard handoff]] · [[soft handoff]]
+|-
+| 요즘도 hard handoff 를 주로 쓴다 || hard 는 early systems. 교수: "nowadays we never use hard handoff"(29:54) || [[hard handoff]]
+|-
+| 인접 cell 이 같은 주파수를 써도 언제나 괜찮다 || FDMA/TDMA 계열에서는 경계의 사용자가 간섭을 받으므로 금지. '''CDMA(IS-95)만 reuse factor 1''' 이 가능 || [[frequency reuse]] · [[IS-95 frequency reuse]]
+|-
+| reuse factor N 은 cell 하나가 쓰는 주파수 개수 || N 은 '''reuse pattern 을 이루는 cell 의 개수'''. N 이 클수록 같은 주파수 cell 이 멀어진다 || [[reuse factor]]
+|-
+| roaming 은 같은 통신사 안에서 cell 을 옮기는 것 || 그건 handoff. roaming 은 '''다른 service provider''' 구역에서 roaming contract 로 서비스를 받는 것 || [[roaming]]
+|}
+
+== 세대 ==
+{|
+! 틀린 생각 || 맞는 사실 || 문서
+|-
+| AMPS 는 이름처럼 advanced 한 디지털 시스템 || AMPS 는 '''analog''' 1G 시스템, FDMA. 교수: "it is not advanced, but it is named" || [[AMPS]]
+|-
+| AMPS 는 voice 와 control 모두 FM || voice 는 '''FM''', control 은 '''FSK''' (10 kbps 디지털 데이터) || [[AMPS control channel]] · [[FM]]
+|-
+| D-AMPS 는 AMPS 와 다른 새 대역을 쓴다 || '''같은 bands and channels''' 를 쓰고, 음성을 디지털화해 TDMA 로 채널당 3 명 || [[D-AMPS]]
+|-
+| GSM 은 순수 TDMA || D-AMPS 처럼 '''TDMA + FDMA''' (124 개 200 kHz 채널을 FDMA 로, 그 안을 8 slot TDMA 로) || [[GSM]] · [[TDMA]]
+|-
+| 한국 2G 는 GSM || 한국은 '''IS-95 (CDMA)'''. GSM 은 유럽 표준 || [[IS-95]] · [[GSM]]
+|-
+| IS-95 는 FDMA 를 전혀 안 쓴다 || 대역을 1.228 MHz 채널 20 개로 나누는 것은 FDMA, 채널 안에서 사용자를 CDMA 로 나눈다 || [[IS-95 대역과 채널]]
+|-
+| IS-95 의 BS 동기화는 MSC 가 맞춘다 || '''GPS''' 서비스를 쓴다 || [[GPS 동기화]]
+|-
+| soft handoff 는 아무 시스템이나 된다 || IS-95 에서는 BS 가 '''pilot channel''' 을 계속 broadcast 해서 MS 가 이웃 cell 을 감지할 수 있기 때문에 가능 || [[IS-95 soft handoff]] · [[pilot channel]]
+|-
+| IMT-2000 은 하나의 구체적 표준 || ITU 가 낸 '''blueprint''' (요구사항). 그 아래 5 개 표준(IMT-DS, MC, TC, SC, FT) || [[IMT-2000]] · [[IMT-2000 표준]]
+|-
+| 3G 는 packet-switched 만 || 3G(IMT-2000)는 '''packet + circuit''' 둘 다 지원. '''all-IP packet-switched''' 는 4G || [[3G]] · [[4G]] · [[circuit switching과 packet switching]]
+|}
+
+{quiz}
+OX: ① uplink 는 forward communication 이다. ② soft handoff 에서 MS 는 두 BS 와 동시에 통신할 수 있다. ③ AMPS 의 control channel 은 FM 으로 변조된다. ④ IS-95 는 neighboring cell 이 같은 주파수 대역을 쓸 수 있다. ⑤ handoff 결정은 MS 가 한다.
+{/quiz}
+{answer}
+① ✗ (uplink = reverse, MS → BS) ② ○ ③ ✗ (control = FSK, voice = FM) ④ ○ (reuse factor 1, CDMA) ⑤ ✗ (MSC 가 신호 세기를 감시하고 결정)
+{/answer}
+
+== 관련 문서 ==
+* [[공식 모음]] · [[셀룰러 세대 비교표]] · [[시험 정보]]

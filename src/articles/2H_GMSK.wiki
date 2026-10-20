@@ -1,0 +1,36 @@
+key: GMSK
+title: GMSK (Gaussian Minimum Shift Keying — GSM 의 변조)
+category: 2강 1G–2G, 용어
+---
+'''GMSK(Gaussian Minimum Shift Keying)'''는 [[GSM]] 이 270.8 kbps 디지털 비트열을 200 kHz 아날로그 신호로 바꿀 때 쓰는 변조 방식이다. [[mid:FSK|FSK]] 의 개량형이다. L10 p.25.
+
+{def}p.25 그림: "270.8 kbps → [GMSK] → 200 kHz" — Channel 001 … 124 (FDMA){/def}
+
+== 이름에서 개념 끌어내기 ==
+이름을 오른쪽부터 읽으면 된다.
+* '''Shift Keying''' — 디지털 비트(0/1)에 따라 반송파의 성질을 바꾸는(shift) 방식. 중간고사의 ASK·[[mid:FSK|FSK]]·[[mid:PSK|PSK]] 와 같은 "Keying" 가족.
+* '''Minimum Shift''' — FSK 의 일종인데, 두 주파수의 간격을 '''서로 구분 가능한 최소한'''(bit rate 의 절반)으로 좁히고 위상이 끊기지 않게 이어 붙인다 → 대역을 적게 쓴다 (MSK).
+* '''Gaussian''' — 비트 경계의 급격한 변화를 Gaussian 필터로 부드럽게 다듬어 옆 채널로 새는 에너지를 더 줄인다.
+{info}교수(10/20, 53:07): "converted to an analog signal by using GMSK, '''which we did not discuss the detailed mechanism'''" — GMSK 의 동작 원리는 범위 밖. "GSM 의 비트열을 200 kHz 아날로그 신호로 바꾸는 변조" 라는 역할만 알면 된다.{/info}
+
+→ '''"좁은 200 kHz 칸에 270.8 kbps 를 옆 칸 침범 없이 넣기 위해 FSK 를 최대한 날씬하게 만든 것"'''. (세부는 보충 — 슬라이드는 상자 이름만.)
+
+{analogy}🎭 FSK 가 '''계단'''(주파수가 뚝뚝 바뀜)이라면 GMSK 는 '''경사로'''다. 같은 높이를 오르지만 모서리가 없어 옆 차선(인접 채널)으로 튀지 않는다.{/analogy}
+
+[[img:L10-25.png|p.25 270.8 kbps 가 GMSK 상자를 지나 200 kHz 채널(FDMA)로 (필기본)|medium]]
+
+{|
+! 시스템 || 디지털 입력 || 변조 || 출력
+|-
+| [[AMPS]] control || 10 kbps || [[mid:FSK|FSK]] || 30 kHz
+|-
+| [[D-AMPS]] || 48.6 kbps || [[QPSK]] || 30 kHz
+|-
+| GSM || 270.8 kbps || '''GMSK''' || 200 kHz
+|}
+
+{tip}이 단계가 바로 필기 질문 "'''analog? digital?'''" 의 답의 절반이다: GSM 은 '''디지털 시스템'''이지만, 무선으로 내보내는 마지막 단계(GMSK)에서는 '''아날로그 파형'''을 만든다. 모든 무선 시스템은 결국 아날로그 전파를 쏜다 — 디지털/아날로그 구분은 그 이전, 정보를 비트로 다루느냐로 한다. → [[CH05 1G–2G 셀룰러]]{/tip}
+
+== 관련 문서 ==
+* [[GSM]] · [[GSM channel bit rate]] · [[QPSK]] · [[FM]]
+* 중간고사: [[mid:FSK|FSK]] · [[mid:digital-to-analog conversion|digital-to-analog conversion]] · [[mid:GFSK|GFSK]] (Bluetooth 의 Gaussian FSK — 같은 Gaussian 아이디어)

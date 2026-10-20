@@ -1,0 +1,52 @@
+key: IS-95 대역과 채널
+title: IS-95 대역과 채널 (1.228 MHz × 20)
+category: 3강 CDMA–4G, 용어
+---
+[[IS-95]] 는 '''두 대역'''(ISM 800 MHz, ISM 1,900 MHz)을 써서 duplex 통신을 하고, 각 대역을 '''1.228 MHz 채널 20 개'''로 나눈다(채널 사이는 [[mid:guard band|guard band]]). 서비스 provider 하나는 '''10 채널'''을 받는다. 채널을 나누는 이 바깥 단계는 [[FDMA]], 한 채널 안을 나누는 것은 [[CDMA]] 다. L10 p.28.
+
+{def}"Bands and Channels: Use '''two bands for duplex''' communication. '''ISM 800-MHz, ISM 1,900-MHz'''. Each band is divided into '''20 channels of 1.228 MHz''' separated by '''guard bands'''. Each service provider is allotted '''10 channels'''." (p.28){/def}
+
+[[img:L10-28.png|p.28 Bands and Channels — 1.228 MHz 밑줄 (필기본: "30 kHz D-AMPS / 200 kHz GSM")|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''two bands for duplex''' — [[AMPS]] 와 같은 발상: 대역 하나는 forward(BS→MS, downlink), 다른 하나는 reverse(MS→BS, uplink). 두 방향을 서로 다른 대역에 두어 동시에 주고받는다(duplex). → [[uplink와 downlink]]
+* '''ISM 800-MHz, ISM 1,900-MHz''' — 그 '''대역 쌍이 놓일 수 있는 위치 두 가지'''다. Forouzan 원문은 "The bands can be the traditional ISM 800-MHz band '''or''' the ISM 1900-MHz band" (Forouzan 보충 — 슬라이드에는 쉼표로만 나열). "800 = uplink, 1,900 = downlink" 로 읽으면 틀린다.
+
+{info}슬라이드 표기를 그대로 옮겼지만, 이 두 대역은 실제로는 통신사가 면허를 받아 쓰는 cellular(800 MHz)·PCS(1,900 MHz) 대역이다. 중간고사의 [[mid:WiFi|WiFi]]·[[mid:Bluetooth|Bluetooth]] 가 쓰는 비면허 ISM 대역(2.4 GHz 등)과 같은 것으로 헷갈리지 말 것 (보충 — 슬라이드에 없음).{/info}
+
+* '''guard band''' — 이웃 채널끼리 겹치지 않도록 비워 두는 띠(중간고사 [[mid:guard band|guard band]]).
+
+{exam}🎯 교수(10/20, 61:15): "'''one important distinction''' to previous ones is its '''bandwidth'''" — AMPS·GSM 의 30 kHz·200 kHz 보다 "a lot bigger bandwidth … because of CDMA that '''spreads spectrum'''". 숫자보다 '''"퍼뜨리니까 넓다"''' 는 이유가 요점(41:54 "숫자 외우지 말고 trend").{/exam}
+
+== 계산 ==
+<pre class="txt">
+채널 폭 합 = 20 × 1.228 MHz = 24.56 MHz
+대역 폭    = 25 MHz (p.29·30 그림 "25-MHz band")
+guard band 몫 = 25 − 24.56 = 0.44 MHz
+provider 당 = 20 ÷ 2 = '''10 채널'''
+채널 하나 안 = Walsh code 64 개 = 64 digital channel (forward, p.29)
+</pre>
+
+{|
+! 표준 || 채널 폭 || 채널 수(방향당) || 채널 안
+|-
+| [[AMPS]] || 30 kHz || 832 || 사용자 1 명 (FM)
+|-
+| [[D-AMPS]] || 30 kHz || 832 || TDMA 3 slot
+|-
+| [[GSM]] || 200 kHz || 124 || TDMA 8 slot
+|-
+| '''IS-95''' || '''1.228 MHz''' || '''20''' || '''CDMA 64 code'''
+|}
+필기 "30 kHz D-AMPS / 200 kHz GSM" 은 이 비교다 — IS-95 채널은 D-AMPS 의 약 '''41 배'''($1228 / 30 \approx 41$) 넓다. 퍼뜨리는([[DSSS]]) 방식이라 넓은 채널이 필요하다.
+
+[[sim:band_channels]]
+위 시뮬레이터에서 옵션 IS-95 를 고르면 20 → 10 → 64 가 차례로 나온다.
+
+{analogy}🎭 '''큰 강당 20 개.''' AMPS 는 1 인용 독서실 칸 832 개, GSM 은 8 명이 교대로 쓰는 세미나실 124 개, IS-95 는 '''수십 명이 동시에 들어가는 강당 20 개'''다. 두 통신사가 강당을 10 개씩 나눠 가진다.{/analogy}
+
+{quiz}IS-95 의 한 대역에 1.228 MHz 채널이 20 개 있을 때, 25 MHz 대역에서 guard band 로 쓰이는 총 폭은?{/quiz}
+{answer}$25 - 20 \times 1.228 = 25 - 24.56 = 0.44\text{ MHz}${/answer}
+
+== 관련 문서 ==
+* [[IS-95]] · [[chip rate]] · [[GPS 동기화]] · [[GSM 대역]] · [[AMPS 대역과 채널]] · [[FDMA]]

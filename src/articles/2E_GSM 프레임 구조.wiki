@@ -1,0 +1,38 @@
+key: GSM 프레임 구조
+title: GSM 프레임 구조 (slot 156.25 bits → frame 8 slots)
+category: 2강 1G–2G, 용어
+---
+'''GSM 프레임 구조'''는 [[GSM]] 의 TDMA 계층 구조 중 아래 두 층 — '''slot'''(사용자 한 명의 비트 덩어리, 156.25 bits)과 '''frame'''(8 slots = 8 사용자 한 바퀴) — 이다. frame 26 개가 모이면 [[GSM multiframe]](120 ms). L10 p.25–26.
+
+{def}"Each slot carries '''156.25 bits'''. # of slots: '''8'''" (p.25)
+p.26: "65 bits — User data → 114 bits — User data plus '''error control bits''' → 156.25 bits — User data plus error control bits and '''TDMA control bits'''" · "Frame = 8 slots"{/def}
+
+[[img:L10-26.png|p.26 Multiframe components — 65 → 114 → 156.25 bits 가 slot 하나, slot 8 개가 frame, frame 26 개가 multiframe(120 ms)|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''slot''' = "자리, 칸". 시간 축 위의 사용자 한 명 몫의 칸 (필기: "time slot").
+* '''frame''' = "틀". 8 개의 칸을 담는 한 틀 = TDMA 가 8 사용자를 '''한 바퀴''' 도는 단위 (필기: "frame").
+* 데이터 링크에서 배운 "frame" 과 이름은 같지만 여기서는 '''시간 슬롯의 묶음'''이다.
+
+{analogy}🎭 '''회전초밥 레일.''' 접시(slot) 하나에 한 손님(사용자)의 초밥(65 bits)이 올라가는데, 접시에는 뚜껑(error control)과 이름표(TDMA control)도 같이 실린다 → 156.25. 접시 8 개가 한 바퀴(frame)를 이루고 손님 8 명이 한 번씩 받는다.{/analogy}
+
+[[anim:gsm_multiframe_anim|65 bits 상자가 114, 156.25 bits 로 부풀어 slot 이 되고, slot 8 개가 frame 이 되는 앞부분을 집중해서 보라]]
+
+== slot 한 칸의 내용 ⭐ ==
+<pre class="txt">
+user data                      65 bits
++ error control bits           49 bits   → 114 bits
++ TDMA control bits         42.25 bits   → '''156.25 bits''' = slot 하나
+frame = 8 slots = 8 × 156.25 = 1,250 bits
+사용자 음성 비율 = 65 / 156.25 ≈ 42 %
+</pre>
+
+* '''error control bits''': 무선 채널의 비트 오류를 검출·정정하기 위한 redundancy(중간고사 CH03 [[mid:redundancy|redundancy]] 와 같은 개념).
+* '''TDMA control bits''': TDMA 를 굴리기 위한 비트 — 동기(training sequence), 경계 표시, guard period 등. 156.25 의 0.25 는 guard period 가 8.25 비트 시간이라 생기는 소수다(보충).
+
+[[sim:gsm_bitrate]]
+
+{warn}"frame = 26" 이라고 헷갈리지 말 것. '''frame = 8 slots''', '''multiframe = 26 frames'''. 슬라이드 p.25 의 "# of slots: 8 · # of frames: 26" 은 "frame 당 slot 8 개, multiframe 당 frame 26 개" 라는 뜻이다.{/warn}
+
+== 관련 문서 ==
+* [[GSM multiframe]] · [[GSM channel bit rate]] · [[TDMA]] · [[GSM]]

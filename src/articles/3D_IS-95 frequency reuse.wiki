@@ -1,0 +1,46 @@
+key: IS-95 frequency reuse
+title: IS-95 frequency reuse (reuse factor = 1)
+category: 3강 CDMA–4G, 용어
+---
+[[IS-95]] 의 [[reuse factor]] 는 '''normally 1''' 이다 — '''이웃 cell 도 같은 주파수 대역을 쓴다.''' FDMA/TDMA 시스템(AMPS reuse factor 7)이 이웃 cell 끼리 주파수를 달리해야 했던 것과 정반대다. 이유: 이웃 cell 에서 온 간섭은 [[CDMA]]/[[DSSS]] 전송에 영향을 주지 못하기 때문. L10 p.31.
+
+{def}"'''Frequency reuse factor''': '''Normally 1''' → '''Neighboring cells can use the same freq. band!''' Why? The '''interference from neighboring cells cannot affect CDMA or DSSS''' transmission." (p.31){/def}
+
+[[img:L10-31.png|p.31 — "Normally 1" (필기: ① 동그라미, 육각형 1·1·1 "가능해짐")|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* [[frequency reuse]] — 같은 주파수를 '''떨어진 cell 에서 다시 쓴다'''. [[reuse factor]] N = 한 패턴(같은 주파수가 다시 나오기 전까지)의 cell 수.
+* '''N = 1''' = 패턴이 cell '''하나'''. 즉 '''바로 옆 cell 에서 곧바로 재사용''' = 모든 cell 이 같은 주파수.
+
+== 왜 가능한가 ==
+<pre class="txt">
+FDMA/TDMA (AMPS, GSM)
+  이웃 cell 이 같은 주파수 → 경계의 MS 가 두 신호를 같은 채널에서 받음 → [[co-channel interference]]
+  ⇒ N = 7 등으로 같은 주파수 cell 을 떨어뜨림 → cell 당 쓸 수 있는 채널 = 전체 / N
+
+CDMA (IS-95)
+  이웃 cell 신호 = 다른 코드로 퍼진 신호
+  내 코드로 역확산하면 → 내 신호만 다시 모이고, 이웃 신호는 '''넓게 퍼진 약한 잡음'''으로 남음
+  ⇒ 같은 주파수를 써도 됨 → N = 1 → cell 당 '''전 대역'''
+</pre>
+
+[[anim:frequency_reuse_hex|N=4, N=7 처럼 같은 색 cell 을 떨어뜨리는 FDMA 방식과, 마지막 장면 IS-95 의 "모든 cell 같은 색 + 사용자마다 다른 code 무늬"를 비교하라]]
+
+[[sim:reuse_pattern]]
+옵션에서 '''N = 1 (IS-95 CDMA)''' 을 고르면 모든 cell 에 같은 번호가 붙고, cell 당 대역이 전 대역이 된다. N = 4 (≈98 채널/cell), N = 7 (≈56 채널/cell) 과 비교하라.
+
+{tip}💡 '''필기 속 질문: "Normally ①" · 육각형 1·1·1 "가능해짐"''' — 바로 이 그림이 정답이다. FDMA 라면 이웃끼리 번호(주파수 그룹)가 달라야 했는데, CDMA 는 코드로 사용자를 나누므로 '''이웃 cell 이 전부 1(같은 대역)이 "가능해졌다"'''. "normally" 는 '''보통의 운용'''이 N=1 이라는 단서로, provider 가 가진 10 채널을 트래픽에 따라 더 얹는 예외 운용도 있을 수 있다는 정도로 읽으면 된다. 시험 답은 슬라이드 문장 + 이유 문장.{/tip}
+
+== 결과: soft handoff 로 이어진다 ==
+이웃 BS 도 '''같은 주파수'''이므로 MS 는 주파수를 바꾸지 않고 두 BS 를 동시에 들을 수 있다 → [[IS-95 soft handoff]] (p.32 가 같은 제목 "Frequency Reuse Factor and Handoff" 로 이어지는 이유).
+
+{analogy}🎭 '''이웃 건물도 같은 주파수의 라디오 방송국.''' 보통이라면 혼선이 나지만, 각 건물 사람들이 '''다른 언어'''로 말하면 같은 주파수여도 서로의 말은 웅성거림일 뿐이다. 그러니 옆 건물과 주파수를 나눠 가질 필요가 없다.{/analogy}
+
+{exam}🎯 교수(10/20, 65:15): "here we see '''the beauty of CDMA''' … CDMA or IS-95 enables frequency reuse factor 1, meaning that neighboring cells can use the same frequency, '''which is not allowed in previous communication systems''' … They don't have to differentiate frequency or time, except they '''differentiate by code''' … it's '''very efficient in terms of frequency and also time'''. And it also serves soft handoff."
+"IS-95 의 frequency reuse factor 는? 그 이유는?" → '''normally 1''', '''interference from neighboring cells cannot affect CDMA or DSSS transmission'''. AMPS(7)와 대비해 묻기 좋다.{/exam}
+
+{quiz}AMPS 의 reuse factor 는 7, IS-95 는 1 이다. 같은 전체 채널 수라면 cell 당 쓸 수 있는 자원은 어떻게 다른가?{/quiz}
+{answer}AMPS 는 전체를 7 그룹으로 나눠 cell 당 '''1/7''' 만 쓴다(395 voice 채널이면 약 56). IS-95 는 N=1 이라 '''모든 cell 이 전 대역'''을 쓰고, 사용자는 코드로 구분한다.{/answer}
+
+== 관련 문서 ==
+* [[frequency reuse]] · [[reuse factor]] · [[co-channel interference]] · [[CDMA]] · [[IS-95 soft handoff]] · [[IS-95]]

@@ -1,0 +1,51 @@
+key: hard handoff
+title: Hard Handoff (break before make)
+category: 1강 셀룰러 동작, 용어
+---
+'''Hard handoff''' 는 MS 가 '''한 번에 한 BS 와만''' 통신하는 [[handoff]] 방식이다. 새 BS 로 넘어가려면 옛 BS 와의 연결을 '''먼저 끊고(break)''' 새 BS 와 '''연결한다(make)''' — '''break before make'''. 그 사이 아주 짧은 끊김이 생긴다. 초기 시스템(early systems, 1G AMPS 등)이 썼다. L10 p.16 (a).
+
+{def}"'''Hard handoff''' — An MS '''only communicates with one BS'''. '''Used in early systems'''." (p.16)
+그림 (a) 아래 문구: "'''Break before make'''".
+MS 가 하나의 BS 와만 통신하는 handoff. 초기 시스템에서 사용. 옛 연결을 끊은 뒤 새 연결을 맺는다.{/def}
+
+[[img:L10-16.png|p.16 (a) Hard handoff — BS1 막대(노랑)가 끝난 뒤 빨간 틈, 그다음 BS2 막대(초록) "Break before make" / (b) Soft handoff 와 비교. 필기 "SRT, KTX ??", "break off connection ??" (필기본)|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''hard''' = 딱딱한, 칼같이 '''한 번에 바뀌는'''. 연결 대상이 BS1 → BS2 로 '''뚝''' 끊겨 바뀐다(겹침 없음).
+* '''break before make''' — 전기 스위치 용어. 접점을 '''먼저 떼고(break)''' 다른 접점에 '''붙인다(make)'''. 동시에 두 곳에 붙는 순간이 없다.
+
+<pre class="txt">
+시간 →      t0 ─────────── t1 ░░ t2 ─────────── t3
+BS1 연결 :  ███████████████                         ← t1 에서 끊음 (break)
+BS2 연결 :                     ████████████████     ← t2 에서 붙음 (make)
+                          ↑ t1~t2 : 아무 BS 와도 연결 안 됨 (빨간 틈)
+연결 BS 집합 :  {BS1}  →  {}  →  {BS2}
+</pre>
+
+{tip}'''필기 속 질문: "break off connection ??"''' (p.16) — "break before make" 의 '''break''' 가 바로 "'''연결을 끊는다(break off the connection)'''" 는 뜻이다. Hard handoff 는 ① BS1 과의 연결을 끊고 ② 그다음 BS2 와 연결한다. 그 사이(그림의 빨간 틈)는 MS 가 어느 BS 와도 연결되지 않은 짧은 구간이다. 교수(10/20 녹음 28:14): "if this mobile station moves from BS1 to BS2, then it firstly '''experiences a break of communication''' … because MS can only communicate with one base station … it is '''inevitable''' … this is not that great."
+"그럼 정의의 '''without interrupting service''' 와 모순 아닌가?" — 틈이 수십~수백 ms 수준으로 짧아 '''통화는 유지'''된다(살짝 끊기는 소리 정도). 다만 새 BS 에 빈 채널이 없거나 신호가 너무 약해 make 에 실패하면 그대로 '''통화가 끊긴다(call drop)''' — KTX·SRT 처럼 handoff 가 잦을수록 이 위험이 커진다. 이 약점을 없앤 것이 [[soft handoff]].{/tip}
+
+{|
+! || hard handoff || [[soft handoff]]
+|-
+| 동시에 통신하는 BS 수 || '''1''' || '''2''' (잠시)
+|-
+| 순서 || '''break before make''' || make before break
+|-
+| 끊김 || 짧은 틈 있음 || 없음
+|-
+| 시스템 || '''early systems''' (1G [[AMPS]], [[FDMA]]/[[TDMA]] 계열) || [[CDMA]] ([[IS-95]] 이후)
+|}
+
+{info}(Forouzan 보충) 왜 초기 시스템은 hard 일 수밖에 없었나: [[FDMA]]/[[TDMA]] 에서는 이웃 cell 이 '''다른 주파수'''를 쓴다([[frequency reuse]]). MS 의 무전기는 한 번에 한 주파수에만 맞출 수 있으므로 BS1 의 주파수를 놓고 BS2 의 주파수로 '''retune''' 해야 한다 → 필연적으로 break before make. CDMA 는 모든 cell 이 같은 주파수라 두 BS 를 동시에 들을 수 있다 → soft.{/info}
+
+[[anim:handoff_hard_soft|위 줄(hard)에서 BS1 막대가 끝나고 빨간 틈 뒤에 BS2 막대가 시작하는 순간을 보라]]
+
+[[sim:handoff_signal]]
+
+{analogy}🎭 '''외나무다리 건너 타기.''' 한쪽 배(BS1)에서 다른 배(BS2)로 옮겨 탈 때, 판자가 하나뿐이라 '''한 발을 떼고 나서야''' 건너편에 발을 디딘다. 그 순간 잠깐 공중에 떠 있다(틈). 건너편 배가 꽉 차 있으면 물에 빠진다(call drop).{/analogy}
+
+{exam}🎯 "An MS only communicates with '''one BS'''", "Used in '''early systems'''", "'''Break before make'''" 세 표현을 짝으로 외운다. T/F 함정: "hard handoff 는 두 BS 와 동시에 통신한다" → 거짓(그건 soft). 교수: "'''nowadays, we never use hard handoff'''"(녹음 29:54).{/exam}
+
+== 관련 문서 ==
+* [[handoff]] · [[soft handoff]] · [[IS-95 soft handoff]] · [[AMPS]] · [[frequency reuse]]

@@ -1,0 +1,39 @@
+key: WAN 분류
+title: WAN 분류 (Wired WANs vs Wireless WANs)
+category: 1강 셀룰러 동작, 용어
+---
+'''WAN 분류''' 는 L10 p.5–7 의 "'''Two broad categories'''" 다. [[mid:LAN|LAN]] 에 유선(Ethernet)과 무선(WiFi·Bluetooth)이 있듯, [[mid:WAN|WAN]] 도 '''Wired WANs''' 와 '''Wireless WANs''' 두 갈래로 나뉜다. 이번 강의(CH05)의 focus 는 '''Wireless WANs''' 다.
+
+{def}"Two broad categories — '''Wired WANs''': Telephone networks · Cable networks. '''Wireless WANs''': Cellular telephony (4G / 5G cellular systems) · Satellite Networks (Starlink / Starshield). — '''Focus of this lecture''' (Wireless WANs)." (p.5–7)
+두 큰 분류 — 유선 WAN: 전화망·케이블망. 무선 WAN: 셀룰러(4G/5G)·위성망(Starlink/Starshield). 이번 강의는 무선 WAN.{/def}
+
+[[img:L10-07.png|p.7 Two broad categories — 왼쪽 위 telephone network 계층 그림, 가운데 5G 셀 그림, 오른쪽 BBC "How SpaceX satellites are used on the battlefield" (필기본)|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''WAN''' = '''W'''ide '''A'''rea '''N'''etwork. 교수: "One important distinction to LAN is about its '''scale''' … WAN is a wider geographical span. '''This is why we call it WAN'''." (p.4 "spanning a town, a state, a country, or even the world")
+* 분류 기준은 '''전송 매체''' — 선(구리선·동축·광섬유)이냐, 전파(지상 BS·위성)냐.
+
+{|
+! 분류 || instance || 매체 / 그림 || 문서
+|-
+| Wired || Telephone networks || local loop → end office → trunk → tandem office → trunk → regional office || [[telephone network]]
+|-
+| Wired || Cable networks || (원래 TV 용) 동축·광섬유 || [[cable network]]
+|-
+| Wireless || Cellular telephony (4G / 5G) || 육각 cell 마다 BS || [[cellular telephony]] · [[CH05 셀룰러 동작]]
+|-
+| Wireless || Satellite networks (Starlink / Starshield) || 궤도 위성 || [[satellite network]] · [[Starlink]]
+|}
+
+[[anim:wan_categories|WAN 이 wired·wireless 로, 다시 telephone·cable / cellular·satellite 로 갈라지는 트리를 따라가라]]
+
+{analogy}🎭 '''도시 간 이동 수단.''' 고속도로·철도처럼 '''깔아 둔 길'''을 따라가는 방법(wired: 전화선, 케이블)과, 비행기·드론처럼 '''하늘로''' 가는 방법(wireless: 기지국 전파, 위성)이 있다. 어느 쪽이든 목적은 '''멀리 떨어진 동네(LAN)들을 잇는 것'''이다.{/analogy}
+
+{exam}🎯 교수(10/20): "Like LANs that have wired and wireless instances, WAN also has two broad categories of wired and wireless." / "In this chapter, I would like to '''focus on this wireless WANs'''." Forouzan 은 두 가지 다 다루지만 오래된 책이라 4G·5G·Starlink 세부가 없어서, 교수는 '''셀룰러 시스템의 진화 흐름'''을 보여 주겠다고 했다 → [[셀룰러 세대]].{/exam}
+
+{quiz}Wireless WAN 의 두 instance 를 슬라이드 표현대로 쓰시오. Wired WAN 은?{/quiz}
+{answer}Wireless: '''Cellular telephony'''(4G/5G cellular systems), '''Satellite networks'''(Starlink/Starshield). Wired: '''Telephone networks''', '''Cable networks''' (p.6–7).{/answer}
+
+== 관련 문서 ==
+* [[CH05 셀룰러 동작]] · [[cellular telephony]] · [[satellite network]] · [[telephone network]] · [[cable network]]
+* [[mid:WAN]] · [[mid:LAN]] · [[mid:point-to-point]]

@@ -1,0 +1,47 @@
+key: DSSS
+title: DSSS (Direct-Sequence Spread Spectrum)
+category: 3강 CDMA–4G, 용어
+---
+'''DSSS (direct-sequence spread spectrum)''' 는 데이터 비트 하나하나에 '''빠른 ±1 칩열(spreading code)'''을 곱해서, 원래 좁았던 신호를 '''넓은 대역으로 퍼뜨리는''' 변조 기법이다. [[IS-95]] 는 DSSS 위에 [[CDMA]] 를 얹었다. 중간고사 [[mid:FHSS|FHSS]] 와 함께 [[spread spectrum]] 의 두 방식 중 하나. L10 p.27, p.30.
+
+{def}"'''DSSS (Direct-Sequence Spread Spectrum)''': a '''signal-spreading modulation technique'''." (p.27)
+→ 신호를 넓게 퍼뜨리는 변조 기법.{/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''Spread Spectrum''' — 스펙트럼(주파수 폭)을 '''퍼뜨린다'''. 필기 스케치 "'''W1 ≪ W2'''" 가 정확히 이것: 원래 폭 W1 → 퍼진 폭 W2.
+* '''Direct-Sequence''' — 칩 '''수열(sequence)'''을 데이터에 '''직접(direct)''' 곱한다. 주파수를 바꾸는 게 아니라 비트 자체를 칩 여러 개로 바꾼다.
+* 대비: [[mid:FHSS|FHSS]] = '''Frequency-Hopping''' — 주파수를 '''뛰어다니며''' 퍼뜨린다. 둘 다 결과는 "넓은 대역"이지만 방법이 다르다.
+
+{exam}🎯 교수(10/20, 56:09–57:39): 칠판에 W1 → W2 로 퍼뜨리는 그림(필기 스케치) — "'''the information contained in this one and this one are the same'''", 그리고 퍼뜨리는 이유는 "'''for implementing multiple access'''" (그것이 CDMA).{/exam}
+
+== 동작 ==
+<pre class="txt">
+비트 1 개   (+1)        ──×  칩열 [+1 −1 +1 +1 −1 …] (n 칩)
+               ↓
+칩 n 개     [+1 −1 +1 +1 −1 …]         ← 같은 시간에 n 배 많은 기호
+               ↓
+대역폭 ≈ n 배로 넓어짐   (W1 → W2 = n·W1)
+
+IS-95 forward : 19.2 ksps × 64 chips = 1.228 Mcps   → 확산 배수 64
+IS-95 reverse : 307.2 kcps × 4       = 1.228 Mcps   → long code 로 DSSS (p.30 점선 상자 "DSSS")
+</pre>
+* 수신자는 '''같은 칩열을 다시 곱하면''' 원래 비트로 돌아온다($(+1)(+1)=1$, $(-1)(-1)=1$). 다른 칩열로 곱한 신호(남의 신호, 이웃 cell 의 간섭)는 퍼진 채로 남아 '''약한 잡음'''이 된다 → 이게 [[IS-95 frequency reuse|reuse factor 1]] 의 이유.
+
+[[img:L10-30.png|p.30 IS-95 reverse — 점선 상자 "DSSS"(필기 동그라미): long code 1.228 Mcps 로 퍼뜨린 뒤 QPSK|medium]]
+
+[[anim:cdma_spreading|비트(+1/−1)가 칩열과 곱해져 잘게 쪼개지는 첫 장면이 DSSS, 그 뒤 여럿이 더해지고 분리되는 장면이 CDMA 다 — 둘의 경계를 찾아보라]]
+
+{warn}⚠️ '''"다시" 표시한 곳.''' DSSS 와 CDMA 를 한 문장씩: '''DSSS = 비트 하나를 칩 여러 개로 바꿔 대역을 넓히는 "기법"(modulation technique). CDMA = 사용자마다 다른 칩열을 줘서 같은 대역을 나눠 쓰게 하는 "다중 접속"(MA method), DSSS 를 기반으로 한다.''' DSSS 만 있고 사용자가 한 명이어도 DSSS 는 DSSS 다(예: 원조 802.11 의 DSSS). 여러 사용자가 코드로 나눠 쓸 때 비로소 CDMA.{/warn}
+
+{info}DSSS 는 WiFi 에도 나왔다 — 원조 IEEE 802.11 physical layer 의 DSSS(11 칩 Barker sequence, Forouzan 보충 — 슬라이드에 없음) → [[mid:802.11 physical layer]].{/info}
+
+{analogy}🎭 '''한 글자를 길게 늘여 쓰는 암호.''' "가" 한 글자를 보내는 대신 미리 정한 64 글자짜리 문장으로 바꿔 보낸다. 받는 사람은 그 문장을 알고 있으니 "아, 이건 '가'구나" 하고 되돌린다. 보내는 글자 수(칩 수)가 64 배가 되니 더 넓은 길(대역)이 필요하지만, 중간에 몇 글자가 잡음에 묻혀도 전체 문장으로 알아볼 수 있다.{/analogy}
+
+{quiz}DSSS 에서 데이터율이 19.2 ksps 이고 각 symbol 을 64 chips 로 퍼뜨리면 chip rate 는? 대역폭은 대략 몇 배가 되나?{/quiz}
+{answer}<pre class="txt">
+19.2 ksps × 64 = 1,228.8 kcps = 1.2288 Mcps ≈ 1.228 Mcps
+대역폭 ≈ 64 배
+</pre>{/answer}
+
+== 관련 문서 ==
+* [[spread spectrum]] · [[CDMA]] · [[chip rate]] · [[Walsh code]] · [[long code와 ESN]] · [[IS-95]] · [[mid:FHSS]]

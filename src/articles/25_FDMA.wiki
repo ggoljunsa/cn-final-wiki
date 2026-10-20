@@ -1,0 +1,41 @@
+key: FDMA
+title: FDMA (Frequency-Division Multiple Access)
+category: 2강 1G–2G, 용어
+---
+'''FDMA(Frequency-Division Multiple Access)'''는 공유 대역을 '''주파수 띠(채널)'''로 나눠 사용자마다 다른 띠를 주는 다중 접속 방식이다. 1G [[AMPS]] 의 방식이고(30 kHz × 832), 2G [[D-AMPS]] · [[GSM]] 도 '''바깥 층'''은 FDMA 다(그 안에 [[TDMA]]).
+
+{def}"AMPS uses '''FDMA''' to separate channels in a link." (p.18)
+p.20 · p.22 · p.25 그림의 회색 상자 "FDMA": 25-MHz band 를 같은 폭(30 kHz / 200 kHz)의 채널로 나누고 사용자(또는 사용자 묶음)마다 다른 채널이 칠해져 있다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''F'''requency-'''D'''ivision = 주파수로 나눔, '''M'''ultiple '''A'''ccess = 여러 사용자가 하나의 매체에 접근. 중간고사 범위의 [[mid:FDM|FDM]](Frequency-Division '''Multiplexing''')과 원리는 같다. 차이는 '''누가''' 나누느냐:
+* FDM: 한 장비(MUX)가 여러 입력을 '''한 링크에 합치는''' physical-layer 기술
+* FDMA: '''서로 다른 사용자'''(MS 들)가 공유 매체를 나눠 쓰는 data-link 의 [[mid:channelization|channelization]] 방법
+교재(Forouzan)도 "FDMA 는 data-link layer 의 access method, FDM 은 physical layer 기술" 이라고 구분한다(보충).
+
+{analogy}🎭 '''라디오 방송국.''' FM 89.1, 91.9, 95.1 … 방송국마다 주파수가 다르니 동시에 방송해도 섞이지 않는다. AMPS 에서는 통화 하나하나가 방송국 하나다. 단, 방송국(통화)이 쉬는 동안에도 그 주파수는 다른 사람이 쓸 수 없다 — FDMA 의 낭비.{/analogy}
+
+[[anim:access_methods|첫 장면(FDMA)에서 주파수 축이 띠로 나뉘는 것을 보고, 다음 장면 TDMA·CDMA 와 무엇이 다른지 한 줄씩 적어 보라]]
+
+[[img:L10-20.png|p.20 AMPS Transmission — 오른쪽 회색 상자 "FDMA": 25-MHz band 를 30 kHz 채널 832 개로, 사용자마다 다른 칸|medium]]
+
+== 셀룰러에서의 FDMA ==
+{|
+! 시스템 || 채널 폭 || 채널 수 || 한 채널 안
+|-
+| [[AMPS]] (1G) || 30 kHz || 832 || 사용자 1명 (FDMA 만)
+|-
+| [[D-AMPS]] (2G) || 30 kHz || 832 || TDMA 로 3명
+|-
+| [[GSM]] (2G) || 200 kHz || 124 || TDMA 로 8명
+|-
+| [[IS-95]] (2G) || 1.228 MHz || 20 (provider 당 10) || [[CDMA]] 로 64 code
+|}
+
+{warn}"2G = TDMA 니까 FDMA 는 1G 만" — '''틀림'''. D-AMPS·GSM·IS-95 모두 대역을 먼저 '''주파수 채널로 나눈 뒤'''(FDMA) 그 안을 TDMA/CDMA 로 다시 나눈다. 순수 FDMA 만 쓰는 것이 1G AMPS 다.{/warn}
+
+* 장점: 단순하다, 동기화가 필요 없다(시간 슬롯이 없으니). 단점: 채널 사이 [[mid:guard band|guard band]] 낭비, 쉬는 채널도 점유, 채널당 사용자 1명이라 용량이 작다.
+
+== 관련 문서 ==
+* [[TDMA]] · [[CDMA]] · [[AMPS]] · [[셀룰러 세대]]
+* 중간고사: [[mid:FDM|FDM]] · [[mid:channelization|channelization]] · [[mid:guard band|guard band]]

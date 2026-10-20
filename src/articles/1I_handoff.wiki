@@ -1,0 +1,58 @@
+key: handoff
+title: Handoff (핸드오프 = handover)
+category: 1강 셀룰러 동작, 용어
+---
+'''Handoff''' 는 사용자가 cell 경계를 넘어 움직일 때, 진행 중인 통화(active call)를 '''한 BS 에서 다른 BS 로 서비스 중단 없이 넘기는''' 과정이다. 이를 위해 '''MSC 가 every few seconds 신호 세기를 감시'''하다가 약해지면 더 나은 cell 을 찾아 통화 채널을 바꾼다. 종류는 [[hard handoff]] 와 [[soft handoff]]. L10 p.14–16.
+
+{def}"Definition: Process of '''transferring an active call from one BS to another''' '''without interrupting service''' as a user moves across cells." (p.14)
+"To this end: '''MSC monitors the level of the signal every few seconds'''. If the strength of the signal diminishes: The MSC '''seeks a new cell''' that can better accommodate the communication. Then it '''changes the channel carrying the call'''." (p.15)
+사용자가 cell 을 넘어갈 때 진행 중인 통화를 서비스 중단 없이 한 BS 에서 다른 BS 로 넘기는 과정. MSC 가 몇 초마다 신호 세기를 감시하다 약해지면 새 cell 을 찾아 통화 채널을 바꾼다.{/def}
+
+[[img:L10-15.png|p.15 Handoff — 밑줄 "MSC monitors the level of the signal every few seconds", 신호가 약해지면 MSC 가 새 cell 을 찾고 채널을 바꾼다 (필기본)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''hand off''' = (럭비·미식축구에서 공을) '''손에서 손으로 넘겨주다'''. 통화(공)를 BS1 의 손에서 BS2 의 손으로 넘긴다. 공을 떨어뜨리면(통화 끊김) 실패.
+* 정의의 세 조건: ① '''active call''' — 통화 '''중'''일 때의 이야기(대기 중 이동은 handoff 가 아님) ② '''from one BS to another''' — 같은 통신사 안 BS 사이(통신사가 바뀌면 [[roaming]]) ③ '''without interrupting service''' — 사용자는 몰라야 한다.
+
+{tip}'''필기 속 질문: "Hand over (동일 개념)"''' (p.14) — '''같은 개념이 맞다.''' 교수(10/20 녹음 26:17): "in Korea it is also called '''hand-over'''. '''It is interchangeable''', hand-over or hand-off, but I prefer hand-off because it is easy to pronounce." '''handoff''' 는 북미식 용어(AMPS·IS-95, Forouzan 교재), '''handover''' 는 유럽·3GPP 식 용어(GSM·UMTS·LTE·5G 표준 문서)다. 시험 답안에는 슬라이드 용어인 handoff 를 쓰되, 5G 자료에서 handover 를 보면 같은 것으로 읽으면 된다.{/tip}
+
+== 누가, 언제, 무엇을 (p.15) ⭐⭐⭐ ==
+<pre class="txt">
+누가   : '''MSC'''  (BS 도 MS 도 아님) — "every transition decision is made by MSC, not by MS" (녹음 33:09)
+언제   : '''every few seconds''' 신호 레벨을 감시하다가 → 신호 세기가 '''diminishes''' 하면
+무엇을 : ① 통화를 더 잘 수용할 '''새 cell 을 찾고''' (seeks a new cell)
+         ② 통화를 싣는 '''채널을 바꾼다''' (changes the channel carrying the call)
+         — 새 cell 은 다른 frequency set 을 쓰므로([[frequency reuse]]) 채널이 바뀌어야 한다
+</pre>
+
+[[anim:handoff_hard_soft|MS 가 BS1 cell → BS2 cell 로 이동할 때 아래 시간축의 BS1·BS2 연결 막대를 보라 — hard 는 틈, soft 는 겹침]]
+
+[[sim:handoff_signal]]
+
+== 두 종류 (p.16) ==
+{|
+! || [[hard handoff]] || [[soft handoff]]
+|-
+| 정의 || An MS only communicates '''with one BS''' || An MS can communicate '''with two BSs at the same time'''
+|-
+| 순서 || '''Break before make''' (먼저 끊고 붙음) || '''Make before break''' (먼저 붙고 끊음)
+|-
+| 그림 || BS1 막대 끝 → 빨간 틈 → BS2 막대 || BS1·BS2 막대가 초록 구간에서 겹침
+|-
+| 쓰인 곳 || '''Used in early systems''' (1G AMPS 등) || CDMA(2G [[IS-95]]) 이후 → [[IS-95 soft handoff]]
+|}
+
+{tip}'''필기 속 질문: "SRT, KTX ??"''' (p.16, 31:00 필기) — 빠른 기차는 cell 을 몇 초~십수 초마다 지나가므로 handoff 가 '''매우 자주''' 일어나고, 한 번이라도 늦거나 실패하면 통화가 끊기거나 데이터가 느려진다. 그래서 KTX·SRT 에서 끊김을 경험하는 것. 교수는 중간고사 범위 10/6 수업([[mid:station mobility]])에서 이미 "disconnected or slow communication while you are in fast transportation such as '''KTX or SRT'''" 를 예로 들며, 4G/5G 는 가장 가까운 BS 로 '''seamless''' 하게 바꿔 주는 매우 복잡한 표준(soft handoff)을 갖고 있다고 했다. 10/20 에도 같은 이야기(녹음 31:17): "slow communication speed while you are in KTX or SRT … the trains are so fast that '''maintaining soft handoff is very difficult technically''' … the coverage of base stations could be limited to some few kilometers, so it happens a lot."{/tip}
+
+{exam}🎯 교수(10/20): "'''Every transition decision is made by mobile switching center, not by mobile station.'''"(33:09) / "'''Nowadays, we never use hard handoff.''' In today's advanced communication systems, people always implement soft handoff"(29:54).{/exam}
+
+{analogy}🎭 '''이어달리기 바통 터치.''' 주자(BS)가 바뀌어도 바통(통화)은 계속 앞으로 가야 한다. 감독(MSC)은 몇 초마다 앞 주자가 지쳤는지(신호 세기) 보고, 지쳤으면 다음 주자를 투입해 바통을 넘기게 한다. 바통을 놓고 나서 다음 주자가 잡으면 hard, 둘이 잠깐 같이 잡고 달리다 넘기면 soft.{/analogy}
+
+{info}WiFi 와 비교: 802.11 도 BSS 사이를 옮겨 다닐 수 있지만(BSS-transition) 통신 연속성을 '''보장하지 않는다'''. 셀룰러는 MSC 가 감시·결정하는 handoff 로 연속성을 지키는 것이 존재 이유다 → [[셀룰러와 WiFi 비교]].{/info}
+
+{quiz}Handoff 의 정의를 쓰고, handoff 를 결정하는 주체와 그 판단 근거를 쓰시오.{/quiz}
+{answer}"Process of transferring an '''active call''' from one BS to another '''without interrupting service''' as a user moves across cells"(p.14). 주체는 '''MSC''' — '''every few seconds''' 신호 레벨을 감시해 세기가 약해지면 더 나은 새 cell 을 찾고 통화 채널을 바꾼다(p.15).{/answer}
+
+== 관련 문서 ==
+* [[hard handoff]] · [[soft handoff]] · [[IS-95 soft handoff]] · [[pilot channel]] · [[MSC]] · [[roaming]]
+* [[셀룰러와 WiFi 비교]] · [[mid:station mobility]]

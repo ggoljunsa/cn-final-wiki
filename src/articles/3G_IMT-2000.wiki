@@ -1,0 +1,47 @@
+key: IMT-2000
+title: IMT-2000 (3G 청사진)
+category: 3강 CDMA–4G, 용어
+---
+'''IMT-2000''' 은 [[ITU]] 가 발표한 '''3G 의 청사진(blueprint)''' — "3G 라면 이 정도는 돼야 한다"는 요구 사항 목록이다. 그 자체는 장비를 만들 수 있는 규격이 아니고, 이 요구를 만족하는 '''실제 표준 5 개'''([[IMT-2000 표준]])가 따로 있다. L10 p.33–35.
+
+{def}"'''IMT-2000''' (Internet Mobile Telecommunications 2000): '''A blueprint of 3G''' issued by '''ITU''' (International Telecommunication Union).
+Key Features:
+* Voice quality comparable to that of the existing public telephone network
+* Data rate: '''144 kbps''' for access in a moving vehicle (car) · '''384 kbps''' for access as the user walks (pedestrians) · '''2 Mbps''' for the stationary user (office or home)
+* Support for '''packet-switched and circuit-switched''' data services
+* A band of '''2 GHz''' · Bandwidths of '''2 MHz''' · Interface to the Internet
+Main goal: provision of '''universal personal communication'''." (p.33){/def}
+
+[[img:L10-33.png|p.33 IMT-2000 — blueprint 밑줄, 2 GHz·2 MHz 밑줄, universal personal communication 밑줄 (필기본: "blue print, not actual standard")|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''IMT''' — 슬라이드 표기 "'''Internet''' Mobile Telecommunications". ITU 공식 명칭은 "'''International''' Mobile Telecommunications" (슬라이드에 없음). 어느 쪽이든 '''Mobile Telecommunications''' = 이동 통신.
+* '''2000''' — 2000 년경 상용화 목표 + '''2,000 MHz(2 GHz) 대역''' + 최대 '''2,000 kbps(2 Mbps)''' 의 세 의미가 겹친 이름이라는 설명이 흔하다 (보충 — 슬라이드에 없음). 외우기 좋다: '''2 GHz · 2 Mbps · 2 MHz · 2000'''.
+* '''blueprint''' = 설계 도면, 청사진. 집을 짓기 전의 그림.
+
+{tip}💡 '''필기 속 질문: "blue print, not actual standard"''' — 맞다. IMT-2000 은 '''요구 사항(청사진)'''이고, 실제로 장비를 만들 수 있는 '''표준'''은 그 요구를 만족하도록 각 지역이 만든 IMT-DS(W-CDMA), IMT-MC(CDMA 2000) 등 5 개다(p.34). 예: 청사진은 "Bandwidths of 2 MHz" 라고 했지만 실제 표준 W-CDMA 는 '''5 MHz''' 를 쓴다(p.35) — 청사진과 실제 표준이 글자 그대로 같을 필요는 없다는 좋은 증거다. → [[IMT-2000 표준]]{/tip}
+
+== 데이터율 — 움직일수록 느리다 ==
+{|
+! 사용자 || 데이터율 || 이유 (보충)
+|-
+| moving vehicle (car) || '''144 kbps''' || 빠른 이동 → 채널이 빨리 변하고 handoff 가 잦음
+|-
+| pedestrians (walking) || '''384 kbps''' ||
+|-
+| stationary (office, home) || '''2 Mbps''' || 채널 상태가 안정
+|}
+4G 에서도 같은 짜임(이동 100 Mbps < 정지 1 Gbps)이 반복된다 → [[4G]].
+
+[[anim:generations_timeline|3G 칸에서 144 k / 384 k / 2 M 세 숫자가 차례로 나오는 것을 보라]]
+
+{analogy}🎭 IMT-2000 은 '''"방 3 개, 화장실 2 개, 30 평, 남향"''' 이라는 '''분양 공고의 조건'''이다. 건설사(유럽, 북미, …)들이 이 조건을 맞춰 각자 '''실제 아파트(W-CDMA, CDMA 2000 …)'''를 짓는다. 조건표만으로는 들어가 살 수 없다.{/analogy}
+
+{exam}🎯 교수(10/20, 66:35–68:40): 2G → 3G 의 '''key point''' 는 "communication '''more than voice''', from voice to '''text and data''' — that is what we call '''universal personal communication'''." 또 '''trend''': "larger bandwidth and larger frequency … Larger frequency bandwidth enables more users … one common trend of advancement." 데이터율은 "peak data rates" 로만 짚었고, "these features are described by a '''blueprint''' of 3G, '''not actual standards'''" — IMT-2000, ITU.
+"IMT-2000 is a ___ of 3G issued by ___" → '''blueprint''', '''ITU'''. 데이터율 세 개(144 k/384 k/2 M)와 사용자 상태 짝짓기, "packet-switched '''and''' circuit-switched" (4G 는 packet 만)도 함정 포인트.{/exam}
+
+{quiz}IMT-2000 의 main goal 은? 실제 표준인가?{/quiz}
+{answer}'''provision of universal personal communication'''. 실제 표준이 아니라 ITU 의 '''blueprint'''(청사진)이고, 실제 표준은 IMT-DS·MC·TC·SC·FT 5 개.{/answer}
+
+== 관련 문서 ==
+* [[3G]] · [[ITU]] · [[IMT-2000 표준]] · [[W-CDMA]] · [[CDMA 2000]] · [[circuit switching과 packet switching]]

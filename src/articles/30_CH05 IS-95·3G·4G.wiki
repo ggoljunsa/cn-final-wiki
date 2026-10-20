@@ -1,0 +1,408 @@
+key: CH05 IS-95·3G·4G
+title: CH05 IS-95·3G·4G (3강 — CDMA: 같은 주파수, 같은 시간, 다른 코드)
+category: 3강 CDMA–4G, 메인
+---
+{warn}'''10/20(화) 수업 p.27–36 반영 (슬라이드 기준).''' 녹음본(`1020_컴네.txt`) '''54:50(p.27) ~ 73:22(끝)''' 반영 — 맨 아래 `🎙 실제 수업 기록` 절. '''교수: "구체적 숫자를 외우지 말고 세대별 진화 trend 를 이해하라"(41:54)''' → 이 문서의 수치는 "원리를 보여 주는 예"로 읽고, 외울 것은 아래 {exam} 박스의 원리·trend 다.{/warn}
+
+'''CH05 IS-95·3G·4G''' 는 L10 덱(`CH05_Wide Area Networks (1).pdf`, 36쪽)의 마지막 구간 p.27–36 이다. [[CH05 1G–2G 셀룰러]] 에서 2G 의 TDMA 계열([[D-AMPS]], [[GSM]])을 봤다면, 여기서는 2G 의 '''다른 한 갈래''' — 한국이 쓴 '''[[IS-95]]''' ([[CDMA]]) — 와 그 뒤의 [[3G]]([[IMT-2000]]), [[4G]] 를 본다.
+이 구간이 던지는 질문은 — '''"FDMA 는 주파수로, TDMA 는 시간으로 사용자를 나눴다. 주파수도 시간도 나누지 않고 모두가 동시에 같은 대역에서 말하면 어떻게 구별하나?"'''
+답: '''코드(code)로 나눈다.''' 각 사용자의 비트에 서로 [[Walsh code|직교하는 칩열]]을 곱해 넓게 퍼뜨리고([[DSSS]]), 수신자는 자기 코드를 다시 곱해 자기 신호만 꺼낸다([[CDMA]]). 이 덕분에 '''이웃 cell 도 같은 주파수를 쓸 수 있고'''([[IS-95 frequency reuse|reuse factor = 1]]), 이웃 BS 의 [[pilot channel]] 을 들으면서 '''끊김 없는 handoff'''([[IS-95 soft handoff]])가 가능해진다. 3G 는 이 CDMA 를 넓힌 것(W-CDMA, CDMA 2000), 4G 는 전부 IP 패킷으로 바꾼 것([[all-IP]])이다.
+
+페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다. 캡처는 내 GoodNotes '''필기본'''이라 빨간 손글씨가 있다.
+
+== 한눈에 보기 ==
+=== ① 세 가지 multiple access — 무엇으로 나누나 ===
+{|
+! 방식 || 나누는 자원 || 한 사용자가 쓰는 것 || 이 덱에서 || 비유
+|-
+| [[FDMA]] || 주파수 || 좁은 주파수 띠 하나를 '''항상''' || [[1G]] [[AMPS]] (30 kHz) || 방마다 다른 방
+|-
+| [[TDMA]] || 시간 || 넓은 띠를 '''차례로''' 잠깐씩 || [[2G]] [[D-AMPS]] (30 kHz), [[GSM]] (200 kHz) || 한 방에서 돌아가며 말하기
+|-
+| '''[[CDMA]]''' || '''코드''' || 넓은 띠 '''전체'''를 '''항상, 모두 동시에''' || [[2G]] '''[[IS-95]]''' (1.228 MHz), 3G || 한 방에서 모두 동시에, 각자 다른 언어로
+|}
+세 방식 모두 중간고사의 [[mid:channelization|channelization]] 세 가지 그대로다 — 이번에는 그것을 셀룰러 표준이 실제로 어떻게 쓰는지 본다.
+
+[[anim:access_methods|FDMA(주파수 띠) → TDMA(시간 슬롯) → CDMA(같은 시간·같은 주파수에 code 층이 쌓임) 순서로 보고, 축 세 개 중 무엇이 "칸막이"인지 말해 보라]]
+
+=== ② IS-95 한 장 요약 ===
+<pre class="txt">
+[[IS-95]] = 2G, 북미 + 한국,  [[DSSS]] 로 퍼뜨리고 [[CDMA]] 로 나눈다
+대역   : 두 대역(duplex) — ISM 800 MHz, ISM 1,900 MHz              ([[IS-95 대역과 채널]])
+채널   : 한 대역 = 1.228 MHz 채널 20 개 (guard band 로 분리) → provider 당 10 개
+동기화 : BS 들이 [[GPS 동기화|GPS]] 로 시계를 맞춘다
+forward(BS→MS): 64 digital channel 을 [[Walsh code]] W0–W63 로 구분, W0 = [[pilot channel]](all 1s)
+               9.6 kbps → 19.2 ksps → ×64 chips → '''1.228 Mcps''' → [[QPSK]]        ([[IS-95 forward 전송]])
+reverse(MS→BS): 9.6 kbps → 28.8 ksps → 6-to-64 → 307.2 kcps → ×4 → '''1.228 Mcps''' → QPSK ([[IS-95 reverse 전송]])
+reuse factor : '''normally 1''' — 이웃 cell 도 같은 대역                     ([[IS-95 frequency reuse]])
+handoff      : pilot 를 듣고 '''soft handoff'''                             ([[IS-95 soft handoff]])
+</pre>
+
+=== ③ 세대 흐름 ===
+{|
+! 세대 || 대표 || 접근 방식 || 핵심 단어
+|-
+| [[1G]] || [[AMPS]] || [[FDMA]] || analog voice
+|-
+| [[2G]] || [[D-AMPS]] · [[GSM]] / '''[[IS-95]]''' || [[TDMA]] / '''[[CDMA]]''' || digital voice
+|-
+| '''[[3G]]''' || '''[[IMT-2000]]''' ([[W-CDMA]] · [[CDMA 2000]] 등 5 표준) || 주로 CDMA || '''144 k / 384 k / 2 M bps''', packet + circuit
+|-
+| '''[[4G]]''' || (슬라이드에 표준 이름 없음) || — || '''100 Mbps 이동 / 1 Gbps 정지''', '''[[all-IP]]''', packet-switched
+|}
+
+[[anim:generations_timeline|1G → 2G → 3G → 4G 가 쌓이는 동안 아래 화살표 "아날로그 → 디지털 → 데이터 → all-IP" 를 따라가며, 각 세대의 data rate 를 소리 내어 읽어 보라]]
+
+{exam}🎯 출제 예상 자리 — 교수(10/20)는 "'''구체적 숫자를 외우지 말고 세대별 진화 trend 를 이해하라'''"(41:54), CDMA 는 "'''세부 블록은 몰라도 된다, code 로 공유한다는 것을 기억하라'''"(64:45)고 했다. 그래서 원리·이유 중심으로:
+* '''CDMA 의 원리''': 매체를 '''frequency 도 time 도 아닌 code''' 로 나눈다 — 같은 시간·같은 주파수. DSSS 로 '''넓게 퍼뜨려 간섭을 피한다'''. 퍼뜨려도 '''정보량은 같다''' (p.27, 57:15)
+* '''IS-95 = DSSS + CDMA''' — DSSS 는 "signal-spreading '''modulation''' technique", CDMA 는 "an '''MA method''' based on DSSS". 퍼뜨리는 이유 = '''multiple access 구현''' (p.27)
+* '''이전 세대와의 important distinction = bandwidth''': 30 kHz·200 kHz → 훨씬 넓은 채널, '''CDMA 가 spectrum 을 퍼뜨리기 때문''' (p.28, 61:15)
+* '''여러 사용자(64)의 신호가 code 로 합쳐져 넓은 한 채널에''' — "large bandwidth aggregated across users" (p.29–30). W0 = pilot channel
+* '''"The beauty of CDMA" = reuse factor 1''' — 이웃 cell 도 같은 주파수(이전 시스템에서는 불가), code 로 구분 → frequency·time 효율 ↑ (p.31, 65:15)
+* '''soft handoff 가 가능한 이유 = pilot channel''' + reuse factor 1 (p.32)
+* '''2G → 3G key point = voice 를 넘어 text·data''' = universal personal communication. IMT-2000 = ITU 의 '''blueprint, not actual standard''' (p.33)
+* '''Trend''': 세대가 갈수록 '''더 넓은 bandwidth·더 높은 frequency''' → 더 높은 data rate·더 많은 사용자. 5G 는 huge bandwidth + '''many base stations''' (p.33·36 구두)
+* IMT-DS = '''W-CDMA''' (Europe, '''한국이 쓰는 3G''') · IMT-MC = '''CDMA 2000''' (IS-95 개선판, North America) (p.35)
+* 4G: '''All IP, packet-switched''' (p.36)
+* GPS 동기화는 교수가 "'''not that important'''" (62:29){/exam}
+
+{analogy}🎭 '''시끄러운 국제 파티.''' FDMA 는 대화하는 쌍마다 다른 방을 주는 것(방=주파수), TDMA 는 한 방에서 마이크를 돌려 가며 말하는 것(차례=시간 슬롯)이다. CDMA 는 '''모두가 한 방에서 동시에 말하되, 쌍마다 다른 언어를 쓰는''' 파티다. 한국어 쌍은 한국어만 알아듣고, 옆에서 들리는 스페인어·독일어는 그냥 웅성거림(잡음)으로 흘려들린다. 방도 하나, 시간도 동시인데 대화가 섞이지 않는다 — 이 "언어"가 [[Walsh code]] 이고, 서로 다른 언어가 서로를 방해하지 않는 성질이 '''직교(orthogonal)''' 다. 그리고 옆 건물(이웃 cell)에서도 같은 방(주파수)을 써도 된다 — 어차피 언어로 구분되니까([[IS-95 frequency reuse|reuse factor 1]]).{/analogy}
+
+== p.27 — 2nd Generation: IS-95 (Interim Standard 95) ⭐⭐⭐ ==
+[[img:L10-27.png|p.27 IS-95 — Base Station 의 forward link 는 "a composite signal which is transmitted to all users and differentiated by codes"(Code1…CodeN), 오른쪽 FDMA/TDMA/CDMA 비교 그림 (필기본: W1≪W2 스케치, user 1·2·3 / code 1·2·3, "다시", "ETRI가 개발?")|large]]
+
+{def}"'''IS-95 (Interim Standard 95)''': One of the dominant 2G standards in '''North America (and South Korea)'''. Based on '''DSSS and CDMA'''.
+* '''DSSS (Direct-Sequence Spread Spectrum)''': a '''signal-spreading modulation technique'''
+* '''CDMA (Code-Division Multiple Access)''': an '''MA method based on DSSS'''" (p.27)
+→ IS-95 는 북미·한국의 2G 표준. 신호를 넓게 퍼뜨리는 변조 기법 DSSS 위에, 코드로 사용자를 나누는 다중 접속 CDMA 를 얹은 것.{/def}
+
+* 그림 왼쪽: 기지국이 '''하나의 합성 신호(composite signal)'''를 모든 MS 에게 보내고, 각 MS 는 '''자기 code(Code1, Code2, …, CodeN)'''로 자기 몫만 꺼낸다. 이것이 forward link 의 CDMA.
+* 그림 오른쪽: '''FDMA'''(주파수 축으로 막대가 나뉨) · '''TDMA'''(시간 축으로 나뉨 — 필기 user 1·2·3) · '''CDMA'''(시간·주파수 전체를 덮는 판이 '''code 별로 겹쳐 쌓임''' — 필기 code 1·2·3).
+* 필기 스케치 '''"W1 ≪ W2"''': 원래 신호는 f1 근처의 좁은 폭 W1 인데, DSSS 를 거치면 훨씬 넓은 폭 W2 로 퍼진다. 이게 '''spread spectrum''' 의 뜻 그대로다 → [[spread spectrum]], [[DSSS]].
+
+{warn}⚠️ '''"다시" 표시한 곳 — DSSS 와 CDMA, 아주 쉽게 다시.'''
+# '''DSSS 는 "퍼뜨리기"''' — 1 비트를 보내는 대신, 그 비트에 '''짧은 ±1 패턴(칩, chip) 여러 개'''를 곱해서 보낸다. 비트 1 개 → 칩 64 개(IS-95 forward). 같은 시간에 64 배 많은 기호를 보내니 '''대역폭이 64 배로 넓어진다'''(필기 W1 → W2). 이게 "signal-spreading '''modulation''' technique".
+# '''CDMA 는 "나누기"''' — 사용자마다 '''서로 다른 칩 패턴'''([[Walsh code]])을 준다. 모두가 퍼뜨린 신호가 공중에서 '''더해져도''', 수신자가 자기 패턴을 곱해 평균하면 남의 신호는 '''정확히 0''' 이 되고 자기 비트만 남는다. 이게 "an '''MA(multiple access) method''' based on DSSS".
+# 그래서 순서는 '''DSSS(기법) 위에 CDMA(접근 방식)''' — DSSS 가 없으면 CDMA 도 없다. 중간고사의 [[mid:FHSS|FHSS]] 가 "주파수를 뛰어다니며 퍼뜨리기" 였다면 DSSS 는 "칩을 곱해서 퍼뜨리기"다.
+숫자로 직접 해 보기 → 아래 [[sim:cdma_walsh]].{/warn}
+
+[[anim:cdma_spreading|스테이션 3개의 비트가 각자 Walsh code 와 곱해져 채널에서 더해지는 장면, 그리고 수신자 2가 자기 code 를 곱했을 때 남의 신호가 0 으로 사라지는 장면을 차례로 보라]]
+
+=== 숫자로 보는 CDMA (Forouzan 보충 — 슬라이드에 없음) ===
+p.27 그림의 "Code1, Code2, …, CodeN" 을 칩 4 개짜리 Walsh code 로 바꾸면 이렇다. 비트 1 → +1, 비트 0 → −1, 말 안 함 → 0.
+<pre class="txt">
+코드 :  c1 = [+1 +1 +1 +1]   c2 = [+1 −1 +1 −1]   c3 = [+1 +1 −1 −1]   c4 = [+1 −1 −1 +1]
+데이터: d1 = −1 (bit 0)      d2 = −1 (bit 0)      d3 = 0 (silent)      d4 = +1 (bit 1)
+
+1. 각자 퍼뜨리기 (d_i × c_i)
+   d1·c1 = [−1 −1 −1 −1]
+   d2·c2 = [−1 +1 −1 +1]
+   d3·c3 = [ 0  0  0  0]
+   d4·c4 = [+1 −1 −1 +1]
+2. 공중에서 더해짐 (채널)  =  [−1 −1 −3 +1]
+3. 수신자 2: 채널 · c2 = (−1)(+1) + (−1)(−1) + (−3)(+1) + (+1)(−1)
+                      = −1 + 1 − 3 − 1 = −4
+4. ÷ 칩 수 4  →  −1  →  '''bit 0'''  (= d2 복원)
+   수신자 3: 채널 · c3 = −1 − 1 + 3 − 1 = 0 → ÷4 = 0 → '''silent'''
+</pre>
+다른 코드끼리 내적이 0([[Walsh code|직교]])이라 남의 몫은 정확히 사라진다.
+
+[[sim:cdma_walsh]]
+
+{tip}💡 '''필기 속 질문: "ETRI가 개발?"''' — 반은 맞다. '''CDMA(IS-95) 원천 기술은 미국 Qualcomm''' 이 만들었고, 한국의 '''[[ETRI]](한국전자통신연구원)''' 가 1990 년대 초 Qualcomm 과 공동 개발 계약을 맺고 '''상용 시스템을 개발'''해, 한국이 '''1996 년 세계 최초로 CDMA 를 상용화'''했다. 슬라이드에 "(and South Korea)" 가 괄호로 붙은 이유가 이것이다. (Qualcomm·1996 은 슬라이드에 없는 배경.) '''교수(59:55)''': "Koreans contributed a lot to invent CDMA … an institution called '''ETRI''' … government research institute that contributed a lot in inventing CDMA, and they earned money a lot" — 교수는 "invent" 라고 표현했다. 시험 답안에서는 '''"ETRI(한국 정부출연 연구소)가 CDMA 개발·상용화에 크게 기여"''' 정도로 쓰면 안전하다.{/tip}
+
+== p.28 — IS-95: Bands, Channels and Synchronization ⭐⭐⭐ ==
+[[img:L10-28.png|p.28 IS-95 Bands, Channels and Synchronization — 1.228 MHz 밑줄 (필기본: 옆에 "30 kHz D-AMPS / 200 kHz GSM" 채널 폭 비교)|medium]]
+
+{def}"'''Bands and Channels''': Use '''two bands for duplex''' communication. '''ISM 800-MHz, ISM 1,900-MHz'''. Each band is divided into '''20 channels of 1.228 MHz''' separated by '''guard bands'''. Each service provider is allotted '''10 channels'''.
+'''Synchronization''': To provide synchronization, '''BSs use the service of GPS'''." (p.28){/def}
+
+<pre class="txt">
+한 대역에 들어간 채널 폭 합 = 20 × 1.228 MHz = 24.56 MHz
+대역 폭 (p.29 그림)         = 25 MHz
+남는 폭                      = 25 − 24.56 = 0.44 MHz  → 채널 사이 [[mid:guard band|guard band]] 몫
+provider 당                  = 20 ÷ 2 = '''10 채널'''
+</pre>
+
+필기의 채널 폭 비교가 이 슬라이드의 요점을 한 줄로 보여 준다:
+{|
+! 표준 || 채널 하나의 폭 || 한 채널을 나누는 방법
+|-
+| [[AMPS]] / [[D-AMPS]] || '''30 kHz''' || AMPS: 1 사용자 · D-AMPS: 시간 슬롯 3 개 ([[TDMA]])
+|-
+| [[GSM]] || '''200 kHz''' || 시간 슬롯 8 개 ([[TDMA]])
+|-
+| '''[[IS-95]]''' || '''1.228 MHz''' || '''Walsh code 64 개''' ([[CDMA]])
+|}
+CDMA 는 신호를 퍼뜨리므로 채널이 '''훨씬 넓다'''(D-AMPS 의 약 40 배). 대신 채널 수는 20 개뿐이고, 한 채널 안을 코드로 잘게 나눈다. 채널을 넓게 나누는 이 바깥 단계는 여전히 '''FDMA''' 다 (p.29 그림 오른쪽 "FDMA" 상자) → [[IS-95 대역과 채널]].
+
+* '''GPS 동기화''': IS-95 의 BS 들은 [[GPS 동기화|GPS 위성 시계]]로 모두 같은 시각을 공유한다. 교수: "'''this one is not that important'''" (62:29).
+
+[[sim:is95_rates]]
+
+== p.29 — IS-95: Forward Transmission (Downlink) ⭐⭐⭐ ==
+[[img:L10-29.png|p.29 IS-95 forward(BS→MS) 블록도 — Digitizer → error correcting → long code(ESN, decimator)로 scramble → W0…W63 곱 → Σ → 1.228 Mcps → QPSK → 20 채널 중 하나(FDMA) (필기본: "CDMA" 동그라미, "64 user")|large]]
+
+왼쪽에서 오른쪽으로, 한 사용자(digital channel 하나)의 음성이 겪는 일:
+<pre class="txt">
+1. 음성 3 kHz  → Digitizer                         → 9.6 kbps
+2. Error correcting, repeating, interleaving       → 19.2 ksps   (2 배: 오류 정정용 [[mid:redundancy|redundancy]])
+3. 사용자 고유 [[long code와 ESN|long code]] 를 더함(⊕, scramble)
+     ESN → Long code generator (1.228 Mcps) → Decimator (1/64 로 솎아냄) → 19.2 ksps  ← 속도를 맞춤
+4. Walsh code W_i (64 chips) 를 곱함                 → 19.2 k × 64 = '''1.2288 Mcps''' ≈ 1.228 Mcps
+5. 64 개 digital channel 을 Σ 로 더함 (W0 = Pilot channel, all 1s · W1 … W63)
+6. [[QPSK]] 로 반송파에 실음                          → 1.228 MHz 아날로그 채널
+7. 25-MHz band 안의 20 채널 중 하나에 배치 ('''FDMA''')
+</pre>
+* 점선 상자 "CDMA"(필기 동그라미): '''W0~W63 로 곱하고 더하는 부분''' — 한 1.228 MHz 채널 안에서 64 개 digital channel 을 '''코드로''' 나눈다.
+* 점선 상자 "FDMA": 25 MHz 를 1.228 MHz 채널 20 개로 '''주파수로''' 나눈다.
+* 즉 IS-95 forward 는 '''FDMA(바깥) + CDMA(안쪽)''' 2 단 구조다.
+* 필기 스케치(W1, W2 가로선 겹침): 같은 주파수 띠 위에 코드 W1, W2, … 의 신호가 층층이 겹친다 — p.27 오른쪽 CDMA 그림과 같은 모습.
+
+{tip}💡 '''필기 속 질문: "64 user" — 한 채널에 정말 64 명?''' '''Walsh code 가 64 개 → digital channel 이 64 개'''라는 뜻이다. 그런데 슬라이드에서 '''digital channel 0 (W0) 은 pilot channel(all 1s)''' 이라 사용자 몫이 아니다 → 많아야 '''63'''. 실제 표준은 W32 를 synchronization, W1–W7 을 paging 에도 쓰므로 traffic(음성) 채널은 '''55 개''' 정도다 (Forouzan 보충 — 슬라이드에 없음). 교수(63:16)도 "these aggregated '''64 user''' signals … 64 different users in this one bag, W1, W2, W3 …" 라고 '''64 user''' 로 말했다 — 필기는 이 말을 받아 적은 것. 시험 답안에는 "1.228 MHz 채널 하나에 code 64 개로 64 digital channel(사용자)의 신호가 합쳐짐, W0 = pilot" 으로 쓰면 된다. → [[Walsh code]], [[pilot channel]]{/tip}
+
+자세히 → [[IS-95 forward 전송]], [[chip rate]], [[long code와 ESN]].
+
+== p.30 — IS-95: Reverse Transmission (Uplink) ⭐⭐ ==
+[[img:L10-30.png|p.30 IS-95 reverse(MS→BS) 블록도 — 9.6 kbps → 28.8 ksps → 6 to 64 symbol modulation → 307.2 kcps → long code(1.228 Mcps)로 DSSS → QPSK → 20 채널 중 하나 ("94 digital channels DSSS", 필기본: "DSSS" 동그라미)|large]]
+
+<pre class="txt">
+1. 음성 3 kHz → Digitizer                          → 9.6 kbps
+2. Error correcting, repetition, interleaving      → 28.8 ksps   (3 배 — forward 의 2 배보다 더 튼튼하게)
+3. 6 to 64 symbol modulation: 6 symbol 묶음 → 64 chip 하나
+     28.8 k ÷ 6 = 4.8 k 묶음/s,  4.8 k × 64          → '''307.2 kcps'''
+4. ESN 의 long code (1.228 Mcps) 와 ⊕ — 칩 1 개당 long code 칩 4 개
+     307.2 k × 4                                    → '''1.2288 Mcps''' ≈ 1.228 Mcps   ← 여기가 DSSS
+5. QPSK → 1.228 MHz 채널 → Σ → 25-MHz band 의 20 채널 중 하나 (FDMA)
+</pre>
+
+{|
+! || forward (p.29, BS→MS) || reverse (p.30, MS→BS)
+|-
+| error correcting 후 || 19.2 ksps (×2) || 28.8 ksps (×3)
+|-
+| 사용자를 나누는 것 || '''Walsh code''' W0–W63 (점선 상자 "CDMA") || '''long code''' (점선 상자 "DSSS")
+|-
+| Walsh code 의 역할 || 사용자 구분용 코드 || 6 → 64 '''symbol modulation''' (변조용)
+|-
+| pilot || W0 = pilot channel || 없음
+|-
+| 최종 chip rate || 1.228 Mcps || 1.228 Mcps
+|-
+| 슬라이드 채널 수 || 64 digital channels || '''94 digital channels''' DSSS
+|}
+
+{info}왜 reverse 는 Walsh code 로 사용자를 나누지 않나? Walsh code 의 직교성은 '''모든 신호의 칩 경계가 정확히 맞을 때'''만 성립한다. forward 는 BS 한 곳에서 64 개를 동시에 만들어 보내니 맞지만, reverse 는 MS 들이 '''각자 다른 거리'''에서 보내 도착 시각이 제각각이다. 그래서 reverse 는 사용자마다 다른 '''long code''' 로 퍼뜨려(DSSS) 구분한다 (Forouzan 보충 — 슬라이드에 없음). → [[IS-95 reverse 전송]]{/info}
+
+== p.31–32 — IS-95: Frequency Reuse Factor and Handoff ⭐⭐⭐ ==
+[[img:L10-31.png|p.31 Frequency reuse factor — "Normally 1 → Neighboring cells can use the same freq. band!" (필기본: ① 동그라미, 육각형 1·1·1 "가능해짐")|medium]]
+
+{def}"'''Frequency reuse factor''': '''Normally 1''' → '''Neighboring cells can use the same freq. band!''' Why? The interference from '''neighboring cells cannot affect CDMA or DSSS''' transmission." (p.31){/def}
+
+* [[CH05 셀룰러 동작]] 의 [[frequency reuse]]: FDMA/TDMA 에서는 이웃 cell 이 같은 주파수를 쓰면 [[co-channel interference]] 가 생기므로, cell 들을 N 개 그룹으로 나눠 같은 주파수 cell 을 떨어뜨렸다(AMPS [[reuse factor]] 7).
+* IS-95 는 '''N = 1''': '''모든 cell 이 같은 대역을 쓴다'''. 이웃 cell 의 신호는 내 코드로 곱하면 상관이 없어(다른 코드 → 내적 ≈ 0) 약한 잡음처럼 퍼져 버리기 때문이다.
+* 필기 '''육각형 1 · 1 · 1 "가능해짐"''' = 바로 이 그림. FDMA 라면 이웃끼리 1·2·3… 처럼 번호가 달라야 했는데, CDMA 라서 '''전부 1 이 가능해졌다'''.
+
+{tip}💡 '''필기 속 질문: "Normally ①" — 왜 "normally" 인가?''' 원칙적으로는 N=1 로 '''모든 cell 이 같은 1.228 MHz 채널'''을 쓸 수 있다는 뜻이다. "normally" 는 '''보통은 그렇게 운영한다'''는 단서 — provider 가 10 개 채널을 가지고 있으니 트래픽이 많은 곳에서 채널을 더 얹는 식의 예외 운용이 가능하다는 정도로 읽으면 된다. 시험 답은 슬라이드 문장 그대로 "'''normally 1 — neighboring cells can use the same frequency band'''" + 이유 "'''interference from neighboring cells cannot affect CDMA or DSSS'''".{/tip}
+
+[[anim:frequency_reuse_hex|이웃 cell 이 같은 주파수를 쓰면 경계에서 간섭(빨간 ✗) → N=4, N=7 로 떨어뜨리는 FDMA 방식 → 마지막 장면에서 IS-95 는 모든 cell 이 같은 색이지만 사용자마다 code 무늬가 다른 것을 확인하라]]
+
+[[sim:reuse_pattern]]
+위 시뮬레이터에서 옵션 '''N = 1 (IS-95 CDMA)''' 을 골라 N = 4 · 7 과 비교하라 — cell 당 쓸 수 있는 대역이 '''전 대역'''이 된다.
+
+[[img:L10-32.png|p.32 Soft handoff — "Every BS continuously broadcasts signals using its pilot channel. MS can detect the pilot signal from its cell and neighboring cells → Enabling an MS to do a soft handoff."|medium]]
+
+{def}"'''Soft handoff''': Every BS '''continuously broadcasts''' signals using its '''pilot channel'''. MS can '''detect the pilot signal from its cell and neighboring cells'''. → '''Enabling an MS to do a soft handoff'''." (p.32){/def}
+
+* [[soft handoff]] = '''make before break''': 새 BS 와 먼저 연결하고 나서 옛 BS 를 끊는다 (반대는 [[hard handoff]] = break before make).
+* IS-95 에서 이게 '''가능한 이유''' 두 가지가 p.31–32 에 함께 있다:
+# '''reuse factor 1''' — 이웃 BS 도 '''같은 주파수'''라서 MS 가 주파수를 바꾸지 않고도 두 BS 를 '''동시에''' 들을 수 있다.
+# '''pilot channel''' — 모든 BS 가 W0(all 1s) pilot 을 계속 방송하니, MS 는 이웃 BS 의 pilot 세기를 늘 재고 있다가 충분히 세지면 그 BS 를 추가한다.
+* FDMA/TDMA(AMPS, GSM)는 이웃 cell 주파수가 달라서 무선기를 새 주파수로 '''갈아타야''' 하므로 hard handoff 가 된다.
+
+[[anim:handoff_hard_soft|위 줄 hard handoff 에서 BS1 막대가 끝난 뒤 BS2 가 시작되는 빨간 틈을, 아래 줄 soft handoff 에서 두 막대가 겹치는 구간을 비교하라 — IS-95 는 아래 줄]]
+
+자세히 → [[IS-95 frequency reuse]], [[IS-95 soft handoff]], [[pilot channel]].
+
+== p.33 — 3rd Generation: IMT-2000 ⭐⭐⭐ ==
+[[img:L10-33.png|p.33 IMT-2000 — "A blueprint of 3G issued by ITU", Key Features(데이터율 144 k / 384 k / 2 M, packet + circuit, 2 GHz band, 2 MHz bandwidth), Main goal: universal personal communication (필기본: "blue print, not actual standard")|large]]
+
+{def}"'''IMT-2000''' (Internet Mobile Telecommunications 2000): '''A blueprint of 3G''' issued by '''ITU''' (International Telecommunication Union).
+Key Features:
+* Voice quality comparable to that of the existing public telephone network
+* Data rate: '''144 kbps''' for access in a moving vehicle (car) · '''384 kbps''' for access as the user walks (pedestrians) · '''2 Mbps''' for the stationary user (office or home)
+* Support for '''packet-switched and circuit-switched''' data services
+* A band of '''2 GHz''' · Bandwidths of '''2 MHz''' · Interface to the Internet
+Main goal: provision of '''universal personal communication'''." (p.33){/def}
+
+{|
+! 사용자 상태 || 데이터율 || 외우는 법
+|-
+| moving vehicle (car) || '''144 kbps''' || 빨리 움직일수록 느리다
+|-
+| pedestrians (walking) || '''384 kbps''' ||
+|-
+| stationary (office, home) || '''2 Mbps''' || 가만히 있을수록 빠르다
+|}
+
+{tip}💡 '''필기 속 질문: "blue print, not actual standard"''' — 정확히 받아 적었다. IMT-2000 은 '''"3G 라면 이 정도는 돼야 한다"는 요구 사항 목록(청사진)'''이지, 그 자체가 장비를 만들 수 있는 규격이 아니다. ITU 가 기준(데이터율, 2 GHz 대역, packet/circuit 지원 …)을 내놓으면, 각 지역 단체가 그 기준을 만족하는 '''실제 표준'''을 만든다 — 그것이 다음 슬라이드의 '''5 개 표준'''(IMT-DS = W-CDMA, IMT-MC = CDMA 2000, …)이다. 비유하면 IMT-2000 은 "방 3 개, 화장실 2 개, 30 평" 이라는 '''설계 조건''', W-CDMA 와 CDMA 2000 은 그 조건으로 지은 '''실제 집''' 두 채. → [[IMT-2000]], [[IMT-2000 표준]]{/tip}
+
+{warn}⚠️ 슬라이드 제목의 풀네임은 '''"Internet''' Mobile Telecommunications 2000"이다. ITU 공식 명칭은 '''"International''' Mobile Telecommunications-2000"이다 (슬라이드에 없음). 시험에 풀네임이 나오면 슬라이드 표기를 쓰되, 공식 명칭도 알아 둘 것.{/warn}
+
+* '''packet-switched + circuit-switched''': 2G 까지는 통화마다 회선을 잡는 circuit switching 이었는데, 3G 는 인터넷 데이터용 '''packet switching''' 을 함께 지원한다 → [[circuit switching과 packet switching]]. 4G 에서는 circuit 이 사라지고 '''packet 만''' 남는다(p.36).
+* [[ITU]] = UN 산하 국제 전기통신 연합 — 전 세계 주파수·표준을 조율한다.
+
+== p.34–35 — IMT-2000 (3G): Standards ⭐⭐⭐ ==
+[[img:L10-34.png|p.34 IMT-2000 5 표준 — IMT-DS(Direct sequence, CDMA) · IMT-MC(Multicarrier, CDMA) · IMT-TC(Time code, CDMA & TDMA) · IMT-SC(Single carrier, TDMA) · IMT-FT(Frequency time, TDMA & FDMA)|large]]
+
+{|
+! 표준 || 풀이 (p.34) || 접근 방식 || p.35 상세
+|-
+| '''IMT-DS''' || '''D'''irect '''S'''equence || CDMA || '''W-CDMA''' (wideband CDMA), '''5 MHz''', '''Europe'''
+|-
+| '''IMT-MC''' || '''M'''ulti'''c'''arrier || CDMA || '''CDMA 2000''' (IS-95 CDMA 의 진화), 15 MHz wideband + 1.25 MHz narrowband, '''North America'''
+|-
+| IMT-TC || '''T'''ime '''C'''ode || CDMA & TDMA || (상세 없음)
+|-
+| IMT-SC || '''S'''ingle '''C'''arrier || TDMA || (상세 없음)
+|-
+| IMT-FT || '''F'''requency '''T'''ime || TDMA & FDMA || (상세 없음)
+|}
+이름에서 접근 방식이 나온다 — '''Direct sequence''' 는 DSSS 의 DS 라서 CDMA, '''Multicarrier''' 는 여러 반송파 + CDMA, '''Time code''' 는 시간(TDMA)+코드(CDMA), '''Single carrier''' 는 반송파 하나를 시간으로(TDMA), '''Frequency time''' 은 주파수(FDMA)+시간(TDMA). 5 개 중 '''CDMA 가 들어간 것이 3 개''' — 3G 의 주류가 CDMA 라는 뜻이다.
+
+[[img:L10-35.png|p.35 IMT-DS 와 IMT-MC 상세 (빨간 상자로 두 개 강조, 필기본: IMT-DS 옆 "South Korea 3G")|large]]
+
+{def}"'''IMT-DS''': Use a version of CDMA: '''wideband CDMA (W-CDMA)'''. Use a '''5 MHz''' bandwidth. Developed in '''Europe'''.
+'''IMT-MC''': An '''evolution of CDMA used in IS-95''' channels: '''CDMA 2000'''. Combine the new '''wideband (15 MHz)''' spread spectrum with the '''narrowband (1.25 MHz) CDMA of IS-95'''. Developed in '''North America'''." (p.35){/def}
+
+{tip}💡 '''필기 속 질문: "South Korea 3G" — 한국 3G 는 IMT-DS(W-CDMA)?''' '''둘 다 썼다'''(슬라이드에 없는 배경). 한국은 2G 가 IS-95 라 처음에는 그 진화형인 '''CDMA 2000'''(IMT-MC; CDMA2000 1x, EV-DO)을 깔았고, 이후 SK텔레콤·KT 가 유럽식 '''W-CDMA'''(IMT-DS)로 3G 를 본격 전개해 이것이 한국 3G 의 주력이 되었다(LG U+ 는 CDMA 2000 계열 유지). '''교수(69:05)''': IMT-DS 는 "'''used in South Korea. We use this one.'''" — 즉 필기의 "South Korea 3G" 는 '''W-CDMA(IMT-DS)''' 를 가리킨다. 시험 답은 "IMT-DS = W-CDMA, 한국이 쓴 3G".{/tip}
+
+* '''W-CDMA vs CDMA 2000''' — 둘 다 CDMA 를 넓힌 것이지만 출신이 다르다: W-CDMA 는 '''유럽(GSM 진영)'''에서 새로 만든 5 MHz CDMA, CDMA 2000 은 '''북미 IS-95 를 그대로 이어받은''' 진화형(IS-95 의 1.25 MHz 채널과 호환). → [[W-CDMA]], [[CDMA 2000]]
+* 1.25 MHz 는 IS-95 채널 폭(p.28 의 1.228 MHz 를 반올림해 부르는 값)이다.
+
+== p.36 — 4th Generation ⭐⭐ ==
+[[img:L10-36.png|p.36 4th Generation — 100 Mbps(moving car) / 1 Gbps(stationary), smooth handoff across heterogeneous networks, All IP packet-switched (필기본: 기지국 △ 여러 개와 단말 □ 사이 화살표 — 교수가 말한 "many base stations" 스케치)|medium]]
+
+{def}"'''4th Generation''': Expected to be a '''complete evolution''' in wireless communications.
+* A '''spectrally efficient''' system · '''High network capacity'''
+* Data rate of '''100 Mbps''' for access in a moving car and '''1 Gbps''' for stationary users
+* Data rate of at least 100 Mbps between any two points in the world
+* '''Smooth handoff across heterogeneous networks'''
+* High quality of service for next generation multimedia support
+* Interoperability with existing wireless standards
+* '''All IP, packet-switched, networks'''" (p.36){/def}
+
+<pre class="txt">
+3G → 4G 데이터율 비교
+  이동(car)   : 144 kbps → 100 Mbps   ≈ 100,000 / 144 ≈ 694 배
+  정지        :   2 Mbps →   1 Gbps   = 1,000 / 2     = 500 배
+</pre>
+* '''All IP, packet-switched''': 음성까지 IP 패킷으로 보낸다. 3G 의 "packet + circuit" 에서 circuit 이 빠졌다 → [[all-IP]], [[circuit switching과 packet switching]].
+* '''Smooth handoff across heterogeneous networks''': 셀룰러 ↔ WiFi 처럼 '''종류가 다른 망 사이'''에서도 끊김 없이 넘어간다.
+* 필기의 △(기지국) 여럿과 □(단말) 사이 화살표 스케치는 교수가 4G/5G trend 로 말한 '''"use many base stations"'''(71:46) 그림이다 — BS 를 촘촘히 깔면 MS–BS 거리가 줄고, 무선의 [[mid:attenuation|attenuation]] 이 줄어 data rate 가 올라간다 (아래 🎙 절).
+* 슬라이드는 4G 의 실제 표준 이름(LTE 등)을 주지 않는다. "Expected to be" 라는 표현처럼 '''요구 사항 목록''' 형태 → [[4G]].
+
+== 2G 세 표준 비교 — TDMA 계열 vs CDMA ⭐⭐⭐ ==
+{|
+! || [[D-AMPS]] || [[GSM]] || '''[[IS-95]]'''
+|-
+| 지역 || 북미 || 유럽 || 북미 + '''한국'''
+|-
+| 채널 폭 || 30 kHz || 200 kHz || '''1.228 MHz'''
+|-
+| 한 채널 안을 나누는 방법 || TDMA 3 slot || TDMA 8 slot || '''CDMA, Walsh code 64'''
+|-
+| 바깥(채널 사이) || FDMA || FDMA || FDMA (20 채널)
+|-
+| reuse factor || 7 (Forouzan 보충 — AMPS 와 같음; 슬라이드는 AMPS 7 만 명시) || 3 (Forouzan 보충 — 슬라이드에 없음) || '''normally 1''' (p.31)
+|-
+| handoff || hard (주파수를 갈아타야 함) || hard (〃) || '''soft''' (pilot channel, p.32)
+|-
+| 변조 || QPSK || GMSK || QPSK
+|}
+
+== 🎙 실제 수업 기록 (10/20 화, 녹음본 기준) ==
+녹음 `1020_컴네.txt` 54:50–73:22 (손글씨 타임스탬프: p.27 54:50 · p.28 1:00:50 · p.29 1:02:30 · p.30 1:04:10 · p.31 1:05:15 · p.32 1:06:20 · p.33 1:06:35 · p.34 1:08:50 · p.35 1:09:05 · p.36 1:10:15). 영어 ASR 이라 용어가 깨져 있다("ATRI" = ETRI, "IMT-270" = IMT-2000, "XDMA" = FDMA, "DSFF" = DSSS) — 슬라이드 용어로 복원했다. 학생 질문은 이 구간에 없었다.
+
+{info}'''암기 범위 (41:54, 앞 구간 AMPS 설명 중):''' "I'm '''not''' going to recommend you to memorize all these specific numbers, but instead … understand how communication systems '''evolve across generations'''. That '''trend''' is important." 단 "'''uplink and downlink'''" 는 외우라고 했다(BS→MS = downlink, MS→BS = uplink). → 이 문서의 1.228 MHz, 9.6 kbps, 307.2 kcps 같은 숫자는 '''원리를 보여 주는 예'''로 읽는다.{/info}
+
+=== p.27 IS-95 — DSSS 와 CDMA (54:50–1:00:43) ===
+* IS-95 는 "North America and South Korea" 의 2G. GSM 과의 '''big difference''' 는 "based on '''DSSS''' … and '''CDMA'''". "CDMA … was very famous in Korea."
+* DSSS: 필기 스케치 그대로 칠판에 그림 — 대역폭 W1 인 신호를 '''W2 로 퍼뜨리는''' 것이 spread spectrum. "'''the information contained in this one and this one are the same'''" — 퍼뜨려도 정보량은 같다(강조).
+* 왜 퍼뜨리나: "'''for implementing multiple access'''" — DSSS 로 구현한 MA 가 CDMA. "if we multiply a '''code''' to these signals … This is why we call it code."
+* 오른쪽 그림: FDMA 는 주파수로, TDMA 는 시간으로 매체를 나누고, CDMA 는 "spread over time and frequency … shared by users at the '''same time and same frequency'''". 색깔 판 하나하나가 code 1, 2, 3 — "'''divided by code, not frequency, nor time'''."
+* '''ETRI''' (59:55): "Koreans contributed a lot to invent CDMA … ETRI … government research institute … they earned money a lot." → [[ETRI]]
+* "And the '''beauty of CDMA''', we will see shortly." (→ p.31 reuse factor 1)
+
+=== p.28 Bands, channels, sync (1:00:47–1:02:32) ===
+{exam}🎯 '''"One important distinction to previous ones is its bandwidth"''' (61:15). AMPS/D-AMPS 30 kHz, GSM 200 kHz 에 비해 IS-95 는 "'''a lot bigger bandwidth'''" — "'''because of CDMA that spreads spectrum'''". 숫자(1.228 MHz)보다 '''"CDMA 는 퍼뜨리므로 채널이 훨씬 넓다"는 이유'''가 요점.{/exam}
+* 두 대역으로 동시에 송수신(duplex) — 이전 세대와 같음.
+* GPS 로 BS·MS 동기화 — 바로 이어서 "'''But this one is not that important.'''" (62:29)
+
+=== p.29–30 Forward / reverse (1:02:32–1:05:15) ===
+{exam}🎯 '''"The important part is: to implement DSSS, IS-95 introduces these blocks"''' (62:32). 사용자마다 다른 code → 하나의 신호로 합쳐짐 → "these aggregated '''64 user''' signals" 가 QPSK 로 '''한 1.228 MHz 주파수 채널'''에 실림 — "64 different users in this one … bag, W1, W2, W3 …" (필기 "64 user" 가 이 말). reverse 도 "user-specific … '''direct sequence spread spectrum from user to base station'''".
+'''"The key point is that they use large bandwidth aggregated across different users."''' (64:36){/exam}
+{info}'''세부 블록은 몰라도 된다''' (64:45): "You don't have to understand the different technical details on CDMA because I did not tell you anything about the details, but you have to remember that '''the medium is shared across so-called codes''', to '''spread the spectrum wide to avoid interference'''." → 블록도 rate(9.6 → 19.2 → 1.228 M 등)는 원리 확인용. 외울 것은 "code 로 공유, 넓게 퍼뜨려 간섭 회피".{/info}
+
+=== p.31–32 Reuse factor 1, soft handoff (1:05:15–1:06:35) ===
+{exam}🎯 '''"The beauty of CDMA"''' = '''frequency reuse factor 1''' (65:15): "neighboring cells can use the same frequency, '''which is not allowed in previous communication systems'''." 이유: "They don't have to differentiate frequency or time, except they '''differentiate by code'''." 결과: "'''very efficient in terms of frequency and also time'''." + "it also serves '''soft handoff'''."{/exam}
+* "Normally" 의 단서는 따로 설명하지 않았다.
+
+=== p.33 3G IMT-2000 (1:06:35–1:08:41) ===
+{exam}🎯 '''2G → 3G 의 key point''' (66:35): "providing communication '''more than voice''', from voice to '''text and data'''. That is what we call '''universal personal communication'''."
+'''Trend''' (67:16–68:10): "larger bandwidth and larger frequency … the speed and efficiency of communication is heavily depending on the '''amount of frequency and time''' … Larger frequency bandwidth enables more users to cover, and that is '''one common trend of advancement''' seen in wireless communications."{/exam}
+* 데이터율(144 k/384 k/2 M)은 "peak data rates" 로만 언급. "these features are described by a '''blueprint''' of 3G, '''not actual standards'''" (필기 그대로) — '''IMT-2000''', "invented by '''ITU''', a very famous group for communications".
+
+=== p.34–35 Standards (1:08:41–1:10:18) ===
+* "actual standards … five representative standards" — 그중 '''DS 와 MC 두 개에 집중'''.
+* '''IMT-DS''': "'''used in South Korea. We use this one.'''" 다른 이름 W-CDMA. "As we can expect from each name" — CDMA with large bandwidth 5 MHz, developed in Europe.
+* '''IMT-MC''': "an improved version of IS-95 … simply called '''CDMA 2000'''", North America, large bandwidth (슬라이드 15 MHz; ASR 은 "50").
+
+=== p.36 4G — 그리고 5G trend (1:10:18–1:12:58) ===
+* "This is the last slide of today's lecture." 지금은 4G·5G 를 쓰지만 "'''Forouzan's book is an old book'''" 이라 4G 는 '''expectation''' 으로만 적혀 있다.
+* '''Natural trend''': "more data rate, and to do that, we need '''more bandwidth''' and more advanced techniques to improve '''frequency efficiency'''."
+* '''5G''' (슬라이드에 없음, 교수 구두): "use '''huge bandwidth'''" — "extremely high frequency bands over 10 GHz or a few hundred GHz", 수 GHz 의 대역폭.
+* '''"Use many base stations"''' (71:46): BS 가 많으면 MS–BS 거리가 줄고, 무선은 [[mid:attenuation|attenuation]](신호 세기 감소)을 겪으므로 '''data rate 가 올라간다''' — 필기의 △(BS) 여럿 + □(MS) 스케치.
+* 서비스도 voice → text, data → video, file transfer 로.
+
+=== 공지 (73:00) ===
+* "From the next course, on '''Thursday''', we will study '''satellite networks''', which is the '''last part of WAN''', and move on to the '''network layer''' … one of the most crucial parts in this course."
+
+== 시험 대비 핵심 요약 ==
+교수 기준(41:54·64:45): '''숫자보다 원리와 세대별 trend'''. 1–8 이 우선, 9 의 숫자는 "알면 좋은" 참고.
+# '''CDMA''' = 매체를 '''code''' 로 나눈다 — '''frequency 도 time 도 아니다'''. 모든 사용자가 '''같은 시간·같은 주파수'''를 쓰고, 서로 직교인 code 로 자기 신호만 꺼낸다.
+# '''DSSS''' = 좁은 신호(W1)를 넓은 대역(W2)으로 '''퍼뜨리는''' modulation technique. 퍼뜨려도 '''정보는 같다'''. 퍼뜨리는 이유 = '''multiple access(CDMA) 구현''' + '''간섭 회피'''. CDMA 는 "an MA method based on DSSS".
+# '''IS-95''' = 북미 + '''한국'''의 2G, '''DSSS + CDMA'''. GSM(TDMA)과의 big difference. 한국 '''ETRI''' 가 CDMA 에 크게 기여.
+# 이전 세대와의 '''important distinction = bandwidth''' — IS-95 채널은 30 kHz(AMPS)·200 kHz(GSM)보다 훨씬 넓다. '''CDMA 가 spectrum 을 퍼뜨리기 때문'''.
+# 한 넓은 채널에 '''여러 사용자(64 code)의 신호가 합쳐져''' 실린다(large bandwidth aggregated across users). forward 는 code(W0–W63, '''W0 = pilot''')로, reverse 는 사용자별 DSSS 로.
+# '''"The beauty of CDMA" = reuse factor 1''' — 이웃 cell 도 같은 주파수(이전 시스템에서는 불가). code 로 구분하므로 이웃 cell 간섭이 영향을 못 줌 → frequency·time 효율 ↑.
+# '''soft handoff''': 모든 BS 가 '''pilot channel''' 을 계속 방송 → MS 가 이웃 cell pilot 감지 → make before break. (이웃도 같은 주파수라 동시에 들을 수 있음)
+# '''2G → 3G''' = voice 를 넘어 '''text·data''' = '''universal personal communication''', packet + circuit. '''IMT-2000''' = '''ITU''' 의 '''blueprint, not actual standard'''. 실제 표준 5 개 중 '''IMT-DS = W-CDMA'''(Europe, '''한국이 쓰는 3G''') · '''IMT-MC = CDMA 2000'''(IS-95 개선판, North America). '''4G''' = '''All IP, packet-switched'''.
+# '''Trend''': 세대가 갈수록 '''bandwidth 와 frequency 를 더 크게''' → data rate·사용자 수 ↑, frequency efficiency ↑. 5G: huge bandwidth(10 GHz 이상 대역) + '''many base stations'''(거리 ↓ → attenuation ↓ → data rate ↑).
+# (참고 숫자) IS-95 채널 1.228 MHz × 20, provider 당 10, chip rate 1.228 Mcps, GPS 동기화("not that important") · 3G 144 k / 384 k / 2 M bps · W-CDMA 5 MHz · 4G 100 Mbps / 1 Gbps.
+
+== 공식 모음 ==
+{|
+! 대상 || 식 || 값
+|-
+| IS-95 forward chip rate || $19.2\text{ ksps} \times 64$ || $1.2288\text{ Mcps} \approx 1.228\text{ Mcps}$
+|-
+| IS-95 reverse (6-to-64) || $28.8\text{ ksps} \div 6 \times 64$ || $307.2\text{ kcps}$
+|-
+| IS-95 reverse chip rate || $307.2\text{ kcps} \times 4$ || $1.2288\text{ Mcps}$
+|-
+| forward 오류정정 배수 || $19.2 \div 9.6$ || $2$
+|-
+| reverse 오류정정 배수 || $28.8 \div 9.6$ || $3$
+|-
+| 한 대역의 채널 폭 합 || $20 \times 1.228\text{ MHz}$ || $24.56\text{ MHz}$ (25 MHz 중)
+|-
+| CDMA 복원 || $d_i = \frac{1}{N}\sum_k (\text{채널})_k \cdot c_{i,k}$ || 다른 코드 몫은 0
+|}
+
+== 관련 문서 ==
+* 앞 구간: [[CH05 셀룰러 동작]] · [[CH05 1G–2G 셀룰러]] · [[셀룰러 세대]] · [[셀룰러 세대 비교표]]
+* IS-95: [[IS-95]] · [[DSSS]] · [[CDMA]] · [[Walsh code]] · [[chip rate]] · [[IS-95 대역과 채널]] · [[GPS 동기화]] · [[IS-95 forward 전송]] · [[IS-95 reverse 전송]] · [[pilot channel]] · [[long code와 ESN]] · [[QPSK]] · [[IS-95 frequency reuse]] · [[IS-95 soft handoff]]
+* 3G·4G: [[3G]] · [[IMT-2000]] · [[ITU]] · [[IMT-2000 표준]] · [[W-CDMA]] · [[CDMA 2000]] · [[circuit switching과 packet switching]] · [[4G]] · [[all-IP]] · [[ETRI]]
+* 용어: [[spread spectrum]] · [[FDMA]] · [[TDMA]] · [[soft handoff]] · [[frequency reuse]]
+* 중간고사: [[mid:channelization]] · [[mid:FHSS]] · [[mid:PSK]] · [[mid:guard band]]

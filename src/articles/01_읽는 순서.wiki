@@ -1,0 +1,40 @@
+key: 읽는 순서
+title: 읽는 순서 — 처음부터 끝까지 따라가기
+category: 안내
+---
+수업(10/20) 슬라이드 순서 그대로다. 굵은 것이 메인 문서이고, 그 아래가 메인을 읽다 막힐 때 들어가는 사전 문서다. 메인을 먼저 끝까지 읽고 사전은 링크로 필요할 때만 들어가는 것을 권한다.
+
+{analogy}
+드라마 정주행과 같다. 메인 문서가 본편이고 사전 문서는 "인물 소개" 페이지다. 누가 누군지 헷갈릴 때만 들어가면 된다.
+{/analogy}
+
+== 0. 출발점 — 중간고사에서 배운 것 (p.2–4) ==
+* 지금까지는 Physical layer → Data-link layer(DLC·MAC) → 그 위의 실제 LAN(Ethernet, WiFi, Bluetooth)을 배웠다. 이제 범위가 넓은 [[mid:WAN|WAN]] 으로 간다.
+* 다시 볼 것: [[중간고사 선수 개념]] — [[mid:FDM|FDM]] · [[mid:TDM|TDM]] · [[mid:channelization|channelization]] · [[mid:FSK|FSK]] · [[mid:FHSS|FHSS]] · [[mid:duplexing과 multiple access|duplexing과 multiple access]]
+
+== 1. '''[[CH05 셀룰러 동작]]''' (p.5–17) ==
+# [[WAN 분류]] — wired([[telephone network]], [[cable network]]) vs wireless([[cellular telephony]], [[satellite network]] → [[Starlink]])
+# 셀룰러의 구성: [[cell]] · [[base station]] · [[mobile station]] · [[MSC]] · [[PSTN]]
+# [[frequency reuse]] · [[reuse factor]] · [[co-channel interference]]
+# 전화 걸기·받기: [[통화 발신 과정]] · [[통화 수신 과정]] · [[paging]] · [[uplink와 downlink]]
+# 움직이면서 통화: [[handoff]] → [[hard handoff]] · [[soft handoff]]
+# 다른 통신사 구역: [[roaming]]
+# 비교: [[셀룰러와 WiFi 비교]]
+
+== 2. '''[[CH05 1G–2G 셀룰러]]''' (p.18–26) ==
+# [[셀룰러 세대]] 큰 그림
+# [[1G]] [[AMPS]] — [[AMPS 대역과 채널]] · [[FDMA]] · [[FM]] · [[AMPS control channel]]
+# [[2G]] [[D-AMPS]] — [[7.95 kbps 디지털 음성]] · [[TDMA]]
+# [[GSM]] — [[GSM 대역]] · [[GSM 프레임 구조]] · [[GSM multiframe]] · [[GSM channel bit rate]] · [[GMSK]] · [[HLR]]
+
+== 3. '''[[CH05 IS-95·3G·4G]]''' (p.27–36) ==
+# [[IS-95]] — [[spread spectrum]] · [[DSSS]] · [[CDMA]] · [[Walsh code]] · [[chip rate]]
+# [[IS-95 대역과 채널]] · [[GPS 동기화]]
+# [[IS-95 forward 전송]] · [[IS-95 reverse 전송]] · [[pilot channel]] · [[long code와 ESN]] · [[QPSK]]
+# [[IS-95 frequency reuse]] (reuse factor 1) · [[IS-95 soft handoff]]
+# [[3G]] [[IMT-2000]] — [[ITU]] · [[IMT-2000 표준]] · [[W-CDMA]] · [[CDMA 2000]] · [[circuit switching과 packet switching]]
+# [[4G]] — [[all-IP]]
+# 여담: [[ETRI]] (한국이 CDMA 를 상용화한 이야기)
+
+== 4. 정리 ==
+* [[셀룰러 세대 비교표]] → [[공식 모음]] → [[자주 틀리는 함정 모음]]

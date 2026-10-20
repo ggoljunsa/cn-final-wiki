@@ -1,0 +1,33 @@
+key: all-IP
+title: All-IP (전부 IP, packet-switched 망)
+category: 3강 CDMA–4G, 용어
+---
+'''all-IP''' 는 음성·영상·데이터 '''모든 트래픽을 IP 패킷으로''' 나르는 망 구조다. [[4G]] 의 요구 사항 "'''All IP, packet-switched, networks'''" 에서 나온다. 2G 까지의 circuit switching 음성, 3G 의 "packet + circuit" 혼합에서 마지막으로 circuit 을 걷어낸 단계. L10 p.36.
+
+{def}"'''All IP, packet-switched, networks'''" (p.36, 4G 요구 사항의 마지막 항목)
+→ 4G 망은 전부 IP 기반, 패킷 교환.{/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''All''' — 예외 없이 전부. 음성도 포함.
+* '''IP''' — 인터넷의 network layer 프로토콜 [[mid:IP|IP]](Internet Protocol). 중간고사 [[mid:TCP/IP 프로토콜 스위트|TCP/IP]] 의 그 IP.
+* → "셀룰러 망을 '''인터넷과 같은 방식'''으로 만든다".
+
+== 무엇이 바뀌나 ==
+<pre class="txt">
+2G : 음성 = circuit (MSC 가 voice channel 을 통화 내내 할당)
+3G : 음성 = circuit,  데이터 = '''packet'''           (p.33 "packet-switched and circuit-switched")
+4G : 음성도 데이터도 = '''IP packet'''                 (p.36 "All IP, packet-switched")
+     → 음성 통화 = 인터넷 위의 음성 패킷 (VoIP 방식, 4G 에서는 VoLTE — 보충, 슬라이드에 없음)
+</pre>
+* 장점(보충): 망이 하나로 단순해지고, 인터넷과 바로 이어지며, 말 안 할 때 자원을 남이 쓰니 '''효율적'''이다 → 4G 의 "spectrally efficient", "high network capacity" 와 맞물림.
+* 또 다른 망(WiFi 등)도 IP 를 쓰므로 '''heterogeneous networks 사이 smooth handoff''' 가 쉬워진다.
+
+[[anim:generations_timeline|아래 화살표 "아날로그 → 디지털 → 데이터 → all-IP" 의 마지막 칸을 보라]]
+
+{analogy}🎭 예전에는 전화는 '''전화선''', 인터넷은 '''인터넷선''' 을 따로 깔았다. all-IP 는 '''모든 걸 인터넷선 하나로''' — 전화도 인터넷 메신저 음성통화처럼 패킷으로 보낸다.{/analogy}
+
+{quiz}"4G networks are all IP, circuit-switched." O/X 와 이유.{/quiz}
+{answer}'''X'''. 4G 는 '''All IP, packet-switched''' 다. circuit switching 은 3G 까지 (3G 는 packet 과 circuit 모두 지원).{/answer}
+
+== 관련 문서 ==
+* [[4G]] · [[circuit switching과 packet switching]] · [[3G]] · [[mid:IP]]

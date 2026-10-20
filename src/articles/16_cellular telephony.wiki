@@ -1,0 +1,43 @@
+key: cellular telephony
+title: Cellular Telephony (셀룰러 이동통신)
+category: 1강 셀룰러 동작, 용어
+---
+'''Cellular telephony''' 는 서비스 지역을 '''[[cell]]''' 로 나누고 cell 마다 [[base station]] 을 둔 '''무선 WAN''' 이다. 슬라이드 p.8 의 섹션 제목 "'''1. Cellular Telephony'''" 이고, 4G·5G 휴대폰망이 모두 여기에 속한다. 구조는 cell(BS + MS) → [[MSC]] → [[PSTN]].
+
+{def}"1. Cellular Telephony — A '''wireless''' WAN that provides '''any type''' of communication." (p.8)
+"Each cellular service area is divided into small regions called '''cells''' that consist of: Base Station (BS) · Mobile Station (MS). '''Mobile Switching Center (MSC)''' — Coordinates communication between all BSs and the central office." (p.9–10)
+어떤 종류의 통신이든 제공하는 무선 WAN. 서비스 지역을 cell 로 나누고, 각 cell 은 BS 와 MS 로, BS 들은 MSC 가 조정한다.{/def}
+
+[[img:L10-08.png|p.8 1. Cellular Telephony — "any type" 아래 필기: voice / text / data{image, video, …} (필기본)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''cellular''' = '''cell''' 로 이루어진. 넓은 지역을 하나의 큰 송신탑으로 덮지 않고 '''작은 cell 여러 개'''로 쪼갠다 — 그래야 같은 주파수를 멀리 떨어진 cell 에서 다시 쓸 수 있다([[frequency reuse]]).
+* '''telephony''' = 전화(음성). 이름에 "전화"가 남은 것은 처음엔 '''voice''' 만 했기 때문이다. 지금은 "any type" — 필기 그대로 '''voice, text, data(image, video, …)'''.
+* 교수(10/20): "In the first time, the communications were focused on '''voice''', and it was expanded to '''text''' … Now, we can use '''all types''' of communication." → 이 확장이 곧 세대의 역사 → [[셀룰러 세대]].
+
+[[anim:cellular_architecture|cell → BS·MS → MSC → PSTN → stationary phone 순서로 셀룰러의 구성 요소가 등장하는 것을 보라]]
+
+{|
+! 구성 요소 || 역할 || 문서
+|-
+| cell || 서비스 지역을 나눈 작은 영역 (육각형) || [[cell]]
+|-
+| BS || cell 의 탑. 무선으로 MS, 유선으로 MSC || [[base station]]
+|-
+| MS || 사용자 기기 || [[mobile station]]
+|-
+| MSC || 모든 BS ↔ central office 조정 || [[MSC]]
+|-
+| PSTN || MSC 가 붙는 유선 전화망 || [[PSTN]]
+|}
+
+동작: [[frequency reuse]] · [[통화 발신 과정]] · [[통화 수신 과정]] · [[handoff]] · [[roaming]] — 전부 [[CH05 셀룰러 동작]] 에.
+
+{analogy}🎭 '''벌집.''' 넓은 판을 육각형 방(cell)으로 빽빽하게 나누고, 방마다 일벌(BS)이 한 마리씩 지킨다. 여왕벌(MSC)이 모든 방을 지휘한다. 방이 작을수록 같은 "꿀(주파수)"을 먼 방에서 또 쓸 수 있다.{/analogy}
+
+{quiz}슬라이드의 cellular telephony 정의를 쓰고, "any type" 이 무엇을 뜻하는지 쓰시오.{/quiz}
+{answer}"A '''wireless WAN''' that provides '''any type of communication'''." (p.8) — any type = voice, text, data(image, video 등). 처음엔 voice 에서 시작해 확장됐다.{/answer}
+
+== 관련 문서 ==
+* [[CH05 셀룰러 동작]] · [[cell]] · [[base station]] · [[mobile station]] · [[MSC]] · [[PSTN]]
+* [[WAN 분류]] · [[셀룰러 세대]] · [[셀룰러와 WiFi 비교]]

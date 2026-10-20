@@ -1,0 +1,47 @@
+key: AMPS
+title: AMPS (Advanced Mobile Phone System — 1G)
+category: 2강 1G–2G, 용어
+---
+'''AMPS(Advanced Mobile Phone System)'''는 북미의 대표적인 [[1G]] 아날로그 셀룰러 시스템이다. 대역을 30 kHz 채널로 잘라 '''한 통화에 한 채널'''을 주는 [[FDMA]] 방식이고, 음성은 [[FM]], 제어는 [[mid:FSK|FSK]] 로 보낸다. L10 p.18–20.
+
+{def}"1st Generation (1G): '''AMPS (Advanced Mobile Phone System)''' — One of the leading analog cellular systems in North America. AMPS uses FDMA to separate channels in a link." (p.18)
+"Each band is 25 MHz, made of 832 30-kHz analog channels." (p.19)
+"Voice channels are modulated using FM. Control channels use FSK to create 30 kHz analog signals." (p.20){/def}
+
+== 이름에서 개념 끌어내기 ==
+'''A'''dvanced '''M'''obile '''P'''hone '''S'''ystem — 지금 보면 전혀 "advanced" 하지 않지만, 이름이 붙은 1970–80 년대(Bell Labs 개발, 1983 년 상용화 — 보충)에는 차량 전화 정도이던 이동전화를 '''cell 구조와 [[handoff]]''' 로 대중화한 첨단 기술이었다. 이름의 "advanced" 는 그 이전 세대(cell 개념 없는 단일 대형 송신탑 방식) 대비라는 뜻.
+
+{analogy}🎭 '''주차장 칸.''' 25 MHz 주차장을 30 kHz 폭 칸 832 개로 그어 놓고, 차(통화) 한 대가 들어오면 칸 하나를 '''통화가 끝날 때까지''' 내준다. 차가 잠깐 멈춰 있어도(말을 안 해도) 칸은 비울 수 없다. 2G 의 [[D-AMPS]] 는 같은 칸을 3 대가 시간을 나눠 쓰는 발레파킹이다.{/analogy}
+
+[[anim:amps_bands|두 대역(MS band = uplink, BS band = downlink)에서 한 통화가 칸을 하나씩 짝으로 잡는 장면을 보라]]
+
+== 한눈에 ==
+{|
+! 항목 || 값 || 문서
+|-
+| 세대·지역 || 1G, North America, '''analog''' || [[1G]]
+|-
+| 다중 접속 || [[FDMA]] — 30 kHz 채널 1개 = 통화 1개 || [[FDMA]]
+|-
+| 대역 || MS band 824–849 MHz (reverse / uplink), BS band 869–894 MHz (forward / downlink) || [[AMPS 대역과 채널]]
+|-
+| 채널 || 30 kHz × 832 (방향당) → provider 당 416 → control 21 + voice 395 || [[AMPS 대역과 채널]]
+|-
+| reuse factor || 7 || [[reuse factor]]
+|-
+| voice 변조 || 3 kHz → [[FM]] → 30 kHz analog || [[FM]]
+|-
+| control 변조 || 10 kbps → [[mid:FSK|FSK]] → 30 kHz analog || [[AMPS control channel]]
+|}
+
+[[img:L10-18.png|p.18 AMPS 개념도 — 폰과 tower 는 "a regular radio, on a specific frequency", tower 들은 유선으로 cell carrier 망 → 일반 전화망|medium]]
+
+{exam}AMPS 를 한 줄로: "'''analog'''(교수: "leading analog, this is important", 37:40) · North America · '''FDMA''' · voice '''FM''' / control '''FSK'''(control 만 digital) · 두 band = '''downlink(BS→MS) / uplink(MS→BS)'''."{/exam}
+
+{info}채널 수(832 / 416 / 21 / 395)·reuse 7 같은 수치는 교수가 "I'm not going to recommend you to memorize all these specific numbers … understand how communication systems evolve across generations"(10/20, 41:54)라고 했다. 구조 이해용으로만.{/info}
+
+{warn}AMPS 와 [[D-AMPS]] 는 '''대역·채널이 똑같다'''. 차이는 채널 안: AMPS = 아날로그 음성 1명(FM), D-AMPS = 디지털 음성 3명(TDMA + QPSK).{/warn}
+
+== 관련 문서 ==
+* [[1G]] · [[AMPS 대역과 채널]] · [[AMPS control channel]] · [[FDMA]] · [[FM]]
+* 후속: [[D-AMPS]] · 전체: [[CH05 1G–2G 셀룰러]]

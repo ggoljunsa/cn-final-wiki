@@ -1,0 +1,42 @@
+key: 셀룰러 세대
+title: 셀룰러 세대 (1G → 2G → 3G → 4G, generation)
+category: 2강 1G–2G, 용어
+---
+'''셀룰러 세대(generation, "G")'''는 [[cellular telephony]] 기술을 약 10 년 단위로 나눈 이름이다. L10 덱 p.18–36 이 1G 부터 4G 까지를 차례로 훑는다. 세대가 바뀔 때마다 바뀐 것은 크게 둘 — '''정보를 어떻게 표현하나'''(analog → digital → packet data → all-IP)와 '''대역을 사용자끼리 어떻게 나누나'''([[FDMA]] → [[TDMA]]/[[CDMA]] → wideband CDMA → …).
+
+{def}슬라이드의 세대별 첫 줄:
+* "1st Generation (1G): AMPS — One of the leading '''analog''' cellular systems in North America. AMPS uses '''FDMA'''." (p.18)
+* "2nd Generation (2G): Digital AMPS — The evolution of the analog AMPS into a '''digital''' system." (p.21) / GSM (p.23) / IS-95 "Based on DSSS and CDMA" (p.27)
+* "3rd Generation: IMT-2000 — A '''blueprint''' of 3G issued by ITU" (p.33)
+* "4th Generation — Expected to be a complete evolution in wireless communications … '''All IP, packet-switched''', networks" (p.36){/def}
+
+== 이름에서 개념 끌어내기 ==
+'''Generation''' = "세대". 부모 세대와 자식 세대가 같은 집(주파수 대역·기지국)을 물려받아 살면서 '''사는 방식'''을 바꾸듯, 셀룰러도 이전 세대의 망을 최대한 재활용하며 진화했다 — 대표 예가 [[D-AMPS]] 가 [[AMPS]] 의 대역·채널을 '''그대로''' 물려받은 것.
+
+{analogy}🎭 '''음악 매체의 세대교체.''' 1G = '''라디오 생방송'''(아날로그 파형 그대로, 주파수마다 한 방송 = FDMA). 2G = '''CD'''(소리를 비트로 — 디지털, 압축 가능). 3G = '''MP3 다운로드'''(음성뿐 아니라 데이터, 인터넷 연결). 4G = '''스트리밍 앱'''(모든 것이 인터넷 패킷 — all-IP).{/analogy}
+
+[[anim:generations_timeline|1G → 2G → 3G → 4G 가 왼쪽에서 쌓이는 동안, 각 칸의 '대표 시스템 · 접근 방식 · 데이터 속도' 세 줄을 소리 내어 읽고, 맨 아래 '아날로그 → 디지털 → 데이터 → all-IP' 화살표로 한 문장 요약을 만들어 보라]]
+
+== 세대별 요약 ==
+{|
+! 세대 || 핵심 변화 || 대표 시스템 || 접근 방식 || 슬라이드
+|-
+| [[1G]] || '''analog''' 음성 || [[AMPS]] (North America) || [[FDMA]] || p.18–20
+|-
+| [[2G]] || '''digital''' 음성 || [[D-AMPS]], [[GSM]] / [[IS-95]] || FDMA+[[TDMA]] / [[CDMA]] || p.21–32
+|-
+| [[3G]] || 데이터·인터넷 (144 k / 384 k / 2 Mbps), packet + circuit || [[IMT-2000]] ([[W-CDMA]], [[CDMA 2000]]) || wideband CDMA || p.33–35
+|-
+| [[4G]] || '''all-IP''', packet-switched, 100 Mbps(이동) / 1 Gbps(정지) || — || — || p.36
+|}
+
+{info}이 위키의 그룹 구분: 1G·2G TDMA 계열은 [[CH05 1G–2G 셀룰러]], 2G CDMA(IS-95)·3G·4G 는 [[CH05 IS-95·3G·4G]]. 세대 전체 비교는 [[셀룰러 세대 비교표]].{/info}
+
+{exam}교수(10/20, 46:12–46:59)가 꼽은 '''세대 진화의 세 trend''': "from '''analog to digital''', and from '''voice communication to data communication''', and from '''narrowband to wideband'''. These are key trends that we commonly see in wireless design." 구체적 수치보다 이 trend 를 이해하라고 했다.{/exam}
+
+{exam}"각 세대의 대표 시스템과 다중 접속 방식" 짝짓기: 1G AMPS–FDMA · 2G D-AMPS/GSM–TDMA · 2G IS-95–CDMA · 3G IMT-2000–W-CDMA/CDMA 2000 · 4G–all-IP.{/exam}
+
+== 관련 문서 ==
+* [[1G]] · [[2G]] · [[3G]] · [[4G]]
+* [[셀룰러 세대 비교표]] · [[CH05 1G–2G 셀룰러]]
+* 접근 방식: [[FDMA]] · [[TDMA]] · [[CDMA]] · [[mid:channelization|channelization]]

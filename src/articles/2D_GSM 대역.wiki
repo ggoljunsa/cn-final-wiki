@@ -1,0 +1,48 @@
+key: GSM 대역
+title: GSM 대역 (890–915 / 935–960 MHz, 200 kHz × 124)
+category: 2강 1G–2G, 용어
+---
+'''GSM 대역'''은 [[GSM]] 이 쓰는 두 주파수 대역이다. reverse(uplink, MS → BS) 890–915 MHz, forward(downlink, BS → MS) 935–960 MHz, 각 25 MHz 를 200 kHz 채널 124 개로 나눈다. L10 p.24.
+
+{def}"Use '''two bands''' for (half) duplex communication
+* Forward ('''Downlink'''): BS → MS
+* Reverse ('''Uplink'''): BS ← MS"
+그림: "Band = 25 MHz = 124 channels", "Channel: 200 kHz", "Reverse band: 124 channels (890–915 MHz)", "Forward band: 124 channels (935–960 MHz)" (p.24){/def}
+
+[[img:L10-24.png|p.24 GSM Bands — Reverse band 890–915 MHz(필기 uplink), Forward band 935–960 MHz(필기 downlink), 각 124 × 200 kHz|medium]]
+
+== 이름에서 개념 끌어내기 ==
+'''forward / reverse''' 는 [[AMPS 대역과 채널|AMPS]] 와 같은 기지국 관점 이름이다 — 망에서 사용자로 "앞으로" = forward = downlink, 사용자에서 망으로 "거꾸로" = reverse = uplink. 낮은 주파수 쪽(890–915)이 uplink 인 것도 AMPS(824–849 uplink)와 같은 패턴. → [[uplink와 downlink]]
+
+{analogy}🎭 AMPS 가 '''좁은 차선(30 kHz) 832 개''' 도로라면, GSM 은 '''넓은 차선(200 kHz) 124 개''' 도로다. 대신 GSM 의 넓은 차선에는 8 칸짜리 버스(TDMA frame)가 다닌다.{/analogy}
+
+== 계산 ⭐⭐ ==
+<pre class="txt">
+1. 대역 폭          915 − 890 = 25 MHz   (960 − 935 = 25 MHz)
+2. 채널 폭          200 kHz
+3. 25,000 kHz ÷ 200 kHz = 125
+4. 양 끝 [[mid:guard band|guard band]] 몫 1 채널 제외 → '''124''' 채널        ← 슬라이드 값
+5. 채널당 8 slot (TDMA)  → 124 × 8 = 992 동시 통화 (provider 구분 전 — 파생값)
+</pre>
+
+[[sim:band_channels]]
+
+{|
+! || [[AMPS]] · [[D-AMPS]] || GSM
+|-
+| uplink || 824–849 MHz || 890–915 MHz
+|-
+| downlink || 869–894 MHz || 935–960 MHz
+|-
+| 대역 폭 || 25 MHz || 25 MHz
+|-
+| 채널 폭 × 개수 || 30 kHz × 832 || 200 kHz × 124
+|-
+| 채널당 사용자 || 1 (AMPS) / 3 (D-AMPS) || 8
+|}
+
+{info}'''"(half) duplex" 괄호에 대해''': 대역은 방향별로 따로라 주파수로는 동시에 주고받을 수 있다(full-duplex 처럼 보임). 그러나 GSM 폰은 uplink 슬롯을 downlink 슬롯보다 '''3 slot 늦게''' 쓰도록 짜여 있어 한 순간에 송신·수신을 동시에 하지 않는다 — 그래서 슬라이드가 "(half)" 를 괄호로 붙인 것으로 보인다(보충 — 슬라이드 설명 없음). 중간고사 개념: [[mid:half-duplex|half-duplex]] · [[mid:full-duplex|full-duplex]] · [[mid:duplexing과 multiple access|duplexing과 multiple access]].{/info}
+
+== 관련 문서 ==
+* [[GSM]] · [[GSM 프레임 구조]] · [[uplink와 downlink]] · [[FDMA]]
+* 비교: [[AMPS 대역과 채널]] · [[IS-95 대역과 채널]]

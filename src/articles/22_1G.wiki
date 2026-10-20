@@ -1,0 +1,36 @@
+key: 1G
+title: 1G (1st Generation — 아날로그 셀룰러)
+category: 2강 1G–2G, 용어
+---
+'''1G(1st Generation)'''는 최초의 셀룰러 세대로, 음성을 '''아날로그 파형 그대로''' 무선으로 보냈다. 슬라이드의 대표는 북미의 [[AMPS]] 다(L10 p.18–20).
+
+{def}"1st Generation (1G): AMPS (Advanced Mobile Phone System) — One of the leading '''analog cellular systems''' in North America. AMPS uses '''FDMA''' to separate channels in a link." (p.18){/def}
+
+== 이름에서 개념 끌어내기 ==
+"1G" 라는 말은 2G 가 나온 뒤에 붙은 '''뒤늦은 이름'''이다. 당시엔 그냥 "cellular" 였다. 그래서 1G 를 정의하는 특징은 '''2G 와의 차이''' — '''analog'''(2G 는 digital)와 '''FDMA 만'''(2G 는 그 위에 TDMA·CDMA)이다.
+
+{analogy}🎭 '''워키토키 수백 대를 채널 다이얼만 다르게 맞춰 놓은 것.''' 각 통화가 자기 주파수(30 kHz) 하나를 통째로 차지하고, 목소리는 [[FM]] 라디오처럼 파형 그대로 실린다. 말을 쉬는 동안에도 주파수는 그 통화 몫이다.{/analogy}
+
+== 특징 ==
+{|
+! 항목 || 1G (AMPS)
+|-
+| 정보 표현 || '''analog''' (voice → [[FM]])
+|-
+| 다중 접속 || [[FDMA]] — 30 kHz 채널 1개 = 사용자 1명
+|-
+| 대역 || 824–849 MHz (uplink) / 869–894 MHz (downlink), 각 25 MHz = 832 채널 → [[AMPS 대역과 채널]]
+|-
+| 제어 || control channel 21 개는 10 kbps 디지털 → [[mid:FSK|FSK]] → [[AMPS control channel]]
+|-
+| handoff || [[hard handoff]] ("Used in early systems", p.16)
+|-
+| reuse factor || 7 → [[reuse factor]]
+|}
+
+[[img:L10-20.png|p.20 AMPS Transmission — 1G 의 전형: 3 kHz voice → FM → 30 kHz 칸 하나 (FDMA)|medium]]
+
+* 약점: 대역 효율이 낮다(사용자당 30 kHz), 도청이 쉽다(FM 라디오처럼 수신기만 있으면 들림 — 보충), 데이터 서비스 없음. → 디지털 [[2G]] 로.
+
+== 관련 문서 ==
+* [[셀룰러 세대]] · [[2G]] · [[AMPS]] · [[FDMA]] · [[CH05 1G–2G 셀룰러]]

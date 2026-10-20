@@ -1,0 +1,33 @@
+key: base station
+title: Base Station (BS, 기지국)
+category: 1강 셀룰러 동작, 용어
+---
+'''Base station(BS)''' 은 각 [[cell]] 안에 있는 고정된 송수신 탑이다. cell 안의 [[mobile station]](MS)과는 '''무선'''으로, [[MSC]] 와는 '''유선'''으로 연결된다. 즉 무선 구간과 유선 infrastructure 를 잇는 '''경계 장비'''다. L10 p.9–13.
+
+{def}"Each cellular service area is divided into small regions called cells that consist of: '''Base Station (BS)''' · Mobile Station (MS)." (p.9)
+"② '''BS relays the number to the MSC'''" (p.12, 발신)
+각 cell 은 BS 와 MS 로 구성된다. BS 는 MS 에게서 받은 것을 MSC 로 중계한다.{/def}
+
+[[img:L10-09.png|p.9 Cell 안의 BS(탑)와 MS — BS 는 MSC 에 유선으로 연결. 필기 "Base Station (BS) ↔ AP: Access point (동일 개념??)" (필기본)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''base''' = 기지(基地). 움직이는 MS 와 달리 '''한 자리에 고정된 근거지'''. '''station''' = 통신하는 장치(802.11·Bluetooth 에서도 쓴 그 station).
+* 그래서 "고정된 station(BS)" ↔ "움직이는 station(MS)" 의 짝이다.
+
+하는 일 (슬라이드에서 BS 가 등장하는 자리)
+* 발신 ②: MS 가 보낸 번호를 '''MSC 로 relay''' (p.12). MS 는 "strongest setup channel" = 보통 '''가장 가까운 BS'''(필기 "closest base station")를 고른다.
+* 수신 ②: MSC 의 paging query 를 '''자기 cell 에 방송''' (p.13 빨간 점선이 모든 BS 로).
+* handoff: 통화가 BS1 → BS2 로 넘어감 (p.14–16).
+* BS 자체는 판단하지 않는다 — 채널 할당·handoff 결정은 '''[[MSC]]''' 의 몫.
+
+{tip}'''필기 속 질문: "Base Station (BS) ↔ AP: Access point (동일 개념??)"''' (p.9)
+'''역할은 같다'''. 둘 다 무선 단말이 붙는 고정 접속점이고, 뒤쪽은 유선망(BS → MSC / AP → [[mid:distribution system]])에 연결된다. 교수도 "The other name of base station could be '''AP, access point'''. … It is the same … '''interchangeable'''" 이라며 강의실 천장의 AP 를 "the station that serves everyone in this room" 이라고 가리켰다(10/20 녹음 8:26).
+'''다른 점''': ① 표준 — AP 는 [[mid:IEEE 802.11]], BS 는 셀룰러(AMPS·GSM·IS-95·4G…). ② 범위 — AP 는 방·건물(수십 m), BS 는 수백 m~수 km. ③ 상위 지휘소 — BS 위에는 '''MSC''' 가 있어 이동 중 handoff 를 '''이음새 없이''' 해 주지만, 802.11 은 BSS 사이 이동의 연속성을 보장하지 않는다([[mid:station mobility]]). ④ 주파수 — 셀룰러는 면허 대역을 [[frequency reuse]] 로 계획 배치, WiFi 는 비면허 ISM 대역을 [[mid:CSMA/CA]] 로 경쟁. → [[셀룰러와 WiFi 비교]]{/tip}
+
+{analogy}🎭 '''동네 우체국 창구.''' 주민(MS)은 가장 가까운 창구(BS)에 편지를 낸다. 창구 직원은 내용을 판단하지 않고 본부(MSC)로 넘긴다. 어느 창구가 맡을지, 이사 가면 어디로 넘길지는 본부가 정한다.{/analogy}
+
+[[anim:cellular_architecture|각 cell 에 BS 가 서고, BS 들이 유선으로 MSC 에 모이는 장면을 보라]]
+
+== 관련 문서 ==
+* [[cell]] · [[mobile station]] · [[MSC]] · [[handoff]] · [[uplink와 downlink]]
+* [[셀룰러와 WiFi 비교]] · [[mid:BSS]] · [[mid:distribution system]]

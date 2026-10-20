@@ -1,0 +1,35 @@
+key: uplink와 downlink
+title: Uplink 와 Downlink (reverse · forward)
+category: 1강 셀룰러 동작, 용어
+---
+셀룰러에서 '''uplink''' 는 '''MS → BS''' 방향(폰이 탑으로 '''올려''' 보냄), '''downlink''' 는 '''BS → MS''' 방향(탑이 폰으로 '''내려''' 보냄)이다. 셀룰러 교재·슬라이드는 같은 것을 '''reverse'''(= uplink) / '''forward'''(= downlink) 라고도 부른다. 1G AMPS 부터 두 방향에 '''서로 다른 대역'''을 줘서 동시에 말하고 듣는다(FDD). 이 문서는 1강 구조(MS·BS)를 바탕으로 2강·3강의 대역 이야기를 미리 정리한다.
+
+{def}AMPS 대역 슬라이드(L10 p.19) 표현: MS 가 보내는 대역 '''824–849 MHz''' = '''reverse''' (mobile → base), BS 가 보내는 대역 '''869–894 MHz''' = '''forward''' (base → mobile). IS-95 블록도(p.29–30)도 forward / reverse 로 나뉜다.
+uplink(reverse) = MS → BS, downlink(forward) = BS → MS.{/def}
+
+[[img:L10-19.png|p.19 AMPS bands — 824–849 MHz (MS 송신 = reverse = uplink) 와 869–894 MHz (BS 송신 = forward = downlink), 각 25 MHz 를 30 kHz 채널로 나눔 (필기본, "다시" 표시)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''up / down''' — BS 탑은 높은 곳, 폰은 땅. 폰 → 탑은 '''위로(up)''', 탑 → 폰은 '''아래로(down)'''. 위성(지상국 → 위성 = uplink)에서 온 말이다.
+* '''forward / reverse''' — 망(BS)을 기준으로, 망이 사용자에게 '''앞으로 내보내는''' 방향이 forward, 사용자가 망으로 '''거슬러 보내는''' 방향이 reverse.
+
+{|
+! 방향 || 별칭 || 송신자 → 수신자 || AMPS 대역 (p.19) || IS-95 (p.29–30)
+|-
+| '''uplink''' || '''reverse''' || MS → BS || 824–849 MHz || reverse 전송 → [[IS-95 reverse 전송]]
+|-
+| '''downlink''' || '''forward''' || BS → MS || 869–894 MHz || forward 전송 → [[IS-95 forward 전송]]
+|}
+* 두 대역을 나눠 쓰는 것 = [[mid:duplexing과 multiple access|duplexing]] 의 한 방식인 '''FDD'''(frequency division duplexing). 같은 대역 안에서 사용자들을 나누는 것은 따로 [[FDMA]]·[[TDMA]]·[[CDMA]] — '''duplexing ≠ multiple access''' (중간고사 Bluetooth 에서 교수가 강조한 구분, Bluetooth 는 시간으로 나누는 TDD 였다 → [[mid:TDD-TDMA]]).
+* 1강 동작과의 연결: 발신 ①(MS → BS 번호 송신)은 '''uplink''', 수신 ②의 paging·④ ringing(BS → MS)은 '''downlink'''.
+
+{analogy}🎭 '''2차선 도로.''' 올라가는 차선(uplink)과 내려오는 차선(downlink)을 따로 깔아 두면 양쪽 차가 동시에 달린다(full-duplex). AMPS 는 두 차선 사이에 45 MHz 의 중앙분리대를 둔 셈이다(824→869, 849→894).{/analogy}
+
+[[anim:amps_bands|MS 가 uplink(824–849 MHz) 채널 하나와 downlink(869–894 MHz) 채널 하나를 짝으로 잡는 모습을 보라]]
+
+{quiz}AMPS 에서 BS 가 MS 에게 보내는 방향의 이름 두 가지와 그 대역은?{/quiz}
+{answer}'''downlink''' = '''forward''' (base → mobile), '''869–894 MHz''' (p.19).{/answer}
+
+== 관련 문서 ==
+* [[AMPS 대역과 채널]] · [[IS-95 forward 전송]] · [[IS-95 reverse 전송]] · [[base station]] · [[mobile station]]
+* [[mid:duplexing과 multiple access]] · [[mid:full-duplex]]

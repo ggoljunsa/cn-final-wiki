@@ -1,0 +1,53 @@
+key: IMT-2000 표준
+title: IMT-2000 표준 5종 (DS · MC · TC · SC · FT)
+category: 3강 CDMA–4G, 용어
+---
+[[IMT-2000]] 청사진을 만족하는 '''실제 3G 표준'''은 다섯 가지다: '''IMT-DS''' (CDMA), '''IMT-MC''' (CDMA), '''IMT-TC''' (CDMA & TDMA), '''IMT-SC''' (TDMA), '''IMT-FT''' (TDMA & FDMA). 슬라이드는 이 중 '''DS([[W-CDMA]])와 MC([[CDMA 2000]])''' 만 자세히 다룬다. L10 p.34–35.
+
+{def}p.34 트리: "Third generation → '''IMT-DS''' Direct sequence (CDMA) · '''IMT-MC''' Multicarrier (CDMA) · '''IMT-TC''' Time code (CDMA & TDMA) · '''IMT-SC''' Single carrier (TDMA) · '''IMT-FT''' Frequency time (TDMA & FDMA)"
+p.35: "'''IMT-DS''': Use a version of CDMA: '''wideband CDMA (W-CDMA)'''. Use a '''5 MHz''' bandwidth. Developed in '''Europe'''. '''IMT-MC''': An evolution of CDMA used in IS-95 channels: '''CDMA 2000'''. Combine the new wideband (15 MHz) spread spectrum with the narrowband (1.25 MHz) CDMA of IS-95. Developed in '''North America'''."{/def}
+
+[[img:L10-34.png|p.34 IMT-2000 5 표준 트리와 각 표준의 접근 방식|large]]
+
+== 이름에서 개념 끌어내기 (외우는 법) ==
+{|
+! 표준 || 풀이 || 이름 → 접근 방식 || 접근 방식 (p.34)
+|-
+| IMT-'''DS''' || '''D'''irect '''S'''equence || DSSS 의 DS → 코드 || '''CDMA'''
+|-
+| IMT-'''MC''' || '''M'''ulti'''c'''arrier || 여러 반송파 위의 코드 || '''CDMA'''
+|-
+| IMT-'''TC''' || '''T'''ime '''C'''ode || Time(TDMA) + Code(CDMA) || '''CDMA & TDMA'''
+|-
+| IMT-'''SC''' || '''S'''ingle '''C'''arrier || 반송파 하나를 시간으로 || '''TDMA'''
+|-
+| IMT-'''FT''' || '''F'''requency '''T'''ime || Frequency(FDMA) + Time(TDMA) || '''TDMA & FDMA'''
+|}
+교수의 "the name itself is very important" 가 그대로 통하는 슬라이드다 — '''Code → CDMA, Time → TDMA, Frequency → FDMA''' 를 이름에서 읽으면 표를 외울 필요가 없다. (Direct sequence 는 [[DSSS]] 의 DS, Multicarrier 는 [[CDMA 2000]] 이 여러 1.25 MHz 반송파를 묶는 것에서.)
+
+[[img:L10-35.png|p.35 IMT-DS 와 IMT-MC 상세 (필기본: IMT-DS 옆 "South Korea 3G")|large]]
+
+== DS vs MC ⭐⭐⭐ ==
+{|
+! || '''IMT-DS''' || '''IMT-MC'''
+|-
+| 실제 이름 || '''W-CDMA''' (wideband CDMA) || '''CDMA 2000'''
+|-
+| 대역폭 || '''5 MHz''' || 새 wideband '''15 MHz''' + IS-95 narrowband '''1.25 MHz'''
+|-
+| 뿌리 || 새로 만든 CDMA (GSM 진영) || '''IS-95 CDMA 의 진화'''
+|-
+| 개발 || '''Europe''' || '''North America'''
+|}
+
+{tip}💡 '''필기 속 질문: "South Korea 3G" (IMT-DS 옆)''' — 한국은 '''둘 다''' 썼다(슬라이드에 없는 배경). 2G 가 IS-95 라 그 진화형 '''CDMA 2000'''(IMT-MC)을 먼저 깔았고, 이후 SK텔레콤·KT 가 '''W-CDMA'''(IMT-DS)로 3G 를 본격 전개해 이것이 주력이 되었다(LG U+ 는 CDMA 2000 계열 유지). '''교수(10/20, 69:05)''': IMT-DS 는 "'''used in South Korea. We use this one.''' Another name of this IMT-DS is Wideband CDMA or just W-CDMA." → 필기의 "South Korea 3G" = '''W-CDMA(IMT-DS)'''. 교수는 5 표준 중 "I would like to '''focus on these two'''"(DS, MC)라고 했다 — TC·SC·FT 는 이름과 접근 방식 정도만.{/tip}
+
+{warn}⚠️ 함정: "IMT-2000 = W-CDMA" 가 아니다. IMT-2000 은 청사진, W-CDMA 는 그것을 만족하는 5 표준 중 '''하나'''(IMT-DS). 또 '''5 개 중 3 개'''(DS, MC, TC)에 CDMA 가 들어가고, '''순수 TDMA 는 SC 하나'''.{/warn}
+
+{analogy}🎭 '''같은 분양 조건, 다섯 건설사.''' IMT-2000 이라는 조건표를 받고 다섯 건설사가 아파트를 지었다. 그중 유럽 건설사(DS = W-CDMA)와 북미 건설사(MC = CDMA 2000) 두 곳이 가장 많이 팔렸다. 북미 건설사는 기존 IS-95 아파트를 증축했고, 유럽 건설사는 새로 지었다.{/analogy}
+
+{quiz}다음 IMT-2000 표준과 접근 방식을 짝지으시오: IMT-TC, IMT-SC, IMT-FT.{/quiz}
+{answer}IMT-TC = '''CDMA & TDMA''' (Time code) · IMT-SC = '''TDMA''' (Single carrier) · IMT-FT = '''TDMA & FDMA''' (Frequency time).{/answer}
+
+== 관련 문서 ==
+* [[IMT-2000]] · [[W-CDMA]] · [[CDMA 2000]] · [[CDMA]] · [[TDMA]] · [[FDMA]] · [[3G]]

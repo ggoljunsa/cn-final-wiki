@@ -1,0 +1,40 @@
+key: 2G
+title: 2G (2nd Generation — 디지털 셀룰러)
+category: 2강 1G–2G, 용어
+---
+'''2G(2nd Generation)'''는 음성을 '''디지털화'''한 셀룰러 세대다. 슬라이드는 세 시스템을 다룬다 — 북미의 [[D-AMPS]](TDMA), 유럽의 [[GSM]](TDMA), 북미·한국의 [[IS-95]](CDMA). L10 p.21–32.
+
+{def}"2nd Generation (2G): Digital AMPS (D-AMPS) — The evolution of the analog AMPS into a '''digital''' system." (p.21)
+"2nd Generation: GSM — A European standard for a common 2G technology for all Europe." (p.23)
+"2nd Generation: IS-95 — One of the dominant 2G standards in North America (and South Korea). Based on DSSS and CDMA." (p.27){/def}
+
+== 이름에서 개념 끌어내기 ==
+1G 와 2G 를 가르는 단어는 단 하나 — '''digital'''. 음성을 비트로 바꾸자 세 가지가 가능해졌다: ① '''압축'''(3 kHz 음성 → 수 kbps), ② 압축한 비트를 짧은 시간 슬롯에 '''몰아 보내기'''([[TDMA]]) 또는 코드로 '''퍼뜨리기'''([[CDMA]]), ③ '''오류 제어 비트'''를 붙이기(GSM 의 65 → 114 bits). 결과는 같은 대역에서 '''더 많은 사용자'''.
+
+{analogy}🎭 '''손편지(1G) → 이메일(2G).''' 손편지는 한 장에 한 사람 글씨가 그대로 담기지만(아날로그), 이메일은 글자를 비트로 바꾸니 압축·암호화·오류 검사를 할 수 있고, 한 회선으로 여러 사람의 메일을 번갈아 보낼 수 있다.{/analogy}
+
+[[anim:generations_timeline|2G 칸에 D-AMPS·GSM(TDMA)과 IS-95(CDMA) 두 갈래가 함께 쌓이는 것을 보라]]
+
+== 2G 세 시스템 ==
+{|
+! || [[D-AMPS]] || [[GSM]] || [[IS-95]]
+|-
+| 지역 || North America || Europe || North America, South Korea
+|-
+| 다중 접속 || FDMA + '''TDMA''' (3) || FDMA + '''TDMA''' (8) || FDMA + '''CDMA''' (64 code)
+|-
+| 채널 폭 || 30 kHz (AMPS 와 같음) || 200 kHz || 1.228 MHz
+|-
+| 변조 || [[QPSK]] || [[GMSK]] || [[QPSK]]
+|-
+| 디지털 음성 || 7.95 kbps || 13 kbps || 9.6 kbps
+|}
+
+[[img:L10-22.png|p.22 AMPS(analog) vs D-AMPS(digitized) — 1G → 2G 의 차이가 한 장에|medium]]
+
+{exam}"2G 의 핵심 변화는?" → '''analog → digital'''. 그 덕에 '''TDMA'''(D-AMPS, GSM) 또는 '''CDMA'''(IS-95) 로 한 주파수 채널을 여러 사용자가 공유.{/exam}
+
+== 관련 문서 ==
+* [[셀룰러 세대]] · [[1G]] · [[3G]]
+* [[D-AMPS]] · [[GSM]] · [[IS-95]] · [[TDMA]] · [[CDMA]]
+* [[CH05 1G–2G 셀룰러]] · [[CH05 IS-95·3G·4G]]

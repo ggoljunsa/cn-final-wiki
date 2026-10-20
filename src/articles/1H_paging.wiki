@@ -1,0 +1,35 @@
+key: paging
+title: Paging (페이징 — 모든 cell 에 묻기)
+category: 1강 셀룰러 동작, 용어
+---
+'''Paging''' 은 [[통화 수신 과정]] ② 단계에서 '''MSC 가 모든 cell 에 query signal 을 보내''' 착신 MS 를 찾는 것이다. 수신 시점에 MSC 는 MS 가 어느 cell 에 있는지 모르기 때문에 필요하다. MS 가 응답하면(③) 위치가 확인된다. L10 p.13.
+
+{def}"② MSC sends '''query signals to every cell''' ('''paging''') ③ MS responds; its location is found" (p.13)
+MSC 가 모든 cell 에 질의 신호를 보내는 것을 paging 이라 한다. MS 가 응답하면 위치를 알게 된다.{/def}
+
+[[img:L10-13.png|p.13 — 빨간 상자 "Paging" 과 MSC 에서 세 cell 의 BS 모두로 뻗는 빨간 점선 ② (필기본)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''page''' (동사) = (방송·호출기로) '''사람을 불러 찾다'''. 호텔·공항에서 "○○○ 님, 안내데스크로 와 주십시오" 방송이 paging, 옛날 '''삐삐'''의 영어 이름이 pager 다.
+* 교수의 비유(10/20 녹음 22:09): "This is often called paging. Think about when you are trying to find something in your book, you keep '''forwarding your book pages'''." 책의 '''page''' 를 한 장씩 넘기며 찾듯, MSC 가 '''모든 cell 을 훑어''' MS 를 찾는다.
+* 핵심은 '''"모른다"''' — 위치를 알면 그 cell 에만 보내면 된다. 모르니까 '''전부(every cell)'''에 보낸다.
+
+<pre class="ascii">
+                ┌─ BS(cell A) ··· "MS#1234 있나요?"   (응답 없음)
+   MSC ─paging─┼─ BS(cell B) ··· "MS#1234 있나요?"   ← MS: "여기요!" ③ → 위치 = cell B
+                └─ BS(cell C) ··· "MS#1234 있나요?"   (응답 없음)
+   이후 ④ ringing · ⑥ voice channel 은 cell B 로만
+</pre>
+
+[[anim:call_receive|MSC 에서 paging 파동이 모든 cell 로 동시에 퍼지고, 한 cell 의 MS 만 응답하는 장면을 보라]]
+
+[[sim:call_flow]]
+
+{analogy}🎭 '''학교 전체 방송.''' 교무실(MSC)에 학부모 전화가 왔는데 학생이 어느 교실에 있는지 모른다. 그래서 전교 방송으로 "3학년 장민준 학생, 교무실 전화 받으세요" (paging). 학생이 "저 3반에 있어요" 하고 응답하면 그다음부터는 3반으로만 연락한다.{/analogy}
+
+{info}(Forouzan 보충 — 슬라이드에 없음) 실제 시스템은 매번 전국 모든 cell 을 부르면 낭비가 크므로, MS 가 대략 어느 '''구역(location area)''' 에 있는지 미리 등록해 두고 그 구역의 cell 들에만 paging 한다. GSM 에서는 가입자 정보·위치를 '''[[HLR]]''' 같은 데이터베이스에 둔다. 슬라이드 수준에서는 "every cell" 로 외우면 된다.{/info}
+
+{exam}🎯 "수신에만 있는 단계는?" → '''paging'''. 이유: "MSC 는 MS 의 위치를 모른다 → 모든 cell 에 query" (p.13 ②). paging 을 보내는 주체는 '''MSC'''(BS 가 아님 — BS 는 자기 cell 에 전달만).{/exam}
+
+== 관련 문서 ==
+* [[통화 수신 과정]] · [[통화 발신 과정]] · [[MSC]] · [[cell]] · [[HLR]]

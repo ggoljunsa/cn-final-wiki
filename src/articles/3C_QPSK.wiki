@@ -1,0 +1,41 @@
+key: QPSK
+title: QPSK (Quadrature Phase Shift Keying)
+category: 3강 CDMA–4G, 용어
+---
+'''QPSK (quadrature phase shift keying)''' 는 반송파의 '''위상(phase)을 4 가지'''로 바꿔 '''한 번에 2 비트'''를 싣는 디지털→아날로그 변조다. 중간고사 [[mid:PSK|PSK]] 의 4-PSK 버전. 이 덱에서는 [[D-AMPS]](48.6 kbps → 30 kHz 채널)와 [[IS-95]](1.228 Mcps → 1.228 MHz 채널) 블록도의 마지막 상자로 나온다. L10 p.23, p.29–30.
+
+{def}p.29: "1.228 Mcps → '''QPSK''' → 1.228 MHz 채널" · p.30: "1.228 Mcps → '''QPSK''' → 1.228 MHz"
+→ 디지털 칩열을 반송파 위상 4 개로 실어 아날로그 채널로 내보내는 마지막 단계.{/def}
+
+[[img:L10-30.png|p.30 — 1.228 Mcps 가 QPSK 상자를 지나 1.228 MHz 주황 채널 모양이 되는 부분|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Phase Shift Keying''' — 위상(phase)을 바꿔서(shift) 비트를 표시(keying). [[mid:PSK|PSK]].
+* '''Quadrature''' — "4 분의 1, 직각" → 위상을 '''90° 간격 4 개'''로. 4 = $2^2$ 이라 '''symbol 하나에 2 비트'''.
+
+<pre class="txt">
+비트 쌍 → 위상 (예시 배치)
+  00 → 45°    01 → 135°    11 → 225°    10 → 315°
+symbol 하나 = 2 bits  →  baud rate = bit rate / 2
+</pre>
+위 배치는 Forouzan 의 예시 형태다 (보충 — 슬라이드에는 상자 이름만). [[mid:QAM|QAM]] 은 위상에 진폭까지 바꾸는 확장.
+
+== 이 덱에서 ==
+{|
+! 표준 || QPSK 입력 || 출력 채널
+|-
+| [[D-AMPS]] (p.23) || 48.6 kbps (3 사용자 TDMA) || 30 kHz
+|-
+| [[IS-95]] forward (p.29) || 1.228 Mcps (64 code 합) || 1.228 MHz
+|-
+| IS-95 reverse (p.30) || 1.228 Mcps || 1.228 MHz
+|}
+참고로 [[GSM]] 은 QPSK 가 아니라 [[GMSK]] 를 쓴다.
+
+{analogy}🎭 '''시계 바늘 4 방향.''' 바늘이 1 시 반, 4 시 반, 7 시 반, 10 시 반 중 어디를 가리키느냐로 두 글자(00, 01, 11, 10)를 전한다. 한 번 가리킬 때마다 2 비트.{/analogy}
+
+{quiz}QPSK 에서 symbol 하나가 나르는 비트 수는? 위상 개수는?{/quiz}
+{answer}'''2 비트''' ($\log_2 4 = 2$), 위상 '''4 개'''.{/answer}
+
+== 관련 문서 ==
+* [[mid:PSK]] · [[mid:modulation]] · [[mid:QAM]] · [[IS-95 forward 전송]] · [[D-AMPS]] · [[GMSK]]

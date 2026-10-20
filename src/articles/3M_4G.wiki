@@ -1,0 +1,57 @@
+key: 4G
+title: 4G (4th Generation, 4세대 셀룰러)
+category: 3강 CDMA–4G, 용어
+---
+'''4G (fourth generation)''' 는 무선 통신의 "'''complete evolution'''" 으로 기대된 세대다. 데이터율 '''이동 중 100 Mbps, 정지 1 Gbps''', 이질적인 망 사이의 '''smooth handoff''', 그리고 '''All IP, packet-switched''' 망이 핵심이다. 슬라이드는 실제 표준 이름 없이 요구 사항만 나열한다. L10 p.36.
+
+{def}"'''4th Generation''': Expected to be a '''complete evolution''' in wireless communications.
+* A '''spectrally efficient''' system
+* '''High network capacity'''
+* Data rate of '''100 Mbps''' for access in a moving car and '''1 Gbps''' for stationary users
+* Data rate of '''at least 100 Mbps between any two points''' in the world
+* '''Smooth handoff across heterogeneous networks'''
+* High '''quality of service''' for next generation multimedia support
+* '''Interoperability''' with existing wireless standards
+* '''All IP, packet-switched''', networks" (p.36){/def}
+
+[[img:L10-36.png|p.36 4th Generation (필기본: 기지국 △ 여러 개와 단말 □ — 교수가 말한 "many base stations")|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''spectrally efficient''' — 스펙트럼(주파수)을 효율적으로 = 같은 Hz 로 더 많은 bps.
+* '''heterogeneous networks''' — hetero(다른) + genous(종류) → '''종류가 다른 망'''(셀룰러, WiFi, …) 사이에서도 끊김 없이 넘어간다.
+* '''All IP''' — 음성·영상·데이터 '''전부''' IP 패킷 → [[all-IP]].
+
+== 3G 와 비교 ==
+{|
+! || [[3G]] (IMT-2000, p.33) || '''4G''' (p.36)
+|-
+| 이동 중 || 144 kbps (car) || '''100 Mbps''' (moving car)
+|-
+| 보행 || 384 kbps || (슬라이드에 없음)
+|-
+| 정지 || 2 Mbps || '''1 Gbps'''
+|-
+| 교환 || packet + circuit || '''All IP, packet-switched'''
+|-
+| handoff || (셀룰러 안) || '''heterogeneous networks 사이 smooth handoff'''
+|}
+<pre class="txt">
+이동:  100 Mbps / 144 kbps = 100,000 / 144 ≈ 694 배
+정지:    1 Gbps /   2 Mbps =   1,000 / 2   = 500 배
+</pre>
+
+[[anim:generations_timeline|마지막 4G 칸에서 100 Mbps / 1 Gbps 와 all-IP 가 나타날 때, 아래 화살표의 마지막 단계 "all-IP" 와 맞춰 보라]]
+
+* '''교수(10/20, 70:18–72:58)''': 지금은 4G·5G 를 쓰지만 "Forouzan's book is an old book" 이라 4G 는 '''expectation''' 으로만 적혀 있다. '''natural trend''' = 더 높은 data rate → 그러려면 '''more bandwidth''' + frequency efficiency 를 높이는 기술. 5G 는 '''huge bandwidth'''(10 GHz 이상 ~ 수백 GHz 대역). 그리고 "'''use many base stations'''" — BS 가 많으면 MS–BS 거리가 줄고, 무선은 [[mid:attenuation|attenuation]] 을 겪으므로 data rate 가 오른다.
+* 필기 스케치(△ 여러 개와 □ 사이 화살표)가 바로 이 "many base stations" 그림이다 — 촘촘한 BS 중 가까운 하나와 짧은 거리로 연결.
+* 실제 4G 표준 이름(LTE-Advanced, WiMAX 2 — ITU 의 IMT-Advanced 요구 사항 충족)은 슬라이드에 없다 (보충).
+
+{analogy}🎭 3G 가 '''전화 도로에 택배 차선을 추가'''한 것이라면, 4G 는 '''도로 전체를 택배 전용 고속도로로 재포장'''한 것이다. 전화(음성)도 택배 상자(IP 패킷)에 넣어 보낸다. 그리고 고속도로 → 시내 도로(WiFi)로 갈아탈 때도 멈추지 않는다(heterogeneous handoff).{/analogy}
+
+{exam}🎯 4G 의 데이터율 '''100 Mbps(moving) / 1 Gbps(stationary)''' 와 3G 의 '''144 k / 384 k / 2 M''' 를 섞어 내는 짝짓기, "4G is all IP, '''packet'''-switched" (circuit 아님) O/X.{/exam}
+
+{quiz}4G 가 지원해야 하는 데이터율 두 가지와 망의 교환 방식을 쓰시오.{/quiz}
+{answer}moving car '''100 Mbps''', stationary '''1 Gbps''' (+ 세계 어느 두 지점 사이든 최소 100 Mbps). 교환 방식: '''All IP, packet-switched'''.{/answer}
+
+== 관련 문서 ==
+* [[all-IP]] · [[3G]] · [[circuit switching과 packet switching]] · [[셀룰러 세대]] · [[handoff]] · [[셀룰러와 WiFi 비교]]

@@ -1,0 +1,43 @@
+key: 통화 발신 과정
+title: 통화 발신 과정 (Transmitting — making a call, ①–⑦)
+category: 1강 셀룰러 동작, 용어
+---
+'''통화 발신 과정''' 은 내 휴대폰(MS)이 전화를 '''걸 때''' 셀룰러망에서 일어나는 7 단계다. L10 p.12 "Operation: Transmitting (making a call)". 번호가 MS → BS → MSC → telephone central office → 상대로 가고, 결과가 MSC 로 돌아오면 MSC 가 '''unused voice channel''' 을 할당해 통화가 시작된다.
+
+{def}"① MS '''scans the band''' and sends the number on the '''strongest setup channel''' ② BS '''relays''' the number to the MSC ③ MSC '''forwards''' it to the telephone central office ④ Central office connects the called party ('''if available''') ⑤ Result is relayed back to the MSC ⑥ MSC assigns an '''unused voice channel'''; MS '''retunes''' ⑦ Communication begins" (p.12){/def}
+
+[[img:L10-12.png|p.12 Transmitting — MS →① BS →② MSC →③ Telephone central office →④ Called party, ⑤ 점선으로 MSC 에 결과, ⑥ MSC → MS, ⑦ Voice channel(초록). 필기 "closest base station", "스마트폰", "통신을 위해 BS, MSC, central office 등 infrastructure 필요", "순서대로 살펴보기" (필기본)|large]]
+
+== 단계별 풀이 ⭐⭐⭐ ==
+<pre class="txt">
+단계  누가 → 누구        무엇을                                   핵심어
+ ①   MS  → BS          대역 scan, 번호를 strongest setup channel 로  '''strongest setup channel''' (≈ closest BS)
+ ②   BS  → MSC         번호 relay                                 BS 는 중계만
+ ③   MSC → central off. 번호 forward                               유선 전화망([[PSTN]])으로 진입
+ ④   central → 상대     상대 연결 (if available)                    상대가 통화 중이면 실패
+ ⑤   central → MSC     결과 회신                                  (그림의 점선 화살표)
+ ⑥   MSC → MS          '''unused voice channel''' 할당, MS retunes   setup channel → voice channel 로 주파수 변경
+ ⑦   MS ↔ 상대          Communication begins                       초록 voice channel
+</pre>
+
+== 용어 끌어내기 ==
+* '''setup channel''' vs '''voice channel''' — 채널이 두 종류다. setup(=control) channel 은 '''통화를 연결하기 위한 신호용'''(번호 전달), voice channel 은 '''실제 통화'''용. 처음에는 모두가 공유하는 setup channel 로 요청하고, 연결되면 나만의 voice channel 을 받는다. (2G 이후 [[AMPS control channel]] 같은 이름으로 다시 나온다.)
+* '''strongest''' — MS 는 대역을 훑어(scan) 신호가 '''가장 센''' setup channel 을 고른다. 보통 '''가장 가까운 BS''' 의 것(필기 "closest base station"). 교수: "sends the phone number to our closest base station. '''This is very important, closest one.''' In other words, … the strongest channel, which is mostly the closest one"(10/20 녹음 15:53–16:28).
+* '''unused''' — 이미 다른 통화가 쓰는 채널은 줄 수 없다. 이 cell 에 배정된 frequency set([[frequency reuse]]) 중 비어 있는 것.
+* '''retunes''' — 라디오 다이얼을 돌리듯 MS 가 할당받은 voice channel 주파수로 '''다시 맞춘다'''. 교수: "MSC assigns a channel, a voice channel, '''or it can be data channel''' in current cellular systems, and the mobile station tunes or switches its frequency band to the assigned one"(녹음 18:07).
+
+[[anim:call_transmit|번호가 ①→②→③→④ 로 가고 ⑤ 결과가 돌아와 ⑥ voice channel 이 할당되는 순서를 따라가며, 각 화살표 번호를 슬라이드 문장과 짝지어라]]
+
+[[sim:call_flow]]
+
+{info}필기 "'''통신을 위해 BS, MSC, central office 등 infrastructure 필요'''" (p.12) — 내 폰은 상대 폰과 직접 통신하지 않는다. 무선 구간은 MS ↔ BS 한 hop 뿐이고, 나머지는 모두 통신사가 깔아 둔 유선 infrastructure 다. 교수(녹음 19:00): "this connection is '''heavily dependent on the infrastructure''' … Without that, those services are almost impossible."{/info}
+
+{analogy}🎭 '''식당 예약 전화.''' ① 가장 잘 들리는 대표번호(strongest setup channel)로 전화해 "○○ 테이블 부탁해요" ② 접수원(BS)이 매니저(MSC)에게 전달 ③ 매니저가 본점(central office)에 연락 ④ 본점이 해당 테이블 확인(비어 있으면) ⑤ 결과를 매니저에게 회신 ⑥ 매니저가 "7번 방으로 오세요"(unused voice channel) — 손님은 그 방으로 이동(retune) ⑦ 식사 시작.{/analogy}
+
+{exam}🎯 발신과 수신의 차이를 묻는 문제가 가장 유력하다: 발신은 MS 가 '''스스로''' strongest setup channel 의 BS 에 접속하므로 위치를 찾을 필요가 없고, 수신은 MSC 가 MS 위치를 몰라 '''paging''' 이 필요하다 → [[통화 수신 과정]]. 공통점: 마지막에 '''MSC 가 voice channel 을 할당'''(⑥).{/exam}
+
+{quiz}발신 과정 ①에서 MS 가 번호를 보내는 채널은? ⑥에서 MSC 가 하는 일은?{/quiz}
+{answer}① 대역을 scan 해 찾은 '''strongest setup channel'''(보통 가장 가까운 BS). ⑥ MSC 가 '''unused voice channel''' 을 할당하고 MS 는 그 채널로 retune 한다(p.12).{/answer}
+
+== 관련 문서 ==
+* [[통화 수신 과정]] · [[paging]] · [[MSC]] · [[base station]] · [[PSTN]] · [[CH05 셀룰러 동작]]

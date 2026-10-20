@@ -1,0 +1,36 @@
+key: 7.95 kbps 디지털 음성
+title: 7.95 kbps 디지털 음성 (D-AMPS 의 digitized voice)
+category: 2강 1G–2G, 용어
+---
+'''7.95 kbps 디지털 음성'''은 [[D-AMPS]] 가 3 kHz 아날로그 음성을 '''digitize''' 한 결과의 bit rate 다. 이 사용자 3 명분을 [[TDMA]] 로 묶으면(overhead 포함) 48.6 kbps 가 된다. L10 p.21–22. 사용자가 이 수치 옆에 '''"기억 x"''' 라고 적어 두었다.
+
+{def}"Voice channel is '''digitized to 7.95 kbps'''. Three digital voice channels are combined using TDMA (48.6 kbps with overhead)." (p.21)
+그림: "3 kHz Voice → [Digitizer] → 7.95 kbps" × 3 (p.22){/def}
+
+{info}'''필기 "기억 x" — 녹음으로 확정: 수치 암기 불필요.''' 교수(10/20, 45:50–46:07): "I would not recommend you to memorize these specific numbers. '''You will not see some OX quizzes that ask these kind of specific numbers.''' Again, I ask you to understand the trend of evolution." (AMPS Bands 에서도 41:54 에 같은 말.) 시험에서 기억할 것은 "'''voice 를 digitize 한다 → 그래서 TDMA 로 3 명을 묶을 수 있다'''" 는 흐름과, 결과 '''48.6 kbps''' 가 30 kHz 채널 하나에 들어간다는 것.{/info}
+
+== 이름에서 개념 끌어내기 ==
+'''digitized''' = 연속 파형을 숫자(비트) 열로 바꿈. 중간고사에서 배운 [[mid:PCM|PCM]](sampling → quantization → encoding)이 기본 방법이다. 그런데 PCM 으로 전화 음성을 바꾸면 보통 8,000 samples/s × 8 bits = '''64 kbps''' 다. 7.95 kbps 는 그 '''1/8''' 수준 — D-AMPS 의 digitizer 는 단순 PCM 이 아니라 사람 목소리의 특징만 뽑아 보내는 '''음성 압축 코덱'''(vocoder, VSELP)이기 때문이다(보충 — 슬라이드는 "Digitizer" 상자 하나로만 그림).
+
+{analogy}🎭 '''녹음 파일(64 kbps PCM)과 음성 메모 앱의 압축 파일(7.95 kbps).''' 같은 목소리라도 사람 말소리에 필요한 정보만 남기면 훨씬 작아진다. 작아진 덕에 3 명분을 한 30 kHz 채널에 돌아가며 실을 수 있다.{/analogy}
+
+[[img:L10-21.png|p.21 D-AMPS — "Voice channel is digitized to 7.95 kbps" (필기본: 7.95 kbps 옆 "기억 x")|medium]]
+
+== 숫자 흐름 ==
+<pre class="txt">
+3 kHz analog voice
+  → Digitizer               7.95 kbps / 사용자
+  → × 3 사용자               23.85 kbps
+  → TDMA + overhead         48.6 kbps          (overhead ≈ 24.75 kbps — 파생값)
+  → [[QPSK]]                  30 kHz analog 채널
+</pre>
+
+[[sim:damps_tdma]]
+
+[[anim:damps_tdma_anim|digitizer 상자에서 7.95 kbps 비트열이 나와 TDMA 슬롯으로 끼워지는 순간을 보라]]
+
+* 비교: [[GSM]] 의 digitizer 출력은 13 kbps(p.25), [[IS-95]] 는 9.6 kbps. 세 값 모두 "2G 는 음성을 수~십수 kbps 로 디지털화" 정도로 이해하면 충분하다.
+
+== 관련 문서 ==
+* [[D-AMPS]] · [[TDMA]] · [[2G]]
+* 중간고사: [[mid:PCM|PCM]] · [[mid:sampling|sampling]] · [[mid:bit rate|bit rate]]

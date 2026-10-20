@@ -1,0 +1,45 @@
+key: chip rate
+title: Chip rate (칩 레이트, cps)
+category: 3강 CDMA–4G, 용어
+---
+'''chip rate''' 는 [[DSSS]]·[[CDMA]] 에서 '''1 초에 보내는 칩(chip)의 개수'''다. 단위는 '''cps (chips per second)''' — Mcps, kcps. [[IS-95]] 는 forward·reverse 모두 '''1.228 Mcps'''(정확히 1.2288 Mcps)이고, 이 값이 그대로 채널 폭 '''1.228 MHz''' 가 된다. L10 p.29–30.
+
+{def}p.29: "19.2 ksps" × W_i → Σ → "'''1.228 Mcps'''" → QPSK → "1.228 MHz". p.30: "307.2 kcps" ⊕ Long code "1.228 Mcps".
+→ 데이터 symbol 하나를 칩 여러 개로 퍼뜨린 결과의 속도가 chip rate.{/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''chip''' = 부스러기, 작은 조각. 비트 하나를 잘게 쪼갠 '''조각'''이 칩이다. 칩은 정보를 새로 싣지 않는다 — 비트 하나를 퍼뜨리기 위한 무늬일 뿐.
+* 그래서 단위도 일부러 구분한다: '''bps'''(bit), '''sps'''(symbol, 오류정정 후), '''cps'''(chip). 슬라이드도 9.6 kbps → 19.2 ksps → 1.228 Mcps 로 단위를 바꿔 쓴다.
+
+== 단위가 바뀌는 지점 ==
+<pre class="txt">
+forward (p.29)
+  9.6 kbps   ← Digitizer 출력 (bit: 진짜 정보)
+  19.2 ksps  ← error correcting·repeating·interleaving 후 (symbol: 정보 + 중복)
+  × 64 chips (Walsh code)
+  1.2288 Mcps ≈ '''1.228 Mcps'''  (chip)
+
+reverse (p.30)
+  9.6 kbps → 28.8 ksps → 6 to 64 → 307.2 kcps → × 4 (long code) → '''1.2288 Mcps'''
+
+칩 하나의 길이 = 1 / 1.2288 M ≈ 0.814 μs   (계산값 — 슬라이드에 없음)
+확산 배수(processing gain) = 1.2288 M / 19.2 k = 64   (Forouzan 보충 용어)
+</pre>
+
+[[img:L10-29.png|p.29 — Σ 출력 "1.228 Mcps" 와 오른쪽 "1.228 MHz" 채널 폭 (필기본)|medium]]
+
+[[sim:is95_rates]]
+
+{info}chip rate(Mcps) 와 채널 폭(MHz) 의 숫자가 같은 것은 우연이 아니다. 대략 1 초에 R 개의 기호를 보내려면 약 R Hz 의 대역이 필요하다(중간고사 [[mid:signal rate와 bit rate|signal rate]] 와 bandwidth 관계). 1.228 Mcps 를 실으려면 약 1.228 MHz 가 필요하다.{/info}
+
+{analogy}🎭 '''글자와 획.''' 글자(bit) 하나를 쓰는 데 획(chip)을 64 번 긋는다. 1 초에 긋는 획 수가 chip rate. 글자 속도는 그대로여도 획 속도가 64 배라서 종이(대역)가 64 배 넓게 필요하다.{/analogy}
+
+{quiz}IS-95 reverse 에서 28.8 ksps 가 1.228 Mcps 가 되는 과정을 단계별로 쓰시오.{/quiz}
+{answer}<pre class="txt">
+28.8 ksps ÷ 6        = 4.8 k 묶음/s
+4.8 k × 64           = 307.2 kcps   (6 to 64 symbol modulation)
+307.2 kcps × 4       = 1,228.8 kcps = 1.2288 Mcps ≈ 1.228 Mcps   (long code 로 DSSS)
+</pre>{/answer}
+
+== 관련 문서 ==
+* [[DSSS]] · [[Walsh code]] · [[IS-95 forward 전송]] · [[IS-95 reverse 전송]] · [[IS-95 대역과 채널]] · [[mid:bit rate]]

@@ -1,0 +1,38 @@
+key: TDMA
+title: TDMA (Time-Division Multiple Access)
+category: 2강 1G–2G, 용어
+---
+'''TDMA(Time-Division Multiple Access)'''는 하나의 채널을 '''시간 슬롯'''으로 나눠 사용자들이 차례로 쓰는 다중 접속 방식이다. 2G [[D-AMPS]](30 kHz 채널을 3 명)와 [[GSM]](200 kHz 채널을 8 명)이 TDMA 이며, 둘 다 바깥 층은 [[FDMA]] 다. L10 p.21–22, p.25–26.
+
+{def}"Three digital voice channels are combined using '''TDMA''' (48.6 kbps with overhead)." (p.21, D-AMPS)
+p.22 그림: 슬롯 "1 2 3 1 2 3 — TDMA". p.25 그림: "time slot → frame(8 slots) → multiframe(26 frames)" 를 감싼 점선 상자에 세로로 "T D M A".{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''T'''ime-'''D'''ivision = 시간으로 나눔, '''M'''ultiple '''A'''ccess = 여러 사용자의 접근. 중간고사의 [[mid:TDM|TDM]](Time-Division Multiplexing)과 원리가 같고, FDM↔[[FDMA]] 관계처럼 TDM 은 physical-layer 의 합치기 기술, TDMA 는 서로 다른 사용자가 매체를 나누는 [[mid:channelization|channelization]] 방법이다. Bluetooth 의 [[mid:TDD-TDMA|TDD-TDMA]] 에서 이미 TDMA 를 한 번 봤다.
+
+{analogy}🎭 '''돌림 노래 마이크 한 개.''' 마이크(30 kHz 채널)는 하나인데 세 사람이 1 초씩 돌아가며 말한다. 각자 할 말을 미리 '''압축해 적어 두었다가'''(digitize) 자기 차례에 빨리 읽으니, 듣는 쪽에서는 세 명 모두 끊김 없이 말하는 것처럼 들린다.{/analogy}
+
+[[anim:access_methods|두 번째 장면(TDMA)에서 같은 주파수 띠가 시간 슬롯 user 1·2·3 으로 나뉘는 것을 보고 FDMA 장면과 비교하라]]
+
+[[img:L10-25.png|p.25 GSM — time slot / frame / multiframe 을 감싼 점선이 TDMA, 그 바깥 200 kHz × 124 가 FDMA (필기본)|medium]]
+
+== 왜 2G 에서야 TDMA 가 가능했나 ⭐⭐ ==
+아날로그 음성은 '''끊기지 않는 연속 파형'''이라 "1/3 시간만 보내라" 가 안 된다. 디지털 비트는 '''버퍼에 모았다가 짧은 슬롯에 몰아서(빠른 rate 로) 보내고''', 수신 측에서 다시 원래 속도로 풀 수 있다. 그래서 '''digitization 이 TDMA 의 전제'''다 — [[1G]] 가 FDMA 뿐이고 [[2G]] 에서 TDMA 가 등장한 이유.
+
+{|
+! 시스템 || 채널 (FDMA) || 채널당 슬롯 (TDMA) || 채널 rate
+|-
+| [[D-AMPS]] || 30 kHz × 832 || 3 || 48.6 kbps
+|-
+| [[GSM]] || 200 kHz × 124 || 8 || 270.8 kbps
+|}
+
+[[sim:damps_tdma]]
+
+{warn}TDMA 시스템도 '''동기화'''가 필요하고(각 MS 가 자기 슬롯 시각을 정확히 지켜야 함), 슬롯마다 '''TDMA control bits'''(동기·guard)가 붙는다 — GSM 에서 114 → 156.25 bits 로 늘어나는 부분. 이것이 "48.6 kbps '''with overhead'''" 의 overhead 다.{/warn}
+
+{exam}"D-AMPS 와 GSM 의 다중 접속 방식은?" → '''TDMA'''(FDMA 위에). IS-95 는 '''CDMA'''. AMPS 는 '''FDMA'''.{/exam}
+
+== 관련 문서 ==
+* [[FDMA]] · [[CDMA]] · [[D-AMPS]] · [[GSM]] · [[GSM 프레임 구조]]
+* 중간고사: [[mid:TDM|TDM]] · [[mid:TDD-TDMA|TDD-TDMA]] · [[mid:channelization|channelization]]
