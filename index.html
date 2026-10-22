@@ -765,35 +765,35 @@ const ARTICLES = {
   "category": [
    "안내"
   ],
-  "body": "'''컴네위키 기말'''은 DGIST [CSE403] Computer Network (Prof. Soobin Um, 2026 Fall) '''기말고사 범위''' — 지금은 '''CH05 Wide Area Networks (1) Cellular Telephony''' — 를 나무위키 스타일로 정리한 학습 위키다. 중간고사 범위(CH01–CH04)는 전편 [[mid:main|컴네위키]]에 있고, 이 위키에서 보라색 ↗중간 표시가 붙은 링크는 그쪽 문서로 넘어간다(새 탭).\n\n중간고사 위키와 똑같이 세 가지를 약속한다.\n\n# '''용어를 까먹으면 클릭한다.''' [[cell]], [[MSC]], [[reuse factor]], [[handoff]], [[GSM multiframe]] 같은 말에는 전부 사전 문서가 있다.\n# '''계산이 나오면 옆에서 값이 바뀌는 걸 본다.''' GSM 270.8 kbps, AMPS 832→416 채널, IS-95 1.228 Mcps, CDMA 복원 과정을 한 단계씩 밟는 '''시뮬레이터'''(◀ ▶).\n# '''보고만 있어도 흐름이 들어온다.''' 발신·수신, hard/soft handoff, frequency reuse, FDMA/TDMA/CDMA 를 '''움직이는 그림'''과 실제 슬라이드 캡처로 보여 준다.\n\n[[anim:generations_timeline|이 강의의 지도. 1G 아날로그 FDMA → 2G 디지털 TDMA/CDMA → 3G IMT-2000 → 4G all-IP. 세대마다 \"무엇으로 사용자를 나누는가\"를 기억하면 덱 전체가 정리된다]]\n\n== 어디서부터 읽나 ==\n\n* 처음이면 → [[읽는 순서]] (슬라이드 순서대로, 메인 문서 3편 + 딸린 사전 문서)\n* 세대가 헷갈리면 → [[셀룰러 세대 비교표]] (1G–4G 를 한 장에)\n* 시험이 코앞이면 → [[공식 모음]] → [[자주 틀리는 함정 모음]]\n* FDM·TDM·FSK·FHSS 가 기억 안 나면 → [[중간고사 선수 개념]]\n* 시험 날짜·범위 → [[시험 정보]] (기말 비중 40%, 날짜·범위 미공지)\n\n== 강의별 메인 문서 ==\n\n{|\n! 구간 || 메인 문서 || 한 줄 요약 || 핵심 시뮬레이터 / 그림\n|-\n| CH05 (1) p.1–17 || [[CH05 셀룰러 동작]] || WAN 분류, [[cell]]·[[base station]]·[[mobile station]]·[[MSC]], '''[[frequency reuse]]'''([[reuse factor]]), [[통화 발신 과정]]·[[통화 수신 과정]]([[paging]]), '''[[handoff]]'''([[hard handoff]]/[[soft handoff]]), [[roaming]] || `sim:call_flow` · `sim:handoff_signal` · `sim:reuse_pattern` · `anim:cellular_architecture` · `anim:handoff_hard_soft`\n|-\n| CH05 (1) p.18–26 || [[CH05 1G–2G 셀룰러]] || [[1G]] [[AMPS]]([[FDMA]], 832 채널, reuse 7), [[2G]] [[D-AMPS]]([[TDMA]] 3 사용자), '''[[GSM]]'''([[GSM multiframe]] → 270.8 kbps) || `sim:band_channels` · `sim:gsm_bitrate` · `sim:damps_tdma` · `anim:amps_bands` · `anim:gsm_multiframe_anim`\n|-\n| CH05 (1) p.27–36 || [[CH05 IS-95·3G·4G]] || '''[[IS-95]]'''([[DSSS]]·[[CDMA]], [[Walsh code]], reuse factor 1, [[pilot channel]]로 soft handoff), [[3G]] [[IMT-2000]]([[W-CDMA]]·[[CDMA 2000]]), [[4G]]([[all-IP]]) || `sim:is95_rates` · `sim:cdma_walsh` · `anim:cdma_spreading` · `anim:access_methods`\n|}\n\n== 이 위키를 읽는 법 ==\n\n{tip}\n* 📖 '''정의 박스'''는 슬라이드 영어 원문이 먼저 온다. \"정의 → 용어 이름\" 유형에 대비해 영어 문장을 그대로 외운다.\n* 🎯 '''출제 포인트 박스'''는 교수가 수업(10/20 녹음)에서 강조한 것이다.\n* ✍️ 슬라이드 캡처에는 '''내 GoodNotes 필기'''(빨간 글씨)가 그대로 있다. 필기에 \"??\"로 남긴 질문은 해당 문서의 💡 \"필기 속 질문\" 박스에서 답했고, \"다시\" 표시한 곳은 ⚠️ 박스로 쉽게 다시 설명했다.\n* 🎭 '''비유 박스'''는 이해가 안 될 때 먼저 읽는다.\n* ❓ '''예상문제'''는 정답이 접혀 있다. 먼저 답을 써 보고 펼친다.\n* 시뮬레이터는 ◀ ▶ 또는 키보드 ← → 로 한 단계씩 넘긴다. 움직이는 그림은 슬라이더로 멈춰 놓고 자막을 읽는다.\n{/tip}\n\n{analogy}\n셀룰러 망은 '''전국에 깔린 동네 우체국망'''이다. 동네(cell)마다 우체국(base station)이 있고, 우체국들은 중앙 집배센터(MSC)에 묶여 있다. 이웃 동네는 같은 배달 차량 번호(주파수)를 쓰면 헷갈리니 몇 동네 건너서만 다시 쓰고(frequency reuse), 내가 이사 가는 중에도 편지가 끊기지 않게 담당 우체국을 넘겨준다(handoff). 다른 회사 우체국 구역에 가도 제휴 덕분에 받을 수 있다(roaming).\n{/analogy}\n\n== 관련 문서 ==\n* [[읽는 순서]] · [[시험 정보]] · [[공식 모음]] · [[셀룰러 세대 비교표]] · [[중간고사 선수 개념]]\n* 전편: [[mid:main|컴네위키 (중간고사)]] · [[mid:WAN|WAN (CH01)]] · [[mid:LAN|LAN]]"
+  "body": "'''컴네위키 기말'''은 DGIST [CSE403] Computer Network (Prof. Soobin Um, 2026 Fall) '''기말고사 범위''' — 지금은 '''CH05 Wide Area Networks (1) Cellular Telephony''' — 를 나무위키 스타일로 정리한 학습 위키다. 중간고사 범위(CH01–CH04)는 전편 [[mid:main|컴네위키]]에 있고, 이 위키에서 보라색 ↗중간 표시가 붙은 링크는 그쪽 문서로 넘어간다(새 탭).\n\n중간고사 위키와 똑같이 세 가지를 약속한다.\n\n# '''용어를 까먹으면 클릭한다.''' [[cell]], [[MSC]], [[reuse factor]], [[handoff]], [[GSM multiframe]] 같은 말에는 전부 사전 문서가 있다.\n# '''계산이 나오면 옆에서 값이 바뀌는 걸 본다.''' GSM 270.8 kbps, AMPS 832→416 채널, IS-95 1.228 Mcps, CDMA 복원 과정을 한 단계씩 밟는 '''시뮬레이터'''(◀ ▶).\n# '''보고만 있어도 흐름이 들어온다.''' 발신·수신, hard/soft handoff, frequency reuse, FDMA/TDMA/CDMA 를 '''움직이는 그림'''과 실제 슬라이드 캡처로 보여 준다.\n\n[[anim:generations_timeline|이 강의의 지도. 1G 아날로그 FDMA → 2G 디지털 TDMA/CDMA → 3G IMT-2000 → 4G all-IP. 세대마다 \"무엇으로 사용자를 나누는가\"를 기억하면 덱 전체가 정리된다]]\n\n== 어디서부터 읽나 ==\n\n* 처음이면 → [[읽는 순서]] (슬라이드 순서대로, 메인 문서 3편 + 딸린 사전 문서)\n* 세대가 헷갈리면 → [[셀룰러 세대 비교표]] (1G–4G 를 한 장에)\n* 시험이 코앞이면 → [[공식 모음]] → [[자주 틀리는 함정 모음]]\n* FDM·TDM·FSK·FHSS 가 기억 안 나면 → [[중간고사 선수 개념]]\n* 시험 날짜·범위 → [[시험 정보]] (기말 비중 40%, 날짜·범위 미공지)\n\n== 강의별 메인 문서 ==\n\n{|\n! 구간 || 메인 문서 || 한 줄 요약 || 핵심 시뮬레이터 / 그림\n|-\n| CH05 (1) p.1–17 || [[CH05 셀룰러 동작]] || WAN 분류, [[cell]]·[[base station]]·[[mobile station]]·[[MSC]], '''[[frequency reuse]]'''([[reuse factor]]), [[통화 발신 과정]]·[[통화 수신 과정]]([[paging]]), '''[[handoff]]'''([[hard handoff]]/[[soft handoff]]), [[roaming]] || `sim:call_flow` · `sim:handoff_signal` · `sim:reuse_pattern` · `anim:cellular_architecture` · `anim:handoff_hard_soft`\n|-\n| CH05 (1) p.18–26 || [[CH05 1G–2G 셀룰러]] || [[1G]] [[AMPS]]([[FDMA]], 832 채널, reuse 7), [[2G]] [[D-AMPS]]([[TDMA]] 3 사용자), '''[[GSM]]'''([[GSM multiframe]] → 270.8 kbps) || `sim:band_channels` · `sim:gsm_bitrate` · `sim:damps_tdma` · `anim:amps_bands` · `anim:gsm_multiframe_anim`\n|-\n| CH05 (1) p.27–36 || [[CH05 IS-95·3G·4G]] || '''[[IS-95]]'''([[DSSS]]·[[CDMA]], [[Walsh code]], reuse factor 1, [[pilot channel]]로 soft handoff), [[3G]] [[IMT-2000]]([[W-CDMA]]·[[CDMA 2000]]), [[4G]]([[all-IP]]) || `sim:is95_rates` · `sim:cdma_walsh` · `anim:cdma_spreading` · `anim:access_methods`\n|-\n| CH05 (2) p.1–21 || [[CH05 Satellite Network]] || [[satellite network 구성]]([[ISL]]), [[orbit]] 3종, '''[[Kepler's law]]'''(Ex 5.1 달 · Ex 5.2 → 24 h = [[geostationary]]), [[위성 세 범주]] [[GEO]]·[[MEO]]([[GPS]], [[trilateration]])·[[LEO]]([[Starlink]], [[footprint]]), [[SATCOM 주파수 대역]](uplink = Earth → satellite) — 10/22 수업 전 선제 작성 || `sim:kepler_period` · `anim:satellite_orbits` · `anim:geo_three` · `anim:leo_footprint` · `anim:trilateration_anim`\n|}\n\n== 이 위키를 읽는 법 ==\n\n{tip}\n* 📖 '''정의 박스'''는 슬라이드 영어 원문이 먼저 온다. \"정의 → 용어 이름\" 유형에 대비해 영어 문장을 그대로 외운다.\n* 🎯 '''출제 포인트 박스'''는 교수가 수업(10/20 녹음)에서 강조한 것이다.\n* ✍️ 슬라이드 캡처에는 '''내 GoodNotes 필기'''(빨간 글씨)가 그대로 있다. 필기에 \"??\"로 남긴 질문은 해당 문서의 💡 \"필기 속 질문\" 박스에서 답했고, \"다시\" 표시한 곳은 ⚠️ 박스로 쉽게 다시 설명했다.\n* 🎭 '''비유 박스'''는 이해가 안 될 때 먼저 읽는다.\n* ❓ '''예상문제'''는 정답이 접혀 있다. 먼저 답을 써 보고 펼친다.\n* 시뮬레이터는 ◀ ▶ 또는 키보드 ← → 로 한 단계씩 넘긴다. 움직이는 그림은 슬라이더로 멈춰 놓고 자막을 읽는다.\n{/tip}\n\n{analogy}\n셀룰러 망은 '''전국에 깔린 동네 우체국망'''이다. 동네(cell)마다 우체국(base station)이 있고, 우체국들은 중앙 집배센터(MSC)에 묶여 있다. 이웃 동네는 같은 배달 차량 번호(주파수)를 쓰면 헷갈리니 몇 동네 건너서만 다시 쓰고(frequency reuse), 내가 이사 가는 중에도 편지가 끊기지 않게 담당 우체국을 넘겨준다(handoff). 다른 회사 우체국 구역에 가도 제휴 덕분에 받을 수 있다(roaming).\n{/analogy}\n\n== 관련 문서 ==\n* [[읽는 순서]] · [[시험 정보]] · [[공식 모음]] · [[셀룰러 세대 비교표]] · [[중간고사 선수 개념]]\n* 전편: [[mid:main|컴네위키 (중간고사)]] · [[mid:WAN|WAN (CH01)]] · [[mid:LAN|LAN]]"
  },
  "읽는 순서": {
   "title": "읽는 순서 — 처음부터 끝까지 따라가기",
   "category": [
    "안내"
   ],
-  "body": "수업(10/20) 슬라이드 순서 그대로다. 굵은 것이 메인 문서이고, 그 아래가 메인을 읽다 막힐 때 들어가는 사전 문서다. 메인을 먼저 끝까지 읽고 사전은 링크로 필요할 때만 들어가는 것을 권한다.\n\n{analogy}\n드라마 정주행과 같다. 메인 문서가 본편이고 사전 문서는 \"인물 소개\" 페이지다. 누가 누군지 헷갈릴 때만 들어가면 된다.\n{/analogy}\n\n== 0. 출발점 — 중간고사에서 배운 것 (p.2–4) ==\n* 지금까지는 Physical layer → Data-link layer(DLC·MAC) → 그 위의 실제 LAN(Ethernet, WiFi, Bluetooth)을 배웠다. 이제 범위가 넓은 [[mid:WAN|WAN]] 으로 간다.\n* 다시 볼 것: [[중간고사 선수 개념]] — [[mid:FDM|FDM]] · [[mid:TDM|TDM]] · [[mid:channelization|channelization]] · [[mid:FSK|FSK]] · [[mid:FHSS|FHSS]] · [[mid:duplexing과 multiple access|duplexing과 multiple access]]\n\n== 1. '''[[CH05 셀룰러 동작]]''' (p.5–17) ==\n# [[WAN 분류]] — wired([[telephone network]], [[cable network]]) vs wireless([[cellular telephony]], [[satellite network]] → [[Starlink]])\n# 셀룰러의 구성: [[cell]] · [[base station]] · [[mobile station]] · [[MSC]] · [[PSTN]]\n# [[frequency reuse]] · [[reuse factor]] · [[co-channel interference]]\n# 전화 걸기·받기: [[통화 발신 과정]] · [[통화 수신 과정]] · [[paging]] · [[uplink와 downlink]]\n# 움직이면서 통화: [[handoff]] → [[hard handoff]] · [[soft handoff]]\n# 다른 통신사 구역: [[roaming]]\n# 비교: [[셀룰러와 WiFi 비교]]\n\n== 2. '''[[CH05 1G–2G 셀룰러]]''' (p.18–26) ==\n# [[셀룰러 세대]] 큰 그림\n# [[1G]] [[AMPS]] — [[AMPS 대역과 채널]] · [[FDMA]] · [[FM]] · [[AMPS control channel]]\n# [[2G]] [[D-AMPS]] — [[7.95 kbps 디지털 음성]] · [[TDMA]]\n# [[GSM]] — [[GSM 대역]] · [[GSM 프레임 구조]] · [[GSM multiframe]] · [[GSM channel bit rate]] · [[GMSK]] · [[HLR]]\n\n== 3. '''[[CH05 IS-95·3G·4G]]''' (p.27–36) ==\n# [[IS-95]] — [[spread spectrum]] · [[DSSS]] · [[CDMA]] · [[Walsh code]] · [[chip rate]]\n# [[IS-95 대역과 채널]] · [[GPS 동기화]]\n# [[IS-95 forward 전송]] · [[IS-95 reverse 전송]] · [[pilot channel]] · [[long code와 ESN]] · [[QPSK]]\n# [[IS-95 frequency reuse]] (reuse factor 1) · [[IS-95 soft handoff]]\n# [[3G]] [[IMT-2000]] — [[ITU]] · [[IMT-2000 표준]] · [[W-CDMA]] · [[CDMA 2000]] · [[circuit switching과 packet switching]]\n# [[4G]] — [[all-IP]]\n# 여담: [[ETRI]] (한국이 CDMA 를 상용화한 이야기)\n\n== 4. 정리 ==\n* [[셀룰러 세대 비교표]] → [[공식 모음]] → [[자주 틀리는 함정 모음]]"
+  "body": "수업(10/20 · 10/22) 슬라이드 순서 그대로다. 굵은 것이 메인 문서이고, 그 아래가 메인을 읽다 막힐 때 들어가는 사전 문서다. 메인을 먼저 끝까지 읽고 사전은 링크로 필요할 때만 들어가는 것을 권한다.\n\n{analogy}\n드라마 정주행과 같다. 메인 문서가 본편이고 사전 문서는 \"인물 소개\" 페이지다. 누가 누군지 헷갈릴 때만 들어가면 된다.\n{/analogy}\n\n== 0. 출발점 — 중간고사에서 배운 것 (p.2–4) ==\n* 지금까지는 Physical layer → Data-link layer(DLC·MAC) → 그 위의 실제 LAN(Ethernet, WiFi, Bluetooth)을 배웠다. 이제 범위가 넓은 [[mid:WAN|WAN]] 으로 간다.\n* 다시 볼 것: [[중간고사 선수 개념]] — [[mid:FDM|FDM]] · [[mid:TDM|TDM]] · [[mid:channelization|channelization]] · [[mid:FSK|FSK]] · [[mid:FHSS|FHSS]] · [[mid:duplexing과 multiple access|duplexing과 multiple access]]\n\n== 1. '''[[CH05 셀룰러 동작]]''' (p.5–17) ==\n# [[WAN 분류]] — wired([[telephone network]], [[cable network]]) vs wireless([[cellular telephony]], [[satellite network]] → [[Starlink]])\n# 셀룰러의 구성: [[cell]] · [[base station]] · [[mobile station]] · [[MSC]] · [[PSTN]]\n# [[frequency reuse]] · [[reuse factor]] · [[co-channel interference]]\n# 전화 걸기·받기: [[통화 발신 과정]] · [[통화 수신 과정]] · [[paging]] · [[uplink와 downlink]]\n# 움직이면서 통화: [[handoff]] → [[hard handoff]] · [[soft handoff]]\n# 다른 통신사 구역: [[roaming]]\n# 비교: [[셀룰러와 WiFi 비교]]\n\n== 2. '''[[CH05 1G–2G 셀룰러]]''' (p.18–26) ==\n# [[셀룰러 세대]] 큰 그림\n# [[1G]] [[AMPS]] — [[AMPS 대역과 채널]] · [[FDMA]] · [[FM]] · [[AMPS control channel]]\n# [[2G]] [[D-AMPS]] — [[7.95 kbps 디지털 음성]] · [[TDMA]]\n# [[GSM]] — [[GSM 대역]] · [[GSM 프레임 구조]] · [[GSM multiframe]] · [[GSM channel bit rate]] · [[GMSK]] · [[HLR]]\n\n== 3. '''[[CH05 IS-95·3G·4G]]''' (p.27–36) ==\n# [[IS-95]] — [[spread spectrum]] · [[DSSS]] · [[CDMA]] · [[Walsh code]] · [[chip rate]]\n# [[IS-95 대역과 채널]] · [[GPS 동기화]]\n# [[IS-95 forward 전송]] · [[IS-95 reverse 전송]] · [[pilot channel]] · [[long code와 ESN]] · [[QPSK]]\n# [[IS-95 frequency reuse]] (reuse factor 1) · [[IS-95 soft handoff]]\n# [[3G]] [[IMT-2000]] — [[ITU]] · [[IMT-2000 표준]] · [[W-CDMA]] · [[CDMA 2000]] · [[circuit switching과 packet switching]]\n# [[4G]] — [[all-IP]]\n# 여담: [[ETRI]] (한국이 CDMA 를 상용화한 이야기)\n\n== 4. '''[[CH05 Satellite Network]]''' (L11 p.1–21, 10/22) ==\n# 정의와 구성: [[satellite network]] → [[satellite network 구성]] · [[ISL]]\n# 궤도: [[orbit]] — [[equatorial orbit]] · [[inclined orbit]] · [[polar orbit]]\n# 주기 계산 ⭐⭐⭐: [[period of a satellite]] → [[Kepler's law]] → [[Example 5.1 달의 주기]] → [[Example 5.2 정지궤도 주기]]\n# 세 범주: [[위성 세 범주]] · [[Van Allen belt]]\n# 대역: [[SATCOM 주파수 대역]] · [[uplink와 downlink]] (위성 uplink = Earth → satellite)\n# [[GEO]] — [[geostationary]] · [[line-of-sight]]\n# [[MEO]] — [[GPS]] · [[trilateration]] (3강 [[GPS 동기화]] 와 연결)\n# [[LEO]] — [[Starlink]] · [[footprint]] · [[UML과 GWL]]\n\n== 5. 정리 ==\n* [[셀룰러 세대 비교표]] → [[공식 모음]] → [[자주 틀리는 함정 모음]]"
  },
  "시험 정보": {
   "title": "시험 정보 — 기말고사",
   "category": [
    "안내"
   ],
-  "body": "기말고사에 대해 지금까지 확인된 것과 아직 모르는 것을 정리한다. 기준 파일은 과목 폴더의 `_시험정보.md` 이고, 새 공지가 나오면 둘을 함께 고친다.\n\n== 확정 ==\n{|\n! 항목 || 내용 || 출처\n|-\n| 성적 비중 || 출석 10 / 과제 10 / 중간 40 / '''기말 40''' || CH00 p.8–9\n|-\n| 교재 || [[mid:Forouzan|Forouzan]], ''Data Communications and Networking with TCP/IP Protocol Suite'' 6e || CH00\n|-\n| 범위 시작 || '''CH05 Wide Area Networks''' 부터. 중간고사 직전에 교수가 \"WAN 은 중간고사 뒤로 미룬다\"고 했고, 10/20 수업에서 CH05 (1)을 나갔다 || 10/6 녹음, 10/20 수업\n|-\n| 교수 학습 지침 || '''구체적 숫자(채널 수 등)는 외우지 말고 세대별 진화 trend 를 이해하라. uplink/downlink 는 외워라''' || 10/20 녹음 41:54\n|-\n| 형식(참고) || 중간고사는 필기(손으로 작성)였고 OX·객관식(4~5지선다)·계산/단답·서술 유형이 섞였다. 교수는 \"교재에만 있는 문제는 내지 않는다 — 슬라이드 중심\"이라고 했다 || 9/22·10/6·10/8 녹음\n|}\n\n== 미확정 ==\n* 기말고사 '''날짜·시간·장소'''\n* '''범위의 끝''' — 10/20 공지: \"다음 수업(목 10/22)에 satellite networks(WAN 의 마지막)를 하고 network layer 로 넘어간다\"(73:00). network layer 는 \"이 과목에서 가장 중요한 부분 중 하나\"라고 했다.\n* 기말이 누적(중간 범위 포함)인지 여부\n\n{warn}\n위 형식 정보는 '''중간고사''' 기준이다. 기말도 같을 것이라고 가정하지 말고 공지를 확인한다.\n{/warn}\n\n== 수업 기록 ==\n{|\n! 날짜 || 범위 || 녹음 || 위키\n|-\n| 10/20 (화) || CH05 (1) p.1–36 전부 (WAN 분류 → cellular 동작 → 1G–4G) || `녹음본/1020_컴네.txt` (73분, whisper 전사) || [[CH05 셀룰러 동작]] · [[CH05 1G–2G 셀룰러]] · [[CH05 IS-95·3G·4G]]\n|}\n\n{analogy}\n시험 정보 문서는 '''공항 출발 안내판'''이다. 게이트(장소)와 시간이 아직 \"미정\"으로 떠 있으니, 공지가 뜨면 바로 이 판을 고친다.\n{/analogy}\n\n== 관련 문서 ==\n* [[main]] · [[읽는 순서]] · [[공식 모음]] · [[자주 틀리는 함정 모음]]\n* 중간고사 때의 정보: [[mid:시험 정보|시험 정보 (중간고사)]]"
+  "body": "기말고사에 대해 지금까지 확인된 것과 아직 모르는 것을 정리한다. 기준 파일은 과목 폴더의 `_시험정보.md` 이고, 새 공지가 나오면 둘을 함께 고친다.\n\n== 확정 ==\n{|\n! 항목 || 내용 || 출처\n|-\n| 성적 비중 || 출석 10 / 과제 10 / 중간 40 / '''기말 40''' || CH00 p.8–9\n|-\n| 교재 || [[mid:Forouzan|Forouzan]], ''Data Communications and Networking with TCP/IP Protocol Suite'' 6e || CH00\n|-\n| 범위 시작 || '''CH05 Wide Area Networks''' 부터. 중간고사 직전에 교수가 \"WAN 은 중간고사 뒤로 미룬다\"고 했고, 10/20 수업에서 CH05 (1)을 나갔다 || 10/6 녹음, 10/20 수업\n|-\n| 교수 학습 지침 || '''구체적 숫자(채널 수 등)는 외우지 말고 세대별 진화 trend 를 이해하라. uplink/downlink 는 외워라''' || 10/20 녹음 41:54\n|-\n| 형식(참고) || 중간고사는 필기(손으로 작성)였고 OX·객관식(4~5지선다)·계산/단답·서술 유형이 섞였다. 교수는 \"교재에만 있는 문제는 내지 않는다 — 슬라이드 중심\"이라고 했다 || 9/22·10/6·10/8 녹음\n|}\n\n== 미확정 ==\n* 기말고사 '''날짜·시간·장소'''\n* '''범위의 끝''' — 10/20 공지: \"다음 수업(목 10/22)에 satellite networks(WAN 의 마지막)를 하고 network layer 로 넘어간다\"(73:00). network layer 는 \"이 과목에서 가장 중요한 부분 중 하나\"라고 했다.\n* 기말이 누적(중간 범위 포함)인지 여부\n\n{warn}\n위 형식 정보는 '''중간고사''' 기준이다. 기말도 같을 것이라고 가정하지 말고 공지를 확인한다.\n{/warn}\n\n== 수업 기록 ==\n{|\n! 날짜 || 범위 || 녹음 || 위키\n|-\n| 10/20 (화) || CH05 (1) p.1–36 전부 (WAN 분류 → cellular 동작 → 1G–4G) || `녹음본/1020_컴네.txt` (73분, whisper 전사) || [[CH05 셀룰러 동작]] · [[CH05 1G–2G 셀룰러]] · [[CH05 IS-95·3G·4G]]\n|-\n| 10/22 (목) || CH05 (2) Satellite Network p.1–21 (예정) — '''선제 작성''' || (녹음 대기) || [[CH05 Satellite Network]]\n|}\n\n{analogy}\n시험 정보 문서는 '''공항 출발 안내판'''이다. 게이트(장소)와 시간이 아직 \"미정\"으로 떠 있으니, 공지가 뜨면 바로 이 판을 고친다.\n{/analogy}\n\n== 관련 문서 ==\n* [[main]] · [[읽는 순서]] · [[공식 모음]] · [[자주 틀리는 함정 모음]]\n* 중간고사 때의 정보: [[mid:시험 정보|시험 정보 (중간고사)]]"
  },
  "자주 틀리는 함정 모음": {
-  "title": "자주 틀리는 함정 모음 — CH05 셀룰러",
+  "title": "자주 틀리는 함정 모음 — CH05 셀룰러 · 위성",
   "category": [
    "안내"
   ],
-  "body": "OX·객관식에서 헷갈리기 쉬운 짝을 모았다. 각 줄의 '''틀린 생각 → 맞는 사실''' 을 읽고, 이유가 바로 떠오르지 않으면 링크된 문서로 간다. 교수는 \"숫자를 묻는 OX 는 안 낸다\"(46:00)고 했으니, 함정은 대부분 '''개념의 방향·짝짓기'''에서 나온다.\n\n{analogy}\n함정 문제는 '''쌍둥이 구별하기'''다. uplink 와 downlink, hard 와 soft, FDMA 와 TDMA 는 얼굴이 닮았지만 \"누가 보내나\", \"끊고 잇나 / 잇고 끊나\", \"무엇으로 나누나\" 같은 점 하나로 구별된다. 그 점 하나만 정확히 기억하면 된다.\n{/analogy}\n\n== 방향과 이름 ==\n{|\n! 틀린 생각 || 맞는 사실 || 문서\n|-\n| downlink = MS 가 BS 로 보내는 것 || '''downlink = forward = BS → MS''', uplink = reverse = MS → BS. 교수: \"uplink/downlink 는 외워라\" || [[uplink와 downlink]]\n|-\n| AMPS 의 824–849 MHz 는 BS 가 쓰는 대역 || 824–849 MHz 는 '''Mobile station band'''(MS 가 송신 = reverse). BS 는 869–894 MHz 로 송신 || [[AMPS 대역과 채널]]\n|-\n| handoff 와 handover 는 다른 절차 || 같은 개념이다 (교수 26:27) || [[handoff]]\n|-\n| base station 과 WiFi 의 AP 는 전혀 다른 것 || 역할은 같다 — 교수: \"interchangeable\"(8:39). 규모·표준·MSC 유무가 다를 뿐 || [[셀룰러와 WiFi 비교]]\n|}\n\n== 구조와 동작 ==\n{|\n! 틀린 생각 || 맞는 사실 || 문서\n|-\n| handoff 를 결정하는 것은 MS || '''MSC''' 가 every few seconds 신호 세기를 감시하고 새 cell 을 찾아 채널을 바꾼다 (교수 33:09 \"made by MSC, not by MS\") || [[handoff]] · [[MSC]]\n|-\n| 전화를 받을 때도 걸 때처럼 MS 가 먼저 신호를 보낸다 || 수신은 MS 위치를 모르므로 MSC 가 '''모든 cell 에 paging''' 을 보내야 한다 || [[통화 수신 과정]] · [[paging]]\n|-\n| 발신 때 MS 는 아무 BS 에나 번호를 보낸다 || 대역을 scan 해 '''가장 강한(closest) setup channel''' 로 보낸다 — 교수 \"very important\"(16:10) || [[통화 발신 과정]]\n|-\n| hard handoff 는 두 BS 와 동시에 통신 || 반대다. hard = '''BS 하나와만''' (break before make), soft = '''두 BS 와 동시에''' (make before break) || [[hard handoff]] · [[soft handoff]]\n|-\n| 요즘도 hard handoff 를 주로 쓴다 || hard 는 early systems. 교수: \"nowadays we never use hard handoff\"(29:54) || [[hard handoff]]\n|-\n| 인접 cell 이 같은 주파수를 써도 언제나 괜찮다 || FDMA/TDMA 계열에서는 경계의 사용자가 간섭을 받으므로 금지. '''CDMA(IS-95)만 reuse factor 1''' 이 가능 || [[frequency reuse]] · [[IS-95 frequency reuse]]\n|-\n| reuse factor N 은 cell 하나가 쓰는 주파수 개수 || N 은 '''reuse pattern 을 이루는 cell 의 개수'''. N 이 클수록 같은 주파수 cell 이 멀어진다 || [[reuse factor]]\n|-\n| roaming 은 같은 통신사 안에서 cell 을 옮기는 것 || 그건 handoff. roaming 은 '''다른 service provider''' 구역에서 roaming contract 로 서비스를 받는 것 || [[roaming]]\n|}\n\n== 세대 ==\n{|\n! 틀린 생각 || 맞는 사실 || 문서\n|-\n| AMPS 는 이름처럼 advanced 한 디지털 시스템 || AMPS 는 '''analog''' 1G 시스템, FDMA. 교수: \"it is not advanced, but it is named\" || [[AMPS]]\n|-\n| AMPS 는 voice 와 control 모두 FM || voice 는 '''FM''', control 은 '''FSK''' (10 kbps 디지털 데이터) || [[AMPS control channel]] · [[FM]]\n|-\n| D-AMPS 는 AMPS 와 다른 새 대역을 쓴다 || '''같은 bands and channels''' 를 쓰고, 음성을 디지털화해 TDMA 로 채널당 3 명 || [[D-AMPS]]\n|-\n| GSM 은 순수 TDMA || D-AMPS 처럼 '''TDMA + FDMA''' (124 개 200 kHz 채널을 FDMA 로, 그 안을 8 slot TDMA 로) || [[GSM]] · [[TDMA]]\n|-\n| 한국 2G 는 GSM || 한국은 '''IS-95 (CDMA)'''. GSM 은 유럽 표준 || [[IS-95]] · [[GSM]]\n|-\n| IS-95 는 FDMA 를 전혀 안 쓴다 || 대역을 1.228 MHz 채널 20 개로 나누는 것은 FDMA, 채널 안에서 사용자를 CDMA 로 나눈다 || [[IS-95 대역과 채널]]\n|-\n| IS-95 의 BS 동기화는 MSC 가 맞춘다 || '''GPS''' 서비스를 쓴다 || [[GPS 동기화]]\n|-\n| soft handoff 는 아무 시스템이나 된다 || IS-95 에서는 BS 가 '''pilot channel''' 을 계속 broadcast 해서 MS 가 이웃 cell 을 감지할 수 있기 때문에 가능 || [[IS-95 soft handoff]] · [[pilot channel]]\n|-\n| IMT-2000 은 하나의 구체적 표준 || ITU 가 낸 '''blueprint''' (요구사항). 그 아래 5 개 표준(IMT-DS, MC, TC, SC, FT) || [[IMT-2000]] · [[IMT-2000 표준]]\n|-\n| 3G 는 packet-switched 만 || 3G(IMT-2000)는 '''packet + circuit''' 둘 다 지원. '''all-IP packet-switched''' 는 4G || [[3G]] · [[4G]] · [[circuit switching과 packet switching]]\n|}\n\n{quiz}\nOX: ① uplink 는 forward communication 이다. ② soft handoff 에서 MS 는 두 BS 와 동시에 통신할 수 있다. ③ AMPS 의 control channel 은 FM 으로 변조된다. ④ IS-95 는 neighboring cell 이 같은 주파수 대역을 쓸 수 있다. ⑤ handoff 결정은 MS 가 한다.\n{/quiz}\n{answer}\n① ✗ (uplink = reverse, MS → BS) ② ○ ③ ✗ (control = FSK, voice = FM) ④ ○ (reuse factor 1, CDMA) ⑤ ✗ (MSC 가 신호 세기를 감시하고 결정)\n{/answer}\n\n== 관련 문서 ==\n* [[공식 모음]] · [[셀룰러 세대 비교표]] · [[시험 정보]]"
+  "body": "OX·객관식에서 헷갈리기 쉬운 짝을 모았다. 각 줄의 '''틀린 생각 → 맞는 사실''' 을 읽고, 이유가 바로 떠오르지 않으면 링크된 문서로 간다. 교수는 \"숫자를 묻는 OX 는 안 낸다\"(46:00)고 했으니, 함정은 대부분 '''개념의 방향·짝짓기'''에서 나온다.\n\n{analogy}\n함정 문제는 '''쌍둥이 구별하기'''다. uplink 와 downlink, hard 와 soft, FDMA 와 TDMA 는 얼굴이 닮았지만 \"누가 보내나\", \"끊고 잇나 / 잇고 끊나\", \"무엇으로 나누나\" 같은 점 하나로 구별된다. 그 점 하나만 정확히 기억하면 된다.\n{/analogy}\n\n== 방향과 이름 ==\n{|\n! 틀린 생각 || 맞는 사실 || 문서\n|-\n| downlink = MS 가 BS 로 보내는 것 || '''downlink = forward = BS → MS''', uplink = reverse = MS → BS. 교수: \"uplink/downlink 는 외워라\" || [[uplink와 downlink]]\n|-\n| AMPS 의 824–849 MHz 는 BS 가 쓰는 대역 || 824–849 MHz 는 '''Mobile station band'''(MS 가 송신 = reverse). BS 는 869–894 MHz 로 송신 || [[AMPS 대역과 채널]]\n|-\n| handoff 와 handover 는 다른 절차 || 같은 개념이다 (교수 26:27) || [[handoff]]\n|-\n| base station 과 WiFi 의 AP 는 전혀 다른 것 || 역할은 같다 — 교수: \"interchangeable\"(8:39). 규모·표준·MSC 유무가 다를 뿐 || [[셀룰러와 WiFi 비교]]\n|}\n\n== 구조와 동작 ==\n{|\n! 틀린 생각 || 맞는 사실 || 문서\n|-\n| handoff 를 결정하는 것은 MS || '''MSC''' 가 every few seconds 신호 세기를 감시하고 새 cell 을 찾아 채널을 바꾼다 (교수 33:09 \"made by MSC, not by MS\") || [[handoff]] · [[MSC]]\n|-\n| 전화를 받을 때도 걸 때처럼 MS 가 먼저 신호를 보낸다 || 수신은 MS 위치를 모르므로 MSC 가 '''모든 cell 에 paging''' 을 보내야 한다 || [[통화 수신 과정]] · [[paging]]\n|-\n| 발신 때 MS 는 아무 BS 에나 번호를 보낸다 || 대역을 scan 해 '''가장 강한(closest) setup channel''' 로 보낸다 — 교수 \"very important\"(16:10) || [[통화 발신 과정]]\n|-\n| hard handoff 는 두 BS 와 동시에 통신 || 반대다. hard = '''BS 하나와만''' (break before make), soft = '''두 BS 와 동시에''' (make before break) || [[hard handoff]] · [[soft handoff]]\n|-\n| 요즘도 hard handoff 를 주로 쓴다 || hard 는 early systems. 교수: \"nowadays we never use hard handoff\"(29:54) || [[hard handoff]]\n|-\n| 인접 cell 이 같은 주파수를 써도 언제나 괜찮다 || FDMA/TDMA 계열에서는 경계의 사용자가 간섭을 받으므로 금지. '''CDMA(IS-95)만 reuse factor 1''' 이 가능 || [[frequency reuse]] · [[IS-95 frequency reuse]]\n|-\n| reuse factor N 은 cell 하나가 쓰는 주파수 개수 || N 은 '''reuse pattern 을 이루는 cell 의 개수'''. N 이 클수록 같은 주파수 cell 이 멀어진다 || [[reuse factor]]\n|-\n| roaming 은 같은 통신사 안에서 cell 을 옮기는 것 || 그건 handoff. roaming 은 '''다른 service provider''' 구역에서 roaming contract 로 서비스를 받는 것 || [[roaming]]\n|}\n\n== 세대 ==\n{|\n! 틀린 생각 || 맞는 사실 || 문서\n|-\n| AMPS 는 이름처럼 advanced 한 디지털 시스템 || AMPS 는 '''analog''' 1G 시스템, FDMA. 교수: \"it is not advanced, but it is named\" || [[AMPS]]\n|-\n| AMPS 는 voice 와 control 모두 FM || voice 는 '''FM''', control 은 '''FSK''' (10 kbps 디지털 데이터) || [[AMPS control channel]] · [[FM]]\n|-\n| D-AMPS 는 AMPS 와 다른 새 대역을 쓴다 || '''같은 bands and channels''' 를 쓰고, 음성을 디지털화해 TDMA 로 채널당 3 명 || [[D-AMPS]]\n|-\n| GSM 은 순수 TDMA || D-AMPS 처럼 '''TDMA + FDMA''' (124 개 200 kHz 채널을 FDMA 로, 그 안을 8 slot TDMA 로) || [[GSM]] · [[TDMA]]\n|-\n| 한국 2G 는 GSM || 한국은 '''IS-95 (CDMA)'''. GSM 은 유럽 표준 || [[IS-95]] · [[GSM]]\n|-\n| IS-95 는 FDMA 를 전혀 안 쓴다 || 대역을 1.228 MHz 채널 20 개로 나누는 것은 FDMA, 채널 안에서 사용자를 CDMA 로 나눈다 || [[IS-95 대역과 채널]]\n|-\n| IS-95 의 BS 동기화는 MSC 가 맞춘다 || '''GPS''' 서비스를 쓴다 || [[GPS 동기화]]\n|-\n| soft handoff 는 아무 시스템이나 된다 || IS-95 에서는 BS 가 '''pilot channel''' 을 계속 broadcast 해서 MS 가 이웃 cell 을 감지할 수 있기 때문에 가능 || [[IS-95 soft handoff]] · [[pilot channel]]\n|-\n| IMT-2000 은 하나의 구체적 표준 || ITU 가 낸 '''blueprint''' (요구사항). 그 아래 5 개 표준(IMT-DS, MC, TC, SC, FT) || [[IMT-2000]] · [[IMT-2000 표준]]\n|-\n| 3G 는 packet-switched 만 || 3G(IMT-2000)는 '''packet + circuit''' 둘 다 지원. '''all-IP packet-switched''' 는 4G || [[3G]] · [[4G]] · [[circuit switching과 packet switching]]\n|}\n\n== 위성 (CH05 (2)) ==\n{|\n! 틀린 생각 || 맞는 사실 || 문서\n|-\n| Kepler's law 의 distance 는 문제에 주어진 고도 그대로 || distance 는 '''지구 중심부터''' → 고도 + '''6378 km'''. 빼먹으면 달 2,379,561 s, GEO ≈ 18.8 h 로 슬라이드 답(2,439,090 s · 24 h)이 안 나온다 || [[Kepler's law]] · [[Example 5.1 달의 주기]]\n|-\n| 위성에서도 uplink = MS → BS || 위성 '''uplink = Earth → satellite''', downlink = satellite → Earth (p.15). 셀룰러 uplink(MS → BS, reverse)와 짝지어 외운다 || [[uplink와 downlink]] · [[SATCOM 주파수 대역]]\n|-\n| GEO 위성 한 기면 지구 전체를 덮는다 || line-of-sight 는 넓지만 '''curvature''' 때문에 '''최소 3 기, equidistant''' 필요 (p.17) || [[GEO]] · [[line-of-sight]]\n|-\n| MEO 는 Van Allen belt 안(또는 LEO 아래)에 있다 || MEO 는 '''두 Van Allen belt 사이''' (p.18) || [[MEO]] · [[Van Allen belt]]\n|-\n| LEO 는 GEO 처럼 equatorial orbit || LEO 는 '''polar and inclined''' orbits (p.20). equatorial 은 GEO || [[LEO]] · [[polar orbit]]\n|-\n| GPS 는 하늘에 고정된 GEO 위성 || GPS 는 '''MEO''' 의 key instance (≈ 18,000 km, 24 기, trilateration) || [[GPS]] · [[MEO]]\n|-\n| 높은 위성일수록 빨리 돈다 || 반대. Kepler: 주기 ∝ distance^1.5 → '''높을수록 느리다''' (LEO 90–120 min, GEO 24 h) || [[period of a satellite]]\n|-\n| geostationary = 위성이 실제로 멈춰 있음 || 주기가 지구 자전(24 h)과 같아 '''지구에 대해''' 멈춰 보일 뿐 || [[geostationary]]\n|}\n\n{quiz}\nOX: ① uplink 는 forward communication 이다. ② soft handoff 에서 MS 는 두 BS 와 동시에 통신할 수 있다. ③ AMPS 의 control channel 은 FM 으로 변조된다. ④ IS-95 는 neighboring cell 이 같은 주파수 대역을 쓸 수 있다. ⑤ handoff 결정은 MS 가 한다.\n{/quiz}\n{answer}\n① ✗ (uplink = reverse, MS → BS) ② ○ ③ ✗ (control = FSK, voice = FM) ④ ○ (reuse factor 1, CDMA) ⑤ ✗ (MSC 가 신호 세기를 감시하고 결정)\n{/answer}\n\n== 관련 문서 ==\n* [[공식 모음]] · [[셀룰러 세대 비교표]] · [[시험 정보]] · [[CH05 Satellite Network]]"
  },
  "공식 모음": {
   "title": "공식 모음 — CH05 의 계산과 참고 수치",
   "category": [
    "안내"
   ],
-  "body": "CH05 (1)은 공식이 많은 장이 아니다. 계산은 '''[[GSM channel bit rate]]''' 하나가 슬라이드에 식으로 나오고, 나머지는 \"대역 ÷ 채널 폭\" 같은 나눗셈이다.\n\n{exam}\n🎙 10/20 수업 41:54 — \"I'm not going to recommend you to memorize all these specific numbers, but instead, I would recommend you to '''understand how communication systems evolve across generations'''. That trend is important. … But I would recommend you to '''memorize uplink and downlink'''.\"\n→ 아래 수치는 '''암기 대상이 아니라 세대 차이를 이해하는 재료'''다. 반대로 [[uplink와 downlink]](= reverse / forward, 누가 보내는가)는 반드시 외운다.\n{/exam}\n\n== 계산 ==\n{|\n! 무엇 || 식 || 값 || 시뮬레이터\n|-\n| [[GSM channel bit rate]] || $\\frac{1}{120\\text{ ms}} \\times 26 \\times 8 \\times 156.25$ || '''270.8 kbps''' || `sim:gsm_bitrate`\n|-\n| GSM 사용자 1명(slot 1개) || $270.8 / 8$ || ≈ 33.85 kbps || `sim:gsm_bitrate`\n|-\n| GSM 순수 user data || $65 \\times 24 / 120\\text{ ms}$ || 13 kbps (p.25 그림의 Digitizer 값; 65×24/120 ms 로 검산) || `sim:gsm_bitrate`\n|-\n| [[AMPS 대역과 채널|AMPS 채널 수]] || $25\\text{ MHz} / 30\\text{ kHz} \\approx 833$ || 832 채널 → provider 당 416 (control 21, voice 395) || `sim:band_channels`\n|-\n| GSM 채널 수 || $25\\text{ MHz} / 200\\text{ kHz} = 125$ || 124 채널 (방향당) || `sim:band_channels`\n|-\n| [[D-AMPS]] 한 채널 || $3 \\times 7.95\\text{ kbps} = 23.85\\text{ kbps}$ || overhead 포함 48.6 kbps || `sim:damps_tdma`\n|-\n| [[IS-95 forward 전송|IS-95 forward]] [[chip rate]] || $19.2\\text{ ksps} \\times 64$ || 1.2288 Mcps ≈ 1.228 Mcps || `sim:is95_rates`\n|-\n| [[IS-95 reverse 전송|IS-95 reverse]] chip rate || $28.8 \\to 307.2\\text{ kcps} \\times 4$ || 1.2288 Mcps || `sim:is95_rates`\n|-\n| cell 당 채널 ([[reuse factor]] N) || $\\text{전체 채널} / N$ || AMPS voice 395/7 ≈ 56 (파생값, 슬라이드에 없음) || `sim:reuse_pattern`\n|}\n\n<pre class=\"txt\">\nGSM channel bit rate — 손으로 푸는 순서\n1. slot 1개 = '''156.25 bits'''\n2. frame 1개 = 8 slots      → 8 × 156.25 = 1250 bits\n3. multiframe = 26 frames   → 26 × 1250 = 32,500 bits\n4. multiframe 길이 = 120 ms → 32,500 / 0.120 s = 270,833 bps ≈ '''270.8 kbps'''\n<\/pre>\n\n== 참고 수치 (암기 불필요 — trend 이해용) ==\n{|\n! 세대 || 수치\n|-\n| AMPS || 824–849 MHz (MS→BS, reverse/uplink) · 869–894 MHz (BS→MS, forward/downlink) · 각 25 MHz · 30 kHz · 832 채널 · 416/provider · control 21 · reuse factor 7\n|-\n| D-AMPS || 7.95 kbps · 3 채널 TDMA · 48.6 kbps\n|-\n| GSM || 890–915 MHz (uplink) · 935–960 MHz (downlink) · 200 kHz · 124 채널 · 156.25 bits · 8 slot · 26 frame (24 traffic + 2 control) · 120 ms · 270.8 kbps\n|-\n| IS-95 || 800 MHz · 1,900 MHz ISM · 1.228 MHz × 20 채널 · 10/provider · reuse factor 1 · GPS 동기화 · Walsh code 64 개 (W0 = pilot)\n|-\n| IMT-2000 || 144 kbps (차량) · 384 kbps (보행) · 2 Mbps (정지) · 2 GHz 대역 · 2 MHz 대역폭 · W-CDMA 5 MHz · CDMA 2000 15 MHz + 1.25 MHz\n|-\n| 4G || 100 Mbps (이동) · 1 Gbps (정지) · 어디서든 100 Mbps 이상\n|}\n\n{analogy}\n이 표는 '''역사책의 연표'''다. 연도를 하나하나 외우는 것보다 \"아날로그 → 디지털 → 데이터 → all-IP\" 라는 흐름을 아는 게 시험에 더 쓸모 있다. 숫자는 그 흐름을 실감하는 재료로만 쓴다(채널 폭 30 kHz → 200 kHz → 1.228 MHz → 5 MHz 처럼 '''점점 넓어진다''').\n{/analogy}\n\n== 관련 문서 ==\n* [[셀룰러 세대 비교표]] · [[GSM multiframe]] · [[AMPS 대역과 채널]] · [[자주 틀리는 함정 모음]]"
+  "body": "CH05 (1)은 공식이 많은 장이 아니다. 계산은 '''[[GSM channel bit rate]]''' 하나가 슬라이드에 식으로 나오고, 나머지는 \"대역 ÷ 채널 폭\" 같은 나눗셈이다.\n\n{exam}\n🎙 10/20 수업 41:54 — \"I'm not going to recommend you to memorize all these specific numbers, but instead, I would recommend you to '''understand how communication systems evolve across generations'''. That trend is important. … But I would recommend you to '''memorize uplink and downlink'''.\"\n→ 아래 수치는 '''암기 대상이 아니라 세대 차이를 이해하는 재료'''다. 반대로 [[uplink와 downlink]](= reverse / forward, 누가 보내는가)는 반드시 외운다.\n{/exam}\n\n== 계산 ==\n{|\n! 무엇 || 식 || 값 || 시뮬레이터\n|-\n| [[GSM channel bit rate]] || $\\frac{1}{120\\text{ ms}} \\times 26 \\times 8 \\times 156.25$ || '''270.8 kbps''' || `sim:gsm_bitrate`\n|-\n| GSM 사용자 1명(slot 1개) || $270.8 / 8$ || ≈ 33.85 kbps || `sim:gsm_bitrate`\n|-\n| GSM 순수 user data || $65 \\times 24 / 120\\text{ ms}$ || 13 kbps (p.25 그림의 Digitizer 값; 65×24/120 ms 로 검산) || `sim:gsm_bitrate`\n|-\n| [[AMPS 대역과 채널|AMPS 채널 수]] || $25\\text{ MHz} / 30\\text{ kHz} \\approx 833$ || 832 채널 → provider 당 416 (control 21, voice 395) || `sim:band_channels`\n|-\n| GSM 채널 수 || $25\\text{ MHz} / 200\\text{ kHz} = 125$ || 124 채널 (방향당) || `sim:band_channels`\n|-\n| [[D-AMPS]] 한 채널 || $3 \\times 7.95\\text{ kbps} = 23.85\\text{ kbps}$ || overhead 포함 48.6 kbps || `sim:damps_tdma`\n|-\n| [[IS-95 forward 전송|IS-95 forward]] [[chip rate]] || $19.2\\text{ ksps} \\times 64$ || 1.2288 Mcps ≈ 1.228 Mcps || `sim:is95_rates`\n|-\n| [[IS-95 reverse 전송|IS-95 reverse]] chip rate || $28.8 \\to 307.2\\text{ kcps} \\times 4$ || 1.2288 Mcps || `sim:is95_rates`\n|-\n| cell 당 채널 ([[reuse factor]] N) || $\\text{전체 채널} / N$ || AMPS voice 395/7 ≈ 56 (파생값, 슬라이드에 없음) || `sim:reuse_pattern`\n|}\n\n<pre class=\"txt\">\nGSM channel bit rate — 손으로 푸는 순서\n1. slot 1개 = '''156.25 bits'''\n2. frame 1개 = 8 slots      → 8 × 156.25 = 1250 bits\n3. multiframe = 26 frames   → 26 × 1250 = 32,500 bits\n4. multiframe 길이 = 120 ms → 32,500 / 0.120 s = 270,833 bps ≈ '''270.8 kbps'''\n<\/pre>\n\n== 위성 (CH05 (2), 4강) ⭐⭐⭐ ==\n위성 덱(L11)의 유일한 계산은 '''[[Kepler's law]]''' 다. 슬라이드에 풀이가 달린 Example 이 두 개 있어 계산 문제 후보 1순위 — 위 교수 지침의 예외로 '''식과 6378 은 외운다'''.\n{|\n! 무엇 || 식 || 값 || 시뮬레이터\n|-\n| [[Kepler's law]] || $\\text{Period [s]} = \\frac{1}{100} \\times \\text{distance}^{1.5}$, distance [km] = 고도 $h$ + '''6378''' || — || `sim:kepler_period`\n|-\n| [[Example 5.1 달의 주기|Ex 5.1]] 달 || $\\frac{1}{100} \\times (384{,}000 + 6378)^{1.5}$ || 2,439,090 s ≈ 1 month || `sim:kepler_period`\n|-\n| [[Example 5.2 정지궤도 주기|Ex 5.2]] GEO || $\\frac{1}{100} \\times (35{,}786 + 6378)^{1.5}$ || 86,579 s ≈ 24 h || `sim:kepler_period`\n|-\n| LEO (참고) || 500 → 2000 km || ≈ 95 → 128 min (슬라이드 \"90 to 120 min\") || `sim:kepler_period`\n|}\n\n<pre class=\"txt\">\nKepler's law — 손으로 푸는 순서\n1. 고도 h (지표면 위, km)\n2. distance = h + '''6378'''                 ← 지구 반지름. 빼먹으면 달 2,379,561 s (오답)\n3. distance^1.5 = distance × √distance\n4. × 1/100 → Period [초]\n5. ÷3600 → 시간, ÷86,400 → 일\n예) 35,786 + 6378 = 42,164 → 42,164 × 205.34 ≈ 8,657,903 → '''86,579 s ≈ 24 h'''\n<\/pre>\n\n[[sim:kepler_period]]\n\n'''SATCOM 주파수 대역''' (L11 p.15, 참고 — 숫자 암기 불필요. '''uplink = Earth → satellite''' 만 확실히)\n{|\n! Band || Downlink, GHz || Uplink, GHz || Bandwidth, MHz\n|-\n| L || 1.5 || 1.6 || 15\n|-\n| S || 1.9 || 2.2 || 70\n|-\n| C || 4.0 || 6.0 || 500\n|-\n| Ku || 11.0 || 14.0 || 500\n|-\n| Ka || 20.0 || 30.0 || 3500\n|}\ntrend: 대역↑ → bandwidth↑, 모든 대역에서 uplink 주파수 > downlink → [[SATCOM 주파수 대역]]\n\n== 참고 수치 (암기 불필요 — trend 이해용) ==\n{|\n! 세대 || 수치\n|-\n| AMPS || 824–849 MHz (MS→BS, reverse/uplink) · 869–894 MHz (BS→MS, forward/downlink) · 각 25 MHz · 30 kHz · 832 채널 · 416/provider · control 21 · reuse factor 7\n|-\n| D-AMPS || 7.95 kbps · 3 채널 TDMA · 48.6 kbps\n|-\n| GSM || 890–915 MHz (uplink) · 935–960 MHz (downlink) · 200 kHz · 124 채널 · 156.25 bits · 8 slot · 26 frame (24 traffic + 2 control) · 120 ms · 270.8 kbps\n|-\n| IS-95 || 800 MHz · 1,900 MHz ISM · 1.228 MHz × 20 채널 · 10/provider · reuse factor 1 · GPS 동기화 · Walsh code 64 개 (W0 = pilot)\n|-\n| IMT-2000 || 144 kbps (차량) · 384 kbps (보행) · 2 Mbps (정지) · 2 GHz 대역 · 2 MHz 대역폭 · W-CDMA 5 MHz · CDMA 2000 15 MHz + 1.25 MHz\n|-\n| 4G || 100 Mbps (이동) · 1 Gbps (정지) · 어디서든 100 Mbps 이상\n|-\n| 위성 고도 || GEO 35,786 km (p.16 본문 \"22,000 miles ≈ 35405 km\") · MEO ≈ 18,000 km, 24 기 (GPS) · LEO 500–2000 km, 90–120 min · Starlink 341 miles ≈ 550 km\n|}\n\n{analogy}\n이 표는 '''역사책의 연표'''다. 연도를 하나하나 외우는 것보다 \"아날로그 → 디지털 → 데이터 → all-IP\" 라는 흐름을 아는 게 시험에 더 쓸모 있다. 숫자는 그 흐름을 실감하는 재료로만 쓴다(채널 폭 30 kHz → 200 kHz → 1.228 MHz → 5 MHz 처럼 '''점점 넓어진다''').\n{/analogy}\n\n== 관련 문서 ==\n* [[셀룰러 세대 비교표]] · [[GSM multiframe]] · [[AMPS 대역과 채널]] · [[자주 틀리는 함정 모음]]\n* 위성: [[Kepler's law]] · [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]] · [[SATCOM 주파수 대역]] · [[CH05 Satellite Network]]"
  },
  "셀룰러 세대 비교표": {
   "title": "셀룰러 세대 비교표 — 1G부터 4G까지 한 장에",
@@ -847,7 +847,7 @@ const ARTICLES = {
    "1강 셀룰러 동작",
    "용어"
   ],
-  "body": "'''Satellite network''' 는 [[WAN 분류|Wireless WAN]] 의 두 번째 instance 다. 지상 BS 대신 '''궤도 위의 위성'''이 중계기 역할을 한다. 슬라이드(p.6–7)의 예는 '''[[Starlink]] / Starshield''' 이고, 오른쪽 BBC 그림 \"How SpaceX satellites are used on the battlefield\" 가 전장에서의 쓰임을 보여 준다.\n\n{def}\"Wireless WANs — Cellular telephony · '''Satellite Networks''' — Starlink / Starshield.\" (p.6–7)\n무선 WAN 의 하나인 위성망. 예: SpaceX 의 Starlink(민간) / Starshield(정부·군용).{/def}\n\n[[img:L10-06.png|p.6 Wireless WANs — Cellular telephony(4G/5G), Satellite Networks(Starlink). 오른쪽 BBC 그림: ① 정찰 드론이 적 전차 위치 전송 → Starlink/Starshield → ② 지휘소가 부대에 알림 → ③ 드론 조종사가 공격 드론 조종 (필기본)|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''satellite''' = 위성. 기지국을 '''하늘 위에''' 띄워 놓은 셀룰러라고 생각하면 된다. 위성 하나의 커버리지(footprint)는 지상 cell 보다 훨씬 넓다.\n* 지상 infrastructure(BS·유선망)가 없거나 파괴된 곳 — 바다, 사막, 산간, '''전쟁터''' — 에서 강하다.\n\n(Forouzan 보충 — 슬라이드에 없음) 궤도 높이로 셋으로 나눈다:\n{|\n! 궤도 || 고도(대략) || 특징\n|-\n| GEO (Geostationary) || 약 35,786 km || 지구 자전과 같이 돌아 하늘에 '''멈춰 보임'''. 3 개면 지구 거의 전체. 대신 거리가 멀어 지연이 큼\n|-\n| MEO (Medium) || 수천~2 만 km || GPS 위성이 여기\n|-\n| LEO (Low) || 수백~2,000 km || 가깝다 → 지연 작음. 대신 빨리 지나가므로 '''위성 수천 개'''가 필요하고 위성 사이 handoff 가 계속 일어남. '''Starlink 가 LEO'''\n|}\n\n{info}교수(10/20 녹음 19:00–21:04)는 발신 절차 뒤에 \"wireless communications … are '''heavily dependent on this infrastructure'''\" 라고 강조하며, '''Ukraine''' 이 최근 미국의 정책 때문에 Starlink/Starshield 연결이 제한돼 데이터 통신과 '''드론 제어'''에 어려움을 겪는다는 예를 들었다. 슬라이드 BBC 그림(드론-위성-지휘소)과 같은 맥락이다.{/info}\n\n{analogy}🎭 '''아주 높은 곳에 세운 기지국 탑.''' 셀룰러 BS 가 동네 언덕 위 확성기라면, 위성은 성층권보다 훨씬 위에 띄운 확성기다. 한 번에 넓은 지역에 들리지만, 멀어서 말이 도착하는 데 시간이 걸린다(지연).{/analogy}\n\n\n== 관련 문서 ==\n* [[Starlink]] · [[WAN 분류]] · [[cellular telephony]] · [[handoff]]\n* [[mid:WAN]]"
+  "body": "'''Satellite network''' 는 [[WAN 분류|Wireless WAN]] 의 두 번째 instance 다. 지상 BS 대신 '''궤도 위의 위성'''이 중계기 역할을 한다. 슬라이드(p.6–7)의 예는 '''[[Starlink]] / Starshield''' 이고, 오른쪽 BBC 그림 \"How SpaceX satellites are used on the battlefield\" 가 전장에서의 쓰임을 보여 준다.\n\n{def}\"Wireless WANs — Cellular telephony · '''Satellite Networks''' — Starlink / Starshield.\" (p.6–7)\n무선 WAN 의 하나인 위성망. 예: SpaceX 의 Starlink(민간) / Starshield(정부·군용).{/def}\n\n[[img:L10-06.png|p.6 Wireless WANs — Cellular telephony(4G/5G), Satellite Networks(Starlink). 오른쪽 BBC 그림: ① 정찰 드론이 적 전차 위치 전송 → Starlink/Starshield → ② 지휘소가 부대에 알림 → ③ 드론 조종사가 공격 드론 조종 (필기본)|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''satellite''' = 위성. 기지국을 '''하늘 위에''' 띄워 놓은 셀룰러라고 생각하면 된다. 위성 하나의 커버리지(footprint)는 지상 cell 보다 훨씬 넓다.\n* 지상 infrastructure(BS·유선망)가 없거나 파괴된 곳 — 바다, 사막, 산간, '''전쟁터''' — 에서 강하다.\n\n(Forouzan 보충 — 슬라이드에 없음) 궤도 높이로 셋으로 나눈다:\n{|\n! 궤도 || 고도(대략) || 특징\n|-\n| GEO (Geostationary) || 약 35,786 km || 지구 자전과 같이 돌아 하늘에 '''멈춰 보임'''. 3 개면 지구 거의 전체. 대신 거리가 멀어 지연이 큼\n|-\n| MEO (Medium) || 수천~2 만 km || GPS 위성이 여기\n|-\n| LEO (Low) || 수백~2,000 km || 가깝다 → 지연 작음. 대신 빨리 지나가므로 '''위성 수천 개'''가 필요하고 위성 사이 handoff 가 계속 일어남. '''Starlink 가 LEO'''\n|}\n\n{info}교수(10/20 녹음 19:00–21:04)는 발신 절차 뒤에 \"wireless communications … are '''heavily dependent on this infrastructure'''\" 라고 강조하며, '''Ukraine''' 이 최근 미국의 정책 때문에 Starlink/Starshield 연결이 제한돼 데이터 통신과 '''드론 제어'''에 어려움을 겪는다는 예를 들었다. 슬라이드 BBC 그림(드론-위성-지휘소)과 같은 맥락이다.{/info}\n\n{analogy}🎭 '''아주 높은 곳에 세운 기지국 탑.''' 셀룰러 BS 가 동네 언덕 위 확성기라면, 위성은 성층권보다 훨씬 위에 띄운 확성기다. 한 번에 넓은 지역에 들리지만, 멀어서 말이 도착하는 데 시간이 걸린다(지연).{/analogy}\n\n\n== 4강에서 자세히 (L11, 10/22) ==\n{info}이 문서는 1강(L10 p.6–7)에서 이름만 나온 satellite network 의 소개다. 10/22 수업 덱 L11(`CH05_Wide Area Networks (2)`)이 위성망 전체를 다룬다 → 메인 문서 '''[[CH05 Satellite Network]]'''.{/info}\n* 정의(L11 p.2): \"A '''wireless''' WAN that provides any type of communication\" — [[cellular telephony]] 와 같은 문장. 구성(p.3): \"a combination of nodes, '''including satellites''', that provides communication from one point on the Earth to another\" → [[satellite network 구성]] · [[ISL]]\n* 궤도와 주기: [[orbit]] (equatorial / inclined / polar) · [[Kepler's law]] ($\\text{Period} = \\frac{1}{100}(h + 6378)^{1.5}$ 초) · [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]]\n* 위의 보충 표(GEO/MEO/LEO)는 L11 p.11–21 에서 슬라이드로 나온다 → [[위성 세 범주]] · [[GEO]] · [[MEO]]([[GPS]]) · [[LEO]]([[Starlink]], [[footprint]])\n* 위성의 uplink = '''Earth → satellite''' (p.15) → [[SATCOM 주파수 대역]] · [[uplink와 downlink]]\n\n== 관련 문서 ==\n* '''[[CH05 Satellite Network]]''' · [[Starlink]] · [[WAN 분류]] · [[cellular telephony]] · [[handoff]] · [[위성 세 범주]]\n* [[mid:WAN]]"
  },
  "Starlink": {
   "title": "Starlink / Starshield (SpaceX 위성망)",
@@ -855,7 +855,7 @@ const ARTICLES = {
    "1강 셀룰러 동작",
    "용어"
   ],
-  "body": "'''Starlink''' 는 SpaceX 가 운영하는 저궤도(LEO) [[satellite network]] 다. 슬라이드 p.6 은 Satellite Networks 의 예로 \"'''Starlink'''\" 를, p.7 은 \"'''Starlink / Starshield'''\" 를 적었다. '''Starshield''' 는 같은 기술의 정부·군용 버전이다. 슬라이드에는 이름과 BBC 그림만 있고, 아래 수치는 '''(일반 보충 — 슬라이드에 없음)'''.\n\n{def}\"Satellite Networks — '''Starlink''' / '''Starshield'''.\" (p.6–7)\nBBC 그림 제목: \"How SpaceX satellites are used on the battlefield\" — ① Spotter drone sends location of enemy tank ② Command centre alerts battlefield unit (Starlink/Starshield 경유) ③ Drone operator flies killer drone to target.{/def}\n\n[[img:L10-07.png|p.7 오른쪽 BBC 그림 — 드론 → Starlink/Starshield → 지휘소 → 부대. Satellite Networks 의 예 (필기본)|medium]]\n\n== 이름에서 개념 끌어내기 ==\n* '''Star + link''' — 별(하늘의 위성)들로 만든 연결. 수천 개의 작은 위성이 '''별자리(constellation)'''처럼 하늘을 덮는다.\n* '''Star + shield''' — 방패. 군·정부용(보안 강화) 버전이라 shield.\n* 녹음 전사에는 \"Starship\"(SpaceX 로켓 이름)으로 깨져 있지만, 슬라이드 기준으로 '''Starlink/Starshield''' 다.\n\n(보충) 특징\n* 고도 약 550 km 의 '''LEO''' — GEO(약 36,000 km)보다 수십 배 가까워 지연이 짧다.\n* 위성이 빠르게 지나가므로 사용자 단말은 몇 분마다 다른 위성으로 넘어간다 — 셀룰러의 [[handoff]] 를 하늘에서 하는 셈.\n* 지상 infrastructure 가 없거나 파괴된 곳에서도 접속이 된다 → 전쟁·재난 지역.\n\n{info}교수(10/20 녹음 19:00–21:04)는 발신 절차 뒤에 \"wireless communications … are '''heavily dependent on this infrastructure'''\" 라고 강조하며, '''Ukraine''' 이 최근 미국의 정책 때문에 Starlink/Starshield 연결이 제한돼 데이터 통신과 '''드론 제어'''에 어려움을 겪는다는 예를 들었다. 슬라이드 BBC 그림(드론-위성-지휘소)과 같은 맥락이다.{/info}\n\n{analogy}🎭 '''하늘을 지나가는 기지국 행렬.''' 셀룰러는 기지국이 땅에 고정되고 내가 움직이지만, Starlink 는 '''기지국(위성)이 머리 위를 줄지어 지나간다'''. 한 위성이 지평선 너머로 사라지기 전에 다음 위성이 와서 통신을 이어받는다.{/analogy}\n\n\n== 관련 문서 ==\n* [[satellite network]] · [[WAN 분류]] · [[handoff]] · [[CH05 셀룰러 동작]]"
+  "body": "'''Starlink''' 는 SpaceX 가 운영하는 저궤도(LEO) [[satellite network]] 다. 슬라이드 p.6 은 Satellite Networks 의 예로 \"'''Starlink'''\" 를, p.7 은 \"'''Starlink / Starshield'''\" 를 적었다. '''Starshield''' 는 같은 기술의 정부·군용 버전이다. 슬라이드에는 이름과 BBC 그림만 있고, 아래 수치는 '''(일반 보충 — 슬라이드에 없음)'''.\n\n{def}\"Satellite Networks — '''Starlink''' / '''Starshield'''.\" (p.6–7)\nBBC 그림 제목: \"How SpaceX satellites are used on the battlefield\" — ① Spotter drone sends location of enemy tank ② Command centre alerts battlefield unit (Starlink/Starshield 경유) ③ Drone operator flies killer drone to target.{/def}\n\n[[img:L10-07.png|p.7 오른쪽 BBC 그림 — 드론 → Starlink/Starshield → 지휘소 → 부대. Satellite Networks 의 예 (필기본)|medium]]\n\n== 이름에서 개념 끌어내기 ==\n* '''Star + link''' — 별(하늘의 위성)들로 만든 연결. 수천 개의 작은 위성이 '''별자리(constellation)'''처럼 하늘을 덮는다.\n* '''Star + shield''' — 방패. 군·정부용(보안 강화) 버전이라 shield.\n* 녹음 전사에는 \"Starship\"(SpaceX 로켓 이름)으로 깨져 있지만, 슬라이드 기준으로 '''Starlink/Starshield''' 다.\n\n(보충) 특징\n* 고도 약 550 km 의 '''LEO''' — GEO(약 36,000 km)보다 수십 배 가까워 지연이 짧다.\n* 위성이 빠르게 지나가므로 사용자 단말은 몇 분마다 다른 위성으로 넘어간다 — 셀룰러의 [[handoff]] 를 하늘에서 하는 셈.\n* 지상 infrastructure 가 없거나 파괴된 곳에서도 접속이 된다 → 전쟁·재난 지역.\n\n{info}교수(10/20 녹음 19:00–21:04)는 발신 절차 뒤에 \"wireless communications … are '''heavily dependent on this infrastructure'''\" 라고 강조하며, '''Ukraine''' 이 최근 미국의 정책 때문에 Starlink/Starshield 연결이 제한돼 데이터 통신과 '''드론 제어'''에 어려움을 겪는다는 예를 들었다. 슬라이드 BBC 그림(드론-위성-지휘소)과 같은 맥락이다.{/info}\n\n{analogy}🎭 '''하늘을 지나가는 기지국 행렬.''' 셀룰러는 기지국이 땅에 고정되고 내가 움직이지만, Starlink 는 '''기지국(위성)이 머리 위를 줄지어 지나간다'''. 한 위성이 지평선 너머로 사라지기 전에 다음 위성이 와서 통신을 이어받는다.{/analogy}\n\n\n== 4강에서: LEO 의 key instance (L11 p.3, p.14, p.20–21) ==\n* '''LEO''': L11 p.21 \"LEO … '''Key instance: Starlink'''\". LEO = polar and inclined orbits, 500–2000 km, 90–120 min, \"similar to the cellular telephone system\" → [[LEO]].\n* '''고도 341 miles''': p.14·p.21 그림 \"Starlink '''341 miles'''\" vs \"Normal satellites '''621+ miles'''\" — 341 miles ≈ 550 km, 621 miles ≈ 1,000 km. 보통 LEO 보다도 낮게 띄웠다. Kepler 로 계산하면 $(1/100)(550 + 6378)^{1.5} \\approx 5{,}766$ s ≈ '''96 min''' → [[Kepler's law]].\n* '''System architecture''' (p.3): '''Space segment'''(위성들 + '''[[ISL]]''') · '''User segment'''(User Terminals) · '''Ground segment'''(Starlink Gateway → Internet) → [[satellite network 구성]].\n* '''ISL''': 위성끼리 직접 데이터를 넘겨, gateway 가 보이는 위성까지 하늘에서 전달한다 → [[ISL]] · [[UML과 GWL]].\n* '''footprint''': 위성 하나가 비추는 지상 영역. 위성을 따라 움직이므로 사용자는 몇 분마다 다음 위성으로 넘어간다 → [[footprint]].\n\n[[img:L11-21.png|L11 p.21 LEO — ISL 로 이어진 위성 2 기, UML·GWL, Footprint, 오른쪽 아래 \"Starlink 341 miles\" vs \"Normal satellites 621+ miles\"|medium]]\n\n== 관련 문서 ==\n* [[satellite network]] · [[WAN 분류]] · [[handoff]] · [[CH05 셀룰러 동작]]\n* 4강: '''[[CH05 Satellite Network]]''' · [[LEO]] · [[ISL]] · [[footprint]] · [[satellite network 구성]]"
  },
  "cellular telephony": {
   "title": "Cellular Telephony (셀룰러 이동통신)",
@@ -991,7 +991,7 @@ const ARTICLES = {
    "1강 셀룰러 동작",
    "용어"
   ],
-  "body": "셀룰러에서 '''uplink''' 는 '''MS → BS''' 방향(폰이 탑으로 '''올려''' 보냄), '''downlink''' 는 '''BS → MS''' 방향(탑이 폰으로 '''내려''' 보냄)이다. 셀룰러 교재·슬라이드는 같은 것을 '''reverse'''(= uplink) / '''forward'''(= downlink) 라고도 부른다. 1G AMPS 부터 두 방향에 '''서로 다른 대역'''을 줘서 동시에 말하고 듣는다(FDD). 이 문서는 1강 구조(MS·BS)를 바탕으로 2강·3강의 대역 이야기를 미리 정리한다.\n\n{def}AMPS 대역 슬라이드(L10 p.19) 표현: MS 가 보내는 대역 '''824–849 MHz''' = '''reverse''' (mobile → base), BS 가 보내는 대역 '''869–894 MHz''' = '''forward''' (base → mobile). IS-95 블록도(p.29–30)도 forward / reverse 로 나뉜다.\nuplink(reverse) = MS → BS, downlink(forward) = BS → MS.{/def}\n\n[[img:L10-19.png|p.19 AMPS bands — 824–849 MHz (MS 송신 = reverse = uplink) 와 869–894 MHz (BS 송신 = forward = downlink), 각 25 MHz 를 30 kHz 채널로 나눔 (필기본, \"다시\" 표시)|medium]]\n\n== 이름에서 개념 끌어내기 ==\n* '''up / down''' — BS 탑은 높은 곳, 폰은 땅. 폰 → 탑은 '''위로(up)''', 탑 → 폰은 '''아래로(down)'''. 위성(지상국 → 위성 = uplink)에서 온 말이다.\n* '''forward / reverse''' — 망(BS)을 기준으로, 망이 사용자에게 '''앞으로 내보내는''' 방향이 forward, 사용자가 망으로 '''거슬러 보내는''' 방향이 reverse.\n\n{|\n! 방향 || 별칭 || 송신자 → 수신자 || AMPS 대역 (p.19) || IS-95 (p.29–30)\n|-\n| '''uplink''' || '''reverse''' || MS → BS || 824–849 MHz || reverse 전송 → [[IS-95 reverse 전송]]\n|-\n| '''downlink''' || '''forward''' || BS → MS || 869–894 MHz || forward 전송 → [[IS-95 forward 전송]]\n|}\n* 두 대역을 나눠 쓰는 것 = [[mid:duplexing과 multiple access|duplexing]] 의 한 방식인 '''FDD'''(frequency division duplexing). 같은 대역 안에서 사용자들을 나누는 것은 따로 [[FDMA]]·[[TDMA]]·[[CDMA]] — '''duplexing ≠ multiple access''' (중간고사 Bluetooth 에서 교수가 강조한 구분, Bluetooth 는 시간으로 나누는 TDD 였다 → [[mid:TDD-TDMA]]).\n* 1강 동작과의 연결: 발신 ①(MS → BS 번호 송신)은 '''uplink''', 수신 ②의 paging·④ ringing(BS → MS)은 '''downlink'''.\n\n{analogy}🎭 '''2차선 도로.''' 올라가는 차선(uplink)과 내려오는 차선(downlink)을 따로 깔아 두면 양쪽 차가 동시에 달린다(full-duplex). AMPS 는 두 차선 사이에 45 MHz 의 중앙분리대를 둔 셈이다(824→869, 849→894).{/analogy}\n\n[[anim:amps_bands|MS 가 uplink(824–849 MHz) 채널 하나와 downlink(869–894 MHz) 채널 하나를 짝으로 잡는 모습을 보라]]\n\n{quiz}AMPS 에서 BS 가 MS 에게 보내는 방향의 이름 두 가지와 그 대역은?{/quiz}\n{answer}'''downlink''' = '''forward''' (base → mobile), '''869–894 MHz''' (p.19).{/answer}\n\n== 관련 문서 ==\n* [[AMPS 대역과 채널]] · [[IS-95 forward 전송]] · [[IS-95 reverse 전송]] · [[base station]] · [[mobile station]]\n* [[mid:duplexing과 multiple access]] · [[mid:full-duplex]]"
+  "body": "셀룰러에서 '''uplink''' 는 '''MS → BS''' 방향(폰이 탑으로 '''올려''' 보냄), '''downlink''' 는 '''BS → MS''' 방향(탑이 폰으로 '''내려''' 보냄)이다. 셀룰러 교재·슬라이드는 같은 것을 '''reverse'''(= uplink) / '''forward'''(= downlink) 라고도 부른다. 1G AMPS 부터 두 방향에 '''서로 다른 대역'''을 줘서 동시에 말하고 듣는다(FDD). 이 문서는 1강 구조(MS·BS)를 바탕으로 2강·3강의 대역 이야기를 미리 정리한다.\n\n{def}AMPS 대역 슬라이드(L10 p.19) 표현: MS 가 보내는 대역 '''824–849 MHz''' = '''reverse''' (mobile → base), BS 가 보내는 대역 '''869–894 MHz''' = '''forward''' (base → mobile). IS-95 블록도(p.29–30)도 forward / reverse 로 나뉜다.\nuplink(reverse) = MS → BS, downlink(forward) = BS → MS.{/def}\n\n[[img:L10-19.png|p.19 AMPS bands — 824–849 MHz (MS 송신 = reverse = uplink) 와 869–894 MHz (BS 송신 = forward = downlink), 각 25 MHz 를 30 kHz 채널로 나눔 (필기본, \"다시\" 표시)|medium]]\n\n== 이름에서 개념 끌어내기 ==\n* '''up / down''' — BS 탑은 높은 곳, 폰은 땅. 폰 → 탑은 '''위로(up)''', 탑 → 폰은 '''아래로(down)'''. 위성(지상국 → 위성 = uplink)에서 온 말이다.\n* '''forward / reverse''' — 망(BS)을 기준으로, 망이 사용자에게 '''앞으로 내보내는''' 방향이 forward, 사용자가 망으로 '''거슬러 보내는''' 방향이 reverse.\n\n{|\n! 방향 || 별칭 || 송신자 → 수신자 || AMPS 대역 (p.19) || IS-95 (p.29–30)\n|-\n| '''uplink''' || '''reverse''' || MS → BS || 824–849 MHz || reverse 전송 → [[IS-95 reverse 전송]]\n|-\n| '''downlink''' || '''forward''' || BS → MS || 869–894 MHz || forward 전송 → [[IS-95 forward 전송]]\n|}\n* 두 대역을 나눠 쓰는 것 = [[mid:duplexing과 multiple access|duplexing]] 의 한 방식인 '''FDD'''(frequency division duplexing). 같은 대역 안에서 사용자들을 나누는 것은 따로 [[FDMA]]·[[TDMA]]·[[CDMA]] — '''duplexing ≠ multiple access''' (중간고사 Bluetooth 에서 교수가 강조한 구분, Bluetooth 는 시간으로 나누는 TDD 였다 → [[mid:TDD-TDMA]]).\n* 1강 동작과의 연결: 발신 ①(MS → BS 번호 송신)은 '''uplink''', 수신 ②의 paging·④ ringing(BS → MS)은 '''downlink'''.\n\n{analogy}🎭 '''2차선 도로.''' 올라가는 차선(uplink)과 내려오는 차선(downlink)을 따로 깔아 두면 양쪽 차가 동시에 달린다(full-duplex). AMPS 는 두 차선 사이에 45 MHz 의 중앙분리대를 둔 셈이다(824→869, 849→894).{/analogy}\n\n[[anim:amps_bands|MS 가 uplink(824–849 MHz) 채널 하나와 downlink(869–894 MHz) 채널 하나를 짝으로 잡는 모습을 보라]]\n\n{quiz}AMPS 에서 BS 가 MS 에게 보내는 방향의 이름 두 가지와 그 대역은?{/quiz}\n{answer}'''downlink''' = '''forward''' (base → mobile), '''869–894 MHz''' (p.19).{/answer}\n\n== 위성의 uplink 와 downlink (L11 p.15, 4강) ⭐⭐⭐ ==\n{def}\"'''Uplink''': transmission from '''the Earth to the satellite'''. '''Downlink''': transmission from '''the satellite to the Earth'''.\" (L11 p.15 Frequency bands for SATCOM){/def}\n\n위성망에서는 송신자·수신자가 MS·BS 가 아니라 '''지구(지상국·user terminal·gateway)'''와 '''위성'''이다. 방향을 정하는 규칙(\"위로 올려 보내면 up\")은 같다 — 위에서 말했듯 uplink/downlink 라는 말 자체가 위성에서 온 말이다.\n\n[[img:L11-15.png|L11 p.15 Frequency bands for SATCOM — Uplink: Earth → satellite, Downlink: satellite → Earth, 대역 표 L/S/C/Ku/Ka|medium]]\n\n{|\n! Band || Downlink, GHz || Uplink, GHz || Bandwidth, MHz\n|-\n| L || 1.5 || 1.6 || 15\n|-\n| S || 1.9 || 2.2 || 70\n|-\n| C || 4.0 || 6.0 || 500\n|-\n| Ku || 11.0 || 14.0 || 500\n|-\n| Ka || 20.0 || 30.0 || 3500\n|}\n* 숫자는 참고. trend: 대역이 높을수록 bandwidth↑, 그리고 '''모든 대역에서 uplink 주파수 > downlink 주파수''' → [[SATCOM 주파수 대역]].\n* uplink·downlink 에 '''다른 주파수'''를 쓰는 것은 AMPS 의 두 대역(824–849 / 869–894 MHz)과 같은 방식(FDD)이다.\n\n{exam}🎯 '''셀룰러 vs 위성 — 같은 단어, 다른 양 끝''' (교수 10/20 41:54: \"memorize uplink and downlink\")\n{|\n! || uplink || downlink\n|-\n| 셀룰러 (L10 p.19, AMPS) || '''MS → BS''' = reverse (824–849 MHz) || '''BS → MS''' = forward (869–894 MHz)\n|-\n| 위성 (L11 p.15, SATCOM) || '''Earth → satellite''' || '''satellite → Earth'''\n|}\n* 공통: '''up = 높은 쪽(탑·위성)으로 올려 보냄'''.\n* 함정: 위성 문제에서 \"uplink = MS → BS\" 라고 쓰면 틀린다. 지상의 gateway(BS 같은 장비)라도 '''위성으로 보내면 uplink''' 다.\n* 위성 uplink/downlink 에는 forward/reverse 라는 별칭을 쓰지 않는다(슬라이드 기준).{/exam}\n\n{quiz}OX: ① 위성 통신에서 downlink 는 위성이 지구로 보내는 전송이다. ② 셀룰러에서 uplink 는 forward 라고도 부른다. ③ SATCOM C band 에서 uplink 는 4 GHz, downlink 는 6 GHz 이다.{/quiz}\n{answer}① ○ ② ✗ (uplink = '''reverse''', downlink = forward) ③ ✗ (uplink '''6''' GHz, downlink '''4''' GHz — uplink 쪽이 더 높다){/answer}\n\n== 관련 문서 ==\n* [[AMPS 대역과 채널]] · [[IS-95 forward 전송]] · [[IS-95 reverse 전송]] · [[base station]] · [[mobile station]]\n* [[mid:duplexing과 multiple access]] · [[mid:full-duplex]]\n* 위성: [[SATCOM 주파수 대역]] · [[CH05 Satellite Network]] · [[satellite network 구성]] · [[UML과 GWL]]"
  },
  "CH05 1G–2G 셀룰러": {
   "title": "CH05 1G–2G 셀룰러 (2강 — AMPS · D-AMPS · GSM: FDMA 에서 TDMA 로)",
@@ -1207,7 +1207,7 @@ const ARTICLES = {
    "3강 CDMA–4G",
    "용어"
   ],
-  "body": "[[IS-95]] 의 기지국(BS)들은 '''GPS(Global Positioning System) 위성의 시계'''를 받아 모두 같은 시각에 맞춰 둔다. 슬라이드는 한 줄뿐이지만, CDMA 는 칩 단위(약 0.8 μs)로 타이밍이 맞아야 동작하므로 이 동기화가 필수다. L10 p.28.\n\n{def}\"'''Synchronization''': To provide synchronization, '''BSs use the service of GPS'''.\" (p.28)\n→ 동기화를 위해 BS 들은 GPS 서비스를 이용한다.{/def}\n\n[[img:L10-28.png|p.28 아래쪽 Synchronization — \"BSs use the service of GPS\" (필기본)|small]]\n\n{info}'''교수(10/20, 62:09–62:29)''': \"for synchronization, IS-95 employs GPS for synchronizing base station and mobile station. '''But this one is not that important.'''\" → 한 줄(\"BS 가 GPS 로 동기화\")만 알면 된다. 아래 \"왜 필요한가\"는 이해용 보충.{/info}\n\n== 이름에서 개념 끌어내기 ==\n* '''Synchronization''' = syn(함께) + chronos(시간) → '''시간을 함께 맞춤'''.\n* '''GPS''' — 위치를 알려 주는 위성 시스템으로 알려져 있지만, 위성마다 '''원자시계'''를 싣고 정확한 시각을 방송한다. 위치 계산 자체가 정확한 시각 차이에서 나온다. IS-95 BS 는 이 '''시각''' 기능을 쓴다.\n\n== 왜 필요한가 (보충 — 슬라이드에 없음) ==\n* '''칩 단위 정렬''': [[chip rate]] 1.228 Mcps → 칩 하나 ≈ 0.814 μs. 코드를 곱해 풀어내려면 이 정도 정밀도로 시각이 맞아야 한다.\n* '''BS 구별''': 실제 IS-95 에서 모든 BS 는 '''같은''' 짧은 PN 코드를 쓰되 '''시간을 조금씩 어긋나게(offset)''' 시작해 서로를 구분한다. \"몇 칩 늦게 시작한 BS\" 로 구별하려면 모든 BS 가 '''공통 기준 시각'''을 가져야 한다 → GPS.\n* '''soft handoff''': MS 가 두 BS 의 신호를 동시에 받아 합치려면 두 BS 의 시각이 맞아야 한다 → [[IS-95 soft handoff]].\n* 대비: [[GSM]] 은 TDMA 라 cell 안에서만 슬롯을 맞추면 되고 BS 끼리 GPS 동기는 필요 없다 (보충).\n\n{analogy}🎭 '''합창단의 지휘자.''' 여러 성당(BS)의 합창단이 동시에 같은 곡을 부르되 각자 반 박자씩 어긋나게 시작해서 듣는 사람이 \"어느 성당 소리인지\" 구별하게 한다. 그러려면 모든 성당이 '''같은 지휘자(GPS 시계)'''를 보고 있어야 한다.{/analogy}\n\n{quiz}IS-95 의 BS 들은 동기화를 위해 무엇을 이용하는가? (p.28){/quiz}\n{answer}'''GPS''' (the service of GPS).{/answer}\n\n== 관련 문서 ==\n* [[IS-95]] · [[IS-95 대역과 채널]] · [[pilot channel]] · [[IS-95 soft handoff]] · [[chip rate]]"
+  "body": "[[IS-95]] 의 기지국(BS)들은 '''GPS(Global Positioning System) 위성의 시계'''를 받아 모두 같은 시각에 맞춰 둔다. 슬라이드는 한 줄뿐이지만, CDMA 는 칩 단위(약 0.8 μs)로 타이밍이 맞아야 동작하므로 이 동기화가 필수다. L10 p.28.\n\n{def}\"'''Synchronization''': To provide synchronization, '''BSs use the service of GPS'''.\" (p.28)\n→ 동기화를 위해 BS 들은 GPS 서비스를 이용한다.{/def}\n\n[[img:L10-28.png|p.28 아래쪽 Synchronization — \"BSs use the service of GPS\" (필기본)|small]]\n\n{info}'''교수(10/20, 62:09–62:29)''': \"for synchronization, IS-95 employs GPS for synchronizing base station and mobile station. '''But this one is not that important.'''\" → 한 줄(\"BS 가 GPS 로 동기화\")만 알면 된다. 아래 \"왜 필요한가\"는 이해용 보충.{/info}\n\n== 이름에서 개념 끌어내기 ==\n* '''Synchronization''' = syn(함께) + chronos(시간) → '''시간을 함께 맞춤'''.\n* '''[[GPS]]''' — 위치를 알려 주는 위성 시스템([[MEO]] 위성 24 기, 4강 L11 p.19)으로 알려져 있지만, 위성마다 '''원자시계'''를 싣고 정확한 시각을 방송한다. 위치 계산 자체가 정확한 시각 차이에서 나온다. IS-95 BS 는 이 '''시각''' 기능을 쓴다.\n\n== 왜 필요한가 (보충 — 슬라이드에 없음) ==\n* '''칩 단위 정렬''': [[chip rate]] 1.228 Mcps → 칩 하나 ≈ 0.814 μs. 코드를 곱해 풀어내려면 이 정도 정밀도로 시각이 맞아야 한다.\n* '''BS 구별''': 실제 IS-95 에서 모든 BS 는 '''같은''' 짧은 PN 코드를 쓰되 '''시간을 조금씩 어긋나게(offset)''' 시작해 서로를 구분한다. \"몇 칩 늦게 시작한 BS\" 로 구별하려면 모든 BS 가 '''공통 기준 시각'''을 가져야 한다 → GPS.\n* '''soft handoff''': MS 가 두 BS 의 신호를 동시에 받아 합치려면 두 BS 의 시각이 맞아야 한다 → [[IS-95 soft handoff]].\n* 대비: [[GSM]] 은 TDMA 라 cell 안에서만 슬롯을 맞추면 되고 BS 끼리 GPS 동기는 필요 없다 (보충).\n\n{analogy}🎭 '''합창단의 지휘자.''' 여러 성당(BS)의 합창단이 동시에 같은 곡을 부르되 각자 반 박자씩 어긋나게 시작해서 듣는 사람이 \"어느 성당 소리인지\" 구별하게 한다. 그러려면 모든 성당이 '''같은 지휘자(GPS 시계)'''를 보고 있어야 한다.{/analogy}\n\n{quiz}IS-95 의 BS 들은 동기화를 위해 무엇을 이용하는가? (p.28){/quiz}\n{answer}'''GPS''' (the service of GPS).{/answer}\n\n== 관련 문서 ==\n* [[IS-95]] · [[IS-95 대역과 채널]] · [[pilot channel]] · [[IS-95 soft handoff]] · [[chip rate]]\n* GPS 자체: [[GPS]] · [[MEO]] · [[trilateration]] (4강)"
  },
  "IS-95 forward 전송": {
   "title": "IS-95 Forward Transmission (Downlink, BS→MS)",
@@ -1345,6 +1345,190 @@ const ARTICLES = {
   ],
   "body": "'''ETRI (Electronics and Telecommunications Research Institute, 한국전자통신연구원)''' 는 대전에 있는 정부출연 연구기관으로, 1990 년대 미국 Qualcomm 과 함께 '''CDMA([[IS-95]]) 상용 시스템을 개발'''해 한국이 '''1996 년 세계 최초로 CDMA 를 상용화'''하는 데 핵심 역할을 했다. 슬라이드 본문에는 없고, 내 필기 \"ETRI가 개발?\"(p.27) 에서 온 문서다. (전체 내용이 슬라이드 밖 배경 지식)\n\n{def}(슬라이드 정의 없음) p.27 \"One of the dominant 2G standards in North America '''(and South Korea)'''\" — 필기: \"'''ETRI가 개발?'''\"\n→ 한국이 IS-95 의 주요 사용국이 된 배경에 ETRI 가 있다.{/def}\n\n[[img:L10-27.png|p.27 — \"South Korea\" 빨간 상자와 왼쪽 필기 \"ETRI가 개발?\" (필기본)|medium]]\n\n== 이름에서 개념 끌어내기 ==\n* '''Electronics and Telecommunications Research Institute''' — 전자 + 통신 + 연구소. 이름 그대로 한국의 국책 전자·통신 연구소.\n\n{tip}💡 '''필기 속 질문: \"ETRI가 개발?\"''' — '''절반은 맞다.'''\n* '''CDMA 원천 기술''': 미국 '''Qualcomm''' (IS-95 는 미국 TIA 의 표준).\n* '''상용 시스템 개발''': ETRI 가 1991 년 Qualcomm 과 공동 개발 계약 → 국내 제조사들과 교환기·기지국·단말을 개발.\n* '''상용화''': 1996 년 한국이 '''세계 최초'''로 CDMA 이동통신 서비스 시작.\n그래서 \"IS-95 를 ETRI 가 발명했다\"는 틀리고, \"'''ETRI 가 CDMA 상용화를 주도했다'''\"가 맞다. '''교수(10/20, 59:55)''': \"one interesting fact is that '''Koreans contributed a lot to invent CDMA''', you may have heard of an institution called '''ETRI'''. It's '''government research institute''' that contributed a lot in inventing CDMA, and they '''earned money a lot'''.\" — 교수는 \"invent\" 라고 했지만 원천 기술은 Qualcomm 이므로, 답안에는 '''\"한국 정부출연 연구소 ETRI 가 CDMA 개발·상용화에 크게 기여\"''' 로 쓰면 어느 쪽에도 안전하다.{/tip}\n\n{info}이 경험 덕분에 한국은 3G 에서도 IS-95 의 진화형 [[CDMA 2000]] 을 먼저 도입했고, 이후 [[W-CDMA]] 로도 3G 를 전개했다 → [[IMT-2000 표준]] 의 \"South Korea 3G\".{/info}\n\n{analogy}🎭 Qualcomm 이 '''레시피'''(CDMA 원천 기술)를 썼다면, ETRI 는 그 레시피로 '''세계 최초의 식당을 차려 손님을 받게''' 만든 셰프 팀이다.{/analogy}\n\n{quiz}\"IS-95 is a 2G standard dominant in North America and ___.\" (p.27){/quiz}\n{answer}'''South Korea'''.{/answer}\n\n== 관련 문서 ==\n* [[IS-95]] · [[CDMA]] · [[CDMA 2000]] · [[CH05 IS-95·3G·4G]]"
  },
+ "CH05 Satellite Network": {
+  "title": "CH05 Satellite Network (4강 — 궤도, Kepler's law, GEO·MEO·LEO)",
+  "category": [
+   "4강 위성",
+   "메인"
+  ],
+  "body": "'''CH05 Satellite Network''' 는 L11 덱(`CH05_Wide Area Networks (2).pdf`, 21쪽) 전부다. 10/22(목) 수업 범위이고, 교수는 10/20 에 \"목요일에 satellite networks — WAN 의 마지막 — 를 하고 network layer 로 넘어간다\"고 예고했다. 1강 [[WAN 분류]]에서 Wireless WAN 의 두 번째 instance 로 이름만 나왔던 [[satellite network]] 를 이제 제대로 본다.\n\n{warn}이 문서는 '''수업 전 선제 작성'''이다(녹음 없음). 교수의 강조점·공지는 10/22 녹음이 오면 `🎙 실제 수업 기록` 절에 반영하고 ⭐ 도 조정한다. 지금의 ⭐ 는 슬라이드 구성과 10/20 교수 지침(아래)으로 추정한 것이다.{/warn}\n\n이 덱이 던지는 질문은 — '''\"지상 infrastructure 없이 지구 위 한 점에서 다른 점으로 통신하려면, 위성을 어디에(어떤 궤도·어떤 높이에) 띄워야 하나?\"'''\n답: 위성은 '''[[orbit]]''' 을 돈다(적도면 [[equatorial orbit|equatorial]] / 기울어진 [[inclined orbit|inclined]] / 극을 지나는 [[polar orbit|polar]]). 한 바퀴 도는 시간 '''[[period of a satellite|period]]''' 는 높이로 정해진다 — '''[[Kepler's law]]''' $\\text{Period} = C \\times \\text{distance}^{1.5}$ ($C \\approx 1/100$). 높이에 따라 위성은 '''[[위성 세 범주|세 범주]]''': 35,786 km 의 '''[[GEO]]'''(주기 24 h = 지구 자전 → 하늘에 멈춰 보임, '''[[geostationary]]'''), [[Van Allen belt]] 두 개 사이의 '''[[MEO]]'''([[GPS]], [[trilateration]]), 500–2000 km 의 '''[[LEO]]'''([[Starlink]], cellular 처럼 움직이는 [[footprint]]).\n\n페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다. L11 PDF 는 '''필기 없는 원본'''이고, p.5–6, 7–8, 9–10, 11–14, 16–17, 18–19, 20–21 은 한 줄씩 늘어나는 build-up 이라 캡처는 마지막 장을 쓴다.\n\n{exam}🎯 교수 학습 지침 (10/20 녹음 41:54, 셀룰러 세대 설명 중): \"I'm not going to recommend you to '''memorize all these specific numbers''' … '''understand''' how communication systems '''evolve''' … But I would recommend you to '''memorize uplink and downlink'''.\"\n→ 이 덱에 적용하면:\n* '''개념'''(orbit 3종의 모양, GEO·MEO·LEO 의 특징과 대표 instance, 왜 GEO 는 3 기가 필요한가, LEO 가 왜 cellular 와 닮았나)이 ⭐ 대상.\n* 고도·대역 숫자는 '''표로 참고'''.\n* '''예외 — Kepler's law 계산(⭐⭐⭐)''': 슬라이드에 '''풀이가 달린 Example 두 개'''(p.8, p.10)가 있다. 계산 문제로 나오기 딱 좋은 모양이다. 공식과 '''반지름 6378 km 를 더하는 것'''은 외운다.\n* '''uplink/downlink''': 이 덱에서 뜻이 바뀐다 — 위성은 '''uplink = Earth → satellite''' (p.15). 셀룰러(MS → BS)와 짝지어 외운다.{/exam}\n\n{analogy}🎭 '''하늘에 띄운 기지국을 어느 층에 둘 것인가.''' 셀룰러는 동네마다 낮은 탑(BS)을 세웠다. 위성망은 탑을 하늘로 올린다. '''꼭대기 층(GEO)'''에 올리면 한 대가 지구의 1/3 을 내려다보고 하늘에 가만히 서 있는 것처럼 보이지만, 너무 멀어 말이 늦게 닿는다. '''1층(LEO)'''에 두면 가까워서 말이 빠르지만, 엘리베이터처럼 빠르게 지나가 버리니 수천 대를 줄 세워 계속 넘겨줘야 한다 — 그게 셀룰러의 handoff 를 하늘에서 하는 Starlink 다. '''중간층(MEO)'''은 방사능 띠 두 개 사이 빈 층에 GPS 를 놓았다.{/analogy}\n\n[[anim:satellite_orbits|고도축 위에 LEO → Lower Van Allen belt → MEO → Upper Van Allen belt → GEO 가 차례로 쌓이는 것을 보고, 오른쪽에서 높을수록 한 바퀴가 느려져 GEO 는 지구와 같이 돈다(정지해 보임)는 것을 확인하라]]\n\n== 한눈에 보기 ==\n기호를 까먹었을 때 이 절만 다시 읽으면 된다.\n\n<pre class=\"ascii\">\n 고도(km)\n 35,786 ─ ─ ─ ─ '''[[GEO]]''' ─ ─ ─ ─   적도면, 주기 24 h → [[geostationary|정지해 보임]], 최소 3 기로 전 지구\n          (Upper [[Van Allen belt]])\n 15,000 ┌──────────────────┐\n        │      '''[[MEO]]'''        │   두 Van Allen belt 사이, [[GPS]] (≈18,000 km, 24 기, [[trilateration]])\n  5,000 └──────────────────┘\n          (Lower Van Allen belt)\n  2,000 ┌──────────────────┐\n        │      '''[[LEO]]'''        │   polar / inclined, 500–2000 km, 90–120 min, cellular 와 비슷 → [[Starlink]]\n      0 └── Earth surface ───┘\n<\/pre>\n\n{|\n! 슬라이드 || 내용 || 문서\n|-\n| p.2 || Satellite network 정의 — \"A '''wireless''' WAN that provides any type of communication\" || [[satellite network]]\n|-\n| p.3 || 구성 — space / ground / user segment, [[ISL]] (Starlink system architecture) || [[satellite network 구성]]\n|-\n| p.4 || [[orbit]] 3종 — [[equatorial orbit|equatorial]] · [[inclined orbit|inclined]] · [[polar orbit|polar]] || [[orbit]]\n|-\n| p.5–6 || [[period of a satellite]] + '''[[Kepler's law]]''' || [[Kepler's law]]\n|-\n| p.7–10 || '''[[Example 5.1 달의 주기]]''' · '''[[Example 5.2 정지궤도 주기]]''' || 계산 ⭐⭐⭐\n|-\n| p.11–14 || [[위성 세 범주]] — 고도 그림, [[Van Allen belt]] || [[위성 세 범주]]\n|-\n| p.15 || [[SATCOM 주파수 대역]] — '''uplink = Earth → satellite''' || [[uplink와 downlink]]\n|-\n| p.16–17 || [[GEO]] — equatorial plane, [[line-of-sight]], 최소 3 기 || [[geostationary]]\n|-\n| p.18–19 || [[MEO]] — Van Allen belt 사이, [[GPS]], [[trilateration]] || [[GPS]]\n|-\n| p.20–21 || [[LEO]] — polar/inclined, Starlink, [[UML과 GWL]], [[ISL]], [[footprint]] || [[LEO]]\n|}\n\n== p.2 — 2. Satellite Network ==\n{def}\"'''2. Satellite Network''' — A '''wireless''' WAN that provides '''any type''' of communication. Any type: voice, text, and data comm.\" (p.2){/def}\n* 1강 [[cellular telephony]] 의 정의(L10 p.8)와 '''글자 그대로 같다'''. 둘 다 [[WAN 분류|Wireless WAN]] 이고 voice·text·data 를 다 실어 나른다. 차이는 중계기(BS)가 '''땅 위의 탑'''이냐 '''궤도 위의 위성'''이냐다. 덱 제목의 \"2.\" 도 \"1. Cellular Telephony\" 다음 순서라는 뜻.\n\n== p.3 — A Satellite Network: 구성 ⭐ ==\n[[img:L11-03.png|p.3 Starlink System Architecture — 위: Space segment(위성 4 기가 빨간 ISL 화살표로 연결), 왼쪽 아래: User segment(집마다 User Terminal 안테나, 노란 빔), 오른쪽 아래: Ground segment(Starlink Gateway 안테나 ↔ Internet). 그림 제목의 \"Startlink\" 는 슬라이드 오타|large]]\n\n{def}\"A Satellite Network — A combination of '''nodes, including satellites''', that provides communication '''from one point on the Earth to another'''.\" (p.3){/def}\n\n* '''node''' 에 위성'''도''' 포함된다 — 위성만 있는 게 아니라 지상의 user terminal, gateway 도 node 다([[mid:node와 link|node]]).\n* 그림(Starlink)은 세 segment 로 나뉜다 → [[satellite network 구성]]\n* '''Space segment''' = 궤도의 위성들 + 위성끼리 잇는 '''[[ISL]]'''(Inter-Satellite Link) · '''User segment''' = 집/폰의 '''User Terminal''' · '''Ground segment''' = '''Gateway''' 안테나가 지상 '''Internet''' 에 붙는 곳.\n* 1강 셀룰러 구조와 겹쳐 보면: 위성 ≈ [[base station]], user terminal ≈ [[mobile station]], gateway ≈ BS 가 유선망(MSC→[[PSTN]])에 붙는 자리 (비교는 보충 — 슬라이드에 없음).\n\n== p.4 — Operation: Orbits ⭐⭐ ==\n[[img:L11-04.png|p.4 Orbits — a. Equatorial-orbit(적도를 따라) b. Inclined-orbit(기울어진) c. Polar-orbit(남북극을 지나는) satellite|large]]\n\n{def}\"'''Orbit''' — The path in which it travels around Earth. e.g., '''Equatorial orbit''', '''inclined orbit''', '''polar orbit'''.\" (p.4){/def}\n\n{|\n! orbit || 궤도면 || 어디에 쓰이나 (이 덱 기준)\n|-\n| [[equatorial orbit]] || '''적도면''' 위 || '''GEO''' (\"The orbit occurs at the equatorial plane\", p.16)\n|-\n| [[inclined orbit]] || 적도면에 '''기울어진''' 면 || LEO (p.20 \"Polar and inclined orbits\"), GPS 도 inclined (보충)\n|-\n| [[polar orbit]] || 남극·북극을 지나는 면 || LEO (p.20)\n|}\n\n{tip}왜 GEO 는 반드시 equatorial 이어야 하나: 지구는 '''적도면 안에서''' 자전한다. 위성이 지구와 같은 주기(24 h)로 '''같은 면'''에서 돌아야 땅에서 볼 때 한 점에 멈춰 있다. 기울어진 궤도에서 24 h 로 돌면 하늘에서 남북으로 8 자를 그리며 흔들린다(보충 — 슬라이드에 없음) → [[geostationary]].{/tip}\n\n== p.5–6 — Period of a satellite & Kepler's law ⭐⭐⭐ ==\n[[img:L11-06.png|p.6 Period of a satellite — Kepler's law: Period (seconds) = C × distance^1.5 (C ≈ 1/100). Units: C a const, period seconds, distance km|large]]\n\n{def}\"'''Period of a satellite''' — The time required for a satellite to make a '''complete trip around the Earth'''.\" (p.5)\n\"'''Kepler's law''' — Period (seconds) = C × distance^1.5 (where C ≈ 1/100). Units — C: a const, period: '''seconds''', distance: '''km'''.\" (p.6){/def}\n\n$$\\text{Period [s]} = \\frac{1}{100} \\times (\\text{distance [km]})^{1.5}, \\qquad \\text{distance} = h + 6378$$\n\n* '''[[period of a satellite|period]]''' = 지구 한 바퀴 시간. 단위 '''초'''.\n* '''distance''' = '''지구 중심'''에서 위성까지의 거리(km). 문제는 보통 \"지표면 위 고도 $h$\" 를 주므로 '''지구 반지름 6378 km 를 더해야''' 한다 — Example 두 개의 풀이가 모두 그렇게 한다.\n* 지수 '''1.5''' → 거리가 4 배면 주기는 $4^{1.5} = 8$ 배. '''높을수록 느리게 돈다''' — 이 trend 하나로 GEO·MEO·LEO 의 주기 차이가 다 설명된다 → [[Kepler's law]].\n\n{warn}'''함정: 고도에 6378 을 더하지 않는 실수.''' 달을 $384{,}000^{1.5}/100$ 으로 계산하면 2,379,561 s — 슬라이드 답 2,439,090 s 와 다르다. 식의 distance 는 '''중심부터'''의 거리다.{/warn}\n\n== p.7–8 — Example 5.1: 달의 주기 ⭐⭐⭐ ==\n[[img:L11-08.png|p.8 Example 5.1 Solution — \"The moon is located approximately 384,000 km above the Earth. The radius of the Earth is 6378 km.\" Period = (1/100) × (384,000 + 6378)^1.5 = 2,439,090 s = 1 month|large]]\n\n{def}\"'''Example 5.1''' — What is the '''period of the moon''', according to Kepler's law?\" (p.7)\nSolution: \"The moon is located approximately '''384,000 km''' above the Earth. The '''radius of the Earth is 6378 km'''. … Period = (1/100) × (384,000 + 6378)^1.5 = '''2,439,090 s = 1 month'''.\" (p.8){/def}\n\n<pre class=\"txt\">\nExample 5.1 — 손으로 푸는 순서\n1. 주어진 것: 고도 h = 384,000 km (지표면 위), 지구 반지름 R = '''6378 km'''\n2. distance = h + R = 384,000 + 6378 = '''390,378 km'''        ← 반지름을 꼭 더한다\n3. distance^1.5 = 390,378 × √390,378\n               = 390,378 × 624.80 ≈ '''243,909,099'''\n4. × C = × 1/100  →  Period ≈ '''2,439,091 s'''   (슬라이드: 2,439,090 s)\n5. 단위 환산: 2,439,091 s ÷ 3600 ≈ 677.5 h ÷ 24 ≈ '''28.2 일 ≈ 1 month'''\n<\/pre>\n→ 사전 문서: [[Example 5.1 달의 주기]]\n\n== p.9–10 — Example 5.2: 35,786 km 위성 = 24 h ⭐⭐⭐ ==\n[[img:L11-10.png|p.10 Example 5.2 Solution — Period = (1/100) × (35,786 + 6378)^1.5 = 86,579 s = 24 h. \"the same as the rotation period of the Earth … stationary to the Earth … geostationary orbit\"|large]]\n\n{def}\"'''Example 5.2''' — What is the period of a satellite that is located at an orbit approximately '''35,786 km above the Earth'''?\" (p.9)\nSolution: \"Period = (1/100) × (35,786 + 6378)^1.5 = '''86,579 s = 24 h'''. This means that a satellite located at 35,786 km has a period of 24 h, which is '''the same as the rotation period of the Earth'''. A satellite like this is said to be '''stationary''' to the Earth. The orbit, as we will see, is called a '''geostationary orbit'''.\" (p.10){/def}\n\n<pre class=\"txt\">\nExample 5.2 — 손으로 푸는 순서\n1. 주어진 것: 고도 h = 35,786 km, 지구 반지름 R = 6378 km\n2. distance = 35,786 + 6378 = '''42,164 km'''\n3. distance^1.5 = 42,164 × √42,164\n               = 42,164 × 205.34 ≈ '''8,657,903'''\n4. × 1/100  →  Period ≈ '''86,579 s'''\n5. 단위 환산: 86,579 ÷ 3600 ≈ '''24.05 h ≈ 24 h''' = 지구 자전 주기\n6. 결론: 지구와 같이 돈다 → 땅에서 보면 '''멈춰 있다''' → '''[[geostationary]] orbit''' = [[GEO]]\n<\/pre>\n→ 사전 문서: [[Example 5.2 정지궤도 주기]]\n\n{info}'''거꾸로 쓰는 법''' (보충 — 슬라이드에 없음): 주기를 주고 고도를 물을 수도 있다. $\\text{distance} = (100 \\times \\text{Period})^{2/3}$, 그다음 6378 을 '''뺀다'''. 24 h = 86,400 s → $(8{,}640{,}000)^{2/3} \\approx 42{,}105$ km → 고도 ≈ 35,727 km (슬라이드의 C 가 근사값이라 35,786 과 약간 다름).{/info}\n\n[[sim:kepler_period]]\n\n{|\n! 위성 || 고도 h (km) || distance = h + 6378 || Period (s) || 환산\n|-\n| 달 (Ex 5.1) || 384,000 || 390,378 || 2,439,091 || ≈ 28.2 일 ≈ 1 month\n|-\n| GEO (Ex 5.2) || 35,786 || 42,164 || 86,579 || ≈ 24.05 h\n|-\n| GEO (p.16 의 35,405 로) || 35,405 || 41,783 || 85,408 || ≈ 23.7 h\n|-\n| MEO — GPS (p.18) || 18,000 || 24,378 || 38,062 || ≈ 10.6 h\n|-\n| LEO 하한 (p.20) || 500 || 6,878 || 5,704 || ≈ 95 min\n|-\n| LEO — Starlink (341 miles ≈ 550) || 550 || 6,928 || 5,766 || ≈ 96 min\n|-\n| LEO 상한 (p.20) || 2,000 || 8,378 || 7,669 || ≈ 128 min\n|-\n| ✗ 달, 반지름 안 더함 || 384,000 || (384,000) || 2,379,561 || 틀린 값\n|}\n값은 전부 python 으로 검산했다. 슬라이드 LEO 주기 \"90 to 120 min\" 은 근사(공식으로는 95–128 min).\n\n== p.11–14 — Three categories of satellites ⭐⭐ ==\n[[img:L11-14.png|p.14 Three categories — 왼쪽 고도축: LEO(파랑, 0 위) → Lower Van Allen belt → MEO(초록, 5000–15,000) → Upper Van Allen belt → GEO(점선, 35,786). 오른쪽 사진: GEO/MEO/LEO 동심원(~35,786 / ~2,000–20,000 / ~500–2,000 km), 국제우주정거장, 위성 constellation, Starlink 341 miles vs normal satellites 621+ miles, KOREA 425 미션 패치, Falcon 9 발사|large]]\n\n위성은 '''고도'''로 세 범주로 나뉜다 → [[위성 세 범주]]. 고도축에서 범주를 가르는 경계가 '''[[Van Allen belt]]''' 두 개다 — 위성 전자장비를 망가뜨리는 방사능 띠라 그 안에는 위성을 두지 않는다(보충 설명은 사전 문서).\n\n{|\n! || [[GEO]] (정지궤도) || [[MEO]] (중궤도) || [[LEO]] (저궤도)\n|-\n| 고도 (참고) || 35,786 km (그림) / \"22,000 miles ≈ 35405 km\" (p.16) || 그림 5,000–15,000 km, GPS \"about 18,000 km\" (p.18) || 500–2000 km (p.20)\n|-\n| 위치 || '''equatorial plane''' || '''두 Van Allen belt 사이''' || Lower Van Allen belt 아래\n|-\n| orbit || [[equatorial orbit|equatorial]] || (GPS 는 inclined — 보충) || '''[[polar orbit|polar]] and [[inclined orbit|inclined]]'''\n|-\n| 주기 (Kepler) || '''24 h''' = 지구 자전 → '''정지해 보임''' || 수 시간 (18,000 km → ≈10.6 h) || '''90 to 120 min'''\n|-\n| 핵심 특징 || '''[[line-of-sight]]''' 로 넓은 지역, 그러나 곡률 때문에 '''최소 3 기''' || 24 기로 위치 측정 || '''\"Similar to the cellular telephone system\"''' — [[footprint]] 가 움직이는 cell\n|-\n| Key instance || (위성 방송·통신 — 보충) || '''[[GPS]]''' ([[trilateration]]) || '''[[Starlink]]'''\n|-\n| 지연 (보충) || 길다 (왕복 수백 ms) || 중간 || 짧다 (수 ms)\n|}\n\n{warn}'''슬라이드끼리 숫자가 안 맞는 곳 두 군데''' (숫자 암기 대상이 아니니 걱정 말고, 어느 걸 쓰는지만 알아 두자)\n* GEO 고도: p.11–14 그림·Example 5.2 는 '''35,786 km''', p.16 본문은 \"22,000 miles (≈ '''35405''' km)\". 22,000 miles × 1.609 ≈ 35,406 km 라 본문은 \"22,000 miles\" 를 환산한 어림값이다. '''Kepler 계산은 Example 5.2 대로 35,786''' 을 쓴다.\n* MEO 고도: p.14 그림의 초록 띠는 '''5,000–15,000 km''' 인데 p.18 본문은 GPS 가 \"about '''18,000''' km\". 실제 GPS 는 약 20,200 km(보충). 오른쪽 사진은 MEO 를 \"~2,000 to 20,000 km\" 로 적었다. → \"'''두 Van Allen belt 사이'''\" 라는 개념으로 기억한다.{/warn}\n\n== p.15 — Frequency bands for SATCOM ⭐⭐ ==\n[[img:L11-15.png|p.15 Frequency bands for SATCOM — Uplink: Earth → satellite, Downlink: satellite → Earth. 표 L/S/C/Ku/Ka 대역의 Downlink·Uplink GHz 와 Bandwidth MHz|large]]\n\n{def}\"'''Uplink''': transmission from '''the Earth to the satellite'''. '''Downlink''': transmission from '''the satellite to the Earth'''.\" (p.15){/def}\n\n{|\n! Band || Downlink, GHz || Uplink, GHz || Bandwidth, MHz\n|-\n| L || 1.5 || 1.6 || 15\n|-\n| S || 1.9 || 2.2 || 70\n|-\n| C || 4.0 || 6.0 || 500\n|-\n| Ku || 11.0 || 14.0 || 500\n|-\n| Ka || 20.0 || 30.0 || 3500\n|}\n* 표의 '''trend''' 두 개(숫자 대신 이것을 기억): ① 대역이 높아질수록(L → Ka) '''bandwidth 가 커진다''' (15 → 3500 MHz) — 높은 주파수일수록 더 많은 데이터를 실을 수 있다 ([[mid:bandwidth]]). ② 모든 행에서 '''uplink 주파수 > downlink 주파수'''. (보충 — 슬라이드에 없음: 높은 주파수는 [[mid:attenuation|감쇠]]가 크다. 지상국은 큰 안테나·큰 출력을 쓸 수 있으니 힘든 높은 주파수를 uplink 로 맡고, 전력이 빠듯한 위성은 낮은 주파수로 내려보낸다.)\n* uplink·downlink 에 '''서로 다른 주파수'''를 쓰는 것 = 셀룰러 AMPS 와 같은 FDD 식 [[mid:duplexing과 multiple access|duplexing]] → [[SATCOM 주파수 대역]].\n\n{exam}🎯 '''uplink/downlink — 셀룰러 vs 위성''' (교수: \"memorize uplink and downlink\")\n{|\n! || uplink || downlink\n|-\n| 셀룰러 (L10, AMPS p.19) || '''MS → BS''' (= reverse) || '''BS → MS''' (= forward)\n|-\n| 위성 (L11 p.15) || '''Earth → satellite''' || '''satellite → Earth'''\n|}\n공통 규칙: '''up = 하늘(높은 쪽 · 망 쪽)으로 올려 보냄, down = 내려 보냄'''. 위성에서는 Earth 쪽이 지상 BS·gateway 라도 그것이 '''보내면 uplink''' 다. \"uplink = MS → BS\" 를 위성 문제에 그대로 쓰면 틀린다 → [[uplink와 downlink]].{/exam}\n\n== p.16–17 — GEO (GEOstationary; 정지궤도) Satellites ⭐⭐ ==\n[[img:L11-17.png|p.17 GEO — 왼쪽: Equatorial-orbit satellite, 오른쪽: 지구 둘레에 120° 간격 위성 3 기가 빔을 쏨. \"A minimum of 3 satellites equidistant from each other in GEO to provide full global transmission\"|large]]\n\n{def}\"'''GEO (GEOstationary; 정지궤도) Satellites''' — The orbit occurs at '''the equatorial plane'''. Approximately '''22,000 miles (≈ 35405 km)''' away from the surface of the Earth. One satellite in orbit has '''line-of-sight contact''' with a vast number of stations, but '''the curvature of the Earth''' still keeps much of the planet out of sight — '''A minimum of 3 satellites''' equidistant from each other in GEO to provide '''full global transmission'''.\" (p.16–17){/def}\n\n* '''[[geostationary]]''' = geo(지구) + stationary(정지). Example 5.2 에서 본 대로 주기 24 h = 지구 자전 → 땅에서 보면 '''하늘의 한 점에 멈춰 있다'''. 그래서 지상 안테나(위성 TV 접시)를 '''한 방향에 고정'''해도 된다.\n* '''[[line-of-sight]]''' = 직선으로 서로 보이는 사이. 높이 떠 있으니 한 기가 '''엄청나게 많은 station''' 을 본다. 그래도 지구는 둥글어서(curvature) 반대편은 가려진다.\n* 그래서 '''최소 3 기를 서로 같은 간격(120°)'''으로 놓아야 지구 전체를 덮는다 → [[GEO]].\n\n[[anim:geo_three|GEO 위성 1 기가 덮는 영역과 곡률로 가려지는 영역을 먼저 보고, 120° 간격 3 기가 되면 전 지구가 덮이는 순간을 확인하라]]\n\n== p.18–19 — MEO (Medium Earth Orbit: 중궤도) Satellites ⭐⭐ ==\n[[img:L11-19.png|p.19 MEO — a. Two-dimensional trilateration(A·B·C 중심의 점선 원 세 개가 분홍 점 하나에서 만남) b. Three-dimensional trilateration(위성 3 기를 중심으로 한 구 세 개가 겹침)|large]]\n\n{def}\"'''MEO (Medium Earth Orbit: 중궤도) Satellites''' — Positioned '''between the two Van Allen belts'''. Orbiting at an altitude about '''18,000 km''' and consist of '''24 satellites'''. '''Key instance: Global Positioning System (GPS)''' — '''Trilateration (삼변측량)'''.\" (p.18–19){/def}\n\n* '''[[MEO]]''' 의 자리 = Lower 와 Upper [[Van Allen belt]] '''사이'''. 대표 = '''[[GPS]]'''(24 기).\n* '''[[trilateration]]''' = 거리(변) 세 개로 위치를 정한다. 2D: 알려진 점 A·B·C 에서의 거리로 원 세 개 → '''교점 하나 = 내 위치'''. 3D: 위성 세 기에서의 거리로 구 세 개 → 교점이 두 개로 좁혀지고, 그중 지구 표면 쪽 하나가 답(보충). 실제 GPS 수신기는 시계 오차까지 풀기 위해 '''4 기 이상'''을 쓴다(보충 — 슬라이드에 없음).\n* 1강·3강과의 연결: [[IS-95]] 기지국은 이 GPS 위성의 '''시각'''을 받아 동기화한다 → [[GPS 동기화]].\n\n[[anim:trilateration_anim|2D 에서 원 세 개가 한 점에서 만나는 것을 보고, 3D 에서 구 세 개가 두 점으로 좁혀진 뒤 지구 쪽 한 점이 남는 것을 확인하라 — 거리 3 개 → 위치 1 개]]\n\n== p.20–21 — LEO (Low Earth Orbit; 저궤도) Satellites ⭐⭐⭐ ==\n[[img:L11-21.png|p.21 LEO — 왼쪽 아래: 위성 2 기가 ISL 로 연결, 각 위성이 폰과 UML(검정), gateway 안테나와 GWL(분홍)로 연결, 지상에 점선 타원 Footprint 2 개가 겹침. 오른쪽: b. Inclined / c. Polar orbit, Starlink 341 miles vs Normal satellites 621+ miles|large]]\n\n{def}\"'''LEO (Low Earth Orbit; 저궤도) Satellites''' — '''Polar and inclined orbits'''. The altitude is between '''500 and 2000 km'''. A rotation period of '''90 to 120 min'''. '''Similar to the cellular telephone system'''. '''Key instance: Starlink'''.\" (p.20–21){/def}\n\n* '''orbit''': polar 와 inclined — GEO(equatorial)와 '''반대'''다. 적도만 도는 게 아니라 고위도까지 덮어야 하니까.\n* '''고도·주기''': 가깝다(500–2000 km) → Kepler 로 '''90–120 min''' 에 한 바퀴. 땅에서 보면 몇 분 만에 하늘을 가로질러 지나간다.\n* '''\"Similar to the cellular telephone system\"''': 위성 하나가 지상에 비추는 영역 = '''[[footprint]]''' 가 셀룰러의 [[cell]] 역할을 한다. 다만 셀룰러는 cell 이 고정되고 사용자가 움직이는데, LEO 는 '''cell(footprint)이 위성과 함께 움직인다'''. 그래서 사용자는 계속 다음 위성으로 넘겨진다 — 하늘의 [[handoff]].\n* 그림의 링크 세 종류: '''UML'''(User Mobile Link, 위성 ↔ 사용자 폰) · '''GWL'''(GateWay Link, 위성 ↔ 지상 gateway) · '''[[ISL]]'''(Inter-Satellite Link, 위성 ↔ 위성) → [[UML과 GWL]].\n* '''[[Starlink]]''': 오른쪽 그림 \"Starlink '''341 miles'''\"(≈ 550 km) vs \"Normal satellites 621+ miles\"(≈ 1,000 km) — 보통 LEO 보다도 '''더 낮게''' 띄워 지연을 줄였다.\n\n[[anim:leo_footprint|LEO 위성 2 기가 ISL 로 이어진 채 지나가면서 지상 footprint 원이 위성을 따라 움직이고, 사용자(UML)가 다음 위성으로 넘겨지는 순간을 보라 — 셀룰러에서 cell 이 움직이는 버전]]\n\n{tip}'''LEO vs 1강 셀룰러, 대응표''' (보충 — 슬라이드는 \"similar\" 한 줄)\n{|\n! 셀룰러 (L10) || LEO (L11 p.21)\n|-\n| [[cell]] (고정) || [[footprint]] (위성과 함께 '''이동''')\n|-\n| [[base station]] || LEO 위성\n|-\n| MS ↔ BS 무선 구간 || '''UML''' (user mobile link)\n|-\n| BS ↔ MSC 유선 || '''GWL''' (위성 ↔ gateway) 또는 '''ISL''' 로 다른 위성에 전달\n|-\n| [[handoff]] — 사용자가 움직여서 || handoff — '''위성이''' 움직여서\n|}{/tip}\n\n== 정리 비교표 — GEO · MEO · LEO ==\n{|\n! 비교 || [[GEO]] || [[MEO]] || [[LEO]]\n|-\n| 이름 || GEOstationary (정지궤도) || Medium Earth Orbit (중궤도) || Low Earth Orbit (저궤도)\n|-\n| orbit || equatorial plane || 두 Van Allen belt 사이 || polar and inclined\n|-\n| 고도 (참고) || 35,786 km (≈ 22,000 miles) || ≈ 18,000 km (GPS) || 500–2000 km\n|-\n| 주기 || 24 h (지구와 같이) || 수 시간 || 90–120 min\n|-\n| 필요한 위성 수 || '''최소 3 기''' (전 지구) || GPS 24 기 || 많음 (Starlink 는 수천 기 — 보충)\n|-\n| 핵심 단어 || line-of-sight, curvature, full global transmission || GPS, trilateration || similar to cellular, footprint, UML·GWL·ISL\n|-\n| Key instance || — || '''GPS''' || '''Starlink'''\n|}\n\n== 공식 모음 ==\n{|\n! 무엇 || 식 || 값\n|-\n| [[Kepler's law]] || $\\text{Period} = \\frac{1}{100} \\times (h + 6378)^{1.5}$ [s, km] || —\n|-\n| [[Example 5.1 달의 주기|Ex 5.1]] 달 || $\\frac{1}{100} \\times 390{,}378^{1.5}$ || 2,439,090 s ≈ 1 month\n|-\n| [[Example 5.2 정지궤도 주기|Ex 5.2]] GEO || $\\frac{1}{100} \\times 42{,}164^{1.5}$ || 86,579 s ≈ 24 h\n|-\n| 거꾸로 (보충) || $h = (100 \\times \\text{Period})^{2/3} - 6378$ || —\n|}\n\n== 🎙 실제 수업 기록 ==\n(10/22 수업 후 녹음 반영 예정)\n\n== 시험 대비 핵심 요약 ==\n# '''Satellite network''' = \"a wireless WAN that provides any type of communication\" (voice·text·data). 구성: \"a combination of nodes, '''including satellites''', that provides communication from one point on the Earth to another\" — space / ground / user segment, 위성끼리는 '''ISL'''.\n# '''Orbit''' = \"the path in which it travels around Earth\": '''equatorial / inclined / polar'''.\n# '''Period''' = \"the time required for a satellite to make a complete trip around the Earth\".\n# '''Kepler's law''': $\\text{Period [s]} = C \\times \\text{distance}^{1.5}$, $C \\approx 1/100$, distance [km] = '''고도 + 6378''' (지구 반지름). 높을수록 주기가 길다.\n# '''Ex 5.1''': $(1/100)(384{,}000 + 6378)^{1.5} = 2{,}439{,}090$ s ≈ 1 month. '''Ex 5.2''': $(1/100)(35{,}786 + 6378)^{1.5} = 86{,}579$ s ≈ '''24 h''' = 지구 자전 → '''stationary''' → '''geostationary orbit'''.\n# 세 범주: '''GEO'''(35,786 km, 24 h) · '''MEO'''(두 '''Van Allen belt''' 사이) · '''LEO'''(500–2000 km, 90–120 min). 높이 숫자보다 '''순서와 경계(Van Allen belt)'''를 기억.\n# '''SATCOM uplink = Earth → satellite, downlink = satellite → Earth''' (셀룰러 uplink = MS → BS 와 짝지어 외운다). 대역이 높을수록 bandwidth↑, uplink 주파수 > downlink 주파수.\n# '''GEO''': '''equatorial plane''', '''line-of-sight''' 로 넓게 보지만 '''curvature''' 때문에 '''최소 3 기 equidistant''' → full global transmission.\n# '''MEO''': between the two Van Allen belts, ≈18,000 km, 24 기, key instance '''GPS''' — '''trilateration'''(거리 3 개로 위치).\n# '''LEO''': '''polar and inclined''' orbits, 500–2000 km, 90–120 min, '''similar to the cellular telephone system''' (footprint = 움직이는 cell), key instance '''Starlink'''. 링크: '''UML'''(user) · '''GWL'''(gateway) · '''ISL'''(위성 간).\n\n== 관련 문서 ==\n* 구성: [[satellite network]] · [[satellite network 구성]] · [[ISL]] · [[Starlink]]\n* 궤도: [[orbit]] · [[equatorial orbit]] · [[inclined orbit]] · [[polar orbit]]\n* 주기: [[period of a satellite]] · [[Kepler's law]] · [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]]\n* 범주: [[위성 세 범주]] · [[Van Allen belt]] · [[GEO]] · [[geostationary]] · [[line-of-sight]] · [[MEO]] · [[GPS]] · [[trilateration]] · [[LEO]] · [[footprint]] · [[UML과 GWL]]\n* 대역: [[SATCOM 주파수 대역]] · [[uplink와 downlink]]\n* 셀룰러와 비교: [[CH05 셀룰러 동작]] · [[cell]] · [[handoff]] · [[cellular telephony]] · [[GPS 동기화]] · [[WAN 분류]]\n* 중간고사 위키: [[mid:WAN]] · [[mid:propagation time]] · [[mid:duplexing과 multiple access]] · [[mid:bandwidth]]"
+ },
+ "satellite network 구성": {
+  "title": "Satellite Network 의 구성 (space · ground · user segment)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "위성망은 '''위성만으로 이루어진 게 아니다'''. 슬라이드 정의대로 \"위성을 '''포함한''' node 들의 조합\"이고, L11 p.3 의 Starlink 그림은 이것을 '''Space segment''' · '''User segment''' · '''Ground segment''' 세 덩어리로 나눠 보여 준다.\n\n{def}\"'''A Satellite Network''' — A combination of '''nodes, including satellites''', that provides communication '''from one point on the Earth to another'''.\" (L11 p.3)\n위성을 포함한 node 들이 모여, 지구 위 한 지점에서 다른 지점으로 통신을 제공하는 망.{/def}\n\n[[img:L11-03.png|p.3 Startlink(오타, Starlink) System Architecture — Space segment(위성 4 기 + ISL), User segment(User Terminals), Ground segment(Starlink Gateway ↔ Internet)|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''combination of nodes''' — 망(network)은 언제나 node + link 다([[mid:node와 link]]). 여기서는 위성도 node 하나일 뿐이고, 지상의 안테나들도 node 다.\n* '''including satellites''' — \"including\" 이 핵심. 위성 '''만''' 이 아니다.\n* '''from one point on the Earth to another''' — 출발점과 도착점은 '''둘 다 지구 위'''. 위성은 중간 다리다.\n* '''segment''' = 조각, 구간. 그림을 점선으로 자른 세 구역.\n\n{|\n! segment || 무엇이 있나 (p.3 그림) || 셀룰러에 빗대면 (보충)\n|-\n| '''Space segment''' || 궤도의 위성들, 위성끼리 잇는 빨간 '''[[ISL]]''' 화살표 || 하늘에 뜬 [[base station]] 들\n|-\n| '''User segment''' || 집 지붕의 '''User Terminal''' 안테나 (노란 빔으로 위성과 연결) || [[mobile station]]\n|-\n| '''Ground segment''' || '''Starlink Gateway''' 안테나 → '''Internet''' (파란 점선으로 위성과 연결) || BS 뒤의 유선망([[MSC]]·[[PSTN]]) 에 붙는 자리\n|}\n\n데이터 흐름 예: 집 User Terminal → (위로) 위성 → ISL 로 옆 위성들 → (아래로) Gateway → Internet. 위로 가는 구간은 '''uplink''', 아래로 오는 구간은 '''downlink''' → [[uplink와 downlink]].\n\n{analogy}🎭 '''공중 케이블카 망.''' 탑승장(user terminal)에서 케이블카(위성)에 오르고, 케이블카끼리는 공중 줄(ISL)로 이어져 옮겨 탄다. 마지막에 큰 역(gateway)에 내려 지하철(Internet)로 갈아탄다. 케이블카만 있어서는 아무 데도 못 간다 — 탑승장과 역이 '''함께''' 있어야 망이다.{/analogy}\n\n{quiz}슬라이드의 satellite network 정의에서 \"including satellites\" 가 뜻하는 바는?{/quiz}\n{answer}위성망의 node 는 위성'''만'''이 아니라 지상의 user terminal·gateway 등도 포함한다는 것. \"A combination of nodes, including satellites, that provides communication from one point on the Earth to another.\"{/answer}\n\n== 관련 문서 ==\n* [[CH05 Satellite Network]] · [[satellite network]] · [[ISL]] · [[Starlink]] · [[UML과 GWL]]"
+ },
+ "ISL": {
+  "title": "ISL (Inter-Satellite Link, 위성 간 링크)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "'''ISL''' 은 '''위성과 위성을 직접 잇는 링크'''다. L11 p.3 의 Starlink 구조도에서 위성들 사이 빨간 양방향 화살표, p.21 LEO 그림에서 두 위성 사이 번개 모양 선에 \"ISL\" 이라고 적혀 있다. 슬라이드는 약자만 쓰고 풀이는 없다 — '''Inter-Satellite Link''' 는 Forouzan 의 풀이다(보충).\n\n{def}슬라이드: p.3 \"Space segment\" 의 위성들 사이 '''ISL''' 화살표, p.21 LEO 위성 2 기 사이 '''ISL'''.\n(Forouzan 보충) \"'''Inter-satellite link (ISL)''' — the link between two satellites\" in a LEO system.\nISL = 위성 ↔ 위성 링크. 지상을 거치지 않고 하늘에서 데이터를 옮긴다.{/def}\n\n[[img:L11-21.png|p.21 LEO — 위성 2 기 사이의 ISL(검정 번개선), 각 위성 아래 UML(폰)·GWL(gateway)과 footprint|medium]]\n\n== 이름에서 개념 끌어내기 ==\n* '''Inter-''' = 사이(between). '''Inter-Satellite''' = 위성 '''사이'''. Internet 이 net 들 '''사이'''를 잇는 것과 같은 접두어.\n* '''Link''' = 두 node 를 잇는 통신 경로([[mid:node와 link]]).\n\n== 왜 필요한가 ==\n* LEO 위성 하나의 [[footprint]] 는 좁다. 내 위성 아래에 gateway 가 없으면, 데이터를 '''옆 위성으로 넘겨서''' gateway 가 보이는 위성까지 옮겨야 한다 → ISL.\n* 바다 한가운데·극지처럼 근처에 지상국을 지을 수 없는 곳도 하늘 위 릴레이로 연결된다(보충).\n* 셀룰러에 빗대면 BS 와 BS 사이를 잇는 '''유선 백본'''을 하늘로 옮긴 것(보충).\n\n<pre class=\"ascii\">\n   위성 A  ⇄ ISL ⇄  위성 B  ⇄ ISL ⇄  위성 C\n     ↑                                 ↓\n   (UML)                             (GWL)\n     │                                 │\n   폰 (user)                        gateway → Internet\n<\/pre>\n\n{analogy}🎭 '''하늘 위의 릴레이 달리기.''' 바통(데이터)을 땅에 내려놓지 않고 옆 주자(위성)에게 직접 넘겨, 결승선(gateway)이 보이는 주자까지 전달한다.{/analogy}\n\n{quiz}LEO 그림(p.21)에 나오는 링크 세 종류 UML · GWL · ISL 은 각각 무엇과 무엇을 잇는가?{/quiz}\n{answer}UML = 위성 ↔ 사용자 단말(폰), GWL = 위성 ↔ 지상 gateway, '''ISL = 위성 ↔ 위성'''.{/answer}\n\n== 관련 문서 ==\n* [[UML과 GWL]] · [[LEO]] · [[footprint]] · [[satellite network 구성]] · [[Starlink]] · [[CH05 Satellite Network]]"
+ },
+ "orbit": {
+  "title": "Orbit (궤도)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "'''Orbit''' 은 위성이 지구 둘레를 도는 '''길'''이다. L11 p.4 는 궤도면의 방향에 따라 세 가지 — '''[[equatorial orbit|equatorial]]''' · '''[[inclined orbit|inclined]]''' · '''[[polar orbit|polar]]''' — 를 그림으로 보여 준다. 이 구분은 뒤에서 GEO(equatorial)와 LEO(polar and inclined)를 설명할 때 다시 쓰인다.\n\n{def}\"'''Operation: Orbits''' — The path in which it travels around Earth. e.g., Equatorial orbit, inclined orbit, polar orbit.\" (L11 p.4)\n궤도 = 위성이 지구 둘레를 이동하는 경로. 예: 적도 궤도, 경사 궤도, 극 궤도.{/def}\n\n[[img:L11-04.png|p.4 a. Equatorial-orbit(적도를 따라 도는 고리) b. Inclined-orbit(비스듬한 고리) c. Polar-orbit(남북극을 지나는 세로 고리) satellite|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''orbit''' — 라틴어 orbis(바퀴, 원). 바퀴처럼 '''같은 길을 계속 돈다'''.\n* 세 이름은 모두 '''궤도면이 적도와 이루는 각도'''로 붙었다: 적도와 같은 면(0°) = '''equatorial''', 비스듬 = '''inclined'''(기울어진), 90° 로 극을 지남 = '''polar'''.\n\n{|\n! orbit || 적도와의 각도 (보충) || 이 덱에서 누가 쓰나\n|-\n| [[equatorial orbit]] || 0° (적도면 그대로) || '''[[GEO]]''' (p.16 \"at the equatorial plane\")\n|-\n| [[inclined orbit]] || 0° 와 90° 사이 || '''[[LEO]]''' (p.20), GPS(보충)\n|-\n| [[polar orbit]] || ≈ 90° (극을 지남) || '''[[LEO]]''' (p.20)\n|}\n\n{info}궤도는 '''방향'''(이 문서) 말고 '''높이'''로도 나눈다 — GEO / MEO / LEO 가 그것이다 → [[위성 세 범주]]. 높이는 주기를 정하고([[Kepler's law]]), 방향은 '''어느 지역 위를 지나가는지'''를 정한다.{/info}\n\n{analogy}🎭 '''지구본에 고무줄 감기.''' 적도선을 따라 감으면 equatorial, 비스듬히 감으면 inclined, 북극과 남극을 지나게 세로로 감으면 polar. 고무줄을 얼마나 '''크게''' 감느냐(고도)는 별개의 선택이다.{/analogy}\n\n{quiz}슬라이드 p.4 의 orbit 세 가지를 쓰시오.{/quiz}\n{answer}'''Equatorial orbit''', '''inclined orbit''', '''polar orbit'''.{/answer}\n\n== 관련 문서 ==\n* [[equatorial orbit]] · [[inclined orbit]] · [[polar orbit]] · [[period of a satellite]] · [[위성 세 범주]] · [[CH05 Satellite Network]]"
+ },
+ "equatorial orbit": {
+  "title": "Equatorial Orbit (적도 궤도)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "'''Equatorial orbit''' 은 궤도면이 '''지구의 적도면과 일치'''하는 [[orbit]] 이다. L11 p.4 (a), 그리고 p.17 GEO 슬라이드 왼쪽에 같은 그림이 다시 나온다 — '''GEO 위성은 반드시 equatorial orbit''' 이기 때문이다.\n\n{def}\"a. '''Equatorial-orbit satellite'''\" (L11 p.4 그림)\n\"GEO — The orbit occurs at '''the equatorial plane'''.\" (p.16)\n적도면 위에서 지구를 도는 궤도.{/def}\n\n[[img:L11-04.png|p.4 a. Equatorial-orbit satellite — 적도를 따라 도는 가로 고리|medium]]\n\n== 이름에서 개념 끌어내기 ==\n* '''equator''' = 적도. '''equatorial''' = 적도의. 그러니 '''적도를 따라''' 도는 궤도.\n* 적도 위만 돈다 → 위성은 늘 '''적도 상공'''에 있다. 극지방에서는 지평선 아주 낮게 보이거나 안 보인다(보충).\n\n== 왜 GEO 는 equatorial 이어야 하나 ==\n* 지구는 '''적도면 안에서''' 자전한다. 위성이 '''같은 면'''에서 '''같은 주기(24 h)'''로 돌아야 땅에서 볼 때 한 점에 멈춰 있다 → [[geostationary]].\n* 다른 면에서 24 h 로 돌면 하늘의 한 점에 머물지 못하고 남북으로 오르내린다(보충 — 슬라이드에 없음).\n\n{analogy}🎭 '''회전목마의 말과 나란히 걷기.''' 회전목마(지구)가 도는 '''같은 바닥면'''에서 같은 속도로 따라 걸으면 말 위의 아이에게 나는 늘 같은 자리에 보인다. 계단을 오르내리며(기울어진 면) 걸으면 아무리 속도를 맞춰도 위아래로 움직여 보인다.{/analogy}\n\n{quiz}GEO 위성의 orbit 은 세 종류 중 어느 것인가?{/quiz}\n{answer}'''Equatorial orbit''' — \"The orbit occurs at the equatorial plane.\" (p.16){/answer}\n\n== 관련 문서 ==\n* [[orbit]] · [[inclined orbit]] · [[polar orbit]] · [[GEO]] · [[geostationary]]"
+ },
+ "inclined orbit": {
+  "title": "Inclined Orbit (경사 궤도)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "'''Inclined orbit''' 은 궤도면이 적도면에 대해 '''비스듬히 기울어진''' [[orbit]] 이다. L11 p.4 (b) 에 나오고, p.21 LEO 슬라이드 오른쪽에 다시 나온다 — LEO 는 \"'''Polar and inclined orbits'''\" 를 쓰기 때문이다.\n\n{def}\"b. '''Inclined-orbit satellite'''\" (L11 p.4, p.21 그림)\n\"LEO — '''Polar and inclined orbits'''.\" (p.20)\n적도면과 비스듬한 각을 이루는 면에서 도는 궤도.{/def}\n\n[[img:L11-04.png|p.4 b. Inclined-orbit satellite — 지구를 비스듬히 감싸는 고리|medium]]\n\n== 이름에서 개념 끌어내기 ==\n* '''incline''' = 기울다. '''inclined''' = 기울어진. 적도면에서 기울어진 정도를 '''inclination'''(경사각)이라 부른다(보충).\n* 적도(0°)와 극(90°) '''사이'''의 아무 각도 → equatorial 과 polar 의 중간.\n\n== 어디에 쓰이나 ==\n* '''[[LEO]]''' (p.20) — 기울어진 면으로 돌면 위성이 북위·남위 몇 도까지 '''오르내리며''' 지나간다. 지구 자전과 합쳐지면 매 바퀴 다른 경도를 지나 넓은 지역을 덮는다(보충). 사람이 많이 사는 중위도를 집중적으로 덮기 좋다 → [[Starlink]] 의 주력 궤도(보충).\n* [[GPS]] 위성도 기울어진 궤도면 여러 개에 나뉘어 있다 (보충 — 슬라이드에 없음).\n\n{analogy}🎭 '''비스듬히 맨 띠.''' 미스코리아 어깨띠처럼 몸(지구)을 비스듬히 두르면, 띠는 한쪽 어깨(북쪽)에서 반대쪽 허리(남쪽)까지 오르내린다. 몸을 돌리면(자전) 띠가 지나는 자리가 매번 달라진다.{/analogy}\n\n{quiz}LEO 위성이 사용하는 orbit 두 가지는? (p.20){/quiz}\n{answer}'''Polar''' and '''inclined''' orbits. (equatorial 은 GEO){/answer}\n\n== 관련 문서 ==\n* [[orbit]] · [[equatorial orbit]] · [[polar orbit]] · [[LEO]]"
+ },
+ "polar orbit": {
+  "title": "Polar Orbit (극 궤도)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "'''Polar orbit''' 은 궤도면이 '''남극과 북극을 지나는''' [[orbit]] 이다(적도와 거의 90°). L11 p.4 (c) 에 나오고, p.21 LEO 슬라이드 오른쪽에 inclined 와 함께 다시 나온다.\n\n{def}\"c. '''Polar-orbit satellite'''\" (L11 p.4, p.21 그림)\n\"LEO — '''Polar''' and inclined orbits.\" (p.20)\n양 극 위를 지나는 세로 방향 궤도.{/def}\n\n[[img:L11-04.png|p.4 c. Polar-orbit satellite — 북극과 남극을 지나는 세로 고리|medium]]\n\n== 이름에서 개념 끌어내기 ==\n* '''pole''' = 극. '''polar''' = 극의. 궤도가 '''극 위를''' 지나간다.\n* 위성은 남북으로 오가고, 그 아래에서 지구가 동서로 돈다 → 몇 바퀴 돌면 '''지구 전체(극지 포함)'''를 한 번씩 지나간다(보충).\n\n== 왜 LEO 가 polar 를 쓰나 ==\n* [[GEO]](equatorial)는 적도 상공에만 있어서 '''극지방이 잘 안 보인다'''(보충). LEO 는 낮아서 위성 하나의 [[footprint]] 가 작으니, 여러 위성을 polar·inclined 궤도에 깔아 '''극지까지''' 덮는다.\n* 그래서 \"LEO = polar and inclined\" 와 \"GEO = equatorial\" 은 짝으로 외우기 좋다.\n\n{analogy}🎭 '''돌아가는 수박 위를 세로로 긋는 칼.''' 칼(위성)은 위에서 아래로만 지나가는데, 수박(지구)이 옆으로 돌고 있으니 몇 번 그으면 수박 껍질 전체에 줄이 생긴다.{/analogy}\n\n{quiz}OX: LEO 위성은 GEO 처럼 equatorial orbit 을 쓴다.{/quiz}\n{answer}✗ — LEO 는 '''polar and inclined orbits''' (p.20). equatorial 은 GEO.{/answer}\n\n== 관련 문서 ==\n* [[orbit]] · [[equatorial orbit]] · [[inclined orbit]] · [[LEO]] · [[footprint]]"
+ },
+ "period of a satellite": {
+  "title": "Period of a Satellite (위성의 주기)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "'''Period of a satellite''' 는 위성이 지구를 '''한 바퀴 완전히 도는 데 걸리는 시간'''이다. L11 p.5 에서 정의하고, p.6 에서 그 값을 구하는 '''[[Kepler's law]]''' 를 준다. 이 값 하나가 GEO 가 \"정지해 보이는\" 이유, LEO 가 \"빨리 지나가는\" 이유를 다 설명한다.\n\n{def}\"'''Period of a satellite''' — The time required for a satellite to make a '''complete trip around the Earth'''.\" (L11 p.5)\n위성이 지구를 한 바퀴 완전히 도는 데 필요한 시간.{/def}\n\n[[img:L11-06.png|p.6 Period of a satellite 정의 + Kepler's law: Period (seconds) = C × distance^1.5 (C ≈ 1/100)|medium]]\n\n== 이름에서 개념 끌어내기 ==\n* '''period''' = 주기. 중간고사 CH02 에서 신호의 period(한 cycle 시간, $T = 1/f$)를 배웠다 → [[mid:주기]]. 같은 말이다 — 위성은 '''지구 한 바퀴'''가 한 cycle.\n* '''complete trip''' — 반 바퀴, 지평선까지가 아니라 '''한 바퀴 전체'''.\n\n== 높이와 주기 ==\n$\\text{Period} = \\frac{1}{100} \\times (h + 6378)^{1.5}$ — '''높을수록 주기가 길다''' ([[Kepler's law]]).\n{|\n! 위성 || 고도 || 주기 || 땅에서 본 모습\n|-\n| [[LEO]] || 500–2000 km || 90–120 min || 몇 분 만에 하늘을 가로질러 사라짐\n|-\n| [[MEO]] (GPS) || ≈ 18,000 km || ≈ 10.6 h (공식값) || 천천히 이동\n|-\n| [[GEO]] || 35,786 km || '''24 h''' = 지구 자전 || '''멈춰 있음''' → [[geostationary]]\n|-\n| 달 || 384,000 km || ≈ 1 month || 한 달에 한 번 같은 위상\n|}\n값은 [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]] 와 같은 방식으로 계산(검산은 [[CH05 Satellite Network]] 의 표).\n\n[[sim:kepler_period]]\n\n{analogy}🎭 '''운동장 트랙의 안쪽 레인과 바깥 레인.''' 안쪽 레인(LEO)은 한 바퀴가 짧고 달리는 속도도 빨라 금방 돈다. 바깥 레인(GEO)은 둘레가 길고 천천히 달려서 한 바퀴에 하루가 걸린다 — 마침 관중석(지구)도 하루에 한 바퀴 도니 관중에게 그 주자는 늘 같은 자리에 보인다.{/analogy}\n\n{quiz}\"Period of a satellite\" 의 슬라이드 정의를 영어로 쓰시오.{/quiz}\n{answer}\"The time required for a satellite to make a complete trip around the Earth.\" (p.5){/answer}\n\n== 관련 문서 ==\n* [[Kepler's law]] · [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]] · [[geostationary]] · [[위성 세 범주]] · [[orbit]]"
+ },
+ "Kepler's law": {
+  "title": "Kepler's Law (케플러 법칙 — 위성 주기 공식)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "'''Kepler's law''' 는 위성의 '''[[period of a satellite|주기]]''' 를 '''지구 중심까지의 거리'''로 구하는 공식이다. L11 p.6 에 나오고, p.7–10 의 Example 두 개가 이 식 하나로 풀린다. 이 덱에서 유일한 계산이라 '''⭐⭐⭐ — 식과 \"반지름 6378 km 를 더한다\"를 외운다.'''\n\n{def}\"'''Kepler's law''' — Period (seconds) = C × distance^1.5 (where C ≈ 1/100). Units — C: a const, period: '''seconds''', distance: '''km'''.\" (L11 p.6){/def}\n\n$$\\text{Period [s]} = C \\times \\text{distance}^{1.5}, \\quad C \\approx \\frac{1}{100}, \\quad \\text{distance [km]} = h + 6378$$\n\n[[img:L11-06.png|p.6 Kepler's law — Period (seconds) = C × distance^1.5 (where C ≈ 1/100), Units: C a const / period seconds / distance km|large]]\n\n== 기호 하나씩 ==\n{|\n! 기호 || 뜻 || 단위 || 주의\n|-\n| Period || 한 바퀴 시간 → [[period of a satellite]] || '''초 (s)''' || 답을 시간·일로 바꿀 때 ÷3600, ÷24\n|-\n| C || 상수 || — || '''≈ 1/100''' (곱하기 0.01)\n|-\n| distance || '''지구 중심'''부터 위성까지 || '''km''' || 문제의 \"above the Earth\" 고도 $h$ 에 '''6378 km(지구 반지름)를 더한다'''\n|-\n| 1.5 || 지수 || — || $x^{1.5} = x \\times \\sqrt{x}$\n|}\n\n== 이름에서 개념 끌어내기 ==\n* '''Kepler''' — 17세기 천문학자 요하네스 케플러. 그의 '''제3법칙'''(\"공전 주기의 제곱은 궤도 긴반지름의 세제곱에 비례\", $T^2 \\propto r^3$)을 위성용으로 쓴 것이다. 양변에 루트를 씌우면 $T \\propto r^{1.5}$ — 슬라이드 식의 '''1.5''' 가 여기서 나온다 (보충 — 슬라이드에 없음).\n* '''distance''' 가 \"altitude\" 가 아니라는 점이 핵심. 행성 운동 법칙이니 거리는 당연히 '''중심(지구 중심)부터'''다.\n\n== 손으로 푸는 순서 (공통 템플릿) ==\n<pre class=\"txt\">\n1. 고도 h (지표면 위, km) 를 읽는다\n2. distance = h + '''6378'''                      ← 절대 빼먹지 말 것\n3. distance^1.5 = distance × √distance\n4. Period = distance^1.5 × '''1/100'''   [초]\n5. 필요하면 ÷60 (분) · ÷3600 (시간) · ÷86,400 (일)\n<\/pre>\n* 예: Ex 5.1 달 384,000 → 390,378 → 2,439,091 s ≈ 1 month → [[Example 5.1 달의 주기]]\n* 예: Ex 5.2 35,786 → 42,164 → 86,579 s ≈ 24 h → [[Example 5.2 정지궤도 주기]]\n\n{warn}'''함정 — 반지름을 안 더하면''': 달 $384{,}000^{1.5}/100 = 2{,}379{,}561$ s (슬라이드 2,439,090 과 다름), GEO $35{,}786^{1.5}/100 = 67{,}697$ s ≈ 18.8 h (24 h 가 안 나옴). 답이 \"24 h\" 나 \"1 month\" 로 깔끔하게 안 떨어지면 6378 을 빠뜨린 것이다.{/warn}\n\n[[sim:kepler_period]]\n\n{info}'''C ≈ 1/100 은 어디서 왔나''' (보충 — 슬라이드에 없음): 뉴턴 역학으로 $T = 2\\pi\\sqrt{r^3/\\mu}$, 지구의 $\\mu = GM \\approx 398{,}600\\ \\text{km}^3/\\text{s}^2$. 그러면 $C = 2\\pi/\\sqrt{398{,}600} \\approx 2\\pi/631.3 \\approx 0.00995 \\approx 1/100$. 그래서 슬라이드가 \"≈\" 를 붙였다. 계산 문제는 '''슬라이드대로 1/100''' 을 쓴다.{/info}\n\n== trend: 높을수록 느리다 ==\n* 거리 4 배 → 주기 $4^{1.5} = 8$ 배. 거리 9 배 → 27 배.\n* LEO(≈ 7,000 km, 중심 기준) → 약 1.5 h, GEO(≈ 42,000 km) → 24 h, 달(≈ 390,000 km) → 한 달. 이 순서만 알면 [[위성 세 범주]]의 주기 비교 문제는 계산 없이 풀린다.\n\n{analogy}🎭 '''긴 줄에 매단 추.''' 짧은 줄의 추는 빨리 흔들리고 긴 줄의 추는 느리게 흔들린다. 위성도 지구 중심에 묶인 \"보이지 않는 줄\" 이 길수록(멀수록) 한 바퀴가 느리다. 다만 줄 길이는 '''지구 중심부터''' 잰다 — 땅바닥(지표면)부터 재면 6378 km 가 모자란다.{/analogy}\n\n{exam}🎯 계산 문제 예상: \"고도 ___ km 위성의 주기를 Kepler's law 로 구하시오\". 채점 포인트 ① 식 $C \\times \\text{distance}^{1.5}$, $C = 1/100$ ② '''distance = 고도 + 6378''' ③ 단위 초 → 시간 환산. 교수가 \"숫자는 외우지 말라\"고 했지만, 이 식과 6378 은 문제에 안 주어질 수도 있으니 외워 두는 게 안전하다.{/exam}\n\n{quiz}고도 1,000 km 의 LEO 위성 주기를 Kepler's law 로 구하시오 (C = 1/100, 지구 반지름 6378 km).{/quiz}\n{answer}distance = 1,000 + 6378 = 7,378 km → $7{,}378^{1.5} = 7{,}378 \\times 85.90 \\approx 633{,}740$ → × 1/100 ≈ '''6,337 s ≈ 105.6 min''' (LEO 의 90–120 min 범위 안).{/answer}\n\n== 관련 문서 ==\n* [[period of a satellite]] · [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]] · [[geostationary]] · [[GEO]] · [[LEO]] · [[CH05 Satellite Network]] · [[공식 모음]]"
+ },
+ "Example 5.1 달의 주기": {
+  "title": "Example 5.1 — 달의 주기 (Kepler's law)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "'''Example 5.1''' 은 [[Kepler's law]] 로 '''달의 주기'''를 구하는 예제다. L11 p.7 이 문제, p.8 이 풀이(Solution). 달은 지구의 '''자연 위성'''이라 이 식이 맞는지 확인하는 검산용 예제이기도 하다 — 답이 실제로 \"한 달\" 이 나온다.\n\n{def}\"'''Example 5.1''' — What is the '''period of the moon''', according to Kepler's law?\" (L11 p.7)\n\"Solution — The moon is located approximately '''384,000 km above the Earth'''. The '''radius of the Earth is 6378 km'''. Applying the formula, we get the following. Period = (1/100) × (384,000 + 6378)^1.5 = '''2,439,090 s = 1 month'''.\" (p.8){/def}\n\n[[img:L11-08.png|p.8 Example 5.1 Solution — Period = (1/100) × (384,000 + 6378)^1.5 = 2,439,090 s = 1 month|large]]\n\n== 풀이 (손으로) ⭐⭐⭐ ==\n<pre class=\"txt\">\n주어진 것: h = 384,000 km (지표면 위),  R = 6378 km,  C = 1/100\n1. distance = h + R = 384,000 + 6378 = '''390,378 km'''\n2. √390,378 ≈ 624.80\n3. distance^1.5 = 390,378 × 624.80 ≈ '''243,909,099'''\n4. Period = 243,909,099 × 1/100 ≈ '''2,439,091 s'''        (슬라이드 2,439,090 s)\n5. ÷ 3600 → 677.5 h,  ÷ 24 → '''28.2 일 ≈ 1 month'''\n<\/pre>\n\n{warn}'''반지름을 안 더하면''' $384{,}000^{1.5}/100 = 2{,}379{,}561$ s ≈ 27.5 일. 우연히 실제 달의 공전 주기(약 27.3 일)에 가깝게 나오지만 '''슬라이드 풀이와 다른 답'''이다 — 시험은 슬라이드 풀이(+6378)를 따른다.{/warn}\n\n{info}(보충 — 슬라이드에 없음) 엄밀히 말하면 지구–달 평균 거리 약 384,400 km 는 '''중심 간''' 거리라서 반지름을 또 더하면 이중 계산이다. 슬라이드(Forouzan)는 384,000 km 를 \"above the Earth\"(지표면 위)로 놓고 6378 을 더했다. 이 과목의 답은 '''2,439,090 s ≈ 1 month''' 로 쓴다.{/info}\n\n== 이름에서 개념 끌어내기 ==\n* '''period of the moon''' — 달이 지구를 한 바퀴 도는 시간. 달(moon)과 '''month''' 는 어원이 같다. 답이 \"1 month\" 인 건 우연이 아니다.\n\n[[sim:kepler_period]]\n\n{analogy}🎭 '''저울 영점 맞추기.''' 새 공식을 받으면 답을 이미 아는 것(달 = 한 달)에 먼저 넣어 본다. 한 달이 나오면 공식과 단위(초, km, +6378)를 제대로 쓴 것이다. 그다음에 모르는 것(GEO, Ex 5.2)에 쓴다.{/analogy}\n\n{quiz}달의 고도를 384,000 km, 지구 반지름을 6378 km 라 할 때 Kepler's law 로 구한 달의 주기는 몇 초인가? 과정도 쓰시오.{/quiz}\n{answer}distance = 384,000 + 6378 = 390,378 km → (1/100) × 390,378^1.5 ≈ '''2,439,090 s ≈ 1 month (≈ 28 일)'''.{/answer}\n\n== 관련 문서 ==\n* [[Kepler's law]] · [[Example 5.2 정지궤도 주기]] · [[period of a satellite]] · [[CH05 Satellite Network]]"
+ },
+ "Example 5.2 정지궤도 주기": {
+  "title": "Example 5.2 — 35,786 km 위성의 주기 = 24 h (정지궤도)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "'''Example 5.2''' 는 지표면 위 '''35,786 km''' 에 있는 위성의 주기를 [[Kepler's law]] 로 구하는 예제다. L11 p.9 가 문제, p.10 이 풀이. 답이 '''24 h = 지구 자전 주기''' 로 나오고, 여기서 '''[[geostationary]] orbit''' 이라는 이름이 태어난다 — 바로 뒤 [[GEO]] 슬라이드로 이어지는 다리 역할을 하는 예제다.\n\n{def}\"'''Example 5.2''' — What is the period of a satellite that is located at an orbit approximately '''35,786 km above the Earth'''?\" (L11 p.9)\n\"Solution — Period = (1/100) × (35,786 + 6378)^1.5 = '''86,579 s = 24 h'''. This means that a satellite located at 35,786 km has a period of 24 h, which is '''the same as the rotation period of the Earth'''. A satellite like this is said to be '''stationary''' to the Earth. The orbit, as we will see, is called a '''geostationary orbit'''.\" (p.10){/def}\n\n[[img:L11-10.png|p.10 Example 5.2 Solution — (1/100) × (35,786 + 6378)^1.5 = 86,579 s = 24 h, \"stationary to the Earth … geostationary orbit\"|large]]\n\n== 풀이 (손으로) ⭐⭐⭐ ==\n<pre class=\"txt\">\n주어진 것: h = 35,786 km,  R = 6378 km,  C = 1/100\n1. distance = 35,786 + 6378 = '''42,164 km'''\n2. √42,164 ≈ 205.34\n3. distance^1.5 = 42,164 × 205.34 ≈ '''8,657,903'''\n4. Period = 8,657,903 × 1/100 ≈ '''86,579 s'''\n5. ÷ 3600 → '''24.05 h ≈ 24 h'''\n6. 의미: 지구 자전 주기(24 h)와 같다 → 지구에 대해 '''stationary''' → '''geostationary orbit'''\n<\/pre>\n\n{info}'''슬라이드 수치 불일치''': p.16 GEO 슬라이드는 고도를 \"22,000 miles (≈ '''35405''' km)\" 라고 적었다. 그 값으로 풀면 $(1/100)(35{,}405 + 6378)^{1.5} \\approx 85{,}408$ s ≈ 23.7 h. 계산 문제는 '''Example 5.2 대로 35,786 km''' 를 쓰고, 문제에 다른 값이 주어지면 그 값을 쓴다.\n(보충) 엄밀한 지구 자전 주기(항성일)는 23 h 56 min ≈ 86,164 s. C 가 \"≈ 1/100\" 근사라 86,579 s 와 조금 차이가 난다.{/info}\n\n== 이름에서 개념 끌어내기 ==\n* '''stationary''' = 정지한. '''geo-stationary''' = '''지구(geo)에 대해''' 정지한. 우주에서 보면 엄청난 속도로 돌지만, 지구도 같은 주기로 돌기 때문에 '''땅에서 보면 멈춰 있다''' → [[geostationary]].\n\n[[sim:kepler_period]]\n\n{analogy}🎭 '''회전 초밥 레일 옆에서 같이 걷는 점원.''' 레일(지구 표면)이 도는 속도에 맞춰 점원(위성)이 바깥쪽에서 같이 돌면, 레일 위 접시(지상 안테나)에서 보기에 점원은 늘 같은 자리에 서 있다. 35,786 km 는 \"바깥쪽에서 하루에 딱 한 바퀴\" 가 되는 거리다.{/analogy}\n\n{exam}🎯 이 예제의 결론 문장 \"a period of 24 h, which is '''the same as the rotation period of the Earth''' … '''stationary''' … '''geostationary orbit'''\" 은 서술형 \"왜 GEO 위성은 하늘에 멈춰 보이는가?\" 의 답 그대로다. 계산 + 의미 두 줄을 같이 쓸 수 있어야 한다.{/exam}\n\n{quiz}지표면 위 35,786 km 위성의 주기를 Kepler's law 로 구하고, 그 결과가 의미하는 바를 쓰시오.{/quiz}\n{answer}(1/100) × (35,786 + 6378)^1.5 = (1/100) × 42,164^1.5 ≈ '''86,579 s ≈ 24 h'''. 지구 자전 주기와 같으므로 지상에서 보면 위성이 '''정지'''해 있다 → '''geostationary orbit''' (GEO).{/answer}\n\n== 관련 문서 ==\n* [[Kepler's law]] · [[Example 5.1 달의 주기]] · [[geostationary]] · [[GEO]] · [[period of a satellite]] · [[CH05 Satellite Network]]"
+ },
+ "위성 세 범주": {
+  "title": "위성 세 범주 — GEO · MEO · LEO (Three categories of satellites)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "위성은 '''고도'''에 따라 세 범주로 나뉜다: '''[[GEO]]''' (정지궤도) · '''[[MEO]]''' (중궤도) · '''[[LEO]]''' (저궤도). L11 p.11–14 의 고도 그림이 이것을 한 장에 보여 주고, 범주 사이의 경계에는 '''[[Van Allen belt]]''' 두 개가 있다. 이어서 p.16–21 이 범주별로 한 슬라이드씩 자세히 설명한다.\n\n{def}\"'''Three categories of satellites'''\" (L11 p.11–14) — 그림: Altitude (km) 축 위에 '''LEO'''(0 바로 위, 파란 띠) · '''Lower Van Allen belt''' · '''MEO'''(5000–15,000, 초록 띠) · '''Upper Van Allen belt''' · '''GEO'''(35,786, 점선).\n고도로 나눈 위성의 세 범주: 저궤도 LEO, 중궤도 MEO, 정지궤도 GEO.{/def}\n\n[[img:L11-14.png|p.14 Three categories of satellites — 고도축(0 / 5000 / 15,000 / 35,786 km) 위의 LEO · Lower Van Allen belt · MEO · Upper Van Allen belt · GEO, 오른쪽 사진: GEO/MEO/LEO 동심원, Starlink 341 miles, KOREA 425, Falcon 9 발사|large]]\n\n[[anim:satellite_orbits|LEO → Lower Van Allen belt → MEO → Upper Van Allen belt → GEO 순서로 고도축이 쌓이는 것을 보고, 높을수록 한 바퀴가 느려지는 것을 비교하라]]\n\n== 이름에서 개념 끌어내기 ==\n* '''LEO = Low Earth Orbit''' (저궤도), '''MEO = Medium Earth Orbit''' (중궤도) — 이름이 곧 '''높이 순서'''.\n* '''GEO''' 만 높이가 아니라 '''성질'''로 이름 붙었다: '''GEOstationary'''(지구에 대해 정지). 그 성질이 생기는 높이가 딱 하나(35,786 km)라 결과적으로 \"가장 높은 범주\" 가 됐다 → [[geostationary]].\n\n{|\n! || [[LEO]] || [[MEO]] || [[GEO]]\n|-\n| 고도 (참고) || 500–2000 km || 그림 5,000–15,000 km · GPS ≈ 18,000 km || 35,786 km\n|-\n| 경계 || Lower Van Allen belt 아래 || '''두 Van Allen belt 사이''' || Upper Van Allen belt 위\n|-\n| orbit || polar · inclined || (GPS 는 inclined — 보충) || equatorial\n|-\n| 주기 || 90–120 min || 수 시간 || 24 h\n|-\n| key instance || [[Starlink]] || [[GPS]] || (방송·통신 — 보충)\n|}\n\n{info}'''숫자는 참고, 순서와 경계를 외운다.''' 교수 10/20 지침(\"specific numbers 는 외우지 말고 trend 를 이해하라\")에 따라 고도 숫자보다 ① '''낮은 순서 LEO < MEO < GEO''' ② '''MEO 는 두 Van Allen belt 사이''' ③ 높을수록 주기가 길다([[Kepler's law]])를 기억하면 된다.\n슬라이드끼리 MEO 고도가 다르다(그림 5,000–15,000 vs 본문 18,000 km). 오른쪽 사진은 MEO 를 \"~2,000 to 20,000 km\" 로 적었다.{/info}\n\n== trend: 높이에 따른 trade-off (보충 — 슬라이드는 범주별 특징만) ==\n* '''높을수록''': 위성 하나가 보는 땅이 넓다 → 적은 수로 덮는다(GEO 는 3 기). 대신 멀어서 신호가 약해지고 [[mid:propagation time]] 이 길다.\n* '''낮을수록''': 가깝고 빠르다(지연 작음). 대신 한 위성이 덮는 [[footprint]] 가 좁고 금방 지나가니 '''수많은 위성'''과 위성 간 넘겨주기가 필요하다 → \"similar to the cellular telephone system\".\n\n{analogy}🎭 '''건물의 세 층 + 사이에 낀 기계실.''' 1층(LEO)은 손님(지상)과 가까워 대화가 빠르다. 꼭대기 층(GEO)은 창밖으로 도시 전체가 보이지만 소리치면 늦게 닿는다. 중간층(MEO)은 1층과 꼭대기 사이인데, 그 위아래에 방사능 기계실(Van Allen belt) 두 개가 끼어 있어 사무실을 둘 수 없다.{/analogy}\n\n{quiz}고도가 낮은 순서대로 세 범주를 쓰고, MEO 가 위치한 곳을 슬라이드 표현으로 쓰시오.{/quiz}\n{answer}'''LEO < MEO < GEO'''. MEO 는 \"'''positioned between the two Van Allen belts'''\" (p.18).{/answer}\n\n== 관련 문서 ==\n* [[GEO]] · [[MEO]] · [[LEO]] · [[Van Allen belt]] · [[Kepler's law]] · [[orbit]] · [[CH05 Satellite Network]]"
+ },
+ "Van Allen belt": {
+  "title": "Van Allen Belt (밴 앨런대)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "'''Van Allen belt''' 는 지구를 도넛 모양으로 둘러싼 '''방사능 띠'''로, 안쪽(Lower)과 바깥쪽(Upper) 두 개가 있다. L11 p.11–14 그림에서 LEO 와 MEO 사이에 \"Lower Van Allen belt\", MEO 와 GEO 사이에 \"Upper Van Allen belt\" 가 적혀 있고, p.18 은 '''MEO 를 \"between the two Van Allen belts\"''' 로 정의한다. 슬라이드는 이름과 위치만 주고, 무엇인지는 설명하지 않는다 — 아래 설명은 보충이다.\n\n{def}\"MEO Satellites — '''Positioned between the two Van Allen belts'''.\" (L11 p.18)\np.11–14 그림: LEO → '''Lower Van Allen belt''' → MEO → '''Upper Van Allen belt''' → GEO.\n두 Van Allen belt = 위성 범주를 가르는 고도 경계.{/def}\n\n[[img:L11-11.png|p.11 Three categories — 고도축에서 LEO(파랑)와 MEO(초록) 사이 Lower Van Allen belt, MEO 와 GEO 사이 Upper Van Allen belt|medium]]\n\n== 무엇인가 (보충 — 슬라이드에 없음) ==\n* 지구 '''자기장'''이 태양풍·우주선에서 온 '''전하 입자'''(양성자·전자)를 붙잡아 생긴 띠. 1958 년 미국 첫 위성 Explorer 1 의 관측으로 James Van Allen 이 발견해 그의 이름이 붙었다.\n* 그 안은 방사선이 강해서 위성의 '''전자 장비가 손상'''되고 태양전지가 빨리 열화된다 → 위성을 '''띠 안에 오래 두지 않는다'''.\n* 그래서 궤도 고도가 띠를 '''피해서''' 세 덩어리로 갈린다: 띠 아래(LEO), 두 띠 사이(MEO), 띠 위(GEO). 정확한 경계 고도는 태양 활동에 따라 출렁여 자료마다 다르다.\n\n== 이름에서 개념 끌어내기 ==\n* '''Van Allen''' = 발견자 이름. '''belt''' = 허리띠. 지구 허리(적도)를 두른 '''두 겹의 띠''' 모양이라 belt.\n* '''Lower / Upper''' = 낮은 쪽 / 높은 쪽 띠. MEO 는 그 '''사이'''.\n\n<pre class=\"ascii\">\n 35,786 ─ ─ GEO ─ ─ ─\n        ░░ Upper Van Allen belt ░░\n 15,000 ┌─── MEO ───┐   ← 두 띠 사이 \"빈 층\"\n  5,000 └───────────┘\n        ░░ Lower Van Allen belt ░░\n ~2,000 ┌─── LEO ───┐\n      0 └─ 지표면 ──┘      (그림 p.14 기준, 축척 아님)\n<\/pre>\n\n{analogy}🎭 '''강물 속 두 개의 급류 구간.''' 배(위성)를 정박시키려면 급류(Van Allen belt)를 피해야 한다. 그래서 정박지는 첫 급류 아래(LEO), 두 급류 사이의 잔잔한 곳(MEO), 두 번째 급류 위(GEO) 세 곳으로 나뉜다.{/analogy}\n\n{quiz}\"Positioned between the two Van Allen belts\" 는 어느 위성 범주의 설명인가?{/quiz}\n{answer}'''MEO''' (Medium Earth Orbit) — p.18.{/answer}\n\n== 관련 문서 ==\n* [[MEO]] · [[위성 세 범주]] · [[LEO]] · [[GEO]] · [[GPS]]"
+ },
+ "SATCOM 주파수 대역": {
+  "title": "SATCOM 주파수 대역 (Frequency bands for SATCOM — L/S/C/Ku/Ka)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "위성 통신(SATCOM, SATellite COMmunication)은 '''uplink''' 와 '''downlink''' 에 서로 다른 주파수를 쓰고, 그 짝을 대역 이름 '''L · S · C · Ku · Ka''' 로 부른다. L11 p.15 한 장에 정의 두 줄과 표 하나가 있다. 이 슬라이드의 진짜 시험 포인트는 표의 숫자가 아니라 '''위성에서 uplink/downlink 의 뜻'''이다 → [[uplink와 downlink]].\n\n{def}\"'''Frequency bands for SATCOM''' — '''Uplink''': transmission from '''the Earth to the satellite'''. '''Downlink''': transmission from '''the satellite to the Earth'''.\" (L11 p.15){/def}\n\n[[img:L11-15.png|p.15 Frequency bands for SATCOM — Uplink/Downlink 정의와 Band(L/S/C/Ku/Ka) · Downlink GHz · Uplink GHz · Bandwidth MHz 표|large]]\n\n{|\n! Band || Downlink, GHz || Uplink, GHz || Bandwidth, MHz\n|-\n| L || 1.5 || 1.6 || 15\n|-\n| S || 1.9 || 2.2 || 70\n|-\n| C || 4.0 || 6.0 || 500\n|-\n| Ku || 11.0 || 14.0 || 500\n|-\n| Ka || 20.0 || 30.0 || 3500\n|}\n(표는 참고용 — 교수 지침상 숫자 암기 대상 아님)\n\n== 이름에서 개념 끌어내기 ==\n* '''SATCOM''' = SATellite COMmunication.\n* '''uplink''' = 땅에서 '''위로(up)''' 위성에 올려 보냄, '''downlink''' = 위성에서 '''아래로(down)''' 내려 보냄. 방향은 '''누가 보내느냐'''로만 정해진다.\n* 대역 이름 (보충 — 슬라이드에 없음): 2차 세계대전 레이더 시절의 암호명이 굳은 것. '''L''' = Long(긴 파장), '''S''' = Short, '''C''' = Compromise(S 와 X 의 절충), '''Ku''' = K-under(K 대역 아래), '''Ka''' = K-above(K 대역 위). K 는 독일어 kurz(짧은).\n\n== 표에서 읽을 trend 두 개 ==\n# '''높은 대역일수록 bandwidth 가 크다''': L 15 MHz → Ka 3500 MHz. 주파수가 높을수록 같은 비율의 폭이라도 Hz 수가 커서 더 많은 데이터를 싣는다 → [[mid:bandwidth]]. Starlink 같은 고속 위성 인터넷이 Ku·Ka 대역을 쓰는 이유(보충).\n# '''모든 행에서 uplink 주파수 > downlink 주파수''' (예: C 6 GHz 올림 / 4 GHz 내림). (보충 — 슬라이드에 없음) 주파수가 높을수록 [[mid:attenuation|감쇠]]가 크다. 지상국은 큰 안테나·큰 송신 전력을 쓸 수 있으니 불리한 높은 주파수를 uplink 로 맡고, 태양전지로 전력이 빠듯한 위성은 덜 감쇠하는 낮은 주파수로 내려보낸다.\n\n* uplink 와 downlink 에 '''서로 다른 주파수'''를 쓰니 동시에 오갈 수 있다 — 셀룰러 AMPS(824–849 / 869–894 MHz)와 같은 방식의 [[mid:duplexing과 multiple access|duplexing]](FDD).\n\n{exam}🎯 '''uplink 의 뜻이 셀룰러와 다르다''' — 교수 10/20: \"'''memorize uplink and downlink'''\".\n{|\n! || uplink || downlink\n|-\n| 셀룰러 (L10) || '''MS → BS''' (reverse) || '''BS → MS''' (forward)\n|-\n| 위성 (L11 p.15) || '''Earth → satellite''' || '''satellite → Earth'''\n|}\n둘 다 \"up = 위로 올려 보냄\". 위성 쪽 문제에서 \"uplink = MS → BS\" 로 답하면 틀린다.{/exam}\n\n{analogy}🎭 '''산꼭대기 산장과 마을의 무전.''' 마을(지상)은 발전기가 커서 높은 톤(높은 주파수)으로 힘차게 올려 보낼 수 있고, 배터리 하나로 버티는 산장(위성)은 덜 흩어지는 낮은 톤으로 내려보낸다. 두 톤이 다르니 서로 동시에 말해도 섞이지 않는다.{/analogy}\n\n{quiz}OX: SATCOM 에서 uplink 는 위성이 지구로 보내는 전송이다.{/quiz}\n{answer}✗ — '''uplink = Earth → satellite''', downlink = satellite → Earth (p.15).{/answer}\n\n== 관련 문서 ==\n* [[uplink와 downlink]] · [[CH05 Satellite Network]] · [[satellite network 구성]] · [[AMPS 대역과 채널]] · [[mid:bandwidth]]"
+ },
+ "GEO": {
+  "title": "GEO (GEOstationary Earth Orbit; 정지궤도 위성)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "'''GEO''' 위성은 '''적도면'''에서 '''약 35,786 km''' 높이로 지구와 '''같은 주기(24 h)'''로 돌아, 땅에서 보면 하늘에 '''멈춰 있는''' 위성이다. L11 p.16–17. 한 기가 엄청 넓은 지역을 [[line-of-sight]] 로 보지만, 지구가 둥글어서 '''최소 3 기'''가 있어야 지구 전체를 덮는다.\n\n{def}\"'''GEO (GEOstationary; 정지궤도) Satellites''' — The orbit occurs at '''the equatorial plane'''. Approximately '''22,000 miles (≈ 35405 km)''' away from the surface of the Earth. One satellite in orbit has '''line-of-sight contact''' with a vast number of stations, but '''the curvature of the Earth''' still keeps much of the planet out of sight. '''A minimum of 3 satellites equidistant from each other''' in GEO to provide '''full global transmission'''.\" (L11 p.16–17){/def}\n\n[[img:L11-17.png|p.17 GEO — 왼쪽 Equatorial-orbit satellite, 오른쪽 120° 간격 GEO 위성 3 기가 지구를 향해 빔을 쏨|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''GEO''' = '''GEO'''stationary (지구 정지). LEO·MEO 와 달리 높이가 아니라 '''성질'''로 붙은 이름 → [[geostationary]].\n* 주기 24 h 는 [[Example 5.2 정지궤도 주기]] 에서 계산했다: $(1/100)(35{,}786 + 6378)^{1.5} = 86{,}579$ s ≈ 24 h.\n\n== 슬라이드 세 줄 풀어 읽기 ==\n# '''at the equatorial plane''' — [[equatorial orbit]] 이어야 지구 자전과 같은 면에서 돈다 → 멈춰 보인다.\n# '''≈ 22,000 miles (≈ 35405 km)''' — 그림·Example 5.2 의 '''35,786 km''' 와 조금 다르다(22,000 miles 를 어림 환산한 값). 계산은 35,786 을 쓴다.\n# '''line-of-sight + curvature → minimum of 3''' — 높아서 한 기가 '''a vast number of stations''' 와 직선으로 닿지만, 둥근 지구 뒤편은 가려진다. 120° 간격('''equidistant''') 3 기면 '''full global transmission'''.\n\n[[anim:geo_three|GEO 1 기가 덮는 영역과 곡률에 가려진 영역 → 120° 간격 3 기로 전 지구 커버. \"최소 3 기\" 의 이유를 그림으로 확인하라]]\n\n{info}(보충 — 슬라이드에 없음)\n* '''장점''': 지상 안테나를 한 방향에 '''고정'''하면 된다(위성 TV 접시, 기상위성 천리안). 3 기로 끝나니 망이 단순하다.\n* '''단점''': 멀다. 신호가 지상 → 위성 → 지상을 가면 약 $2 \\times 35{,}786 / 300{,}000 \\approx 0.24$ s, 대화 왕복이면 0.5 s 가까이 → 통화가 어색하다 ([[mid:propagation time]]). 그리고 적도 상공에만 있어서 '''극지방'''은 거의 안 보인다(그래서 \"full global\" 도 극지는 예외).{/info}\n\n{analogy}🎭 '''적도 위에 세운 세 개의 초고층 등대.''' 등대 하나가 아주 높아 수평선 끝까지 비추지만, 지구 반대편은 등대 뒤라 안 보인다. 120° 씩 떨어진 세 등대를 세우면 바다 어디서든 등대 하나는 보인다. 그리고 등대는 움직이지 않으니 배는 늘 같은 방향을 보면 된다.{/analogy}\n\n{quiz}GEO 에서 full global transmission 을 위해 필요한 최소 위성 수와 그 이유는?{/quiz}\n{answer}'''최소 3 기, 서로 같은 간격(equidistant)'''. 한 기는 line-of-sight 로 넓은 지역과 통신하지만 '''지구의 곡률(curvature)''' 때문에 많은 지역이 가려지기 때문이다 (p.17).{/answer}\n\n== 관련 문서 ==\n* [[geostationary]] · [[line-of-sight]] · [[equatorial orbit]] · [[Example 5.2 정지궤도 주기]] · [[위성 세 범주]] · [[MEO]] · [[LEO]] · [[CH05 Satellite Network]]"
+ },
+ "geostationary": {
+  "title": "Geostationary (정지궤도 — 지구에 대해 정지)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "'''Geostationary''' 는 위성이 '''지구에 대해 정지해 보이는''' 성질, 그리고 그런 궤도(geostationary orbit)를 말한다. 조건은 두 가지 — ① 주기가 '''지구 자전 주기(24 h)와 같고''' ② '''적도면'''에서 돈다. L11 p.10 Example 5.2 의 결론에서 처음 등장하고, p.16 의 GEO 제목 \"GEO (GEOstationary; 정지궤도)\" 로 이어진다.\n\n{def}\"This means that a satellite located at 35,786 km has a period of 24 h, which is '''the same as the rotation period of the Earth'''. A satellite like this is said to be '''stationary to the Earth'''. The orbit, as we will see, is called a '''geostationary orbit'''.\" (L11 p.10)\n\"GEO (GEOstationary; 정지궤도) — The orbit occurs at the equatorial plane.\" (p.16){/def}\n\n[[img:L11-10.png|p.10 Example 5.2 — 86,579 s = 24 h, \"stationary to the Earth … geostationary orbit\"|medium]]\n\n== 이름에서 개념 끌어내기 ==\n* '''geo''' (지구) + '''stationary''' (정지한) = '''지구에 대해 멈춘'''. 우주에서 보면 초속 약 3 km 로 돌고 있지만(보충), 발밑의 지구도 같은 각속도로 돌기 때문에 '''땅에서 보면''' 멈춰 있다. \"정지\" 는 '''상대적'''이다.\n* 그래서 \"정지궤도(靜止軌道)\". 위성이 실제로 멈춘 게 아니다 — 멈추면 떨어진다.\n\n== 조건 두 개 ==\n{|\n! 조건 || 왜 || 슬라이드\n|-\n| 주기 = 24 h || 지구와 같은 속도로 돌아야 같은 자리 || p.10 ([[Kepler's law]] → 35,786 km 에서 24 h)\n|-\n| equatorial plane || 지구 자전과 같은 '''면'''이어야 남북으로 흔들리지 않음 || p.16 ([[equatorial orbit]])\n|}\n(보충) 주기만 24 h 이고 면이 기울어진 궤도는 \"geosynchronous\" 라 부르며, 하늘에서 8 자를 그린다. geostationary 는 geosynchronous 의 특수한 경우.\n\n{analogy}🎭 '''회전목마 바깥을 함께 도는 사진사.''' 회전목마(지구)와 '''같은 속도, 같은 높이(면)'''로 바깥을 돌면 말 위 아이에게 사진사는 늘 정면에 있다. 속도가 다르면 앞서거나 뒤처지고, 계단을 오르내리면 위아래로 움직여 보인다.{/analogy}\n\n{quiz}\"Geostationary\" 위성이 하늘에 멈춰 보이는 이유를 한 문장으로 쓰시오.{/quiz}\n{answer}주기가 '''지구 자전 주기(24 h)와 같고''' 적도면에서 돌기 때문에, 지구에 대해 '''stationary''' 하다 (p.10, p.16).{/answer}\n\n== 관련 문서 ==\n* [[GEO]] · [[Example 5.2 정지궤도 주기]] · [[Kepler's law]] · [[equatorial orbit]] · [[period of a satellite]]"
+ },
+ "line-of-sight": {
+  "title": "Line-of-Sight (가시선)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "'''Line-of-sight''' 는 송신 안테나와 수신 안테나가 '''직선으로 서로 보이는''' 관계다. L11 p.17 GEO 설명에 나온다 — GEO 위성은 아주 높아서 한 기가 '''엄청나게 많은 station 과 line-of-sight 로 닿지만''', 지구가 둥글어(curvature) 반대편은 가려진다. 그래서 최소 3 기가 필요하다.\n\n{def}\"One satellite in orbit has '''line-of-sight contact''' with a vast number of stations, but '''the curvature of the Earth''' still keeps much of the planet '''out of sight'''.\" (L11 p.17)\n가시선 접촉 = 둘 사이에 가리는 것 없이 직선으로 신호가 닿는 상태.{/def}\n\n[[img:L11-17.png|p.17 GEO — 120° 간격 3 기가 각자 지구의 한쪽 면을 line-of-sight 로 비춤|medium]]\n\n== 이름에서 개념 끌어내기 ==\n* '''line of sight''' = '''시선(sight)의 선(line)'''. \"눈으로 보이는 곳\" 까지만 닿는다. 위성 통신에 쓰는 GHz 대 전파([[SATCOM 주파수 대역]])는 빛처럼 '''직진'''하고 지구를 돌아 휘어 가지 못한다(보충).\n* '''out of sight''' = 시야 밖. 지구 곡률 뒤에 있는 곳.\n\n<pre class=\"ascii\">\n                ◉ GEO 위성\n              ╱  │  ╲\n            ╱    │    ╲        ← line-of-sight (직선으로 닿는 범위)\n          ╱      │      ╲\n     ────●───────●───────●────\n        ╱   지구 (둥글다)  ╲\n      ░░░ 이 뒤쪽은 out of sight ░░░\n<\/pre>\n\n== 어디서 중요한가 ==\n* [[GEO]]: 높을수록 시야가 넓지만 곡률 때문에 '''한 기로는 반쪽도 못 덮는다''' → '''minimum of 3 satellites'''.\n* [[LEO]]: 낮아서 시야(= [[footprint]])가 훨씬 좁다 → 위성이 많이 필요하고 계속 다음 위성으로 넘겨야 한다.\n* (보충) 지상 마이크로파 중계탑을 산꼭대기에 세우는 이유, 빌딩 숲에서 위성 신호가 끊기는 이유도 line-of-sight 때문이다.\n\n{analogy}🎭 '''등산할 때 보이는 범위.''' 산꼭대기(높은 위성)에 오르면 먼 마을까지 보이지만, 지구가 둥글어 지평선 너머는 아무리 높아도 안 보인다. 그래서 \"모든 곳이 보이게\" 하려면 산꼭대기 감시탑을 여러 개(GEO 는 3 개) 세워야 한다.{/analogy}\n\n{quiz}GEO 위성 한 기로 full global transmission 이 안 되는 이유를 슬라이드 표현으로 쓰시오.{/quiz}\n{answer}\"One satellite … has line-of-sight contact with a vast number of stations, but '''the curvature of the Earth''' still keeps much of the planet out of sight.\" → 최소 3 기 필요.{/answer}\n\n== 관련 문서 ==\n* [[GEO]] · [[geostationary]] · [[footprint]] · [[SATCOM 주파수 대역]]"
+ },
+ "MEO": {
+  "title": "MEO (Medium Earth Orbit; 중궤도 위성)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "'''MEO''' 위성은 '''두 [[Van Allen belt]] 사이'''의 중간 높이를 도는 위성이다. L11 p.18–19. 대표 instance 는 '''[[GPS]]''' — 약 18,000 km 에 24 기가 돌며, '''[[trilateration]]'''(삼변측량)으로 지상의 위치를 알려 준다. 통신보다 '''위치 측정'''이 주 용도인 범주다.\n\n{def}\"'''MEO (Medium Earth Orbit: 중궤도) Satellites''' — Positioned '''between the two Van Allen belts'''. Orbiting at an altitude about '''18,000 km''' and consist of '''24 satellites'''. '''Key instance: Global Positioning System (GPS)''' — '''Trilateration (삼변측량)'''.\" (L11 p.18–19){/def}\n\n[[img:L11-19.png|p.19 MEO — 정의 + a. Two-dimensional trilateration(원 세 개의 교점) b. Three-dimensional trilateration(위성 3 기의 구)|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''Medium''' Earth Orbit = '''중간''' 높이 궤도. LEO(낮음)와 GEO(정지) 사이.\n* 정의가 숫자보다 '''위치 관계'''(\"between the two Van Allen belts\")로 되어 있다 — 이게 외울 것이다.\n\n{|\n! 항목 || 슬라이드 || 참고\n|-\n| 위치 || '''between the two Van Allen belts''' || 그림 p.14: Lower belt 위, Upper belt 아래\n|-\n| 고도 || about 18,000 km (p.18) || 그림 p.14 초록 띠는 5,000–15,000 km — 슬라이드끼리 불일치. 실제 GPS ≈ 20,200 km (보충)\n|-\n| 위성 수 || '''24 satellites''' || (보충) 6 개 궤도면 × 4 기, 경사 55° 의 [[inclined orbit]]\n|-\n| 주기 || (없음) || Kepler 로 18,000 km → ≈ 10.6 h, 20,200 km → ≈ 12 h (보충)\n|-\n| key instance || '''GPS''' — '''trilateration''' || → [[GPS]] · [[trilateration]]\n|}\n\n[[anim:trilateration_anim|2D 에서 기지점 A·B·C 의 거리 원 세 개가 한 점에서 만나고, 3D 에서 위성 세 기의 구가 겹쳐 위치가 하나로 정해지는 것을 보라]]\n\n{info}왜 GPS 가 MEO 에 있나 (보충 — 슬라이드에 없음): LEO 는 한 위성이 보는 땅이 좁아 지구 어디서든 '''여러 위성이 동시에 보이게''' 하려면 수백 기가 필요하고, GEO 는 적도 위에 몰려 있어 위치 계산용 '''기하(서로 다른 방향의 위성)'''가 나쁘다. MEO 에 24 기를 깔면 지구 어디서든 늘 4 기 이상이 보인다.{/info}\n\n{analogy}🎭 '''아파트 중간층의 경비실.''' 1층(LEO)은 시야가 좁고, 꼭대기(GEO)는 한쪽 방향만 본다. 방사능 기계실 두 개(Van Allen belt) 사이 중간층에 경비실 24 개를 고루 두면, 단지 어디서 소리쳐도 여러 경비실이 들어 위치를 짚어 준다.{/analogy}\n\n{quiz}MEO 위성의 위치를 Van Allen belt 로 설명하고, 대표 instance 와 그 원리를 쓰시오.{/quiz}\n{answer}'''두 Van Allen belt 사이'''(between the two Van Allen belts). 대표 instance = '''GPS''', 원리 = '''trilateration(삼변측량)''' (p.18–19).{/answer}\n\n== 관련 문서 ==\n* [[GPS]] · [[trilateration]] · [[Van Allen belt]] · [[위성 세 범주]] · [[GEO]] · [[LEO]] · [[CH05 Satellite Network]]"
+ },
+ "GPS": {
+  "title": "GPS (Global Positioning System)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "'''GPS''' 는 '''[[MEO]]''' 의 대표 instance 다(L11 p.19 \"Key instance: Global Positioning System (GPS)\"). 약 18,000 km 높이의 위성 24 기가 신호를 보내고, 수신기는 위성들까지의 '''거리'''로 자기 위치를 계산한다 — '''[[trilateration]]'''. 3강에서 [[IS-95]] 기지국이 GPS 로 시계를 맞춘다고 했던 그 GPS 다 → [[GPS 동기화]].\n\n{def}\"MEO — Orbiting at an altitude about '''18,000 km''' and consist of '''24 satellites'''. '''Key instance: Global Positioning System (GPS)''' — '''Trilateration (삼변측량)'''.\" (L11 p.18–19)\nGPS = 중궤도 위성 24 기로 지상 수신기의 위치를 알려 주는 시스템. 원리는 삼변측량.{/def}\n\n[[img:L11-19.png|p.19 MEO 와 GPS — a. 2D trilateration(원 3 개), b. 3D trilateration(구 3 개)|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''Global''' — 지구 어디서나. '''Positioning''' — 위치를 정함. '''System''' — 위성 + 지상 관제 + 수신기 전체.\n* 이름에 \"communication\" 이 없다 — 데이터를 주고받는 망이 아니라, 위성이 '''일방적으로 방송'''하는 신호를 수신기가 듣기만 한다(보충). 그래서 내 폰의 GPS 는 위성에 아무것도 보내지 않는다.\n\n== 어떻게 위치를 아나 (보충 — 슬라이드는 \"Trilateration\" 한 단어) ==\n# 각 위성은 '''자기 위치'''와 '''정확한 송신 시각'''(원자시계)을 계속 방송한다.\n# 수신기는 받은 시각 − 보낸 시각 = 전파 이동 시간을 재고, × 빛의 속도 = '''위성까지 거리'''를 얻는다 ([[mid:propagation time]] 을 거꾸로 쓰는 셈).\n# 위성 3 기까지의 거리 → 구 3 개의 교점 → 위치 ([[trilateration]]). 실제로는 수신기 시계 오차까지 풀어야 해서 '''4 기 이상'''을 쓴다.\n\n{info}'''3강과의 연결''': GPS 위성은 원자시계를 싣고 정확한 시각을 방송한다. [[IS-95]] 의 BS 들은 이 '''시각''' 기능을 써서 서로 동기화한다 — \"To provide synchronization, BSs use the service of GPS\" (L10 p.28) → [[GPS 동기화]].{/info}\n\n{warn}'''GPS 는 GEO 가 아니다.''' 위치 측정 위성이니 \"늘 하늘 한자리에 있는\" 정지궤도일 것 같지만, 슬라이드는 GPS 를 '''MEO''' 의 key instance 로 든다 (p.19). GEO 는 적도 상공에 몰려 있어 위치 계산에 불리하다(보충).{/warn}\n\n[[anim:trilateration_anim|거리 원(구) 세 개가 한 점에서 만나는 순간 — GPS 가 위치를 정하는 방법이다]]\n\n{analogy}🎭 '''세 친구에게 \"나랑 몇 m 떨어져 있어?\" 묻기.''' 친구 A 는 \"100 m\", B 는 \"80 m\", C 는 \"120 m\" 라고 답한다. 세 친구 위치를 알고 있으면, 세 거리를 동시에 만족하는 곳은 한 군데뿐 — 거기가 나다. GPS 위성이 그 친구들이다.{/analogy}\n\n{quiz}GPS 는 세 위성 범주 중 어디에 속하며, 위치를 정하는 원리는?{/quiz}\n{answer}'''MEO''' (약 18,000 km, 24 기). 원리 = '''trilateration(삼변측량)''' — 위성들까지의 거리로 위치를 정한다.{/answer}\n\n== 관련 문서 ==\n* [[MEO]] · [[trilateration]] · [[GPS 동기화]] · [[IS-95]] · [[위성 세 범주]] · [[CH05 Satellite Network]]"
+ },
+ "trilateration": {
+  "title": "Trilateration (삼변측량)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "'''Trilateration''' 은 '''위치를 아는 기준점 세 개까지의 거리'''로 내 위치를 정하는 방법이다. L11 p.19 가 [[GPS]] 의 원리로 소개하고, 2D(원 세 개)와 3D(구 세 개) 그림을 나란히 보여 준다.\n\n{def}\"Key instance: Global Positioning System (GPS) — '''Trilateration (삼변측량)'''.\" (L11 p.19)\n그림: \"a. '''Two-dimensional trilateration'''\" (A·B·C 를 중심으로 한 원 세 개가 한 점에서 만남) · \"b. '''Three-dimensional trilateration'''\" (위성 세 기를 중심으로 한 구 세 개가 겹침).{/def}\n\n[[img:L11-19.png|p.19 a. 2D trilateration — A·B·C 중심 점선 원 3 개가 분홍 점 하나에서 만남. b. 3D trilateration — 위성 3 기 중심의 구 3 개|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''tri-''' = 셋, '''lateral''' = 변(side) → '''세 변(거리)'''으로 잰다. 한국어 \"삼변측량(三邊測量)\" 도 그대로다.\n* 비슷한 말 '''triangulation(삼각측량)''' 은 '''각도'''로 잰다. trilateration 은 '''거리'''만 쓴다 — 이름의 \"lateral(변)\" 이 그 차이(보충).\n\n== 2D 와 3D ==\n{|\n! || 2D (평면) || 3D (공간, GPS)\n|-\n| 기준점 || A · B · C (평면 위 점) || 위성 3 기\n|-\n| 거리 하나가 만드는 도형 || '''원''' (그 점에서 거리 r 인 점들) || '''구'''\n|-\n| 하나 || 원 위 어디든 || 구 표면 어디든\n|-\n| 둘 || 원 두 개 → 교점 '''2 개''' || 구 두 개 → 교선(원)\n|-\n| 셋 || 원 세 개 → 교점 '''1 개''' = 내 위치 || 구 세 개 → 교점 2 개 → 하나는 우주 공간이라 버리고 '''지구 쪽 1 개''' (보충)\n|}\n(보충) 실제 GPS 수신기는 값싼 시계의 오차를 함께 풀기 위해 '''위성 4 기 이상'''을 쓴다.\n\n[[anim:trilateration_anim|2D: 원이 하나씩 커지며 후보가 원 → 두 점 → 한 점으로 줄어드는 것을 보라. 3D: 구 세 개가 두 점으로 좁혀지고 지구 쪽 하나가 남는다]]\n\n{analogy}🎭 '''천둥까지의 거리로 내 위치 찾기.''' 번개가 친 곳 세 군데를 알고, 각각 천둥이 몇 초 뒤 들렸는지(= 거리)를 재면 내가 어디 서 있는지 한 점으로 정해진다. 기준이 하나면 원 위 어디든, 둘이면 두 후보, 셋이면 하나.{/analogy}\n\n{quiz}2D trilateration 에서 기준점이 2 개뿐이면 위치 후보는 몇 개인가? 3 개면?{/quiz}\n{answer}2 개 → 원 두 개의 교점 '''2 개'''(어느 쪽인지 모름). 3 개 → '''1 개'''로 확정.{/answer}\n\n== 관련 문서 ==\n* [[GPS]] · [[MEO]] · [[GPS 동기화]] · [[CH05 Satellite Network]]"
+ },
+ "LEO": {
+  "title": "LEO (Low Earth Orbit; 저궤도 위성)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "'''LEO''' 위성은 '''500–2000 km''' 의 낮은 고도에서 '''polar·inclined''' 궤도로 '''90–120 분'''에 한 바퀴씩 도는 위성이다. L11 p.20–21. 슬라이드의 핵심 문장은 \"'''Similar to the cellular telephone system'''\" — 위성 하나가 지상에 만드는 [[footprint]] 가 셀룰러의 [[cell]] 처럼 동작하기 때문이다. 대표 instance 는 '''[[Starlink]]'''.\n\n{def}\"'''LEO (Low Earth Orbit; 저궤도) Satellites''' — '''Polar and inclined orbits'''. The altitude is between '''500 and 2000 km'''. A rotation period of '''90 to 120 min'''. '''Similar to the cellular telephone system'''. '''Key instance: Starlink'''.\" (L11 p.20–21){/def}\n\n[[img:L11-21.png|p.21 LEO — 위성 2 기(ISL 연결), UML(폰)·GWL(gateway), 점선 Footprint 2 개. 오른쪽: Inclined/Polar orbit, Starlink 341 miles vs Normal satellites 621+ miles|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''Low''' Earth Orbit = '''낮은''' 궤도. 낮다 → 가깝다 → ① 신호 지연이 짧고 약해짐도 덜하다(보충) ② 대신 한 위성이 보는 땅([[footprint]])이 좁다 ③ [[Kepler's law]] 로 주기가 짧다(빨리 지나간다).\n\n== 슬라이드 다섯 줄 ==\n{|\n! 줄 || 뜻 || 연결\n|-\n| Polar and inclined orbits || 적도만이 아니라 고위도·극지까지 덮는다 || [[polar orbit]] · [[inclined orbit]] (GEO 는 [[equatorial orbit|equatorial]])\n|-\n| 500 and 2000 km || Lower Van Allen belt 아래 || [[Van Allen belt]] · [[위성 세 범주]]\n|-\n| 90 to 120 min || Kepler: 500 km → ≈ 95 min, 2000 km → ≈ 128 min (슬라이드 값은 근사) || [[period of a satellite]]\n|-\n| Similar to the cellular telephone system || footprint = 움직이는 cell, 위성 사이 handoff || [[footprint]] · [[cell]] · [[handoff]]\n|-\n| Key instance: Starlink || 341 miles ≈ 550 km — 보통 LEO(621+ miles ≈ 1,000 km)보다 낮게 || [[Starlink]]\n|}\n\n[[anim:leo_footprint|LEO 위성이 ISL 로 이어진 채 지나가며 footprint 원이 위성을 따라 이동하고, 사용자가 다음 위성으로 넘겨지는 것을 보라 — \"cell 이 움직이는 셀룰러\"]]\n\n== \"Similar to the cellular telephone system\" 풀어 읽기 ==\n{|\n! 셀룰러 (1강) || LEO\n|-\n| [[cell]] — 땅에 '''고정''' || [[footprint]] — 위성과 함께 '''이동'''\n|-\n| [[base station]] || LEO 위성\n|-\n| MS ↔ BS 무선 구간 || '''UML''' (user mobile link) → [[UML과 GWL]]\n|-\n| BS ↔ MSC 유선 || '''GWL''' (gateway link) 또는 위성 간 '''[[ISL]]'''\n|-\n| 사용자가 움직여 cell 을 넘으면 [[handoff]] || '''위성이''' 움직여 footprint 가 지나가면 다음 위성으로 handoff\n|}\n(대응표는 보충 — 슬라이드는 \"similar\" 한 줄)\n\n{info}(보충 — 슬라이드에 없음) LEO 위성은 초속 7 km 대로 날아 한 위성이 머리 위에 몇 분밖에 머물지 않는다. 그래서 망 전체가 '''수백~수천 기'''로 하늘을 덮어야 하고(constellation), 사용자는 몇 분마다 다음 위성으로 넘어간다. 대신 가까워서 지연이 수 ms 로 짧아(550 km 왕복 ≈ 3.7 ms) 인터넷·화상 통화에 적합하다 — GEO(≈ 0.24 s)와 대조.{/info}\n\n{warn}'''함정''': LEO 를 \"equatorial\" 로 쓰지 말 것 — 슬라이드는 '''polar and inclined'''. equatorial 은 GEO.{/warn}\n\n{analogy}🎭 '''머리 위를 지나가는 이동식 기지국 행렬.''' 셀룰러는 땅에 박힌 탑 옆을 내가 지나가지만, LEO 는 탑(위성)이 손전등을 아래로 비추며(footprint) 줄지어 머리 위를 지나간다. 앞 탑의 불빛이 나를 벗어나기 전에 뒤 탑의 불빛이 나를 비춰 통화를 이어받는다.{/analogy}\n\n{quiz}LEO 위성에 대한 슬라이드 설명 다섯 가지를 쓰시오.{/quiz}\n{answer}① '''polar and inclined orbits''' ② 고도 '''500–2000 km''' ③ rotation period '''90–120 min''' ④ '''similar to the cellular telephone system''' ⑤ key instance '''Starlink'''.{/answer}\n\n== 관련 문서 ==\n* [[footprint]] · [[UML과 GWL]] · [[ISL]] · [[Starlink]] · [[polar orbit]] · [[inclined orbit]] · [[위성 세 범주]] · [[GEO]] · [[MEO]] · [[cell]] · [[handoff]] · [[CH05 Satellite Network]]"
+ },
+ "footprint": {
+  "title": "Footprint (위성 커버리지 영역)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "'''Footprint''' 는 위성 하나가 지상에서 '''서비스할 수 있는 영역'''이다. L11 p.21 LEO 그림에서 위성 아래 점선 타원 두 개에 \"Footprint\" 라고 적혀 있다. LEO 에서는 이 footprint 가 셀룰러의 [[cell]] 역할을 하지만 '''위성을 따라 움직인다'''는 점이 다르다 — 슬라이드의 \"similar to the cellular telephone system\" 이 바로 이 그림이다.\n\n{def}슬라이드: p.21 LEO 그림 — 각 위성 아래 지상의 점선 타원 \"'''Footprint'''\", 그 안의 사용자 폰(UML)과 gateway(GWL). 두 footprint 는 가운데서 '''겹친다'''.\n(Forouzan 보충) LEO 의 footprint 는 보통 지름 수천 km(약 8000 km).\nFootprint = 위성 신호가 닿는 지상 영역.{/def}\n\n[[img:L11-21.png|p.21 LEO — 두 위성 아래의 점선 타원 Footprint 두 개(가운데 겹침), 안에 사용자 폰과 gateway|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''foot + print''' = '''발자국'''. 위성이 하늘에서 땅을 \"밟고\" 지나간 자국. 손전등을 바닥에 비췄을 때 생기는 '''빛 동그라미'''를 떠올리면 된다.\n* 발자국은 '''걸어가면 따라 움직인다''' — LEO 가 지나가면 footprint 도 땅 위를 미끄러져 간다. (GEO 는 멈춰 있으니 footprint 도 고정 — 보충)\n\n== cell 과의 비교 ==\n{|\n! || 셀룰러 [[cell]] || LEO footprint\n|-\n| 중심 || 땅 위 [[base station]] || 하늘의 LEO 위성\n|-\n| 움직임 || '''고정''' || 위성과 함께 '''이동'''\n|-\n| 크기 || 수백 m ~ 수 km || 수천 km (보충)\n|-\n| 넘겨주기 || 사용자가 움직이면 [[handoff]] || 위성이 움직이면 다음 위성으로 handoff\n|-\n| 경계 || 이웃 cell 과 겹침(soft handoff 구간) || 이웃 footprint 와 겹침 (p.21 그림)\n|}\n* 높이가 높을수록 footprint 는 넓다 — [[GEO]] 한 기는 지구의 약 1/3 을 덮고([[line-of-sight]]), [[LEO]] 는 그보다 훨씬 좁아 위성 수가 많아야 한다.\n\n[[anim:leo_footprint|footprint 원이 위성을 따라 땅 위를 미끄러지고, 두 footprint 가 겹치는 구간에서 사용자가 다음 위성으로 넘어가는 것을 보라]]\n\n{analogy}🎭 '''무대 위를 지나가는 스포트라이트.''' 조명(위성)이 움직이면 바닥의 빛 동그라미(footprint)도 따라 움직인다. 배우(사용자)가 계속 빛 안에 있으려면, 첫 조명이 벗어나기 전에 다음 조명이 와서 비춰 줘야 한다 — 두 동그라미가 겹치는 순간이 바로 넘겨주는 때다.{/analogy}\n\n{quiz}LEO 에서 footprint 가 셀룰러의 cell 과 '''다른''' 점 한 가지는?{/quiz}\n{answer}cell 은 땅에 '''고정'''되지만 LEO 의 footprint 는 위성과 함께 '''움직인다'''. 그래서 사용자가 가만히 있어도 위성 간 handoff 가 일어난다.{/answer}\n\n== 관련 문서 ==\n* [[LEO]] · [[UML과 GWL]] · [[ISL]] · [[cell]] · [[handoff]] · [[line-of-sight]] · [[Starlink]]"
+ },
+ "UML과 GWL": {
+  "title": "UML 과 GWL (User Mobile Link · GateWay Link)",
+  "category": [
+   "4강 위성",
+   "용어"
+  ],
+  "body": "L11 p.21 LEO 그림에는 링크가 세 종류 있다: 위성 ↔ 사용자 폰의 '''UML''', 위성 ↔ 지상 gateway 의 '''GWL''', 위성 ↔ 위성의 '''[[ISL]]'''. 슬라이드는 약자만 적었고, 풀이(User Mobile Link, GateWay Link)는 Forouzan 의 것이다(보충).\n\n{def}슬라이드: p.21 LEO 그림 — 위성과 '''폰''' 사이 검정 번개선 \"'''UML'''\", 위성과 '''gateway 안테나''' 사이 분홍 번개선 \"'''GWL'''\", 두 위성 사이 \"'''ISL'''\".\n(Forouzan 보충) \"'''User mobile link (UML)''' — communication between a satellite and a mobile station. '''Gateway link (GWL)''' — communication between a satellite and an Earth station (gateway).\"{/def}\n\n[[img:L11-21.png|p.21 LEO — UML(위성 ↔ 폰, 검정), GWL(위성 ↔ gateway 안테나, 분홍), ISL(위성 ↔ 위성)|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''UML = User Mobile Link''' — '''사용자(user)'''의 '''이동 단말(mobile)'''과 위성을 잇는 링크. 셀룰러의 MS ↔ BS 무선 구간과 같은 자리.\n* '''GWL = GateWay Link''' — '''gateway'''(지상망의 관문)와 위성을 잇는 링크. 위성망과 지상 Internet·전화망이 만나는 문.\n* '''ISL = Inter-Satellite Link''' — 위성 '''사이'''. → [[ISL]]\n\n{|\n! 링크 || 잇는 것 || p.3 Starlink 그림에서 || 셀룰러에 빗대면 (보충)\n|-\n| '''UML''' || 위성 ↔ 사용자 단말 || 노란 빔 (User segment) || MS ↔ [[base station]]\n|-\n| '''GWL''' || 위성 ↔ 지상 gateway || 파란 점선 (Ground segment) || BS ↔ [[MSC]] (유선망 쪽)\n|-\n| '''ISL''' || 위성 ↔ 위성 || 빨간 화살표 (Space segment) || BS 끼리의 백본\n|}\n\n<pre class=\"ascii\">\n      위성 1  ── ISL ──  위성 2\n      ╱    ╲             ╱    ╲\n   UML      GWL       GWL      UML\n   ╱          ╲       ╱          ╲\n 폰          gateway gateway       폰\n(──── footprint 1 ────)(──── footprint 2 ────)\n<\/pre>\n\n* 각 링크의 '''위로 가는 방향'''(폰/gateway → 위성)이 '''uplink''', 내려오는 방향이 '''downlink''' 다 → [[uplink와 downlink]] · [[SATCOM 주파수 대역]].\n\n{analogy}🎭 '''하늘 위 환승역.''' UML 은 승객(폰)이 역(위성)에 오르는 '''개찰구''', GWL 은 역에서 지상 철도(Internet)로 갈아타는 '''환승 통로''', ISL 은 역과 역을 잇는 '''공중 연결 다리'''다.{/analogy}\n\n{quiz}p.21 그림에서 위성과 gateway 를 잇는 링크의 이름은? 위성과 사용자 폰을 잇는 링크는?{/quiz}\n{answer}위성 ↔ gateway = '''GWL''' (gateway link), 위성 ↔ 폰 = '''UML''' (user mobile link). (위성 ↔ 위성 = ISL){/answer}\n\n== 관련 문서 ==\n* [[ISL]] · [[LEO]] · [[footprint]] · [[satellite network 구성]] · [[uplink와 downlink]]"
+ },
  "spread spectrum": {
   "title": "Spread spectrum (대역 확산)",
   "category": [
@@ -1455,6 +1639,34 @@ const NAV_ORDER = [
    "4G",
    "all-IP",
    "ETRI"
+  ]
+ },
+ {
+  "group": "4강 위성",
+  "items": [
+   "CH05 Satellite Network",
+   "satellite network 구성",
+   "ISL",
+   "orbit",
+   "equatorial orbit",
+   "inclined orbit",
+   "polar orbit",
+   "period of a satellite",
+   "Kepler's law",
+   "Example 5.1 달의 주기",
+   "Example 5.2 정지궤도 주기",
+   "위성 세 범주",
+   "Van Allen belt",
+   "SATCOM 주파수 대역",
+   "GEO",
+   "geostationary",
+   "line-of-sight",
+   "MEO",
+   "GPS",
+   "trilateration",
+   "LEO",
+   "footprint",
+   "UML과 GWL"
   ]
  },
  {
@@ -3210,6 +3422,203 @@ window.SIMS = window.SIMS || {};
   };
 })(typeof window !== "undefined" ? window : globalThis);
 
+// ===== sims/kepler_period.js =====
+// kepler_period — L11 p.5–10 Kepler's law: Period (s) = (1/100) × distance^1.5, distance = 고도 + 6378 km
+window.SIMS = window.SIMS || {};
+(function (global) {
+  "use strict";
+
+  var R_EARTH = 6378;
+
+  function comma(n) {
+    var neg = n < 0; n = Math.abs(n);
+    var s = String(Math.round(n));
+    var out = "";
+    while (s.length > 3) { out = "," + s.slice(-3) + out; s = s.slice(0, -3); }
+    return (neg ? "-" : "") + s + out;
+  }
+  function fx(x, d) { return String(Number(x.toFixed(d))); }
+
+  var CASES = {
+    moon: { h: 384000, name: "Example 5.1 — 달 (moon)", short: "달", addR: true },
+    geo: { h: 35786, name: "Example 5.2 — GEO 위성", short: "GEO", addR: true },
+    meo: { h: 18000, name: "MEO — GPS 위성", short: "MEO (GPS)", addR: true },
+    leo: { h: 550, name: "LEO — Starlink 위성", short: "LEO (Starlink)", addR: true },
+    trap: { h: 384000, name: "함정 — 달, 반지름을 안 더함", short: "달 (틀린 풀이)", addR: false }
+  };
+
+  // 그림: 지구 + 궤도. 반지름 R 과 고도 h 를 따로 표시 (축척 아님)
+  function makeSvg(level, c, dist) {
+    return function () {
+      var W = 620, H = 300;
+      var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">';
+      s += '<defs><marker id="kp_ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker></defs>';
+      var cx = 150, cy = 160, rE = 60, rO = 125;
+      // 궤도
+      s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + rO + '" fill="none" stroke="#777" stroke-dasharray="5 4"/>';
+      // 지구
+      s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + rE + '" fill="#dbe8f7" stroke="#1d65b3" stroke-width="2"/>';
+      s += '<circle cx="' + cx + '" cy="' + cy + '" r="3" fill="#1d65b3"/>';
+      s += '<text x="' + cx + '" y="' + (cy + 20) + '" text-anchor="middle" fill="#1d65b3">Earth 중심</text>';
+      // 위성 (오른쪽)
+      var sx = cx + rO, sy = cy;
+      s += '<rect x="' + (sx - 7) + '" y="' + (sy - 7) + '" width="14" height="14" fill="#fdeec2" stroke="#e09a40" stroke-width="2"/>';
+      s += '<text x="' + sx + '" y="' + (sy - 14) + '" text-anchor="middle" font-weight="700" fill="#e09a40">' + c.short + '</text>';
+      // 반지름 R (중심 → 표면)
+      var showR = c.addR ? level >= 1 : false;
+      var rCol = showR ? "#1d65b3" : (c.addR ? "#bbb" : "#d6465f");
+      s += '<line x1="' + cx + '" y1="' + (cy + 40) + '" x2="' + (cx + rE) + '" y2="' + (cy + 40) + '" stroke="' + rCol + '" stroke-width="2"' + (c.addR || level < 1 ? '' : ' stroke-dasharray="3 3"') + '/>';
+      s += '<text x="' + (cx + rE / 2) + '" y="' + (cy + 56) + '" text-anchor="middle" fill="' + rCol + '">R = 6378</text>';
+      // 고도 h (표면 → 위성)
+      s += '<line x1="' + (cx + rE) + '" y1="' + cy + '" x2="' + (sx - 8) + '" y2="' + cy + '" stroke="#e09a40" stroke-width="2.5"/>';
+      s += '<text x="' + (cx + rE + (rO - rE) / 2) + '" y="' + (cy - 6) + '" text-anchor="middle" fill="#a8661a">h = ' + comma(c.h) + '</text>';
+      // distance 화살표 (중심 → 위성)
+      if (level >= 1) {
+        var dCol = c.addR ? "#2e9e4f" : "#d6465f";
+        s += '<line x1="' + cx + '" y1="' + (cy + 80) + '" x2="' + (sx - 2) + '" y2="' + (cy + 80) + '" stroke="' + dCol + '" stroke-width="2" marker-end="url(#kp_ar)" marker-start="url(#kp_ar)"/>';
+        s += '<text x="' + (cx + rO / 2) + '" y="' + (cy + 98) + '" text-anchor="middle" font-weight="700" fill="' + dCol + '">' +
+          (c.addR ? "distance = h + R = " + comma(dist) + " km" : "distance = h 만 = " + comma(dist) + " km ✗") + '</text>';
+      }
+      // 오른쪽 계산 칸
+      var x0 = 320;
+      s += '<text x="' + x0 + '" y="30" font-weight="700" fill="#333">Kepler\'s law</text>';
+      s += '<text x="' + x0 + '" y="50" fill="#333">Period (s) = (1/100) × distance^1.5</text>';
+      s += '<text x="' + x0 + '" y="68" fill="#777" font-size="11">distance = 지구 중심부터의 거리 (km)</text>';
+      var rows = [
+        [1, "distance", comma(dist) + " km"],
+        [2, "√distance", fx(Math.sqrt(dist), 2)],
+        [3, "distance^1.5", comma(Math.pow(dist, 1.5))],
+        [4, "× 1/100", comma(Math.pow(dist, 1.5) / 100) + " s"]
+      ];
+      rows.forEach(function (r, i) {
+        var y = 100 + i * 30, on = level >= r[0], hl = level === r[0];
+        s += '<rect x="' + x0 + '" y="' + (y - 16) + '" width="280" height="24" rx="4" fill="' + (hl ? "#fff3bf" : "#fafafa") + '" stroke="' + (hl ? "#d6a017" : "#ddd") + '"/>';
+        s += '<text x="' + (x0 + 8) + '" y="' + y + '" fill="' + (on ? "#333" : "#bbb") + '">' + r[1] + '</text>';
+        s += '<text x="' + (x0 + 272) + '" y="' + y + '" text-anchor="end" font-weight="700" fill="' + (on ? "#222" : "#bbb") + '">' + (on ? r[2] : "?") + '</text>';
+      });
+      if (level >= 5) {
+        var ok = c.addR;
+        s += '<rect x="' + x0 + '" y="222" width="280" height="30" rx="5" fill="' + (ok ? "#dff3e4" : "#fbe3e7") + '" stroke="' + (ok ? "#2e9e4f" : "#d6465f") + '"/>';
+        s += '<text x="' + (x0 + 140) + '" y="242" text-anchor="middle" font-weight="700" fill="' + (ok ? "#1d6b2a" : "#d6465f") + '">' + c.result + '</text>';
+      }
+      s += '<text x="10" y="290" fill="#999" font-size="10">그림은 축척이 아님 (R 과 h 를 구분해 보이려는 개념도)</text>';
+      s += '</svg>';
+      return s;
+    };
+  }
+
+  global.SIMS["kepler_period"] = {
+    title: "Kepler's law — 고도 h 로 위성 주기 구하기 (L11 p.6–10)",
+    desc: "[[Kepler's law]]: Period(s) = (1/100) × distance^1.5. distance 는 '''지구 중심부터'''의 거리라서 고도 h 에 지구 반지름 6378 km 를 더한다. [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]] 와 [[MEO]] · [[LEO]] 를 같은 순서로 손계산한다.",
+    options: [
+      { key: "obj", label: "대상", values: [
+        { value: "moon", label: "Ex 5.1 달 (h = 384,000 km)" },
+        { value: "geo", label: "Ex 5.2 GEO (h = 35,786 km)" },
+        { value: "meo", label: "MEO GPS (h ≈ 18,000 km)" },
+        { value: "leo", label: "LEO Starlink (h = 550 km)" },
+        { value: "trap", label: "함정: 반지름 안 더함 (달)" }
+      ] }
+    ],
+    build: function (opts) {
+      var key = opts.obj || "moon";
+      var c = CASES[key];
+      var dist = c.addR ? c.h + R_EARTH : c.h;
+      var root = Math.sqrt(dist);
+      var p15 = Math.pow(dist, 1.5);
+      var T = p15 / 100;
+      var Tr = Math.round(T);
+
+      // 단위 환산
+      var conv, convLine, result, meaning, noteEnd;
+      if (key === "moon" || key === "trap") {
+        var days = T / 86400;
+        conv = fx(days, 1) + " 일";
+        convLine = comma(Tr) + " s ÷ 86,400 (s/일) ≈ " + fx(days, 1) + " 일";
+      } else if (key === "leo") {
+        var mins = T / 60;
+        conv = fx(mins, 1) + " min";
+        convLine = comma(Tr) + " s ÷ 60 ≈ " + fx(mins, 1) + " min";
+      } else {
+        var hrs = T / 3600;
+        var hd = key === "geo" ? 2 : 1;
+        conv = fx(hrs, hd) + " h";
+        convLine = comma(Tr) + " s ÷ 3,600 ≈ " + fx(hrs, hd) + " h";
+      }
+      if (key === "moon") {
+        result = comma(Tr) + " s ≈ " + conv + " ≈ 1 month";
+        meaning = "'''≈ 1 month''' — 슬라이드 답 2,439,090 s = 1 month. 마지막 자리 1 차이는 반올림 차이(2,439,090.99…)일 뿐이다.";
+        noteEnd = "시험 포인트: 384,000 은 '지구 위' 거리(above the Earth) → 반지름 6378 을 '''반드시 더한다'''.";
+      } else if (key === "geo") {
+        result = comma(Tr) + " s ≈ " + conv + " ≈ 24 h";
+        meaning = "'''≈ 24 h''' = 지구 자전 주기와 같다 → 지구에서 보면 멈춰 있는 위성 = [[geostationary]] orbit, 즉 [[GEO]] (슬라이드 86,579 s = 24 h).";
+        noteEnd = "p.16 본문은 GEO 고도를 '22,000 miles (≈ 35405 km)' 로 적는다. Kepler 예제(Ex 5.2)는 35,786 km 를 쓴다 — 둘 다 근사값.";
+      } else if (key === "meo") {
+        result = comma(Tr) + " s ≈ " + conv;
+        meaning = "'''≈ 10.6 h''' — 하루에 지구를 두 바퀴 남짓 돈다. GPS 같은 [[MEO]] 위성은 지상에서 보면 천천히 움직인다.";
+        noteEnd = "이 값은 슬라이드에 없는 파생값이다 (p.18 'altitude about 18,000 km' 에 같은 공식을 적용).";
+      } else if (key === "leo") {
+        result = comma(Tr) + " s ≈ " + conv;
+        meaning = "'''≈ 96 min''' — 슬라이드 p.20 'rotation period of 90 to 120 min' 범위 안. [[LEO]] 는 빠르게 지나가므로 footprint 가 계속 움직인다.";
+        noteEnd = "이 값은 슬라이드에 없는 파생값이다 (Starlink 고도 550 km 가정). 범위 양 끝: h=500 → 5,704 s ≈ 95 min, h=2000 → 7,669 s ≈ 128 min.";
+      } else {
+        result = comma(Tr) + " s — 틀린 값";
+        meaning = "'''틀린 값''' 2,379,561 s (≈ " + conv + "). 정답 2,439,091 s 보다 약 59,530 s(≈ 0.7 일) 작다. 반지름을 빼먹으면 distance 가 작아져서 주기도 짧게 나온다.";
+        noteEnd = "distance 는 '''지구 중심'''부터의 거리다. 문제의 '384,000 km above the Earth' 는 표면부터의 고도 → h + 6378 로 바꿔야 한다. 달에서는 차이가 2.4% 지만 LEO(550 km)에서 빼먹으면 550^1.5/100 ≈ 129 s 로, 정답 5,766 s 의 약 1/45 이 된다.";
+      }
+      c.result = result;
+
+      var lines = [
+        "문제: 고도 h = " + comma(c.h) + " km (지표면 위)",
+        c.addR ? "distance = h + 6378 = " + comma(c.h) + " + 6,378 = " + comma(dist) + " km"
+               : "distance = h = " + comma(dist) + " km   ✗ (반지름 안 더함)",
+        "√distance = √" + comma(dist) + " ≈ " + fx(root, 2),
+        "distance^1.5 = distance × √distance ≈ " + comma(dist) + " × " + fx(root, 2) + " ≈ " + comma(p15),
+        "Period = (1/100) × " + comma(p15) + " ≈ " + comma(Tr) + " s",
+        convLine
+      ];
+
+      var vars = [
+        { name: "h", label: "고도 h (km)", group: "입력" },
+        { name: "R", label: "지구 반지름 R (km)", group: "입력" },
+        { name: "dist", label: "distance (km)", group: "계산" },
+        { name: "root", label: "√distance", group: "계산" },
+        { name: "pow", label: "distance^1.5", group: "계산" },
+        { name: "T", label: "Period (s)", group: "결과" },
+        { name: "conv", label: "환산", group: "결과" }
+      ];
+      var st = { h: comma(c.h), R: "6,378", dist: "?", root: "-", pow: "-", T: "?", conv: "-" };
+      var steps = [];
+      function push(desc, pc, level, note) {
+        steps.push({ desc: desc, pc: { P: pc }, vars: JSON.parse(JSON.stringify(st)), note: note, svg: makeSvg(level, c, dist) });
+      }
+
+      push("'''" + c.name + "''': 지표면 위 고도 h = " + comma(c.h) + " km. [[Kepler's law]] 는 Period(s) = C × distance^1.5, C ≈ 1/100, distance 단위 km, period 단위 seconds.", 1, 0);
+      if (c.addR) {
+        st.dist = comma(dist);
+        push("distance 는 '''지구 중심'''에서 위성까지의 거리다. 고도 h 에 지구 반지름 6378 km 를 더한다: " + comma(c.h) + " + 6,378 = '''" + comma(dist) + " km'''.", 2, 1);
+      } else {
+        st.dist = comma(dist) + " ✗";
+        push("(틀린 풀이) 고도 h 를 그대로 distance 로 넣었다: distance = " + comma(dist) + " km. 그림의 빨간 점선 — 지구 반지름 6378 km 가 빠졌다.", 2, 1,
+          "여기가 실수 지점: distance 는 지구 중심부터 잰다.");
+      }
+      st.root = fx(root, 2);
+      push("지수 1.5 = 1 + 0.5 이므로 distance^1.5 = distance × √distance. 먼저 √" + comma(dist) + " ≈ '''" + fx(root, 2) + "'''.", 3, 2);
+      st.pow = comma(p15);
+      push("distance × √distance = " + comma(dist) + " × " + fx(root, 2) + " ≈ '''" + comma(p15) + "'''.", 4, 3);
+      st.T = comma(Tr) + " s";
+      push("C ≈ 1/100 을 곱한다(100 으로 나눈다): Period ≈ '''" + comma(Tr) + " s'''.", 5, 4);
+      st.conv = conv;
+      push(convLine + ". " + meaning, 6, 5, noteEnd);
+
+      return {
+        panels: [{ id: "P", title: "손으로 푸는 순서", lang: "txt", lines: lines }],
+        vars: vars,
+        steps: steps
+      };
+    }
+  };
+})(typeof window !== "undefined" ? window : globalThis);
+
 // ===== sims/reuse_pattern.js =====
 window.SIMS = window.SIMS || {};
 // reuse_pattern — L10 p.11 Frequency Reuse Principle (N = 4 / 7) + p.31 IS-95 frequency reuse factor 1
@@ -4888,6 +5297,132 @@ ANIMS["generations_timeline"] = {
   }
 };
 
+// ===== anims/geo_three.js =====
+// ============================================================
+// geo_three — L11 p.16–17 (GEO: line-of-sight, 최소 3기 = full global transmission)
+// 가운데: 북극 위에서 내려다본 적도면. GEO 위성 1기 → 닿는 호(파랑) / 곡률로 가려진 호(빨강)
+//        → 120° 간격 3기로 빨간 호가 사라짐 → 세 위성이 지구와 같이 돈다(geostationary)
+// 왼쪽: 슬라이드 p.17 a. Equatorial-orbit satellite (옆에서 본 모습)
+// ============================================================
+window.ANIMS = window.ANIMS || {};
+ANIMS["geo_three"] = {
+  title: "GEO — 위성 1기의 line-of-sight 와 최소 3기의 전 지구 커버, 12초",
+  desc: "[[GEO]] 위성은 적도면 위 높은 궤도에서 넓은 지역과 [[line-of-sight]] 로 통신하지만, 지구 곡률 때문에 1기로는 반대편이 가려진다 → 서로 같은 간격(120°)의 '''최소 3기'''로 full global transmission",
+  duration: 12,
+  build: function () {
+    var D = 12;
+    var C = {
+      a: "#1d65b3", aL: "#dbe8f7", b: "#2e9e4f", bL: "#dff3e4", c: "#e09a40",
+      red: "#d6465f", muted: "#777", ink: "#222", pink: "#c2185b", pinkL: "#f7c8e0"
+    };
+    function r2(v) { return Math.round(v * 100) / 100; }
+    function r4(v) { return Math.round(v * 10000) / 10000; }
+    function txt(x, y, s, size, fill, extra) {
+      return '<text x="' + r2(x) + '" y="' + r2(y) + '" font-size="' + (size || 13) + '" fill="' + (fill || C.ink) + '"' + (/text-anchor/.test(extra || "") ? "" : ' text-anchor="middle"') + (extra || "") + '>' + s + '</text>';
+    }
+    function show(from, to) {
+      var f = 0.15 / D, a = r4(from / D), b = r4(Math.min(from / D + f, (from + to) / 2 / D));
+      if (to >= D) return '<animate attributeName="opacity" values="0;0;1;1" keyTimes="0;' + a + ';' + b + ';1" dur="' + D + 's" fill="freeze"/>';
+      var c = r4(Math.max(b, to / D - f)), d = r4(to / D);
+      return '<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;' + a + ';' + b + ';' + c + ';' + d + ';1" dur="' + D + 's" fill="freeze"/>';
+    }
+    function vis(from, to, inner) { return '<g opacity="0">' + inner + show(from, to) + '</g>'; }
+    function caps(list) {
+      return list.map(function (c) { return vis(c[0], c[1], txt(380, 26, c[2], 14, C.ink, ' font-weight="700"')); }).join("");
+    }
+    function sat(x, y, k) {
+      k = k || 1;
+      var w = 9 * k, pw = 11 * k, ph = 5 * k;
+      return '<g>' +
+        '<rect x="' + r2(x - w / 2 - pw) + '" y="' + r2(y - ph / 2) + '" width="' + r2(pw) + '" height="' + r2(ph) + '" fill="' + C.pinkL + '" stroke="' + C.pink + '" stroke-width="0.9"/>' +
+        '<rect x="' + r2(x + w / 2) + '" y="' + r2(y - ph / 2) + '" width="' + r2(pw) + '" height="' + r2(ph) + '" fill="' + C.pinkL + '" stroke="' + C.pink + '" stroke-width="0.9"/>' +
+        '<rect x="' + r2(x - w / 2) + '" y="' + r2(y - w / 2) + '" width="' + r2(w) + '" height="' + r2(w) + '" fill="#fff" stroke="' + C.pink + '" stroke-width="1.2"/></g>';
+    }
+
+    var cx = 380, cy = 195, R = 56, G = 128;          // 지구 반지름, GEO 궤도 반지름 (개념도)
+    var ALPHA = Math.acos(R / G);                      // 접선점까지의 중심각
+    function pt(rad, ang) { return [cx + rad * Math.cos(ang), cy + rad * Math.sin(ang)]; }
+    function arc(rad, a0, a1, col, w, extra) {
+      var p0 = pt(rad, a0), p1 = pt(rad, a1), large = (a1 - a0) > Math.PI ? 1 : 0;
+      return '<path d="M' + r2(p0[0]) + ',' + r2(p0[1]) + ' A' + rad + ',' + rad + ' 0 ' + large + ' 1 ' + r2(p1[0]) + ',' + r2(p1[1]) + '" fill="none" stroke="' + col + '" stroke-width="' + w + '" stroke-linecap="butt"' + (extra || "") + '/>';
+    }
+    // 위성 하나(각도 th): 빔(접선 삼각형) + 닿는 호 + 아이콘
+    function geoSat(th) {
+      var sp = pt(G, th), t1 = pt(R, th - ALPHA), t2 = pt(R, th + ALPHA);
+      return '<polygon points="' + r2(sp[0]) + ',' + r2(sp[1]) + ' ' + r2(t1[0]) + ',' + r2(t1[1]) + ' ' + r2(t2[0]) + ',' + r2(t2[1]) + '" fill="' + C.pink + '" fill-opacity="0.16" stroke="' + C.pink + '" stroke-opacity="0.5" stroke-width="1"/>' +
+        arc(R + 5, th - ALPHA, th + ALPHA, C.a, 6) +
+        sat(sp[0], sp[1], 1.3);
+    }
+
+    var s = '<svg viewBox="0 0 760 370" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GEO 위성 3기로 전 지구 커버 애니메이션">';
+
+    s += caps([
+      [0, 1.5, "GEO 궤도는 적도면(equatorial plane) 위, 지표에서 약 35,786 km"],
+      [1.5, 3.8, "위성 1기: line-of-sight 로 보이는 넓은 지역(파랑)에 직접 닿는다"],
+      [3.8, 6, "그러나 지구 곡률(curvature)이 반대편(빨강)을 가린다 — 1기로는 부족"],
+      [6, 8.6, "서로 같은 간격(equidistant, 120°)으로 위성 3기를 두면 가려진 곳이 사라진다"],
+      [8.6, D, "세 위성은 지구 자전과 함께 돈다 → 지상에서는 늘 같은 자리 (geostationary)"]
+    ]);
+
+    // ---------- 왼쪽: 옆에서 본 적도 궤도 (p.17 a) ----------
+    var ex = 112, ey = 200;
+    var side = '';
+    side += '<ellipse cx="' + ex + '" cy="' + ey + '" rx="88" ry="17" fill="none" stroke="#333" stroke-width="1.4"/>';
+    side += '<circle cx="' + ex + '" cy="' + ey + '" r="48" fill="#d6d6d6" stroke="' + C.pink + '" stroke-width="1.6"/>';
+    // 궤도 앞쪽 반은 지구 위로 다시 그림
+    side += '<path d="M' + (ex - 88) + ',' + ey + ' A88,17 0 0 0 ' + (ex + 88) + ',' + ey + '" fill="none" stroke="#333" stroke-width="1.4"/>';
+    side += txt(ex, ey - 6, "Earth", 12, "#333");
+    side += txt(ex - 70, ey - 26, "Orbit", 11, "#333");
+    side += '<circle r="6" fill="' + C.pinkL + '" stroke="' + C.pink + '" stroke-width="1.6">' +
+      '<animateMotion path="M' + (ex + 88) + ',' + ey + ' A88,17 0 1 1 ' + (ex - 88) + ',' + ey + ' A88,17 0 1 1 ' + (ex + 88) + ',' + ey + '" begin="0s" dur="' + D + 's" fill="freeze"/></circle>';
+    side += txt(ex, ey + 70, "옆에서 본 모습:", 11, C.muted);
+    side += txt(ex, ey + 85, "Equatorial-orbit satellite", 11, C.muted);
+    s += side;
+
+    // ---------- 가운데: 위에서 본 적도면 ----------
+    var mid = '';
+    mid += '<circle cx="' + cx + '" cy="' + cy + '" r="' + G + '" fill="none" stroke="' + C.pink + '" stroke-dasharray="6 5" stroke-width="1.2"/>';
+    mid += '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="#d6d6d6" stroke="#888" stroke-width="1.5"/>';
+    mid += '<circle cx="' + cx + '" cy="' + cy + '" r="4" fill="' + C.ink + '"/>';
+    mid += txt(cx, cy + 20, "North pole", 10, "#444");
+    mid += txt(cx + G - 6, cy + G - 18, "GEO orbit", 11, C.pink, ' text-anchor="start"');
+    s += mid;
+
+    var TH1 = -Math.PI / 2;                       // 위쪽
+    var TH2 = TH1 + 2 * Math.PI / 3, TH3 = TH1 + 4 * Math.PI / 3;
+    var rot = '';
+    // 1기 + 가려진 호
+    rot += vis(1.5, D, geoSat(TH1));
+    rot += vis(3.8, 7.4, arc(R + 5, TH1 + ALPHA, TH1 + 2 * Math.PI - ALPHA, C.red, 6) +
+      txt(cx, cy + R + 32, "out of sight", 12, C.red, ' font-weight="700"'));
+    // 2·3기
+    rot += vis(6, D, geoSat(TH2));
+    rot += vis(6.8, D, geoSat(TH3));
+    // 지상의 한 점(서울 같은) — 회전해도 위쪽 위성 아래에 머문다
+    var gp = pt(R - 9, TH1);
+    rot += '<circle cx="' + r2(gp[0]) + '" cy="' + r2(gp[1]) + '" r="3.5" fill="' + C.b + '"/>';
+    s += '<g>' + rot + '<animateTransform attributeName="transform" type="rotate" values="0 ' + cx + ' ' + cy + ';80 ' + cx + ' ' + cy + '" begin="8.8s" dur="3s" fill="freeze"/></g>';
+
+    // ---------- 오른쪽: 범례 / 결과 ----------
+    var lx = 572;
+    s += '<line x1="' + lx + '" y1="98" x2="' + (lx + 26) + '" y2="98" stroke="' + C.a + '" stroke-width="6"/>' + txt(lx + 34, 102, "line-of-sight 로 닿음", 12, C.ink, ' text-anchor="start"');
+    s += vis(3.8, D, '<line x1="' + lx + '" y1="122" x2="' + (lx + 26) + '" y2="122" stroke="' + C.red + '" stroke-width="6"/>' + txt(lx + 34, 126, "곡률로 가려짐", 12, C.ink, ' text-anchor="start"'));
+    s += '<circle cx="' + (lx + 13) + '" cy="146" r="3.5" fill="' + C.b + '"/>' + txt(lx + 34, 150, "지상의 한 지점", 12, C.ink, ' text-anchor="start"');
+    s += vis(1.5, 6, txt(lx, 196, "1기 → 지구의 일부만", 14, C.red, ' font-weight="700" text-anchor="start"'));
+    s += vis(6, D,
+      '<rect x="' + (lx - 6) + '" y="176" width="180" height="58" rx="6" fill="' + C.bL + '" stroke="' + C.b + '" stroke-width="1.6"/>' +
+      txt(lx + 84, 199, "최소 3기 (120° 간격)", 14, "#1d6b2a", ' font-weight="700"') +
+      txt(lx + 84, 220, "= full global transmission", 12, "#1d6b2a", ' font-weight="700"'));
+    s += vis(8.6, D, txt(lx + 84, 262, "지구와 같이 돌아서", 12, C.muted) + txt(lx + 84, 278, "초록 점 위의 위성은 그대로", 12, C.muted));
+    s += txt(lx + 84, 318, "(축척 아님 — 실제 GEO 궤도는", 10, C.muted) + txt(lx + 84, 332, "지구 반지름의 약 6.6배)", 10, C.muted);
+
+    // ---------- 요점 ----------
+    s += txt(380, 362, "GEO: 적도면 위 · 24 h 주기로 정지해 보임 · 최소 3기 = full global transmission", 12, C.muted);
+    s += '</svg>';
+    return s;
+  }
+};
+
 // ===== anims/gsm_multiframe_anim.js =====
 // ============================================================
 // gsm_multiframe_anim — GSM: 65 → 114 → 156.25 bits slot → 8 slot frame → 26 frame multiframe(120 ms) → 270.8 kbps
@@ -5161,6 +5696,141 @@ ANIMS["handoff_hard_soft"] = {
   }
 };
 
+// ===== anims/leo_footprint.js =====
+// ============================================================
+// leo_footprint — L11 p.20–21 (LEO: footprint, UML/GWL, ISL, "Similar to the cellular telephone system")
+// 위성 A·B 가 왼쪽→오른쪽으로 지나가고(1.5s→12.5s, 280px), 각 위성 아래 footprint 타원이 따라 움직인다.
+// 폰(UML)은 x=380 고정: 처음엔 A 의 footprint 안 → t≈7s 에 A 를 벗어나 B 로 넘겨짐.
+// gateway(GWL)는 x=520 고정, 계속 A 의 footprint 안 → B 의 트래픽은 ISL 로 A 를 거쳐 gateway 로.
+// ============================================================
+window.ANIMS = window.ANIMS || {};
+ANIMS["leo_footprint"] = {
+  title: "LEO — footprint 가 움직이는 셀룰러 (UML · GWL · ISL), 14초",
+  desc: "[[LEO]] 위성은 낮게 빠르게 지나가므로 지상의 [[footprint]] 도 위성을 따라 움직인다. 폰은 [[UML과 GWL|UML]] 로, gateway 는 GWL 로 위성과 통신하고, 위성끼리는 [[ISL]] 로 중계한다 — footprint 가 지나가면 다음 위성으로 넘겨지는 '''Similar to the cellular telephone system'''",
+  duration: 14,
+  build: function () {
+    var D = 14;
+    var C = {
+      a: "#1d65b3", aL: "#dbe8f7", b: "#2e9e4f", bL: "#dff3e4", c: "#e09a40", cL: "#fdeec2",
+      dev: "#3b2f4a", devL: "#efe9f6", red: "#d6465f", muted: "#777", ink: "#222", pink: "#c2185b", pinkL: "#f7c8e0"
+    };
+    function r2(v) { return Math.round(v * 100) / 100; }
+    function r4(v) { return Math.round(v * 10000) / 10000; }
+    function txt(x, y, s, size, fill, extra) {
+      return '<text x="' + r2(x) + '" y="' + r2(y) + '" font-size="' + (size || 13) + '" fill="' + (fill || C.ink) + '"' + (/text-anchor/.test(extra || "") ? "" : ' text-anchor="middle"') + (extra || "") + '>' + s + '</text>';
+    }
+    function show(from, to) {
+      var f = 0.15 / D, a = r4(from / D), b = r4(Math.min(from / D + f, (from + to) / 2 / D));
+      if (to >= D) return '<animate attributeName="opacity" values="0;0;1;1" keyTimes="0;' + a + ';' + b + ';1" dur="' + D + 's" fill="freeze"/>';
+      var c = r4(Math.max(b, to / D - f)), d = r4(to / D);
+      return '<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;' + a + ';' + b + ';' + c + ';' + d + ';1" dur="' + D + 's" fill="freeze"/>';
+    }
+    function vis(from, to, inner) { return '<g opacity="0">' + inner + show(from, to) + '</g>'; }
+    function caps(list) {
+      return list.map(function (c) { return vis(c[0], c[1], txt(380, 26, c[2], 14, C.ink, ' font-weight="700"')); }).join("");
+    }
+    function sat(x, y, k) {
+      k = k || 1;
+      var w = 12 * k, pw = 22 * k, ph = 8 * k;
+      return '<g>' +
+        '<rect x="' + r2(x - w / 2 - pw) + '" y="' + r2(y - ph / 2) + '" width="' + r2(pw) + '" height="' + r2(ph) + '" fill="' + C.pinkL + '" stroke="' + C.pink + '" stroke-width="1"/>' +
+        '<rect x="' + r2(x + w / 2) + '" y="' + r2(y - ph / 2) + '" width="' + r2(pw) + '" height="' + r2(ph) + '" fill="' + C.pinkL + '" stroke="' + C.pink + '" stroke-width="1"/>' +
+        '<rect x="' + r2(x - w / 2) + '" y="' + r2(y - w / 2) + '" width="' + r2(w) + '" height="' + r2(w) + '" fill="#fff" stroke="' + C.pink + '" stroke-width="1.4"/></g>';
+    }
+    function phone(x, y) {
+      return '<rect x="' + (x - 7) + '" y="' + (y - 13) + '" width="14" height="26" rx="3" fill="' + C.aL + '" stroke="' + C.a + '" stroke-width="1.7"/>' +
+        '<line x1="' + (x - 3) + '" y1="' + (y - 8) + '" x2="' + (x + 3) + '" y2="' + (y - 8) + '" stroke="' + C.a + '" stroke-width="1.4"/>';
+    }
+    function dish(x, y) {   // 접시 안테나: 밑변 가운데 (x,y)
+      return '<path d="M' + (x - 14) + ',' + (y - 22) + ' Q' + x + ',' + (y - 2) + ' ' + (x + 14) + ',' + (y - 22) + ' Z" fill="' + C.pinkL + '" stroke="' + C.pink + '" stroke-width="1.5"/>' +
+        '<line x1="' + x + '" y1="' + (y - 12) + '" x2="' + x + '" y2="' + y + '" stroke="' + C.dev + '" stroke-width="2"/>' +
+        '<line x1="' + (x - 8) + '" y1="' + y + '" x2="' + (x + 8) + '" y2="' + y + '" stroke="' + C.dev + '" stroke-width="2"/>';
+    }
+
+    var T0 = 1.5, T1 = 12.5, SH = 280;        // 이동 시간·거리
+    var SY = 92, GY = 272;                    // 위성 높이, 지면 높이
+    var AX = 380, BX = 100, PX = 380, GX = 540, RX = 160;
+    var HO = 7.0;                             // 폰이 A → B 로 넘겨지는 시각 (footprint 겹침 6.2~7.8s 사이)
+    function xAt(x0, t) { return x0 + SH * Math.max(0, Math.min(1, (t - T0) / (T1 - T0))); }
+    function move(extra) {
+      return '<animateTransform attributeName="transform" type="translate" values="0,0;' + SH + ',0" begin="' + T0 + 's" dur="' + (T1 - T0) + 's" fill="freeze"' + (extra || "") + '/>';
+    }
+    // 위성(이동) ↔ 지상 고정점 링크: x1 이 위성을 따라간다
+    function link(x0, gx, gy, col, from, to, label) {
+      var l = '<line x1="' + x0 + '" y1="' + (SY + 10) + '" x2="' + gx + '" y2="' + gy + '" stroke="' + col + '" stroke-width="2.4">' +
+        '<animate attributeName="x1" values="' + x0 + ';' + (x0 + SH) + '" begin="' + T0 + 's" dur="' + (T1 - T0) + 's" fill="freeze"/></line>';
+      return vis(from, to, l);
+    }
+
+    var s = '<svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LEO 위성 footprint 이동 애니메이션">';
+    s += '<defs><clipPath id="lf_clip"><rect x="0" y="40" width="760" height="282"/></clipPath></defs>';
+
+    s += caps([
+      [0, 1.5, "LEO 위성(500–2000 km)은 낮게, 빠르게 지나간다 — 90 to 120 min 에 한 바퀴"],
+      [1.5, 4.2, "위성이 닿는 지상 영역 = footprint. 위성을 따라 footprint 도 움직인다"],
+      [4.2, 6.2, "UML: 폰 ↔ 위성 · GWL: 위성 ↔ gateway(지상국)"],
+      [6.2, 8.2, "footprint 가 지나가면 폰은 다음 위성(B)으로 넘겨진다 — handoff 처럼"],
+      [8.2, 11.2, "ISL(inter-satellite link): B 가 받은 신호를 A 로 중계해 gateway 까지"],
+      [11.2, D, "Similar to the cellular telephone system — cell(footprint)이 움직이는 셀룰러"]
+    ]);
+
+    var body = '';
+    // 지면
+    body += '<line x1="0" y1="' + GY + '" x2="760" y2="' + GY + '" stroke="#bbb" stroke-width="1.2"/>';
+    // footprint (이동)
+    function fp(x0, col, name) {
+      return '<g><ellipse cx="' + x0 + '" cy="' + GY + '" rx="' + RX + '" ry="24" fill="' + col + '" fill-opacity="0.12" stroke="#555" stroke-width="1.4" stroke-dasharray="7 5"/>' +
+        txt(x0, GY + 40, "Footprint " + name, 12, "#444") + move() + '</g>';
+    }
+    body += fp(AX, C.c, "A") + fp(BX, C.b, "B");
+    // ISL (두 위성 사이, 함께 이동)
+    body += '<g><path d="M' + (BX + 40) + ',' + SY + ' L' + (BX + 128) + ',' + SY + ' L' + (BX + 136) + ',' + (SY - 8) + ' L' + (BX + 144) + ',' + (SY + 8) + ' L' + (BX + 152) + ',' + SY + ' L' + (AX - 40) + ',' + SY + '" fill="none" stroke="' + C.dev + '" stroke-width="2"/>' +
+      txt((AX + BX) / 2, SY - 14, "ISL", 13, C.dev, ' font-weight="700"') + move() + '</g>';
+    // 링크
+    body += link(AX, PX, GY - 16, C.ink, 4.2, HO);              // UML: 폰 ↔ A
+    body += link(BX, PX, GY - 16, C.ink, HO, D);                // UML: 폰 ↔ B
+    body += link(AX, GX, GY - 22, C.pink, 4.2, D);              // GWL: A ↔ gateway
+    // 링크 이름 (고정 위치 근처)
+    body += vis(4.2, HO, txt(PX - 26, 195, "UML", 12, C.ink, ' font-weight="700"'));
+    body += vis(HO, D, txt(PX - 52, 195, "UML", 12, C.ink, ' font-weight="700"'));
+    body += vis(4.2, D, txt(GX + 34, 195, "GWL", 12, C.pink, ' font-weight="700"'));
+    // 넘겨짐 표시
+    body += vis(6.3, 8.2, '<circle cx="' + PX + '" cy="' + (GY - 14) + '" r="20" fill="none" stroke="' + C.b + '" stroke-width="2.5"/>' +
+      txt(PX, GY - 42, "A → B", 12, C.b, ' font-weight="700"'));
+    // 데이터 흐름: 폰 → B → (ISL) → A → gateway
+    function hop(x1, y1, x2, y2, b, d, col) {
+      return '<circle r="5" fill="' + col + '" opacity="0"><animateMotion begin="' + b + 's" dur="' + d + 's" fill="freeze" path="M' + r2(x1) + ',' + r2(y1) + ' L' + r2(x2) + ',' + r2(y2) + '"/>' + show(b, b + d) + '</circle>';
+    }
+    // 1차(4.6~6.0): 폰 → A → gateway
+    body += hop(PX, GY - 16, xAt(AX, 4.9), SY + 10, 4.6, 0.7, C.a) + hop(xAt(AX, 5.4), SY + 10, GX, GY - 22, 5.3, 0.7, C.a);
+    // 2차(8.4~10.8): 폰 → B → ISL → A → gateway
+    body += hop(PX, GY - 16, xAt(BX, 8.8), SY + 10, 8.4, 0.8, C.a);
+    body += hop(xAt(BX, 9.4), SY, xAt(AX, 9.6), SY, 9.2, 0.8, C.dev);
+    body += hop(xAt(AX, 10.2), SY + 10, GX, GY - 22, 10.0, 0.8, C.a);
+    // 지상 장비 (고정)
+    body += phone(PX, GY - 2) + txt(PX + 12, GY + 4, "폰 (user)", 11, C.a, ' text-anchor="start"');
+    body += dish(GX, GY) + txt(GX + 18, GY - 4, "gateway", 11, C.pink, ' text-anchor="start"');
+    // 위성 (이동)
+    body += '<g>' + sat(AX, SY) + txt(AX, SY - 18, "위성 A", 12, C.pink, ' font-weight="700"') + move() + '</g>';
+    body += '<g>' + sat(BX, SY) + txt(BX, SY - 18, "위성 B", 12, C.pink, ' font-weight="700"') + move() + '</g>';
+    // 이동 방향
+    body += txt(700, 60, "이동 방향 →", 11, C.muted);
+    s += '<g clip-path="url(#lf_clip)">' + body + '</g>';
+
+    // 비유 상자 (끝)
+    s += vis(11.2, D,
+      '<rect x="14" y="128" width="190" height="62" rx="6" fill="#fff" stroke="' + C.b + '" stroke-width="1.6"/>' +
+      txt(109, 148, "footprint ≈ cell", 12, "#1d6b2a", ' font-weight="700"') +
+      txt(109, 165, "위성 ≈ BS (움직이는 기지국)", 12, "#1d6b2a", ' font-weight="700"') +
+      txt(109, 182, "다음 위성으로 ≈ handoff", 12, "#1d6b2a", ' font-weight="700"'));
+
+    // ---------- 요점 ----------
+    s += txt(380, 350, "LEO = cell 이 움직이는 셀룰러: footprint ≈ cell, 위성 ≈ BS — 대표 예 Starlink", 12, C.muted);
+    s += '</svg>';
+    return s;
+  }
+};
+
 // ===== anims/roaming_anim.js =====
 // ============================================================
 // roaming_anim — L10 p.17 (Operation: Roaming)
@@ -5303,6 +5973,266 @@ ANIMS["roaming_anim"] = {
 
     // ---- 요점 ----
     s += txt(380, 318, "roaming = 이웃 service provider 끼리 roaming contract 로 coverage 를 넓혀 주는 것", 12, C.muted);
+    s += '</svg>';
+    return s;
+  }
+};
+
+// ===== anims/satellite_orbits.js =====
+// ============================================================
+// satellite_orbits — L11 p.11–14 (Three categories of satellites)
+// 왼쪽: 슬라이드의 고도축 그림을 아래에서 위로 쌓는다 (LEO → Lower Van Allen → MEO → Upper Van Allen → GEO)
+// 오른쪽(9s~): 위에서 본 세 궤도. 같은 5초 동안 LEO 여러 바퀴, MEO 1바퀴, GEO 는 지구 자전과 같은 1/4 바퀴 → 정지해 보임
+// ============================================================
+window.ANIMS = window.ANIMS || {};
+ANIMS["satellite_orbits"] = {
+  title: "위성 세 범주 — LEO · MEO · GEO 와 Van Allen belt, 14초",
+  desc: "고도에 따라 [[LEO]](500–2000 km) · [[MEO]](두 [[Van Allen belt]] 사이) · [[GEO]](35,786 km) 로 나뉜다. 높을수록 주기가 길어서([[Kepler's law]]) GEO 는 지구 자전과 같은 24 h → 지상에서 보면 멈춰 있다",
+  duration: 14,
+  build: function () {
+    var D = 14;
+    var C = {
+      a: "#1d65b3", aL: "#dbe8f7", b: "#2e9e4f", bL: "#dff3e4", c: "#e09a40", cL: "#fdeec2",
+      dev: "#3b2f4a", red: "#d6465f", muted: "#777", ink: "#222", pink: "#c2185b", pinkL: "#f7c8e0",
+      leo: "#16a3c9", meo: "#7cbf1e"
+    };
+    function r2(v) { return Math.round(v * 100) / 100; }
+    function r4(v) { return Math.round(v * 10000) / 10000; }
+    function txt(x, y, s, size, fill, extra) {
+      return '<text x="' + r2(x) + '" y="' + r2(y) + '" font-size="' + (size || 13) + '" fill="' + (fill || C.ink) + '"' + (/text-anchor/.test(extra || "") ? "" : ' text-anchor="middle"') + (extra || "") + '>' + s + '</text>';
+    }
+    function show(from, to) {
+      var f = 0.15 / D, a = r4(from / D), b = r4(Math.min(from / D + f, (from + to) / 2 / D));
+      if (to >= D) return '<animate attributeName="opacity" values="0;0;1;1" keyTimes="0;' + a + ';' + b + ';1" dur="' + D + 's" fill="freeze"/>';
+      var c = r4(Math.max(b, to / D - f)), d = r4(to / D);
+      return '<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;' + a + ';' + b + ';' + c + ';' + d + ';1" dur="' + D + 's" fill="freeze"/>';
+    }
+    function vis(from, to, inner) { return '<g opacity="0">' + inner + show(from, to) + '</g>'; }
+    function caps(list) {
+      return list.map(function (c) { return vis(c[0], c[1], txt(380, 26, c[2], 14, C.ink, ' font-weight="700"')); }).join("");
+    }
+    // 위성 아이콘: 중심 (x,y), 크기 배율 k
+    function sat(x, y, k) {
+      k = k || 1;
+      var w = 9 * k, pw = 11 * k, ph = 5 * k;
+      return '<g>' +
+        '<rect x="' + r2(x - w / 2 - pw) + '" y="' + r2(y - ph / 2) + '" width="' + r2(pw) + '" height="' + r2(ph) + '" fill="' + C.pinkL + '" stroke="' + C.pink + '" stroke-width="0.9"/>' +
+        '<rect x="' + r2(x + w / 2) + '" y="' + r2(y - ph / 2) + '" width="' + r2(pw) + '" height="' + r2(ph) + '" fill="' + C.pinkL + '" stroke="' + C.pink + '" stroke-width="0.9"/>' +
+        '<rect x="' + r2(x - w / 2) + '" y="' + r2(y - w / 2) + '" width="' + r2(w) + '" height="' + r2(w) + '" fill="#fff" stroke="' + C.pink + '" stroke-width="1.2"/></g>';
+    }
+
+    var s = '<svg viewBox="0 0 760 370" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="위성 세 범주 LEO MEO GEO 애니메이션">';
+    s += '<defs><marker id="so_ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,10 L5,0 L10,10 z" fill="#333"/></marker></defs>';
+
+    s += caps([
+      [0, 1.5, "위성 궤도는 고도(altitude)에 따라 세 범주로 나뉜다"],
+      [1.5, 3, "LEO (Low Earth Orbit): 고도 500–2000 km — 가장 낮은 궤도"],
+      [3, 4.5, "Lower Van Allen belt: 방사선이 강한 띠 — 위성은 이 띠를 피한다"],
+      [4.5, 6, "MEO (Medium Earth Orbit): 두 Van Allen belt 사이에 위치"],
+      [6, 7.5, "Upper Van Allen belt: 두 번째 방사선 띠"],
+      [7.5, 9, "GEO (Geostationary): 35,786 km, 적도면(equatorial plane) 위"],
+      [9, D, "높을수록 느리다: LEO 90–120 min, GEO 24 h = 지구 자전과 같아 정지해 보임"]
+    ]);
+
+    // ---------- 왼쪽: 고도축 (축척 아님, 슬라이드 그림 비율) ----------
+    var X0 = 120, X1 = 400;            // 띠 영역
+    var Y = { 0: 300, 2000: 282, 5000: 250, 15000: 175, 35786: 85 };
+    s += '<rect x="' + X0 + '" y="300" width="' + (X1 - X0) + '" height="26" fill="#cfcfcf" stroke="#999"/>';
+    s += txt((X0 + X1) / 2, 318, "Earth surface", 13, "#333");
+    s += '<line x1="' + X0 + '" y1="330" x2="' + X0 + '" y2="58" stroke="#333" stroke-width="1.6" marker-end="url(#so_ar)"/>';
+    s += txt(X0 - 8, 56, "Altitude (km)", 12, "#333", ' text-anchor="end"');
+    s += txt(X0 - 8, Y[0] + 4, "0", 12, "#333", ' text-anchor="end"');
+
+    // LEO 띠
+    s += vis(1.5, D,
+      '<rect x="' + X0 + '" y="' + Y[2000] + '" width="' + (X1 - X0) + '" height="' + (Y[0] - Y[2000]) + '" fill="' + C.leo + '" fill-opacity="0.85"/>' +
+      [150, 190, 230, 270, 310, 370].map(function (x) { return sat(x, 291, 0.8); }).join("") +
+      txt(X1 + 10, 295, "LEO", 14, C.leo, ' font-weight="700" text-anchor="start"') +
+      txt(X1 + 46, 295, "500–2000", 11, C.muted, ' text-anchor="start"'));
+    // Lower Van Allen belt
+    s += vis(3, D, txt((X0 + X1) / 2, 271, "Lower Van Allen belt", 13, C.red) +
+      txt(X0 - 8, Y[5000] + 4, "5000", 12, "#333", ' text-anchor="end"'));
+    // MEO 띠
+    s += vis(4.5, D,
+      '<rect x="' + X0 + '" y="' + Y[15000] + '" width="' + (X1 - X0) + '" height="' + (Y[5000] - Y[15000]) + '" fill="' + C.meo + '" fill-opacity="0.85"/>' +
+      [150, 195, 240, 370].map(function (x) { return sat(x, 205, 1); }).join("") +
+      txt(X1 + 10, 217, "MEO", 14, "#4f8a0c", ' font-weight="700" text-anchor="start"') +
+      txt(X1 + 50, 217, "GPS", 11, C.muted, ' text-anchor="start"') +
+      txt(X0 - 8, Y[15000] + 4, "15,000", 12, "#333", ' text-anchor="end"'));
+    // Upper Van Allen belt
+    s += vis(6, D, txt((X0 + X1) / 2, 140, "Upper Van Allen belt", 13, C.red));
+    // GEO 점선
+    s += vis(7.5, D,
+      '<line x1="' + X0 + '" y1="' + Y[35786] + '" x2="' + X1 + '" y2="' + Y[35786] + '" stroke="' + C.pink + '" stroke-width="1.5" stroke-dasharray="14 8"/>' +
+      [190, 265, 340].map(function (x) { return sat(x, Y[35786], 1.3); }).join("") +
+      txt(X1 + 10, Y[35786] + 5, "GEO", 14, C.pink, ' font-weight="700" text-anchor="start"') +
+      txt(X0 - 8, Y[35786] + 4, "35,786", 12, "#333", ' text-anchor="end"'));
+
+    // ---------- 오른쪽: 위에서 본 궤도, 9s~ ----------
+    var cx = 600, cy = 200, rE = 30, rL = 46, rM = 80, rG = 122;
+    var R0 = 9.5, RD = 4;    // 회전 구간
+    function spin(deg) {
+      return '<animateTransform attributeName="transform" type="rotate" values="0 ' + cx + ' ' + cy + ';' + deg + ' ' + cx + ' ' + cy + '" begin="' + R0 + 's" dur="' + RD + 's" fill="freeze"/>';
+    }
+    var right = '';
+    right += '<circle cx="' + cx + '" cy="' + cy + '" r="' + rG + '" fill="none" stroke="' + C.pink + '" stroke-dasharray="6 5" stroke-width="1.3"/>';
+    right += '<circle cx="' + cx + '" cy="' + cy + '" r="' + rM + '" fill="none" stroke="' + C.meo + '" stroke-width="1.3"/>';
+    right += '<circle cx="' + cx + '" cy="' + cy + '" r="' + rL + '" fill="none" stroke="' + C.leo + '" stroke-width="1.3"/>';
+    // 지구 + 지상의 한 점(검정) — GEO 위성과 함께 같은 각도로 회전
+    right += '<circle cx="' + cx + '" cy="' + cy + '" r="' + rE + '" fill="' + C.aL + '" stroke="' + C.a + '" stroke-width="1.8"/>';
+    right += '<g>' +
+      '<line x1="' + cx + '" y1="' + (cy - rE) + '" x2="' + cx + '" y2="' + (cy - rG + 8) + '" stroke="' + C.pink + '" stroke-width="1" stroke-dasharray="2 3"/>' +
+      '<circle cx="' + cx + '" cy="' + (cy - rE + 5) + '" r="4" fill="' + C.ink + '"/>' +
+      sat(cx, cy - rG, 1.1) + spin(90) + '</g>';
+    // LEO: 4초에 3바퀴, MEO: 1바퀴
+    right += '<g>' + sat(cx + rL, cy, 0.7) + spin(1080) + '</g>';
+    right += '<g>' + sat(cx - rM, cy, 0.9) + spin(360) + '</g>';
+    right += txt(cx, cy + 4, "Earth", 11, C.a);
+    // 범례
+    var ly = 340;
+    right += txt(462, ly - 18, "같은 4초 동안:", 11, C.muted, ' text-anchor="start"');
+    right += txt(462, ly, "LEO 3바퀴", 12, C.leo, ' font-weight="700" text-anchor="start"');
+    right += txt(538, ly, "MEO 1바퀴", 12, "#4f8a0c", ' font-weight="700" text-anchor="start"');
+    right += txt(616, ly, "GEO = 지구와 함께 1/4", 12, C.pink, ' font-weight="700" text-anchor="start"');
+    right += txt(cx, 70, "위에서 본 궤도 (축척 아님)", 11, C.muted);
+    s += vis(9, D, right);
+
+    // ---------- 요점 ----------
+    s += txt(380, 362, "LEO(낮고 빠름) · MEO(Van Allen belt 사이, GPS) · GEO(35,786 km, 24 h → 정지) — 높을수록 주기가 길다", 12, C.muted);
+    s += '</svg>';
+    return s;
+  }
+};
+
+// ===== anims/trilateration_anim.js =====
+// ============================================================
+// trilateration_anim — L11 p.19 (MEO / GPS: Trilateration 삼변측량)
+// 왼쪽 a. 2D: A·B·C 에서 거리 원이 하나씩 커진다 → (A) 원 위 어딘가 → (A,B) 교점 2개 → (A,B,C) 한 점
+// 오른쪽 b. 3D: 위성 3기의 구(sphere)가 커져 겹침 → 공통점 2개 → 우주 쪽은 버리고 지구 표면 쪽 = 내 위치
+// 모든 원은 교점이 정확히 원 위에 오도록 build() 안에서 반지름을 계산한다.
+// ============================================================
+window.ANIMS = window.ANIMS || {};
+ANIMS["trilateration_anim"] = {
+  title: "Trilateration(삼변측량) — 거리 3개로 위치 1개 찾기, 14초",
+  desc: "[[trilateration]] 은 위치를 아는 기준점들까지의 '''거리'''만으로 내 위치를 정한다. 2D 는 원 3개의 교점, 3D 는 위성 3기의 구가 겹치는 두 점 중 지구 표면 쪽 — [[GPS]]([[MEO]] 위성)가 쓰는 원리",
+  duration: 14,
+  build: function () {
+    var D = 14;
+    var C = {
+      a: "#1d65b3", aL: "#dbe8f7", b: "#2e9e4f", bL: "#dff3e4", c: "#e09a40", cL: "#fdeec2",
+      red: "#d6465f", muted: "#777", ink: "#222", pink: "#c2185b", pinkL: "#f7c8e0", mag: "#e8358f"
+    };
+    function r2(v) { return Math.round(v * 100) / 100; }
+    function r4(v) { return Math.round(v * 10000) / 10000; }
+    function txt(x, y, s, size, fill, extra) {
+      return '<text x="' + r2(x) + '" y="' + r2(y) + '" font-size="' + (size || 13) + '" fill="' + (fill || C.ink) + '"' + (/text-anchor/.test(extra || "") ? "" : ' text-anchor="middle"') + (extra || "") + '>' + s + '</text>';
+    }
+    function show(from, to) {
+      var f = 0.15 / D, a = r4(from / D), b = r4(Math.min(from / D + f, (from + to) / 2 / D));
+      if (to >= D) return '<animate attributeName="opacity" values="0;0;1;1" keyTimes="0;' + a + ';' + b + ';1" dur="' + D + 's" fill="freeze"/>';
+      var c = r4(Math.max(b, to / D - f)), d = r4(to / D);
+      return '<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;' + a + ';' + b + ';' + c + ';' + d + ';1" dur="' + D + 's" fill="freeze"/>';
+    }
+    function vis(from, to, inner) { return '<g opacity="0">' + inner + show(from, to) + '</g>'; }
+    function caps(list) {
+      return list.map(function (c) { return vis(c[0], c[1], txt(380, 26, c[2], 14, C.ink, ' font-weight="700"')); }).join("");
+    }
+    function dist(p, q) { return Math.sqrt((p[0] - q[0]) * (p[0] - q[0]) + (p[1] - q[1]) * (p[1] - q[1])); }
+    // 반지름 0 → r 로 커지는 원
+    function grow(cx, cy, r, b, d, style) {
+      return '<circle cx="' + r2(cx) + '" cy="' + r2(cy) + '" r="0" ' + style + '>' +
+        '<animate attributeName="r" values="0;' + r2(r) + '" begin="' + b + 's" dur="' + d + 's" fill="freeze"/></circle>';
+    }
+    // 두 원의 교점 (둘 다 반환)
+    function inter(p, r0, q, r1) {
+      var d = dist(p, q), a = (r0 * r0 - r1 * r1 + d * d) / (2 * d), h = Math.sqrt(Math.max(0, r0 * r0 - a * a));
+      var mx = p[0] + a * (q[0] - p[0]) / d, my = p[1] + a * (q[1] - p[1]) / d;
+      return [[mx + h * (q[1] - p[1]) / d, my - h * (q[0] - p[0]) / d], [mx - h * (q[1] - p[1]) / d, my + h * (q[0] - p[0]) / d]];
+    }
+    function satIcon(x, y) {
+      return '<rect x="' + r2(x - 22) + '" y="' + r2(y - 3.5) + '" width="15" height="7" fill="' + C.pinkL + '" stroke="#333" stroke-width="0.9"/>' +
+        '<rect x="' + r2(x + 7) + '" y="' + r2(y - 3.5) + '" width="15" height="7" fill="' + C.pinkL + '" stroke="#333" stroke-width="0.9"/>' +
+        '<line x1="' + r2(x - 7) + '" y1="' + r2(y) + '" x2="' + r2(x + 7) + '" y2="' + r2(y) + '" stroke="#333" stroke-width="1"/>' +
+        '<rect x="' + r2(x - 5) + '" y="' + r2(y - 5) + '" width="10" height="10" fill="#111"/>';
+    }
+
+    var s = '<svg viewBox="0 0 760 370" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="2D와 3D trilateration 애니메이션">';
+    s += '<defs>' +
+      '<clipPath id="tl_clip3"><rect x="396" y="48" width="350" height="272"/></clipPath>' +
+      '<radialGradient id="tl_sph" cx="0.38" cy="0.35" r="0.7"><stop offset="0" stop-color="#ffffff" stop-opacity="0.75"/><stop offset="1" stop-color="#8a8a8a" stop-opacity="0.55"/></radialGradient>' +
+      '</defs>';
+
+    s += caps([
+      [0, 1.5, "Trilateration(삼변측량): 기준점까지의 거리만으로 내 위치를 찾는다"],
+      [1.5, 3.4, "A 까지의 거리만 알면 → 나는 A 를 중심으로 한 원 위 어딘가"],
+      [3.4, 5.4, "B 까지의 거리를 더하면 → 두 원의 교점 2개로 좁혀진다"],
+      [5.4, 7.6, "C 까지의 거리를 더하면 → 세 원이 한 점에서 만난다 = 내 위치"],
+      [7.6, 9.8, "3D (GPS): 위성까지의 거리 → 위성을 중심으로 한 구(sphere)"],
+      [9.8, 11.6, "위성 3기의 구가 모두 겹치는 점은 2개"],
+      [11.6, D, "우주 쪽 점은 버리고, 지구 표면 쪽 하나 = 내 위치 (GPS)"]
+    ]);
+
+    // ---------- a. 2D ----------
+    s += '<rect x="14" y="48" width="362" height="272" fill="#fff" stroke="#333" stroke-width="1.4"/>';
+    var P = [190, 182];                          // 내 위치
+    var A = [160, 244], B = [128, 132], Cc = [268, 212];
+    var rA = dist(A, P), rB = dist(B, P), rC = dist(Cc, P);
+    var dash = 'fill="none" stroke="#333" stroke-width="1.5" stroke-dasharray="6 4"';
+    s += grow(A[0], A[1], rA, 1.6, 1.2, dash) + grow(B[0], B[1], rB, 3.5, 1.2, dash) + grow(Cc[0], Cc[1], rC, 5.5, 1.2, dash);
+    // 반지름 선 (거리) — 원이 커지는 동안만
+    function radius(p, col, b, e, label, lx, ly) {
+      return vis(b, e, '<line x1="' + p[0] + '" y1="' + p[1] + '" x2="' + P[0] + '" y2="' + P[1] + '" stroke="' + col + '" stroke-width="2"/>' + txt(lx, ly, label, 12, col, ' font-weight="700"'));
+    }
+    s += radius(A, C.a, 2.2, 3.4, "거리 r_A", A[0] - 40, A[1] - 30);
+    s += radius(B, C.b, 4.1, 5.4, "거리 r_B", B[0] - 42, B[1] + 34);
+    s += radius(Cc, C.c, 6.1, 7.6, "거리 r_C", Cc[0] + 36, Cc[1] + 34);
+    // 기준점
+    [[A, "A"], [B, "B"], [Cc, "C"]].forEach(function (q) {
+      s += '<circle cx="' + q[0][0] + '" cy="' + q[0][1] + '" r="3.5" fill="#111"/>' + txt(q[0][0] + (q[1] === "C" ? 13 : -13), q[0][1] + 5, q[1], 14, "#111");
+    });
+    // A,B 교점 2개 (후보)
+    var ab = inter(A, rA, B, rB);
+    var other = dist(ab[0], P) > 1 ? ab[0] : ab[1];
+    s += vis(4.8, 6.8,
+      '<circle cx="' + r2(other[0]) + '" cy="' + r2(other[1]) + '" r="7" fill="none" stroke="' + C.mag + '" stroke-width="2.5"/>' +
+      '<circle cx="' + P[0] + '" cy="' + P[1] + '" r="7" fill="none" stroke="' + C.mag + '" stroke-width="2.5"/>' +
+      txt(other[0] + (other[0] < P[0] ? -12 : 12), other[1] - 12, "후보?", 12, C.mag, ' font-weight="700"'));
+    s += vis(6.8, D, '<line x1="' + r2(other[0] - 6) + '" y1="' + r2(other[1] - 6) + '" x2="' + r2(other[0] + 6) + '" y2="' + r2(other[1] + 6) + '" stroke="' + C.red + '" stroke-width="2.5"/>' +
+      '<line x1="' + r2(other[0] - 6) + '" y1="' + r2(other[1] + 6) + '" x2="' + r2(other[0] + 6) + '" y2="' + r2(other[1] - 6) + '" stroke="' + C.red + '" stroke-width="2.5"/>');
+    s += vis(6.8, D, '<circle cx="' + P[0] + '" cy="' + P[1] + '" r="10" fill="' + C.mag + '"/>' +
+      txt(306, 92, "세 원의 교점", 13, C.mag, ' font-weight="700"') + txt(306, 109, "= 내 위치", 13, C.mag, ' font-weight="700"'));
+    s += txt(195, 338, "a. Two-dimensional trilateration", 13, "#333");
+
+    // ---------- b. 3D ----------
+    s += '<rect x="396" y="48" width="350" height="272" fill="#fff" stroke="#333" stroke-width="1.4"/>';
+    // 세 위성은 한 평면(y=150) 위 → 공통점 2개는 그 평면에 대해 대칭: (571, 150∓60)
+    var Q1 = [571, 90], Q2 = [571, 210];
+    var S1 = [511, 150], S2 = [571, 150], S3 = [631, 150];
+    var three = '';
+    // 지구 (표면이 Q2 를 지남)
+    var ER = 300, EC = [571, Q2[1] + ER];
+    three += vis(7.6, D, '<circle cx="' + EC[0] + '" cy="' + EC[1] + '" r="' + ER + '" fill="' + C.aL + '" stroke="' + C.a + '" stroke-width="2"/>' +
+      txt(700, 306, "Earth", 13, C.a, ' font-weight="700"'));
+    three += grow(S1[0], S1[1], dist(S1, Q2), 8.0, 1.4, 'fill="url(#tl_sph)" stroke="#777" stroke-width="1"');
+    three += grow(S3[0], S3[1], dist(S3, Q2), 8.4, 1.4, 'fill="url(#tl_sph)" stroke="#777" stroke-width="1"');
+    three += grow(S2[0], S2[1], dist(S2, Q2), 8.8, 1.4, 'fill="url(#tl_sph)" stroke="#777" stroke-width="1"');
+    three += vis(7.6, D, satIcon(S1[0], S1[1]) + satIcon(S2[0], S2[1]) + satIcon(S3[0], S3[1]));
+    s += '<g clip-path="url(#tl_clip3)">' + three + '</g>';
+    // 후보 2개
+    s += vis(9.8, D, '<circle cx="' + Q1[0] + '" cy="' + Q1[1] + '" r="7" fill="none" stroke="' + C.mag + '" stroke-width="2.5"/>' +
+      '<circle cx="' + Q2[0] + '" cy="' + Q2[1] + '" r="7" fill="none" stroke="' + C.mag + '" stroke-width="2.5"/>');
+    s += vis(9.8, 11.6, txt(Q1[0] + 14, Q1[1] - 6, "점 1", 12, C.mag, ' font-weight="700" text-anchor="start" stroke="#fff" stroke-width="3" paint-order="stroke"') +
+      txt(Q2[0] + 14, Q2[1] + 18, "점 2", 12, C.mag, ' font-weight="700" text-anchor="start" stroke="#fff" stroke-width="3" paint-order="stroke"'));
+    s += vis(11.6, D,
+      '<line x1="' + (Q1[0] - 7) + '" y1="' + (Q1[1] - 7) + '" x2="' + (Q1[0] + 7) + '" y2="' + (Q1[1] + 7) + '" stroke="' + C.red + '" stroke-width="2.5"/>' +
+      '<line x1="' + (Q1[0] - 7) + '" y1="' + (Q1[1] + 7) + '" x2="' + (Q1[0] + 7) + '" y2="' + (Q1[1] - 7) + '" stroke="' + C.red + '" stroke-width="2.5"/>' +
+      txt(Q1[0] + 14, Q1[1] - 4, "우주 쪽 ✗", 12, C.red, ' font-weight="700" text-anchor="start" stroke="#fff" stroke-width="3" paint-order="stroke"') +
+      '<circle cx="' + Q2[0] + '" cy="' + Q2[1] + '" r="10" fill="' + C.mag + '"/>' +
+      txt(Q2[0] + 16, Q2[1] + 22, "지구 표면 = 내 위치", 12, C.mag, ' font-weight="700" text-anchor="start" stroke="#fff" stroke-width="3" paint-order="stroke"'));
+    s += txt(571, 338, "b. Three-dimensional trilateration", 13, "#333");
+
+    // ---------- 요점 ----------
+    s += txt(380, 362, "거리 3개 → 위치 1개 — GPS 는 MEO 위성들까지의 거리로 trilateration 한다", 12, C.muted);
     s += '</svg>';
     return s;
   }
@@ -5946,7 +6876,7 @@ window.addEventListener("load", function () {
 })();
 
 // ===== offline (build.py 생성) =====
-const OFFLINE_VER = "b478a8fc5b";
+const OFFLINE_VER = "3a7c8dc29b";
 const OFFLINE_IMAGES = [
  "images/L10-05.png",
  "images/L10-06.png",
@@ -5978,7 +6908,18 @@ const OFFLINE_IMAGES = [
  "images/L10-33.png",
  "images/L10-34.png",
  "images/L10-35.png",
- "images/L10-36.png"
+ "images/L10-36.png",
+ "images/L11-03.png",
+ "images/L11-04.png",
+ "images/L11-06.png",
+ "images/L11-08.png",
+ "images/L11-10.png",
+ "images/L11-11.png",
+ "images/L11-14.png",
+ "images/L11-15.png",
+ "images/L11-17.png",
+ "images/L11-19.png",
+ "images/L11-21.png"
 ];
 
 </script>

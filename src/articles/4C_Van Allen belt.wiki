@@ -1,0 +1,38 @@
+key: Van Allen belt
+title: Van Allen Belt (밴 앨런대)
+category: 4강 위성, 용어
+---
+'''Van Allen belt''' 는 지구를 도넛 모양으로 둘러싼 '''방사능 띠'''로, 안쪽(Lower)과 바깥쪽(Upper) 두 개가 있다. L11 p.11–14 그림에서 LEO 와 MEO 사이에 "Lower Van Allen belt", MEO 와 GEO 사이에 "Upper Van Allen belt" 가 적혀 있고, p.18 은 '''MEO 를 "between the two Van Allen belts"''' 로 정의한다. 슬라이드는 이름과 위치만 주고, 무엇인지는 설명하지 않는다 — 아래 설명은 보충이다.
+
+{def}"MEO Satellites — '''Positioned between the two Van Allen belts'''." (L11 p.18)
+p.11–14 그림: LEO → '''Lower Van Allen belt''' → MEO → '''Upper Van Allen belt''' → GEO.
+두 Van Allen belt = 위성 범주를 가르는 고도 경계.{/def}
+
+[[img:L11-11.png|p.11 Three categories — 고도축에서 LEO(파랑)와 MEO(초록) 사이 Lower Van Allen belt, MEO 와 GEO 사이 Upper Van Allen belt|medium]]
+
+== 무엇인가 (보충 — 슬라이드에 없음) ==
+* 지구 '''자기장'''이 태양풍·우주선에서 온 '''전하 입자'''(양성자·전자)를 붙잡아 생긴 띠. 1958 년 미국 첫 위성 Explorer 1 의 관측으로 James Van Allen 이 발견해 그의 이름이 붙었다.
+* 그 안은 방사선이 강해서 위성의 '''전자 장비가 손상'''되고 태양전지가 빨리 열화된다 → 위성을 '''띠 안에 오래 두지 않는다'''.
+* 그래서 궤도 고도가 띠를 '''피해서''' 세 덩어리로 갈린다: 띠 아래(LEO), 두 띠 사이(MEO), 띠 위(GEO). 정확한 경계 고도는 태양 활동에 따라 출렁여 자료마다 다르다.
+
+== 이름에서 개념 끌어내기 ==
+* '''Van Allen''' = 발견자 이름. '''belt''' = 허리띠. 지구 허리(적도)를 두른 '''두 겹의 띠''' 모양이라 belt.
+* '''Lower / Upper''' = 낮은 쪽 / 높은 쪽 띠. MEO 는 그 '''사이'''.
+
+<pre class="ascii">
+ 35,786 ─ ─ GEO ─ ─ ─
+        ░░ Upper Van Allen belt ░░
+ 15,000 ┌─── MEO ───┐   ← 두 띠 사이 "빈 층"
+  5,000 └───────────┘
+        ░░ Lower Van Allen belt ░░
+ ~2,000 ┌─── LEO ───┐
+      0 └─ 지표면 ──┘      (그림 p.14 기준, 축척 아님)
+</pre>
+
+{analogy}🎭 '''강물 속 두 개의 급류 구간.''' 배(위성)를 정박시키려면 급류(Van Allen belt)를 피해야 한다. 그래서 정박지는 첫 급류 아래(LEO), 두 급류 사이의 잔잔한 곳(MEO), 두 번째 급류 위(GEO) 세 곳으로 나뉜다.{/analogy}
+
+{quiz}"Positioned between the two Van Allen belts" 는 어느 위성 범주의 설명인가?{/quiz}
+{answer}'''MEO''' (Medium Earth Orbit) — p.18.{/answer}
+
+== 관련 문서 ==
+* [[MEO]] · [[위성 세 범주]] · [[LEO]] · [[GEO]] · [[GPS]]

@@ -1,0 +1,39 @@
+key: MEO
+title: MEO (Medium Earth Orbit; 중궤도 위성)
+category: 4강 위성, 용어
+---
+'''MEO''' 위성은 '''두 [[Van Allen belt]] 사이'''의 중간 높이를 도는 위성이다. L11 p.18–19. 대표 instance 는 '''[[GPS]]''' — 약 18,000 km 에 24 기가 돌며, '''[[trilateration]]'''(삼변측량)으로 지상의 위치를 알려 준다. 통신보다 '''위치 측정'''이 주 용도인 범주다.
+
+{def}"'''MEO (Medium Earth Orbit: 중궤도) Satellites''' — Positioned '''between the two Van Allen belts'''. Orbiting at an altitude about '''18,000 km''' and consist of '''24 satellites'''. '''Key instance: Global Positioning System (GPS)''' — '''Trilateration (삼변측량)'''." (L11 p.18–19){/def}
+
+[[img:L11-19.png|p.19 MEO — 정의 + a. Two-dimensional trilateration(원 세 개의 교점) b. Three-dimensional trilateration(위성 3 기의 구)|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Medium''' Earth Orbit = '''중간''' 높이 궤도. LEO(낮음)와 GEO(정지) 사이.
+* 정의가 숫자보다 '''위치 관계'''("between the two Van Allen belts")로 되어 있다 — 이게 외울 것이다.
+
+{|
+! 항목 || 슬라이드 || 참고
+|-
+| 위치 || '''between the two Van Allen belts''' || 그림 p.14: Lower belt 위, Upper belt 아래
+|-
+| 고도 || about 18,000 km (p.18) || 그림 p.14 초록 띠는 5,000–15,000 km — 슬라이드끼리 불일치. 실제 GPS ≈ 20,200 km (보충)
+|-
+| 위성 수 || '''24 satellites''' || (보충) 6 개 궤도면 × 4 기, 경사 55° 의 [[inclined orbit]]
+|-
+| 주기 || (없음) || Kepler 로 18,000 km → ≈ 10.6 h, 20,200 km → ≈ 12 h (보충)
+|-
+| key instance || '''GPS''' — '''trilateration''' || → [[GPS]] · [[trilateration]]
+|}
+
+[[anim:trilateration_anim|2D 에서 기지점 A·B·C 의 거리 원 세 개가 한 점에서 만나고, 3D 에서 위성 세 기의 구가 겹쳐 위치가 하나로 정해지는 것을 보라]]
+
+{info}왜 GPS 가 MEO 에 있나 (보충 — 슬라이드에 없음): LEO 는 한 위성이 보는 땅이 좁아 지구 어디서든 '''여러 위성이 동시에 보이게''' 하려면 수백 기가 필요하고, GEO 는 적도 위에 몰려 있어 위치 계산용 '''기하(서로 다른 방향의 위성)'''가 나쁘다. MEO 에 24 기를 깔면 지구 어디서든 늘 4 기 이상이 보인다.{/info}
+
+{analogy}🎭 '''아파트 중간층의 경비실.''' 1층(LEO)은 시야가 좁고, 꼭대기(GEO)는 한쪽 방향만 본다. 방사능 기계실 두 개(Van Allen belt) 사이 중간층에 경비실 24 개를 고루 두면, 단지 어디서 소리쳐도 여러 경비실이 들어 위치를 짚어 준다.{/analogy}
+
+{quiz}MEO 위성의 위치를 Van Allen belt 로 설명하고, 대표 instance 와 그 원리를 쓰시오.{/quiz}
+{answer}'''두 Van Allen belt 사이'''(between the two Van Allen belts). 대표 instance = '''GPS''', 원리 = '''trilateration(삼변측량)''' (p.18–19).{/answer}
+
+== 관련 문서 ==
+* [[GPS]] · [[trilateration]] · [[Van Allen belt]] · [[위성 세 범주]] · [[GEO]] · [[LEO]] · [[CH05 Satellite Network]]

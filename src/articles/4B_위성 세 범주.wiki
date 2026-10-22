@@ -1,0 +1,45 @@
+key: 위성 세 범주
+title: 위성 세 범주 — GEO · MEO · LEO (Three categories of satellites)
+category: 4강 위성, 용어
+---
+위성은 '''고도'''에 따라 세 범주로 나뉜다: '''[[GEO]]''' (정지궤도) · '''[[MEO]]''' (중궤도) · '''[[LEO]]''' (저궤도). L11 p.11–14 의 고도 그림이 이것을 한 장에 보여 주고, 범주 사이의 경계에는 '''[[Van Allen belt]]''' 두 개가 있다. 이어서 p.16–21 이 범주별로 한 슬라이드씩 자세히 설명한다.
+
+{def}"'''Three categories of satellites'''" (L11 p.11–14) — 그림: Altitude (km) 축 위에 '''LEO'''(0 바로 위, 파란 띠) · '''Lower Van Allen belt''' · '''MEO'''(5000–15,000, 초록 띠) · '''Upper Van Allen belt''' · '''GEO'''(35,786, 점선).
+고도로 나눈 위성의 세 범주: 저궤도 LEO, 중궤도 MEO, 정지궤도 GEO.{/def}
+
+[[img:L11-14.png|p.14 Three categories of satellites — 고도축(0 / 5000 / 15,000 / 35,786 km) 위의 LEO · Lower Van Allen belt · MEO · Upper Van Allen belt · GEO, 오른쪽 사진: GEO/MEO/LEO 동심원, Starlink 341 miles, KOREA 425, Falcon 9 발사|large]]
+
+[[anim:satellite_orbits|LEO → Lower Van Allen belt → MEO → Upper Van Allen belt → GEO 순서로 고도축이 쌓이는 것을 보고, 높을수록 한 바퀴가 느려지는 것을 비교하라]]
+
+== 이름에서 개념 끌어내기 ==
+* '''LEO = Low Earth Orbit''' (저궤도), '''MEO = Medium Earth Orbit''' (중궤도) — 이름이 곧 '''높이 순서'''.
+* '''GEO''' 만 높이가 아니라 '''성질'''로 이름 붙었다: '''GEOstationary'''(지구에 대해 정지). 그 성질이 생기는 높이가 딱 하나(35,786 km)라 결과적으로 "가장 높은 범주" 가 됐다 → [[geostationary]].
+
+{|
+! || [[LEO]] || [[MEO]] || [[GEO]]
+|-
+| 고도 (참고) || 500–2000 km || 그림 5,000–15,000 km · GPS ≈ 18,000 km || 35,786 km
+|-
+| 경계 || Lower Van Allen belt 아래 || '''두 Van Allen belt 사이''' || Upper Van Allen belt 위
+|-
+| orbit || polar · inclined || (GPS 는 inclined — 보충) || equatorial
+|-
+| 주기 || 90–120 min || 수 시간 || 24 h
+|-
+| key instance || [[Starlink]] || [[GPS]] || (방송·통신 — 보충)
+|}
+
+{info}'''숫자는 참고, 순서와 경계를 외운다.''' 교수 10/20 지침("specific numbers 는 외우지 말고 trend 를 이해하라")에 따라 고도 숫자보다 ① '''낮은 순서 LEO < MEO < GEO''' ② '''MEO 는 두 Van Allen belt 사이''' ③ 높을수록 주기가 길다([[Kepler's law]])를 기억하면 된다.
+슬라이드끼리 MEO 고도가 다르다(그림 5,000–15,000 vs 본문 18,000 km). 오른쪽 사진은 MEO 를 "~2,000 to 20,000 km" 로 적었다.{/info}
+
+== trend: 높이에 따른 trade-off (보충 — 슬라이드는 범주별 특징만) ==
+* '''높을수록''': 위성 하나가 보는 땅이 넓다 → 적은 수로 덮는다(GEO 는 3 기). 대신 멀어서 신호가 약해지고 [[mid:propagation time]] 이 길다.
+* '''낮을수록''': 가깝고 빠르다(지연 작음). 대신 한 위성이 덮는 [[footprint]] 가 좁고 금방 지나가니 '''수많은 위성'''과 위성 간 넘겨주기가 필요하다 → "similar to the cellular telephone system".
+
+{analogy}🎭 '''건물의 세 층 + 사이에 낀 기계실.''' 1층(LEO)은 손님(지상)과 가까워 대화가 빠르다. 꼭대기 층(GEO)은 창밖으로 도시 전체가 보이지만 소리치면 늦게 닿는다. 중간층(MEO)은 1층과 꼭대기 사이인데, 그 위아래에 방사능 기계실(Van Allen belt) 두 개가 끼어 있어 사무실을 둘 수 없다.{/analogy}
+
+{quiz}고도가 낮은 순서대로 세 범주를 쓰고, MEO 가 위치한 곳을 슬라이드 표현으로 쓰시오.{/quiz}
+{answer}'''LEO < MEO < GEO'''. MEO 는 "'''positioned between the two Van Allen belts'''" (p.18).{/answer}
+
+== 관련 문서 ==
+* [[GEO]] · [[MEO]] · [[LEO]] · [[Van Allen belt]] · [[Kepler's law]] · [[orbit]] · [[CH05 Satellite Network]]

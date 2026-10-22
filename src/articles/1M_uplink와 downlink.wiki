@@ -30,6 +30,45 @@ uplink(reverse) = MS → BS, downlink(forward) = BS → MS.{/def}
 {quiz}AMPS 에서 BS 가 MS 에게 보내는 방향의 이름 두 가지와 그 대역은?{/quiz}
 {answer}'''downlink''' = '''forward''' (base → mobile), '''869–894 MHz''' (p.19).{/answer}
 
+== 위성의 uplink 와 downlink (L11 p.15, 4강) ⭐⭐⭐ ==
+{def}"'''Uplink''': transmission from '''the Earth to the satellite'''. '''Downlink''': transmission from '''the satellite to the Earth'''." (L11 p.15 Frequency bands for SATCOM){/def}
+
+위성망에서는 송신자·수신자가 MS·BS 가 아니라 '''지구(지상국·user terminal·gateway)'''와 '''위성'''이다. 방향을 정하는 규칙("위로 올려 보내면 up")은 같다 — 위에서 말했듯 uplink/downlink 라는 말 자체가 위성에서 온 말이다.
+
+[[img:L11-15.png|L11 p.15 Frequency bands for SATCOM — Uplink: Earth → satellite, Downlink: satellite → Earth, 대역 표 L/S/C/Ku/Ka|medium]]
+
+{|
+! Band || Downlink, GHz || Uplink, GHz || Bandwidth, MHz
+|-
+| L || 1.5 || 1.6 || 15
+|-
+| S || 1.9 || 2.2 || 70
+|-
+| C || 4.0 || 6.0 || 500
+|-
+| Ku || 11.0 || 14.0 || 500
+|-
+| Ka || 20.0 || 30.0 || 3500
+|}
+* 숫자는 참고. trend: 대역이 높을수록 bandwidth↑, 그리고 '''모든 대역에서 uplink 주파수 > downlink 주파수''' → [[SATCOM 주파수 대역]].
+* uplink·downlink 에 '''다른 주파수'''를 쓰는 것은 AMPS 의 두 대역(824–849 / 869–894 MHz)과 같은 방식(FDD)이다.
+
+{exam}🎯 '''셀룰러 vs 위성 — 같은 단어, 다른 양 끝''' (교수 10/20 41:54: "memorize uplink and downlink")
+{|
+! || uplink || downlink
+|-
+| 셀룰러 (L10 p.19, AMPS) || '''MS → BS''' = reverse (824–849 MHz) || '''BS → MS''' = forward (869–894 MHz)
+|-
+| 위성 (L11 p.15, SATCOM) || '''Earth → satellite''' || '''satellite → Earth'''
+|}
+* 공통: '''up = 높은 쪽(탑·위성)으로 올려 보냄'''.
+* 함정: 위성 문제에서 "uplink = MS → BS" 라고 쓰면 틀린다. 지상의 gateway(BS 같은 장비)라도 '''위성으로 보내면 uplink''' 다.
+* 위성 uplink/downlink 에는 forward/reverse 라는 별칭을 쓰지 않는다(슬라이드 기준).{/exam}
+
+{quiz}OX: ① 위성 통신에서 downlink 는 위성이 지구로 보내는 전송이다. ② 셀룰러에서 uplink 는 forward 라고도 부른다. ③ SATCOM C band 에서 uplink 는 4 GHz, downlink 는 6 GHz 이다.{/quiz}
+{answer}① ○ ② ✗ (uplink = '''reverse''', downlink = forward) ③ ✗ (uplink '''6''' GHz, downlink '''4''' GHz — uplink 쪽이 더 높다){/answer}
+
 == 관련 문서 ==
 * [[AMPS 대역과 채널]] · [[IS-95 forward 전송]] · [[IS-95 reverse 전송]] · [[base station]] · [[mobile station]]
 * [[mid:duplexing과 multiple access]] · [[mid:full-duplex]]
+* 위성: [[SATCOM 주파수 대역]] · [[CH05 Satellite Network]] · [[satellite network 구성]] · [[UML과 GWL]]

@@ -1,0 +1,44 @@
+key: UML과 GWL
+title: UML 과 GWL (User Mobile Link · GateWay Link)
+category: 4강 위성, 용어
+---
+L11 p.21 LEO 그림에는 링크가 세 종류 있다: 위성 ↔ 사용자 폰의 '''UML''', 위성 ↔ 지상 gateway 의 '''GWL''', 위성 ↔ 위성의 '''[[ISL]]'''. 슬라이드는 약자만 적었고, 풀이(User Mobile Link, GateWay Link)는 Forouzan 의 것이다(보충).
+
+{def}슬라이드: p.21 LEO 그림 — 위성과 '''폰''' 사이 검정 번개선 "'''UML'''", 위성과 '''gateway 안테나''' 사이 분홍 번개선 "'''GWL'''", 두 위성 사이 "'''ISL'''".
+(Forouzan 보충) "'''User mobile link (UML)''' — communication between a satellite and a mobile station. '''Gateway link (GWL)''' — communication between a satellite and an Earth station (gateway)."{/def}
+
+[[img:L11-21.png|p.21 LEO — UML(위성 ↔ 폰, 검정), GWL(위성 ↔ gateway 안테나, 분홍), ISL(위성 ↔ 위성)|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''UML = User Mobile Link''' — '''사용자(user)'''의 '''이동 단말(mobile)'''과 위성을 잇는 링크. 셀룰러의 MS ↔ BS 무선 구간과 같은 자리.
+* '''GWL = GateWay Link''' — '''gateway'''(지상망의 관문)와 위성을 잇는 링크. 위성망과 지상 Internet·전화망이 만나는 문.
+* '''ISL = Inter-Satellite Link''' — 위성 '''사이'''. → [[ISL]]
+
+{|
+! 링크 || 잇는 것 || p.3 Starlink 그림에서 || 셀룰러에 빗대면 (보충)
+|-
+| '''UML''' || 위성 ↔ 사용자 단말 || 노란 빔 (User segment) || MS ↔ [[base station]]
+|-
+| '''GWL''' || 위성 ↔ 지상 gateway || 파란 점선 (Ground segment) || BS ↔ [[MSC]] (유선망 쪽)
+|-
+| '''ISL''' || 위성 ↔ 위성 || 빨간 화살표 (Space segment) || BS 끼리의 백본
+|}
+
+<pre class="ascii">
+      위성 1  ── ISL ──  위성 2
+      ╱    ╲             ╱    ╲
+   UML      GWL       GWL      UML
+   ╱          ╲       ╱          ╲
+ 폰          gateway gateway       폰
+(──── footprint 1 ────)(──── footprint 2 ────)
+</pre>
+
+* 각 링크의 '''위로 가는 방향'''(폰/gateway → 위성)이 '''uplink''', 내려오는 방향이 '''downlink''' 다 → [[uplink와 downlink]] · [[SATCOM 주파수 대역]].
+
+{analogy}🎭 '''하늘 위 환승역.''' UML 은 승객(폰)이 역(위성)에 오르는 '''개찰구''', GWL 은 역에서 지상 철도(Internet)로 갈아타는 '''환승 통로''', ISL 은 역과 역을 잇는 '''공중 연결 다리'''다.{/analogy}
+
+{quiz}p.21 그림에서 위성과 gateway 를 잇는 링크의 이름은? 위성과 사용자 폰을 잇는 링크는?{/quiz}
+{answer}위성 ↔ gateway = '''GWL''' (gateway link), 위성 ↔ 폰 = '''UML''' (user mobile link). (위성 ↔ 위성 = ISL){/answer}
+
+== 관련 문서 ==
+* [[ISL]] · [[LEO]] · [[footprint]] · [[satellite network 구성]] · [[uplink와 downlink]]

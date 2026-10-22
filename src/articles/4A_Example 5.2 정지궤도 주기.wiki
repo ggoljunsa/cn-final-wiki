@@ -1,0 +1,39 @@
+key: Example 5.2 정지궤도 주기
+title: Example 5.2 — 35,786 km 위성의 주기 = 24 h (정지궤도)
+category: 4강 위성, 용어
+---
+'''Example 5.2''' 는 지표면 위 '''35,786 km''' 에 있는 위성의 주기를 [[Kepler's law]] 로 구하는 예제다. L11 p.9 가 문제, p.10 이 풀이. 답이 '''24 h = 지구 자전 주기''' 로 나오고, 여기서 '''[[geostationary]] orbit''' 이라는 이름이 태어난다 — 바로 뒤 [[GEO]] 슬라이드로 이어지는 다리 역할을 하는 예제다.
+
+{def}"'''Example 5.2''' — What is the period of a satellite that is located at an orbit approximately '''35,786 km above the Earth'''?" (L11 p.9)
+"Solution — Period = (1/100) × (35,786 + 6378)^1.5 = '''86,579 s = 24 h'''. This means that a satellite located at 35,786 km has a period of 24 h, which is '''the same as the rotation period of the Earth'''. A satellite like this is said to be '''stationary''' to the Earth. The orbit, as we will see, is called a '''geostationary orbit'''." (p.10){/def}
+
+[[img:L11-10.png|p.10 Example 5.2 Solution — (1/100) × (35,786 + 6378)^1.5 = 86,579 s = 24 h, "stationary to the Earth … geostationary orbit"|large]]
+
+== 풀이 (손으로) ⭐⭐⭐ ==
+<pre class="txt">
+주어진 것: h = 35,786 km,  R = 6378 km,  C = 1/100
+1. distance = 35,786 + 6378 = '''42,164 km'''
+2. √42,164 ≈ 205.34
+3. distance^1.5 = 42,164 × 205.34 ≈ '''8,657,903'''
+4. Period = 8,657,903 × 1/100 ≈ '''86,579 s'''
+5. ÷ 3600 → '''24.05 h ≈ 24 h'''
+6. 의미: 지구 자전 주기(24 h)와 같다 → 지구에 대해 '''stationary''' → '''geostationary orbit'''
+</pre>
+
+{info}'''슬라이드 수치 불일치''': p.16 GEO 슬라이드는 고도를 "22,000 miles (≈ '''35405''' km)" 라고 적었다. 그 값으로 풀면 $(1/100)(35{,}405 + 6378)^{1.5} \approx 85{,}408$ s ≈ 23.7 h. 계산 문제는 '''Example 5.2 대로 35,786 km''' 를 쓰고, 문제에 다른 값이 주어지면 그 값을 쓴다.
+(보충) 엄밀한 지구 자전 주기(항성일)는 23 h 56 min ≈ 86,164 s. C 가 "≈ 1/100" 근사라 86,579 s 와 조금 차이가 난다.{/info}
+
+== 이름에서 개념 끌어내기 ==
+* '''stationary''' = 정지한. '''geo-stationary''' = '''지구(geo)에 대해''' 정지한. 우주에서 보면 엄청난 속도로 돌지만, 지구도 같은 주기로 돌기 때문에 '''땅에서 보면 멈춰 있다''' → [[geostationary]].
+
+[[sim:kepler_period]]
+
+{analogy}🎭 '''회전 초밥 레일 옆에서 같이 걷는 점원.''' 레일(지구 표면)이 도는 속도에 맞춰 점원(위성)이 바깥쪽에서 같이 돌면, 레일 위 접시(지상 안테나)에서 보기에 점원은 늘 같은 자리에 서 있다. 35,786 km 는 "바깥쪽에서 하루에 딱 한 바퀴" 가 되는 거리다.{/analogy}
+
+{exam}🎯 이 예제의 결론 문장 "a period of 24 h, which is '''the same as the rotation period of the Earth''' … '''stationary''' … '''geostationary orbit'''" 은 서술형 "왜 GEO 위성은 하늘에 멈춰 보이는가?" 의 답 그대로다. 계산 + 의미 두 줄을 같이 쓸 수 있어야 한다.{/exam}
+
+{quiz}지표면 위 35,786 km 위성의 주기를 Kepler's law 로 구하고, 그 결과가 의미하는 바를 쓰시오.{/quiz}
+{answer}(1/100) × (35,786 + 6378)^1.5 = (1/100) × 42,164^1.5 ≈ '''86,579 s ≈ 24 h'''. 지구 자전 주기와 같으므로 지상에서 보면 위성이 '''정지'''해 있다 → '''geostationary orbit''' (GEO).{/answer}
+
+== 관련 문서 ==
+* [[Kepler's law]] · [[Example 5.1 달의 주기]] · [[geostationary]] · [[GEO]] · [[period of a satellite]] · [[CH05 Satellite Network]]

@@ -1,0 +1,53 @@
+key: SATCOM 주파수 대역
+title: SATCOM 주파수 대역 (Frequency bands for SATCOM — L/S/C/Ku/Ka)
+category: 4강 위성, 용어
+---
+위성 통신(SATCOM, SATellite COMmunication)은 '''uplink''' 와 '''downlink''' 에 서로 다른 주파수를 쓰고, 그 짝을 대역 이름 '''L · S · C · Ku · Ka''' 로 부른다. L11 p.15 한 장에 정의 두 줄과 표 하나가 있다. 이 슬라이드의 진짜 시험 포인트는 표의 숫자가 아니라 '''위성에서 uplink/downlink 의 뜻'''이다 → [[uplink와 downlink]].
+
+{def}"'''Frequency bands for SATCOM''' — '''Uplink''': transmission from '''the Earth to the satellite'''. '''Downlink''': transmission from '''the satellite to the Earth'''." (L11 p.15){/def}
+
+[[img:L11-15.png|p.15 Frequency bands for SATCOM — Uplink/Downlink 정의와 Band(L/S/C/Ku/Ka) · Downlink GHz · Uplink GHz · Bandwidth MHz 표|large]]
+
+{|
+! Band || Downlink, GHz || Uplink, GHz || Bandwidth, MHz
+|-
+| L || 1.5 || 1.6 || 15
+|-
+| S || 1.9 || 2.2 || 70
+|-
+| C || 4.0 || 6.0 || 500
+|-
+| Ku || 11.0 || 14.0 || 500
+|-
+| Ka || 20.0 || 30.0 || 3500
+|}
+(표는 참고용 — 교수 지침상 숫자 암기 대상 아님)
+
+== 이름에서 개념 끌어내기 ==
+* '''SATCOM''' = SATellite COMmunication.
+* '''uplink''' = 땅에서 '''위로(up)''' 위성에 올려 보냄, '''downlink''' = 위성에서 '''아래로(down)''' 내려 보냄. 방향은 '''누가 보내느냐'''로만 정해진다.
+* 대역 이름 (보충 — 슬라이드에 없음): 2차 세계대전 레이더 시절의 암호명이 굳은 것. '''L''' = Long(긴 파장), '''S''' = Short, '''C''' = Compromise(S 와 X 의 절충), '''Ku''' = K-under(K 대역 아래), '''Ka''' = K-above(K 대역 위). K 는 독일어 kurz(짧은).
+
+== 표에서 읽을 trend 두 개 ==
+# '''높은 대역일수록 bandwidth 가 크다''': L 15 MHz → Ka 3500 MHz. 주파수가 높을수록 같은 비율의 폭이라도 Hz 수가 커서 더 많은 데이터를 싣는다 → [[mid:bandwidth]]. Starlink 같은 고속 위성 인터넷이 Ku·Ka 대역을 쓰는 이유(보충).
+# '''모든 행에서 uplink 주파수 > downlink 주파수''' (예: C 6 GHz 올림 / 4 GHz 내림). (보충 — 슬라이드에 없음) 주파수가 높을수록 [[mid:attenuation|감쇠]]가 크다. 지상국은 큰 안테나·큰 송신 전력을 쓸 수 있으니 불리한 높은 주파수를 uplink 로 맡고, 태양전지로 전력이 빠듯한 위성은 덜 감쇠하는 낮은 주파수로 내려보낸다.
+
+* uplink 와 downlink 에 '''서로 다른 주파수'''를 쓰니 동시에 오갈 수 있다 — 셀룰러 AMPS(824–849 / 869–894 MHz)와 같은 방식의 [[mid:duplexing과 multiple access|duplexing]](FDD).
+
+{exam}🎯 '''uplink 의 뜻이 셀룰러와 다르다''' — 교수 10/20: "'''memorize uplink and downlink'''".
+{|
+! || uplink || downlink
+|-
+| 셀룰러 (L10) || '''MS → BS''' (reverse) || '''BS → MS''' (forward)
+|-
+| 위성 (L11 p.15) || '''Earth → satellite''' || '''satellite → Earth'''
+|}
+둘 다 "up = 위로 올려 보냄". 위성 쪽 문제에서 "uplink = MS → BS" 로 답하면 틀린다.{/exam}
+
+{analogy}🎭 '''산꼭대기 산장과 마을의 무전.''' 마을(지상)은 발전기가 커서 높은 톤(높은 주파수)으로 힘차게 올려 보낼 수 있고, 배터리 하나로 버티는 산장(위성)은 덜 흩어지는 낮은 톤으로 내려보낸다. 두 톤이 다르니 서로 동시에 말해도 섞이지 않는다.{/analogy}
+
+{quiz}OX: SATCOM 에서 uplink 는 위성이 지구로 보내는 전송이다.{/quiz}
+{answer}✗ — '''uplink = Earth → satellite''', downlink = satellite → Earth (p.15).{/answer}
+
+== 관련 문서 ==
+* [[uplink와 downlink]] · [[CH05 Satellite Network]] · [[satellite network 구성]] · [[AMPS 대역과 채널]] · [[mid:bandwidth]]

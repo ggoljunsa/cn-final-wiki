@@ -1,0 +1,27 @@
+key: polar orbit
+title: Polar Orbit (극 궤도)
+category: 4강 위성, 용어
+---
+'''Polar orbit''' 은 궤도면이 '''남극과 북극을 지나는''' [[orbit]] 이다(적도와 거의 90°). L11 p.4 (c) 에 나오고, p.21 LEO 슬라이드 오른쪽에 inclined 와 함께 다시 나온다.
+
+{def}"c. '''Polar-orbit satellite'''" (L11 p.4, p.21 그림)
+"LEO — '''Polar''' and inclined orbits." (p.20)
+양 극 위를 지나는 세로 방향 궤도.{/def}
+
+[[img:L11-04.png|p.4 c. Polar-orbit satellite — 북극과 남극을 지나는 세로 고리|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''pole''' = 극. '''polar''' = 극의. 궤도가 '''극 위를''' 지나간다.
+* 위성은 남북으로 오가고, 그 아래에서 지구가 동서로 돈다 → 몇 바퀴 돌면 '''지구 전체(극지 포함)'''를 한 번씩 지나간다(보충).
+
+== 왜 LEO 가 polar 를 쓰나 ==
+* [[GEO]](equatorial)는 적도 상공에만 있어서 '''극지방이 잘 안 보인다'''(보충). LEO 는 낮아서 위성 하나의 [[footprint]] 가 작으니, 여러 위성을 polar·inclined 궤도에 깔아 '''극지까지''' 덮는다.
+* 그래서 "LEO = polar and inclined" 와 "GEO = equatorial" 은 짝으로 외우기 좋다.
+
+{analogy}🎭 '''돌아가는 수박 위를 세로로 긋는 칼.''' 칼(위성)은 위에서 아래로만 지나가는데, 수박(지구)이 옆으로 돌고 있으니 몇 번 그으면 수박 껍질 전체에 줄이 생긴다.{/analogy}
+
+{quiz}OX: LEO 위성은 GEO 처럼 equatorial orbit 을 쓴다.{/quiz}
+{answer}✗ — LEO 는 '''polar and inclined orbits''' (p.20). equatorial 은 GEO.{/answer}
+
+== 관련 문서 ==
+* [[orbit]] · [[equatorial orbit]] · [[inclined orbit]] · [[LEO]] · [[footprint]]

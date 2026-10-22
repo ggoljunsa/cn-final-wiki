@@ -1,0 +1,37 @@
+key: Example 5.1 달의 주기
+title: Example 5.1 — 달의 주기 (Kepler's law)
+category: 4강 위성, 용어
+---
+'''Example 5.1''' 은 [[Kepler's law]] 로 '''달의 주기'''를 구하는 예제다. L11 p.7 이 문제, p.8 이 풀이(Solution). 달은 지구의 '''자연 위성'''이라 이 식이 맞는지 확인하는 검산용 예제이기도 하다 — 답이 실제로 "한 달" 이 나온다.
+
+{def}"'''Example 5.1''' — What is the '''period of the moon''', according to Kepler's law?" (L11 p.7)
+"Solution — The moon is located approximately '''384,000 km above the Earth'''. The '''radius of the Earth is 6378 km'''. Applying the formula, we get the following. Period = (1/100) × (384,000 + 6378)^1.5 = '''2,439,090 s = 1 month'''." (p.8){/def}
+
+[[img:L11-08.png|p.8 Example 5.1 Solution — Period = (1/100) × (384,000 + 6378)^1.5 = 2,439,090 s = 1 month|large]]
+
+== 풀이 (손으로) ⭐⭐⭐ ==
+<pre class="txt">
+주어진 것: h = 384,000 km (지표면 위),  R = 6378 km,  C = 1/100
+1. distance = h + R = 384,000 + 6378 = '''390,378 km'''
+2. √390,378 ≈ 624.80
+3. distance^1.5 = 390,378 × 624.80 ≈ '''243,909,099'''
+4. Period = 243,909,099 × 1/100 ≈ '''2,439,091 s'''        (슬라이드 2,439,090 s)
+5. ÷ 3600 → 677.5 h,  ÷ 24 → '''28.2 일 ≈ 1 month'''
+</pre>
+
+{warn}'''반지름을 안 더하면''' $384{,}000^{1.5}/100 = 2{,}379{,}561$ s ≈ 27.5 일. 우연히 실제 달의 공전 주기(약 27.3 일)에 가깝게 나오지만 '''슬라이드 풀이와 다른 답'''이다 — 시험은 슬라이드 풀이(+6378)를 따른다.{/warn}
+
+{info}(보충 — 슬라이드에 없음) 엄밀히 말하면 지구–달 평균 거리 약 384,400 km 는 '''중심 간''' 거리라서 반지름을 또 더하면 이중 계산이다. 슬라이드(Forouzan)는 384,000 km 를 "above the Earth"(지표면 위)로 놓고 6378 을 더했다. 이 과목의 답은 '''2,439,090 s ≈ 1 month''' 로 쓴다.{/info}
+
+== 이름에서 개념 끌어내기 ==
+* '''period of the moon''' — 달이 지구를 한 바퀴 도는 시간. 달(moon)과 '''month''' 는 어원이 같다. 답이 "1 month" 인 건 우연이 아니다.
+
+[[sim:kepler_period]]
+
+{analogy}🎭 '''저울 영점 맞추기.''' 새 공식을 받으면 답을 이미 아는 것(달 = 한 달)에 먼저 넣어 본다. 한 달이 나오면 공식과 단위(초, km, +6378)를 제대로 쓴 것이다. 그다음에 모르는 것(GEO, Ex 5.2)에 쓴다.{/analogy}
+
+{quiz}달의 고도를 384,000 km, 지구 반지름을 6378 km 라 할 때 Kepler's law 로 구한 달의 주기는 몇 초인가? 과정도 쓰시오.{/quiz}
+{answer}distance = 384,000 + 6378 = 390,378 km → (1/100) × 390,378^1.5 ≈ '''2,439,090 s ≈ 1 month (≈ 28 일)'''.{/answer}
+
+== 관련 문서 ==
+* [[Kepler's law]] · [[Example 5.2 정지궤도 주기]] · [[period of a satellite]] · [[CH05 Satellite Network]]

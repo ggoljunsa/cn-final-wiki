@@ -2,7 +2,7 @@ key: 읽는 순서
 title: 읽는 순서 — 처음부터 끝까지 따라가기
 category: 안내
 ---
-수업(10/20) 슬라이드 순서 그대로다. 굵은 것이 메인 문서이고, 그 아래가 메인을 읽다 막힐 때 들어가는 사전 문서다. 메인을 먼저 끝까지 읽고 사전은 링크로 필요할 때만 들어가는 것을 권한다.
+수업(10/20 · 10/22) 슬라이드 순서 그대로다. 굵은 것이 메인 문서이고, 그 아래가 메인을 읽다 막힐 때 들어가는 사전 문서다. 메인을 먼저 끝까지 읽고 사전은 링크로 필요할 때만 들어가는 것을 권한다.
 
 {analogy}
 드라마 정주행과 같다. 메인 문서가 본편이고 사전 문서는 "인물 소개" 페이지다. 누가 누군지 헷갈릴 때만 들어가면 된다.
@@ -36,5 +36,15 @@ category: 안내
 # [[4G]] — [[all-IP]]
 # 여담: [[ETRI]] (한국이 CDMA 를 상용화한 이야기)
 
-== 4. 정리 ==
+== 4. '''[[CH05 Satellite Network]]''' (L11 p.1–21, 10/22) ==
+# 정의와 구성: [[satellite network]] → [[satellite network 구성]] · [[ISL]]
+# 궤도: [[orbit]] — [[equatorial orbit]] · [[inclined orbit]] · [[polar orbit]]
+# 주기 계산 ⭐⭐⭐: [[period of a satellite]] → [[Kepler's law]] → [[Example 5.1 달의 주기]] → [[Example 5.2 정지궤도 주기]]
+# 세 범주: [[위성 세 범주]] · [[Van Allen belt]]
+# 대역: [[SATCOM 주파수 대역]] · [[uplink와 downlink]] (위성 uplink = Earth → satellite)
+# [[GEO]] — [[geostationary]] · [[line-of-sight]]
+# [[MEO]] — [[GPS]] · [[trilateration]] (3강 [[GPS 동기화]] 와 연결)
+# [[LEO]] — [[Starlink]] · [[footprint]] · [[UML과 GWL]]
+
+== 5. 정리 ==
 * [[셀룰러 세대 비교표]] → [[공식 모음]] → [[자주 틀리는 함정 모음]]

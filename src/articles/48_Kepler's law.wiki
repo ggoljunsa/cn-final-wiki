@@ -1,0 +1,59 @@
+key: Kepler's law
+title: Kepler's Law (케플러 법칙 — 위성 주기 공식)
+category: 4강 위성, 용어
+---
+'''Kepler's law''' 는 위성의 '''[[period of a satellite|주기]]''' 를 '''지구 중심까지의 거리'''로 구하는 공식이다. L11 p.6 에 나오고, p.7–10 의 Example 두 개가 이 식 하나로 풀린다. 이 덱에서 유일한 계산이라 '''⭐⭐⭐ — 식과 "반지름 6378 km 를 더한다"를 외운다.'''
+
+{def}"'''Kepler's law''' — Period (seconds) = C × distance^1.5 (where C ≈ 1/100). Units — C: a const, period: '''seconds''', distance: '''km'''." (L11 p.6){/def}
+
+$$\text{Period [s]} = C \times \text{distance}^{1.5}, \quad C \approx \frac{1}{100}, \quad \text{distance [km]} = h + 6378$$
+
+[[img:L11-06.png|p.6 Kepler's law — Period (seconds) = C × distance^1.5 (where C ≈ 1/100), Units: C a const / period seconds / distance km|large]]
+
+== 기호 하나씩 ==
+{|
+! 기호 || 뜻 || 단위 || 주의
+|-
+| Period || 한 바퀴 시간 → [[period of a satellite]] || '''초 (s)''' || 답을 시간·일로 바꿀 때 ÷3600, ÷24
+|-
+| C || 상수 || — || '''≈ 1/100''' (곱하기 0.01)
+|-
+| distance || '''지구 중심'''부터 위성까지 || '''km''' || 문제의 "above the Earth" 고도 $h$ 에 '''6378 km(지구 반지름)를 더한다'''
+|-
+| 1.5 || 지수 || — || $x^{1.5} = x \times \sqrt{x}$
+|}
+
+== 이름에서 개념 끌어내기 ==
+* '''Kepler''' — 17세기 천문학자 요하네스 케플러. 그의 '''제3법칙'''("공전 주기의 제곱은 궤도 긴반지름의 세제곱에 비례", $T^2 \propto r^3$)을 위성용으로 쓴 것이다. 양변에 루트를 씌우면 $T \propto r^{1.5}$ — 슬라이드 식의 '''1.5''' 가 여기서 나온다 (보충 — 슬라이드에 없음).
+* '''distance''' 가 "altitude" 가 아니라는 점이 핵심. 행성 운동 법칙이니 거리는 당연히 '''중심(지구 중심)부터'''다.
+
+== 손으로 푸는 순서 (공통 템플릿) ==
+<pre class="txt">
+1. 고도 h (지표면 위, km) 를 읽는다
+2. distance = h + '''6378'''                      ← 절대 빼먹지 말 것
+3. distance^1.5 = distance × √distance
+4. Period = distance^1.5 × '''1/100'''   [초]
+5. 필요하면 ÷60 (분) · ÷3600 (시간) · ÷86,400 (일)
+</pre>
+* 예: Ex 5.1 달 384,000 → 390,378 → 2,439,091 s ≈ 1 month → [[Example 5.1 달의 주기]]
+* 예: Ex 5.2 35,786 → 42,164 → 86,579 s ≈ 24 h → [[Example 5.2 정지궤도 주기]]
+
+{warn}'''함정 — 반지름을 안 더하면''': 달 $384{,}000^{1.5}/100 = 2{,}379{,}561$ s (슬라이드 2,439,090 과 다름), GEO $35{,}786^{1.5}/100 = 67{,}697$ s ≈ 18.8 h (24 h 가 안 나옴). 답이 "24 h" 나 "1 month" 로 깔끔하게 안 떨어지면 6378 을 빠뜨린 것이다.{/warn}
+
+[[sim:kepler_period]]
+
+{info}'''C ≈ 1/100 은 어디서 왔나''' (보충 — 슬라이드에 없음): 뉴턴 역학으로 $T = 2\pi\sqrt{r^3/\mu}$, 지구의 $\mu = GM \approx 398{,}600\ \text{km}^3/\text{s}^2$. 그러면 $C = 2\pi/\sqrt{398{,}600} \approx 2\pi/631.3 \approx 0.00995 \approx 1/100$. 그래서 슬라이드가 "≈" 를 붙였다. 계산 문제는 '''슬라이드대로 1/100''' 을 쓴다.{/info}
+
+== trend: 높을수록 느리다 ==
+* 거리 4 배 → 주기 $4^{1.5} = 8$ 배. 거리 9 배 → 27 배.
+* LEO(≈ 7,000 km, 중심 기준) → 약 1.5 h, GEO(≈ 42,000 km) → 24 h, 달(≈ 390,000 km) → 한 달. 이 순서만 알면 [[위성 세 범주]]의 주기 비교 문제는 계산 없이 풀린다.
+
+{analogy}🎭 '''긴 줄에 매단 추.''' 짧은 줄의 추는 빨리 흔들리고 긴 줄의 추는 느리게 흔들린다. 위성도 지구 중심에 묶인 "보이지 않는 줄" 이 길수록(멀수록) 한 바퀴가 느리다. 다만 줄 길이는 '''지구 중심부터''' 잰다 — 땅바닥(지표면)부터 재면 6378 km 가 모자란다.{/analogy}
+
+{exam}🎯 계산 문제 예상: "고도 ___ km 위성의 주기를 Kepler's law 로 구하시오". 채점 포인트 ① 식 $C \times \text{distance}^{1.5}$, $C = 1/100$ ② '''distance = 고도 + 6378''' ③ 단위 초 → 시간 환산. 교수가 "숫자는 외우지 말라"고 했지만, 이 식과 6378 은 문제에 안 주어질 수도 있으니 외워 두는 게 안전하다.{/exam}
+
+{quiz}고도 1,000 km 의 LEO 위성 주기를 Kepler's law 로 구하시오 (C = 1/100, 지구 반지름 6378 km).{/quiz}
+{answer}distance = 1,000 + 6378 = 7,378 km → $7{,}378^{1.5} = 7{,}378 \times 85.90 \approx 633{,}740$ → × 1/100 ≈ '''6,337 s ≈ 105.6 min''' (LEO 의 90–120 min 범위 안).{/answer}
+
+== 관련 문서 ==
+* [[period of a satellite]] · [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]] · [[geostationary]] · [[GEO]] · [[LEO]] · [[CH05 Satellite Network]] · [[공식 모음]]

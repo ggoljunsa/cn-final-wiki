@@ -1,0 +1,36 @@
+key: ISL
+title: ISL (Inter-Satellite Link, 위성 간 링크)
+category: 4강 위성, 용어
+---
+'''ISL''' 은 '''위성과 위성을 직접 잇는 링크'''다. L11 p.3 의 Starlink 구조도에서 위성들 사이 빨간 양방향 화살표, p.21 LEO 그림에서 두 위성 사이 번개 모양 선에 "ISL" 이라고 적혀 있다. 슬라이드는 약자만 쓰고 풀이는 없다 — '''Inter-Satellite Link''' 는 Forouzan 의 풀이다(보충).
+
+{def}슬라이드: p.3 "Space segment" 의 위성들 사이 '''ISL''' 화살표, p.21 LEO 위성 2 기 사이 '''ISL'''.
+(Forouzan 보충) "'''Inter-satellite link (ISL)''' — the link between two satellites" in a LEO system.
+ISL = 위성 ↔ 위성 링크. 지상을 거치지 않고 하늘에서 데이터를 옮긴다.{/def}
+
+[[img:L11-21.png|p.21 LEO — 위성 2 기 사이의 ISL(검정 번개선), 각 위성 아래 UML(폰)·GWL(gateway)과 footprint|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Inter-''' = 사이(between). '''Inter-Satellite''' = 위성 '''사이'''. Internet 이 net 들 '''사이'''를 잇는 것과 같은 접두어.
+* '''Link''' = 두 node 를 잇는 통신 경로([[mid:node와 link]]).
+
+== 왜 필요한가 ==
+* LEO 위성 하나의 [[footprint]] 는 좁다. 내 위성 아래에 gateway 가 없으면, 데이터를 '''옆 위성으로 넘겨서''' gateway 가 보이는 위성까지 옮겨야 한다 → ISL.
+* 바다 한가운데·극지처럼 근처에 지상국을 지을 수 없는 곳도 하늘 위 릴레이로 연결된다(보충).
+* 셀룰러에 빗대면 BS 와 BS 사이를 잇는 '''유선 백본'''을 하늘로 옮긴 것(보충).
+
+<pre class="ascii">
+   위성 A  ⇄ ISL ⇄  위성 B  ⇄ ISL ⇄  위성 C
+     ↑                                 ↓
+   (UML)                             (GWL)
+     │                                 │
+   폰 (user)                        gateway → Internet
+</pre>
+
+{analogy}🎭 '''하늘 위의 릴레이 달리기.''' 바통(데이터)을 땅에 내려놓지 않고 옆 주자(위성)에게 직접 넘겨, 결승선(gateway)이 보이는 주자까지 전달한다.{/analogy}
+
+{quiz}LEO 그림(p.21)에 나오는 링크 세 종류 UML · GWL · ISL 은 각각 무엇과 무엇을 잇는가?{/quiz}
+{answer}UML = 위성 ↔ 사용자 단말(폰), GWL = 위성 ↔ 지상 gateway, '''ISL = 위성 ↔ 위성'''.{/answer}
+
+== 관련 문서 ==
+* [[UML과 GWL]] · [[LEO]] · [[footprint]] · [[satellite network 구성]] · [[Starlink]] · [[CH05 Satellite Network]]

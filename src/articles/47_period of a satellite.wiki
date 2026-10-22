@@ -1,0 +1,39 @@
+key: period of a satellite
+title: Period of a Satellite (위성의 주기)
+category: 4강 위성, 용어
+---
+'''Period of a satellite''' 는 위성이 지구를 '''한 바퀴 완전히 도는 데 걸리는 시간'''이다. L11 p.5 에서 정의하고, p.6 에서 그 값을 구하는 '''[[Kepler's law]]''' 를 준다. 이 값 하나가 GEO 가 "정지해 보이는" 이유, LEO 가 "빨리 지나가는" 이유를 다 설명한다.
+
+{def}"'''Period of a satellite''' — The time required for a satellite to make a '''complete trip around the Earth'''." (L11 p.5)
+위성이 지구를 한 바퀴 완전히 도는 데 필요한 시간.{/def}
+
+[[img:L11-06.png|p.6 Period of a satellite 정의 + Kepler's law: Period (seconds) = C × distance^1.5 (C ≈ 1/100)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''period''' = 주기. 중간고사 CH02 에서 신호의 period(한 cycle 시간, $T = 1/f$)를 배웠다 → [[mid:주기]]. 같은 말이다 — 위성은 '''지구 한 바퀴'''가 한 cycle.
+* '''complete trip''' — 반 바퀴, 지평선까지가 아니라 '''한 바퀴 전체'''.
+
+== 높이와 주기 ==
+$\text{Period} = \frac{1}{100} \times (h + 6378)^{1.5}$ — '''높을수록 주기가 길다''' ([[Kepler's law]]).
+{|
+! 위성 || 고도 || 주기 || 땅에서 본 모습
+|-
+| [[LEO]] || 500–2000 km || 90–120 min || 몇 분 만에 하늘을 가로질러 사라짐
+|-
+| [[MEO]] (GPS) || ≈ 18,000 km || ≈ 10.6 h (공식값) || 천천히 이동
+|-
+| [[GEO]] || 35,786 km || '''24 h''' = 지구 자전 || '''멈춰 있음''' → [[geostationary]]
+|-
+| 달 || 384,000 km || ≈ 1 month || 한 달에 한 번 같은 위상
+|}
+값은 [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]] 와 같은 방식으로 계산(검산은 [[CH05 Satellite Network]] 의 표).
+
+[[sim:kepler_period]]
+
+{analogy}🎭 '''운동장 트랙의 안쪽 레인과 바깥 레인.''' 안쪽 레인(LEO)은 한 바퀴가 짧고 달리는 속도도 빨라 금방 돈다. 바깥 레인(GEO)은 둘레가 길고 천천히 달려서 한 바퀴에 하루가 걸린다 — 마침 관중석(지구)도 하루에 한 바퀴 도니 관중에게 그 주자는 늘 같은 자리에 보인다.{/analogy}
+
+{quiz}"Period of a satellite" 의 슬라이드 정의를 영어로 쓰시오.{/quiz}
+{answer}"The time required for a satellite to make a complete trip around the Earth." (p.5){/answer}
+
+== 관련 문서 ==
+* [[Kepler's law]] · [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]] · [[geostationary]] · [[위성 세 범주]] · [[orbit]]

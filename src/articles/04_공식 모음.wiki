@@ -40,6 +40,48 @@ GSM channel bit rate — 손으로 푸는 순서
 4. multiframe 길이 = 120 ms → 32,500 / 0.120 s = 270,833 bps ≈ '''270.8 kbps'''
 </pre>
 
+== 위성 (CH05 (2), 4강) ⭐⭐⭐ ==
+위성 덱(L11)의 유일한 계산은 '''[[Kepler's law]]''' 다. 슬라이드에 풀이가 달린 Example 이 두 개 있어 계산 문제 후보 1순위 — 위 교수 지침의 예외로 '''식과 6378 은 외운다'''.
+{|
+! 무엇 || 식 || 값 || 시뮬레이터
+|-
+| [[Kepler's law]] || $\text{Period [s]} = \frac{1}{100} \times \text{distance}^{1.5}$, distance [km] = 고도 $h$ + '''6378''' || — || `sim:kepler_period`
+|-
+| [[Example 5.1 달의 주기|Ex 5.1]] 달 || $\frac{1}{100} \times (384{,}000 + 6378)^{1.5}$ || 2,439,090 s ≈ 1 month || `sim:kepler_period`
+|-
+| [[Example 5.2 정지궤도 주기|Ex 5.2]] GEO || $\frac{1}{100} \times (35{,}786 + 6378)^{1.5}$ || 86,579 s ≈ 24 h || `sim:kepler_period`
+|-
+| LEO (참고) || 500 → 2000 km || ≈ 95 → 128 min (슬라이드 "90 to 120 min") || `sim:kepler_period`
+|}
+
+<pre class="txt">
+Kepler's law — 손으로 푸는 순서
+1. 고도 h (지표면 위, km)
+2. distance = h + '''6378'''                 ← 지구 반지름. 빼먹으면 달 2,379,561 s (오답)
+3. distance^1.5 = distance × √distance
+4. × 1/100 → Period [초]
+5. ÷3600 → 시간, ÷86,400 → 일
+예) 35,786 + 6378 = 42,164 → 42,164 × 205.34 ≈ 8,657,903 → '''86,579 s ≈ 24 h'''
+</pre>
+
+[[sim:kepler_period]]
+
+'''SATCOM 주파수 대역''' (L11 p.15, 참고 — 숫자 암기 불필요. '''uplink = Earth → satellite''' 만 확실히)
+{|
+! Band || Downlink, GHz || Uplink, GHz || Bandwidth, MHz
+|-
+| L || 1.5 || 1.6 || 15
+|-
+| S || 1.9 || 2.2 || 70
+|-
+| C || 4.0 || 6.0 || 500
+|-
+| Ku || 11.0 || 14.0 || 500
+|-
+| Ka || 20.0 || 30.0 || 3500
+|}
+trend: 대역↑ → bandwidth↑, 모든 대역에서 uplink 주파수 > downlink → [[SATCOM 주파수 대역]]
+
 == 참고 수치 (암기 불필요 — trend 이해용) ==
 {|
 ! 세대 || 수치
@@ -55,6 +97,8 @@ GSM channel bit rate — 손으로 푸는 순서
 | IMT-2000 || 144 kbps (차량) · 384 kbps (보행) · 2 Mbps (정지) · 2 GHz 대역 · 2 MHz 대역폭 · W-CDMA 5 MHz · CDMA 2000 15 MHz + 1.25 MHz
 |-
 | 4G || 100 Mbps (이동) · 1 Gbps (정지) · 어디서든 100 Mbps 이상
+|-
+| 위성 고도 || GEO 35,786 km (p.16 본문 "22,000 miles ≈ 35405 km") · MEO ≈ 18,000 km, 24 기 (GPS) · LEO 500–2000 km, 90–120 min · Starlink 341 miles ≈ 550 km
 |}
 
 {analogy}
@@ -63,3 +107,4 @@ GSM channel bit rate — 손으로 푸는 순서
 
 == 관련 문서 ==
 * [[셀룰러 세대 비교표]] · [[GSM multiframe]] · [[AMPS 대역과 채널]] · [[자주 틀리는 함정 모음]]
+* 위성: [[Kepler's law]] · [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]] · [[SATCOM 주파수 대역]] · [[CH05 Satellite Network]]

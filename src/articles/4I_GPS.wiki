@@ -1,0 +1,33 @@
+key: GPS
+title: GPS (Global Positioning System)
+category: 4강 위성, 용어
+---
+'''GPS''' 는 '''[[MEO]]''' 의 대표 instance 다(L11 p.19 "Key instance: Global Positioning System (GPS)"). 약 18,000 km 높이의 위성 24 기가 신호를 보내고, 수신기는 위성들까지의 '''거리'''로 자기 위치를 계산한다 — '''[[trilateration]]'''. 3강에서 [[IS-95]] 기지국이 GPS 로 시계를 맞춘다고 했던 그 GPS 다 → [[GPS 동기화]].
+
+{def}"MEO — Orbiting at an altitude about '''18,000 km''' and consist of '''24 satellites'''. '''Key instance: Global Positioning System (GPS)''' — '''Trilateration (삼변측량)'''." (L11 p.18–19)
+GPS = 중궤도 위성 24 기로 지상 수신기의 위치를 알려 주는 시스템. 원리는 삼변측량.{/def}
+
+[[img:L11-19.png|p.19 MEO 와 GPS — a. 2D trilateration(원 3 개), b. 3D trilateration(구 3 개)|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Global''' — 지구 어디서나. '''Positioning''' — 위치를 정함. '''System''' — 위성 + 지상 관제 + 수신기 전체.
+* 이름에 "communication" 이 없다 — 데이터를 주고받는 망이 아니라, 위성이 '''일방적으로 방송'''하는 신호를 수신기가 듣기만 한다(보충). 그래서 내 폰의 GPS 는 위성에 아무것도 보내지 않는다.
+
+== 어떻게 위치를 아나 (보충 — 슬라이드는 "Trilateration" 한 단어) ==
+# 각 위성은 '''자기 위치'''와 '''정확한 송신 시각'''(원자시계)을 계속 방송한다.
+# 수신기는 받은 시각 − 보낸 시각 = 전파 이동 시간을 재고, × 빛의 속도 = '''위성까지 거리'''를 얻는다 ([[mid:propagation time]] 을 거꾸로 쓰는 셈).
+# 위성 3 기까지의 거리 → 구 3 개의 교점 → 위치 ([[trilateration]]). 실제로는 수신기 시계 오차까지 풀어야 해서 '''4 기 이상'''을 쓴다.
+
+{info}'''3강과의 연결''': GPS 위성은 원자시계를 싣고 정확한 시각을 방송한다. [[IS-95]] 의 BS 들은 이 '''시각''' 기능을 써서 서로 동기화한다 — "To provide synchronization, BSs use the service of GPS" (L10 p.28) → [[GPS 동기화]].{/info}
+
+{warn}'''GPS 는 GEO 가 아니다.''' 위치 측정 위성이니 "늘 하늘 한자리에 있는" 정지궤도일 것 같지만, 슬라이드는 GPS 를 '''MEO''' 의 key instance 로 든다 (p.19). GEO 는 적도 상공에 몰려 있어 위치 계산에 불리하다(보충).{/warn}
+
+[[anim:trilateration_anim|거리 원(구) 세 개가 한 점에서 만나는 순간 — GPS 가 위치를 정하는 방법이다]]
+
+{analogy}🎭 '''세 친구에게 "나랑 몇 m 떨어져 있어?" 묻기.''' 친구 A 는 "100 m", B 는 "80 m", C 는 "120 m" 라고 답한다. 세 친구 위치를 알고 있으면, 세 거리를 동시에 만족하는 곳은 한 군데뿐 — 거기가 나다. GPS 위성이 그 친구들이다.{/analogy}
+
+{quiz}GPS 는 세 위성 범주 중 어디에 속하며, 위치를 정하는 원리는?{/quiz}
+{answer}'''MEO''' (약 18,000 km, 24 기). 원리 = '''trilateration(삼변측량)''' — 위성들까지의 거리로 위치를 정한다.{/answer}
+
+== 관련 문서 ==
+* [[MEO]] · [[trilateration]] · [[GPS 동기화]] · [[IS-95]] · [[위성 세 범주]] · [[CH05 Satellite Network]]

@@ -33,6 +33,8 @@ category: 안내
 ! 날짜 || 범위 || 녹음 || 위키
 |-
 | 10/20 (화) || CH05 (1) p.1–36 전부 (WAN 분류 → cellular 동작 → 1G–4G) || `녹음본/1020_컴네.txt` (73분, whisper 전사) || [[CH05 셀룰러 동작]] · [[CH05 1G–2G 셀룰러]] · [[CH05 IS-95·3G·4G]]
+|-
+| 10/22 (목) || CH05 (2) Satellite Network p.1–21 (예정) — '''선제 작성''' || (녹음 대기) || [[CH05 Satellite Network]]
 |}
 
 {analogy}

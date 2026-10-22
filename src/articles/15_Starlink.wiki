@@ -24,5 +24,15 @@ BBC 그림 제목: "How SpaceX satellites are used on the battlefield" — ① S
 {analogy}🎭 '''하늘을 지나가는 기지국 행렬.''' 셀룰러는 기지국이 땅에 고정되고 내가 움직이지만, Starlink 는 '''기지국(위성)이 머리 위를 줄지어 지나간다'''. 한 위성이 지평선 너머로 사라지기 전에 다음 위성이 와서 통신을 이어받는다.{/analogy}
 
 
+== 4강에서: LEO 의 key instance (L11 p.3, p.14, p.20–21) ==
+* '''LEO''': L11 p.21 "LEO … '''Key instance: Starlink'''". LEO = polar and inclined orbits, 500–2000 km, 90–120 min, "similar to the cellular telephone system" → [[LEO]].
+* '''고도 341 miles''': p.14·p.21 그림 "Starlink '''341 miles'''" vs "Normal satellites '''621+ miles'''" — 341 miles ≈ 550 km, 621 miles ≈ 1,000 km. 보통 LEO 보다도 낮게 띄웠다. Kepler 로 계산하면 $(1/100)(550 + 6378)^{1.5} \approx 5{,}766$ s ≈ '''96 min''' → [[Kepler's law]].
+* '''System architecture''' (p.3): '''Space segment'''(위성들 + '''[[ISL]]''') · '''User segment'''(User Terminals) · '''Ground segment'''(Starlink Gateway → Internet) → [[satellite network 구성]].
+* '''ISL''': 위성끼리 직접 데이터를 넘겨, gateway 가 보이는 위성까지 하늘에서 전달한다 → [[ISL]] · [[UML과 GWL]].
+* '''footprint''': 위성 하나가 비추는 지상 영역. 위성을 따라 움직이므로 사용자는 몇 분마다 다음 위성으로 넘어간다 → [[footprint]].
+
+[[img:L11-21.png|L11 p.21 LEO — ISL 로 이어진 위성 2 기, UML·GWL, Footprint, 오른쪽 아래 "Starlink 341 miles" vs "Normal satellites 621+ miles"|medium]]
+
 == 관련 문서 ==
 * [[satellite network]] · [[WAN 분류]] · [[handoff]] · [[CH05 셀룰러 동작]]
+* 4강: '''[[CH05 Satellite Network]]''' · [[LEO]] · [[ISL]] · [[footprint]] · [[satellite network 구성]]

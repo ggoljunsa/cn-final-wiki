@@ -1,5 +1,5 @@
 key: 자주 틀리는 함정 모음
-title: 자주 틀리는 함정 모음 — CH05 셀룰러
+title: 자주 틀리는 함정 모음 — CH05 셀룰러 · 위성
 category: 안내
 ---
 OX·객관식에서 헷갈리기 쉬운 짝을 모았다. 각 줄의 '''틀린 생각 → 맞는 사실''' 을 읽고, 이유가 바로 떠오르지 않으면 링크된 문서로 간다. 교수는 "숫자를 묻는 OX 는 안 낸다"(46:00)고 했으니, 함정은 대부분 '''개념의 방향·짝짓기'''에서 나온다.
@@ -67,6 +67,27 @@ OX·객관식에서 헷갈리기 쉬운 짝을 모았다. 각 줄의 '''틀린 �
 | 3G 는 packet-switched 만 || 3G(IMT-2000)는 '''packet + circuit''' 둘 다 지원. '''all-IP packet-switched''' 는 4G || [[3G]] · [[4G]] · [[circuit switching과 packet switching]]
 |}
 
+== 위성 (CH05 (2)) ==
+{|
+! 틀린 생각 || 맞는 사실 || 문서
+|-
+| Kepler's law 의 distance 는 문제에 주어진 고도 그대로 || distance 는 '''지구 중심부터''' → 고도 + '''6378 km'''. 빼먹으면 달 2,379,561 s, GEO ≈ 18.8 h 로 슬라이드 답(2,439,090 s · 24 h)이 안 나온다 || [[Kepler's law]] · [[Example 5.1 달의 주기]]
+|-
+| 위성에서도 uplink = MS → BS || 위성 '''uplink = Earth → satellite''', downlink = satellite → Earth (p.15). 셀룰러 uplink(MS → BS, reverse)와 짝지어 외운다 || [[uplink와 downlink]] · [[SATCOM 주파수 대역]]
+|-
+| GEO 위성 한 기면 지구 전체를 덮는다 || line-of-sight 는 넓지만 '''curvature''' 때문에 '''최소 3 기, equidistant''' 필요 (p.17) || [[GEO]] · [[line-of-sight]]
+|-
+| MEO 는 Van Allen belt 안(또는 LEO 아래)에 있다 || MEO 는 '''두 Van Allen belt 사이''' (p.18) || [[MEO]] · [[Van Allen belt]]
+|-
+| LEO 는 GEO 처럼 equatorial orbit || LEO 는 '''polar and inclined''' orbits (p.20). equatorial 은 GEO || [[LEO]] · [[polar orbit]]
+|-
+| GPS 는 하늘에 고정된 GEO 위성 || GPS 는 '''MEO''' 의 key instance (≈ 18,000 km, 24 기, trilateration) || [[GPS]] · [[MEO]]
+|-
+| 높은 위성일수록 빨리 돈다 || 반대. Kepler: 주기 ∝ distance^1.5 → '''높을수록 느리다''' (LEO 90–120 min, GEO 24 h) || [[period of a satellite]]
+|-
+| geostationary = 위성이 실제로 멈춰 있음 || 주기가 지구 자전(24 h)과 같아 '''지구에 대해''' 멈춰 보일 뿐 || [[geostationary]]
+|}
+
 {quiz}
 OX: ① uplink 는 forward communication 이다. ② soft handoff 에서 MS 는 두 BS 와 동시에 통신할 수 있다. ③ AMPS 의 control channel 은 FM 으로 변조된다. ④ IS-95 는 neighboring cell 이 같은 주파수 대역을 쓸 수 있다. ⑤ handoff 결정은 MS 가 한다.
 {/quiz}
@@ -75,4 +96,4 @@ OX: ① uplink 는 forward communication 이다. ② soft handoff 에서 MS 는 
 {/answer}
 
 == 관련 문서 ==
-* [[공식 모음]] · [[셀룰러 세대 비교표]] · [[시험 정보]]
+* [[공식 모음]] · [[셀룰러 세대 비교표]] · [[시험 정보]] · [[CH05 Satellite Network]]

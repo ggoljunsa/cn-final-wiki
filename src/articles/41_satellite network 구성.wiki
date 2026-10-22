@@ -1,0 +1,36 @@
+key: satellite network 구성
+title: Satellite Network 의 구성 (space · ground · user segment)
+category: 4강 위성, 용어
+---
+위성망은 '''위성만으로 이루어진 게 아니다'''. 슬라이드 정의대로 "위성을 '''포함한''' node 들의 조합"이고, L11 p.3 의 Starlink 그림은 이것을 '''Space segment''' · '''User segment''' · '''Ground segment''' 세 덩어리로 나눠 보여 준다.
+
+{def}"'''A Satellite Network''' — A combination of '''nodes, including satellites''', that provides communication '''from one point on the Earth to another'''." (L11 p.3)
+위성을 포함한 node 들이 모여, 지구 위 한 지점에서 다른 지점으로 통신을 제공하는 망.{/def}
+
+[[img:L11-03.png|p.3 Startlink(오타, Starlink) System Architecture — Space segment(위성 4 기 + ISL), User segment(User Terminals), Ground segment(Starlink Gateway ↔ Internet)|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''combination of nodes''' — 망(network)은 언제나 node + link 다([[mid:node와 link]]). 여기서는 위성도 node 하나일 뿐이고, 지상의 안테나들도 node 다.
+* '''including satellites''' — "including" 이 핵심. 위성 '''만''' 이 아니다.
+* '''from one point on the Earth to another''' — 출발점과 도착점은 '''둘 다 지구 위'''. 위성은 중간 다리다.
+* '''segment''' = 조각, 구간. 그림을 점선으로 자른 세 구역.
+
+{|
+! segment || 무엇이 있나 (p.3 그림) || 셀룰러에 빗대면 (보충)
+|-
+| '''Space segment''' || 궤도의 위성들, 위성끼리 잇는 빨간 '''[[ISL]]''' 화살표 || 하늘에 뜬 [[base station]] 들
+|-
+| '''User segment''' || 집 지붕의 '''User Terminal''' 안테나 (노란 빔으로 위성과 연결) || [[mobile station]]
+|-
+| '''Ground segment''' || '''Starlink Gateway''' 안테나 → '''Internet''' (파란 점선으로 위성과 연결) || BS 뒤의 유선망([[MSC]]·[[PSTN]]) 에 붙는 자리
+|}
+
+데이터 흐름 예: 집 User Terminal → (위로) 위성 → ISL 로 옆 위성들 → (아래로) Gateway → Internet. 위로 가는 구간은 '''uplink''', 아래로 오는 구간은 '''downlink''' → [[uplink와 downlink]].
+
+{analogy}🎭 '''공중 케이블카 망.''' 탑승장(user terminal)에서 케이블카(위성)에 오르고, 케이블카끼리는 공중 줄(ISL)로 이어져 옮겨 탄다. 마지막에 큰 역(gateway)에 내려 지하철(Internet)로 갈아탄다. 케이블카만 있어서는 아무 데도 못 간다 — 탑승장과 역이 '''함께''' 있어야 망이다.{/analogy}
+
+{quiz}슬라이드의 satellite network 정의에서 "including satellites" 가 뜻하는 바는?{/quiz}
+{answer}위성망의 node 는 위성'''만'''이 아니라 지상의 user terminal·gateway 등도 포함한다는 것. "A combination of nodes, including satellites, that provides communication from one point on the Earth to another."{/answer}
+
+== 관련 문서 ==
+* [[CH05 Satellite Network]] · [[satellite network]] · [[ISL]] · [[Starlink]] · [[UML과 GWL]]

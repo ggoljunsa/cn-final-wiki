@@ -28,8 +28,15 @@
 | 덱 | PDF (`../강의자료/`) | 페이지 | 내용 | 수업 | 해설본 |
 |---|---|---|---|---|---|
 | L10 | CH05_Wide Area Networks (1) | 36 | p.2–4 복습(LAN 까지 배운 것, WAN recap), p.5–7 WAN 분류(wired: telephone/cable · wireless: cellular/satellite), **p.8–17 Cellular 동작**(cell·BS·MS·MSC, frequency reuse, 발신·수신, handoff hard/soft, roaming), **p.18–36 세대**(1G AMPS, 2G D-AMPS·GSM·IS-95, 3G IMT-2000, 4G) | 10/20(화) 전부 | `../정리본/CH05_정리.md` |
+| L11 | CH05_Wide Area Networks (2) | 21 | **Satellite Network 전부**: p.2 정의, p.3 구성(space/ground/user segment, ISL — Starlink system architecture), p.4 orbit 3종(equatorial/inclined/polar), p.5–6 period + Kepler's law, p.7–8 Ex 5.1 달의 주기, p.9–10 Ex 5.2 35,786 km 위성 = 24 h(geostationary), p.11–14 세 범주(GEO/MEO/LEO, Van Allen belt), p.15 SATCOM 주파수 대역 표(L/S/C/Ku/Ka, uplink=Earth→satellite), p.16–17 GEO, p.18–19 MEO(GPS, trilateration), p.20–21 LEO(Starlink, UML/GWL/ISL, footprint) | 10/22(목) — **수업 전 선제 작성, 녹음 없음** | `../정리본/CH05(2)_정리.md` |
 
-**⚠️ 이 PDF 는 사용자의 GoodNotes 필기본이다.** 슬라이드 위에 빨간 손글씨가 있다: 각 슬라이드 제목 옆 녹음 타임스탬프(`14:40~` = 녹음 14분 40초부터 그 슬라이드), 밑줄, 메모. 메모는 사용자가 수업 중 표시한 것이라 **강조·약점 신호**로 쓴다:
+L11 PDF 는 **필기 없는 원본**이다(L10 과 다름). p.5–6, p.7–8, p.9–10, p.11–14, p.16–17, p.18–19, p.20–21 은 같은 슬라이드가 한 줄씩 늘어나는 build-up 이다 — 캡처는 **가장 완성된 마지막 장**(p.6, p.8, p.10, p.14, p.17, p.19, p.21)을 쓴다.
+
+**검산된 수치**(python): Period = (1/100) × (h + 6378)^1.5 [s], h = 지표면 위 고도 km, 6378 = 지구 반지름. 달 h=384,000 → 2,439,091 s ≈ 1 month (슬라이드 2,439,090) · h=35,786 → 86,579 s = 24.05 h (슬라이드 "24 h") · LEO h=500 → 5,704 s ≈ 95 min, h=2000 → 7,669 s ≈ 128 min (슬라이드 "90 to 120 min" 은 근사) · MEO h=18,000 → 38,062 s ≈ 10.6 h. **함정: distance 는 지구 중심부터의 거리 → 고도에 반지름 6378 km 를 더해야 한다** (안 더하면 달 2,379,561 s). 슬라이드 불일치: p.11–14 그림은 GEO 35,786 km, p.16 본문은 "22,000 miles (≈ 35405 km)" — 둘 다 소개하고 Kepler 예제는 35,786 을 쓴다고 명시. MEO 도 불일치: p.14 그림 초록 띠 5,000–15,000 km vs p.18 본문 "about 18,000 km"(실제 GPS ≈ 20,200 km, 보충). Ex 5.1 의 384,000 km 는 원래 지구–달 중심 거리라 6378 을 더하면 엄밀히는 이중 계산이지만 시험은 슬라이드 풀이(2,439,090 s)를 따른다.
+
+**이 덱에서 uplink/downlink 의 뜻이 바뀐다**: 셀룰러는 uplink = MS→BS, 위성은 uplink = **Earth → satellite**, downlink = satellite → Earth (p.15). 교수가 10/20 에 "uplink/downlink 는 외워라" 라고 했으므로 둘을 연결하는 `{exam}` 을 반드시 넣는다.
+
+**⚠️ L10 PDF 는 사용자의 GoodNotes 필기본이다.** 슬라이드 위에 빨간 손글씨가 있다: 각 슬라이드 제목 옆 녹음 타임스탬프(`14:40~` = 녹음 14분 40초부터 그 슬라이드), 밑줄, 메모. 메모는 사용자가 수업 중 표시한 것이라 **강조·약점 신호**로 쓴다:
 - "다시" (p.19 AMPS Bands, p.25 GSM Transmission, p.27 DSSS/CDMA) → 사용자가 다시 봐야 한다고 표시 → 그 문서에 쉬운 재설명 + `{warn}`.
 - "기억 x" (p.21, 7.95 kbps 옆) → 교수가 "외울 필요 없다"고 한 듯 — 녹음본으로 확인하고 `{info}` 로 "수치 암기 불필요" 명시.
 - "AP: Access point (동일 개념??)" (p.9 BS 옆) · "Hand over (동일 개념)" (p.14) · "SRT, KTX??", "break off connection??" (p.16 soft handoff 옆) · "416 channels ? 다시" (p.19) · "위의 5~6번 과정이랑 다른 거임?" (p.13 receiving) · "ETRI가 개발!" (p.27) · "South Korea 3G" (p.35 IMT-DS) · "blue print, not actual standard" (p.33) · "64 user" (p.29) · "각 소자가 frequency 쓰는…" (p.11) → 사용자가 품은 **질문**이다. 해당 문서에 그 질문에 대한 답을 `{tip}` 박스(제목 "필기 속 질문: …")로 반드시 답한다.
@@ -116,6 +123,11 @@ main(대문) · 읽는 순서 · 시험 정보 · 자주 틀리는 함정 모음
 **메인**: CH05 IS-95·3G·4G
 **사전**: IS-95 · DSSS · CDMA · Walsh code · chip rate · IS-95 대역과 채널 · GPS 동기화 · IS-95 forward 전송 · IS-95 reverse 전송 · pilot channel · long code와 ESN · QPSK · IS-95 frequency reuse · IS-95 soft handoff · 3G · IMT-2000 · ITU · IMT-2000 표준 · W-CDMA · CDMA 2000 · circuit switching과 packet switching · 4G · all-IP · ETRI
 
+### 4강 CH05 Satellite Network (`4강 위성`) [40_–] — L11 p.1–21 (10/22 수업 전 선제 작성)
+**메인**: CH05 Satellite Network
+**사전**: satellite network 구성 · ISL · orbit · equatorial orbit · inclined orbit · polar orbit · period of a satellite · Kepler's law · Example 5.1 달의 주기 · Example 5.2 정지궤도 주기 · 위성 세 범주 · Van Allen belt · SATCOM 주파수 대역 · GEO · geostationary · line-of-sight · MEO · GPS · trilateration · LEO · footprint · UML과 GWL
+(기존 키 재사용·갱신: satellite network(14_ — 이번 덱 메인으로 링크 추가) · Starlink(15_ — LEO·ISL 내용 추가) · WAN 분류 · uplink와 downlink(1M_ — 위성의 uplink/downlink 절 추가) · GPS 동기화(37_ — `[[GPS]]` 로 링크) · cellular telephony · handoff · cell)
+
 ### 기타 용어 (`용어`) [Z0_] — 해당 용어를 처음 쓰는 작성자가 만든다
 spread spectrum · 셀룰러와 WiFi 비교
 
@@ -135,6 +147,7 @@ spread spectrum · 셀룰러와 WiFi 비교
 | is95_rates | p.29–30 블록도의 rate 를 왼쪽→오른쪽으로 (옵션: forward(downlink) / reverse(uplink)). forward: voice 3 kHz → digitizer 9.6 kbps → error correcting·repeating·interleaving 19.2 ksps → long code(ESN, decimator 1.228 Mcps → 19.2 ksps)로 scramble → Walsh code W_i (64 chips) 곱 → 19.2 k × 64 = 1.2288 Mcps → Σ(64 digital channel, W0 = pilot all 1s) → QPSK → 1.228 MHz 채널 · reverse: 9.6 kbps → 28.8 ksps → 6-to-64 symbol modulation 307.2 kcps → long code(1.228 Mcps)로 DSSS ×4 → QPSK | 둘 다 1.2288 Mcps ≈ 1.228 Mcps (forward 64 배 확산, reverse 307.2×4) | IS-95 forward 전송, IS-95 reverse 전송, chip rate, Walsh code, long code와 ESN |
 | cdma_walsh | Forouzan 6e CDMA 예제(보충 — 슬라이드 p.27 의 "code1, code2, …, codeN" 그림을 수치로): 4 스테이션, Walsh code c1=[+1 +1 +1 +1], c2=[+1 −1 +1 −1], c3=[+1 +1 −1 −1], c4=[+1 −1 −1 +1]. 데이터 d1=−1(bit 0), d2=−1(bit 0), d3=0(silent), d4=+1(bit 1). 단계: 각 d_i·c_i → 채널에서 합 → 수신자 i 가 합·c_i 내적 ÷ 4 (옵션: 복원할 스테이션 = 1 / 2 / 3 / 4) | 채널 합 [−1 −1 −3 +1] · 복원 d1=−1, d2=−1, d3=0(silent), d4=+1 | CDMA, Walsh code, DSSS, spread spectrum |
 | reuse_pattern | p.11 그림: 육각 cell 격자에 reuse factor N = 4 / 7 패턴으로 주파수 그룹 1..N 을 배치하는 과정을 한 cell 씩(svg 육각형), 매 step "같은 번호 cell 끼리 인접하지 않음" 확인. 마지막 step: 채널 395 개(AMPS voice)일 때 cell 당 395/N. 옵션 N = 4 / 7 / 1(IS-95 CDMA: 모든 cell 이 같은 대역, 코드로 구분) | N=4: cell 당 ≈98 · N=7: ≈56 · N=1: 전 대역(코드로 구분) | frequency reuse, reuse factor, co-channel interference, IS-95 frequency reuse |
+| kepler_period | Kepler's law: 고도 h → distance = h + 6378 → distance^1.5 → × 1/100 → 초 → 시간/일 환산. 옵션: Ex 5.1 달(h=384,000) / Ex 5.2 GEO(35,786) / MEO GPS(≈18,000) / LEO Starlink(550) / 함정: 반지름 안 더함(달) | 2,439,091 s ≈ 28.2 일 · 86,579 s ≈ 24.05 h · 38,062 s ≈ 10.6 h · 5,766 s ≈ 96 min · 2,379,561 s (틀린 값) | Kepler's law, period of a satellite, Example 5.1 달의 주기, Example 5.2 정지궤도 주기, GEO, LEO, CH05 Satellite Network |
 
 ### 엔진 API (`src/sims/_engine.js`, 모든 sim 파일이 따를 것 — 참조 구현 `src/sims/_reference_ticket_lock.js.txt`)
 ```js
@@ -220,3 +233,7 @@ python3 build.py                        # index.html 재생성 + 문서에서 �
 | gsm_multiframe_anim | p.25–26: 65 bits user data → 114 bits(error control) → 156.25 bits(TDMA control) slot → 8 slot = frame → 26 frame(24 traffic + 2 control) = multiframe 120 ms → "(1/120 ms) × 26 × 8 × 156.25 = 270.8 kbps" 식이 아래에 완성 | GSM 프레임 구조, GSM multiframe, GSM channel bit rate |
 | cdma_spreading | CDMA 원리(Forouzan 보충 + p.27 그림): 스테이션 3개의 비트(+1/−1)가 각자 Walsh code 칩열과 곱해짐 → 채널에서 더해져 하나의 파형 → 수신자 2 가 자기 code 를 곱해 평균 → 자기 비트만 복원(나머지는 0 으로 상쇄). 요점 "같은 주파수·같은 시간, 코드가 직교라서 분리" | CDMA, Walsh code, DSSS, spread spectrum, IS-95 |
 | generations_timeline | 1G(AMPS, analog, FDMA, voice) → 2G(digital: D-AMPS·GSM=TDMA, IS-95=CDMA) → 3G(IMT-2000: 144 k/384 k/2 M bps, packet+circuit, W-CDMA·CDMA 2000) → 4G(100 Mbps 이동 / 1 Gbps 정지, all-IP packet-switched) 가 왼쪽에서 오른쪽으로 쌓이고, 아래에 "아날로그→디지털→데이터→all-IP" 화살표 | 셀룰러 세대, 1G, 2G, 3G, 4G, 셀룰러 세대 비교표, main |
+| satellite_orbits | p.11–14 그림: 고도축(0 / 5,000 / 15,000 / 35,786 km) 위에 LEO(파랑 띠) → Lower Van Allen belt → MEO(초록 띠) → Upper Van Allen belt → GEO(점선) 가 차례로 나타나고, 오른쪽에 각 궤도 위성이 지구를 도는 속도 차이(LEO 빠름 ~90–120 min, MEO, GEO 24 h = 지구와 같이 돎 → 정지해 보임) | 위성 세 범주, GEO, MEO, LEO, Van Allen belt, CH05 Satellite Network, main |
+| geo_three | p.17: 적도면 위 GEO 위성 1 기 → 닿는 영역(line-of-sight)과 지구 곡률로 가려지는 영역 → 120° 간격 3 기로 전 지구 커버. 요점 "최소 3 기 = full global transmission" | GEO, geostationary, line-of-sight |
+| leo_footprint | p.20–21: LEO 위성 2 기가 ISL 로 연결되어 지나가고, 지상의 footprint 원이 위성을 따라 이동. 사용자 폰(UML)·gateway(GWL). footprint 가 지나가면 다음 위성으로 넘겨짐 → "Similar to the cellular telephone system"(cell 이 움직이는 셀룰러) | LEO, footprint, UML과 GWL, ISL, Starlink |
+| trilateration_anim | p.19: 2D — 기지점 A·B·C 에서 거리 원 3 개가 커지며 한 점에서 만남(교점 = 내 위치) / 3D — 위성 3 기의 구가 겹쳐 두 점 → 지구 표면 쪽 하나. 요점 "거리 3 개 → 위치 1 개 (GPS)" | trilateration, GPS, MEO |

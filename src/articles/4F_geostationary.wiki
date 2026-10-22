@@ -1,0 +1,32 @@
+key: geostationary
+title: Geostationary (정지궤도 — 지구에 대해 정지)
+category: 4강 위성, 용어
+---
+'''Geostationary''' 는 위성이 '''지구에 대해 정지해 보이는''' 성질, 그리고 그런 궤도(geostationary orbit)를 말한다. 조건은 두 가지 — ① 주기가 '''지구 자전 주기(24 h)와 같고''' ② '''적도면'''에서 돈다. L11 p.10 Example 5.2 의 결론에서 처음 등장하고, p.16 의 GEO 제목 "GEO (GEOstationary; 정지궤도)" 로 이어진다.
+
+{def}"This means that a satellite located at 35,786 km has a period of 24 h, which is '''the same as the rotation period of the Earth'''. A satellite like this is said to be '''stationary to the Earth'''. The orbit, as we will see, is called a '''geostationary orbit'''." (L11 p.10)
+"GEO (GEOstationary; 정지궤도) — The orbit occurs at the equatorial plane." (p.16){/def}
+
+[[img:L11-10.png|p.10 Example 5.2 — 86,579 s = 24 h, "stationary to the Earth … geostationary orbit"|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''geo''' (지구) + '''stationary''' (정지한) = '''지구에 대해 멈춘'''. 우주에서 보면 초속 약 3 km 로 돌고 있지만(보충), 발밑의 지구도 같은 각속도로 돌기 때문에 '''땅에서 보면''' 멈춰 있다. "정지" 는 '''상대적'''이다.
+* 그래서 "정지궤도(靜止軌道)". 위성이 실제로 멈춘 게 아니다 — 멈추면 떨어진다.
+
+== 조건 두 개 ==
+{|
+! 조건 || 왜 || 슬라이드
+|-
+| 주기 = 24 h || 지구와 같은 속도로 돌아야 같은 자리 || p.10 ([[Kepler's law]] → 35,786 km 에서 24 h)
+|-
+| equatorial plane || 지구 자전과 같은 '''면'''이어야 남북으로 흔들리지 않음 || p.16 ([[equatorial orbit]])
+|}
+(보충) 주기만 24 h 이고 면이 기울어진 궤도는 "geosynchronous" 라 부르며, 하늘에서 8 자를 그린다. geostationary 는 geosynchronous 의 특수한 경우.
+
+{analogy}🎭 '''회전목마 바깥을 함께 도는 사진사.''' 회전목마(지구)와 '''같은 속도, 같은 높이(면)'''로 바깥을 돌면 말 위 아이에게 사진사는 늘 정면에 있다. 속도가 다르면 앞서거나 뒤처지고, 계단을 오르내리면 위아래로 움직여 보인다.{/analogy}
+
+{quiz}"Geostationary" 위성이 하늘에 멈춰 보이는 이유를 한 문장으로 쓰시오.{/quiz}
+{answer}주기가 '''지구 자전 주기(24 h)와 같고''' 적도면에서 돌기 때문에, 지구에 대해 '''stationary''' 하다 (p.10, p.16).{/answer}
+
+== 관련 문서 ==
+* [[GEO]] · [[Example 5.2 정지궤도 주기]] · [[Kepler's law]] · [[equatorial orbit]] · [[period of a satellite]]

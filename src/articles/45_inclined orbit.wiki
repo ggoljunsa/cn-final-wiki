@@ -1,0 +1,27 @@
+key: inclined orbit
+title: Inclined Orbit (경사 궤도)
+category: 4강 위성, 용어
+---
+'''Inclined orbit''' 은 궤도면이 적도면에 대해 '''비스듬히 기울어진''' [[orbit]] 이다. L11 p.4 (b) 에 나오고, p.21 LEO 슬라이드 오른쪽에 다시 나온다 — LEO 는 "'''Polar and inclined orbits'''" 를 쓰기 때문이다.
+
+{def}"b. '''Inclined-orbit satellite'''" (L11 p.4, p.21 그림)
+"LEO — '''Polar and inclined orbits'''." (p.20)
+적도면과 비스듬한 각을 이루는 면에서 도는 궤도.{/def}
+
+[[img:L11-04.png|p.4 b. Inclined-orbit satellite — 지구를 비스듬히 감싸는 고리|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''incline''' = 기울다. '''inclined''' = 기울어진. 적도면에서 기울어진 정도를 '''inclination'''(경사각)이라 부른다(보충).
+* 적도(0°)와 극(90°) '''사이'''의 아무 각도 → equatorial 과 polar 의 중간.
+
+== 어디에 쓰이나 ==
+* '''[[LEO]]''' (p.20) — 기울어진 면으로 돌면 위성이 북위·남위 몇 도까지 '''오르내리며''' 지나간다. 지구 자전과 합쳐지면 매 바퀴 다른 경도를 지나 넓은 지역을 덮는다(보충). 사람이 많이 사는 중위도를 집중적으로 덮기 좋다 → [[Starlink]] 의 주력 궤도(보충).
+* [[GPS]] 위성도 기울어진 궤도면 여러 개에 나뉘어 있다 (보충 — 슬라이드에 없음).
+
+{analogy}🎭 '''비스듬히 맨 띠.''' 미스코리아 어깨띠처럼 몸(지구)을 비스듬히 두르면, 띠는 한쪽 어깨(북쪽)에서 반대쪽 허리(남쪽)까지 오르내린다. 몸을 돌리면(자전) 띠가 지나는 자리가 매번 달라진다.{/analogy}
+
+{quiz}LEO 위성이 사용하는 orbit 두 가지는? (p.20){/quiz}
+{answer}'''Polar''' and '''inclined''' orbits. (equatorial 은 GEO){/answer}
+
+== 관련 문서 ==
+* [[orbit]] · [[equatorial orbit]] · [[polar orbit]] · [[LEO]]

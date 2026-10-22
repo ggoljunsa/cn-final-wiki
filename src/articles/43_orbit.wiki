@@ -1,0 +1,34 @@
+key: orbit
+title: Orbit (궤도)
+category: 4강 위성, 용어
+---
+'''Orbit''' 은 위성이 지구 둘레를 도는 '''길'''이다. L11 p.4 는 궤도면의 방향에 따라 세 가지 — '''[[equatorial orbit|equatorial]]''' · '''[[inclined orbit|inclined]]''' · '''[[polar orbit|polar]]''' — 를 그림으로 보여 준다. 이 구분은 뒤에서 GEO(equatorial)와 LEO(polar and inclined)를 설명할 때 다시 쓰인다.
+
+{def}"'''Operation: Orbits''' — The path in which it travels around Earth. e.g., Equatorial orbit, inclined orbit, polar orbit." (L11 p.4)
+궤도 = 위성이 지구 둘레를 이동하는 경로. 예: 적도 궤도, 경사 궤도, 극 궤도.{/def}
+
+[[img:L11-04.png|p.4 a. Equatorial-orbit(적도를 따라 도는 고리) b. Inclined-orbit(비스듬한 고리) c. Polar-orbit(남북극을 지나는 세로 고리) satellite|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''orbit''' — 라틴어 orbis(바퀴, 원). 바퀴처럼 '''같은 길을 계속 돈다'''.
+* 세 이름은 모두 '''궤도면이 적도와 이루는 각도'''로 붙었다: 적도와 같은 면(0°) = '''equatorial''', 비스듬 = '''inclined'''(기울어진), 90° 로 극을 지남 = '''polar'''.
+
+{|
+! orbit || 적도와의 각도 (보충) || 이 덱에서 누가 쓰나
+|-
+| [[equatorial orbit]] || 0° (적도면 그대로) || '''[[GEO]]''' (p.16 "at the equatorial plane")
+|-
+| [[inclined orbit]] || 0° 와 90° 사이 || '''[[LEO]]''' (p.20), GPS(보충)
+|-
+| [[polar orbit]] || ≈ 90° (극을 지남) || '''[[LEO]]''' (p.20)
+|}
+
+{info}궤도는 '''방향'''(이 문서) 말고 '''높이'''로도 나눈다 — GEO / MEO / LEO 가 그것이다 → [[위성 세 범주]]. 높이는 주기를 정하고([[Kepler's law]]), 방향은 '''어느 지역 위를 지나가는지'''를 정한다.{/info}
+
+{analogy}🎭 '''지구본에 고무줄 감기.''' 적도선을 따라 감으면 equatorial, 비스듬히 감으면 inclined, 북극과 남극을 지나게 세로로 감으면 polar. 고무줄을 얼마나 '''크게''' 감느냐(고도)는 별개의 선택이다.{/analogy}
+
+{quiz}슬라이드 p.4 의 orbit 세 가지를 쓰시오.{/quiz}
+{answer}'''Equatorial orbit''', '''inclined orbit''', '''polar orbit'''.{/answer}
+
+== 관련 문서 ==
+* [[equatorial orbit]] · [[inclined orbit]] · [[polar orbit]] · [[period of a satellite]] · [[위성 세 범주]] · [[CH05 Satellite Network]]

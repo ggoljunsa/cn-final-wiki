@@ -1,0 +1,37 @@
+key: line-of-sight
+title: Line-of-Sight (가시선)
+category: 4강 위성, 용어
+---
+'''Line-of-sight''' 는 송신 안테나와 수신 안테나가 '''직선으로 서로 보이는''' 관계다. L11 p.17 GEO 설명에 나온다 — GEO 위성은 아주 높아서 한 기가 '''엄청나게 많은 station 과 line-of-sight 로 닿지만''', 지구가 둥글어(curvature) 반대편은 가려진다. 그래서 최소 3 기가 필요하다.
+
+{def}"One satellite in orbit has '''line-of-sight contact''' with a vast number of stations, but '''the curvature of the Earth''' still keeps much of the planet '''out of sight'''." (L11 p.17)
+가시선 접촉 = 둘 사이에 가리는 것 없이 직선으로 신호가 닿는 상태.{/def}
+
+[[img:L11-17.png|p.17 GEO — 120° 간격 3 기가 각자 지구의 한쪽 면을 line-of-sight 로 비춤|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''line of sight''' = '''시선(sight)의 선(line)'''. "눈으로 보이는 곳" 까지만 닿는다. 위성 통신에 쓰는 GHz 대 전파([[SATCOM 주파수 대역]])는 빛처럼 '''직진'''하고 지구를 돌아 휘어 가지 못한다(보충).
+* '''out of sight''' = 시야 밖. 지구 곡률 뒤에 있는 곳.
+
+<pre class="ascii">
+                ◉ GEO 위성
+              ╱  │  ╲
+            ╱    │    ╲        ← line-of-sight (직선으로 닿는 범위)
+          ╱      │      ╲
+     ────●───────●───────●────
+        ╱   지구 (둥글다)  ╲
+      ░░░ 이 뒤쪽은 out of sight ░░░
+</pre>
+
+== 어디서 중요한가 ==
+* [[GEO]]: 높을수록 시야가 넓지만 곡률 때문에 '''한 기로는 반쪽도 못 덮는다''' → '''minimum of 3 satellites'''.
+* [[LEO]]: 낮아서 시야(= [[footprint]])가 훨씬 좁다 → 위성이 많이 필요하고 계속 다음 위성으로 넘겨야 한다.
+* (보충) 지상 마이크로파 중계탑을 산꼭대기에 세우는 이유, 빌딩 숲에서 위성 신호가 끊기는 이유도 line-of-sight 때문이다.
+
+{analogy}🎭 '''등산할 때 보이는 범위.''' 산꼭대기(높은 위성)에 오르면 먼 마을까지 보이지만, 지구가 둥글어 지평선 너머는 아무리 높아도 안 보인다. 그래서 "모든 곳이 보이게" 하려면 산꼭대기 감시탑을 여러 개(GEO 는 3 개) 세워야 한다.{/analogy}
+
+{quiz}GEO 위성 한 기로 full global transmission 이 안 되는 이유를 슬라이드 표현으로 쓰시오.{/quiz}
+{answer}"One satellite … has line-of-sight contact with a vast number of stations, but '''the curvature of the Earth''' still keeps much of the planet out of sight." → 최소 3 기 필요.{/answer}
+
+== 관련 문서 ==
+* [[GEO]] · [[geostationary]] · [[footprint]] · [[SATCOM 주파수 대역]]

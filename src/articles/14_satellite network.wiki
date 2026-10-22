@@ -29,6 +29,13 @@ category: 1강 셀룰러 동작, 용어
 {analogy}🎭 '''아주 높은 곳에 세운 기지국 탑.''' 셀룰러 BS 가 동네 언덕 위 확성기라면, 위성은 성층권보다 훨씬 위에 띄운 확성기다. 한 번에 넓은 지역에 들리지만, 멀어서 말이 도착하는 데 시간이 걸린다(지연).{/analogy}
 
 
+== 4강에서 자세히 (L11, 10/22) ==
+{info}이 문서는 1강(L10 p.6–7)에서 이름만 나온 satellite network 의 소개다. 10/22 수업 덱 L11(`CH05_Wide Area Networks (2)`)이 위성망 전체를 다룬다 → 메인 문서 '''[[CH05 Satellite Network]]'''.{/info}
+* 정의(L11 p.2): "A '''wireless''' WAN that provides any type of communication" — [[cellular telephony]] 와 같은 문장. 구성(p.3): "a combination of nodes, '''including satellites''', that provides communication from one point on the Earth to another" → [[satellite network 구성]] · [[ISL]]
+* 궤도와 주기: [[orbit]] (equatorial / inclined / polar) · [[Kepler's law]] ($\text{Period} = \frac{1}{100}(h + 6378)^{1.5}$ 초) · [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]]
+* 위의 보충 표(GEO/MEO/LEO)는 L11 p.11–21 에서 슬라이드로 나온다 → [[위성 세 범주]] · [[GEO]] · [[MEO]]([[GPS]]) · [[LEO]]([[Starlink]], [[footprint]])
+* 위성의 uplink = '''Earth → satellite''' (p.15) → [[SATCOM 주파수 대역]] · [[uplink와 downlink]]
+
 == 관련 문서 ==
-* [[Starlink]] · [[WAN 분류]] · [[cellular telephony]] · [[handoff]]
+* '''[[CH05 Satellite Network]]''' · [[Starlink]] · [[WAN 분류]] · [[cellular telephony]] · [[handoff]] · [[위성 세 범주]]
 * [[mid:WAN]]

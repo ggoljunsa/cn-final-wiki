@@ -30,6 +30,8 @@ category: 안내
 | CH05 (1) p.18–26 || [[CH05 1G–2G 셀룰러]] || [[1G]] [[AMPS]]([[FDMA]], 832 채널, reuse 7), [[2G]] [[D-AMPS]]([[TDMA]] 3 사용자), '''[[GSM]]'''([[GSM multiframe]] → 270.8 kbps) || `sim:band_channels` · `sim:gsm_bitrate` · `sim:damps_tdma` · `anim:amps_bands` · `anim:gsm_multiframe_anim`
 |-
 | CH05 (1) p.27–36 || [[CH05 IS-95·3G·4G]] || '''[[IS-95]]'''([[DSSS]]·[[CDMA]], [[Walsh code]], reuse factor 1, [[pilot channel]]로 soft handoff), [[3G]] [[IMT-2000]]([[W-CDMA]]·[[CDMA 2000]]), [[4G]]([[all-IP]]) || `sim:is95_rates` · `sim:cdma_walsh` · `anim:cdma_spreading` · `anim:access_methods`
+|-
+| CH05 (2) p.1–21 || [[CH05 Satellite Network]] || [[satellite network 구성]]([[ISL]]), [[orbit]] 3종, '''[[Kepler's law]]'''(Ex 5.1 달 · Ex 5.2 → 24 h = [[geostationary]]), [[위성 세 범주]] [[GEO]]·[[MEO]]([[GPS]], [[trilateration]])·[[LEO]]([[Starlink]], [[footprint]]), [[SATCOM 주파수 대역]](uplink = Earth → satellite) — 10/22 수업 전 선제 작성 || `sim:kepler_period` · `anim:satellite_orbits` · `anim:geo_three` · `anim:leo_footprint` · `anim:trilateration_anim`
 |}
 
 == 이 위키를 읽는 법 ==

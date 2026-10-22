@@ -1,0 +1,27 @@
+key: equatorial orbit
+title: Equatorial Orbit (적도 궤도)
+category: 4강 위성, 용어
+---
+'''Equatorial orbit''' 은 궤도면이 '''지구의 적도면과 일치'''하는 [[orbit]] 이다. L11 p.4 (a), 그리고 p.17 GEO 슬라이드 왼쪽에 같은 그림이 다시 나온다 — '''GEO 위성은 반드시 equatorial orbit''' 이기 때문이다.
+
+{def}"a. '''Equatorial-orbit satellite'''" (L11 p.4 그림)
+"GEO — The orbit occurs at '''the equatorial plane'''." (p.16)
+적도면 위에서 지구를 도는 궤도.{/def}
+
+[[img:L11-04.png|p.4 a. Equatorial-orbit satellite — 적도를 따라 도는 가로 고리|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''equator''' = 적도. '''equatorial''' = 적도의. 그러니 '''적도를 따라''' 도는 궤도.
+* 적도 위만 돈다 → 위성은 늘 '''적도 상공'''에 있다. 극지방에서는 지평선 아주 낮게 보이거나 안 보인다(보충).
+
+== 왜 GEO 는 equatorial 이어야 하나 ==
+* 지구는 '''적도면 안에서''' 자전한다. 위성이 '''같은 면'''에서 '''같은 주기(24 h)'''로 돌아야 땅에서 볼 때 한 점에 멈춰 있다 → [[geostationary]].
+* 다른 면에서 24 h 로 돌면 하늘의 한 점에 머물지 못하고 남북으로 오르내린다(보충 — 슬라이드에 없음).
+
+{analogy}🎭 '''회전목마의 말과 나란히 걷기.''' 회전목마(지구)가 도는 '''같은 바닥면'''에서 같은 속도로 따라 걸으면 말 위의 아이에게 나는 늘 같은 자리에 보인다. 계단을 오르내리며(기울어진 면) 걸으면 아무리 속도를 맞춰도 위아래로 움직여 보인다.{/analogy}
+
+{quiz}GEO 위성의 orbit 은 세 종류 중 어느 것인가?{/quiz}
+{answer}'''Equatorial orbit''' — "The orbit occurs at the equatorial plane." (p.16){/answer}
+
+== 관련 문서 ==
+* [[orbit]] · [[inclined orbit]] · [[polar orbit]] · [[GEO]] · [[geostationary]]

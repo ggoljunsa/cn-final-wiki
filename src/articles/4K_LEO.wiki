@@ -1,0 +1,57 @@
+key: LEO
+title: LEO (Low Earth Orbit; 저궤도 위성)
+category: 4강 위성, 용어
+---
+'''LEO''' 위성은 '''500–2000 km''' 의 낮은 고도에서 '''polar·inclined''' 궤도로 '''90–120 분'''에 한 바퀴씩 도는 위성이다. L11 p.20–21. 슬라이드의 핵심 문장은 "'''Similar to the cellular telephone system'''" — 위성 하나가 지상에 만드는 [[footprint]] 가 셀룰러의 [[cell]] 처럼 동작하기 때문이다. 대표 instance 는 '''[[Starlink]]'''.
+
+{def}"'''LEO (Low Earth Orbit; 저궤도) Satellites''' — '''Polar and inclined orbits'''. The altitude is between '''500 and 2000 km'''. A rotation period of '''90 to 120 min'''. '''Similar to the cellular telephone system'''. '''Key instance: Starlink'''." (L11 p.20–21){/def}
+
+[[img:L11-21.png|p.21 LEO — 위성 2 기(ISL 연결), UML(폰)·GWL(gateway), 점선 Footprint 2 개. 오른쪽: Inclined/Polar orbit, Starlink 341 miles vs Normal satellites 621+ miles|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Low''' Earth Orbit = '''낮은''' 궤도. 낮다 → 가깝다 → ① 신호 지연이 짧고 약해짐도 덜하다(보충) ② 대신 한 위성이 보는 땅([[footprint]])이 좁다 ③ [[Kepler's law]] 로 주기가 짧다(빨리 지나간다).
+
+== 슬라이드 다섯 줄 ==
+{|
+! 줄 || 뜻 || 연결
+|-
+| Polar and inclined orbits || 적도만이 아니라 고위도·극지까지 덮는다 || [[polar orbit]] · [[inclined orbit]] (GEO 는 [[equatorial orbit|equatorial]])
+|-
+| 500 and 2000 km || Lower Van Allen belt 아래 || [[Van Allen belt]] · [[위성 세 범주]]
+|-
+| 90 to 120 min || Kepler: 500 km → ≈ 95 min, 2000 km → ≈ 128 min (슬라이드 값은 근사) || [[period of a satellite]]
+|-
+| Similar to the cellular telephone system || footprint = 움직이는 cell, 위성 사이 handoff || [[footprint]] · [[cell]] · [[handoff]]
+|-
+| Key instance: Starlink || 341 miles ≈ 550 km — 보통 LEO(621+ miles ≈ 1,000 km)보다 낮게 || [[Starlink]]
+|}
+
+[[anim:leo_footprint|LEO 위성이 ISL 로 이어진 채 지나가며 footprint 원이 위성을 따라 이동하고, 사용자가 다음 위성으로 넘겨지는 것을 보라 — "cell 이 움직이는 셀룰러"]]
+
+== "Similar to the cellular telephone system" 풀어 읽기 ==
+{|
+! 셀룰러 (1강) || LEO
+|-
+| [[cell]] — 땅에 '''고정''' || [[footprint]] — 위성과 함께 '''이동'''
+|-
+| [[base station]] || LEO 위성
+|-
+| MS ↔ BS 무선 구간 || '''UML''' (user mobile link) → [[UML과 GWL]]
+|-
+| BS ↔ MSC 유선 || '''GWL''' (gateway link) 또는 위성 간 '''[[ISL]]'''
+|-
+| 사용자가 움직여 cell 을 넘으면 [[handoff]] || '''위성이''' 움직여 footprint 가 지나가면 다음 위성으로 handoff
+|}
+(대응표는 보충 — 슬라이드는 "similar" 한 줄)
+
+{info}(보충 — 슬라이드에 없음) LEO 위성은 초속 7 km 대로 날아 한 위성이 머리 위에 몇 분밖에 머물지 않는다. 그래서 망 전체가 '''수백~수천 기'''로 하늘을 덮어야 하고(constellation), 사용자는 몇 분마다 다음 위성으로 넘어간다. 대신 가까워서 지연이 수 ms 로 짧아(550 km 왕복 ≈ 3.7 ms) 인터넷·화상 통화에 적합하다 — GEO(≈ 0.24 s)와 대조.{/info}
+
+{warn}'''함정''': LEO 를 "equatorial" 로 쓰지 말 것 — 슬라이드는 '''polar and inclined'''. equatorial 은 GEO.{/warn}
+
+{analogy}🎭 '''머리 위를 지나가는 이동식 기지국 행렬.''' 셀룰러는 땅에 박힌 탑 옆을 내가 지나가지만, LEO 는 탑(위성)이 손전등을 아래로 비추며(footprint) 줄지어 머리 위를 지나간다. 앞 탑의 불빛이 나를 벗어나기 전에 뒤 탑의 불빛이 나를 비춰 통화를 이어받는다.{/analogy}
+
+{quiz}LEO 위성에 대한 슬라이드 설명 다섯 가지를 쓰시오.{/quiz}
+{answer}① '''polar and inclined orbits''' ② 고도 '''500–2000 km''' ③ rotation period '''90–120 min''' ④ '''similar to the cellular telephone system''' ⑤ key instance '''Starlink'''.{/answer}
+
+== 관련 문서 ==
+* [[footprint]] · [[UML과 GWL]] · [[ISL]] · [[Starlink]] · [[polar orbit]] · [[inclined orbit]] · [[위성 세 범주]] · [[GEO]] · [[MEO]] · [[cell]] · [[handoff]] · [[CH05 Satellite Network]]
