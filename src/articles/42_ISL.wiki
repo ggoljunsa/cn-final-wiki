@@ -5,7 +5,7 @@ category: 4강 위성, 용어
 '''ISL''' 은 '''위성과 위성을 직접 잇는 링크'''다. L11 p.3 의 Starlink 구조도에서 위성들 사이 빨간 양방향 화살표, p.21 LEO 그림에서 두 위성 사이 번개 모양 선에 "ISL" 이라고 적혀 있다. 슬라이드는 약자만 쓰고 풀이는 없다 — '''Inter-Satellite Link''' 는 Forouzan 의 풀이다(보충).
 
 {def}슬라이드: p.3 "Space segment" 의 위성들 사이 '''ISL''' 화살표, p.21 LEO 위성 2 기 사이 '''ISL'''.
-(Forouzan 보충) "'''Inter-satellite link (ISL)''' — the link between two satellites" in a LEO system.
+(Forouzan 보충, 요지) LEO 위성들은 서로 '''intersatellite links (ISLs)''' 로 통신한다 — 위성과 위성 사이의 링크.
 ISL = 위성 ↔ 위성 링크. 지상을 거치지 않고 하늘에서 데이터를 옮긴다.{/def}
 
 [[img:L11-21.png|p.21 LEO — 위성 2 기 사이의 ISL(검정 번개선), 각 위성 아래 UML(폰)·GWL(gateway)과 footprint|medium]]

@@ -5,7 +5,7 @@ category: 4강 위성, 용어
 L11 p.21 LEO 그림에는 링크가 세 종류 있다: 위성 ↔ 사용자 폰의 '''UML''', 위성 ↔ 지상 gateway 의 '''GWL''', 위성 ↔ 위성의 '''[[ISL]]'''. 슬라이드는 약자만 적었고, 풀이(User Mobile Link, GateWay Link)는 Forouzan 의 것이다(보충).
 
 {def}슬라이드: p.21 LEO 그림 — 위성과 '''폰''' 사이 검정 번개선 "'''UML'''", 위성과 '''gateway 안테나''' 사이 분홍 번개선 "'''GWL'''", 두 위성 사이 "'''ISL'''".
-(Forouzan 보충) "'''User mobile link (UML)''' — communication between a satellite and a mobile station. '''Gateway link (GWL)''' — communication between a satellite and an Earth station (gateway)."{/def}
+(Forouzan 보충, 요지) 이동 단말은 '''user mobile link (UML)''' 로 위성과 통신하고, 위성은 '''gateway link (GWL)''' 로 지상국(gateway)과 통신한다.{/def}
 
 [[img:L11-21.png|p.21 LEO — UML(위성 ↔ 폰, 검정), GWL(위성 ↔ gateway 안테나, 분홍), ISL(위성 ↔ 위성)|large]]
 

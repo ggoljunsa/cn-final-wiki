@@ -10,7 +10,7 @@ uplink(reverse) = MS → BS, downlink(forward) = BS → MS.{/def}
 [[img:L10-19.png|p.19 AMPS bands — 824–849 MHz (MS 송신 = reverse = uplink) 와 869–894 MHz (BS 송신 = forward = downlink), 각 25 MHz 를 30 kHz 채널로 나눔 (필기본, "다시" 표시)|medium]]
 
 == 이름에서 개념 끌어내기 ==
-* '''up / down''' — BS 탑은 높은 곳, 폰은 땅. 폰 → 탑은 '''위로(up)''', 탑 → 폰은 '''아래로(down)'''. 위성(지상국 → 위성 = uplink)에서 온 말이다.
+* '''up / down''' — BS 탑은 높은 곳, 폰은 땅. 폰 → 탑은 '''위로(up)''', 탑 → 폰은 '''아래로(down)'''. 위성 통신(지상국 → 위성 = uplink)에서 널리 쓰이던 말이다 (보충 — 슬라이드에 없음).
 * '''forward / reverse''' — 망(BS)을 기준으로, 망이 사용자에게 '''앞으로 내보내는''' 방향이 forward, 사용자가 망으로 '''거슬러 보내는''' 방향이 reverse.
 
 {|
@@ -33,7 +33,7 @@ uplink(reverse) = MS → BS, downlink(forward) = BS → MS.{/def}
 == 위성의 uplink 와 downlink (L11 p.15, 4강) ⭐⭐⭐ ==
 {def}"'''Uplink''': transmission from '''the Earth to the satellite'''. '''Downlink''': transmission from '''the satellite to the Earth'''." (L11 p.15 Frequency bands for SATCOM){/def}
 
-위성망에서는 송신자·수신자가 MS·BS 가 아니라 '''지구(지상국·user terminal·gateway)'''와 '''위성'''이다. 방향을 정하는 규칙("위로 올려 보내면 up")은 같다 — 위에서 말했듯 uplink/downlink 라는 말 자체가 위성에서 온 말이다.
+위성망에서는 송신자·수신자가 MS·BS 가 아니라 '''지구(지상국·user terminal·gateway)'''와 '''위성'''이다. 방향을 정하는 규칙("위로 올려 보내면 up")은 같다 — 위에서 말했듯 uplink/downlink 는 위성 통신에서 널리 쓰이던 말이다 (보충).
 
 [[img:L11-15.png|L11 p.15 Frequency bands for SATCOM — Uplink: Earth → satellite, Downlink: satellite → Earth, 대역 표 L/S/C/Ku/Ka|medium]]
 

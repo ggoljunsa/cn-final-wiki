@@ -28,7 +28,7 @@ Footprint = 위성 신호가 닿는 지상 영역.{/def}
 |-
 | 경계 || 이웃 cell 과 겹침(soft handoff 구간) || 이웃 footprint 와 겹침 (p.21 그림)
 |}
-* 높이가 높을수록 footprint 는 넓다 — [[GEO]] 한 기는 지구의 약 1/3 을 덮고([[line-of-sight]]), [[LEO]] 는 그보다 훨씬 좁아 위성 수가 많아야 한다.
+* 높이가 높을수록 footprint 는 넓다 — [[GEO]] 한 기는 지구의 약 40% 를 덮고([[line-of-sight]], 보충 — 슬라이드에 없음), [[LEO]] 는 그보다 훨씬 좁아 위성 수가 많아야 한다.
 
 [[anim:leo_footprint|footprint 원이 위성을 따라 땅 위를 미끄러지고, 두 footprint 가 겹치는 구간에서 사용자가 다음 위성으로 넘어가는 것을 보라]]
 
