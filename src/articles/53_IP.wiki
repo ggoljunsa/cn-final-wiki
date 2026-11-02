@@ -1,0 +1,49 @@
+key: IP
+title: IP (Internet Protocol) — 인터넷의 network layer 프로토콜
+category: 5강 네트워크 계층, 용어
+---
+'''IP (Internet Protocol)''' 은 인터넷 [[network layer]] 의 주 프로토콜이다. L12 p.4–5, p.17–18, p.26. 교수 정리: IP 의 '''두 큰 성질은 [[connectionless]] 와 [[best effort]]''' 이고, 그 밖의 서비스는 TCP·application·[[IPSec]] 같은 '''다른 프로토콜'''이 한다(10/27 녹음 28:28). 주소(addressing)는 다음 수업(10/29)의 주제다. 중간고사 위키의 [[mid:IP]] 도 참고.
+
+{def}"'''Internet Protocol (IP)''': the main protocol of the Internet
+* Defines the format and structure of '''addresses'''
+* '''Connectionless''': no setup; each datagram is handled independently
+* '''Best effort''': no flow or congestion control, no error recovery (checksum covers the header only)
+* Its unit is the '''datagram''': an IP packet (header + payload)" (p.4)
+"IP itself is connectionless and best effort: anything more is added by other protocols." (p.18)
+"The Internet's network layer (IP) uses the '''datagram approach'''." (p.26){/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''Inter-net''' = 망'''들 사이'''(inter)를 잇는 것. 서로 다른 LAN·WAN 을 하나로 묶는 공통 규칙이 IP 다. 그래서 '''주소 형식'''을 정하는 게 첫 번째 일이다 — 모두가 같은 주소 체계를 써야 망을 넘나들 수 있다.
+
+== IP 를 한 장으로 ==
+{|
+! 항목 || 내용 || 문서
+|-
+| 주소 || format and structure of addresses (IP address) || [[mid:IP 주소와 MAC 주소]]
+|-
+| 서비스 형태 || '''connectionless''' — setup 없이 datagram 마다 독립 || [[connectionless]]
+|-
+| 신뢰성 || '''best effort''' — 보장 없음 || [[best effort]]
+|-
+| 단위 || '''datagram''' = header + payload || [[datagram]]
+|-
+| packet switching || '''datagram approach''' (destination address 로 forwarding) || [[datagram approach]]
+|-
+| 주는 서비스 || packetizing ✓ · routing/forwarding ✓ · error control △ || [[IP가 제공하는 서비스]]
+|-
+| 안 주는 서비스 || flow ✗ · congestion ✗ · QoS ✗ · security ✗ || 같은 표
+|-
+| 돕는 프로토콜 || [[ICMP]], IGMP, DHCP, ARP || [[보조 프로토콜]]
+|}
+
+{exam}🎯 "I would like to highlight '''two big properties of IP''', which is '''connectionless''' … and anything other services [are] served by '''higher layer protocol''' such as TCP, application layer and IPSec." (28:28) — 그리고 best effort 를 "very important" 라고 했다(05:59). → '''"IP = connectionless + best effort"''' 한 줄을 외운다.{/exam}
+
+{analogy}🎭 IP 는 '''일반 우편'''이다. 봉투에 주소만 정확히 쓰면(주소 형식) 우체국이 최선을 다해 배달하지만(best effort), 등기처럼 도착 확인을 해 주지도, 편지 여러 통이 보낸 순서대로 온다고 약속하지도 않는다(connectionless). 그런 보장이 필요하면 '''등기 서비스(TCP)''' 를 위에 덧붙인다.{/analogy}
+
+{quiz}OX: ① IP 는 데이터를 보내기 전에 연결 setup 을 한다. ② IP 의 checksum 은 payload 까지 검사한다. ③ 인터넷의 network layer 는 virtual-circuit approach 를 쓴다.{/quiz}
+{answer}① ✗ (connectionless — no setup) ② ✗ (checksum covers the '''header only''') ③ ✗ (IP 는 '''datagram approach''', p.26){/answer}
+
+== 관련 문서 ==
+* [[connectionless]] · [[best effort]] · [[datagram]] · [[IP가 제공하는 서비스]] · [[datagram approach]] · [[ICMP]] · [[IPSec]]
+* [[CH07 네트워크 계층 서비스와 성능]] · [[all-IP]] (4G 가 모든 것을 IP 패킷으로)
+* 중간고사: [[mid:IP]] · [[mid:TCP]] · [[mid:IP 주소와 MAC 주소]]

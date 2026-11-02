@@ -1,0 +1,40 @@
+key: congestion control
+title: Congestion control (혼잡 제어) — vicious cycle, IP ✗
+category: 5강 네트워크 계층, 용어
+---
+'''Congestion''' 은 인터넷의 '''한 지역에 datagram 이 너무 많은''' 상태다. 라우터가 datagram 을 버리기(drop) 시작하고, 위층이 잃어버린 것을 다시 보내면서(duplicates) 트래픽이 '''더''' 늘어나는 '''악순환(vicious cycle)''' 이 생긴다. '''Congestion control''' 은 이를 막는 것인데 '''[[IP]] 는 하지 않는다''' — 라우터는 버리기만 하고, 속도를 줄이는 건 TCP. L12 p.14, p.18, p.38.
+
+{def}"'''Congestion Control''' — '''Congestion''': too many datagrams in one area of the Internet. Routers start to '''drop''' datagrams. Upper layers then '''resend''' the lost ones (duplicates) → even more traffic: the situation can get '''worse'''." (p.14)
+"Congestion control — '''✗ No''' — Routers only drop packets; TCP slows down" (p.18){/def}
+
+[[img:L12-14.png|p.14 Too many datagrams → Routers drop packets → Senders resend duplicates → (다시) Too many datagrams — "a vicious cycle"|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''congestion''' = 혼잡, 정체. 교수: "It is like Korean '''혼잡'''" (10/27 녹음 23:56). 출근길 도로 정체와 똑같다.
+
+== vicious cycle ==
+<pre class="txt">
+  ① 한 지역에 datagram 이 너무 많다 (too many datagrams)
+        │
+        ▼
+  ② 라우터 queue 가 넘쳐 datagram 을 버린다 (drop)
+        │
+        ▼
+  ③ 보낸 쪽(위층)이 잃은 것을 다시 보낸다 (duplicates)
+        │
+        └──────▶ ① 로 — 트래픽이 더 늘어 상황이 악화
+</pre>
+* 그래프로 보면: load 가 capacity 를 넘으면 '''throughput collapses''' (p.38) → [[load와 성능]].
+
+[[anim:load_curves|capacity 를 넘는 순간 throughput 곡선이 무너지는 것이 바로 이 vicious cycle 의 결과다]]
+
+{warn}'''flow control 과 헷갈리지 말 것''': flow control 은 '''receiver 하나'''를 보호(buffer), congestion control 은 '''망 전체'''를 보호. 둘 다 IP 는 안 하고 TCP 가 한다 → [[flow control]].{/warn}
+
+{analogy}🎭 '''명절 고속도로.''' 차가 너무 많으면(too many datagrams) 톨게이트가 진입을 막고(drop), 막힌 사람들이 다른 시간에 '''또''' 출발하면서(resend) 정체가 더 길어진다. 정체를 줄이려면 '''출발하는 쪽이 덜 출발해야'''(TCP slows down) 한다 — 도로(IP) 자체는 아무 조절도 안 한다.{/analogy}
+
+{quiz}congestion 이 생겼을 때 IP(라우터)와 TCP 가 각각 하는 일은?{/quiz}
+{answer}라우터(IP)는 패킷을 '''drop''' 할 뿐 congestion control 을 하지 않는다. '''TCP 가 보내는 속도를 줄인다'''(slows down). (p.18){/answer}
+
+== 관련 문서 ==
+* [[flow control]] · [[load와 성능]] · [[queuing delay]] · [[best effort]] · [[IP가 제공하는 서비스]]
+* 중간고사: [[mid:TCP]]

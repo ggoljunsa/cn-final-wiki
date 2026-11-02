@@ -33,6 +33,8 @@ category: 3강 CDMA–4G, 용어
   3G    : circuit (음성) + '''packet''' (인터넷 데이터)       ← IMT-2000 p.33
   4G    : '''packet only''' — 음성도 IP 패킷 (All IP)          ← p.36
 </pre>
+{info}'''5강(CH07)에서 이어진다''': packet switching 의 정식 정의와 두 가지 접근 — '''[[datagram approach]]'''(connectionless, destination address 로 forwarding, 순서 뒤섞임 — IP 가 이것)와 '''[[virtual-circuit approach]]'''(connection-oriented, setup → data transfer → teardown, [[VCI]] label, in order) — 은 L12 p.19–26 에서 나온다 → [[packet switching]]. virtual circuit 은 이름 그대로 circuit switching 의 "길을 먼저 잡는" 성질을 packet 위에서 '''흉내 낸''' 것이다.{/info}
+
 1강의 [[통화 발신 과정]] 에서 MSC 가 "unused voice channel 을 할당" 하고 통화가 끝날 때까지 그 채널을 쓰는 것이 바로 circuit switching 의 모습이다.
 
 [[anim:generations_timeline|3G 칸의 "packet + circuit" 이 4G 칸에서 "all-IP packet-switched" 로 바뀌는 지점을 보라]]
@@ -44,3 +46,4 @@ category: 3강 CDMA–4G, 용어
 
 == 관련 문서 ==
 * [[all-IP]] · [[3G]] · [[4G]] · [[IMT-2000]] · [[PSTN]] · [[mid:IP]]
+* 5강: [[packet switching]] · [[datagram approach]] · [[virtual-circuit approach]] · [[IP]]

@@ -1,0 +1,59 @@
+key: total delay 공식
+title: Total delay 공식 — (n+1)(Delay_tr + Delay_pg + Delay_pr) + n·Delay_qu
+category: 5강 네트워크 계층, 용어
+---
+라우터 '''n''' 개를 지나는 경로의 '''전체 delay''' 공식이다. 링크가 '''n + 1''' 개라 transmission·propagation 은 n + 1 번, processing 은 라우터 n 개 + 목적지 = '''n + 1''' 번, queuing 은 '''라우터에서만 n''' 번. L12 p.28, p.32–33. 네 성분의 정의는 [[transmission delay]] · [[propagation delay]] · [[processing delay]] · [[queuing delay]].
+
+{def}"'''Delay''' = time for a packet to go from source to destination. Four parts: transmission, propagation, processing, queuing." (p.28)
+"Path with '''n routers → n + 1 links'''. Transmit + propagate on each of the n + 1 links. Process at the n routers + the destination (n + 1 times). '''Queue only at the n routers'''. (Assume equal delays at the sender, routers, and receiver)" (p.32){/def}
+
+$$\text{Total delay} = (n + 1)\,(\text{Delay}_{tr} + \text{Delay}_{pg} + \text{Delay}_{pr}) + (n)\,(\text{Delay}_{qu})$$
+
+[[img:L12-33.png|p.33 Total delay 식과 Source → R1 → R2 → … → Rn → Dest. 그림, "n + 1 links", "queuing happens only at n routers"|large]]
+
+== 기호 ==
+{|
+! 기호 || 뜻 || 몇 번
+|-
+| $n$ || 경로 위 라우터 수 || —
+|-
+| $\text{Delay}_{tr}$ || [[transmission delay]] = Packet length / Transmission rate || n + 1 (링크마다)
+|-
+| $\text{Delay}_{pg}$ || [[propagation delay]] = Distance / Propagation speed || n + 1 (링크마다)
+|-
+| $\text{Delay}_{pr}$ || [[processing delay]] (장비 안 처리) || n + 1 (라우터 + 목적지)
+|-
+| $\text{Delay}_{qu}$ || [[queuing delay]] (라우터 queue 대기) || '''n''' (라우터만)
+|}
+* "Assume equal delays" — 모든 링크·장비의 각 지연이 같다고 가정해서 곱셈으로 쓸 수 있다.
+
+== 손으로 푸는 순서 ==
+<pre class="txt">
+예시 (수치는 가정) — n = 3, L = 8,000 bits, R = 10 Mbps, d = 200 km, s = 2×10^8 m/s,
+                    Delay_pr = 50 μs, Delay_qu = 2 ms
+1. 라우터 n = 3  →  링크 n + 1 = 4
+2. Delay_tr = 8,000 / 10^7           = 0.8 ms
+3. Delay_pg = 200,000 / (2 × 10^8)   = 1 ms
+4. (n+1)(tr + pg + pr) = 4 × (0.8 + 1 + 0.05) = 4 × 1.85 = 7.4 ms
+5. n × qu = 3 × 2 ms                 = 6 ms
+6. Total = 7.4 + 6                   = '''13.4 ms'''
+</pre>
+<pre class="txt">
+자주 하는 실수 (같은 수치)
+ ✗ queuing 도 (n+1) 번:   4 × (0.8 + 1 + 0.05 + 2)   = 15.4 ms   (+2 ms = qu 하나 더)
+ ✗ 링크를 n 개로:          3 × 1.85 + 3 × 2           = 11.55 ms  (−1.85 ms = 링크 하나 빠짐)
+ ✓                         4 × 1.85 + 3 × 2           = 13.4 ms
+</pre>
+값은 python 으로 검산했다.
+
+[[sim:total_delay]]
+
+[[anim:delay_four_parts|n = 1 인 경로에서 링크 두 개의 tr+pg, 라우터·목적지의 processing 두 번, 라우터만의 queuing 한 번이 쌓이는 것을 보고 2(tr+pg+pr) + 1·qu 를 확인하라]]
+
+{exam}🎯 교수(48:39–50:43): "There are n distinct routers. Then we can see that there are '''n plus 1 links''' … queuing delay is multiplying by '''N''', which is the number of routers … transmission, propagation, and even processing delay [are multiplied by n + 1]." + "'''Just remember that queuing delay is involved with routers, not with source and destination.'''"{/exam}
+
+{analogy}🎭 '''기차로 n 개 환승역을 거치는 여행.''' 구간(링크)은 역보다 하나 많다(n + 1). 구간마다 타는 시간(tr)과 달리는 시간(pg)이 들고, 각 역과 종착역에서 개찰구를 지나는 시간(pr)이 들고, '''환승역에서만''' 다음 기차를 기다린다(qu). 종착역에서는 기다릴 다음 기차가 없다.{/analogy}
+
+== 관련 문서 ==
+* [[transmission delay]] · [[propagation delay]] · [[processing delay]] · [[queuing delay]] · [[throughput]] · [[공식 모음]]
+* 중간고사: [[mid:latency]] · [[mid:propagation time]] · [[mid:transmission time]]

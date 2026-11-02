@@ -1,0 +1,35 @@
+key: bottleneck
+title: Bottleneck (병목) — 경로에서 가장 느린 링크 (DGIST 300 Mbps 일화)
+category: 5강 네트워크 계층, 용어
+---
+'''Bottleneck''' 은 경로에서 '''가장 느린 링크'''로, 경로 전체의 [[throughput]] 을 정한다. L12 p.35–36. 교수는 이 슬라이드에서 '''DGIST 캠퍼스 유선망이 300 Mbps 밖에 안 되어 WiFi 가 빨라도 소용없다'''는 일화를 들었다(10/27 녹음 52:00–56:29).
+
+{def}"On a path, throughput = the '''slowest link''' (the '''bottleneck''')." (p.35)
+"b. '''Water-pipe analogy'''" — 굵은 관, 가는 관('''Bottleneck'''), 중간 관 (p.36){/def}
+
+[[img:L12-36.png|p.36 Water-pipe analogy — 가운데 가는 관 위에 빨간 "Bottleneck"|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''bottle + neck''' = 병의 목. 병이 아무리 커도 물은 '''좁은 목'''으로만 나온다. 경로가 아무리 빨라도 '''가장 좁은 링크'''만큼만 흐른다.
+
+== 교수 일화 — DGIST 의 bottleneck ==
+{tip}"I heard from '''Professor Bae''', which is also a faculty member in our EECS … he found out that the network speed, '''wired speed of network''' in [DGIST] is just '''300 Mbps''' … Do you remember the speed of Ethernet? Fast Ethernet or Gigabit Ethernet, right? It is '''slower than Gigabit Ethernet''' and I was very surprised." (53:18–54:28)
+"while your wireless network speed is faster than 300 Mbps … you are bottlenecked with this one, because anyway you have to link to the internet by using this … wired infra network … '''you cannot use your Wi-Fi service faster than this one'''." (55:15–55:52)
+"'''300 Mbps in 2026. Wow.'''" (56:23) — 인프라 업그레이드는 공사 중.{/tip}
+
+<pre class="txt">
+노트북 ──WiFi (예: 1.2 Gbps)──▶ AP ──캠퍼스 유선 '''300 Mbps'''──▶ 외부망 (예: 10 Gbps) ──▶ Internet
+경로 throughput = min(1.2 G, '''300 M''', 10 G) = '''300 Mbps'''      ← 유선이 bottleneck
+업그레이드 뒤 (가정 유선 10 Gbps): min(1.2 G, 10 G, 10 G) = 1.2 Gbps  ← 이번엔 WiFi 가 bottleneck
+(WiFi·외부망 수치는 예시값 — 녹음에는 300 Mbps 만 나온다)
+</pre>
+* 비교: [[mid:Fast Ethernet]] 100 Mbps < '''300 Mbps''' < [[mid:Gigabit Ethernet]] 1 Gbps.
+* 교훈: bottleneck 을 고치면 '''사라지는 게 아니라 다음으로 느린 곳으로 옮겨 간다'''.
+
+[[sim:bottleneck_throughput]]
+
+{analogy}🎭 '''4 차선 고속도로 중간의 1 차선 공사 구간.''' 앞뒤가 4 차선이어도 시간당 지나가는 차는 1 차선 구간이 정한다. 내 차(WiFi)가 아무리 좋아도 공사 구간(캠퍼스 유선)에서 막힌다.{/analogy}
+
+== 관련 문서 ==
+* [[throughput]] · [[load와 성능]] · [[congestion control]] · [[CH07 네트워크 계층 서비스와 성능]]
+* 중간고사: [[mid:Gigabit Ethernet]] · [[mid:Fast Ethernet]] · [[mid:WiFi]]

@@ -1,0 +1,50 @@
+key: packet switching
+title: Packet switching (패킷 교환) — 라우터는 switch, 두 가지 접근
+category: 5강 네트워크 계층, 용어
+---
+'''Packet switching''' 은 메시지를 패킷(datagram)으로 나눠 보내고, 경로 위의 '''라우터(= switch)''' 가 각 패킷을 '''input port → output port''' 로 연결해 넘기는 방식이다. 접근은 두 가지: '''[[datagram approach]]'''(connectionless)와 '''[[virtual-circuit approach]]'''(connection-oriented). 인터넷의 IP 는 datagram 쪽이다. L12 p.19–26.
+
+{def}"Discusses packet switching: (i) the '''datagram (connectionless)''' approach; (ii) the '''virtual-circuit (connection-oriented)''' approach." (p.19)
+"A '''router is a switch''': it connects an '''input port''' to an '''output port'''. Each numbered box = '''one datagram'''; together, 1–4 carry '''one message'''." (p.20–21)
+"Two approaches: datagram (connectionless) vs. virtual circuit (connection-oriented)" (p.22){/def}
+
+[[img:L12-22.png|p.22 A connectionless (datagram) packet-switched network — Sender 의 1 2 3 4 가 R1–R5 를 서로 다른 경로로 지나 Receiver 에 "1 3 4 2 Out of order" 로 도착|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''packet''' = 작은 꾸러미, '''switching''' = 갈림길에서 방향을 바꿔 잇는 것(전화 교환원이 선을 꽂아 잇던 것). → "꾸러미 단위로 갈림길마다 방향을 정해 넘긴다". 교수: "router is served similar to switch and selects next intermediate node … this switching with respect to the packet" (10/27 녹음 30:41–31:15).
+
+== 두 접근 한눈에 ==
+{|
+! || [[datagram approach|Datagram]] || [[virtual-circuit approach|Virtual circuit]]
+|-
+| Service || Connectionless || Connection-oriented
+|-
+| Setup before sending? || No || Yes (path is set up first)
+|-
+| Router decides by || '''Destination address''' || '''Label (VCI)'''
+|-
+| Path of packets || May differ per packet || Same for all packets
+|-
+| Arrival order || May be out of order || In order
+|}
+"The Internet's network layer (IP) uses the '''datagram''' approach." (p.26)
+
+[[anim:datagram_vs_vc_anim|위 datagram 과 아래 virtual circuit 에서 같은 메시지 1–4 의 경로와 도착 순서가 어떻게 다른지 비교하라]]
+
+[[sim:datagram_vs_vc]]
+
+== circuit switching 과의 관계 ==
+3강 [[circuit switching과 packet switching]] 에서 본 '''circuit switching''' 은 통화 전에 '''전용 회선을 잡아 독점'''한다(1G·2G 음성). packet switching 은 회선을 독점하지 않고 패킷마다 망을 나눠 쓴다(4G all-IP). 그 packet switching 안에서 다시 "회선 흉내를 내느냐(virtual circuit) 안 내느냐(datagram)" 로 갈린다.
+<pre class="txt">
+switching
+ ├─ circuit switching          : 물리 회선 예약·독점 (전통 전화망)
+ └─ '''packet switching'''          : 패킷 단위로 망 공유
+      ├─ datagram approach     : 패킷마다 독립 (IP)            ← connectionless
+      └─ virtual-circuit       : setup 한 가상 회선을 따라감    ← connection-oriented
+</pre>
+
+{analogy}🎭 packet switching 은 '''택배 허브 시스템'''이다. 상자(패킷)가 허브(라우터)에 들어오면 분류 벨트가 어느 출구(output port)로 보낼지 정한다. datagram 은 상자마다 주소를 보고 그때그때 출구를 정하는 '''일반 택배''', virtual circuit 은 미리 정한 노선 번호표(VCI)를 붙여 같은 노선으로만 보내는 '''정기 화물 노선'''이다.{/analogy}
+
+== 관련 문서 ==
+* [[datagram approach]] · [[virtual-circuit approach]] · [[VCI]] · [[forwarding]] · [[circuit switching과 packet switching]] · [[connectionless]]
+* 중간고사: [[mid:스위치]] · [[mid:라우터]]

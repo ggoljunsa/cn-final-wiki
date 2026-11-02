@@ -1,0 +1,30 @@
+key: 보조 프로토콜
+title: 보조 프로토콜 (Auxiliary protocols: ICMP · IGMP · DHCP · ARP)
+category: 5강 네트워크 계층, 용어
+---
+network layer 에는 [[IP]] 말고도 '''IP 를 돕는 auxiliary protocol''' 들이 있다. L12 p.5 는 네 개를 이름만 든다: '''ICMP, IGMP, DHCP, ARP'''. 교수: "there are other auxiliary protocols in network layer that helps performance of IP … I think you may remember '''ARP'''" (10/27 녹음 07:41–08:29). 각 프로토콜의 동작은 다음 강의들에서 다룰 것으로 보인다 — 아래 한 줄 설명은 Forouzan 보충(슬라이드에 없음)이다.
+
+{def}"'''Auxiliary protocols''': ICMP, IGMP, DHCP, ARP" (p.5){/def}
+
+{|
+! 프로토콜 || 풀네임 || 하는 일 (보충) || 이 위키
+|-
+| '''ICMP''' || Internet Control Message Protocol || 오류·상황 '''보고''' (datagram discarded, bad header — p.12 에 등장) || [[ICMP]]
+|-
+| '''IGMP''' || Internet Group Management Protocol || '''multicast 그룹''' 가입·탈퇴 관리 || [[mid:multicast]]
+|-
+| '''DHCP''' || Dynamic Host Configuration Protocol || host 에 '''IP 주소를 자동으로 할당''' (와이파이 접속하면 주소가 저절로 생기는 것) || —
+|-
+| '''ARP''' || Address Resolution Protocol || '''IP 주소 → MAC 주소''' 변환 (중간고사 CH03) || [[mid:ARP]]
+|}
+
+== 이름에서 개념 끌어내기 ==
+* '''auxiliary''' = 보조의, 도우미. 주인공 IP 혼자서는 할 수 없는 '''주변 일'''(주소 받기, 주소 변환, 오류 알리기, 그룹 관리)을 맡는다.
+
+{tip}'''ARP 는 어느 계층?''' 중간고사에서 ARP 는 link-layer addressing(CH03 (2))에서 배웠지만, 이 덱(Forouzan 분류)은 network layer 의 보조 프로토콜로 넣는다. IP 주소(network)와 MAC 주소(data-link)를 '''이어 주는''' 프로토콜이라 경계에 있다. 교수 표현: ARP "translates [the network address to the] physical address … that helps IP" (08:08).{/tip}
+
+{analogy}🎭 IP 가 '''택배 기사'''라면 DHCP 는 '''새 집에 주소를 붙여 주는 동사무소''', ARP 는 '''"이 주소면 몇 호 현관문?" 을 알려 주는 경비실''', ICMP 는 '''반송 안내문''', IGMP 는 '''단체 배송 명단 관리'''다.{/analogy}
+
+== 관련 문서 ==
+* [[ICMP]] · [[IP]] · [[network layer]] · [[CH07 네트워크 계층 서비스와 성능]]
+* 중간고사: [[mid:ARP]] · [[mid:IP 주소와 MAC 주소]] · [[mid:multicast]]

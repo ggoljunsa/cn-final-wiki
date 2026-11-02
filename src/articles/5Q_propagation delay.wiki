@@ -1,0 +1,36 @@
+key: propagation delay
+title: Propagation delay (전파 지연) — Delay_pg = Distance / Propagation speed
+category: 5강 네트워크 계층, 용어
+---
+'''Propagation delay''' 는 '''비트 하나'''가 링크의 한쪽 끝에서 다른 쪽 끝까지 '''이동하는''' 시간이다. 거리와 매체의 전파 속도로만 정해지고 패킷 크기와는 무관하다. L12 p.30. 교수: data link layer 에서 배운 propagation delay 와 "this is the same one" (10/27 녹음 44:40) — 중간고사 [[mid:propagation time]] · [[mid:T_p]].
+
+{def}"'''Propagation delay''': time for '''one bit''' to travel the link." (p.30)
+$$\text{Delay}_{pg} = \frac{\text{Distance}}{\text{Propagation speed}}$$
+"Speed ≈ $3 \times 10^8$ m/s in vacuum, '''less in cables'''." / "Ex) 2,000 m cable, $2 \times 10^8$ m/s → $\text{Delay}_{pg} = 2{,}000 / (2 \times 10^8) = 10\ \mu s$" (p.30){/def}
+
+[[img:L12-30.png|p.30 — "pg: one bit crosses the link"(파란 화살표) 와 Ex) 2,000 m cable, 2×10^8 m/s, Delay_pg = 2,000/(2×10^8) = 10 μs|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''propagate''' = 퍼져 나가다, 전파되다. 신호(전파·빛·전기)가 매체를 '''퍼져 나가는''' 데 걸리는 시간 → 물리적인 '''거리'''의 문제.
+* 왜 "one bit" 로 정의하나? 교수: "'''because it is about distance'''. We don't have to worry about pushing up, propagating all bits … physical distance can simply be measured with just one bit" (44:50–45:22). 모든 비트가 같은 속도로 같은 거리를 가니 하나만 재면 된다.
+
+== p.30 예제 풀이 ⭐⭐ ==
+<pre class="txt">
+1. Distance = 2,000 m (= 2 km 케이블)
+2. Propagation speed = 2 × 10^8 m/s  (진공의 빛 3 × 10^8 보다 느림 — "less in cables")
+3. Delay_pg = 2,000 / (2 × 10^8)
+            = 1 × 10^-5 s
+            = '''10 μs'''
+</pre>
+* 단위 맞추기: 거리 '''m''' ↔ 속도 '''m/s'''. 거리가 km 로 주어지면 × 1000.
+* 위성으로 보면(보충): GEO 35,786 km 를 빛의 속도로 가면 $35{,}786{,}000 / (3 \times 10^8) \approx 0.119$ s — [[GEO]] 가 "말이 늦게 닿는" 이유.
+
+[[sim:total_delay]]
+
+{tip}'''transmission vs propagation 한 줄 구별''': transmission 은 "'''얼마나 많이'''(bits) 보내나", propagation 은 "'''얼마나 멀리'''(m) 보내나". 2 km 케이블·100 Mbps·1,000 bytes 면 tr = 80 μs, pg = 10 μs — 짧은 케이블에서는 transmission 이 더 크다. 대륙 간 링크나 위성에서는 propagation 이 압도한다.{/tip}
+
+{analogy}🎭 '''긴 터널에 공을 굴리기.''' 공 하나가 터널 끝까지 가는 시간이 propagation delay 다. 공을 100 개 굴리든 1 개 굴리든 '''공 하나'''가 건너는 시간은 같다 — 터널 길이와 공의 속도만 중요하다.{/analogy}
+
+== 관련 문서 ==
+* [[transmission delay]] · [[total delay 공식]] · [[processing delay]] · [[queuing delay]] · [[GEO]]
+* 중간고사: [[mid:propagation time]] · [[mid:T_p]] · [[mid:latency]] · [[mid:bandwidth-delay product]]

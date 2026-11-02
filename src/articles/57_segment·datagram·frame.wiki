@@ -1,0 +1,31 @@
+key: segment·datagram·frame
+title: Segment · Datagram · Frame — 계층마다 다른 PDU 이름
+category: 5강 네트워크 계층, 용어
+---
+같은 데이터 덩어리도 '''어느 계층에서 보느냐'''에 따라 이름이 다르다. L12 p.4: "Transport: '''segment''' → Network: '''datagram''' → Data link: '''frame'''". 교수: "it would be very confusing but I will remind you quickly" (10/27 녹음 07:24). 전체 목록(message · segment · datagram · frame · bits)은 중간고사 [[mid:PDU]].
+
+{def}"Its unit is the datagram: an IP packet (header + payload) — '''Transport: segment → Network: datagram → Data link: frame'''." (p.4){/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''segment''' = 조각. 위(application)의 긴 메시지를 transport 가 '''잘라 낸 조각'''.
+* '''datagram''' = 데이터 전보. 주소를 달고 '''혼자 가는''' 한 통 → [[datagram]].
+* '''frame''' = 틀, 액자. 링크 위에서 '''시작과 끝을 표시한 틀'''(중간고사 [[mid:framing]]).
+
+== 캡슐화로 보면 ==
+<pre class="ascii">
+ Application  :                              [ message ]
+ Transport    :                   [ TCP hdr | message ]            = '''segment'''
+ Network      :         [ IP hdr | TCP hdr | message ]             = '''datagram''' (IP packet)
+ Data link    : [ DL hdr | IP hdr | TCP hdr | message | trailer ]  = '''frame'''
+ Physical     :  0101100111010…                                    = bits
+</pre>
+* 아래로 갈수록 header 가 하나씩 붙는다 — '''encapsulation''' ([[mid:캡슐화]]). network layer 에서 header 를 붙이는 일이 [[packetizing]] 이다.
+* datagram 의 '''payload''' = 위층의 segment 전체.
+
+{warn}함정: "network layer 의 단위는 frame" ✗ → '''datagram'''. "transport 의 단위는 datagram" ✗ → '''segment''' (TCP 기준). frame 은 data-link.{/warn}
+
+{analogy}🎭 '''편지 → 봉투 → 우편 자루 → 트럭'''. 편지(message)를 봉투에 넣으면 segment, 봉투에 주소 스티커를 붙여 우체국 체계에 넣으면 datagram, 그 봉투를 다음 우체국행 자루(구간마다 바뀜)에 담으면 frame 이다.{/analogy}
+
+== 관련 문서 ==
+* [[datagram]] · [[packetizing]] · [[network layer]] · [[IP]]
+* 중간고사: [[mid:PDU]] · [[mid:캡슐화]] · [[mid:Ethernet 프레임 형식]]

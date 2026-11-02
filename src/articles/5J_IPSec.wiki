@@ -1,0 +1,24 @@
+key: IPSec
+title: IPSec (IP Security) — connectionless IP 위의 connection-oriented 보안 층
+category: 5강 네트워크 계층, 용어
+---
+'''IPSec''' 은 connectionless 인 [[IP]] 위에 얹는 '''또 하나의 virtual level''' 로, IP 를 '''connection-oriented''' 하고 '''secure''' 한 서비스로 바꾼다. 인터넷은 원래 보안을 고려하지 않았고(소수 대학 연구자의 망), 지금은 보안이 큰 관심사라 IP 자체가 아니라 IPSec 을 '''덧붙인다'''(Added on top). L12 p.16, p.18.
+
+{def}"'''Security''' — Not a concern originally: a few university users doing research. Today, security is a '''big concern'''. Connectionless IP needs another '''virtual level''' that turns it into a '''connection-oriented''' service: '''IPSec'''." (p.16)
+"Security — ✗ No — Added on top: IPSec" (p.18){/def}
+
+[[img:L12-16.png|p.16 Upper layers / IPSec (connection-oriented, secure) / IP (connectionless) / Lower layers|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''IP + Sec(urity)''' = IP 를 위한 보안. 이름에 IP 가 들어 있듯 '''IP 와 같은 계층'''에서 동작하지만 '''IP 와는 다른 프로토콜'''이다.
+
+{exam}🎯 "Actually, '''IPSec is at the same layer as IP, but different from IP'''." (10/27 녹음 29:05) / "it is a '''different protocol''', a complementary [one]" (27:11–27:46)
+→ OX 함정: "IP 는 security 서비스를 제공한다" ✗ (IPSec 이 한다). "IPSec 은 transport layer 프로토콜이다" ✗ (network layer, IP 와 같은 층).{/exam}
+
+* 그림의 층 순서: Upper layers / '''IPSec''' / '''IP''' / Lower layers — IPSec 이 IP '''바로 위'''에서 connectionless 를 connection-oriented 로 바꿔 준다.
+* (Forouzan 보충 — 슬라이드에 없음) IPSec 은 통신 전에 두 끝이 보안 연결(security association)을 맺어 암호화·인증 키를 정한다 — 그래서 "connection-oriented" 다. VPN 이 대표적 쓰임.
+
+{analogy}🎭 일반 우편(IP)으로 보내는 편지는 누구나 열어 볼 수 있다. IPSec 은 '''보내기 전에 받는 사람과 금고 비밀번호를 미리 정하고(연결), 편지를 금고에 넣어 보내는 것'''이다. 우체국(IP)은 그대로, 그 위에 금고 서비스를 얹었다.{/analogy}
+
+== 관련 문서 ==
+* [[IP가 제공하는 서비스]] · [[connectionless]] · [[virtual-circuit approach]] (또 다른 connection-oriented) · [[IP]]

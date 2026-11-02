@@ -16,12 +16,14 @@ category: 안내
 |-
 | 교수 학습 지침 || '''구체적 숫자(채널 수 등)는 외우지 말고 세대별 진화 trend 를 이해하라. uplink/downlink 는 외워라''' || 10/20 녹음 41:54
 |-
+| 교수 강조 (CH07) || "the most important one is about '''each role and each service'''" — network layer 서비스마다 IP 가 하는지/누가 하는지([[IP가 제공하는 서비스]]), routing vs forwarding, datagram vs virtual circuit, queuing 은 라우터에서만 || 10/27 녹음 01:49 · 20:47 · 39:05 · 50:43
+|-
 | 형식(참고) || 중간고사는 필기(손으로 작성)였고 OX·객관식(4~5지선다)·계산/단답·서술 유형이 섞였다. 교수는 "교재에만 있는 문제는 내지 않는다 — 슬라이드 중심"이라고 했다 || 9/22·10/6·10/8 녹음
 |}
 
 == 미확정 ==
 * 기말고사 '''날짜·시간·장소'''
-* '''범위의 끝''' — 10/20 공지: "다음 수업(목 10/22)에 satellite networks(WAN 의 마지막)를 하고 network layer 로 넘어간다"(73:00). network layer 는 "이 과목에서 가장 중요한 부분 중 하나"라고 했다.
+* '''범위의 끝''' — 10/20 공지: "다음 수업(목 10/22)에 satellite networks(WAN 의 마지막)를 하고 network layer 로 넘어간다"(73:00). 10/27 에 '''CH07 Network Layer: Data Transfer (1)''' 을 끝까지 나갔으므로 범위는 지금 '''CH05 (1)(2) + CH07 (1)''' 까지 진행. 교수: "network and transport, these two layers are the '''most important''' layers"(10/27 00:32). 다음 수업(10/29)은 IP(addressing 등).
 * 기말이 누적(중간 범위 포함)인지 여부
 
 {warn}
@@ -35,6 +37,8 @@ category: 안내
 | 10/20 (화) || CH05 (1) p.1–36 전부 (WAN 분류 → cellular 동작 → 1G–4G) || `녹음본/1020_컴네.txt` (73분, whisper 전사) || [[CH05 셀룰러 동작]] · [[CH05 1G–2G 셀룰러]] · [[CH05 IS-95·3G·4G]]
 |-
 | 10/22 (목) || CH05 (2) Satellite Network p.1–21 (예정) — '''선제 작성''' || (녹음 대기) || [[CH05 Satellite Network]]
+|-
+| 10/27 (화) || '''CH07 Network Layer: Data Transfer (1) p.1–38 전부''' — services(IP 가 주는 것: packetizing·routing/forwarding ✓, error control △, 나머지 ✗), packet switching(datagram vs virtual circuit), delay·throughput·load. '''시험 공지 없음'''. 다음 수업 10/29: IP || `녹음본/1027_컴네.txt` (60분, faster-whisper) || [[CH07 네트워크 계층 서비스와 성능]]
 |}
 
 {analogy}

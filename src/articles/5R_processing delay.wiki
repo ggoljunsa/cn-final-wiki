@@ -1,0 +1,30 @@
+key: processing delay
+title: Processing delay (처리 지연) — 장비 안에서 처리하는 시간
+category: 5강 네트워크 계층, 용어
+---
+'''Processing delay''' ($\text{Delay}_{pr}$)는 라우터나 host 가 패킷을 '''받아서, header 를 떼고, 오류를 검사하고, 다음으로 넘기는'''(output port 또는 upper layer) 데 걸리는 시간이다. 라우터 n 개와 '''목적지 1 곳'''에서 생겨 total delay 에서 '''n + 1''' 번 센다. L12 p.31–33.
+
+{def}"'''Processing delay''' ($\text{Delay}_{pr}$): Time for a '''router/host''' to '''receive''' the packet, '''remove the header''', '''check errors''', and '''pass it on''' (output port or upper layer)." (p.31)
+"Process at the n routers + the destination ('''n + 1 times''')." (p.32){/def}
+
+[[img:L12-31.png|p.31 Inside a router — input queue (Delay_qu) → Process (Delay_pr) → output queue (Delay_qu)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''process''' = 처리하다. 교수: "you can think of it as that delay is with respect to the device, '''within device''', processing package or data" (10/27 녹음 47:13). 링크 위가 아니라 '''장비 안'''의 시간이다.
+
+== 어디서 몇 번? ==
+<pre class="txt">
+Source ─ R1 ─ R2 ─ … ─ Rn ─ Dest.
+          pr   pr        pr     pr       → n 개 라우터 + 목적지 = '''n + 1''' 번
+(source 의 처리는 공식에서 세지 않는다 — "Assume equal delays at the sender, routers, and receiver")
+</pre>
+
+{warn}'''p.9 와 p.31 이 부딪혀 보이는 곳''': p.9 는 "Routers do not decapsulate the packet", p.31 은 processing 에 "'''remove the header'''" 를 넣는다. 정의 문장은 '''router/host''' 를 함께 말하는 것으로 읽는다 — host(목적지)는 header 를 떼서 upper layer 로 넘기고, 라우터는 IP header 를 읽어 output port 로 넘긴다. 라우터가 떼는 것은 '''하위 계층(frame)의 header''' 이지 IP 패킷을 decapsulate 하는 것은 아니다(Forouzan 보충 — 슬라이드에 없음). 시험에서 "라우터는 패킷을 decapsulate 한다" 는 ✗.{/warn}
+
+[[anim:delay_four_parts|5.8–6.8 초: 라우터 가운데 Process 상자가 진해지는 동안이 processing delay, 10.5 초 이후 목적지 B 에서도 processing 이 한 번 더 생긴다]]
+
+{analogy}🎭 '''택배 물류센터의 스캔·분류 작업.''' 상자를 내려 송장을 스캔하고(header), 파손 여부를 확인하고(check errors), 맞는 출구 벨트에 올린다(pass it on). 기다리는 줄(queuing)과는 별개로, '''작업 자체'''에 드는 시간이다.{/analogy}
+
+== 관련 문서 ==
+* [[queuing delay]] · [[total delay 공식]] · [[transmission delay]] · [[propagation delay]] · [[packetizing]]
+* 중간고사: [[mid:latency]]

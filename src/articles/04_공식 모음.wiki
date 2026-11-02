@@ -1,5 +1,5 @@
 key: 공식 모음
-title: 공식 모음 — CH05 의 계산과 참고 수치
+title: 공식 모음 — CH05 · CH07 의 계산과 참고 수치
 category: 안내
 ---
 CH05 (1)은 공식이 많은 장이 아니다. 계산은 '''[[GSM channel bit rate]]''' 하나가 슬라이드에 식으로 나오고, 나머지는 "대역 ÷ 채널 폭" 같은 나눗셈이다.
@@ -82,7 +82,26 @@ Kepler's law — 손으로 푸는 순서
 |}
 trend: 대역↑ → bandwidth↑, 모든 대역에서 uplink 주파수 > downlink → [[SATCOM 주파수 대역]]
 
-== 참고 수치 (암기 불필요 — trend 이해용) ==
+== Network layer 성능 (CH07 (1), L12 p.28–38) ⭐⭐⭐ ==
+CH05 와 달리 '''이 공식들은 계산 문제로 나오기 좋은 모양'''이다. 기호마다 사전 문서가 있다.
+{|
+! 무엇 || 식 || 예 || 시뮬레이터
+|-
+| [[transmission delay]] || $\text{Delay}_{tr} = \frac{\text{Packet length}}{\text{Transmission rate}}$ || 8,000 bits / 100 Mbps = 80 μs (가정값) || `sim:total_delay`
+|-
+| [[propagation delay]] || $\text{Delay}_{pg} = \frac{\text{Distance}}{\text{Propagation speed}}$ || '''2,000 m / (2×10^8 m/s) = 10 μs''' (p.30) || `sim:total_delay`
+|-
+| [[total delay 공식]] || $(n+1)(\text{Delay}_{tr} + \text{Delay}_{pg} + \text{Delay}_{pr}) + n \cdot \text{Delay}_{qu}$ || n = 3, tr 0.8 ms, pg 1 ms, pr 50 μs, qu 2 ms → '''13.4 ms''' (가정값) || `sim:total_delay`
+|-
+| [[throughput]] (경로) || $\min(\text{link rates})$ = [[bottleneck]] || '''min(200, 100, 150) = 100 kbps''' (p.35) || `sim:bottleneck_throughput`
+|-
+| 전송 시간 (보충) || 데이터 크기 / 경로 throughput || 1 GB / 300 Mbps ≈ 26.7 s (DGIST 일화) || `sim:bottleneck_throughput`
+|}
+* 세는 법: 라우터 '''n''' → 링크 '''n + 1''' → tr·pg '''n + 1''' 번, processing '''n + 1''' 번(라우터 + 목적지), queuing '''n''' 번(라우터만).
+* 함정 값(같은 가정): queuing 을 n+1 번 → 15.4 ms ✗, 링크를 n 개 → 11.55 ms ✗.
+* 단위: L 은 bits(bytes × 8), R 은 bps, 거리 m ↔ 속도 m/s. 진공 $3 \times 10^8$ m/s, 케이블은 더 느림(예 $2 \times 10^8$).
+
+
 {|
 ! 세대 || 수치
 |-
@@ -108,3 +127,4 @@ trend: 대역↑ → bandwidth↑, 모든 대역에서 uplink 주파수 > downli
 == 관련 문서 ==
 * [[셀룰러 세대 비교표]] · [[GSM multiframe]] · [[AMPS 대역과 채널]] · [[자주 틀리는 함정 모음]]
 * 위성: [[Kepler's law]] · [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]] · [[SATCOM 주파수 대역]] · [[CH05 Satellite Network]]
+* network layer: [[total delay 공식]] · [[transmission delay]] · [[propagation delay]] · [[throughput]] · [[bottleneck]] · [[CH07 네트워크 계층 서비스와 성능]]

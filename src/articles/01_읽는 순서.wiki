@@ -2,7 +2,7 @@ key: 읽는 순서
 title: 읽는 순서 — 처음부터 끝까지 따라가기
 category: 안내
 ---
-수업(10/20 · 10/22) 슬라이드 순서 그대로다. 굵은 것이 메인 문서이고, 그 아래가 메인을 읽다 막힐 때 들어가는 사전 문서다. 메인을 먼저 끝까지 읽고 사전은 링크로 필요할 때만 들어가는 것을 권한다.
+수업(10/20 · 10/22 · 10/27) 슬라이드 순서 그대로다. 굵은 것이 메인 문서이고, 그 아래가 메인을 읽다 막힐 때 들어가는 사전 문서다. 메인을 먼저 끝까지 읽고 사전은 링크로 필요할 때만 들어가는 것을 권한다.
 
 {analogy}
 드라마 정주행과 같다. 메인 문서가 본편이고 사전 문서는 "인물 소개" 페이지다. 누가 누군지 헷갈릴 때만 들어가면 된다.
@@ -46,5 +46,16 @@ category: 안내
 # [[MEO]] — [[GPS]] · [[trilateration]] (3강 [[GPS 동기화]] 와 연결)
 # [[LEO]] — [[Starlink]] · [[footprint]] · [[UML과 GWL]]
 
-== 5. 정리 ==
+== 5. '''[[CH07 네트워크 계층 서비스와 성능]]''' (L12 p.1–38, 10/27) ==
+교수: "network and transport, these two layers are the most important layers". 여기서부터 계층이 한 칸 올라간다.
+# 개요: [[network layer]] → [[host-to-host delivery]] → [[IP]] — [[connectionless]] · [[best effort]] · [[datagram]] · [[segment·datagram·frame]] · [[보조 프로토콜]] · [[ICMP]]
+# 서비스 ①: [[packetizing]] (예외 [[fragmentation]])
+# 서비스 ② ⭐⭐⭐: [[routing]] (표를 만든다) ↔ [[forwarding]] (표를 쓴다) · [[forwarding table]]
+# 서비스 ③–⑦: [[IP의 error control]] · [[flow control]] · [[congestion control]] · [[QoS]] · [[IPSec]]
+# 정리 표 ⭐⭐⭐: [[IP가 제공하는 서비스]] (2 ✓ · 1 △ · 4 ✗)
+# Packet switching: [[packet switching]] → [[datagram approach]] (IP) vs [[virtual-circuit approach]] · [[VCI]] (3강 [[circuit switching과 packet switching]] 과 연결)
+# 성능 — delay: [[transmission delay]] · [[propagation delay]] · [[processing delay]] · [[queuing delay]] → '''[[total delay 공식]]''' ⭐⭐⭐
+# 성능 — throughput: [[throughput]] · [[bottleneck]] (DGIST 300 Mbps 일화) · [[load와 성능]]
+
+== 6. 정리 ==
 * [[셀룰러 세대 비교표]] → [[공식 모음]] → [[자주 틀리는 함정 모음]]

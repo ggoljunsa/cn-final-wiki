@@ -1,5 +1,5 @@
 key: 자주 틀리는 함정 모음
-title: 자주 틀리는 함정 모음 — CH05 셀룰러 · 위성
+title: 자주 틀리는 함정 모음 — CH05 셀룰러 · 위성 · CH07 network layer
 category: 안내
 ---
 OX·객관식에서 헷갈리기 쉬운 짝을 모았다. 각 줄의 '''틀린 생각 → 맞는 사실''' 을 읽고, 이유가 바로 떠오르지 않으면 링크된 문서로 간다. 교수는 "숫자를 묻는 OX 는 안 낸다"(46:00)고 했으니, 함정은 대부분 '''개념의 방향·짝짓기'''에서 나온다.
@@ -88,6 +88,48 @@ OX·객관식에서 헷갈리기 쉬운 짝을 모았다. 각 줄의 '''틀린 �
 | geostationary = 위성이 실제로 멈춰 있음 || 주기가 지구 자전(24 h)과 같아 '''지구에 대해''' 멈춰 보일 뿐 || [[geostationary]]
 |}
 
+== Network layer (CH07 (1)) ==
+{|
+! 틀린 생각 || 맞는 사실 || 문서
+|-
+| 라우터는 패킷을 decapsulate 해서 payload 를 확인한다 || '''Routers do not decapsulate''' — header 만 읽는다. 유일한 예외는 '''fragmentation'''(packet too large, header 를 모든 fragment 에 복사) (p.9) || [[packetizing]] · [[fragmentation]]
+|-
+| IP 의 checksum 은 datagram 전체의 오류를 검출하고 고친다 || checksum 은 '''header only''', '''detect only, no recovery'''. 오류 보고는 ICMP → error control '''△ Partly''' (p.12, p.18) || [[IP의 error control]] · [[ICMP]]
+|-
+| routing = 도착한 패킷을 다음 interface 로 내보내는 것 || 그건 '''forwarding'''. routing = 경로를 골라 '''표를 만드는''' 것. "Routing builds the table. Forwarding uses it, packet by packet." (p.11, 교수 20:47) || [[routing]] · [[forwarding]]
+|-
+| IP 는 flow control 을 한다 / flow control 과 congestion control 은 같은 것 || IP 는 둘 다 '''안 한다'''. flow control = '''receiver''' buffer 보호(TCP receive window), congestion control = '''망''' 보호(라우터는 drop 만, TCP 가 slow down) (p.13–14, p.18) || [[flow control]] · [[congestion control]]
+|-
+| congestion 이 생기면 라우터가 sender 에게 속도를 줄이라고 한다 || 라우터는 '''drop''' 만 한다. drop → 재전송 → 더 혼잡(vicious cycle). 속도 조절은 TCP (p.14, p.18) || [[congestion control]]
+|-
+| QoS·security 는 IP 가 제공한다 || QoS 는 '''upper layers'''(network layer 는 untouched), security 는 '''IPSec'''(IP 와 같은 계층의 '''다른''' 프로토콜) (p.15–16) || [[QoS]] · [[IPSec]]
+|-
+| 인터넷(IP)은 virtual-circuit 방식 || IP 는 '''datagram approach''' (p.26) || [[datagram approach]]
+|-
+| datagram 방식도 패킷이 보낸 순서대로 도착한다 || datagram 은 패킷마다 '''destination address''' 로 따로 forwarding → 경로가 달라 '''out of order''' 가능. 순서 보장은 '''virtual circuit'''(label = VCI, 같은 경로) (p.23, p.26) || [[datagram approach]] · [[virtual-circuit approach]]
+|-
+| virtual circuit 의 라우터도 destination address 로 결정한다 || '''label (VCI)''' 로 결정한다 — 교수 "key difference" (39:05) || [[VCI]]
+|-
+| total delay 에서 queuing 도 (n+1) 번 || queuing 은 '''라우터에서만 → n 번'''. tr·pg·pr 만 n+1 (교수 50:43 "queuing delay is involved with routers, not with source and destination") || [[total delay 공식]] · [[queuing delay]]
+|-
+| 라우터 n 개면 링크도 n 개 || 링크는 '''n + 1''' 개 (Source–R1 … Rn–Dest.) || [[total delay 공식]]
+|-
+| propagation delay 는 패킷이 길수록 길다 || propagation = '''한 비트'''가 건너는 시간 = distance / speed — 패킷 길이와 무관. 패킷 길이에 비례하는 것은 '''transmission''' delay || [[propagation delay]] · [[transmission delay]]
+|-
+| 경로 throughput 은 링크 rate 의 평균(또는 합) || '''가장 느린 링크(bottleneck)''': min(200, 100, 150) = 100 kbps (p.35) || [[throughput]] · [[bottleneck]]
+|-
+| load 가 capacity 를 넘으면 throughput 은 capacity 에 머문다 || '''collapses''' — 오히려 떨어진다 (drop·재전송). delay 는 capacity '''근처'''에서 이미 치솟는다 (p.38) || [[load와 성능]]
+|-
+| network layer 의 단위는 frame / transport 의 단위는 datagram || Transport '''segment''' → Network '''datagram''' → Data link '''frame''' (p.4) || [[segment·datagram·frame]]
+|}
+
+{quiz}
+OX: ① IP 는 connectionless 이고 best effort 이다. ② forwarding table 은 forwarding 이 만들고 routing 이 쓴다. ③ queuing delay 는 source 와 destination 에서도 생긴다. ④ IPSec 은 IP 와 같은 계층에 있다. ⑤ virtual circuit 에서는 패킷이 in order 로 도착한다.
+{/quiz}
+{answer}
+① ○ ② ✗ (routing 이 '''만들고''', forwarding 이 '''쓴다''') ③ ✗ (라우터에서만) ④ ○ ("same layer as IP, but different from IP") ⑤ ○
+{/answer}
+
 {quiz}
 OX: ① uplink 는 forward communication 이다. ② soft handoff 에서 MS 는 두 BS 와 동시에 통신할 수 있다. ③ AMPS 의 control channel 은 FM 으로 변조된다. ④ IS-95 는 neighboring cell 이 같은 주파수 대역을 쓸 수 있다. ⑤ handoff 결정은 MS 가 한다.
 {/quiz}
@@ -96,4 +138,4 @@ OX: ① uplink 는 forward communication 이다. ② soft handoff 에서 MS 는 
 {/answer}
 
 == 관련 문서 ==
-* [[공식 모음]] · [[셀룰러 세대 비교표]] · [[시험 정보]] · [[CH05 Satellite Network]]
+* [[공식 모음]] · [[셀룰러 세대 비교표]] · [[시험 정보]] · [[CH05 Satellite Network]] · [[CH07 네트워크 계층 서비스와 성능]] · [[IP가 제공하는 서비스]]

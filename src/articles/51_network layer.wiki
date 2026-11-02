@@ -1,0 +1,40 @@
+key: network layer
+title: Network Layer (네트워크 계층) — 기말 범위의 시작
+category: 5강 네트워크 계층, 용어
+---
+'''Network layer''' 는 TCP/IP 5계층의 세 번째 층으로, 패킷을 '''출발 host 에서 도착 host 까지''' 전달한다([[host-to-host delivery]]). L12 p.2–7. 교수: "'''network and transport, these two layers are the most important layers'''" (10/27 녹음 00:32). 계층 모델 자체는 중간고사 [[mid:network layer]] · [[mid:TCP/IP 프로토콜 스위트]] 에 있다.
+
+{def}"'''Network layer''': delivers packets '''host-to-host''', from source to destination. '''Routers''' on the path choose the '''best route''' for each packet." (p.3)
+"The network layer runs at '''every hop'''. Source host: creates the packet and sends it. Routers: forward it (up to the network layer only). Destination host: delivers it to the upper layer." (p.7)
+네트워크 계층은 패킷을 source host 에서 destination host 까지 전달하고, 경로 위의 라우터가 패킷마다 best route 를 고른다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''net + work''' = 그물망. 링크 하나(data-link 의 일)가 아니라 '''링크들이 얽힌 그물 전체'''를 가로지르는 것이 이 층의 일이다. 그래서 "어느 길로?"([[routing]])라는 질문이 처음 생긴다.
+
+== 어디서 동작하나 ==
+[[img:L12-07.png|p.7 Communication at the network layer — Alice·Bob(host)은 5계층, 경로의 라우터 R2·R4·R5·R7 은 Network·Data link·Physical 3계층만|large]]
+
+<pre class="ascii">
+  Source host        Router           Router         Destination host
+  Application                                         Application
+  Transport                                           Transport
+  '''Network'''   ───▶   '''Network'''   ───▶   '''Network'''  ───▶   '''Network'''
+  Data-link          Data-link        Data-link       Data-link
+  Physical           Physical         Physical        Physical
+</pre>
+* host 는 5계층 전부, 라우터는 '''network layer 까지만''' — "up to the network layer only".
+* 이 층의 주 프로토콜이 '''[[IP]]''' 이고, 보조로 [[ICMP]] 등 [[보조 프로토콜]]이 있다.
+
+== 이 층이 줄 수 있는 서비스 (p.6) ==
+[[packetizing]] · [[routing]]/[[forwarding]] · error control · [[flow control]] · [[congestion control]] · [[QoS]] · security — 이 중 IP 가 실제로 주는 것은 [[IP가 제공하는 서비스]] 표 참고.
+
+{warn}'''교수가 짚은 오해''' (00:58–01:38): LAN·WAN 을 physical·data-link 바로 다음에 배웠다고 해서 LAN·WAN 이 그 두 층만으로 돌아가는 것은 아니다. Ethernet·WiFi 위에서도 network·transport·application 이 다 돈다.{/warn}
+
+{analogy}🎭 data-link 가 '''동네 골목 배달'''(이 집에서 옆 집까지)이라면, network layer 는 '''전국 택배'''다. 서울에서 부산까지 가려면 여러 물류센터(라우터)를 거쳐야 하고, 각 센터는 "다음 센터는 어디?"만 결정한다.{/analogy}
+
+{quiz}network layer 의 서비스를 한 문장으로 쓰고, 라우터는 몇 번째 계층까지 갖는지 쓰시오.{/quiz}
+{answer}패킷을 source host 에서 destination host 까지 전달(host-to-host delivery)하며, 경로의 라우터가 각 패킷의 best route(next hop)를 고른다. 라우터는 physical·data-link·'''network''' 의 3 계층까지만 갖는다.{/answer}
+
+== 관련 문서 ==
+* [[CH07 네트워크 계층 서비스와 성능]] · [[host-to-host delivery]] · [[IP]] · [[IP가 제공하는 서비스]]
+* 중간고사: [[mid:network layer]] · [[mid:transport layer]] · [[mid:라우터]] · [[mid:end-to-end와 hop-to-hop]]

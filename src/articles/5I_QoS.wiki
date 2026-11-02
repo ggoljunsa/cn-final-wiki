@@ -1,0 +1,22 @@
+key: QoS
+title: QoS (Quality of Service, 서비스 품질) — upper layers 에서
+category: 5강 네트워크 계층, 용어
+---
+'''QoS (Quality of Service)''' 는 응용이 요구하는 '''서비스 품질'''(속도·지연·끊김 없음 등)을 보장하는 것이다. multimedia 같은 새 응용 때문에 점점 중요해졌지만, '''network layer 를 건드리지 않으려고(untouched)''' 주로 '''upper layers''' 에서 구현한다 → [[IP]] 는 '''✗ No'''. L12 p.15, p.18.
+
+{def}"'''Quality of Service (QoS)''' — New applications (e.g., '''multimedia''') made QoS more and more important. To keep the network layer '''untouched''', QoS is mostly implemented in the '''upper layers'''." (p.15)
+"Quality of service — ✗ No — Mostly implemented in upper layers" (p.18){/def}
+
+[[img:L12-15.png|p.15 Application·Transport(초록) 옆에 "QoS added here", Network (IP)·Data-link·Physical 은 회색, Network 옆 "unchanged"|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''quality of service''' = 서비스의 '''품질'''. 교수: "quality of service is just service '''품질''' in Korean" (10/27 녹음 25:54). 품질의 잣대는 "data rate … throughput" 처럼 응용마다 다르다 — 영상 통화는 지연이, 파일 다운로드는 throughput 이 중요하다.
+* 교수: multimedia 는 "very '''old-fashioned''' terminology" (26:28) — 지금의 영상 스트리밍·화상 회의를 떠올리면 된다.
+
+== 왜 IP 는 손대지 않나 ==
+* IP 는 전 세계 모든 장비가 공유하는 '''공통 바닥'''이라, 바꾸려면 모든 라우터를 바꿔야 한다. 그래서 IP 는 그대로(unchanged) 두고 품질 보장은 '''끝 host 의 transport·application''' 에서 한다. (이유 설명은 보충 — 슬라이드는 "to keep the network layer untouched" 한 줄)
+
+{analogy}🎭 '''택시 vs 도로.''' 손님마다 원하는 품질(빨리 / 편하게 / 싸게)이 다르지만, 그걸 맞추려고 '''도로(IP)를 매번 새로 깔지는 않는다'''. 택시 회사(upper layers)가 차종·경로 선택으로 맞춘다.{/analogy}
+
+== 관련 문서 ==
+* [[IP가 제공하는 서비스]] · [[throughput]] · [[IP]] · [[CH07 네트워크 계층 서비스와 성능]]

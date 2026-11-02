@@ -1,0 +1,436 @@
+key: CH07 네트워크 계층 서비스와 성능
+title: CH07 Network Layer: Data Transfer (1) (5강 — 서비스, packet switching, delay·throughput)
+category: 5강 네트워크 계층, 메인
+---
+'''CH07 Network Layer: Data Transfer (1)''' 은 L12 덱(`CH07_Network Layer - Data Transfer (1).pdf`, 38쪽) 전부다. 10/27(화) 한 번의 수업에 끝까지 나갔다. 지금까지 Physical·Data-link 계층과 그 위의 실제 instance(LAN: Ethernet·WiFi·Bluetooth, WAN: cellular·satellite)를 봤고, 이제 한 층 올라가 '''[[network layer]]''' 로 들어간다. 교수: "'''network and transport, these two layers are the most important layers'''" (00:32).
+
+이 덱이 던지는 질문은 — '''"network layer 는 무슨 일을 할 수 있고, 그중 인터넷의 IP 는 실제로 무엇을 해 주며, 그 성능은 어떻게 재는가?"'''
+답은 세 덩어리다.
+# '''1. Services''' — network layer 가 줄 수 있는 서비스 7 가지([[packetizing]], [[routing]]/[[forwarding]], error control, [[flow control]], [[congestion control]], [[QoS]], security) 중 '''[[IP]] 가 실제로 주는 것은 packetizing 과 routing/forwarding, 그리고 error control 일부뿐'''이다 → [[IP가 제공하는 서비스]]. IP 의 두 성질은 '''[[connectionless]]''' 와 '''[[best effort]]'''.
+# '''2. Packet Switching''' — 라우터는 switch 다. 패킷을 나르는 방법은 '''[[datagram approach]]'''(connectionless, destination address 로 결정, 순서 뒤섞임 — IP 가 이것)와 '''[[virtual-circuit approach]]'''(connection-oriented, [[VCI]] label, 같은 경로, 순서 유지) 두 가지 → [[packet switching]].
+# '''3. Performance''' — delay 는 [[transmission delay]] · [[propagation delay]] · [[processing delay]] · [[queuing delay]] 네 가지이고, 라우터 n 개 경로의 '''[[total delay 공식]]''' 은 $(n+1)(D_{tr} + D_{pg} + D_{pr}) + n \cdot D_{qu}$. [[throughput]] 은 가장 느린 링크([[bottleneck]])가 정한다. load 가 capacity 에 가까우면 delay 가 치솟고, 넘으면 throughput 이 무너진다 → [[load와 성능]].
+
+페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다. L12 PDF 는 '''필기 없는 원본'''이고, p.2–5, 8–9, 10–11, 12–13, 17–18, 20–22, 28–30, 32–33, 34–36, 37–38 은 한 줄씩 늘어나는 build-up 이라 캡처는 마지막 장을 쓴다.
+
+{exam}🎯 교수가 이 덱에서 짚은 것 (10/27 녹음)
+* "'''the most important one is about each role and each service'''" (01:49) — 각 서비스가 '''무엇이고 IP 가 그걸 하느냐 마느냐'''가 이 덱의 핵심. p.18 표를 통째로 기억한다.
+* "I would like to highlight '''two big properties of IP''', which is '''connectionless''' … [and best effort] — anything other services served by '''higher layer protocol''' such as TCP, application layer and IPSec" (28:28).
+* "'''routing''' means '''building the table'''. '''forwarding''' is just '''pushing the packet into the next interface'''. This is the distinction" (20:47).
+* "virtual circuit approach uses a '''flow label''' … datagram approach uses '''destination address''' … '''these are the key differences'''" (39:05–39:34).
+* "Just remember that '''queuing delay is involved with routers''', not with source and destination" (50:43).
+* 시험 공지는 없었다.{/exam}
+
+{analogy}🎭 '''network layer = 택배 회사의 전국 배송망.''' 내 물건(payload)을 상자에 담아 송장(header: 보내는 곳·받는 곳 주소)을 붙이는 것이 [[packetizing]], 물류센터(라우터)마다 송장의 '''받는 주소만 보고''' 다음 센터로 넘기는 것이 [[forwarding]], 본사가 전국 배송 경로표를 짜 두는 것이 [[routing]]. 이 택배 회사는 '''"최선을 다하지만 보장은 안 합니다"'''([[best effort]]) — 상자가 깨져도 송장만 확인하고, 분실돼도 다시 보내 주지 않으며, 상자들이 순서대로 도착한다는 약속도 없다([[connectionless]]). 그런 보장은 위층 서비스(TCP)가 따로 해 준다.{/analogy}
+
+[[anim:encap_decap|source 가 header 를 붙이고(encapsulate), 라우터 두 개가 header 만 읽고 넘기며, destination 이 header 를 떼는(decapsulate) 것을 보고, 마지막 장면에서 유일한 예외 fragmentation 을 확인하라]]
+
+== 한눈에 보기 ==
+{|
+! 슬라이드 || 내용 || 문서
+|-
+| p.2 || So far — Physical·Data-link 끝(✓) → LAN/WAN instance → 이제 '''Network''' || [[network layer]]
+|-
+| p.3–5 || Overview — [[host-to-host delivery]], 라우터가 next hop, '''[[IP]]''' (주소 형식, [[connectionless]], [[best effort]], [[datagram]]), PDU 이름, 보조 프로토콜 || [[IP]] · [[segment·datagram·frame]] · [[보조 프로토콜]]
+|-
+| p.6–7 || 1. Services — network layer 는 '''every hop''' 에서 동작 || [[network layer]]
+|-
+| p.8–9 || [[packetizing]] — encapsulate / decapsulate, 라우터는 decapsulate 안 함, 예외 [[fragmentation]] || ⭐⭐
+|-
+| p.10–11 || [[routing]] vs [[forwarding]] — 표를 '''만드는''' 것 vs 표를 '''쓰는''' 것, [[forwarding table]] || ⭐⭐⭐
+|-
+| p.12–13 || error control (header checksum + [[ICMP]]) · [[flow control]] (IP ✗ → TCP) || [[IP의 error control]]
+|-
+| p.14 || [[congestion control]] — vicious cycle || ⭐⭐
+|-
+| p.15 || [[QoS]] — upper layers 에서 || ⭐
+|-
+| p.16 || security — '''[[IPSec]]''' || ⭐
+|-
+| p.17–18 || '''What IP provides''' 표 || [[IP가 제공하는 서비스]] ⭐⭐⭐
+|-
+| p.19–22 || 2. [[packet switching]] — router = switch, datagram 1–4 = one message || ⭐⭐
+|-
+| p.23–24 || '''[[datagram approach]]''' — destination address, different paths, out of order || ⭐⭐⭐
+|-
+| p.25 || '''[[virtual-circuit approach]]''' — setup → data transfer → teardown, [[VCI]] || ⭐⭐⭐
+|-
+| p.26 || Datagram vs. Virtual-Circuit 비교표 || ⭐⭐⭐
+|-
+| p.27–31 || 3. Performance — delay 네 가지 || [[transmission delay]] · [[propagation delay]] · [[processing delay]] · [[queuing delay]]
+|-
+| p.32–33 || '''[[total delay 공식]]''' (n 라우터 → n+1 링크) || 계산 ⭐⭐⭐
+|-
+| p.34–36 || [[throughput]] = [[bottleneck]] — min(200, 100, 150) = 100 kbps || 계산 ⭐⭐
+|-
+| p.37–38 || [[load와 성능]] — delay shoots up, throughput collapses || ⭐⭐
+|}
+
+----
+
+== p.2 — So far… ==
+슬라이드 오른쪽 5계층 그림: Physical·Data-link 옆에 "Done ✓", Network 옆에 "Now".
+* '''Physical Layer''' — transmit a signal over a physical channel ([[mid:physical layer]])
+* '''Data-link Layer''' — detect and correct errors (DLC), share the medium among users (MAC) ([[mid:data-link layer]] · [[mid:DLC]] · [[mid:MAC sublayer]])
+* '''Real-world instantiations''' — LANs: Ethernet, Wi-Fi, Bluetooth / WANs: cellular (1G–4G), satellite (Starlink) → [[CH05 셀룰러 동작]] · [[CH05 Satellite Network]]
+
+{warn}'''교수가 짚은 오해 (00:58–01:38)''': LAN·WAN 을 physical·data-link 바로 다음에 배웠다고 해서 "'''LAN·WAN 은 아래 두 계층만으로 만들어진다'''"고 생각하면 안 된다. "Of course, they have '''network and transport and application layers'''" — 실제 LAN·WAN 위에서도 위 세 계층이 다 돈다. 순서는 강의 편의일 뿐이다.{/warn}
+
+== p.3–5 — Overview: Network Layer ⭐⭐ ==
+[[img:L12-05.png|p.5 Overview — Network layer: host-to-host delivery, Routers choose the best route / Internet Protocol (IP): addresses, Connectionless, Best effort (checksum covers the header only), datagram, Transport: segment → Network: datagram → Data link: frame / Auxiliary protocols: ICMP, IGMP, DHCP, ARP. 아래: Source host → R1 → R2 → R3 → Destination host, "each router picks the next hop"|large]]
+
+{def}"'''Network layer''': delivers packets '''host-to-host''', from source to destination. '''Routers''' on the path choose the '''best route''' for each packet." (p.3){/def}
+
+* '''[[host-to-host delivery]]''' — data-link 은 링크 하나(hop-to-hop)만 책임졌다. network layer 는 '''출발 host 에서 도착 host 까지''' 전체를 책임진다. 그 사이의 라우터 R1·R2·R3 이 각자 '''next hop''' 을 고른다 ([[mid:end-to-end와 hop-to-hop]]).
+
+{def}"'''Internet Protocol (IP)''': the main protocol of the Internet
+* Defines the format and structure of '''addresses'''
+* '''Connectionless''': no setup; each datagram is handled '''independently'''
+* '''Best effort''': no flow or congestion control, no error recovery (checksum covers the header only)
+* Its unit is the '''datagram''': an IP packet (header + payload) — Transport: '''segment''' → Network: '''datagram''' → Data link: '''frame'''
+'''Auxiliary protocols''': ICMP, IGMP, DHCP, ARP" (p.4–5){/def}
+
+{|
+! IP 의 성질 || 뜻 || 문서
+|-
+| 주소 형식 정의 || 매일 쓰는 '''IP address''' 의 형식·구조를 정한다 (다음 수업 10/29 주제) || [[IP]] · [[mid:IP 주소와 MAC 주소]]
+|-
+| '''[[connectionless]]''' || '''setup 없음'''. 이전 프로토콜들(TCP 같은)의 handshaking 이 없다. 같은 메시지의 datagram 이라도 '''하나씩 독립적으로''' 처리 || [[datagram approach]]
+|-
+| '''[[best effort]]''' || flow·congestion control 없음, error recovery 없음. checksum 은 '''header 만''' || [[IP의 error control]]
+|-
+| 단위 = '''[[datagram]]''' || IP packet = header + payload. "packet" 과 같은 뜻으로 섞어 쓴다(교수 05:16) || [[segment·datagram·frame]]
+|-
+| 보조 프로토콜 || '''[[ICMP]]''', IGMP, DHCP, ARP — IP 를 돕는 같은 계층의 프로토콜 || [[보조 프로토콜]]
+|}
+
+{tip}'''PDU 이름 세 개''' — 교수: "it would be very confusing but I will remind you" (07:24). 계층마다 같은 데이터 덩어리를 다른 이름으로 부른다.
+<pre class="txt">
+Transport  :  '''segment'''   (TCP 의 단위)
+Network    :  '''datagram'''  (= IP packet = header + payload)
+Data link  :  '''frame'''     (중간고사: Ethernet frame, 802.11 frame)
+</pre>
+→ [[segment·datagram·frame]] · [[mid:PDU]]{/tip}
+
+== p.6–7 — 1. Services: Communication at the network layer ⭐ ==
+{def}"Discusses the services a network layer can provide (packetizing, routing, error, flow, and congestion control, QoS, security), and which ones the Internet's IP actually provides." (p.6){/def}
+
+[[img:L12-07.png|p.7 Communication at the network layer — Alice(Sky Research) 의 LAN → R2 → R4(National ISP, Switched WAN) → R5 → R7(ISP) → Bob(Scientific Books). Alice·Bob 은 5계층 전부(Network 빨강), 라우터 R2·R4·R5·R7 은 Network·Data link·Physical 3계층만|large]]
+
+{def}"The network layer runs at '''every hop'''. '''Source host''': creates the packet and sends it. '''Routers''': forward it (up to the network layer only). '''Destination host''': delivers it to the upper layer." (p.7){/def}
+
+* 그림에서 '''host(Alice, Bob)는 5계층''', '''라우터는 3계층(Network 까지)''' 만 있다. 라우터는 패킷을 network layer 까지만 올려서 주소를 보고 다시 내려보낸다. transport·application 은 양 끝 host 에만 있다.
+* "potential services" (교수 08:46) — 아래 7 가지는 network layer 가 '''줄 수 있는''' 서비스 목록이고, IP 가 그걸 다 주지는 '''않는다'''. 각 절 끝에 "IP 는?" 을 확인하며 읽는다.
+
+== p.8–9 — Packetizing ⭐⭐ ==
+[[img:L12-09.png|p.9 Packetizing — Source: Payload → encapsulate → [Header|Payload] / Destination: decapsulate → Payload → to upper layer / Router: [Header|Payload(회색)] "reads the header only". 왼쪽: Routers do not decapsulate, Only exception: fragmentation, Header is copied to every fragment|large]]
+
+{def}"'''Packetizing''': carry the payload '''without changing or using it'''. Source: '''encapsulate''' (add a header). Destination: '''decapsulate''' (remove the header). Header: '''source & destination addresses''' + control info. '''Routers do not decapsulate''' the packet. '''Only exception: fragmentation''' (packet too large) — Header is copied to every fragment, with a few changes." (p.8–9){/def}
+
+* 중간고사의 '''[[mid:캡슐화]]''' 와 같은 개념이다 — 교수: "we learned it in several different terminologies, such as encapsulation and decapsulation" (11:38).
+* 라우터는 header 를 '''읽기만''' 한다(어디로 보낼지 = destination address). payload 는 열어 보지도, 바꾸지도 않는다 → [[packetizing]].
+* '''예외 = [[fragmentation]]''': 패킷이 다음 링크가 받을 수 있는 크기보다 크면 라우터가 쪼갠다. 이때 header 를 '''모든 fragment 에 복사'''하고 몇 군데만 바꾼다. 교수: "essentially router does not interact with the payload other than fragmentation" (14:07).
+* IP 는? → '''✓ Yes''' (14:41 "this is actually served by IP").
+
+== p.10–11 — Routing and Forwarding ⭐⭐⭐ ==
+[[img:L12-10.png|p.10 Routing — S, R1–R5, D 그래프. 파란 굵은 선 S → R1 → R4 → D 가 best route, 회색 선은 other possible routes|medium]]
+
+{def}"'''Routing''': choose the path from source to destination. There are usually '''many possible routes'''. Pick the '''best''' one by some metric (e.g., hops, delay, cost). '''Routing protocols''': Routers share what they know about their neighborhood; build '''consistent tables''' used when packets arrive." (p.10){/def}
+
+[[img:L12-11.png|p.11 Forwarding — 패킷 [B|Data] 가 interface 1 로 들어옴 → Forwarding value B 로 Forwarding table(Forwarding value / Output interface: A→1, B→2) 조회 → "Send the packet out of interface 2". 왼쪽: "Routing builds the table. Forwarding uses it, packet by packet."|large]]
+
+{def}"'''Forwarding''': the action a router takes '''when a packet arrives'''. Look up the '''forwarding value''' (e.g., destination address or label) in the '''forwarding table'''. Send the packet out of the matching '''interface'''." (p.11)
+"'''Routing builds the table. Forwarding uses it, packet by packet.'''" (p.11){/def}
+
+{|
+! || [[routing]] || [[forwarding]]
+|-
+| 무엇 || 경로를 '''고른다''' → 표를 '''만든다''' || 도착한 패킷을 표대로 '''내보낸다'''
+|-
+| 언제 || 미리, 주기적으로 (routing protocol 로 이웃과 정보 교환) || 패킷이 '''도착할 때마다''' (packet by packet)
+|-
+| 결과 || [[forwarding table]] (routing table) || output interface 하나 선택
+|-
+| 교수 비유 || 경로 계획 || 신경망의 '''forward pass''' — 입력을 넣어 밀어내는 것 (18:11–19:07)
+|}
+
+{exam}🎯 "When we call '''routing''', it means '''building the table'''. On the other hand, when we call '''forwarding''', it is just '''pushing the packet into the next interface'''. '''This is the distinction''' between these two." (20:47)
+그리고 forwarding value 는 '''destination address''' 일 수도, '''label''' 일 수도 있다 — 이게 뒤 p.26 의 datagram(주소) vs virtual circuit(label) 차이로 이어진다. 교수: "this is why I mentioned the forwarding value" (39:40).{/exam}
+
+* IP 는? → '''✓ Yes''' — "routing is indeed served by the IP and it is one crucial service" (17:42).
+
+== p.12–13 — Error Control and Flow Control ⭐⭐ ==
+[[img:L12-13.png|p.13 위: IP datagram [Header(checked ✓) | Payload(not checked by IP)]. 아래: Sender → Receiver "too fast?", "IP: no flow control → TCP does it"|large]]
+
+{def}"'''Error Control''' — '''Checksum covers the header only''': detects header errors, '''no recovery'''. '''ICMP''' reports errors (e.g., datagram discarded, bad header)." (p.12)
+"'''Flow Control''' — Keep the sender's rate within what the '''receiver''' can handle (its buffer). '''IP does not provide it → done by TCP'''." (p.13){/def}
+
+* '''error control''' — IP 의 checksum 은 '''header 만''' 검사한다(payload 는 "not checked by IP"). 그리고 '''검출만''' 하고 고치거나 재전송하지 않는다. 오류를 알리는 건 [[ICMP]] 몫 → '''△ Partly''' (교수 21:25 "limited to the header … error control in a '''partial''' manner") → [[IP의 error control]].
+* '''[[flow control]]''' — 보내는 쪽이 받는 쪽 buffer 가 감당할 속도를 넘지 않게. '''IP ✗ → TCP''' (교수 14:48, 22:54).
+
+== p.14 — Congestion Control ⭐⭐ ==
+[[img:L12-14.png|p.14 Congestion Control — Too many datagrams → Routers drop packets → Senders resend duplicates → (다시 Too many datagrams), "a vicious cycle"|medium]]
+
+{def}"'''Congestion''': too many datagrams in one area of the Internet. Routers start to '''drop''' datagrams. Upper layers then '''resend''' the lost ones (duplicates) → even more traffic: the situation can get '''worse'''." (p.14){/def}
+
+* 교수: "It is like Korean '''혼잡'''" (23:56). 도로 정체와 똑같다.
+* '''vicious cycle''' (악순환): 너무 많음 → 라우터가 버림 → 보낸 쪽이 다시 보냄 → 더 많아짐.
+* IP 는? → '''✗ No''' — 라우터는 버리기만 하고, 속도를 줄이는 것은 TCP (p.18 "Routers only drop packets; TCP slows down") → [[congestion control]].
+* '''flow control 과 다르다''': flow control 은 '''받는 사람 하나'''(receiver buffer)를 보호, congestion control 은 '''망 전체'''(라우터들)를 보호.
+
+== p.15 — Quality of Service (QoS) ⭐ ==
+[[img:L12-15.png|p.15 QoS — Application·Transport(초록) 옆 "QoS added here", Network (IP) 옆 "unchanged"|medium]]
+
+{def}"'''Quality of Service (QoS)''' — New applications (e.g., '''multimedia''') made QoS more and more important. To keep the network layer '''untouched''', QoS is mostly implemented in the '''upper layers'''." (p.15){/def}
+* QoS = 서비스 '''품질'''(교수 25:54). data rate·throughput·delay 같은 지표로, 앱마다 원하는 기준이 다르다. IP 는 건드리지 않고 '''위층(transport·application)''' 에서 → '''✗ No''' → [[QoS]].
+
+== p.16 — Security ⭐ ==
+[[img:L12-16.png|p.16 Security — Upper layers / IPSec (connection-oriented, secure) / IP (connectionless) / Lower layers 4층 그림|medium]]
+
+{def}"'''Security''' — Not a concern originally: a few university users doing research. Today, security is a '''big concern'''. Connectionless IP needs another '''virtual level''' that turns it into a '''connection-oriented''' service: '''IPSec'''." (p.16){/def}
+* 인터넷은 처음에 소수 대학 연구자끼리 쓰던 망이라 보안을 고려하지 않았다. 지금은 IP 위에 '''[[IPSec]]''' 을 얹어 connection-oriented·secure 하게 만든다 → '''✗ No (Added on top: IPSec)'''.
+* 교수: "Actually, '''IPSec is at the same layer as IP, but different from IP'''" (29:05) — network layer 안의 '''다른 protocol''' 이다. IP 가 보안을 하는 게 아니다.
+
+== p.17–18 — Network-Layer Services: What IP Provides ⭐⭐⭐ ==
+[[img:L12-18.png|p.18 What IP Provides — Packetizing ✓ Yes / Routing·forwarding ✓ Yes / Error control △ Partly / Flow control ✗ No (TCP receive window) / Congestion control ✗ No (Routers only drop packets; TCP slows down) / QoS ✗ No (upper layers) / Security ✗ No (IPSec). "IP itself is connectionless and best effort: anything more is added by other protocols."|large]]
+
+{|
+! Service || IP provides? || Who handles it / note
+|-
+| [[packetizing]] || '''✓ Yes''' || Encapsulation at source, decapsulation at destination
+|-
+| [[routing]] / [[forwarding]] || '''✓ Yes''' || Routers choose the next hop for each datagram
+|-
+| [[IP의 error control|Error control]] || '''△ Partly''' || Header checksum (detect only) + ICMP reports; no recovery
+|-
+| [[flow control]] || '''✗ No''' || TCP (receive window)
+|-
+| [[congestion control]] || '''✗ No''' || Routers only drop packets; TCP slows down
+|-
+| [[QoS|Quality of service]] || '''✗ No''' || Mostly implemented in upper layers
+|-
+| Security || '''✗ No''' || Added on top: [[IPSec]]
+|}
+{def}"IP itself is '''connectionless''' and '''best effort''': anything more is added by '''other protocols'''." (p.18){/def}
+→ 표 하나짜리 사전 문서: [[IP가 제공하는 서비스]]
+
+{tip}'''외우는 법 — "2 ✓ · 1 △ · 4 ✗"'''. ✓ 두 개는 "network layer 라면 최소한 해야 하는 것"(상자에 담기 + 길 찾기). △ 는 "header 만 지키기". ✗ 넷(flow · congestion · QoS · security)은 '''전부 다른 누군가'''(TCP · upper layers · IPSec)가 한다.{/tip}
+
+== p.19–22 — 2. Packet Switching ⭐⭐ ==
+{def}"Discusses packet switching: (i) the '''datagram (connectionless)''' approach; (ii) the '''virtual-circuit (connection-oriented)''' approach." (p.19)
+"A '''router is a switch''': it connects an '''input port''' to an '''output port'''. Each numbered box = '''one datagram'''; together, 1–4 carry '''one message'''." (p.20–21){/def}
+
+[[img:L12-22.png|p.22 Packet Switching — Sender 가 4 3 2 1 을 보냄 → A connectionless (datagram) packet-switched network(R1–R5): 1 은 R1→R4→R5, 2 는 R1→R2→R5, 3 은 R1→R3→R4→R5, 4 는 R1→R3→R5 → Receiver 쪽 "1 3 4 2 Out of order". 아래: Two approaches: datagram (connectionless) vs. virtual circuit (connection-oriented)|large]]
+
+* '''packet switching''' = 라우터(= switch)가 들어온 패킷을 어느 output port 로 내보낼지 정하는 일 → [[packet switching]]. 3강의 [[circuit switching과 packet switching]] 에서 "4G 는 all-IP packet-switched" 라고만 했던 그 packet switching 이다.
+* 교수: "even if they are in the same message, one router can forward each datagram [differently] … '''The order of datagram is not guaranteed''' in this connectionless [service]" (32:29–33:07).
+
+== p.23–24 — Datagram Approach: Connectionless Service ⭐⭐⭐ ==
+{def}"Each packet is handled '''independently''' (no relation to other packets). Router decides using '''only the destination address'''. Packets of one message may take '''different paths''' and arrive '''out of order'''." (p.23)
+"'''Forwarding table''' maps '''destination address → output interface'''." (p.24){/def}
+
+[[img:L12-24.png|p.24 Datagram Approach — 패킷 [SA|DA|Data] 의 DA 로 Forwarding table(Destination address / Output interface: A→1, B→2, …, H→3) 조회 → "Send the packet out of interface 2"|medium]]
+
+* 헤더에 SA(source address)·DA(destination address)가 있고, 라우터는 '''DA 하나만''' 본다 → [[datagram approach]] · [[forwarding table]].
+* p.11 의 "forwarding value" 가 여기서는 '''destination address''' 다.
+
+== p.25 — Virtual-Circuit Approach: Connection-Oriented Service ⭐⭐⭐ ==
+[[img:L12-25.png|p.25 Virtual-Circuit Approach — Sender 의 4 3 2 1 이 파란 Virtual circuit 띠를 따라 R1 → R3 → R4 → Receiver 로 같은 순서(4 3 2 1)로 감. R2·R5 는 회색(안 씀)|large]]
+
+{def}"Packets of a message are '''related''' and all follow '''one path'''. Phases: '''setup''' (define the path) → '''data transfer''' → '''teardown'''. Each packet carries a '''flow label''': the '''virtual-circuit identifier (VCI)'''." (p.25){/def}
+
+* 이름: '''virtual circuit''' = "가상의 회선". 실제 전선(circuit)을 독점하는 건 아니지만, 모든 패킷이 '''회선처럼 같은 길'''로 간다. 교수: "This route is similar to the circuit, but there are '''no physical circuits'''" (37:54) → [[virtual-circuit approach]].
+* forwarding value = '''label (VCI)''' → [[VCI]].
+
+== p.26 — Datagram vs. Virtual-Circuit ⭐⭐⭐ ==
+[[img:L12-26.png|p.26 비교표 — Service / Setup before sending? / Router decides by / Path of packets / Arrival order. "The Internet's network layer (IP) uses the datagram approach."|medium]]
+
+{|
+! || [[datagram approach|Datagram]] || [[virtual-circuit approach|Virtual circuit]]
+|-
+| Service || '''Connectionless''' || '''Connection-oriented'''
+|-
+| Setup before sending? || No || Yes (path is set up first)
+|-
+| Router decides by || '''Destination address''' || '''Label (VCI)'''
+|-
+| Path of packets || May differ per packet || Same for all packets
+|-
+| Arrival order || '''May be out of order''' || '''In order'''
+|}
+{def}"'''The Internet's network layer (IP) uses the datagram approach.'''" (p.26){/def}
+
+[[anim:datagram_vs_vc_anim|위 줄에서 datagram 1–4 가 제각각 다른 길로 가서 2 4 1 3 순서로 도착하는 것, 아래 줄에서 setup 으로 길(VCI)을 정한 뒤 1 2 3 4 가 줄지어 도착하고 teardown 되는 것을 비교하라]]
+
+[[sim:datagram_vs_vc]]
+
+{exam}🎯 "This is '''one key difference''' between virtual circuit approach and the previous one, which is datagram approach, where virtual circuit approach uses a '''flow label''' to choose the next intermediate node … On the other hand, in datagram approach, it uses '''destination address''' … These are two key differences." (39:05–39:34)
+"The '''order is not preserved''' in datagram approach but in virtual circuit it '''ensures same order'''." (41:22)
+→ 서술형으로 "두 방식의 차이" 가 나오면 '''① 결정 기준(destination address vs VCI) ② setup 유무 ③ 경로 ④ 순서''' 네 줄로 쓴다.{/exam}
+
+== p.27–31 — 3. Performance: Delay ⭐⭐⭐ ==
+{def}"'''Delay''' = time for a packet to go from source to destination. Four parts: '''transmission, propagation, processing, queuing'''." (p.28){/def}
+
+[[img:L12-30.png|p.30 Delay — A → B 링크. "tr: push all bits out"(비트 여러 개가 A 에서 나옴), "pg: one bit crosses the link". Delay_tr = (Packet length)/(Transmission rate), Delay_pg = (Distance)/(Propagation speed), Speed ≈ 3×10^8 m/s in vacuum, less in cables. Ex) 2,000 m cable, 2×10^8 m/s → Delay_pg = 10 μs|large]]
+
+{def}"'''Transmission delay''': time to put '''all bits''' of the packet on the link — $\text{Delay}_{tr} = \frac{\text{Packet length}}{\text{Transmission rate}}$." (p.29)
+"'''Propagation delay''': time for '''one bit''' to travel the link — $\text{Delay}_{pg} = \frac{\text{Distance}}{\text{Propagation speed}}$. Speed ≈ $3 \times 10^8$ m/s in vacuum, less in cables." (p.30){/def}
+
+<pre class="txt">
+p.30 예제 — Propagation delay
+1. Distance = 2,000 m,  Propagation speed = 2 × 10^8 m/s (케이블)
+2. Delay_pg = 2,000 / (2 × 10^8) = 1 × 10^-5 s
+3.          = '''10 μs'''
+</pre>
+
+* '''[[transmission delay]]''' = 비트를 '''전부''' 밀어내는 시간 → 패킷 길이와 링크 rate 에 달림. 중간고사 [[mid:transmission time]] 과 같은 개념.
+* '''[[propagation delay]]''' = 비트 '''하나'''가 건너는 시간 → 거리와 매체 속도에만 달림. 중간고사 [[mid:propagation time]] · [[mid:T_p]] 와 같다(교수 44:40 "we also discussed propagation delay [in data link layer], this is the same one").
+* 교수: 왜 one bit 로 정의하나? "because '''it is about distance'''" (44:50) — 모든 비트가 같은 속도로 같은 거리를 가니 하나만 보면 된다.
+
+[[img:L12-31.png|p.31 Inside a router — input queue (Delay_qu) → Process (Delay_pr) → output queue (Delay_qu)|medium]]
+
+{def}"'''Processing delay''' ($\text{Delay}_{pr}$): Time for a router/host to receive the packet, remove the header, check errors, and pass it on (output port or upper layer)."
+"'''Queuing delay''' ($\text{Delay}_{qu}$): Time a packet waits in a router's '''input and output queues'''. Happens in '''routers'''; grows with traffic load." (p.31){/def}
+* '''[[processing delay]]''' — 장비 '''안에서''' 처리하는 시간(교수 47:13 "within device"). 라우터와 '''목적지 host''' 에서 생긴다.
+* '''[[queuing delay]]''' — 라우터의 input/output queue 에서 '''기다리는''' 시간. '''라우터에서만''', 트래픽이 많을수록 커진다.
+
+[[anim:delay_four_parts|비트 6 개가 차례로 나가는 동안이 transmission, 한 비트가 링크를 건너는 동안이 propagation 임을 구별하고, 라우터 안에서 queue 대기(queuing)와 Process(processing)가 따로 쌓이는 것, 목적지 B 에는 queuing 이 없는 것을 확인하라]]
+
+== p.32–33 — Total delay ⭐⭐⭐ ==
+[[img:L12-33.png|p.33 Total delay = (n + 1)(Delay_tr + Delay_pg + Delay_pr) + (n)(Delay_qu). Source → R1 → R2 → … → Rn → Dest., "n + 1 links", "queuing happens only at n routers". (Assume equal delays at the sender, routers, and receiver)|large]]
+
+{def}"Path with '''n routers → n + 1 links'''. Transmit + propagate on each of the n + 1 links. Process at the n routers + the destination ('''n + 1 times'''). Queue '''only at the n routers'''. (Assume equal delays at the sender, routers, and receiver)" (p.32–33){/def}
+
+$$\text{Total delay} = (n + 1)\,(\text{Delay}_{tr} + \text{Delay}_{pg} + \text{Delay}_{pr}) + (n)\,(\text{Delay}_{qu})$$
+
+<pre class="txt">
+왜 (n+1) 과 n 인가 — 라우터 n = 3 일 때 세어 보기
+  Source ─link1─ R1 ─link2─ R2 ─link3─ R3 ─link4─ Dest.
+  · 링크            : 4 개 = n + 1   → tr, pg 를 4 번
+  · processing      : R1, R2, R3, Dest. = 4 번 = n + 1
+  · queuing         : R1, R2, R3       = 3 번 = '''n'''   (source·dest. 에는 없음)
+</pre>
+
+<pre class="txt">
+예시 계산 (수치는 가정) — n = 3, L = 8,000 bits, R = 10 Mbps, d = 200 km, s = 2×10^8 m/s,
+                         Delay_pr = 50 μs, Delay_qu = 2 ms
+1. Delay_tr = 8,000 / 10^7           = 0.8 ms
+2. Delay_pg = 200,000 / (2 × 10^8)   = 1 ms
+3. 링크 하나 몫 = 0.8 + 1 + 0.05     = 1.85 ms
+4. (n+1) × 1.85 = 4 × 1.85           = 7.4 ms
+5. n × Delay_qu = 3 × 2              = 6 ms
+6. Total = 7.4 + 6                   = '''13.4 ms'''
+   ✗ queuing 을 4 번 세면 15.4 ms,  ✗ 링크를 3 개로 세면 11.55 ms
+</pre>
+
+[[sim:total_delay]]
+
+{exam}🎯 "'''Just remember that queuing delay is involved with routers, not with source and destination.'''" (50:43) — 공식에서 queuing 만 '''n''', 나머지는 '''n + 1'''. 계산 문제가 나오면 가장 먼저 "라우터 몇 개 → 링크 몇 개"를 센다 → [[total delay 공식]].{/exam}
+
+== p.34–36 — Throughput ⭐⭐ ==
+[[img:L12-36.png|p.36 Throughput — a. A path through three links: Source —Link1 TR 200 Kbps— R1 —Link2 TR 100 Kbps— R2 —Link3 TR 150 Kbps— Destination. b. Water-pipe analogy: 굵은 관 – 가는 관(Bottleneck) – 중간 관|large]]
+
+{def}"'''Throughput''': number of bits passing a point per second. On a path, throughput = the '''slowest link''' (the '''bottleneck''')." (p.34–35)
+"Ex) min(200, 100, 150) kbps = '''100 kbps'''" (p.35){/def}
+
+<pre class="txt">
+p.35 예제
+1. 링크 rate: Link1 200 kbps, Link2 100 kbps, Link3 150 kbps
+2. 경로 throughput = min(200, 100, 150) = '''100 kbps'''   ← Link2 가 bottleneck
+   (평균 150 도, 합 450 도 아니다)
+</pre>
+
+* '''[[throughput]]''' 은 "한 지점을 1 초에 지나는 비트 수". 중간고사 [[mid:throughput]] 과 같은 말이고, '''bandwidth(링크가 낼 수 있는 최대)''' 와 구별한다([[mid:bandwidth]]).
+* '''[[bottleneck]]''' = 병목. 물은 '''가장 가는 관'''만큼만 흐른다(water-pipe analogy).
+
+{tip}'''교수 일화 — DGIST 캠퍼스망의 bottleneck (52:00–56:29)'''
+EECS 의 Prof. Bae 가 알아낸 바로는 '''DGIST 의 유선 캠퍼스 인프라 속도가 300 Mbps''' 뿐이다 — "300 Mbps in 2026. Wow." [[mid:Gigabit Ethernet]](1 Gbps)보다도 느리다. 그래서 '''WiFi 가 300 Mbps 보다 빨라도''' 결국 이 유선망을 거쳐 인터넷에 나가므로 "you '''cannot''' use your Wi-Fi service faster than this one" — 유선 300 Mbps 가 bottleneck 이다. 교수가 연구실 PC 에서 카카오톡이 느렸던 이유. 인프라 업그레이드는 공사 중이라고 했다.
+→ 업그레이드가 끝나도 bottleneck 은 사라지지 않고 '''다음으로 느린 링크(WiFi 등)로 옮겨 갈''' 뿐이다.{/tip}
+
+[[sim:bottleneck_throughput]]
+
+== p.37–38 — Delay and throughput vs. load ⭐⭐ ==
+[[img:L12-38.png|p.38 a. Delay as a function of load — No-congestion area 에서 완만하다가 Capacity 근처에서 수직으로 치솟음. b. Throughput as a function of load — Capacity 까지 직선 상승, 넘어서 Congestion area 에서 급락. "Near capacity, delay shoots up; beyond capacity, throughput collapses (congestion)."|large]]
+
+{def}"Packet delay and throughput as a function of '''load'''. '''Near capacity, delay shoots up'''; '''beyond capacity, throughput collapses''' (congestion)." (p.37–38){/def}
+* '''load''' = 망에 보내려는 양(교수 56:50 "how much you use").
+* delay: capacity 에 가까워지면 queue 가 가득 차 [[queuing delay]] 가 폭증 → 거의 무한대(라우터가 버림, 57:56).
+* throughput: capacity 까지는 load 에 비례해 오르다가, 넘으면 라우터가 버리기 시작해 '''오히려 떨어진다''' (58:44–59:11) — p.14 vicious cycle 의 그래프 판 → [[load와 성능]].
+
+[[anim:load_curves|load 커서를 따라 왼쪽 delay 곡선이 capacity 앞에서 수직으로 치솟고, 오른쪽 throughput 이 capacity 를 지나 무너지는 순간을 보라]]
+
+{warn}'''슬라이드 세부 주의 (그림 읽기)'''
+* p.38 b 그림의 throughput 꼭대기는 capacity 선을 '''살짝 지난''' congestion area 쪽에 있다. 문장은 "beyond capacity, throughput collapses" — 시험 답은 문장대로 쓴다.
+* p.9 그림은 위에서부터 Source → Destination → Router 순으로 그려져 있다. 실제 순서는 Source → Router → Destination 이다(문서 맨 위 움직이는 그림 참고).
+* p.31 processing delay 정의에 "remove the header" 가 들어 있는데, p.9 는 "Routers do not decapsulate" 라고 한다. 둘은 모순이 아니라 관점 차이로 읽는다: 라우터는 '''하위 계층(frame) header''' 를 떼고 IP header 를 처리할 뿐, '''IP 패킷을 decapsulate 해서 payload 를 꺼내지는 않는다'''(Forouzan 보충 — 슬라이드에 없음).{/warn}
+
+== 공식 모음 ==
+{|
+! 무엇 || 식 || 예
+|-
+| [[transmission delay]] || $\text{Delay}_{tr} = \frac{\text{Packet length}}{\text{Transmission rate}}$ || 8,000 bits / 100 Mbps = 80 μs
+|-
+| [[propagation delay]] || $\text{Delay}_{pg} = \frac{\text{Distance}}{\text{Propagation speed}}$ || '''2,000 m / (2×10^8 m/s) = 10 μs''' (p.30)
+|-
+| [[total delay 공식]] || $(n+1)(\text{Delay}_{tr} + \text{Delay}_{pg} + \text{Delay}_{pr}) + n \cdot \text{Delay}_{qu}$ || n = 3 예시 → 13.4 ms
+|-
+| [[throughput]] (경로) || $\min(\text{link}_1, \text{link}_2, \dots)$ || '''min(200, 100, 150) = 100 kbps''' (p.35)
+|-
+| 전송 시간 (보충) || 파일 크기 / 경로 throughput || 1 MB / 100 kbps = 80 s
+|}
+
+== 🎙 실제 수업 기록 (10/27 화, 녹음본 기준) ==
+녹음: `녹음본/1027_컴네.txt` (60분, faster-whisper 전사 — "panetizing" = packetizing, "Honjak" = 혼잡, "SDS" = best effort 처럼 깨져 있다). 덱 38쪽을 한 번에 끝냈다.
+* '''00:00–00:41''' 복습: LAN 은 Ethernet·Wi-Fi·Bluetooth, WAN 은 cellular·satellite. "from today, we are going to delve into network layer". "'''network and transport, these two layers are the most important layers'''."
+* '''00:58–01:38''' "LAN·WAN 이 physical·data-link 위에만 만들어졌다고 '''헷갈리지 말라'''" — network·transport·application 도 있다.
+* '''01:49''' "'''the most important one is about each role and each service'''."
+* '''04:13–05:30''' connectionless: "no setup … in IP protocol, we don't have that set up [handshaking]". datagram 과 packet 은 "interchangeably used, means the same". 같은 메시지라도 datagram 마다 다른 라우터로 갈 수 있다.
+* '''05:59–06:43''' "This '''very important''' [property] … is called '''best effort'''. It means that it has no control of flow and congestion and it has no error recovery … served by other layers."
+* '''07:11–07:41''' transport 의 단위는 segment, data link 는 frame — "it would be very confusing but I will remind you".
+* '''08:08''' 보조 프로토콜: ICMP, IGMP, 그리고 기억하는 '''ARP'''([[mid:ARP]], 주소 변환으로 IP 를 돕는다).
+* '''09:37–10:59''' p.7 그림: host 는 5 계층 전부, 라우터는 "up to the network layer".
+* '''11:29–14:41''' packetizing = encapsulation/decapsulation. "'''routers do not decapsulate''' … just read the header … one exception … fragmentation … header it just copies to every fragment". "this is actually served by IP."
+* '''14:48–15:00''' "flow control … '''is not served by IP'''."
+* '''15:30–17:42''' routing = 경로 선택, routing protocols 가 표를 만든다. "routing is indeed served by the IP and it is one crucial service".
+* '''18:11–19:07''' forwarding 비유: "You may have seen terminologies like forwarding when you learn AI … Inputting data to neural network is called forward … forwarding means '''pushing data into output interface'''."
+* '''20:00–20:33''' forwarding value: "often … destination address … or it can be '''label''' in some specific instances."
+* '''20:47''' ⭐ "routing … means '''building the table'''. … forwarding, it is just '''pushing the packet into the next interface'''. This is the distinction."
+* '''21:25–21:35''' error control: "limited to the header … error control in a '''partial''' manner."
+* '''22:09–23:22''' flow control: "should not send too much data that exceeds the capability of the receiver" → TCP.
+* '''23:44–25:39''' congestion: "like Korean '''혼잡'''", routers drop → resend → "vicious cycle". IP 는 안 함, higher level.
+* '''25:54–27:11''' QoS = "service 품질", "very old-fashioned terminology, multimedia" — higher layer.
+* '''27:11–27:46''' security: IPSec, "a different protocol, complementary".
+* '''28:28–29:05''' ⭐ IP 의 '''두 큰 성질: connectionless + best effort'''. 나머지는 TCP, application layer, IPSec 이 한다. "'''IPSec is at the same layer as IP, but different from IP'''."
+* '''30:41–33:15''' router ≈ switch. 같은 메시지의 datagram 이라도 라우터가 따로 보내고 "'''the order of datagram is not guaranteed'''".
+* '''34:49–36:58''' datagram approach: "router decides using only the destination address", forwarding table 조회.
+* '''37:15–38:51''' virtual circuit: "similar to the circuit, but there are no physical circuits", setup → data transfer → teardown, flow label.
+* '''39:05–39:54''' ⭐ "key difference … virtual circuit approach uses a '''flow label''' … datagram approach … '''destination address''' … this is why I mentioned the forwarding value."
+* '''41:22''' "The order is not preserved in datagram approach but in virtual circuit it ensures same order." IP 는 connectionless(datagram).
+* '''43:28–46:31''' transmission delay = 모든 비트를 매체에 밀어 넣는 시간, propagation delay = "time for one bit to travel the link" — data link 에서 배운 것과 같다. "'''because it is about distance'''". 2 km 케이블 예제.
+* '''46:49–48:04''' processing = "within device", queuing = 라우터의 input/output queue, "'''specifically in routers, not in source and destination'''", 트래픽이 늘면 커진다.
+* '''48:39–50:43''' total delay: n 라우터 → n+1 링크, queuing × n, 나머지 × (n+1). ⭐ "'''Just remember that queuing delay is involved with routers, not with source and destination.'''"
+* '''51:38–52:00''' throughput 은 맥락마다 정의가 여럿이지만 network layer 에서는 "number of bits that passes one point".
+* '''52:00–56:29''' bottleneck 일화: Prof. Bae(EECS)가 DGIST 유선 인프라가 '''300 Mbps''' 임을 발견, Gigabit Ethernet 보다 느림, WiFi 가 더 빨라도 그 이상 못 씀, 업그레이드 공사 중. "300 Mbps in 2026. Wow."
+* '''56:41–59:25''' load 그래프: "near capacity delay shoots up", 라우터가 버려 "throughput collapses".
+* '''59:27''' 공지: '''목요일(10/29)에 IP'''(addressing 등)를 다룬다. 시험 관련 공지 없음.
+
+== 시험 대비 핵심 요약 ==
+# '''Network layer''' = '''host-to-host delivery''' (source → destination). 경로 위 라우터가 패킷마다 next hop(best route)을 고른다. network layer 는 '''every hop''' 에서 동작하지만 라우터는 '''network layer 까지만''' 올린다.
+# '''IP''' = 인터넷의 주 프로토콜: 주소 형식 정의, '''connectionless'''(no setup, datagram 마다 독립), '''best effort'''(flow·congestion control 없음, error recovery 없음, checksum 은 header 만). 단위 '''datagram''' = header + payload.
+# PDU 이름: Transport '''segment''' → Network '''datagram''' → Data link '''frame'''. 보조 프로토콜: '''ICMP, IGMP, DHCP, ARP'''.
+# '''Packetizing''': payload 를 바꾸지도 쓰지도 않고 나름. source encapsulate, destination decapsulate, '''routers do not decapsulate''' — 예외 '''fragmentation'''(header 를 모든 fragment 에 복사, 몇 군데 변경).
+# '''Routing builds the table, forwarding uses it, packet by packet.''' forwarding = 도착한 패킷의 forwarding value(destination address 또는 label)로 forwarding table 을 찾아 interface 로 내보내기.
+# '''What IP provides''': packetizing ✓, routing/forwarding ✓, error control △(header checksum detect only + ICMP), flow ✗(TCP), congestion ✗(routers drop, TCP slows down), QoS ✗(upper layers), security ✗('''IPSec''' — IP 와 같은 계층의 다른 프로토콜).
+# '''Congestion''' = 한 지역에 datagram 과다 → 라우터 drop → 재전송 → 더 악화(vicious cycle). '''flow control''' 은 receiver 보호, congestion control 은 망 보호.
+# '''Packet switching''': router = switch (input port → output port). '''Datagram''' = connectionless, setup 없음, '''destination address''', 경로 제각각, '''out of order''' — '''IP 가 이것'''. '''Virtual circuit''' = connection-oriented, setup → data transfer → teardown, '''flow label = VCI''', 같은 경로, '''in order'''.
+# '''Delay''' 4 가지: transmission $= L/R$ (모든 비트), propagation $= d/s$ (한 비트, 거리), processing (장비 안), queuing (라우터 queue, load 에 비례). 예: 2,000 m / 2×10^8 m/s = '''10 μs'''.
+# '''Total delay = (n+1)(tr + pg + pr) + n·qu''' — n 라우터, n+1 링크, '''queuing 은 라우터에서만'''.
+# '''Throughput''' = 한 지점을 초당 지나는 비트 수, 경로 throughput = '''가장 느린 링크(bottleneck)''': min(200, 100, 150) = 100 kbps.
+# '''Load''': near capacity, '''delay shoots up'''; beyond capacity, '''throughput collapses''' (congestion).
+
+== 관련 문서 ==
+* 개요: [[network layer]] · [[host-to-host delivery]] · [[IP]] · [[connectionless]] · [[best effort]] · [[datagram]] · [[segment·datagram·frame]] · [[ICMP]] · [[보조 프로토콜]]
+* 서비스: [[packetizing]] · [[fragmentation]] · [[routing]] · [[forwarding]] · [[forwarding table]] · [[IP의 error control]] · [[flow control]] · [[congestion control]] · [[QoS]] · [[IPSec]] · [[IP가 제공하는 서비스]]
+* Packet switching: [[packet switching]] · [[datagram approach]] · [[virtual-circuit approach]] · [[VCI]] · [[circuit switching과 packet switching]]
+* 성능: [[transmission delay]] · [[propagation delay]] · [[processing delay]] · [[queuing delay]] · [[total delay 공식]] · [[throughput]] · [[bottleneck]] · [[load와 성능]]
+* 앞 강의: [[CH05 셀룰러 동작]] · [[CH05 Satellite Network]] · [[all-IP]]
+* 중간고사 위키: [[mid:network layer]] · [[mid:캡슐화]] · [[mid:PDU]] · [[mid:라우터]] · [[mid:IP]] · [[mid:TCP]] · [[mid:latency]] · [[mid:propagation time]] · [[mid:transmission time]] · [[mid:throughput]] · [[mid:ARP]] · [[mid:Gigabit Ethernet]]

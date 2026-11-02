@@ -1,0 +1,36 @@
+key: IP의 error control
+title: IP 의 error control — header checksum (detect only) + ICMP, △ Partly
+category: 5강 네트워크 계층, 용어
+---
+network layer 의 error control 중 [[IP]] 가 해 주는 것은 '''일부(△ Partly)''' 뿐이다: checksum 은 '''header 만''' 덮고, 오류를 '''검출만''' 하며, 오류는 [[ICMP]] 가 '''보고'''한다. '''recovery(복구)는 없다'''. L12 p.12, p.18.
+
+{def}"'''Error Control''' — '''Checksum covers the header only''': detects header errors, '''no recovery'''. ICMP reports errors (e.g., datagram discarded, bad header)." (p.12)
+"Error control — '''△ Partly''' — Header checksum (detect only) + ICMP reports; no recovery" (p.18){/def}
+
+[[img:L12-13.png|p.13 IP datagram — Header 는 "checked ✓"(초록), Payload 는 "not checked by IP"(빨강 점선)|medium]]
+
+== "Partly" 인 이유 세 가지 ==
+{|
+! || IP 가 하는 것 || 안 하는 것
+|-
+| 범위 || '''header''' 검사 || payload 검사 ✗
+|-
+| 동작 || 오류 '''검출''' (detect) || 정정·재전송(recovery) ✗
+|-
+| 알림 || [[ICMP]] 로 보고 (discarded, bad header) || —
+|}
+교수: "error control provided by IP is '''limited to the header''' … So we call it error control in a '''partial''' manner" (10/27 녹음 21:25–21:35).
+
+{tip}'''왜 header 만?''' (Forouzan 보충 — 슬라이드에 없음) ① header 는 라우터마다 일부가 바뀌므로(예: TTL) 매 hop 다시 검사해야 하는데, payload 까지 하면 너무 느리다. ② payload 는 위층(TCP·UDP)이 자기 checksum 으로 검사한다. ③ header 가 틀리면 '''엉뚱한 곳으로 배달'''되니 header 만큼은 지켜야 한다.{/tip}
+
+== 중간고사와의 연결 ==
+* checksum 의 계산 원리는 [[mid:checksum]] (CH03). data-link 의 [[mid:CRC]] 는 '''frame 전체'''를 검사했다 — IP 는 header 만이라는 점이 다르다.
+
+{analogy}🎭 택배 기사가 '''송장(header)이 찢어졌는지만''' 확인하고, 상자 안 물건(payload)이 깨졌는지는 보지 않는다. 송장이 찢어졌으면 상자를 반송 처리하고 "배송 불가" 안내문(ICMP)을 보내지만, 새 물건을 대신 보내 주지는 않는다.{/analogy}
+
+{quiz}OX: IP 의 checksum 은 datagram 전체의 오류를 검출하고 정정한다.{/quiz}
+{answer}✗. checksum 은 '''header only''', 그리고 '''detect only, no recovery'''.{/answer}
+
+== 관련 문서 ==
+* [[ICMP]] · [[best effort]] · [[IP가 제공하는 서비스]] · [[datagram]]
+* 중간고사: [[mid:checksum]] · [[mid:CRC]]

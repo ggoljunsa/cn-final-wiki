@@ -1,0 +1,37 @@
+key: routing
+title: Routing (라우팅) — 경로를 골라 표를 만든다
+category: 5강 네트워크 계층, 용어
+---
+'''Routing''' 은 source 에서 destination 까지의 '''경로를 고르는''' 일이고, 그 결과로 라우터들이 패킷이 올 때 쓸 '''표(table)를 만든다'''. 짝이 되는 [[forwarding]] 은 그 표를 '''쓰는''' 일이다. [[IP]] 가 제공한다(✓ Yes). L12 p.10–11, p.18.
+
+{def}"'''Routing''': choose the path from source to destination. There are usually '''many possible routes'''. Pick the '''best''' one by some '''metric''' (e.g., hops, delay, cost). '''Routing protocols''': Routers share what they know about their neighborhood; build '''consistent tables''' used when packets arrive." (p.10)
+"'''Routing builds the table.''' Forwarding uses it, packet by packet." (p.11){/def}
+
+[[img:L12-10.png|p.10 Routing — S, R1–R5, D 그래프. 파란 굵은 선 S → R1 → R4 → D 가 best route, 회색은 other possible routes|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''route''' = 길, 노선. '''routing''' = 노선을 '''정하는''' 일. 길이 하나뿐이면 정할 것도 없다 — "there are usually '''many possible routes'''" 라서 필요하다.
+* '''metric''' = 무엇을 "best" 로 볼지의 잣대: hop 수, delay, cost.
+
+== 어떻게 하나 (p.10) ==
+# 라우터들이 '''routing protocol''' 로 "내 이웃은 누구고 얼마나 먼지" 를 서로 알려 준다.
+# 그 정보로 각자 '''일관된 표(consistent tables)''' 를 만든다 → [[forwarding table]].
+# 패킷이 오면 그 표대로 [[forwarding]] 한다.
+구체적인 routing algorithm·protocol 은 뒤 강의에서 배운다(교수 17:28).
+
+{exam}🎯 "when we call '''routing''', it means '''building the table'''. On the other hand, when we call '''forwarding''', it is just '''pushing the packet into the next interface'''. This is the distinction between these two." (10/27 녹음 20:47)
+{|
+! || routing || forwarding
+|-
+| 한 줄 || '''builds''' the table || '''uses''' it, packet by packet
+|-
+| 시점 || 패킷 오기 전, 주기적으로 || 패킷이 도착할 때마다
+|-
+| 범위 || 망 전체(이웃 정보 교환) || 라우터 하나 안
+|}{/exam}
+
+{analogy}🎭 routing 은 '''내비게이션이 경로를 계산해 지도를 만드는 일''', forwarding 은 '''교차로에서 그 지도를 보고 핸들을 꺾는 일'''이다. 경로 계산은 출발 전(또는 주기적으로) 한 번, 핸들 꺾기는 교차로마다 매번.{/analogy}
+
+== 관련 문서 ==
+* [[forwarding]] · [[forwarding table]] · [[host-to-host delivery]] · [[IP가 제공하는 서비스]] · [[CH07 네트워크 계층 서비스와 성능]]
+* 중간고사: [[mid:라우터]]

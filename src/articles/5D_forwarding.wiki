@@ -1,0 +1,38 @@
+key: forwarding
+title: Forwarding (포워딩) — 도착한 패킷을 표대로 내보내기
+category: 5강 네트워크 계층, 용어
+---
+'''Forwarding''' 은 패킷이 '''도착했을 때''' 라우터가 하는 동작이다: 패킷의 '''forwarding value'''(destination address 또는 label)로 [[forwarding table]] 을 찾아, 맞는 '''output interface''' 로 내보낸다. [[routing]] 이 만든 표를 '''패킷마다''' 쓰는 일. L12 p.11.
+
+{def}"'''Forwarding''': the action a router takes '''when a packet arrives'''. Look up the '''forwarding value''' (e.g., '''destination address or label''') in the '''forwarding table'''. Send the packet out of the matching '''interface'''." (p.11)
+"Routing builds the table. '''Forwarding uses it, packet by packet.'''" (p.11){/def}
+
+[[img:L12-11.png|p.11 Forwarding — [B|Data] 가 interface 1 로 도착 → Forwarding value B 로 표 조회(A→1, B→2) → "Send the packet out of interface 2"|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''forward''' = 앞으로 보내다. 교수 비유(10/27 녹음 18:11–19:07): "You may have seen terminologies like forwarding when you learn '''AI''' … Inputting data to neural network is called '''forward''' … in this case, forwarding means '''pushing data into output interface'''." — 신경망 forward pass 처럼 '''입력을 넣으면 정해진 규칙대로 출력 쪽으로 밀어낸다'''. 고민(경로 계산)은 이미 끝나 있다.
+
+== forwarding 의 3 단계 ==
+<pre class="txt">
+1. 패킷 도착 (interface 1)         [ B | Data ]
+2. forwarding value = B 를 표에서 찾기  →  B ⇒ output interface 2
+3. interface 2 로 내보내기          [ B | Data ] ─▶
+</pre>
+
+== forwarding value 는 두 종류 ==
+{|
+! 방식 || forwarding value || 문서
+|-
+| '''[[datagram approach]]''' (IP) || '''destination address''' (p.24: "maps destination address → output interface") || [[datagram approach]]
+|-
+| '''[[virtual-circuit approach]]''' || '''label = [[VCI]]''' (flow label) || [[VCI]]
+|}
+교수: "this is why I made the slide, why I mentioned the forwarding value" (39:40) — p.11 에서 "destination address '''or label'''" 이라고 둘 다 적어 둔 이유가 p.26 비교표다.
+
+{analogy}🎭 forwarding 은 '''우체국 분류 선반'''이다. 편지가 오면 우편번호(forwarding value)를 보고 해당 칸(interface)에 툭 넣는다. 우편번호 → 칸 대응표를 누가 언제 만들었는지(routing)는 분류하는 사람이 신경 쓰지 않는다.{/analogy}
+
+{quiz}routing 과 forwarding 의 차이를 교수 표현대로 한 문장씩 쓰시오.{/quiz}
+{answer}routing = '''building the table''' (경로를 골라 표를 만든다). forwarding = '''pushing the packet into the next interface''' (도착한 패킷을 표대로 내보낸다, packet by packet).{/answer}
+
+== 관련 문서 ==
+* [[routing]] · [[forwarding table]] · [[datagram approach]] · [[virtual-circuit approach]] · [[VCI]] · [[packet switching]]
