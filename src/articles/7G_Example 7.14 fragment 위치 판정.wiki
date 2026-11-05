@@ -1,0 +1,34 @@
+key: Example 7.14 fragment 위치 판정
+title: Example 7.14 — M = 1, offset = 0 → first fragment
+category: 7강 IPv4 데이터그램, 예제
+---
+'''Example 7.14''' 는 [[flags D와 M|M bit]] 와 [[fragmentation offset|offset]] 두 값으로 패킷이 first / middle / last fragment 중 무엇인지 판정하는 예제다. 답: '''first fragment'''. L13 p.47.
+
+{def}"A packet arrives with M = 1 and offset = 0. First, last, or middle? — '''M = 1 → first or middle'''. '''Offset = 0 → it is the first fragment'''." (p.47){/def}
+
+[[img:L13-47.png|p.47 Example 7.14 + Summary 표: M 0·Offset 0 Not fragmented / 1·0 First fragment / 1·>0 Middle fragment / 0·>0 Last fragment|medium]]
+
+== 풀이 — 두 질문으로 쪼개기 ==
+<pre class="txt">
+질문 1: 뒤에 더 있나?          M = 1 → 예 → 마지막 아님 → first 또는 middle
+질문 2: 원래 datagram 맨 앞인가? offset = 0 → 예 → '''first fragment'''
+</pre>
+{|
+! M || offset || 판정
+|-
+| 0 || 0 || Not fragmented (온전한 datagram)
+|-
+| 1 || 0 || '''First''' fragment
+|-
+| 1 || > 0 || Middle fragment
+|-
+| 0 || > 0 || Last fragment
+|}
+{warn}"offset = 0 이니까 나뉘지 않았다" 는 오답. offset 0 인 경우는 not fragmented '''와''' first 두 가지라서 M 까지 봐야 한다.{/warn}
+
+{analogy}🎭 '''연재물 회차 판정.''' "다음 호에 계속"(M = 1) 이 붙어 있고 "1 쪽부터"(offset 0) 이면 1 회. "계속" 이 없고 1 쪽부터면 단편.{/analogy}
+
+[[sim:fragment_calc]]
+
+== 관련 문서 ==
+* [[flags D와 M]] · [[fragmentation offset]] · [[Example 7.16 첫·마지막 바이트]] · [[fragmentation]]

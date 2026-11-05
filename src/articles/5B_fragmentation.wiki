@@ -27,6 +27,10 @@ category: 5강 네트워크 계층, 용어
 
 {analogy}🎭 '''엘리베이터에 안 들어가는 소파.''' 이삿짐센터(라우터)는 원래 상자를 열지 않지만, 소파가 엘리베이터(다음 링크)에 안 들어가면 어쩔 수 없이 분해해서 여러 번 나른다. 조각마다 '''같은 배송지 스티커'''(복사된 header)와 "3 개 중 1 번째" 표시(a few changes)를 붙인다.{/analogy}
 
+{tip}'''필기 메모: 노란 형광펜 + 손그림 + "Fragmented"''' (p.9) — "fragmentation" 과 "Header is copied to every fragment" 에 형광펜. 손그림: 긴 패킷 [H | …………] 이 화살표 뒤에 [H | …] 두 조각으로 나뉘고, 각 조각 앞에 header 가 붙은 모습에 "Fragmented" 라고 적었다. 위 그림 설명과 같다: 조각마다 header 가 복사된다.{/tip}
+
+{info}L13(7강) 에서 자세히: 누가 나누고 합치나·identification·flags·offset 계산 → [[CH07 IPv4 데이터그램과 포워딩]] · [[fragmentation offset]] · [[flags D와 M]] · [[MTU]] · [[reassembly]]{/info}
+
 == 관련 문서 ==
 * [[packetizing]] · [[datagram]] · [[forwarding]] · [[CH07 네트워크 계층 서비스와 성능]]
 * 중간고사: [[mid:fragmentation]] (802.11) · [[mid:프레임 길이 제한]]

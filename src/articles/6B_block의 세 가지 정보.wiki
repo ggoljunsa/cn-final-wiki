@@ -1,0 +1,43 @@
+key: block의 세 가지 정보
+title: Block 의 세 가지 정보 — N = 2^(32−n), first (suffix 0), last (suffix 1)
+category: 6강 IPv4 주소, 용어
+---
+classless block 안의 '''아무 주소 하나'''와 prefix 길이 n 만 있으면 그 block 의 '''① 주소 수 N ② first address ③ last address''' 를 모두 구할 수 있다. L13 p.11, p.18. 이 위키 6강 계산 문제의 거의 전부가 이것이다.
+
+{def}"From '''any''' address in a block (/n), we can find three things:
+① Number of addresses: $N = 2^{32-n}$
+② First address: keep the n leftmost bits, set the rest to '''0s'''
+③ Last address: keep the n leftmost bits, set the rest to '''1s'''" (p.11){/def}
+
+[[img:L13-11.png|p.11 Prefix + 000…0 = First address, Prefix + 111…1 = Last address, N = 2^(32 − n)|large]]
+
+== 이름에서 개념 끌어내기 ==
+* "keep the n leftmost bits" — prefix 는 block 안 모든 주소가 '''공유'''하니 그대로 둔다. 바꾸는 건 suffix 뿐: '''가장 작은 suffix(000…0) = first''', '''가장 큰 suffix(111…1) = last'''. 교수: "first address … '''always''' starts from all zero bits … the last address, it's always all ones" (27:15–28:03).
+
+== 손으로 푸는 순서 ==
+<pre class="txt">
+1. N = 2^(32 − n)
+2. n 이 걸친 바이트 찾기:  n ≤ 8 → 1번째, ≤ 16 → 2번째, ≤ 24 → 3번째, 그 외 4번째
+3. 그 바이트 안에서 block 크기 b = 2^(8 − (n mod 8))  (n 이 8 의 배수면 그 다음 바이트부터 전부 0/255)
+4. first: 그 바이트 = (b 의 배수 중 원래 값 이하 최대), 뒤 바이트 전부 0
+5. last : 그 바이트 = first 바이트 + b − 1,           뒤 바이트 전부 255
+</pre>
+<pre class="txt">
+예) 167.199.170.82/27   → N = 2^5 = 32, 넷째 바이트, b = 2^(8−3) = 32
+    32 의 배수 중 82 이하 최대 = 64 → first 167.199.170.64,  last = 64 + 31 = 95 → 167.199.170.95
+예) 230.8.24.56/20      → N = 2^12 = 4,096, 셋째 바이트, b = 2^(8−4) = 16
+    16 의 배수 중 24 이하 최대 = 16 → first 230.8.16.0,      last 230.8.(16+15).255 = 230.8.31.255
+</pre>
+* 같은 값을 [[address mask]] 로: N = NOT(mask) + 1, first = address AND mask, last = address OR NOT(mask).
+
+[[anim:cidr_mask_anim|AND 줄에서 suffix 5 칸이 0 으로, OR 줄에서 1 로 바뀌는 것을 보고 first·last 규칙을 비트로 확인하라]]
+
+[[sim:cidr_block]]
+
+{analogy}🎭 block 은 '''아파트 한 동'''이고 prefix 는 '''동 번호''', suffix 는 '''호수'''다. 어느 집 하나(any address)의 주소만 알면 같은 동의 첫 집(000 호)과 마지막 집(맨 끝 호)을 알 수 있고, 호수 자릿수(suffix 비트)로 그 동의 세대 수($2^{32-n}$)를 안다.{/analogy}
+
+{quiz}200.1.1.77/28 의 N, first, last 는?{/quiz}
+{answer}N = $2^4$ = 16. 넷째 바이트, b = 16 → 16 의 배수 중 77 이하 최대 = 64 → first '''200.1.1.64''', last 64 + 15 = '''200.1.1.79'''.{/answer}
+
+== 관련 문서 ==
+* [[address mask]] · [[Example 7.1]] · [[Example 7.3]] · [[network address]] · [[slash notation]] · [[prefix와 suffix]] · [[공식 모음]]

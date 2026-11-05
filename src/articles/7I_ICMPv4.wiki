@@ -1,0 +1,48 @@
+key: ICMPv4
+title: ICMPv4 (Internet Control Message Protocol v4) — IP 의 두 구멍을 메우는 동반자
+category: 7강 IPv4 데이터그램, 용어
+---
+'''ICMPv4''' 는 IPv4 에 없는 두 가지 — '''오류 보고'''와 '''host·관리용 질의''' — 를 채우는 network-layer 프로토콜이다. IP 의 companion 이지만 메시지는 '''IP datagram 안에 실려''' 간다. L13 p.49–55. L12 에서 이름만 나왔던 [[ICMP]] 를 이 덱에서 자세히 본다.
+
+{def}"IPv4 alone has two gaps: '''No error-reporting (or error-correcting) mechanism'''; '''No mechanism for host and management queries'''. ICMP (Internet Control Message Protocol) fills them. '''Companion of IP, also a network-layer protocol'''. Its messages are '''encapsulated in IP datagrams''', not passed directly to the data-link layer." (p.49)
+IPv4 에는 오류 보고(정정) 장치와 질의 장치가 없다. ICMP 가 이를 메운다. IP 의 동반 프로토콜로 같은 network layer 이며, 메시지는 IP datagram 에 캡슐화된다.{/def}
+
+[[img:L13-49.png|p.49 — "ICMP rides inside IP": Frame header | IP header | ICMP message (IP datagram 범위)|medium]]
+
+== 두 종류 (p.50) ==
+{|
+! || Error-reporting messages || Query messages
+|-
+| 하는 일 || 라우터나 destination host 가 IP 패킷을 처리하다 만난 '''문제를 보고''' || host 나 network manager 가 라우터·다른 host 에서 '''정보를 얻음'''
+|-
+| 메시지 || destination unreachable(3), source quench(4), redirection(5), time exceeded(11), parameter problem(12) || echo request/reply(8/0), timestamp request/reply(13/14)
+|-
+| 사전 || [[ICMP error-reporting message]] · [[time exceeded와 traceroute]] || [[echo request와 ping]]
+|}
+
+== 메시지 형식 (p.51, 개정판 신규) ==
+[[img:L13-51.png|p.51 General format of ICMP messages — Type 8 bits · Code 8 bits · Checksum 16 bits / Rest of the header (error-reporting) 또는 Identifier · Sequence number (query) / Data section. Type and code values 표|large]]
+<pre class="ascii">
+ 8 bits   8 bits        16 bits
+┌────────┬────────┬──────────────────┐
+│  Type  │  Code  │     Checksum     │
+├────────┴────────┴──────────────────┤
+│ Rest of the header                 │  ← error-reporting
+│ (query: Identifier │ Sequence no.) │  ← query: request·reply 짝짓기
+├────────────────────────────────────┤
+│ Data section                       │  ← error: 원래 IP header + 첫 8 bytes
+└────────────────────────────────────┘
+</pre>
+* '''type''' = 무슨 메시지, '''code''' = 세부 이유(destination unreachable 은 code 0–15, redirection 0–3, time exceeded·parameter problem 0–1, 나머지는 0 만).
+
+== 이름에서 개념 끌어내기 ==
+* '''Internet Control Message''' — 데이터가 아니라 '''제어용 쪽지'''. "버렸어", "길 틀렸어", "살아 있니?" 같은 말.
+* "'''v4'''": IPv4 짝꿍. IPv6 에는 ICMPv6 가 따로 있다(보충).
+* network layer 인데 IP 위에 실린다 → [[protocol field|protocol]] 번호 '''1'''. 계층은 같지만 캡슐화는 IP 안 — 시험에서 "ICMP 는 data-link 로 바로 간다" 는 ✗.
+
+{exam}🎯 "'''ICMP reports errors; it does not correct them'''" (p.52) 와 "error messages always go back to the '''original source'''" 는 정의형 문제 단골. L12 의 "IP error control = header checksum(detect) + ICMP(report), no recovery" 와 연결.{/exam}
+
+{analogy}🎭 '''우편 시스템의 반송 안내문 + 수신 확인 서비스.''' 배달 실패하면 보낸 사람에게 안내문(error-reporting)이 가고, "받는 사람 집에 있나요?" 확인 전화(query: echo)도 할 수 있다. 안내문도 결국 '''같은 우편망(IP)''' 으로 배달된다.{/analogy}
+
+== 관련 문서 ==
+* [[ICMP]] · [[ICMP error-reporting message]] · [[time exceeded와 traceroute]] · [[echo request와 ping]] · [[IP의 error control]] · [[보조 프로토콜]] · [[protocol field]]

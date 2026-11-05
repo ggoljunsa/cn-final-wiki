@@ -1,0 +1,50 @@
+key: Example 7.5 subnet 설계
+title: Example 7.5 — 14.24.74.0/24 를 120 · 60 · 10 subnet 으로 (128 /25 · 64 /26 · 16 /28, 48 reserve)
+category: 6강 IPv4 주소, 용어
+---
+'''Example 7.5''' 는 [[subnetting]] 의 대표 계산 예제다. /24 block(256 주소)에서 120 · 60 · 10 주소가 필요한 subblock 3 개를 만든다. 답: a '''14.24.74.0/25''' (128), b '''14.24.74.128/26''' (64), c '''14.24.74.192/28''' (16), 남는 '''48''' 개(.208–.255)는 reserve. L13 p.24–26.
+
+{def}"Block: 14.24.74.0/24 → $2^{32-24}$ = 256 addresses. First: 14.24.74.0, Last: 14.24.74.255. Need 3 subblocks: 120, 60, and 10 addresses.
+Solution — Allocate from the '''largest''' to the '''smallest'''. This keeps every start address divisible by its block size." (p.24)
+"Round each need up to a power of 2, then place blocks largest first." (p.25)
+"Used: 128 + 64 + 16 = '''208''' → '''48''' addresses left in reserve. 14.24.74.208 – 14.24.74.255; prefix not decided yet (48 is not a power of 2)" (p.26){/def}
+
+[[img:L13-25.png|p.25 표 — a 120→128 /25 .0–.127 · b 60→64 /26 .128–.191 · c 10→16 /28 .192–.207. Check: 0 ÷ 128, 128 ÷ 64, 192 ÷ 16 ✓|large]]
+
+== 풀이 ==
+{|
+! Subblock || Need || Allocate || Prefix || First || Last || 검산
+|-
+| a || 120 || 128 = $2^7$ || 32 − 7 = '''25''' || 14.24.74.0/25 || 14.24.74.127/25 || 0 ÷ 128 = 0 ✓
+|-
+| b || 60 || 64 = $2^6$ || 32 − 6 = '''26''' || 14.24.74.128/26 || 14.24.74.191/26 || 128 ÷ 64 = 2 ✓
+|-
+| c || 10 || 16 = $2^4$ || 32 − 4 = '''28''' || 14.24.74.192/28 || 14.24.74.207/28 || 192 ÷ 16 = 12 ✓
+|-
+| reserve || – || 48 || 미정 || 14.24.74.208 || 14.24.74.255 || 48 ≠ $2^k$
+|}
+<pre class="txt">
+used    = 128 + 64 + 16 = 208
+reserve = 256 − 208     = 48   (.208 ~ .255)
+(보충) 48 을 나중에 쓰려면 다시 2^k 로: .208/28 (16) + .224/27 (32)  — python summarize 결과
+</pre>
+
+[[img:L13-26.png|p.26 a. Original block / b. Subblocks 128 (n = 25) · 64 (n = 26) · 16 (28) · 48 Unused|large]]
+
+{warn}'''슬라이드 오타·어림 두 가지'''
+* p.26 그림의 c 라벨 "'''14.24.192.0/28'''" 은 오타 → '''14.24.74.192/28''' (p.25 표가 맞다).
+* 교수는 "this amounts to '''200''' addresses" (51:28)라고 어림했지만 정확히는 used '''208''', reserve '''48'''.{/warn}
+
+{warn}'''함정 — 작은 것부터 놓으면''': c(16) .0–.15 → b(64) 가 '''.16''' 에서 시작 → 16 ÷ 64 = 0.25 ✗ (규칙 ③ 위반, .16/26 을 mask 하면 .0 이 나와 c 와 겹친다) → a(128) 가 .80 에서 시작 → 80 ÷ 128 ✗. 고치려면 b 를 .64, a 를 .128 로 밀어야 하고 .16–.63 에 틈이 생긴다. → 반드시 '''largest first'''. 아래 sim 의 "함정" 옵션으로 확인.{/warn}
+
+[[anim:subnet_split_anim|need(빨간 점선)가 128·64·16 으로 커지고 .0·.128·.192 에 놓인 뒤 48 이 Unused 로 남는 것을 보라]]
+
+[[sim:subnet_alloc]]
+
+{analogy}🎭 256 칸짜리 서랍장에 128 칸·64 칸·16 칸짜리 정리함을 넣는 것. 큰 정리함부터 왼쪽 끝에 붙이면 모두 칸 눈금에 딱 맞고, 오른쪽 48 칸이 빈다.{/analogy}
+
+{quiz}같은 block 14.24.74.0/24 에서 need 가 100 · 30 · 30 이면?{/quiz}
+{answer}128 · 32 · 32. a .0/25 (.0–.127), b .128/27 (.128–.159), c .160/27 (.160–.191). used 192, reserve 64 (.192–.255 — 이건 $2^6$ 이라 .192/26 하나로 쓸 수 있다).{/answer}
+
+== 관련 문서 ==
+* [[subnetting]] · [[CIDR]] · [[block의 세 가지 정보]] · [[address mask]] · [[CH07 IPv4 주소]]

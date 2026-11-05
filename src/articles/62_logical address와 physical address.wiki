@@ -1,0 +1,41 @@
+key: logical address와 physical address
+title: Logical address (IP) 와 physical address (MAC) — connection 이냐 device 냐
+category: 6강 IPv4 주소, 용어
+---
+11/3 수업에서 교수가 "'''the most crucial distinction from MAC address'''" (05:19) 라고 못박은 대비다. '''IP address''' 는 connection 에 붙는 '''logical address''', '''MAC address''' 는 device(NIC)에 붙는 '''physical address'''. 슬라이드 근거는 L13 p.3 "An address belongs to a connection, not a device". 중간고사 CH03 (2) 의 [[mid:IP 주소와 MAC 주소|IP 주소와 MAC 주소]] 를 network layer 쪽에서 다시 본 것이다.
+
+{def}"IP address: identifies the '''connection''' of a device to the Internet … An address belongs to a connection, '''not a device'''." (p.3)
+교수(03:08–03:25): "Some device-unique address could be MAC addresses … This is why we call MAC addresses '''physical addresses'''. It is allocated to a physical device. But an IP address is more like a '''logical address''', allocated to one connection."{/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''physical''' = 물리적 — 실제 장비(랜카드)에 공장에서 새겨진 주소. 장비를 옮겨도 그대로.
+* '''logical''' = 논리적 — 장비가 '''어느 network 에 어떻게 연결됐는가'''를 나타내는 주소. 연결을 바꾸면 바뀐다.
+
+{|
+! || IP address (logical) || MAC address (physical)
+|-
+| 붙는 곳 || '''connection''' (interface 마다) || '''device''' (NIC)
+|-
+| 한 장비에 || 연결 수만큼 '''여러 개''' (라우터 3 networks → 3 개) || 하나 (NIC 당)
+|-
+| 길이 || 32 bits (IPv4) || 48 bits
+|-
+| 계층 || network layer || data-link layer
+|-
+| 구조 || prefix(network) + suffix(node) — 위치 정보가 있음 || 위치 정보 없음
+|-
+| 둘을 잇는 것 || [[mid:ARP|ARP]] (IP → MAC, address mapping — p.29) ||
+|}
+
+[[img:L13-03.png|p.3 (필기본) 라우터 하나에 주소 세 개. 손글씨 "not 'device' (MAC)"|medium]]
+
+{analogy}🎭 MAC 주소는 '''주민등록번호''', IP 주소는 '''지금 사는 집 주소'''다. 이사(다른 network 로 연결)하면 집 주소는 바뀌지만 주민번호는 그대로다. 집이 두 채(연결 두 개)면 집 주소도 두 개다.{/analogy}
+
+{exam}🎯 교수(02:52 · 05:19): "the important key word here is '''connections, not devices'''" … "'''This is the most crucial distinction from MAC address.'''" — 서술형 대비 세 줄: ① IP 는 connection, MAC 은 device ② IP 는 logical, MAC 은 physical ③ 한 장비가 IP 는 여러 개 가질 수 있다(예: 라우터).{/exam}
+
+{quiz}노트북이 와이파이와 유선 LAN 에 동시에 연결되어 있다. IP 주소와 MAC 주소는 각각 몇 개인가? (NIC 는 무선·유선 각 1 개){/quiz}
+{answer}IP 주소 '''2 개'''(연결 2 개), MAC 주소 '''2 개'''(NIC 2 개). 핵심은 IP 가 '''연결'''을 따라간다는 것 — NIC 하나에 연결이 여러 개면 IP 도 여러 개가 될 수 있다.{/answer}
+
+== 관련 문서 ==
+* [[IPv4 address]] · [[prefix와 suffix]] · [[CH07 IPv4 주소]] · [[보조 프로토콜]]
+* 중간고사: [[mid:IP 주소와 MAC 주소]] · [[mid:MAC 주소]] · [[mid:ARP]] · [[mid:주소 체계]]

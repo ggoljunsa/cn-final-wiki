@@ -43,6 +43,8 @@ category: 5강 네트워크 계층, 용어
 {quiz}OX: ① IP 는 데이터를 보내기 전에 연결 setup 을 한다. ② IP 의 checksum 은 payload 까지 검사한다. ③ 인터넷의 network layer 는 virtual-circuit approach 를 쓴다.{/quiz}
 {answer}① ✗ (connectionless — no setup) ② ✗ (checksum covers the '''header only''') ③ ✗ (IP 는 '''datagram approach''', p.26){/answer}
 
+{tip}'''필기 메모: 노란 형광펜''' (p.4) — "the main protocol of the Internet", "Connectionless", "Best effort" 에 형광펜. 즉 IP 를 한 줄로 말하라면 '''인터넷의 핵심 프로토콜 + connectionless + best effort''' 이다 → [[connectionless]] · [[best effort]]. (같은 장 그림 옆의 동그라미 친 R 두 개는 라우터 표시로 보이며 별도 설명이 필요한 질문은 아니다.){/tip}
+
 == 관련 문서 ==
 * [[connectionless]] · [[best effort]] · [[datagram]] · [[IP가 제공하는 서비스]] · [[datagram approach]] · [[ICMP]] · [[IPSec]]
 * [[CH07 네트워크 계층 서비스와 성능]] · [[all-IP]] (4G 가 모든 것을 IP 패킷으로)

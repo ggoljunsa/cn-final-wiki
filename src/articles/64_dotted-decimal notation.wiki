@@ -1,0 +1,31 @@
+key: dotted-decimal notation
+title: Dotted-decimal notation — 같은 주소의 세 가지 표기 (binary · dotted decimal · hex)
+category: 6강 IPv4 주소, 용어
+---
+IPv4 주소 32 비트를 쓰는 방법은 세 가지다: '''binary'''(32 비트 그대로), '''dotted decimal'''(바이트마다 십진수 0–255 를 점으로 연결), '''hexadecimal'''(16 진수 8 자리). L13 p.4. 일상에서 보는 "128.11.3.31" 이 dotted decimal 이다 — 교수: "most closely related to how we describe IP address in our daily life" (06:45).
+
+{def}"Three notations of the same address: Binary 10000000 00001011 00000011 00011111 — Dotted decimal 128.11.3.31 — Hexadecimal 800B031F" (p.4 그림)
+같은 주소를 2진수 · 점 찍은 십진수 · 16진수로 쓸 수 있다.{/def}
+
+[[img:L13-04.png|p.4 Binary ↔ Dotted decimal ↔ Hexadecimal (128.11.3.31 = 800B031F)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''dotted''' + '''decimal''' = "점 찍은 십진수". 32 비트를 8 비트씩 네 덩어리로 끊어 '''각 덩어리를 십진수'''로 쓰고 '''점(.)''' 으로 잇는다.
+
+== 변환 ==
+<pre class="txt">
+binary :  10000000 . 00001011 . 00000011 . 00011111
+decimal:     128   .    11    .     3    .    31
+hex    :     80         0B          03         1F      → 800B031F
+규칙: 한 바이트 = 0–255 = 16진수 두 자리
+</pre>
+* 한 바이트가 255 를 넘을 수 없다 → "220.8.24.256" 같은 것은 잘못된 주소.
+* 계산 문제([[Example 7.1]] 등)에서는 '''prefix 경계가 걸친 바이트 하나만''' 2진수로 바꾸면 충분하다.
+
+{analogy}🎭 같은 날짜를 "2026-11-05", "Nov 5, 2026", "20261105" 로 쓰는 것과 같다. 값은 하나, 표기만 셋.{/analogy}
+
+{quiz}10000001 00001011 00001011 11101111 을 dotted decimal 로 쓰시오.{/quiz}
+{answer}128+1 = 129, 11, 11, 128+64+32+8+4+2+1 = 239 → '''129.11.11.239'''{/answer}
+
+== 관련 문서 ==
+* [[IPv4 address]] · [[address space]] · [[slash notation]] · [[address mask]]

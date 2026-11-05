@@ -28,5 +28,7 @@ category: 4강 위성, 용어
 {quiz}GEO 에서 full global transmission 을 위해 필요한 최소 위성 수와 그 이유는?{/quiz}
 {answer}'''최소 3 기, 서로 같은 간격(equidistant)'''. 한 기는 line-of-sight 로 넓은 지역과 통신하지만 '''지구의 곡률(curvature)''' 때문에 많은 지역이 가려지기 때문이다 (p.17).{/answer}
 
+{tip}'''필기 메모: "GEO → 정지궤도"''' (p.11, 35,786 km 에서 화살표) — GEO 의 한글 이름이 '''정지궤도'''(geostationary orbit)다. 높이 이름이 아니라 "지구에 대해 정지" 라는 성질로 붙은 이름 → [[geostationary]].{/tip}
+
 == 관련 문서 ==
 * [[geostationary]] · [[line-of-sight]] · [[equatorial orbit]] · [[Example 5.2 정지궤도 주기]] · [[위성 세 범주]] · [[MEO]] · [[LEO]] · [[CH05 Satellite Network]]

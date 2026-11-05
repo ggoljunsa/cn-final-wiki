@@ -1,0 +1,40 @@
+key: Example 7.3
+title: Example 7.3 — 230.8.24.56 은 prefix 에 따라 여섯 가지 block 에 속한다
+category: 6강 IPv4 주소, 용어
+---
+'''Example 7.3''' 은 '''주소만으로는 block 을 알 수 없다'''는 것을 보여 준다. 같은 230.8.24.56 이 /16, /20, /26, /27, /29, /31 에 따라 전혀 다른 block 이 된다 → 그래서 classless 주소에는 '''항상 /n''' 을 붙인다. L13 p.19. 교수: "I recommend you to '''take this one as your own'''" (36:13) — 직접 풀어 보라는 것.
+
+{def}"An address '''alone''' does not tell which block it belongs to. Ex) 230.8.24.56 belongs to many blocks, depending on the prefix … → '''Always give the prefix length (/n) together with a classless address'''." (p.19){/def}
+
+[[img:L13-19.png|p.19 Prefix length 16 / 20 / 26 / 27 / 29 / 31 → 각 block|large]]
+
+== 여섯 줄 전부 풀기 (python 검산) ==
+<pre class="txt">
+24 = 00011000 (셋째 바이트),  56 = 00111000 (넷째 바이트)
+
+/16  N = 65,536  셋째·넷째 전부 suffix          → 230.8.0.0    ~ 230.8.255.255
+/20  N = 4,096   셋째 앞 4 비트 0001|1000         → 0001 0000 = 16 ~ 0001 1111 = 31
+                                                  → 230.8.16.0   ~ 230.8.31.255
+/26  N = 64      넷째 앞 2 비트 00|111000         → 00 000000 = 0  ~ 00 111111 = 63
+                                                  → 230.8.24.0   ~ 230.8.24.63
+/27  N = 32      넷째 앞 3 비트 001|11000         → 001 00000 = 32 ~ 001 11111 = 63
+                                                  → 230.8.24.32  ~ 230.8.24.63
+/29  N = 8       넷째 앞 5 비트 00111|000         → 56 ~ 63
+                                                  → 230.8.24.56  ~ 230.8.24.63
+/31  N = 2       넷째 앞 7 비트 0011100|0         → 56 ~ 57
+                                                  → 230.8.24.56  ~ 230.8.24.57
+</pre>
+* n 이 커질수록 block 이 '''반씩 줄며''' 230.8.24.56 을 감싼다 — "longer prefix → smaller network".
+* /29 · /31 에서는 56 이 마침 block 의 '''first''' 다(56 은 8 의 배수). /27 에서는 아니다(first = 32) — "주어진 주소 = first" 라고 가정하는 실수에 주의.
+
+[[sim:cidr_block]]
+
+{tip}230.8.24.56 은 classful 로 보면 첫 바이트 230 = 1110… 이라 '''class D (multicast)''' 범위다. 이 예제는 순전히 classless 계산 연습용이라 class 는 무시한다 → [[classful addressing]].{/tip}
+
+{analogy}🎭 "강남역 2 번 출구" 라는 위치는 '''지도 축척'''에 따라 "서울"(/16)에도, "강남구"(/20)에도, "역삼동 한 블록"(/29)에도 속한다. 축척(/n)을 말해 주지 않으면 어느 영역 이야기인지 모른다.{/analogy}
+
+{quiz}230.8.24.56/28 의 block 은?{/quiz}
+{answer}N = 16, 56 = 0011 1000 → 앞 4 비트 0011 = 48 → '''230.8.24.48 ~ 230.8.24.63'''.{/answer}
+
+== 관련 문서 ==
+* [[block의 세 가지 정보]] · [[slash notation]] · [[Example 7.1]] · [[address mask]] · [[classless addressing]]

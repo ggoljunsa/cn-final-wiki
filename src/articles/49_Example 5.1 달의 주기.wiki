@@ -33,5 +33,7 @@ category: 4강 위성, 용어
 {quiz}달의 고도를 384,000 km, 지구 반지름을 6378 km 라 할 때 Kepler's law 로 구한 달의 주기는 몇 초인가? 과정도 쓰시오.{/quiz}
 {answer}distance = 384,000 + 6378 = 390,378 km → (1/100) × 390,378^1.5 ≈ '''2,439,090 s ≈ 1 month (≈ 28 일)'''.{/answer}
 
+{tip}'''필기 메모: 그림 r, d 와 "Rule ⟷ Law ⟷ Theorem / Conjecture(추측)"''' (p.8) — 손으로 그린 그림은 지구(반지름 r = 6378 km)와 달 사이 거리 표시다. Kepler 식의 distance 는 지구 '''중심'''부터의 거리이므로 d = 6378 + 384,000 이다(위 풀이의 이유). 필기 윗줄의 "Bayes' Rule P(A|B)=" 와 "Rule ⟷ Law ⟷ Theorem / Conjecture" 는 수업 중 용어 설명에 대한 사이드 메모로 보인다(슬라이드·시험 범위 밖). 참고로 Kepler's law 는 관측에서 나온 '''경험 법칙(law)''' 이다.{/tip}
+
 == 관련 문서 ==
 * [[Kepler's law]] · [[Example 5.2 정지궤도 주기]] · [[period of a satellite]] · [[CH05 Satellite Network]]

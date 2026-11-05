@@ -124,7 +124,43 @@ CH05 와 달리 '''이 공식들은 계산 문제로 나오기 좋은 모양'''�
 이 표는 '''역사책의 연표'''다. 연도를 하나하나 외우는 것보다 "아날로그 → 디지털 → 데이터 → all-IP" 라는 흐름을 아는 게 시험에 더 쓸모 있다. 숫자는 그 흐름을 실감하는 재료로만 쓴다(채널 폭 30 kHz → 200 kHz → 1.228 MHz → 5 MHz 처럼 '''점점 넓어진다''').
 {/analogy}
 
+== IPv4 addressing (CH07 (2), L13 p.4–28) ⭐⭐⭐ ==
+'''계산 문제 1 순위'''. 주소 하나 + /n 으로 block 을, 요청 수로 prefix 를, 여러 요청으로 subnet 표를 만든다. 값은 python `ipaddress` 로 검산.
+{|
+! 무엇 || 식 || 예 (슬라이드) || 시뮬레이터
+|-
+| [[address space]] || $2^{32} = (2^8)^4$ || 4,294,967,296 (p.4) || —
+|-
+| class networks / 주소 || $2^{\text{prefix}-\text{leading}}$ / $2^{32-\text{prefix}}$ || A 128 × 16,777,216 · B 16,384 × 65,536 · C 2,097,152 × 256 (p.7) || `sim:classful_class`
+|-
+| [[block의 세 가지 정보|주소 수 N]] || $N = 2^{32-n}$ = NOT(mask) + 1 || /27 → 32 (Ex 7.1) || `sim:cidr_block`
+|-
+| prefix 길이 || $n = 32 - \log_2 N$ || 1000 → 1024 → /22 (Ex 7.4) || `sim:cidr_block`
+|-
+| [[address mask]] || n 개 1 + (32 − n) 개 0 || /27 = 255.255.255.224, /22 = 255.255.252.0 || `sim:cidr_block`
+|-
+| first ([[network address]]) || address AND mask || 167.199.170.82/27 → .64 || `sim:cidr_block`
+|-
+| last || address OR NOT(mask) || 167.199.170.82/27 → .95 || `sim:cidr_block`
+|-
+| CIDR block 검사 || first mod N = 0 || 302,910,464 = 1024 × 295,811 (Ex 7.4) || —
+|-
+| [[subnetting|subnet]] || need → $2^k$, $n_{sub} = 32 - k$, largest first || 120/60/10 → /25 .0, /26 .128, /28 .192, reserve 48 (Ex 7.5) || `sim:subnet_alloc`
+|-
+| [[address aggregation|aggregation]] || 공통 prefix 길이 || 4 × /26 (.0 .64 .128 .192) → 160.70.14.0/24 (Ex 7.6) || —
+|}
+* '''빠른 계산''': n 이 걸친 바이트의 block 폭 $b = 2^{8-(n \bmod 8)}$ → first = b 의 배수 중 원래 값 이하 최대, last = first + b − 1 (뒤 바이트는 0 / 255).
+* Ex 7.3 (230.8.24.56): /16 → .0.0–.255.255 · /20 → .16.0–.31.255 · /26 → .24.0–.24.63 · /27 → .24.32–.24.63 · /29 → .24.56–.24.63 · /31 → .24.56–.24.57.
+
+== IPv4 datagram·fragmentation·forwarding (CH07 (2) rev p.31–68) ⭐⭐⭐ ==
+* header = HLEN × 4 (20–60 B) · data = total length − HLEN × 4 · total ≤ 65,535
+* offset = first byte ÷ 8 · first = offset × 8 · last = first + data − 1 · fragment data = ⌊(MTU − 20)/8⌋ × 8
+* M/offset: 0/0 안 나뉨 · 1/0 first · 1/>0 middle · 0/>0 last
+* protocol: ICMP 1 · IGMP 2 · TCP 6 · UDP 17 · OSPF 89 / ICMP type: 3·4·5·11·12, echo 8/0, timestamp 13/14
+* forwarding: dest AND mask == network address (긴 mask 부터), /n 블록 = 2^(32−n) 주소 (Ex 7.22: /18 16,384, /20 4,096)
+
 == 관련 문서 ==
 * [[셀룰러 세대 비교표]] · [[GSM multiframe]] · [[AMPS 대역과 채널]] · [[자주 틀리는 함정 모음]]
 * 위성: [[Kepler's law]] · [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]] · [[SATCOM 주파수 대역]] · [[CH05 Satellite Network]]
 * network layer: [[total delay 공식]] · [[transmission delay]] · [[propagation delay]] · [[throughput]] · [[bottleneck]] · [[CH07 네트워크 계층 서비스와 성능]]
+* IPv4 addressing: [[block의 세 가지 정보]] · [[address mask]] · [[Example 7.1]] · [[Example 7.4]] · [[Example 7.5 subnet 설계]] · [[CH07 IPv4 주소]]

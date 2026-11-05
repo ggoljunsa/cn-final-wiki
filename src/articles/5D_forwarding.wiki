@@ -34,5 +34,7 @@ category: 5강 네트워크 계층, 용어
 {quiz}routing 과 forwarding 의 차이를 교수 표현대로 한 문장씩 쓰시오.{/quiz}
 {answer}routing = '''building the table''' (경로를 골라 표를 만든다). forwarding = '''pushing the packet into the next interface''' (도착한 패킷을 표대로 내보낸다, packet by packet).{/answer}
 
+{tip}'''필기 메모: 손그림 "□ → table", "forward"''' (p.11) — 패킷(□)이 들어오면 forwarding table 에서 값을 찾아(f) 내보낸다는 그림. 한 단어로 "forward". 슬라이드 파란 글씨와 같다: routing builds the table, forwarding uses it, packet by packet.{/tip}
+
 == 관련 문서 ==
 * [[routing]] · [[forwarding table]] · [[datagram approach]] · [[virtual-circuit approach]] · [[VCI]] · [[packet switching]]

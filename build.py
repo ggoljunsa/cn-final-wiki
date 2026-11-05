@@ -146,6 +146,8 @@ def main():
     # [[mid:키]] — 중간고사 위키 소스가 옆에 있으면 키를 대조한다 (없으면 건너뜀)
     broken_mid = {}
     mid_dir = os.path.join(ROOT, "..", "..", "중간고사", "위키", "src", "articles")
+    if not os.path.isdir(mid_dir):  # OneDrive 밖 작업 사본: repos/cn-final-wiki 옆의 repos/cn-wiki
+        mid_dir = os.path.join(ROOT, "..", "cn-wiki", "src", "articles")
     mid_keys = None
     if os.path.isdir(mid_dir):
         mid_keys = set()

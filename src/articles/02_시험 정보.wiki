@@ -18,13 +18,18 @@ category: 안내
 |-
 | 교수 강조 (CH07) || "the most important one is about '''each role and each service'''" — network layer 서비스마다 IP 가 하는지/누가 하는지([[IP가 제공하는 서비스]]), routing vs forwarding, datagram vs virtual circuit, queuing 은 라우터에서만 || 10/27 녹음 01:49 · 20:47 · 39:05 · 50:43
 |-
+| 교수 강조 (CH07 (2) addressing) || "the important key word here is '''connections, not devices'''" — "the most crucial distinction from MAC address"([[logical address와 physical address]]), address depletion "a crucial issue of IPv4", block size "must be a '''power of 2'''", subnetting 은 "'''largest first'''", Example 7.3 은 "take this one as your own"(직접 풀어 보기) || 11/3 녹음 02:52 · 05:19 · 16:34 · 21:01 · 36:13 · 47:31
+|-
+| '''과제 PS1''' || '''Problem Set 1 — 11/4 배포, 마감 11/15(일), LMS 제출'''. 범위: CH05 (1)(2), CH07 (1), CH07 (2) addressing · header · fragmentation → [[PS1 풀이 가이드]] || LMS (11/4)
+|-
 | 형식(참고) || 중간고사는 필기(손으로 작성)였고 OX·객관식(4~5지선다)·계산/단답·서술 유형이 섞였다. 교수는 "교재에만 있는 문제는 내지 않는다 — 슬라이드 중심"이라고 했다 || 9/22·10/6·10/8 녹음
 |}
 
 == 미확정 ==
 * 기말고사 '''날짜·시간·장소'''
-* '''범위의 끝''' — 10/20 공지: "다음 수업(목 10/22)에 satellite networks(WAN 의 마지막)를 하고 network layer 로 넘어간다"(73:00). 10/27 에 '''CH07 Network Layer: Data Transfer (1)''' 을 끝까지 나갔으므로 범위는 지금 '''CH05 (1)(2) + CH07 (1)''' 까지 진행. 교수: "network and transport, these two layers are the '''most important''' layers"(10/27 00:32). 다음 수업(10/29)은 IP(addressing 등).
+* '''범위의 끝''' — 10/20 공지: "다음 수업(목 10/22)에 satellite networks(WAN 의 마지막)를 하고 network layer 로 넘어간다"(73:00). 10/27 에 '''CH07 Network Layer: Data Transfer (1)''' 을 끝까지 나갔으므로 범위는 지금 '''CH05 (1)(2) + CH07 (1) + CH07 (2) p.1–30''' 까지 진행. 교수: "network and transport, these two layers are the '''most important''' layers"(10/27 00:32). 10/29 는 녹음이 없고, 11/3 에 '''CH07 (2) p.1–30 IPv4 addressing''' 을 나갔다(11/5 p.31~ 예정).
 * 기말이 누적(중간 범위 포함)인지 여부
+* '''NAT 범위 여부''' — 11/4 에 올라온 개정판 덱(`CH07_Network Layer - Data Transfer (2) rev.pdf`, 68쪽)에서 '''NAT 슬라이드(구 덱 p.64–67)가 삭제'''됐다. p.2 목차에는 아직 "NAT" 가 남아 있다. 범위에서 빠졌을 가능성이 크지만 교수에게 확인 필요.
 
 {warn}
 위 형식 정보는 '''중간고사''' 기준이다. 기말도 같을 것이라고 가정하지 말고 공지를 확인한다.
@@ -39,12 +44,24 @@ category: 안내
 | 10/22 (목) || CH05 (2) Satellite Network p.1–21 (예정) — '''선제 작성''' || (녹음 대기) || [[CH05 Satellite Network]]
 |-
 | 10/27 (화) || '''CH07 Network Layer: Data Transfer (1) p.1–38 전부''' — services(IP 가 주는 것: packetizing·routing/forwarding ✓, error control △, 나머지 ✗), packet switching(datagram vs virtual circuit), delay·throughput·load. '''시험 공지 없음'''. 다음 수업 10/29: IP || `녹음본/1027_컴네.txt` (60분, faster-whisper) || [[CH07 네트워크 계층 서비스와 성능]]
+|-
+| 10/29 (목) || (예고: IP) — 진도 기록 없음. 11/3 이 CH07 (2) p.1 부터 시작 || '''녹음 없음''' || —
+|-
+| 11/3 (화) || '''CH07 Network Layer: Data Transfer (2) p.1–30''' — IPv4 address(connection, not device), address space, classful A–E → depletion, classless/CIDR, N·first·last, address mask, Ex 7.1·7.3·7.4, block allocation(ICANN), subnetting(Ex 7.5), aggregation(Ex 7.6), main·auxiliary protocols, IP unreliable·connectionless. '''공지: 중간고사 점수 확인·claim 일시·장소 → TA 문의''' || `녹음본/1103_컴네.txt` (60분, whisper.cpp large-v3-turbo) || [[CH07 IPv4 주소]]
+|-
+| 11/4 (수) || '''PS1 배포''' (마감 11/15 일, LMS). 개정판 덱 `… (2) rev.pdf` 게시 — p.1–50 동일, '''NAT 삭제''' || — || [[PS1 풀이 가이드]]
+|-
+| 11/5 (목) || CH07 (2) p.31~ '''datagram format 부터 예정''' (11/3 녹음 59:13 "continue our discussion on IPv4 format on Thursday") || '''녹음 대기''' || [[CH07 IPv4 데이터그램과 포워딩]]
 |}
+
+{warn}
+'''중간고사 점수 확인·claim 공지 (11/3 녹음 00:00–00:42)''' — "a date and location for where you can claim your midterm score or you can check your midterm … If you have any questions or claims, you can '''ask your TA'''." 정확한 날짜·장소는 녹음에서 들리지 않는다 → LMS 공지 또는 TA 에게 확인.
+{/warn}
 
 {analogy}
 시험 정보 문서는 '''공항 출발 안내판'''이다. 게이트(장소)와 시간이 아직 "미정"으로 떠 있으니, 공지가 뜨면 바로 이 판을 고친다.
 {/analogy}
 
 == 관련 문서 ==
-* [[main]] · [[읽는 순서]] · [[공식 모음]] · [[자주 틀리는 함정 모음]]
+* [[main]] · [[읽는 순서]] · [[PS1 풀이 가이드]] · [[공식 모음]] · [[자주 틀리는 함정 모음]]
 * 중간고사 때의 정보: [[mid:시험 정보|시험 정보 (중간고사)]]

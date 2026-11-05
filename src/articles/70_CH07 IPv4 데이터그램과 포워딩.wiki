@@ -1,0 +1,320 @@
+key: CH07 IPv4 데이터그램과 포워딩
+title: CH07 Network Layer: Data Transfer (2) 후반 (7강 — IPv4 datagram, fragmentation, ICMPv4, forwarding)
+category: 7강 IPv4 데이터그램, 메인
+---
+'''CH07 IPv4 데이터그램과 포워딩''' 은 L13 덱 — 교수가 11/4 에 올린 '''개정판''' `CH07_Network Layer - Data Transfer (2) rev.pdf`(68쪽) — 의 '''p.31–68''' 이다. 페이지 번호는 모두 '''rev 기준'''. 앞부분 p.1–30(IPv4 주소: classful → [[CIDR|classless]], mask, subnetting, aggregation)은 [[CH07 IPv4 주소]] 에서 다룬다. 11/3(화) 수업은 p.30 까지 나갔고, 교수는 끝에서 "'''continue our discussion on IPv4 format on Thursday'''"(59:13)라고 했다 — 이 문서의 범위가 11/5(목) 수업이다.
+
+{info}11/5(목) 수업 전 선제 작성 — 녹음이 오면 🎙 절과 ⭐ 조정{/info}
+
+{info}11/4 개정판에서 NAT 슬라이드 4장이 삭제됨 — 시험 범위에서 빠졌을 가능성(교수 확인 전). 다만 rev p.2 개요에는 아직 NAT 가 언급돼 있다(슬라이드 정리 누락으로 보임).{/info}
+
+이 덱 후반이 던지는 질문은 — '''"주소를 정했으니, 그 주소를 실은 IP 패킷은 실제로 어떻게 생겼고, 라우터는 그걸 보고 어떻게 다음 hop 을 고르나?"'''
+답은 네 덩어리다.
+# '''IPv4 datagram format''' (p.31–41) — header 20–60 bytes 를 32-bit 행으로 그린다. [[HLEN]] 은 4-byte 단위, [[total length]] 는 header + data, [[TTL]] 은 hop 제한, [[protocol field|protocol]] 은 위층 프로토콜 번호, [[header checksum]] 은 header 만 → [[IPv4 datagram format]].
+# '''Fragmentation''' (p.42–48) — datagram 이 [[MTU]] 보다 크면 나눈다. [[identification field|identification]] 으로 같은 datagram 임을, [[flags D와 M|M bit]] 로 마지막인지를, [[fragmentation offset|offset]](8-byte 단위)으로 위치를 표시하고, '''destination 만''' [[reassembly|reassemble]] 한다 → [[fragmentation]].
+# '''ICMPv4''' (p.49–55) — IP 에 없는 오류 보고·질의를 채우는 동반 프로토콜. '''reports errors, does not correct them''', 항상 '''original source''' 로 → [[ICMPv4]].
+# '''Forwarding''' (p.56–68) — [[forwarding table]] 의 행을 '''긴 mask 부터''' 검사해 처음 맞는 행([[longest mask matching]])의 interface 로 보낸다. [[address aggregation]] 으로 표가 줄고, ISP 계층([[hierarchical routing]])으로 인터넷 전체 표가 감당할 만한 크기가 된다.
+
+페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다. rev PDF 는 '''필기 없는 원본'''이다(p.31–68 손글씨 없음 — 구판 GoodNotes 본도 수업이 p.30 에서 끝나 이 범위엔 필기가 없었다). 구판 대비 변경: p.51 ICMP 형식 신규, Ex 7.19 build-up 3 장(p.57–59) + 해답(p.60), aggregation build-up 2 장(p.64–65) 추가, NAT 4 장 삭제. p.33–38 은 같은 header 표에서 강조 칸만 바뀌는 build-up 이라 캡처는 대표 장(p.32 전체 형식)과 설명 장을 섞어 쓴다.
+
+{exam}🎯 출제 예상 (슬라이드 구성 기준 추정 — 수업 후 조정)
+* '''계산·판정 예제 7 개'''(Ex 7.7 · 7.9 · 7.10 · 7.14 · 7.16 · 7.19–7.21)에 전부 '''풀이'''가 달려 있다. 앞 덱의 Kepler 처럼 '''계산 문제로 나오기 딱 좋은 모양'''이다. 특히 '''HLEN × 4''', '''offset × 8''', '''last byte = first + data − 1''', '''AND mask''' 네 동작은 손에 익혀 둔다.
+* 정의형: MTU, "who fragments / who reassembles", ICMP "reports, not corrects", error-reporting vs query, "network address = the first address"(p.56 Remember).
+* 11/3 녹음(56:43–59:00)에서 교수가 다시 짚은 IP 의 성질: "'''unreliable''' … '''best-effort delivery''' … packets may be '''corrupted, lost, out of order, or even delayed'''" → 그래서 header 에 checksum 은 있어도 recovery 는 없고, 오류는 ICMP 가 '''보고'''만 한다.{/exam}
+
+{analogy}🎭 '''택배 상자의 송장(header)과 물류센터(라우터).''' 송장에는 칸이 정해져 있다 — 송장 길이(HLEN), 상자 전체 무게(total length), "환승 최대 n 번"(TTL), 내용물 종류(protocol), 송장 오탈자 검사칸(checksum), 보내는 사람·받는 사람 주소. 상자가 트럭(MTU)에 안 들어가면 물류센터가 나눠 담고 송장을 복사해 "같은 주문번호(identification), 몇 번째 칸부터(offset), 뒤에 더 있음(M)"을 적는다. 받는 집만 상자를 다시 합친다. 물류센터는 주소의 '''앞자리(prefix)'''만 보고 가장 구체적으로 맞는 방향(longest match)으로 보낸다.{/analogy}
+
+[[anim:ipv4_header_anim|header 가 32-bit 행 다섯 줄 + options 로 한 줄씩 채워지는 것을 보고, 마지막에 HLEN × 4 = header, total length = header + data 가 되는 관계를 확인하라]]
+
+== 한눈에 보기 ==
+기호를 까먹었을 때 이 절만 다시 읽으면 된다.
+
+<pre class="ascii">
+ 0        4        8               16                              31
+ ┌────────┬────────┬───────────────┬───────────────────────────────┐
+ │ VER 4  │ [[HLEN]] 4 │ [[service type]] 8│ [[total length]] 16                     │  ← header + data (bytes)
+ ├────────┴────────┴───────────────┼─────┬─────────────────────────┤
+ │ [[identification field|identification]] 16                │flags│ [[fragmentation offset|fragmentation offset]] 13   │  ← fragmentation 3 형제
+ ├─────────────────┬───────────────┼─────┴─────────────────────────┤
+ │ [[TTL]] 8           │ [[protocol field|protocol]] 8    │ [[header checksum]] 16             │
+ ├─────────────────┴───────────────┴───────────────────────────────┤
+ │ source IP address 32                                            │
+ │ destination IP address 32                                       │
+ │ options + padding (0–40 bytes)                                  │
+ └─────────────────────────────────────────────────────────────────┘
+ header = HLEN × 4 bytes (5 → 20, 15 → 60)      data = total length − HLEN × 4
+ fragment 의 첫 byte = offset × 8               last byte = first + data − 1
+ M = 1 → 뒤에 더 있음 · D = 1 → 나누지 마라     TTL 0 → discard + ICMP time exceeded(type 11)
+ forwarding: dest AND mask == 행의 network address ? — 긴 mask 부터, 처음 맞는 행
+</pre>
+{|
+! 덩어리 || 핵심 수치·규칙 || 사전
+|-
+| Format (p.31–38) || header 20–60 B, datagram ≤ 65,535 B, HLEN 4-byte 단위, TTL ≈ 2 × max routers || [[IPv4 datagram format]] · [[HLEN]] · [[total length]] · [[TTL]] · [[protocol field]] · [[header checksum]] · [[service type]]
+|-
+| 예제 (p.39–41) || 01000010 → HLEN 2 → 8 B < 20 → discard · 0x0028 − 20 = 20 B · 9 번째 byte TTL 01, 10 번째 protocol 02 = IGMP || [[Example 7.7 버전 판정]] · [[Example 7.9 데이터 길이]] · [[Example 7.10 TTL과 protocol]]
+|-
+| Fragmentation (p.42–48) || MTU (Ethernet 1500 B), offset = 첫 byte ÷ 8, M/D flag, 재조립은 destination 만 || [[MTU]] · [[fragmentation]] · [[identification field]] · [[flags D와 M]] · [[fragmentation offset]] · [[reassembly]] · [[Example 7.14 fragment 위치 판정]] · [[Example 7.16 첫·마지막 바이트]]
+|-
+| ICMPv4 (p.49–55) || error-reporting(type 3·4·5·11·12) vs query(echo·timestamp) || [[ICMPv4]] · [[ICMP error-reporting message]] · [[time exceeded와 traceroute]] · [[echo request와 ping]]
+|-
+| Forwarding (p.56–68) || 표 = network address/mask → next hop → interface, 긴 mask 먼저 || [[forwarding table]] · [[next hop]] · [[Example 7.19–7.21 R1 포워딩]] · [[longest mask matching]] · [[address aggregation]] · [[hierarchical routing]]
+|}
+
+== p.31–32 — IPv4 Datagram Format ⭐⭐⭐ ==
+[[img:L13-32.png|p.32 Header format — 0·4·8·16·31 bit 눈금, VER 4 bits · HLEN 4 bits · Service type 8 bits · Total length 16 bits / Identification 16 bits · Flags 3 bits · Fragmentation offset 13 bits / Time-to-live 8 bits · Protocol 8 bits · Header checksum 16 bits / Source IP address (32 bits) / Destination IP address (32 bits) / Options + padding (0 to 40 bytes). Legend: VER version number, HLEN header length, byte 8 bits|large]]
+* "'''IP packets are called datagrams'''" — 길이가 변하는(variable length) '''header + payload'''. header 는 '''20–60 bytes''', datagram 전체는 '''20–65,535 bytes'''(p.31 그림).
+* header 는 '''4-byte(32-bit) 행'''으로 그린다(p.32). 고정 부분 5 행 = 20 bytes, 그 아래 options 0–40 bytes.
+* 이 header 에 "routing and delivery 에 필요한 것"이 다 들어 있다 — 라우터는 payload 를 안 보고 header 만 읽는다([[packetizing]]).
+자세한 필드별 설명은 [[IPv4 datagram format]].
+
+== p.33 — VER, HLEN, Service type ⭐⭐⭐ ==
+* '''VER''' (4 bits): version = '''4'''. 6 이면 IPv6 — 다른 처리.
+* '''[[HLEN]]''' (4 bits): header 길이를 '''4-byte word 단위'''로. "Sender stores (length ÷ 4); receiver multiplies by 4". '''5 → 20 bytes(min), 15 → 60 bytes(max)'''. 4 bits 로는 0–15 밖에 못 쓰니 60 까지 담으려고 4 로 나눠 적는 것이다.
+* '''[[service type]]''' (8 bits): 원래 TOS(type of service — 어떻게 다룰지), 지금은 '''DiffServ'''(differentiated services) 로 재정의.
+
+== p.34 — Total length ⭐⭐⭐ ==
+* '''[[total length]]''' (16 bits): '''header + data''', 단위 '''bytes'''. 최대 $2^{16} - 1 = 65{,}535$ bytes 이지만 실제 datagram 은 훨씬 작다(MTU 때문).
+* 위층이 준 data 길이: $\text{Data} = \text{Total length} - \text{HLEN} \times 4$ — 슬라이드에 굵게 박힌 식.
+{warn}'''단위가 셋 다 다르다.''' HLEN 은 '''4 bytes''', total length 는 '''1 byte''', fragmentation offset 은 '''8 bytes''' 단위. 계산 문제의 오답은 거의 다 여기서 나온다.{/warn}
+
+== p.35 — Identification · Flags · Offset, TTL ⭐⭐ ==
+[[img:L13-35.png|p.35 — 왼쪽: Identification, Flags, Fragmentation offset → used for fragmentation (details later). Time-to-live (TTL) 8 bits: limits the number of hops (routers) visited, set to ≈ 2 × max routers between any two hosts, each router decrements it by 1, reaches 0 → router discards the datagram. 오른쪽 header 표에서 2 행 전체와 TTL 칸이 노랗게 강조|medium]]
+* 2 행 세 필드는 [[fragmentation]] 용 — p.42–48 에서 자세히.
+* '''[[TTL]]''' (8 bits): 지나갈 수 있는 '''hop(라우터) 수 제한'''. 처음 값 ≈ 두 host 사이 최대 라우터 수 × 2. 라우터마다 '''1 씩 감소''', '''0 이 되면 라우터가 discard''' (→ ICMP time exceeded, p.54). 이름은 "time" 이지만 실제로는 '''hop count''' 다.
+
+== p.36 — Protocol ⭐⭐ ==
+[[img:L13-36.png|p.36 Protocol — Transport(노랑: … TCP UDP) 와 Network(ICMP IGMP OSPF) 의 프로토콜들이 점선으로 Datagram 의 Payload(빨간 점)에 모임 = multiplexing. 왼쪽 상자: Some protocol values — ICMP: 01, IGMP: 02, TCP: 06, UDP: 17, OSPF: 89|medium]]
+* '''[[protocol field|Protocol]]''' (8 bits): 이 datagram 의 payload 를 '''어느 위층 프로토콜'''이 쓰는가 — TCP, UDP, ICMP, IGMP …
+* destination 에서 IP 가 payload 를 '''어디로 올려 보낼지'''를 알려 준다 → '''multiplexing / demultiplexing'''.
+* 값: ICMP '''1''', IGMP '''2''', TCP '''6''', UDP '''17''', OSPF '''89''' (10 진수. 헥사로 쓰면 UDP = 0x11).
+{info}ICMP·IGMP·OSPF 는 network layer 프로토콜인데도 IP datagram 안에 실려 다닌다(그림에서 Network 칸 안). 그래서 protocol 번호가 필요하다 → [[ICMPv4]] p.49 "ICMP rides inside IP".{/info}
+
+== p.37–38 — Header checksum, 주소, Options, Payload ⭐⭐ ==
+* '''[[header checksum]]''' (16 bits): '''header 만''' 검사(payload 아님). '''매 라우터에서 다시 계산'''한다 — TTL 이 바뀌니까(fragmentation 이면 flags·offset·total length 도).
+* '''Source / Destination IP address''' (32 bits 각각): '''source host 에서 destination host 까지 바뀌지 않아야''' 한다(구판의 NAT 는 예외처럼 보였지만 개정판에서 삭제).
+* '''Options''': 최대 40 bytes, network testing·debugging 용. IP 소프트웨어는 처리할 수 있어야 한다.
+* '''Payload''': 위층에서 온 data — "'''the reason the datagram exists'''".
+
+== p.39 — Example 7.7: 01000010 → discard ⭐⭐⭐ ==
+[[img:L13-39.png|p.39 Example 7.7 — An IPv4 packet arrives with the first 8 bits 01000010. The receiver discards it. Why? Solution: 0100 = 4 → version correct, 0010 = 2 → header = 2 × 4 = 8 bytes, a header must be at least 20 bytes → corrupted. 아래: 초록 0100 "VER = 4 ✓", 빨강 0010 "HLEN = 2 → 8 B ✗"|medium]]
+<pre class="txt">
+01000010  →  0100 | 0010
+상위 4 bits 0100 = 4   → VER = 4 ✓ (IPv4 맞음)
+하위 4 bits 0010 = 2   → HLEN = 2 → header = 2 × 4 = '''8 bytes'''
+header 최소 = 20 bytes (HLEN ≥ 5) → 8 < 20 → 불가능
+∴ 전송 중 손상(corrupted) → '''discard'''
+</pre>
+→ [[Example 7.7 버전 판정]]
+
+== p.40 — Example 7.9: data 길이 ⭐⭐⭐ ==
+<pre class="txt">
+HLEN = 5              → header = 5 × 4 = 20 bytes
+total length = 0x0028 → 2 × 16 + 8 = 40 bytes
+data = 40 − 20        = '''20 bytes'''
+</pre>
+→ [[Example 7.9 데이터 길이]]
+
+== p.41 — Example 7.10: TTL 과 protocol ⭐⭐⭐ ==
+[[img:L13-41.png|p.41 Example 7.10 — First bytes (hex): 45 00 00 28 00 01 00 00 01 02 … How many hops can it travel? Which upper-layer protocol? TTL is the 9th byte (skip 8 bytes) → 01 → only 1 hop. Protocol is the 10th byte → 02 → IGMP. 아래 byte 1–10 상자, 9 TTL·10 Protocol 노랗게|medium]]
+<pre class="txt">
+byte:  1  2  3  4  5  6  7  8  9  10
+hex :  45 00 00 28 00 01 00 00 01 02
+       ├VER 4, HLEN 5 (20 B)
+          ├service type 0
+             └──┤total length 0x0028 = 40
+                   └──┤identification 1
+                         └──┤flags 000, offset 0
+                               └TTL = 1  → '''1 hop''' 만
+                                  └protocol = 2 → '''IGMP'''
+</pre>
+요령: 첫 행 4 bytes + 둘째 행 4 bytes = 8 bytes 를 건너뛰면 셋째 행 첫 byte 가 TTL, 그 다음이 protocol. → [[Example 7.10 TTL과 protocol]]
+
+[[sim:ipv4_header_decode]]
+
+== p.42 — MTU 와 Fragmentation ⭐⭐⭐ ==
+[[img:L13-42.png|p.42 — MTU (Maximum Transfer Unit): max payload size of a frame, set by the network's hardware and software, e.g., 1500 bytes for an Ethernet LAN. Datagram bigger than the MTU → divide it: fragmentation. 그림: IP datagram(Header|Payload) 이 Frame(Header | Frame Payload | Trailer) 의 payload 로 들어감, "MTU: Maximum size of frame payload"|medium]]
+* '''[[MTU]]''' = frame 이 실을 수 있는 '''payload 최대 크기'''. 네트워크의 hardware·software 가 정한다. Ethernet LAN 은 '''1500 bytes'''([[mid:프레임 길이 제한]]).
+* datagram 이 MTU 보다 크면 '''나눈다 = [[fragmentation]]'''. datagram 은 frame 의 payload 로 들어가야 하기 때문(캡슐화, [[mid:캡슐화]]).
+{tip}슬라이드는 MTU 를 "Maximum '''Transfer''' Unit" 이라 적었다(Forouzan 표기). 흔히 "Maximum Transmission Unit" 이라고도 하는데 같은 것이다. 시험 답안은 슬라이드대로.{/tip}
+
+== p.43 — Who fragments? Who reassembles? ⭐⭐⭐ ==
+[[img:L13-43.png|p.43 — Who fragments? The source host or any router on the path. Who reassembles? The destination host only. A datagram may be fragmented several times. Each fragment copies most of the header — Changed: flags, fragmentation offset, total length; Checksum is recalculated. 그림: Source → R1(fragments, 조각 2) → R2(fragments again, 조각 3) → Destination(reassembles)|medium]]
+* '''나누는 쪽''': source host 또는 경로 위 '''아무 라우터'''. '''여러 번''' 나뉠 수 있다.
+* '''합치는 쪽''': '''destination host 만'''([[reassembly]]). 중간 라우터는 합치지 않는다 — fragment 마다 경로가 달라질 수 있으니까([[datagram approach]]).
+* fragment 마다 header 대부분을 복사, '''바뀌는 것 = flags, fragmentation offset, total length''' + '''checksum 재계산'''. (L12 p.9 "header is copied to every fragment, with a few changes" 의 그 "few changes" 가 이것이다.)
+
+== p.44 — Identification, Flags ⭐⭐⭐ ==
+* '''[[identification field|Identification]]''' (16 bits): source 가 datagram 마다 붙이는 번호. 모든 fragment 에 '''그대로 복사''' → destination 이 "같은 datagram 조각끼리" 묶는다.
+* '''[[flags D와 M|Flags]]''' (3 bits) = '''− · D · M''': 첫 bit reserved, '''D'''(do not fragment) = 1 → 나누면 안 됨, '''M'''(more fragments) = 1 → 마지막 fragment 가 아님.
+
+== p.45–46 — Fragmentation offset ⭐⭐⭐ ==
+[[img:L13-46.png|p.46 — A fragment can be fragmented again. Offsets always refer to the original datagram. 위: Original → F1 F2 F3, 한 라우터에서 F2 가 F2.1 F2.2 로 다시 나뉘어 다른 경로로, Reassembled 에 F2.2 F2.1 F3 F1 도착. 아래: Original datagram(total 4020, id 14,567, M 0, offset 000, Bytes 0000–3999) → F1(1420, M 1, offset 000, 0000–1399), F2(1420, M 1, 175, 1400–2799), F3(1220, M 0, 350, 2800–3999); F2 → F2.1(820, M 1, 175, 1400–2199), F2.2(620, M 1, 275, 2200–2799)|large]]
+* '''[[fragmentation offset|Fragmentation offset]]''' (13 bits): "'''the relative position of this fragment with respect to the whole datagram'''"(p.45, rev) — 이 fragment 의 data 가 '''원래 datagram 전체에서 어디'''였나, '''8-byte 단위'''. $\text{Offset} = \frac{\text{first byte number}}{8}$. 예: bytes 1400–2799 → 1400 ÷ 8 = '''175''' (p.45).
+* 왜 8 로 나누나: offset 칸이 13 bits 뿐($2^{13} = 8192$ 가지)인데 total length 는 65,535 까지 → 8 로 나눠 적으면 $8191 \times 8 = 65{,}528$ 까지 표시 가능. 대신 '''마지막이 아닌 fragment 의 data 크기는 8 의 배수'''여야 한다.
+* p.46 표 (python 검산):
+{|
+! 조각 || bytes || offset || M || total length
+|-
+| 원래 || 0–3999 || 0 || 0 || 4,020
+|-
+| F1 || 0–1399 || 0 || 1 || 1,420
+|-
+| F2 || 1400–2799 || 175 || 1 || 1,420
+|-
+| F3 || 2800–3999 || 350 || '''0''' || 1,220
+|-
+| F2.1 || 1400–2199 || 175 || 1 || 820
+|-
+| F2.2 || 2200–2799 || '''275''' || '''1''' || 620
+|}
+{warn}'''F2.2 의 M 은 1 이다.''' F2.2 는 F2 를 나눈 조각 중 마지막이지만, 원래 datagram 의 마지막(F3)이 아니다. "다시 나눈 조각의 offset·M 도 '''원래 datagram 기준'''"이 p.46 의 핵심 문장 "Offsets always refer to the original datagram".{/warn}
+
+[[anim:fragmentation_anim|R1 이 datagram 을 F1·F2·F3 로, R2 가 F2 를 다시 F2.1·F2.2 로 나누는 동안 offset 이 원래 byte ÷ 8 로 매겨지는 것, destination 에서 뒤섞여 도착한 조각이 offset 순으로 합쳐지는 것을 보라]]
+
+== p.47 — Example 7.14: M = 1, offset = 0 ⭐⭐⭐ ==
+[[img:L13-47.png|p.47 Example 7.14 — A packet arrives with M = 1 and offset = 0. First, last, or middle? M = 1 → first or middle, Offset = 0 → it is the first fragment. Summary 표: M 0·offset 0 Not fragmented / 1·0 First / 1·>0 Middle / 0·>0 Last|medium]]
+{|
+! M bit || Offset || This packet is…
+|-
+| 0 || 0 || Not fragmented
+|-
+| 1 || 0 || '''First''' fragment
+|-
+| 1 || > 0 || Middle fragment
+|-
+| 0 || > 0 || Last fragment
+|}
+→ [[Example 7.14 fragment 위치 판정]]
+
+== p.48 — Example 7.16: first / last byte ⭐⭐⭐ ==
+<pre class="txt">
+offset = 100, HLEN = 5, total length = 100
+first byte = 100 × 8          = '''800'''
+data       = 100 − 5 × 4      = 80 bytes
+last byte  = 800 + 80 − 1     = '''879'''
+</pre>
+→ [[Example 7.16 첫·마지막 바이트]]
+
+[[sim:fragment_calc]]
+
+== p.49–50 — ICMPv4 ⭐⭐⭐ ==
+[[img:L13-49.png|p.49 ICMPv4 — IPv4 alone has two gaps: no error-reporting (or error-correcting) mechanism, no mechanism for host and management queries. ICMP fills them: companion of IP, also a network-layer protocol, messages are encapsulated in IP datagrams, not passed directly to the data-link layer. 그림 "ICMP rides inside IP": Frame header | IP header | ICMP message, IP datagram 범위 표시|medium]]
+* IPv4 혼자서는 '''두 구멍''': ① 오류 보고(또는 정정) 장치가 없다, ② host·관리용 질의 장치가 없다. → '''[[ICMPv4]]''' 가 메운다.
+* IP 의 '''companion''', 역시 network-layer 프로토콜. 그런데 메시지는 '''IP datagram 에 캡슐화'''되어 간다(data-link 로 바로 안 감) — [[protocol field|protocol]] 번호 1.
+* 두 종류(p.50): '''error-reporting messages'''(라우터·destination 이 IP 패킷을 처리하다 만난 문제 보고: destination unreachable, source quench, redirection, time exceeded, parameter problem) vs '''query messages'''(host·관리자가 정보를 얻음: echo request/reply, timestamp request/reply).
+
+== p.51 — General format of ICMP messages ⭐⭐ (개정판 신규) ==
+[[img:L13-51.png|p.51 ICMPv4: General format of ICMP messages — 두 형식 모두 Type 8 bits · Code 8 bits · Checksum 16 bits 로 시작. Error-reporting: Rest of the header / Data section. Query: Identifier · Sequence number / Data section. 아래 Type and code values — Error-reporting: 03 Destination unreachable (codes 0 to 15), 04 Source quench (only code 0), 05 Redirection (codes 0 to 3), 11 Time exceeded (codes 0 and 1), 12 Parameter problem (codes 0 and 1). Query: 08 and 00 Echo request and reply (only code 0), 13 and 14 Timestamp request and reply (only code 0)|large]]
+* 모든 ICMP 메시지의 첫 4 bytes = '''Type(8) · Code(8) · Checksum(16)'''. '''type''' = 무슨 메시지인가, '''code''' = 왜(세부 이유).
+* error-reporting 은 둘째 행이 "rest of the header", query 는 '''identifier · sequence number'''(request 와 reply 를 짝짓는 번호).
+* 값 표: error 3 · 4 · 5 · 11 · 12, query '''8/0 = echo request/reply''', '''13/14 = timestamp request/reply'''. echo '''reply 가 type 0''' 인 것이 헷갈리기 쉽다.
+
+== p.52–53 — Error reporting ⭐⭐⭐ ==
+[[img:L13-53.png|p.53 ICMP error-reporting messages at a glance — Type 3 Destination unreachable (codes 0–15 tell why; most common), 4 Source quench (congestion: a datagram was dropped → source should slow down), 5 Redirection (the source used the wrong router), 11 Time exceeded (TTL = 0, or not all fragments arrived in time), 12 Parameter problem (bad header field code 0, or an option is missing/unknown code 1)|large]]
+* "'''ICMP reports errors; it does not correct them'''" (p.52) — 오류 정정은 위층 몫.
+* 오류 메시지는 '''항상 original source''' 로 간다. 이유: datagram 에는 '''source 와 destination 주소밖에 없다''' — 경로 중간의 라우터 주소는 모른다.
+* 오류 메시지의 data section = '''원래 IP header + 그 data 의 첫 8 bytes'''(port 번호) — 개정판 설명: "'''i.e., information for finding the original packet having the error'''". source 가 어느 패킷·어느 프로세스의 오류인지 찾을 수 있게.
+* 표 다섯 줄 → [[ICMP error-reporting message]].
+
+== p.54–55 — Time exceeded, Parameter problem, Echo, Timestamp ⭐⭐ ==
+[[img:L13-54.png|p.54 — Time exceeded: TTL reaches 0, or not all fragments arrive within a time limit. Parameter problem: problem in the header (code 0), option missing or not understood (code 1). 그림 "TTL running out": Host —TTL=3→ R1 —TTL=2→ R2 —TTL=1→ R3 (TTL=0 discard), 빨간 점선 "Time exceeded (type 11)" 가 Host 로|medium]]
+* '''Time exceeded''' 두 경우: TTL 0(라우터가 보냄) / 정해진 시간 안에 fragment 가 다 안 옴(destination 이 보냄 — [[reassembly]] 타이머). → [[time exceeded와 traceroute]]
+* '''Echo request / reply''': 상대 host·router 가 살아 있나 — '''ping''', '''traceroute''' 가 쓴다. '''Timestamp request / reply''': round-trip time 측정, 두 시계 동기 확인(p.55). → [[echo request와 ping]]
+
+== p.56 — Forwarding of IP Packets ⭐⭐⭐ ==
+[[img:L13-56.png|p.56 Forwarding of IP Packets — Host or router looks up its forwarding table to find the next hop; Row: network address (with mask) → next-hop address → interface; Remember: network address = the first address in the network. 그림: Packet → Extract destination address → Search table → Interface number and next-hop address → To other modules or protocols. Forwarding table: Network address including mask (x0.y0.z0.t0/n0 …) | Next-hop IP address | Interface (m0, m1, m2)|large]]
+* host·라우터는 '''[[forwarding table]]''' 에서 '''[[next hop]]''' 을 찾는다. 한 행 = '''network address (with mask) → next-hop address → interface'''.
+* 개정판에 굵게 추가: "'''Remember: network address = the first address in the network'''" — 표의 왼쪽 칸에는 블록의 '''첫 주소'''([[network address]])를 적는다. 라우터 interface 에 붙은 주소(connection address)를 적으면 틀린다 → Ex 7.19 build-up(p.58–59)이 바로 이 구별이다.
+* L12 의 표(destination address → interface)가 classless 주소 시대에는 '''블록(network address/mask)''' 단위가 된 것. 그래서 비교가 "같은가" 가 아니라 "'''AND mask 했더니 같은가'''"다.
+
+== p.57–62 — Example 7.19–7.21: R1 의 forwarding table ⭐⭐⭐ ==
+[[img:L13-59.png|p.59 Example 7.19 (build-up 3 장 중 셋째) — R1 의 네 interface: m0 쪽 블록 180.70.65.128/25(빨간 점선 = Network address), R1 의 m0 주소 180.70.65.135/25(파란 점선 = Connection address); m1 201.4.16.0/22 / 201.4.16.2/22; m3 201.4.22.0/24 / 201.4.22.3/24; m2 180.70.65.192/26 / 180.70.65.194/26, 그 네트워크의 180.70.65.200/26 라우터 너머 Rest of the Internet|large]]
+[[img:L13-60.png|p.60 Solution — rows are sorted from the longest mask to the shortest: 180.70.65.192/26 — m2 / 180.70.65.128/25 — m0 / 201.4.22.0/24 — m3 / 201.4.16.0/22 — m1 / Default 180.70.65.200 m2. 왼쪽 그림은 Network address(빨간 점선)만 남김|large]]
+* p.57–59 는 같은 그림의 build-up: p.58 '''Network address'''(빨강) 표시 → p.59 '''Connection address'''(파랑, 라우터 interface 에 실제로 붙은 주소) 추가 → p.60 해답에서는 '''network address 만''' 표에 들어간다.
+* 표 만들기(7.19): 직접 연결된 네트워크 네 개 → next hop '''—'''(직접 전달), 나머지 전부는 '''Default → 180.70.65.200, m2'''. 행은 '''/26 → /25 → /24 → /22''' 순.
+* 비트로 보기(7.20, p.61): 각 행은 목적지 주소의 '''왼쪽 n bits''' 패턴이다. "'''Longer prefix = smaller range'''" — /26 은 64 개, /22 는 1,024 개 주소.
+* 찾기(7.21, p.62): 목적지 '''180.70.65.140'''.
+<pre class="txt">
+140 = 10001100
+/26: 180.70.65.140 AND 255.255.255.192 → 140 의 앞 2 bits 10 → '''180.70.65.128''' ≠ 180.70.65.192 ✗
+/25: 180.70.65.140 AND 255.255.255.128 → 140 의 앞 1 bit  1  → '''180.70.65.128''' = 180.70.65.128 ✓ → '''m0'''
+</pre>
+→ [[Example 7.19–7.21 R1 포워딩]] · [[longest mask matching]]
+
+[[sim:forward_lookup]]
+
+{warn}'''슬라이드 p.61 오타 주의''' (개정판에도 그대로): 셋째 행(201.4.22.0/24)의 셋째 octet 이 '''00011100'''(= 28)로 적혀 있지만 22 = '''00010110''' 이다(python 검산). 시험에서 비트로 쓰라면 00010110. 넷째 행 201.4.16.0/22 의 '''000100''' 은 맞다.{/warn}
+
+{warn}'''표에 connection address 를 쓰는 실수.''' m0 행에 R1 의 interface 주소 180.70.65.135 를 적으면 안 된다. 그 블록의 '''첫 주소''' 180.70.65.128 이 network address 다(p.56 Remember). 마찬가지로 next hop 은 직접 연결이면 '—', default 행만 다음 라우터 180.70.65.200.{/warn}
+
+== p.63–66 — Address Aggregation 과 longest match ⭐⭐⭐ ==
+[[img:L13-65.png|p.65 Address Aggregation (build-up p.63 그림만 → p.64 R1 표 → p.65 R2 표까지) — Organization 1–4 (140.24.7.0/26, .64/26, .128/26, .192/26) 가 R1 의 m0–m3 에, R1 m4 ↔ R2 m0. Forwarding table for R1: 네 /26 행 + 0.0.0.0/0 → address of R2 m4. Forwarding table for R2: 140.24.7.0/24 → m0 한 줄 + 0.0.0.0/0 → default router m1|large]]
+* '''[[address aggregation]]''': 네 조직의 /26 블록 네 개(각 64 주소)가 연속이라 '''/24 하나(256 주소)'''로 묶인다 → R2 는 '''한 행'''이면 된다. "Aggregation shrinks the table". 개정판은 이를 p.63(그림) → p.64(R1 표: 조직마다 한 행) → p.65(R2 표: 한 행) 로 나눠 보여 준다 — '''가까운 R1 은 자세히, 먼 R2 는 뭉뚱그려'''.
+[[img:L13-66.png|p.66 — What if one organization is not close to the others? Keep a separate row for it, and sort rows from the longest mask to the shortest; the router uses the longest match. Organization 4 (140.24.7.192/26) 가 R2 쪽으로 떨어져 있음. R2 표: 140.24.7.192/26 → m1, 140.24.7.0/24 → address of R1 m0, 0.0.0.0/0 → default router m2. R1 표: .0/26 m0, .64/26 m1, .128/26 m2, 0.0.0.0/0 default router m3|large]]
+* 한 조직이 '''멀리 떨어져 있으면'''(not close): 그 조직은 '''따로 한 행'''(140.24.7.192/26)을 두고, 나머지는 /24 로 묶는다. 두 행이 겹치므로(192/26 은 /24 안에 포함) '''긴 mask 부터 정렬, 라우터는 longest match''' 를 쓴다.
+<pre class="txt">
+R2 에 140.24.7.200 도착
+  /26: 140.24.7.200 AND 255.255.255.192 = 140.24.7.192 ✓ → m1 (Organization 4)  ← 여기서 끝
+  (/24: 140.24.7.0 도 맞지만 더 짧으니 고려 안 함)
+R2 에 140.24.7.42 도착
+  /26: 140.24.7.0 ≠ 140.24.7.192 ✗
+  /24: 140.24.7.0 = 140.24.7.0 ✓ → m0 (R1 쪽)
+</pre>
+→ [[longest mask matching]]
+
+== p.67–68 — Hierarchical routing (Example 7.22) ⭐⭐ ==
+[[img:L13-68.png|p.68 Example 7.22 Hierarchical routing with ISPs — Regional ISP 120.14.64.0/18 (Total 16,384) "To the rest of Internet" ← Local ISP 1 120.14.64.0/20 (4096: Small ISP1–8 각 /23 = 512, H 001–128 각 /30), Unused 120.14.80.0/20, Local ISP 2 120.14.96.0/20 (LOrg 01–04 각 /22), Local ISP 3 120.14.112.0/20 (SOrg 01–16 각 /24)|large]]
+* aggregation 은 '''gigantic forwarding table''' 문제를 푼다(p.67). Backbone·national ISP → local ISP → customer 의 계층.
+* local ISP 는 '''큰 블록 하나(prefix 하나)'''를 받아 고객에게 쪼개 준다. '''나머지 인터넷은 그 쪼갬을 모른다''' — 블록 전체가 local ISP 로 가고, 안에서 라우터가 고객을 찾는다.
+* Ex 7.22 수치 (python 검산): /18 = $2^{14}$ = '''16,384''' → /20 네 개(각 '''4,096''': 64.0, 80.0 unused, 96.0, 112.0) → Local ISP 1: /23 × 8 (각 512, 64.0 … 78.0) → 각 Small ISP: /30 × 128 가구(4 × 128 = 512) · Local ISP 2: /22 × 4 (1,024 × 4 = 4,096) · Local ISP 3: /24 × 16 (256 × 16 = 4,096).
+→ [[hierarchical routing]]
+
+== 공식 모음 ==
+{|
+! 무엇 || 식 || 예 (슬라이드)
+|-
+| header 길이 || $\text{header} = \text{HLEN} \times 4$ bytes (HLEN 5–15) || HLEN 2 → 8 B ✗ (Ex 7.7), 5 → 20 B
+|-
+| data 길이 || $\text{data} = \text{total length} - \text{HLEN} \times 4$ || 0x0028 − 20 = 20 B (Ex 7.9)
+|-
+| datagram 크기 || 20 ≤ total ≤ $2^{16}-1$ = 65,535 bytes || p.31
+|-
+| offset || $\text{offset} = \text{first byte} \div 8$ || 1400 ÷ 8 = 175, 2800 ÷ 8 = 350 (p.45–46)
+|-
+| fragment 범위 || first = offset × 8, last = first + (total − HLEN × 4) − 1 || 800–879 (Ex 7.16)
+|-
+| fragment 당 data || (MTU − header) 를 8 의 배수로 내림 || MTU 1,420 → 1,400 (p.46)
+|-
+| fragment 판정 || M·offset 2 × 2 표 || M 1, off 0 → first (Ex 7.14)
+|-
+| TTL || 라우터마다 −1, 0 → discard + ICMP type 11 || 01 → 1 hop (Ex 7.10)
+|-
+| ICMP type || error 3·4·5·11·12, query 8/0 echo, 13/14 timestamp || p.51
+|-
+| forwarding || dest AND mask == network address ? (긴 mask 부터) || 180.70.65.140 → /25 → m0 (Ex 7.21)
+|-
+| 블록 크기 || /n → $2^{32-n}$ 주소 || /26 64 · /24 256 · /20 4,096 · /18 16,384
+|}
+
+== 시험 대비 핵심 요약 ==
+# IP packet = '''datagram''' = header(20–60 B) + payload, 전체 20–65,535 B. header 는 '''32-bit 행''' 5 개 + options(0–40 B).
+# '''VER''' 4 bits(= 4), '''HLEN''' 4 bits = header ÷ '''4''' (5 → 20, 15 → 60), '''service type''' 8 bits(TOS → DiffServ), '''total length''' 16 bits = header + data(bytes). $\text{data} = \text{total} - \text{HLEN}\times4$.
+# '''TTL''' = hop 제한, 라우터마다 −1, 0 이면 discard. '''protocol''' = 위층(ICMP 1, IGMP 2, TCP 6, UDP 17, OSPF 89) — demultiplexing. '''header checksum''' = header 만, '''매 라우터 재계산'''. 주소는 끝까지 불변.
+# Ex 7.7: 01000010 → HLEN 2 → 8 B < 20 → '''discard(corrupted)'''. Ex 7.9: 40 − 20 = '''20 B'''. Ex 7.10: 9 번째 byte TTL 01 → '''1 hop''', 10 번째 02 → '''IGMP'''.
+# '''MTU''' = frame payload 최대(Ethernet 1500 B). 넘으면 fragmentation. '''source 나 아무 라우터'''가 나누고(여러 번 가능) '''destination 만''' 합친다.
+# fragment 마다 header 복사, '''flags · offset · total length''' 변경 + checksum 재계산. '''identification''' 은 그대로 복사(같은 datagram 표시).
+# Flags = − · '''D'''(1 → 나누지 마) · '''M'''(1 → 뒤에 더 있음). '''offset''' 13 bits = whole datagram 기준 relative position, '''8-byte 단위''', 다시 나눠도 '''원래 datagram 기준'''.
+# M/offset 판정: 0/0 not fragmented · 1/0 first · 1/>0 middle · 0/>0 last. Ex 7.16: 800–879.
+# '''ICMPv4''': IP 의 두 구멍(오류 보고, 질의)을 메움. IP datagram 안에 실림. 형식 = type·code·checksum. '''reports, does not correct''', 항상 '''original source''' 로(data = 원 header + 8 bytes). error-reporting(3 destination unreachable · 4 source quench · 5 redirection · 11 time exceeded · 12 parameter problem) vs query(8/0 echo, 13/14 timestamp).
+# '''Forwarding''': 표 = network address/mask → next hop → interface. '''network address = 블록의 첫 주소'''(connection address 아님). '''dest AND mask''' 를 '''긴 mask 부터''' 비교, 처음 맞는 행 = '''longest match''', 없으면 default. Ex 7.21: 180.70.65.140 → '''m0'''.
+# '''Aggregation''': 연속 블록을 하나로 → 표 축소(R2 한 행). 떨어진 조직은 따로 한 행 + longest match. '''Hierarchical routing''': ISP 가 큰 블록을 받아 쪼개 주고, 밖에서는 prefix 하나로 보인다(Ex 7.22: /18 = 16,384 → /20 × 4).
+
+== 관련 문서 ==
+* Format: [[IPv4 datagram format]] · [[HLEN]] · [[service type]] · [[total length]] · [[TTL]] · [[protocol field]] · [[header checksum]]
+* 예제: [[Example 7.7 버전 판정]] · [[Example 7.9 데이터 길이]] · [[Example 7.10 TTL과 protocol]] · [[Example 7.14 fragment 위치 판정]] · [[Example 7.16 첫·마지막 바이트]] · [[Example 7.19–7.21 R1 포워딩]]
+* Fragmentation: [[MTU]] · [[fragmentation]] · [[identification field]] · [[flags D와 M]] · [[fragmentation offset]] · [[reassembly]]
+* ICMPv4: [[ICMPv4]] · [[ICMP error-reporting message]] · [[time exceeded와 traceroute]] · [[echo request와 ping]] · [[ICMP]]
+* Forwarding: [[forwarding table]] · [[next hop]] · [[longest mask matching]] · [[address aggregation]] · [[hierarchical routing]] · [[forwarding]]
+* 앞 문서: [[CH07 IPv4 주소]] · [[IPv4 address]] · [[CIDR]] · [[address mask]] · [[network address]] · [[CH07 네트워크 계층 서비스와 성능]] · [[best effort]] · [[datagram]]
+* 중간고사 위키: [[mid:IP]] · [[mid:캡슐화]] · [[mid:프레임 길이 제한]] · [[mid:checksum]] · [[mid:TCP]] · [[mid:UDP]] · [[mid:fragmentation]]

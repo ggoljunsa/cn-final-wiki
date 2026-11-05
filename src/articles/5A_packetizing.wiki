@@ -30,6 +30,8 @@ category: 5강 네트워크 계층, 용어
 
 {analogy}🎭 '''이삿짐 상자.''' 보내는 집에서 상자에 짐을 넣고 송장을 붙인다(encapsulate). 중간 물류센터는 송장만 스캔하고 상자는 '''열지 않는다'''. 받는 집에서 상자를 연다(decapsulate). 단, 상자가 너무 커서 트럭에 안 들어가면 물류센터가 '''두 상자로 나눠 담고 송장을 복사해 각각 붙인다'''(fragmentation).{/analogy}
 
+{tip}'''필기 메모: 제목 "Packetizing" 의 "etizing" 동그라미 (p.8), "reads the header only" 의 header 동그라미 + Router 에서 이어진 화살표 (p.9)''' — packet + -ize = "패킷으로 만들다" 라는 동사형이라는 표시로 읽힌다. p.9 그림에서 Router 는 payload 가 회색(손대지 않음)이고 '''header 만 읽는다''' — 목적지 주소를 보고 다음 hop 을 고르기 위해서다. 그래서 "routers do not decapsulate" 다. 예외는 [[fragmentation]].{/tip}
+
 == 관련 문서 ==
 * [[fragmentation]] · [[datagram]] · [[segment·datagram·frame]] · [[IP가 제공하는 서비스]] · [[forwarding]]
 * 중간고사: [[mid:캡슐화]] · [[mid:PDU]]

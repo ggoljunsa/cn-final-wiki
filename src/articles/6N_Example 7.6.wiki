@@ -1,0 +1,40 @@
+key: Example 7.6
+title: Example 7.6 — ISP 가 /26 네 개를 160.70.14.0/24 하나로 광고
+category: 6강 IPv4 주소, 용어
+---
+'''Example 7.6''' 은 [[address aggregation]] 의 구체 예다. ISP 아래 네 조직이 각각 /26 (64 주소)를 받았고, ISP 는 바깥에 '''160.70.14.0/24''' 하나만 알린다. 이 범위로 가는 패킷은 모두 ISP 로 오고, ISP 가 안에서 맞는 조직으로 보낸다. L13 p.28.
+
+{def}"The ISP combines 4 blocks into '''one block''' and advertises only that block. Packets for this block go to the ISP; the ISP forwards them to the right organization." (p.28)
+그림: "All packets with destination addresses 160.70.14.0/24 to 160.70.14.255/24 are sent to ISP."{/def}
+
+[[img:L13-28.png|p.28 Block 1 .0/26–.63/26 · Block 2 .64/26–.127/26 · Block 3 .128/26–.191/26 · Block 4 .192/26–.255/26 → ISP (Larger block) → Internet|large]]
+
+== 표 ==
+{|
+! Block || 범위 || 25–26 번째 비트
+|-
+| 1 || 160.70.14.0 – .63 /26 || 00
+|-
+| 2 || 160.70.14.64 – .127 /26 || 01
+|-
+| 3 || 160.70.14.128 – .191 /26 || 10
+|-
+| 4 || 160.70.14.192 – .255 /26 || 11
+|-
+| 합친 것 || '''160.70.14.0 – .255 /24''' || (suffix 로)
+|}
+<pre class="txt">
+목적지 160.70.14.130 인 패킷:
+  바깥 라우터: 130 AND /24 mask → 160.70.14.0/24 일치 → ISP 로
+  ISP       : 130 = 10000010 AND /26 mask(11000000) → 10000000 = 128 → Block 3 으로
+</pre>
+
+[[anim:aggregation_anim|패킷 .14.130 이 바깥에서는 /24 만으로 ISP 에 오고, ISP 안에서 /26 으로 Block 3 을 찾는 두 단계를 보라]]
+
+{analogy}🎭 회사 대표번호 하나(/24)로 전화를 받고, 교환원(ISP)이 내선(/26)으로 돌려 주는 것.{/analogy}
+
+{quiz}목적지가 160.70.14.70 이면 ISP 는 어느 block 으로 보내는가?{/quiz}
+{answer}70 = 01000110 → 앞 2 비트 01 → '''Block 2''' (.64–.127).{/answer}
+
+== 관련 문서 ==
+* [[address aggregation]] · [[ISP]] · [[network address]] · [[address mask]] · [[subnetting]]

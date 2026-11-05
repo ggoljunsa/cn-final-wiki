@@ -1,0 +1,45 @@
+key: ICMP error-reporting message
+title: ICMP error-reporting messages — type 3·4·5·11·12
+category: 7강 IPv4 데이터그램, 용어
+---
+'''ICMP error-reporting message''' 는 라우터나 destination host 가 IP 패킷을 처리하다 만난 문제를 '''original source 에게 보고'''하는 ICMPv4 메시지다. 다섯 가지(type 3, 4, 5, 11, 12). '''보고만 하고 고치지 않는다.''' L13 p.52–54.
+
+{def}"ICMP '''reports errors; it does not correct them'''. Error messages '''always go back to the original source''' — the datagram carries only the source and destination addresses. Data section: '''original IP header + first 8 bytes of its data''' (port numbers), i.e., information for finding the original packet having the error." (p.52, rev)
+ICMP 는 오류를 보고할 뿐 정정하지 않는다. 오류 메시지는 항상 원래 source 로 간다(datagram 에는 source·destination 주소만 있으므로). data 부분에는 원래 IP header 와 그 data 의 첫 8 bytes 를 담아 원래 패킷을 찾을 수 있게 한다.{/def}
+
+[[img:L13-53.png|p.53 ICMP error-reporting messages at a glance — 3 Destination unreachable / 4 Source quench / 5 Redirection / 11 Time exceeded / 12 Parameter problem 과 "Sent when…"|large]]
+
+== 다섯 메시지 ==
+{|
+! Type || Message || Sent when… (p.53) || 기억법
+|-
+| 3 || Destination unreachable || 목적지에 갈 수 없음 (code 0–15 가 이유), 가장 흔함 || "못 가"
+|-
+| 4 || Source quench || congestion: datagram 이 버려짐 → source 는 '''slow down''' || "천천히" (quench = 끄다)
+|-
+| 5 || Redirection || source 가 '''wrong router''' 를 씀 || "저쪽 라우터로"
+|-
+| 11 || Time exceeded || '''TTL = 0''', 또는 fragment 가 시간 안에 다 안 옴 || "시간(수명) 끝"
+|-
+| 12 || Parameter problem || header 필드 이상(code 0), option 누락·미인식(code 1) || "header 이상"
+|}
+
+== 왜 항상 original source 로? ==
+<pre class="txt">
+Source ─→ R1 ─→ R2 ✗ (error! datagram dropped)
+   ↑                │
+   └──── ICMP error message ───┘   (p.52 그림)
+datagram header 에 있는 주소 = source, destination 둘뿐
+→ R2 는 R1 이 누군지 모른다 → 보고할 수 있는 곳은 source 뿐
+</pre>
+* data section 에 '''원래 header + 첫 8 bytes''': 첫 8 bytes 에 TCP/UDP '''port 번호'''가 있어 source 가 어느 프로세스(연결)의 패킷인지 찾는다.
+
+{warn}source quench(4)는 congestion 에 대한 반응이지만, L12 의 결론 "IP 는 congestion control 을 하지 않는다(routers only drop packets; TCP slows down)" 와 모순이 아니다 — ICMP 는 '''알릴''' 뿐이고 속도를 줄이는 건 source 몫이다.{/warn}
+
+{analogy}🎭 '''반송 사유가 체크된 반송 봉투.''' "수취인 불명(3)", "물량 폭주로 지연(4)", "다른 지점으로 보내세요(5)", "보관 기간 만료(11)", "주소 양식 오류(12)". 원래 봉투 겉면(header)과 첫 줄(8 bytes)을 동봉해 보낸 사람이 어떤 편지였는지 알게 한다.{/analogy}
+
+{quiz}ICMP error message 가 중간 라우터가 아니라 original source 로 가는 이유와, data section 에 원래 datagram 의 첫 8 bytes 를 넣는 이유를 쓰시오.{/quiz}
+{answer}IP datagram 에는 source 와 destination 주소만 있고 경로상의 라우터 주소는 없으므로 보고할 수 있는 곳은 source 뿐이다. 첫 8 bytes 에는 transport header 의 port 번호가 있어 source 가 오류 난 원래 패킷(과 그 프로세스)을 찾을 수 있다.{/answer}
+
+== 관련 문서 ==
+* [[ICMPv4]] · [[time exceeded와 traceroute]] · [[TTL]] · [[congestion control]] · [[IP의 error control]]

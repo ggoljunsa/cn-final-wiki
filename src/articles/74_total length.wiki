@@ -1,0 +1,30 @@
+key: total length
+title: Total length — header + data 의 전체 바이트 수
+category: 7강 IPv4 데이터그램, 용어
+---
+'''Total length''' 는 IPv4 header 첫 행 오른쪽 16 bits 로, '''header + data''' 전체 길이를 '''bytes''' 로 적는다. 최대 65,535 bytes. 위층이 준 data 의 길이는 여기서 header 를 빼서 구한다. L13 p.34.
+
+{def}"Total length (16 bits): '''Header + data, in bytes'''. Up to 65,535 bytes; real datagrams are much smaller. Data length from the upper layer: '''Data = Total length − HLEN × 4'''." (p.34)
+Total length 는 header 와 data 를 합한 길이(bytes)다. 최대 65,535 bytes 이고, data 길이 = total length − HLEN × 4.{/def}
+
+[[img:L13-34.png|p.34 — Total length (16 bits): Header + data, in bytes, up to 65,535 bytes; Data = Total length − HLEN × 4 (굵게). 오른쪽 표에서 HLEN 과 Total length 칸이 함께 강조|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''total''' = header 까지 '''전부'''. "data 길이" 가 아니다. 그래서 data 를 구하려면 header 를 빼야 하고, header 는 HLEN × 4 다.
+* 16 bits 라서 최대 $2^{16} - 1 = 65{,}535$. 실제로는 [[MTU]](Ethernet 1500 B) 때문에 훨씬 작다.
+
+<pre class="txt">
+$\text{Data} = \text{Total length} - \text{HLEN} \times 4$
+Ex 7.9 : HLEN 5, total 0x0028
+         0x0028 = 2×16 + 8 = 40
+         data   = 40 − 5×4 = '''20 bytes'''
+</pre>
+
+{info}fragmentation 이 일어나면 total length 는 '''fragment 마다 새로''' 적힌다(그 fragment 의 header + 그 fragment 의 data). p.46: 원래 4,020 → F1 1,420 / F2 1,420 / F3 1,220. 그래서 "fragment 가 바꾸는 header 필드" 에 total length 가 들어간다(p.43).{/info}
+
+{analogy}🎭 '''택배 상자 총무게.''' 상자 무게(header)까지 포함한 저울 숫자다. 내용물 무게가 궁금하면 빈 상자 무게를 빼야 한다. 빈 상자 무게는 상자 옆에 "4 kg 단위로 5 칸"(HLEN) 이라 적혀 있다.{/analogy}
+
+{warn}total length 와 HLEN 의 '''단위가 다르다'''(1 byte vs 4 bytes). "40 − 5 = 35" 라고 빼면 틀린다.{/warn}
+
+== 관련 문서 ==
+* [[HLEN]] · [[IPv4 datagram format]] · [[Example 7.9 데이터 길이]] · [[Example 7.16 첫·마지막 바이트]] · [[fragmentation]]

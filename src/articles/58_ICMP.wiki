@@ -28,6 +28,8 @@ datagram 도착
 {quiz}IP 의 error control 이 "partly" 라고 하는 이유를 checksum 과 ICMP 로 설명하시오.{/quiz}
 {answer}checksum 이 '''header 만''' 덮어 payload 오류는 검사하지 않고, 오류를 '''검출만''' 한다. 오류(버려진 datagram, bad header)는 ICMP 가 '''보고'''하지만, '''recovery(복구·재전송)는 하지 않는다'''.{/answer}
 
+{info}L13 에서 자세히: [[ICMPv4]] · [[ICMP error-reporting message]] · [[echo request와 ping]] · [[time exceeded와 traceroute]]{/info}
+
 == 관련 문서 ==
 * [[IP의 error control]] · [[보조 프로토콜]] · [[IP]] · [[best effort]] · [[IP가 제공하는 서비스]]
 * 중간고사: [[mid:checksum]]

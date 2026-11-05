@@ -1,0 +1,25 @@
+key: DHCP
+title: DHCP (Dynamic Host Configuration Protocol) — host 에 IP 주소를 자동으로 (어느 계층?)
+category: 6강 IPv4 주소, 용어
+---
+'''DHCP''' 는 host 가 network 에 붙을 때 '''IP 주소(와 설정)를 자동으로 받게''' 해 주는 프로토콜이다. L12 p.5 는 network layer 의 auxiliary protocol 로 들었고, L13 p.29 그림은 '''application layer''' 칸에 그려 두었다. 이번 강의(주소 할당)의 맨 마지막 고리 — [[ICANN]] → [[ISP]] → 조직 → '''DHCP 로 host 하나하나에''' — 라서 여기 둔다.
+
+{def}"Auxiliary protocols: ICMP, IGMP, '''DHCP''', ARP" (L12 p.5)
+p.29 그림: Application layer = SMTP, FTP, TELNET, DNS, SNMP, …, '''DHCP'''{/def}
+
+[[img:L13-29.png|p.29 Application layer 칸 오른쪽 끝의 DHCP|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''D'''ynamic '''H'''ost '''C'''onfiguration '''P'''rotocol — host 의 설정(configuration)을 '''동적으로'''(접속할 때마다 자동으로) 해 준다. 와이파이에 붙으면 주소가 저절로 생기는 것이 DHCP 덕분.
+* (Forouzan 보충 — 슬라이드에 없음) DHCP 서버가 자기 block 에서 빈 주소를 '''일정 기간 빌려준다(lease)'''. 주소와 함께 mask, 기본 라우터 주소도 준다.
+
+{tip}'''DHCP 는 어느 계층인가?''' 두 슬라이드가 다르게 보인다. DHCP '''메시지 자체'''는 UDP 위에서 오가는 application layer 프로토콜이지만(p.29 그림), 하는 일이 '''IP 주소 설정'''이라 network layer 를 돕는 보조 프로토콜로도 분류된다(L12 p.5). 시험에서 "network layer 보조 프로토콜" 을 물으면 p.29 기준 '''ICMP · IGMP · ARP''' 를 쓰고, L12 p.5 목록대로 DHCP 를 덧붙여도 틀리지 않다.{/tip}
+
+{analogy}🎭 DHCP 는 '''호텔 프런트'''다. 체크인(접속)하면 빈 방 번호(IP 주소)와 와이파이 비밀번호(설정)를 주고, 체크아웃하면 방 번호를 회수해 다음 손님에게 준다.{/analogy}
+
+{quiz}DHCP 가 "dynamic" 인 이유를 한 줄로.{/quiz}
+{answer}host 가 접속할 때마다 주소를 '''자동으로 빌려주고''' 쓰지 않으면 회수해 다시 쓰기 때문(고정 할당이 아님).{/answer}
+
+== 관련 문서 ==
+* [[보조 프로토콜]] · [[IGMP]] · [[ICMP]] · [[block allocation]] · [[IPv4 address]]
+* 중간고사: [[mid:UDP]] · [[mid:TCP/IP 프로토콜 스위트]]

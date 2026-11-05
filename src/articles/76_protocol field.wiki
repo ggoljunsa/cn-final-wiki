@@ -1,0 +1,36 @@
+key: protocol field
+title: Protocol 필드 — payload 를 어느 위층 프로토콜로 올릴까
+category: 7강 IPv4 데이터그램, 용어
+---
+'''Protocol 필드'''는 IPv4 header 셋째 행 둘째 byte(8 bits)로, 이 datagram 의 payload 를 '''어느 위층 프로토콜'''이 쓰는지 적는다. destination 의 IP 는 이 값을 보고 payload 를 TCP·UDP·ICMP … 중 어디로 넘길지 정한다. L13 p.36.
+
+{def}"Protocol (8 bits): '''which upper-layer protocol uses this datagram''' — e.g., TCP, UDP, ICMP, IGMP. At the destination, it tells IP where to deliver the payload: '''multiplexing / demultiplexing'''." (p.36)
+Protocol 필드는 이 datagram 을 쓰는 상위 프로토콜을 나타내고, destination 에서 IP 가 payload 를 어디로 전달할지 알려 준다.{/def}
+
+[[img:L13-36.png|p.36 — Transport 층 TCP·UDP, Network 층 ICMP·IGMP·OSPF 가 점선으로 Datagram payload 의 한 점에 모임. Some protocol values: ICMP 01, IGMP 02, TCP 06, UDP 17, OSPF 89|medium]]
+
+== 값 표 (p.36) ==
+{|
+! 프로토콜 || 값 (10 진) || hex || 층
+|-
+| ICMP || 1 || 0x01 || network
+|-
+| IGMP || 2 || 0x02 || network
+|-
+| TCP || 6 || 0x06 || transport
+|-
+| UDP || 17 || 0x11 || transport
+|-
+| OSPF || 89 || 0x59 || network (routing)
+|}
+{warn}hex 덤프 문제에서 UDP 는 '''11''' 로 보인다(17 = 0x11). "11 = 11 번 프로토콜" 로 읽지 말 것. 슬라이드 표의 값은 10 진수다.{/warn}
+
+== 이름에서 개념 끌어내기 ==
+* 여러 위층 프로토콜이 '''하나의 IP''' 를 같이 쓴다 = multiplexing. 받는 쪽에서 다시 갈라 준다 = demultiplexing. 갈라 줄 때 필요한 '''꼬리표'''가 protocol 번호다.
+* ICMP·IGMP·OSPF 는 network layer 프로토콜인데도 번호가 있다 → 이들은 '''IP datagram 안에 실려''' 다닌다는 증거([[ICMPv4]] "ICMP rides inside IP").
+
+{analogy}🎭 '''회사 우편물의 "부서명" 칸.''' 우편실(IP)은 봉투를 열지 않고 부서명(protocol)만 보고 영업부(TCP)·총무부(UDP)·감사실(ICMP)로 나눠 보낸다.{/analogy}
+
+== 관련 문서 ==
+* [[IPv4 datagram format]] · [[Example 7.10 TTL과 protocol]] · [[ICMPv4]] · [[보조 프로토콜]]
+* 중간고사: [[mid:TCP]] · [[mid:UDP]] · [[mid:multiplexing]]

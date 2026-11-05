@@ -1,0 +1,33 @@
+key: TTL
+title: TTL (Time-to-live) — 지나갈 수 있는 hop 수
+category: 7강 IPv4 데이터그램, 용어
+---
+'''TTL''' (Time-to-live) 은 IPv4 header 셋째 행 첫 8 bits 로, datagram 이 '''지나갈 수 있는 라우터(hop) 수'''를 제한한다. 라우터마다 1 씩 줄고 0 이 되면 버려진다. L13 p.35.
+
+{def}"Time-to-live (TTL) (8 bits): '''Limits the number of hops (routers) visited'''. Set to ≈ 2 × max routers between any two hosts. '''Each router decrements it by 1'''. '''Reaches 0 → router discards the datagram'''." (p.35)
+TTL 은 datagram 이 거칠 수 있는 hop 수를 제한한다. 처음엔 두 host 사이 최대 라우터 수의 약 2 배로 정하고, 라우터마다 1 감소, 0 이 되면 라우터가 버린다.{/def}
+
+[[img:L13-35.png|p.35 — Identification·Flags·Fragmentation offset(2 행) 과 TTL 칸 강조. TTL: limits the number of hops, ≈ 2 × max routers, each router decrements by 1, reaches 0 → discards|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''time to live''' = "살 수 있는 시간". 원래 설계는 '''초 단위 수명'''이었지만 실제로는 '''hop 마다 1''' 씩 깎는 '''hop count''' 로 쓰인다. 이름의 "time" 에 속지 말 것.
+* 왜 필요한가: [[forwarding table]] 이 잘못되면 datagram 이 라우터 사이를 '''영원히 맴돌 수 있다'''(routing loop). TTL 이 0 이 되면 버려지므로 망에 유령 패킷이 쌓이지 않는다.
+
+[[img:L13-54.png|p.54 TTL running out — Host —TTL=3→ R1 —TTL=2→ R2 —TTL=1→ R3: TTL=0 discard, Time exceeded (type 11) 가 Host 로|medium]]
+
+<pre class="txt">
+Host 가 TTL=3 으로 보냄
+R1: 3 → 2  (forward)
+R2: 2 → 1  (forward)
+R3: 1 → 0  → '''discard''' + ICMP time exceeded(type 11) 를 source 로
+Ex 7.10: 9 번째 byte 01 → TTL 1 → 첫 라우터에서 0 → '''only 1 hop'''
+</pre>
+
+{info}TTL 이 매 라우터에서 바뀌므로 [[header checksum]] 도 '''매 라우터에서 다시 계산'''한다(p.37 "e.g., TTL changes").{/info}
+
+{analogy}🎭 '''환승 횟수 제한이 찍힌 교통카드.''' 환승할 때마다 1 회씩 차감되고 0 회가 되면 개찰구(라우터)가 막는다. 길을 잃고 같은 역을 빙빙 도는 승객도 결국 멈춘다. 막힌 승객에게는 "환승 횟수 초과" 안내문(ICMP time exceeded)이 출발지로 날아간다.{/analogy}
+
+[[sim:ipv4_header_decode]]
+
+== 관련 문서 ==
+* [[IPv4 datagram format]] · [[time exceeded와 traceroute]] · [[ICMP error-reporting message]] · [[header checksum]] · [[Example 7.10 TTL과 protocol]]

@@ -32,5 +32,7 @@ category: 4강 위성, 용어
 {quiz}슬라이드의 satellite network 정의에서 "including satellites" 가 뜻하는 바는?{/quiz}
 {answer}위성망의 node 는 위성'''만'''이 아니라 지상의 user terminal·gateway 등도 포함한다는 것. "A combination of nodes, including satellites, that provides communication from one point on the Earth to another."{/answer}
 
+{tip}'''필기 메모: "지상국"''' (p.3, Starlink Gateway 옆) — Starlink Gateway 안테나가 곧 '''지상국(ground station)''' 이다. Ground segment 의 이 지상국이 위성의 신호를 받아 Internet 으로 넘기는 '''문''' 역할을 한다.{/tip}
+
 == 관련 문서 ==
 * [[CH05 Satellite Network]] · [[satellite network]] · [[ISL]] · [[Starlink]] · [[UML과 GWL]]

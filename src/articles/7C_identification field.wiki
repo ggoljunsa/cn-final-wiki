@@ -1,0 +1,22 @@
+key: identification field
+title: Identification (16 bits) — 같은 datagram 의 fragment 끼리 묶는 번호
+category: 7강 IPv4 데이터그램, 용어
+---
+'''Identification''' 은 IPv4 header 둘째 행 왼쪽 16 bits 로, source 가 '''datagram 마다 붙이는 번호'''다. fragmentation 이 일어나면 '''모든 fragment 에 그대로 복사'''되어, destination 이 어느 조각들이 한 datagram 이었는지 안다. L13 p.44.
+
+{def}"Identification (16 bits): '''A number for each datagram sent by the source'''. '''Copied into all fragments''' → destination knows which fragments belong together." (p.44)
+Identification 은 source 가 보내는 datagram 마다 붙는 번호이고, 모든 fragment 에 복사되어 destination 이 같은 datagram 의 조각을 알아본다.{/def}
+
+[[img:L13-44.png|p.44 — Identification (16 bits) / Flags (3 bits): 1st bit reserved, D (do not fragment), M (more fragments). 오른쪽 Flags field 그림: − | D | M (reserved / do not fragment / more fragments)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''identify''' = 신원 확인. fragment 는 서로 다른 경로로, 다른 datagram 의 조각들과 '''섞여''' 도착한다. "너는 누구네 조각이냐" 를 판별하는 열쇠가 identification(+ source address).
+* fragment 가 바꾸는 필드(flags · offset · total length)와 달리 identification 은 '''절대 안 바뀐다'''. 바뀌면 재조립이 불가능.
+* p.46 그림 값: '''14,567''' — 원래 datagram, F1, F2, F3, F2.1, F2.2 모두 14,567.
+
+{analogy}🎭 '''이삿짐 상자에 쓴 "김씨네 302 호".''' 트럭 여러 대에 나눠 실어 다른 길로 와도, 같은 표시가 붙은 상자끼리 모아 한 집 살림을 복원한다.{/analogy}
+
+[[anim:fragmentation_anim|모든 조각이 id 14,567 을 그대로 복사해 가지고 가는 것을 확인하라]]
+
+== 관련 문서 ==
+* [[fragmentation]] · [[flags D와 M]] · [[fragmentation offset]] · [[reassembly]] · [[IPv4 datagram format]]

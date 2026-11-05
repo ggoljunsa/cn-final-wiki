@@ -1,0 +1,40 @@
+key: network address
+title: Network address — block 의 first address, 라우터가 목적지 network 를 찾는 열쇠
+category: 6강 IPv4 주소, 용어
+---
+'''Network address''' 는 block 의 '''first address'''(suffix 가 전부 0)다. block 전체를 대표하는 이름이라, 라우터는 패킷의 destination address 에서 network address 를 뽑아 [[forwarding table]] 을 찾는다. L13 p.20.
+
+{def}"The '''first address (network address)''' identifies the block; routers use it to reach the destination network." (p.20)
+first address 가 곧 network address 이며 block 을 식별한다. 라우터는 이것으로 목적지 network 에 도달한다.{/def}
+
+[[img:L13-20.png|p.20 Router 에 Network 1 … m. Routing Process: Destination address → Find network address → Forwarding table (Network address → Interface) → Interface number|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''network''' 의 '''address''' — 개별 노드가 아니라 '''network(block) 전체'''의 주소. suffix 가 0 이라 "그 동네의 대표 번지".
+
+== 라우터 안에서 ==
+<pre class="txt">
+Destination address (예: 167.199.170.82)
+   │  mask(/27) 와 AND
+   ▼
+Network address 167.199.170.64         ← "Find network address"
+   │  forwarding table 조회
+   ▼
+| Network address  | Interface |
+| b1.c1.d1.e1      |    1      |
+| 167.199.170.64   |    2      |  ← 일치
+   ▼
+interface 2 로 내보냄
+</pre>
+* 교수(36:43–37:27): "router uses the first address to reach the destination network … destination address comes to the router, then it finds network address to find the interface".
+* 그래서 [[address mask]] 의 AND 가 "implementable in a router" 하다는 것. 실제 forwarding 에서 mask 가 여러 개일 때는 [[longest mask matching]] (11/5).
+* L12 의 [[forwarding]] = "forwarding value 로 table 조회" 에서 forwarding value 가 바로 이 network address 다.
+
+{analogy}🎭 택배 분류 센터는 받는 사람 집 주소 전체가 아니라 '''우편번호(network address)''' 만 보고 어느 트럭(interface)에 실을지 정한다. 집 앞 배달은 동네 집배원(그 network 안)의 몫이다.{/analogy}
+
+{quiz}network address 와 first address 의 관계, 그리고 라우터가 그것을 구하는 연산은?{/quiz}
+{answer}같은 것이다(p.20 "first address (network address)"). 라우터는 destination address '''AND''' mask 로 구한다.{/answer}
+
+== 관련 문서 ==
+* [[block의 세 가지 정보]] · [[address mask]] · [[forwarding table]] · [[forwarding]] · [[routing]] · [[longest mask matching]] · [[CH07 IPv4 주소]]
+* 중간고사: [[mid:라우터]]

@@ -1,0 +1,30 @@
+key: MTU
+title: MTU (Maximum Transfer Unit) — frame 이 실을 수 있는 payload 최대 크기
+category: 7강 IPv4 데이터그램, 용어
+---
+'''MTU''' 는 한 네트워크의 frame 이 실을 수 있는 '''payload 의 최대 크기'''다. IP datagram 은 frame 의 payload 로 들어가야 하므로, datagram 이 MTU 보다 크면 [[fragmentation]] 이 필요하다. L13 p.42.
+
+{def}"MTU (Maximum Transfer Unit): '''max payload size of a frame'''. Set by the network's hardware and software. e.g., '''1500 bytes for an Ethernet LAN'''. Datagram bigger than the MTU → divide it: fragmentation." (p.42)
+MTU 는 frame payload 의 최대 크기로, 네트워크의 하드웨어·소프트웨어가 정한다(Ethernet LAN 1500 bytes). datagram 이 MTU 보다 크면 나눈다.{/def}
+
+[[img:L13-42.png|p.42 — IP datagram(Header|Payload) 이 Frame(Header | Frame Payload | Trailer) 의 payload 로 들어감. "MTU: Maximum size of frame payload"|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Maximum Transfer Unit''' — 한 번에 '''옮길(transfer)''' 수 있는 최대 단위. 슬라이드(Forouzan) 표기는 Transfer, 흔히 Maximum '''Transmission''' Unit 이라고도 쓴다. 같은 것.
+* MTU 는 '''frame 전체'''가 아니라 '''frame 의 payload''' 크기다. Ethernet frame 최대 1518 bytes 중 data 칸이 1500([[mid:프레임 길이 제한]]).
+* 링크마다 MTU 가 다르다 → 경로 중간의 '''더 작은 MTU''' 링크 앞에서 라우터가 나눈다. 그래서 "who fragments? source 또는 '''any router'''".
+
+<pre class="txt">
+fragment 하나에 실을 data = (MTU − IP header 20) 를 8 의 배수로 내림
+MTU 1500 → 1480 (8 의 배수 ✓)
+MTU 1420 → 1400 (p.46 그림)
+MTU 1000 →  980 → 976 (8 의 배수로 내림)
+</pre>
+
+{analogy}🎭 '''엘리베이터 문 크기.''' 건물(네트워크)마다 엘리베이터 크기가 다르다. 큰 소파(datagram)가 작은 엘리베이터 앞에 오면 분해해야 한다. 엘리베이터 크기는 건물이 정하지 짐이 정하지 않는다.{/analogy}
+
+[[sim:fragment_calc]]
+
+== 관련 문서 ==
+* [[fragmentation]] · [[fragmentation offset]] · [[total length]] · [[CH07 IPv4 데이터그램과 포워딩]]
+* 중간고사: [[mid:프레임 길이 제한]] · [[mid:Ethernet 프레임 형식]]

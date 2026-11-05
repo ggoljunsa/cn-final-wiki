@@ -2,7 +2,7 @@ key: 읽는 순서
 title: 읽는 순서 — 처음부터 끝까지 따라가기
 category: 안내
 ---
-수업(10/20 · 10/22 · 10/27) 슬라이드 순서 그대로다. 굵은 것이 메인 문서이고, 그 아래가 메인을 읽다 막힐 때 들어가는 사전 문서다. 메인을 먼저 끝까지 읽고 사전은 링크로 필요할 때만 들어가는 것을 권한다.
+수업(10/20 · 10/22 · 10/27 · 11/3) 슬라이드 순서 그대로다. 굵은 것이 메인 문서이고, 그 아래가 메인을 읽다 막힐 때 들어가는 사전 문서다. 메인을 먼저 끝까지 읽고 사전은 링크로 필요할 때만 들어가는 것을 권한다.
 
 {analogy}
 드라마 정주행과 같다. 메인 문서가 본편이고 사전 문서는 "인물 소개" 페이지다. 누가 누군지 헷갈릴 때만 들어가면 된다.
@@ -57,5 +57,19 @@ category: 안내
 # 성능 — delay: [[transmission delay]] · [[propagation delay]] · [[processing delay]] · [[queuing delay]] → '''[[total delay 공식]]''' ⭐⭐⭐
 # 성능 — throughput: [[throughput]] · [[bottleneck]] (DGIST 300 Mbps 일화) · [[load와 성능]]
 
-== 6. 정리 ==
+== 6. '''[[CH07 IPv4 주소]]''' (L13 p.1–30, 11/3) ==
+교수: "the important key word here is connections, not devices". 지난 시간 "IP 는 주소 형식을 정한다"의 그 주소를 끝까지.
+# 주소 기초: [[IPv4]] → [[IPv4 address]] ⭐⭐⭐ · [[logical address와 physical address]] (IP vs MAC) · [[address space]] · [[dotted-decimal notation]] · [[prefix와 suffix]]
+# 옛 방식: [[classful addressing]] (A–E, "Why 2^7") → [[address depletion]]
+# 지금 방식 ⭐⭐⭐: [[classless addressing]] → [[slash notation]] · [[CIDR]] → [[block의 세 가지 정보]] → [[address mask]] → [[Example 7.1]] · [[Example 7.3]] → [[network address]]
+# 나눠 주기: [[block allocation]] · [[ICANN]] · [[ISP]] · [[Example 7.4]]
+# 쪼개기 ⭐⭐⭐: [[subnetting]] → [[Example 7.5 subnet 설계]] (큰 것부터)
+# 합치기: [[address aggregation]] → [[Example 7.6]]
+# 프로토콜 정리: [[보조 프로토콜]] · [[IGMP]] · [[DHCP]] · [[ICMP]] · p.30 IP = unreliable · best effort · connectionless
+
+== 7. '''[[CH07 IPv4 데이터그램과 포워딩]]''' (L13 rev p.31~, 11/5~) ==
+# [[CH07 IPv4 데이터그램과 포워딩]] → [[IPv4 datagram format]] → [[HLEN]] · [[total length]] → Ex [[Example 7.7 버전 판정|7.7]]·[[Example 7.9 데이터 길이|7.9]]·[[Example 7.10 TTL과 protocol|7.10]] (sim ipv4_header_decode) → [[MTU]] → [[fragmentation offset]] · [[flags D와 M]] → Ex [[Example 7.14 fragment 위치 판정|7.14]]·[[Example 7.16 첫·마지막 바이트|7.16]] (sim fragment_calc) → [[ICMPv4]] → [[Example 7.19–7.21 R1 포워딩]] (sim forward_lookup) → [[longest mask matching]] → [[hierarchical routing]]
+
+== 8. 정리 ==
 * [[셀룰러 세대 비교표]] → [[공식 모음]] → [[자주 틀리는 함정 모음]]
+* 과제: [[PS1 풀이 가이드]] (마감 11/15)

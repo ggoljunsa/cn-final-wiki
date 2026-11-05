@@ -1,0 +1,39 @@
+key: HLEN
+title: HLEN (header length) — header 길이를 4-byte 단위로
+category: 7강 IPv4 데이터그램, 용어
+---
+'''HLEN''' 은 IPv4 header 첫 byte 의 하위 4 bits 로, '''header 의 길이를 4-byte word 단위'''로 적는다. 보내는 쪽은 길이 ÷ 4 를 저장하고 받는 쪽은 × 4 한다. L13 p.33.
+
+{def}"HLEN (4 bits): header length in '''4-byte words'''. Sender stores (length ÷ 4); receiver multiplies by 4. '''5 → 20 bytes (min), 15 → 60 bytes (max)'''." (p.33)
+HLEN 은 header 길이를 4-byte 단위로 나타낸 4-bit 필드다. 5 면 20 bytes(최소), 15 면 60 bytes(최대).{/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''H'''eader '''LEN'''gth. 그런데 "길이" 라고 bytes 수를 그대로 적으면 4 bits(최대 15)로는 60 을 못 담는다 → '''4 로 나눠서''' 적는다. 그래서 header 는 항상 '''4 의 배수''' 길이이고, options 뒤에 padding 이 붙는다.
+
+== 값 표 ==
+{|
+! HLEN (2진) || HLEN || header 길이 || 의미
+|-
+| 0000–0100 || 0–4 || 0–16 B || '''불가능''' (최소 20 B) → 손상 → discard
+|-
+| 0101 || 5 || 20 B || options 없음 (가장 흔함, hex 첫 byte `45`)
+|-
+| 0110 || 6 || 24 B || options 4 B
+|-
+| 1111 || 15 || 60 B || options 40 B (최대)
+|}
+
+<pre class="txt">
+첫 byte 0x45 = 0100 0101
+              VER=4 HLEN=5 → header = 5 × 4 = 20 bytes
+data = total length − HLEN × 4
+</pre>
+
+{warn}'''HLEN 6 을 "6 bytes" 로 읽는 실수.''' 단위가 4 bytes 라서 24 bytes 다. 마찬가지로 Ex 7.7 의 HLEN 2 는 "2 bytes" 가 아니라 8 bytes — 그래도 20 미만이라 버린다.{/warn}
+
+{analogy}🎭 '''박스 단위로 적는 창고 장부.''' 칸이 좁아 "물건 20 개" 대신 "4 개들이 박스 5 개" 라고 적는다. 읽는 사람은 박스 수 × 4 로 되돌린다. 박스가 5 개보다 적다고 적혀 있으면 — 기본 물품만 해도 20 개인데 — 장부가 잘못된 것이다(Ex 7.7).{/analogy}
+
+[[sim:ipv4_header_decode]]
+
+== 관련 문서 ==
+* [[IPv4 datagram format]] · [[total length]] · [[Example 7.7 버전 판정]] · [[Example 7.9 데이터 길이]] · [[fragmentation offset]] (같은 "단위 바꿔 적기", 8 bytes)

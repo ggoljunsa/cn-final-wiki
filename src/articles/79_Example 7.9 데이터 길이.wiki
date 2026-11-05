@@ -1,0 +1,25 @@
+key: Example 7.9 데이터 길이
+title: Example 7.9 — HLEN 5, total length 0x0028 → data 20 bytes
+category: 7강 IPv4 데이터그램, 예제
+---
+'''Example 7.9''' 는 [[HLEN]] 과 [[total length]] 로 '''data 길이'''를 구하는 예제다. 답 20 bytes. L13 p.40.
+
+{def}"HLEN = 5 and total length = 0028 (hex). How many bytes of data? — Header = 5 × 4 = 20 bytes. Total length = 0x0028 = 40 bytes. '''Data = 40 − 20 = 20 bytes'''." (p.40){/def}
+
+[[img:L13-40.png|p.40 Example 7.9 — Header: 20 bytes | Data: 20 bytes, 아래 Total length: 40 bytes|medium]]
+
+== 풀이 ==
+<pre class="txt">
+header = HLEN × 4      = 5 × 4 = 20 bytes
+total  = 0x0028        = 2 × 16 + 8 = 40 bytes
+data   = total − header = 40 − 20 = '''20 bytes'''
+</pre>
+
+{warn}0x0028 을 10 진수 28 로 읽으면 data = 8 (✗). hex 표시가 붙은 숫자는 반드시 16 진수 변환부터. 또 total length 는 '''header 포함'''이라 그대로 data 가 아니다.{/warn}
+
+{analogy}🎭 '''포장 포함 무게 40 g, 포장지 20 g.''' 과자 실제 양은 20 g. 포장지 무게는 "4 g 짜리 5 겹"(HLEN 5)으로 적혀 있다.{/analogy}
+
+[[sim:ipv4_header_decode]]
+
+== 관련 문서 ==
+* [[total length]] · [[HLEN]] · [[Example 7.7 버전 판정]] · [[Example 7.10 TTL과 protocol]] · [[Example 7.16 첫·마지막 바이트]]

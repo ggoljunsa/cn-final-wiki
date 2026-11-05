@@ -137,5 +137,63 @@ OX: ① uplink 는 forward communication 이다. ② soft handoff 에서 MS 는 
 ① ✗ (uplink = reverse, MS → BS) ② ○ ③ ✗ (control = FSK, voice = FM) ④ ○ (reuse factor 1, CDMA) ⑤ ✗ (MSC 가 신호 세기를 감시하고 결정)
 {/answer}
 
+== IPv4 addressing (CH07 (2) p.1–30) ==
+{|
+! 틀린 생각 || 맞는 사실 || 문서
+|-
+| IP 주소는 장비(device)마다 하나 || '''connection''' 마다 하나 — 라우터가 network 3 개에 붙으면 주소 3 개 (p.3). 장비마다 하나인 것은 '''MAC''' (physical). 교수 "the most crucial distinction" || [[IPv4 address]] · [[logical address와 physical address]]
+|-
+| class A 의 network 수는 $2^8$ = 256 || 첫 비트가 0 으로 고정 → $2^7$ = '''128''' (p.7 "Why 2^7 and not 2^8?"). B $2^{14}$, C $2^{21}$ || [[classful addressing]]
+|-
+| class A 막대 밑 "$2^{31}$" 은 비트 수 || '''주소 개수'''($2^{31}$ = 주소 공간의 50%). 필기에 "bits" 라고 적은 것 정정 || [[classful addressing]]
+|-
+| classless 에서도 첫 바이트로 prefix 길이를 안다 || prefix 길이는 주소에 '''내장되지 않는다''' → 반드시 '''/n''' (p.10, p.19) || [[slash notation]] · [[Example 7.3]]
+|-
+| prefix 가 길수록 network 가 크다 || '''longer prefix → smaller network''' — n 이 1 늘면 block 이 절반 (p.9) || [[classless addressing]]
+|-
+| 주어진 주소가 block 의 first address || '''any''' address in the block. 167.199.170.82/27 의 first 는 .64, 230.8.24.56/27 의 first 는 .32 || [[Example 7.1]] · [[Example 7.3]]
+|-
+| /27 의 mask 는 255.255.255.27 || 27 은 1 의 '''개수'''. 11100000 = '''224''' → 255.255.255.224 || [[address mask]]
+|-
+| N 을 정하는 것은 prefix 비트 || '''suffix''' 비트: $N = 2^{32-n}$. Ex 7.4 에서 교수도 "10 bits for prefix" 라고 했다가 정정(prefix 22, suffix 10) || [[Example 7.4]]
+|-
+| first = address OR mask, last = address AND NOT mask || '''first = AND mask''', '''last = OR NOT(mask)''', N = NOT(mask) + 1 (p.18) || [[address mask]]
+|-
+| 1000 개가 필요하면 1000 개짜리 block || block 크기는 '''power of 2''' → 1024 (/22) (p.22) || [[Example 7.4]] · [[CIDR]]
+|-
+| 개인도 ICANN 에서 주소를 받는다 || ICANN 은 '''ISP·large organizations''' 에만 (p.21) || [[ICANN]] · [[block allocation]]
+|-
+| subnet 은 요청 순서대로(작은 것부터) 빈틈없이 놓으면 된다 || '''largest first''' — 작은 것부터 놓으면 64 짜리가 .16 에서 시작해 규칙 ③(first 가 $N_{sub}$ 의 배수) 위반 || [[subnetting]] · [[Example 7.5 subnet 설계]]
+|-
+| Ex 7.5 used = 200, c 는 14.24.192.0/28 || used '''208''', reserve '''48''', c 는 '''14.24.74.192/28''' (p.26 그림 오타, 교수 "200" 은 어림) || [[Example 7.5 subnet 설계]]
+|-
+| 남는 48 개도 /n 하나로 쓸 수 있다 || 48 은 2 의 거듭제곱이 아니라 "prefix not decided yet" (p.26). 쓰려면 /28 (16) + /27 (32) 로 다시 쪼갠다 || [[Example 7.5 subnet 설계]]
+|-
+| aggregation 은 subnet 을 더 잘게 나누는 것 || 반대 — 작은 block 여러 개를 '''큰 block 하나'''로 묶어 바깥에 광고 (address/route summarization) || [[address aggregation]]
+|-
+| network layer 보조 프로토콜에 DHCP 가 반드시 들어간다 || p.29 그림의 network layer 는 '''ICMP · IGMP · ARP''' (DHCP 는 application 칸). L12 p.5 목록에는 DHCP 포함 — 두 슬라이드 차이 || [[DHCP]] · [[보조 프로토콜]]
+|}
+
+{quiz}
+OX: ① 167.199.170.82/27 의 network address 는 167.199.170.82 다. ② /24 block 은 주소 256 개다. ③ CIDR block 의 first address 는 N 으로 나누어떨어져야 한다. ④ IP 는 reliable 하다. ⑤ 라우터 하나는 IP 주소를 하나만 가진다.
+{/quiz}
+{answer}
+① ✗ (.64) ② ○ ③ ○ ④ ✗ (unreliable, best effort — TCP 와 짝) ⑤ ✗ (connection 마다)
+{/answer}
+
+== IPv4 datagram·fragmentation·forwarding (CH07 (2) rev p.31–68) ==
+* '''HLEN·total length·offset 단위가 다르다''': HLEN ×4 bytes, total length ×1, offset ×8. HLEN 6 = 24 B, offset 100 = byte 800 → [[HLEN]] · [[fragmentation offset]]
+* '''total length 는 header 포함''': data = total − HLEN×4 (Ex 7.9 0x0028 − 20 = 20) → [[total length]]
+* '''Ex 7.7 의 discard 이유는 version 이 아니라 HLEN''': 0100 = 4 ✓, 0010 → 8 B < 20 → [[Example 7.7 버전 판정]]
+* '''hex 덤프 byte 번호는 1 부터''': TTL = 9 번째, protocol = 10 번째. UDP 17 은 hex 11 → [[Example 7.10 TTL과 protocol]]
+* '''last byte = first + data − 1''' (Ex 7.16: 879, 880 ✗) → [[Example 7.16 첫·마지막 바이트]]
+* '''offset 0 ≠ 안 나뉨''': M 까지 봐야 한다(M1·off0 = first) → [[Example 7.14 fragment 위치 판정]]
+* '''다시 나눈 조각의 offset·M 도 원래 datagram 기준''': F2.2 offset 275, M = 1 → [[fragmentation offset]]
+* '''fragment data 는 8 의 배수''': MTU 1000 → 980 이 아니라 976 → [[MTU]]
+* '''재조립은 destination 만''' (라우터는 나누기만) → [[reassembly]]
+* '''ICMP 는 보고만, 정정 ✗, 항상 original source 로''' / echo reply 는 type 0 → [[ICMP error-reporting message]] · [[echo request와 ping]]
+* '''forwarding table 은 긴 mask 부터''': 180.70.65.200 은 /25 에도 맞지만 /26 → m2. 표에는 network address(첫 주소), connection address ✗ → [[longest mask matching]]
+* '''슬라이드 p.61 오타''': 201.4.22.0 셋째 octet = 00010110 (슬라이드 00011100) → [[Example 7.19–7.21 R1 포워딩]]
+
 == 관련 문서 ==
-* [[공식 모음]] · [[셀룰러 세대 비교표]] · [[시험 정보]] · [[CH05 Satellite Network]] · [[CH07 네트워크 계층 서비스와 성능]] · [[IP가 제공하는 서비스]]
+* [[공식 모음]] · [[셀룰러 세대 비교표]] · [[시험 정보]] · [[CH05 Satellite Network]] · [[CH07 네트워크 계층 서비스와 성능]] · [[IP가 제공하는 서비스]] · [[CH07 IPv4 주소]] · [[subnetting]] · [[address mask]]

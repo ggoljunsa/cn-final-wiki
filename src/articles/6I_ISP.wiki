@@ -1,0 +1,33 @@
+key: ISP
+title: ISP (Internet Service Provider) — 큰 block 을 받아 고객에게 나누고, 바깥엔 하나로 알린다
+category: 6강 IPv4 주소, 용어
+---
+'''ISP (Internet Service Provider)''' 는 [[ICANN]] 에서 '''큰 block''' 을 받아 고객(가정·회사)에게 '''작은 subblock''' 으로 나눠 주는 인터넷 사업자다(KT, SKB, LG U+ 같은). L13 p.21, p.22, p.27–28. 블록을 나누는 쪽에서는 [[subnetting]], 바깥에 알리는 쪽에서는 [[address aggregation]] 을 한다.
+
+{def}"ICANN gives large blocks to '''ISPs''' and large organizations" (p.21)
+"An ISP requests a block of 1000 addresses" (p.22, [[Example 7.4]])
+"The ISP combines 4 blocks into one block and advertises only that block. Packets for this block go to the ISP; the ISP forwards them to the right organization." (p.28, [[Example 7.6]]){/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''Internet Service Provider''' = 인터넷 서비스를 '''제공하는''' 회사. 교수(38:04): "ISP, which is an internet service provider".
+
+== ISP 가 하는 두 방향의 일 ==
+{|
+! 방향 || 일 || 예 || 문서
+|-
+| 위 → ISP || ICANN 에 block 요청 (2 의 거듭제곱으로) || 1000 요청 → 1024 (/22) || [[Example 7.4]]
+|-
+| ISP → 아래 || 고객에게 subblock 할당 || cust. cust. cust. || [[block allocation]] · [[subnetting]]
+|-
+| ISP → 바깥 || 고객 block 들을 하나로 광고 || 4 × /26 → 160.70.14.0/24 || [[address aggregation]] · [[Example 7.6]]
+|}
+
+[[img:L13-28.png|p.28 Example 7.6 — Block 1–4 (/26) → ISP (Larger block) → "All packets with destination addresses 160.70.14.0/24 to 160.70.14.255/24 are sent to ISP"|medium]]
+
+{analogy}🎭 ISP 는 '''아파트 관리사무소'''다. 건설사(ICANN)에게서 단지 전체를 받아 각 세대(고객)에 호수를 나눠 주고, 바깥 택배사에는 "○○ 아파트 단지" 하나로만 알린다. 택배가 단지에 오면 관리사무소가 동·호로 나눠 준다.{/analogy}
+
+{quiz}ISP 가 1000 개 주소를 요청하면 받는 block 크기와 prefix 길이는?{/quiz}
+{answer}1024 (= $2^{10}$), prefix $32 - 10$ = '''/22'''.{/answer}
+
+== 관련 문서 ==
+* [[ICANN]] · [[block allocation]] · [[Example 7.4]] · [[subnetting]] · [[address aggregation]] · [[Example 7.6]]

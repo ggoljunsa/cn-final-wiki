@@ -1,0 +1,30 @@
+key: reassembly
+title: Reassembly (재조립) — destination host 만 한다
+category: 7강 IPv4 데이터그램, 용어
+---
+'''Reassembly''' 는 fragment 들을 모아 원래 datagram 으로 되돌리는 일이다. IPv4 에서는 '''destination host 만''' 한다 — 중간 라우터는 나누기만 하고 합치지 않는다. L13 p.43, p.46.
+
+{def}"Who fragments? The source host or any router on the path. '''Who reassembles? The destination host only.''' A datagram may be fragmented several times." (p.43)
+fragmentation 은 source 나 경로 위 어느 라우터든 할 수 있지만, 재조립은 destination host 만 한다. 한 datagram 이 여러 번 나뉠 수 있다.{/def}
+
+[[img:L13-43.png|p.43 — Source → R1 (fragments, 조각 2 개) → R2 (fragments again, 조각 3 개) → Destination (reassembles). 바뀌는 필드: flags, fragmentation offset, total length; checksum recalculated|medium]]
+
+== 왜 destination 만? ==
+* IP 는 [[datagram approach]] — fragment 마다 '''경로가 달라질 수 있다'''(p.46 그림에서 F2.1·F2.2 는 다른 라우터를 거친다). 중간 라우터는 조각을 다 본다는 보장이 없다.
+* 중간에서 합쳐 봤자 다음 링크 MTU 가 또 작으면 다시 나눠야 한다 — 낭비.
+
+== 재조립 절차 ==
+<pre class="txt">
+1. 같은 (source address, '''identification''') 의 조각을 모은다
+2. '''offset''' 순으로 정렬 (offset × 8 = 시작 byte)
+3. M = 0 인 조각(마지막)이 오고 빈틈이 없으면 완성
+4. 제한 시간 안에 다 안 오면 → 전부 버림 + ICMP '''time exceeded''' (p.54 "not all fragments arrive within a time limit")
+p.46: 도착 F2.2 F2.1 F3 F1 → 정렬 F1(0) F2.1(175) F2.2(275) F3(350) → bytes 0–3999
+</pre>
+
+{analogy}🎭 '''퍼즐은 받는 집에서 맞춘다.''' 택배 회사(라우터)는 박스를 나눠 싣기만 하고 열어서 맞춰 보지 않는다. 받는 사람이 상자 번호(offset) 순으로 늘어놓고, "끝" 표시(M = 0) 상자까지 다 왔는지 확인한다.{/analogy}
+
+[[anim:fragmentation_anim|뒤섞여 도착한 F2.2·F2.1·F3·F1 이 destination 에서 offset 순으로 맞춰지는 마지막 장면을 보라]]
+
+== 관련 문서 ==
+* [[fragmentation]] · [[identification field]] · [[fragmentation offset]] · [[flags D와 M]] · [[time exceeded와 traceroute]] · [[datagram approach]]

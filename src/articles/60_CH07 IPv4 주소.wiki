@@ -1,0 +1,401 @@
+key: CH07 IPv4 주소
+title: CH07 Network Layer: Data Transfer (2) 전반 (6강 — IPv4 addressing: classful → classless/CIDR, subnetting, aggregation)
+category: 6강 IPv4 주소, 메인
+---
+'''CH07 Network Layer: Data Transfer (2)''' 는 L13 덱(`CH07_Network Layer - Data Transfer (2).pdf`, 67쪽 — 11/4 에 교수가 68쪽 개정판 `… (2) rev.pdf` 를 올렸고 p.1–50 은 글자까지 같다)이고, 그중 '''p.1–30 이 11/3(화) 수업 분량'''이다. 지난 시간(L12)에 "[[IP]] 는 주소의 형식을 정한다"고만 하고 넘어갔던 그 '''주소'''를 이번에 끝까지 판다. 교수: "we mainly focus on '''addressing''', how to address and addressing mechanism with IPv4" (01:53). p.31 이후(datagram format, fragmentation, ICMPv4, forwarding)는 11/5(목) 수업 분량으로 [[CH07 IPv4 데이터그램과 포워딩]] 에 있다.
+
+이 덱 전반부가 던지는 질문은 — '''"32 비트짜리 주소를 전 세계 network 들에 어떻게 나눠 주고, 받은 주소 하나에서 그 network 를 어떻게 알아내는가?"'''
+답은 네 덩어리다.
+# '''1. IPv4 address 가 무엇인가''' — [[IPv4 address]] 는 device 가 아니라 '''connection''' 에 붙는 32 비트 주소다(라우터가 network 3 개에 붙으면 주소 3 개). 주소 공간은 $2^{32}$ = 4,294,967,296 → [[address space]] · [[dotted-decimal notation]] · [[prefix와 suffix]].
+# '''2. Classful → 고갈''' — 초기에는 prefix 길이를 8 / 16 / 24 로 고정한 [[classful addressing]](class A–E)을 썼는데, A 는 너무 크고 C 는 너무 작아 주소가 빨리 바닥났다 → [[address depletion]].
+# '''3. Classless (CIDR)''' — prefix 길이 n 을 0–32 아무거나 쓰되 '''block 크기는 2 의 거듭제곱'''. 주소 뒤에 '''/n''' 을 붙인다([[slash notation]]). 주소 하나와 n 만 있으면 '''N = 2^(32−n), first, last''' 가 나온다 → [[classless addressing]] · [[CIDR]] · [[block의 세 가지 정보]] · [[address mask]] · [[network address]].
+# '''4. 나눠 주고 쪼개고 합치기''' — [[ICANN]] 이 [[ISP]] 에 큰 block 을 주고([[block allocation]]), 받은 쪽은 [[subnetting]] 으로 쪼개며(큰 것부터), 바깥에는 여러 block 을 하나로 묶어 광고한다([[address aggregation]]).
+끝의 p.29–30 은 [[IPv4]] 가 TCP/IP suite 에서 어디에 있는지(보조 프로토콜 [[ICMP]] · [[IGMP]] · [[mid:ARP|ARP]])와 '''unreliable, best-effort, connectionless''' 라는 성질을 다시 정리한다.
+
+페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다. L13 PDF 는 '''사용자의 GoodNotes 필기본'''(11/3 수업 중 필기)이라 몇 장에 빨간 손글씨가 있다. p.12–16 은 Example 7.1 이 한 줄씩 늘어나는 build-up, p.17–18 도 build-up 이라 캡처는 마지막 장(p.16, p.18)을 쓴다.
+
+{exam}🎯 교수가 이 덱에서 짚은 것 (11/3 녹음)
+* "the important key word here is '''connections''', not devices" (02:52) — "This is '''the most crucial distinction from MAC address'''" (05:19). IP address = connection 마다(logical), MAC address = device 마다(physical) → [[logical address와 physical address]].
+* address depletion: "'''a crucial issue of IPv4'''" (16:34) — 한국어로 "자원 고갈"이라고 직접 말했다.
+* "some '''important restrictions''' … the block size must be a '''power of 2'''" (21:01) — CIDR 의 모든 계산이 여기서 출발한다.
+* 첫 주소는 "'''always''' all zero bits" in the suffix, 마지막은 "always all ones" (27:15–28:03).
+* address mask 로 "'''important quantities'''" 를 "simple bit operation" 으로 — "very implementable in a router" (31:17, 35:46).
+* Example 7.3 은 "I recommend you to '''take this one as your own'''" (36:13) — 직접 손으로 풀어 보라는 뜻.
+* subnetting: "allocate the '''largest''' first and ends with assigning the smallest" (47:31). "It can look complicated, but it is '''exactly the same''' as how we divide block of the entire address space" (50:35).
+* 시험 직접 공지는 없었다. 수업 첫머리는 '''중간고사 점수 확인·claim 공지'''(아래 🎙).{/exam}
+
+{analogy}🎭 '''IPv4 주소 = 우편 주소.''' 앞부분(prefix)은 "대구시 달성군 DGIST"처럼 '''동네(network)''' 를, 뒷부분(suffix)은 "E7 동 412 호"처럼 '''그 동네 안의 집(node)''' 을 가리킨다(교수: "like a postal address", p.5). 예전에는 동네 크기를 대·중·소 세 가지로만 정해 놓고 나눠 줘서(classful) 대형 단지는 텅 비고 소형 단지는 모자랐다(depletion). 그래서 이제는 '''필요한 만큼 2 의 거듭제곱 크기'''로 잘라 주고 주소 끝에 "/n"(동네 이름이 몇 글자인지)을 붙여 쓴다(CIDR). 동네 안에서 다시 동·호로 쪼개는 게 subnetting, 우체국이 바깥에 "이 구 전체는 우리가 받는다"고만 알리는 게 aggregation 이다.{/analogy}
+
+[[anim:cidr_mask_anim|Example 7.1 의 32 비트에 /27 mask 를 대고, AND 한 줄에서 suffix 가 0 이 되는 것(first = .64)과 NOT(mask) 와 OR 한 줄에서 suffix 가 1 이 되는 것(last = .95)을 확인하라]]
+
+== 한눈에 보기 ==
+{|
+! 슬라이드 || 내용 || 문서
+|-
+| p.2 || 4. IPv4 — addressing, packet format, fragmentation, ICMPv4, forwarding (NAT 는 rev 덱에서 삭제) || [[IPv4]]
+|-
+| p.3 || IPv4 address = 32 bits, unique · universal, '''connection 에 붙는다''' (라우터 3 networks → 3 addresses) || [[IPv4 address]] ⭐⭐⭐
+|-
+| p.4 || address space $2^{32}$, 세 표기(binary · dotted decimal · hex) || [[address space]] · [[dotted-decimal notation]] ⭐⭐
+|-
+| p.5 || two-level hierarchy: prefix (n) = network, suffix (32 − n) = node || [[prefix와 suffix]] ⭐⭐
+|-
+| p.6–7 || classful A/B/C/D/E — leading bits, prefix 8/16/24, # of networks, 첫 바이트 범위, "Why $2^7$?" || [[classful addressing]] ⭐⭐⭐
+|-
+| p.8 || address depletion — A too big, C too small || [[address depletion]] ⭐⭐
+|-
+| p.9 || classless — variable-size block, '''power of 2''', n = 0–32, longer prefix → smaller network || [[classless addressing]] ⭐⭐⭐
+|-
+| p.10 || slash notation address/n (CIDR) || [[slash notation]] · [[CIDR]] ⭐⭐
+|-
+| p.11 || 세 가지: $N = 2^{32-n}$, first(suffix 0), last(suffix 1) || [[block의 세 가지 정보]] ⭐⭐⭐
+|-
+| p.12–16 || Example 7.1 — 167.199.170.82/27 → 32 개, .64 ~ .95 || [[Example 7.1]] 계산 ⭐⭐⭐
+|-
+| p.17–18 || address mask, N = NOT(mask)+1, first = AND, last = OR NOT || [[address mask]] ⭐⭐⭐
+|-
+| p.19 || Example 7.3 — 230.8.24.56 은 prefix 에 따라 다른 block || [[Example 7.3]] ⭐⭐
+|-
+| p.20 || network address(first address)로 라우터가 forwarding || [[network address]] ⭐⭐
+|-
+| p.21 || block allocation — ICANN, CIDR block 세 규칙 || [[block allocation]] · [[ICANN]] ⭐⭐⭐
+|-
+| p.22 || Example 7.4 — ISP 1000 → 1024, /22, 18.14.12.0/22 || [[Example 7.4]] 계산 ⭐⭐
+|-
+| p.23 || subnetting — 세 규칙, largest first || [[subnetting]] ⭐⭐⭐
+|-
+| p.24–26 || Example 7.5 — 14.24.74.0/24 → 128 · 64 · 16, 48 reserve || [[Example 7.5 subnet 설계]] 계산 ⭐⭐⭐
+|-
+| p.27–28 || address aggregation (summarization), Example 7.6 — 4 × /26 → /24 || [[address aggregation]] · [[Example 7.6]] ⭐⭐
+|-
+| p.29 || main and auxiliary protocols (IGMP, ICMP, IP, ARP) || [[보조 프로토콜]] · [[IGMP]] · [[DHCP]] ⭐
+|-
+| p.30 || IP: unreliable, best-effort, connectionless || [[IPv4]] · [[best effort]] · [[connectionless]] ⭐⭐
+|}
+
+----
+
+== p.2 — 4. Internet Protocol Version 4 (IPv4) ==
+{def}"Discusses Internet Protocol version 4 (IPv4), including '''addressing''', packet format, fragmentation, ICMPv4, forwarding, and NAT." (p.2){/def}
+* 번호 "4." 는 Forouzan CH07 의 절 번호다(1–3 절은 L12 의 Services · Packet switching · Performance).
+* 왜 "version 4"? 교수: "we now use '''IPv6''', which is a later version … which we will cover in the next few lectures" (01:28) → [[IPv4]].
+* p.2 에는 NAT 가 적혀 있지만 '''11/4 개정판(rev)에서 NAT 슬라이드(구 p.64–67)가 삭제'''됐다 — 범위에서 빠졌을 가능성이 크다(교수 확인 필요, [[시험 정보]]).
+* 이번 수업(11/3)은 '''addressing''' 까지, packet format 이후는 11/5 → [[CH07 IPv4 데이터그램과 포워딩]].
+
+== p.3 — IPv4 Addresses ⭐⭐⭐ ==
+[[img:L13-03.png|p.3 IPv4 Addresses (필기본) — Network 1·2·3 에 연결된 라우터 R 의 세 주소 200.1.1.1 · 200.1.2.1 · 200.1.3.1. 손글씨: "two connections" 형광펜 → "not 'device' (MAC)", 세 주소에 밑줄 → "여러 개"|large]]
+
+{def}"'''IP address''': identifies the '''connection''' of a device to the Internet. IPv4 address = '''32 bits'''. '''Unique''': two connections never share one. '''Universal''': accepted by every host on the Internet. An address belongs to a '''connection, not a device''' — A router on 3 networks has '''3 addresses'''." (p.3){/def}
+
+* '''unique''' — 두 connection 이 같은 주소를 쓰지 않는다. '''universal''' — 인터넷의 모든 host 가 이 주소 체계를 받아들인다.
+* '''connection 에 붙는다''': 라우터 R 은 장비 하나지만 network 1·2·3 에 각각 연결되어 있으니 주소도 '''3 개'''(200.1.1.1 / 200.1.2.1 / 200.1.3.1). 세 주소의 셋째 바이트가 1·2·3 으로 다른 것은 각 network 의 prefix 가 다르기 때문이다.
+* MAC 주소는 반대로 device 에 하나 → [[logical address와 physical address]] · [[mid:MAC 주소|MAC 주소]] · [[mid:IP 주소와 MAC 주소|IP 주소와 MAC 주소]].
+
+{tip}'''필기 속 메모: "two connections → not 'device' (MAC)", "여러 개"''' — 정확히 교수 설명 그대로다(02:52–05:19). 정리하면
+* '''IP address''' = '''logical address''', '''connection''' 마다 하나 → 한 장비가 '''여러 개'''를 가질 수 있다(라우터, 와이파이+유선을 동시에 쓰는 노트북).
+* '''MAC address''' = '''physical address''', '''device(NIC)''' 에 하나 → 장비 고유.
+교수: "one device can have multiple IP addresses depending on their … connections" (03:35), "MAC address should be one, should be unique to this device" (05:00).{/tip}
+
+{exam}🎯 "The important key word here is '''connections, not devices'''." (02:52) … "This is '''the most crucial distinction from MAC address'''." (05:19) → 서술형 "IP address 와 MAC address 의 차이" 에는 '''connection vs device''', '''logical vs physical''', '''32 bits vs 48 bits''' 세 줄을 쓴다.{/exam}
+
+== p.4 — Address Space ⭐⭐ ==
+[[img:L13-04.png|p.4 Address Space (필기본) — 2^32 = 4,294,967,296 addresses. 같은 주소의 세 표기: Binary 10000000 00001011 00000011 00011111 ↔ Dotted decimal 128.11.3.31 ↔ Hexadecimal 800B031F. 손글씨 "(2^8)^4"|large]]
+
+{def}"'''Address space''' = total number of addresses. IPv4: $2^{32}$ = '''4,294,967,296''' addresses. Three notations of the same address: binary, dotted decimal, hexadecimal." (p.4){/def}
+* 손글씨 "'''(2^8)^4'''" — 한 바이트가 $2^8 = 256$ 가지이고 바이트가 4 개이니 $(2^8)^4 = 2^{32}$. 교수: "around '''4 billion'''" (05:33).
+* "space" 의 뜻(교수 07:25): feature space, code space 처럼 '''가능한 모든 값의 집합''' → [[address space]].
+* 세 표기 → [[dotted-decimal notation]]. 바이트마다 8 비트 ↔ 0–255 십진수 ↔ 16 진수 두 자리.
+<pre class="txt">
+128     .  11       .  3        .  31
+10000000   00001011   00000011   00011111
+80         0B         03         1F        → 800B031F
+</pre>
+
+== p.5 — Two-level hierarchy: Prefix and Suffix ⭐⭐ ==
+[[img:L13-05.png|p.5 32 bits = Prefix (n bits, "Defines network") + Suffix ((32 − n) bits, "Defines connection to the node"). 아래 노란 Network 안의 스위치와 노트북들|medium]]
+
+{def}"Two-level hierarchy (like a '''postal address'''). '''Prefix''' (n bits): identifies the '''network'''. '''Suffix''' (32 − n bits): identifies the '''node'''." (p.5){/def}
+* 이름(교수 08:10): '''pre-fix''' = 앞에 고정된 것, '''suf-fix''' = 뒤에 붙은 것 → [[prefix와 suffix]].
+* 같은 network 안의 노드들은 '''prefix 가 같고 suffix 만 다르다'''. 라우터는 prefix 만 보고 network 를 찾는다(p.20).
+* "hierarchy 를 두는 건 상식이지만 '''어떻게 구현하느냐'''가 두 갈래": classful vs classless (09:47).
+
+== p.6–7 — Classful Addressing ⭐⭐⭐ ==
+[[img:L13-06.png|p.6 Classful Addressing (필기본) — 주소 공간을 A 50% · B 25% · C 12.5% · D 6.25% · E 6.25% 로 나눈 막대, 각 class 의 leading bits(0 / 10 / 110 / 1110 / 1111)와 prefix, First byte 표. 손글씨 "2^31", "2^30", "2^29", "2^28", "0~127"|large]]
+
+[[img:L13-07.png|p.7 표 — Class / Leading bits / Prefix / # of networks / Addresses per network / First byte. A 0 · 8 · 2^7 = 128 · 2^24 = 16,777,216 · 0–127 / B 10 · 16 · 2^14 = 16,384 · 2^16 = 65,536 · 128–191 / C 110 · 24 · 2^21 = 2,097,152 · 2^8 = 256 · 192–223 / D 1110 multicast 224–239 / E 1111 reserved 240–255. "Why 2^7 and not 2^8? Class A uses 8 bits, but the first bit is fixed to 0."|large]]
+
+{def}"Early design: three '''fixed''' prefix lengths: 8 (class A), 16 (B), 24 (C)." (p.6)
+"The '''first bits''' mark the class, so fewer bits remain for the network ID." (p.7)
+"Why $2^7$ and not $2^8$? Class A uses 8 bits, but the first bit is fixed to 0." (p.7){/def}
+
+{|
+! Class || Leading bits || Prefix || # of networks || Addresses / network || First byte || 주소 공간 몫
+|-
+| A || 0 || 8 || $2^7$ = 128 || $2^{24}$ = 16,777,216 || 0 – 127 || $2^{31}$ (50%)
+|-
+| B || 10 || 16 || $2^{14}$ = 16,384 || $2^{16}$ = 65,536 || 128 – 191 || $2^{30}$ (25%)
+|-
+| C || 110 || 24 || $2^{21}$ = 2,097,152 || $2^8$ = 256 || 192 – 223 || $2^{29}$ (12.5%)
+|-
+| D || 1110 || – || Multicast || – || 224 – 239 || $2^{28}$ (6.25%)
+|-
+| E || 1111 || – || Reserved || – || 240 – 255 || $2^{28}$ (6.25%)
+|}
+* # of networks = $2^{(\text{prefix} - \text{leading bits 수})}$: A $2^{8-1}$, B $2^{16-2}$, C $2^{24-3}$. Addresses / network = $2^{32-\text{prefix}}$.
+* 첫 바이트 범위는 leading bits 에서 바로 나온다: A 는 첫 비트 0 → 00000000–01111111 = '''0–127''' (교수 11:02–11:40), B 는 10 → 10000000–10111111 = 128–191.
+
+{warn}'''필기 "2^31 bits", "2^30 bits" 정정''' — 막대 아래 적은 $2^{31}$, $2^{30}$, $2^{29}$, $2^{28}$ 은 '''비트 수가 아니라 주소 개수'''다. class A 의 주소는 첫 비트가 0 인 모든 32 비트 주소 = 나머지 31 비트의 경우의 수 = $2^{31}$ 개 = 전체 $2^{32}$ 의 '''50%'''. 교수: "A can use all different '''31-bit''' [patterns], so it includes the half of these addresses" (13:06). 같은 방식으로 B = $2^{30}$ (25%), C = $2^{29}$ (12.5%), D·E = 각 $2^{28}$ (6.25%). 확인: $2^{31} + 2^{30} + 2^{29} + 2^{28} + 2^{28} = 2^{32}$ ✓.{/warn}
+
+[[sim:classful_class]]
+
+== p.8 — Address Depletion ⭐⭐ ==
+[[img:L13-08.png|p.8 Address Depletion (필기본, 제목 옆 손글씨 "주소/자원 고갈") — Class A: too big (Only 128 organizations in the world, each gets 16,777,216 addresses → most of them unused) / Class C: too small (Only 256 addresses per block → not enough for most organizations). Result: addresses ran out fast|large]]
+
+{def}"Classful addresses were '''not distributed properly'''. Class A: '''too big''' — Only 128 organizations in the world; each gets 16,777,216 addresses → most of them unused. Class C: '''too small''' — Only 256 addresses per block → not enough for most organizations. Result: addresses ran out fast; no addresses left for new organizations and users." (p.8){/def}
+* 교수 예(17:14–18:42): DGIST 가 class A 하나를 받으면 1,600 만 주소 — 삼성·SK 하이닉스도 다 못 쓴다. class B(65,536)는 삼성 같은 큰 회사에 맞을 정도. class C(256)는 대부분의 조직에 모자란다 → [[address depletion]].
+* 해결책: 단기 — [[classless addressing]](p.9). 장기 — IPv6 (다음 강의들). (주소를 아끼는 NAT 는 구 덱 p.64–67 에 있었으나 rev 덱에서 삭제됐다.)
+
+== p.9 — Classless Addressing ⭐⭐⭐ ==
+[[img:L13-09.png|p.9 Classless Addressing — Block 1, Block 2, …, Block i, …, Block (m − 1), Block m 가 크기가 제각각인 막대로 Address space 를 채움. 손글씨 "2^32"|medium]]
+
+{def}"'''Short-term fix''': same address space, but each organization gets a '''variable-size block'''. No classes: prefix = block (network), suffix = node. '''Block size''' (= the number of addresses in a block) must be a '''power of 2'''. Prefix length n: anywhere from '''0 to 32'''. '''Longer prefix → smaller network'''." (p.9){/def}
+* class 가 없어지고 '''block''' 이 그 자리를 차지한다. 교수: "we call block equivalently as one network" (30:24) → [[classless addressing]].
+* '''power of 2''' 인 이유: block 크기 = suffix 비트 $(32-n)$ 개로 만들 수 있는 주소 수 = $2^{32-n}$ — 2 의 거듭제곱일 수밖에 없다. 교수 "important restrictions" (21:01).
+* 극단 두 개(교수 22:03–22:42): '''n = 32''' → suffix 0 비트 → block 에 주소 '''1 개'''(노드 하나). '''n = 0''' → 주소 공간 전체 $2^{32}$ 가 block 하나.
+* "Longer prefix → smaller network": prefix 를 1 비트 늘릴 때마다 block 크기가 절반.
+
+== p.10 — Slash notation (CIDR) ⭐⭐ ==
+[[img:L13-10.png|p.10 byte . byte . byte . byte / n (Prefix length). Examples: 12.24.76.8/8, 23.14.67.92/12, 220.8.24.255/25|medium]]
+
+{def}"Prefix length is '''not built into''' the address, so we must state it. '''Slash notation''' (CIDR: '''Classless Inter-Domain Routing'''): '''address/n'''." (p.10){/def}
+* classful 에서는 첫 바이트를 보면 prefix 길이가 정해졌지만(p.7), classless 에서는 주소만 봐서는 모른다 → '''/n''' 을 붙인다 → [[slash notation]] · [[CIDR]].
+* 예: 12.24.76.8/'''8''' → prefix 8 비트, suffix 24 비트. 23.14.67.92/'''12''' → prefix 12, suffix 20 (교수가 25:00 에 "25 bits for the last one" 이라 말한 것은 말실수 — 32 − 12 = '''20''').
+
+== p.11 — 블록의 세 가지 정보 ⭐⭐⭐ ==
+[[img:L13-11.png|p.11 Any address = Prefix (n bits) + Suffix ((32 − n) bits). First address = Prefix + 000…0 ("Set all suffix bits to 0s"), Last address = Prefix + 111…1 ("Set all suffix bits to 1s"). Number of addresses N = 2^(32 − n)|large]]
+
+{def}"From '''any''' address in a block (/n), we can find three things:
+① Number of addresses: $N = 2^{32-n}$
+② First address: keep the n leftmost bits, set the rest to '''0s'''
+③ Last address: keep the n leftmost bits, set the rest to '''1s'''" (p.11){/def}
+→ [[block의 세 가지 정보]]. "'''any'''" 가 핵심 — block 안의 '''아무 주소'''나 하나 주면 된다. 교수: "first address … it '''always''' starts from all zero bits … the last address, it's always all ones" (27:15–28:03).
+
+== p.12–16 — Example 7.1 ⭐⭐⭐ ==
+[[img:L13-16.png|p.16 Example 7.1 — Given 167.199.170.82/27. ① N = 2^(32−27) = 2^5 = 32 addresses ② First: 10100111 11000111 10101010 010'''00000''' = 167.199.170.64/27 ③ Last: … 010'''11111''' = 167.199.170.95/27. Block: 167.199.170.64/27 ~ 167.199.170.95/27 (32 addresses)|large]]
+
+{tip}'''필기 p.12 "←27→ ←5→ → 2^5 = 32"''' — /27 이면 prefix 27 비트, 나머지 5 비트가 suffix, 그래서 주소 $2^5 = 32$ 개. 예제의 ① 을 슬라이드보다 먼저 써 둔 것이다(정답).{/tip}
+
+<pre class="txt">
+Example 7.1 — 167.199.170.82/27
+1. n = 27 → suffix = 32 − 27 = 5 비트
+2. ① N = 2^5 = '''32'''
+3. 마지막 바이트만 suffix 를 품는다(27 = 8+8+8+3) → 82 를 2진수로: 010 10010
+                                                         ^^^ ^^^^^
+                                                     prefix  suffix(5)
+4. ② first: suffix → 00000  →  010 00000 = 64  →  '''167.199.170.64/27'''
+5. ③ last : suffix → 11111  →  010 11111 = 95  →  '''167.199.170.95/27'''
+6. 검산: 95 − 64 + 1 = 32 ✓,  64 ÷ 32 = 2 (나누어떨어짐) ✓
+</pre>
+→ [[Example 7.1]]
+
+{tip}'''손으로 빨리 푸는 법''' — /27 처럼 n 이 8 의 배수가 아니면 '''그 경계가 걸친 바이트 하나'''만 보면 된다. 그 바이트에서 block 크기는 $2^{32-n}$ = 32 → '''32 의 배수 중 82 이하 최대 = 64''' 가 first, first + 32 − 1 = 95 가 last. 비트를 다 안 써도 된다.{/tip}
+
+== p.17–18 — Address mask ⭐⭐⭐ ==
+[[img:L13-18.png|p.18 Address mask: 32 bits with n leftmost 1s and (32 − n) 0s. Ex) /27 → 255.255.255.224 = 11111111 11111111 11111111 111 00000. 표: Number of addresses N = NOT (mask) + 1 / First address = (any address in the block) AND (mask) / Last address = (any address in the block) OR [NOT (mask)]|large]]
+
+{def}"'''Address mask''': 32 bits with n leftmost 1s and (32 − n) 0s. Ex) /27 → 255.255.255.224" (p.17)
+"All three values come from '''simple bit operations''':
+Number of addresses N = '''NOT (mask) + 1'''
+First address = (any address in the block) '''AND''' (mask)
+Last address = (any address in the block) '''OR''' [NOT (mask)]" (p.18){/def}
+
+<pre class="txt">
+/27 mask           = 11111111 11111111 11111111 11100000 = 255.255.255.224
+NOT(mask)          = 00000000 00000000 00000000 00011111 = 0.0.0.31
+N   = NOT(mask)+1  = 31 + 1 = '''32'''
+address            = 10100111 11000111 10101010 01010010 = 167.199.170.82
+AND mask           = 10100111 11000111 10101010 01000000 = '''167.199.170.64'''  (first)
+OR  NOT(mask)      = 10100111 11000111 10101010 01011111 = '''167.199.170.95'''  (last)
+</pre>
+* AND 에서 mask 의 1 자리는 원래 비트를 '''통과''', 0 자리는 '''0 으로 지운다''' → suffix 만 0. OR NOT(mask) 는 suffix 자리만 '''1 로 칠한다'''. 교수: "the prefix is just preserved because any address in that block should have the same prefix" (34:41) → [[address mask]].
+* 왜 mask 를 쓰나: "very '''implementable in a router'''" (35:46) — 라우터는 비트 연산 한 번으로 network address 를 얻는다.
+
+[[sim:cidr_block]]
+
+== p.19 — Example 7.3 ⭐⭐ ==
+[[img:L13-19.png|p.19 Example 7.3 — 230.8.24.56 belongs to many blocks: /16 → 230.8.0.0 to 230.8.255.255, /20 → 230.8.16.0 to 230.8.31.255, /26 → 230.8.24.0 to 230.8.24.63, /27 → 230.8.24.32 to 230.8.24.63, /29 → 230.8.24.56 to 230.8.24.63, /31 → 230.8.24.56 to 230.8.24.57. "→ Always give the prefix length (/n) together with a classless address"|large]]
+
+{def}"An address '''alone''' does not tell which block it belongs to. Ex) 230.8.24.56 belongs to many blocks, depending on the prefix … → '''Always give the prefix length (/n) together with a classless address'''." (p.19){/def}
+* 같은 주소인데 n 이 커질수록 block 이 '''작아지며''' 그 주소를 감싼다(longer prefix → smaller network). 교수: "I recommend you to '''take this one as your own'''" (36:13) — 여섯 줄을 직접 풀어 보라 → [[Example 7.3]] (풀이 전부).
+
+== p.20 — Network Address ⭐⭐ ==
+[[img:L13-20.png|p.20 Network 1, 2, …, m 이 Router 의 interface 1, 2, …, m 에 연결. 아래 Routing Process: Destination address → Find network address → Forwarding table (Network address b1.c1.d1.e1 → Interface 1, …) → Interface number|large]]
+
+{def}"The '''first address''' ('''network address''') identifies the block; routers use it to reach the destination network." (p.20){/def}
+* 라우터의 동작: 도착한 패킷의 destination address → (mask 로 AND) → '''network address''' → [[forwarding table]] 에서 interface 찾기 → 내보내기. L12 에서 배운 [[forwarding]] 의 실제 모습 → [[network address]].
+* 교수(37:01): "destination address comes to the router, then it finds network address to find the interface". 자세한 forwarding 은 11/5 ([[longest mask matching]]).
+
+== p.21 — Block Allocation ⭐⭐⭐ ==
+[[img:L13-21.png|p.21 Block Allocation — ICANN → (large blocks) → ISP A, Large org / ISP A → cust. cust. cust. (smaller subblocks). 왼쪽: Restrictions on a CIDR block: Size N must be a power of 2 · Addresses must be contiguous (no gaps) · The first address must be divisible by N|large]]
+
+{def}"Global authority: '''ICANN''' (Internet Corporation for Assigned Names and Numbers). Gives '''large blocks''' to ISPs and large organizations, '''not to individual users'''.
+'''Restrictions on a CIDR block''': Size N must be a '''power of 2'''. Addresses must be '''contiguous''' (no gaps). The first address must be '''divisible by N'''." (p.21){/def}
+* 개인은 ICANN 에서 직접 받지 않는다 — "we never directly receive an IP address. We always get the address by ISPs or organizations" (38:19) → [[ICANN]] · [[ISP]] · [[block allocation]].
+* 세 규칙의 이유: ① 2 의 거듭제곱 → suffix 비트로 딱 떨어지게. ② contiguous → "This one is used or unused [in the middle] — it is not allowed" (39:24). ③ first 가 N 의 배수 → first 의 suffix 가 '''전부 0''' 이 되어 mask 연산이 성립한다.
+
+{exam}🎯 '''CIDR block 세 규칙'''은 subnetting(p.23)에서 거의 그대로 다시 나온다. "power of 2 · contiguous · first divisible by N" 세 줄을 외운다.{/exam}
+
+== p.22 — Example 7.4 ⭐⭐ ==
+[[img:L13-22.png|p.22 Example 7.4 — An ISP requests a block of 1000 addresses. ① 1000 is not a power of 2 → grant 1024 (= 2^10) ② n = 32 − log2 1024 = 22 ③ 18.14.12.0/22 ④ Check: first address = 302,910,464 = 1024 × 295,811 ✓. 막대 18.14.12.0 (first) … 1024 addresses … 18.14.15.255 (last)|large]]
+
+<pre class="txt">
+Example 7.4 — ISP 가 1000 주소 요청
+1. 1000 은 2 의 거듭제곱 아님 → 위로 올림: 2^10 = '''1024'''
+2. n = 32 − log2(1024) = 32 − 10 = '''22'''
+3. 빈 block 하나 할당: '''18.14.12.0/22'''
+4. last = first + 1023 → 18.14.12.0 + 3×256 + 255 = '''18.14.15.255'''
+5. 검산: 18×2^24 + 14×2^16 + 12×2^8 + 0 = 302,910,464 = 1024 × 295,811 ✓ (나누어떨어짐)
+</pre>
+* 교수가 처음에 "10 bits for prefix, 22 bits for suffix" 라고 했다가 "'''Ah, sorry'''" 하고 정정했다(40:50–41:44): '''suffix 10 비트, prefix 22 비트'''가 맞다 → [[Example 7.4]].
+
+== p.23 — Subnetting ⭐⭐⭐ ==
+[[img:L13-23.png|p.23 Subnetting — Block → subnets → sub-subnets. Designing subnets (block of N addresses, prefix n): subnet size N_sub, prefix n_sub, Assign the largest subnet first. Three rules: ① N_sub must be a power of 2 ② n_sub = 32 − log2 N_sub ③ First address of each subnet is divisible by N_sub. 아래 Organization block 막대: Subnet 1 · Subnet 2 · S3 · (빈칸)|large]]
+
+{def}"'''Subnetting''' adds '''more levels of hierarchy''': Block → subnets → sub-subnets … Designing subnets (block of N addresses, prefix n): Subnet size $N_{sub}$, prefix $n_{sub}$. '''Assign the largest subnet first'''.
+Three rules: ① $N_{sub}$ must be a power of 2 ② $n_{sub} = 32 - \log_2 N_{sub}$ ③ First address of each subnet is divisible by $N_{sub}$" (p.23){/def}
+* 이름 그대로 '''sub-net''' = network 아래의 network (교수 44:23 "You can understand the mechanism of subnetting by its name") → [[subnetting]].
+* 세 규칙은 p.21 CIDR block 규칙의 축소판이다. 교수: "It is '''essentially the same operation''' as dividing the entire address space into blocks" (50:52).
+
+[[anim:subnet_split_anim|need 120·60·10 이 128·64·16 으로 커져 큰 것부터 .0 · .128 · .192 에 놓이고 48 이 남는 과정을 보고, 시작 주소가 모두 블록 크기로 나누어떨어지는지 확인하라]]
+
+== p.24–26 — Example 7.5 ⭐⭐⭐ ==
+[[img:L13-25.png|p.25 Example 7.5 표 — Subblock / Need / Allocate / Prefix / First / Last: a 120 → 128, 32 − 7 = 25, 14.24.74.0/25 ~ 14.24.74.127/25 · b 60 → 64, 32 − 6 = 26, 14.24.74.128/26 ~ 14.24.74.191/26 · c 10 → 16, 32 − 4 = 28, 14.24.74.192/28 ~ 14.24.74.207/28. Check: 0 ÷ 128, 128 ÷ 64, 192 ÷ 16 ✓|large]]
+
+[[img:L13-26.png|p.26 Used: 128 + 64 + 16 = 208 → 48 addresses left in reserve (14.24.74.208 – 14.24.74.255; prefix not decided yet). 그림 a. Original block 14.24.74.0/24 ~ 14.24.74.255/24, b. Subblocks N = 128 (n = 25) · 64 (n = 26) · 16 (28) · 48 Unused|large]]
+
+<pre class="txt">
+Example 7.5 — 14.24.74.0/24 에서 120, 60, 10 주소 subnet
+0. N = 2^(32−24) = 256  (14.24.74.0 ~ 14.24.74.255)
+1. 2 의 거듭제곱으로 올림:  120 → 128 (2^7),  60 → 64 (2^6),  10 → 16 (2^4)
+2. 큰 것부터:
+   a  128  n = 32 − 7 = '''25'''   .0   ~ .127   (0 ÷ 128 = 0 ✓)
+   b   64  n = 32 − 6 = '''26'''   .128 ~ .191   (128 ÷ 64 = 2 ✓)
+   c   16  n = 32 − 4 = '''28'''   .192 ~ .207   (192 ÷ 16 = 12 ✓)
+3. used = 128 + 64 + 16 = '''208'''  →  reserve = 256 − 208 = '''48'''  (.208 ~ .255)
+   48 은 2 의 거듭제곱이 아님 → prefix 미정 (나중에 /28 + /27 등으로 쪼갤 수 있다)
+</pre>
+→ [[Example 7.5 subnet 설계]]
+
+{warn}'''슬라이드 오타''' — p.26 그림의 c 시작 라벨 "'''14.24.192.0/28'''" 은 "'''14.24.74.192/28'''" 의 오타다(p.25 표가 맞다). 그리고 교수는 used 를 "this amounts to '''200''' addresses" (51:28)라고 어림했지만 정확히는 '''208''', 남는 것은 '''48''' 이다.{/warn}
+
+{warn}'''왜 큰 것부터?''' — 작은 것부터 빈틈없이 붙이면 c(16)를 .0–.15 에 놓고 b(64)가 '''.16''' 에서 시작하는데, 16 ÷ 64 는 나누어떨어지지 않는다 → 규칙 ③ 위반(.16/26 을 mask 하면 .0 이 나와 c 와 겹친다). b 를 .64 로 밀면 .16–.63 에 '''틈'''이 생겨 남은 주소가 조각난다. 큰 것부터 놓으면 앞에 놓인 block 크기의 합이 늘 다음 block 크기의 배수라서 '''자동으로''' 나누어떨어진다(p.24 "This keeps every start address divisible by its block size").{/warn}
+
+[[sim:subnet_alloc]]
+
+== p.27–28 — Address Aggregation ⭐⭐ ==
+[[img:L13-27.png|p.27 Address Aggregation — 160.70.14.0/26 · 160.70.14.64/26 · 160.70.14.128/26 · 160.70.14.192/26 → ISP → Internet. "Advertised to the world: 160.70.14.0/24 only"|large]]
+
+{def}"Also called '''address summarization''' or '''route summarization'''. Combine several small blocks into '''one larger block'''. Routers outside need only the larger block's prefix. ICANN → ISP (large block) → customers (subblocks)." (p.27)
+"Example 7.6 — The ISP combines 4 blocks into one block and advertises only that block. Packets for this block go to the ISP; the ISP forwards them to the right organization." (p.28){/def}
+
+[[img:L13-28.png|p.28 Example 7.6 — Block 1 160.70.14.0/26 to .63/26, Block 2 .64/26 to .127/26, Block 3 .128/26 to .191/26, Block 4 .192/26 to .255/26 → ISP (Larger block) → "All packets with destination addresses 160.70.14.0/24 to 160.70.14.255/24 are sent to ISP." → Internet|large]]
+
+* subnetting 의 '''반대 방향'''이다: 쪼갠 것을 바깥에서는 다시 하나로 본다. 교수: 인터넷의 다른 사용자는 "'''coarse-grained''' addresses" 만 알면 된다 (53:17–54:13) → [[address aggregation]] · [[Example 7.6]].
+* 네 /26 이 합쳐지는 이유: 네 block 은 '''앞 24 비트가 같고''' 25–26 번째 비트만 00·01·10·11 → 그 두 비트를 suffix 로 돌리면 /24 하나.
+
+[[anim:aggregation_anim|네 /26 block 의 앞 24 비트가 같다는 것을 비트로 확인하고, 바깥 forwarding table 이 네 줄에서 160.70.14.0/24 한 줄로 줄어든 뒤 패킷 .14.130 이 ISP 를 거쳐 Block 3 으로 가는 것을 보라]]
+
+== p.29 — Main and Auxiliary Protocols ⭐ ==
+[[img:L13-29.png|p.29 TCP/IP suite — Application layer (SMTP, FTP, TELNET, DNS, SNMP, …, DHCP) / Transport (SCTP, TCP, UDP) / Network layer (IGMP, ICMP, IP, ARP) / Data-link·Physical (Underlying LAN or WAN technology). "IP delivers datagrams; ICMP, IGMP, and ARP help it (errors, multicast, address mapping)"|large]]
+
+{def}"Where IP and the other network-layer protocols sit in the TCP/IP suite. IP delivers datagrams; '''ICMP, IGMP, and ARP''' help it ('''errors, multicast, address mapping''')." (p.29){/def}
+* [[ICMP]] = errors, [[IGMP]] = multicast, [[mid:ARP|ARP]] = address mapping(IP ↔ MAC). 교수: ARP 는 "we already learned" (56:14).
+* ⚠️ L12 p.5 는 '''DHCP''' 도 auxiliary protocol 로 들었지만, 이 그림에서는 DHCP 가 '''application layer''' 칸에 있다 → [[DHCP]] 의 tip 박스 · [[보조 프로토콜]].
+
+== p.30 — Internet Protocol (IP): unreliable, best-effort, connectionless ⭐⭐ ==
+[[img:L13-30.png|p.30 Sent 1 2 3 4 (in order) → Internet → Received 3 1 4 ("2 lost", "3 arrives first"). 왼쪽: Unreliable, best-effort delivery (corrupted, lost, out of order, delayed; Need reliability? Pair IP with TCP) · Connectionless (datagram approach; each datagram handled independently; different route)|medium]]
+
+{def}"'''Unreliable, best-effort delivery''': Packets may be '''corrupted, lost, out of order, or delayed'''. Need reliability? '''Pair IP with TCP'''.
+'''Connectionless''' (datagram approach): Each datagram is handled '''independently'''. Each may take a '''different route'''." (p.30){/def}
+* L12 의 [[best effort]] · [[connectionless]] · [[datagram approach]] 복습이다. 교수: "As we learned in the first class, it is unreliable" (56:43). 그림: 2 는 '''분실'''(lost), 3 이 '''먼저''' 도착(out of order) → [[IPv4]].
+* 신뢰성이 필요하면 TCP 와 짝을 짓는다 ([[mid:TCP|TCP]]).
+
+== 🎙 실제 수업 기록 (11/3 화, 녹음본 기준) ==
+녹음: `녹음본/1103_컴네.txt` (60분, whisper.cpp large-v3-turbo 영어 전사 — "meetup score" = midterm score, "Ja-won-quart" = 자원 고갈, "sub-mapping" = subnetting, "address application" = address aggregation, "AIP" = ARP, "best export" = best effort, "ICN" = ICMP 처럼 깨져 있다). p.1–30 까지 나갔고 p.31(datagram format)부터는 11/5(목).
+* '''00:00–00:42''' ⭐ '''공지 — 중간고사 점수 확인·claim''': 점수를 확인하고 답안을 보며 claim 할 수 있는 '''날짜와 장소'''가 공지된다. "If you have any questions or claims, you can '''ask your TA'''." 구체적 일시·장소는 녹음에서 알아들을 수 없다 → LMS·TA 공지 확인 ([[시험 정보]]).
+* '''01:02–02:16''' 오늘은 network layer 둘째 부분, '''IP'''. "v4" 인 이유: 이제 IPv6 를 쓰고 "we will cover in the next few lectures". 초점은 '''addressing'''.
+* '''02:22–05:19''' ⭐ IPv4 address = connection 식별, 32 bits = 4 bytes. "the important key word here is '''connections, not devices'''." MAC 은 device 에 할당된 physical address, IP 는 "more like a '''logical address''', allocated to one connection". "one device can have multiple IP addresses". "'''This is the most crucial distinction from MAC address.'''"
+* '''05:26–07:13''' 32 bits → "around 4 billion". 세 표기 binary · dotted decimal("most closely related to … daily life") · hexadecimal.
+* '''07:13–07:58''' "address space" 의 "space" = feature space, code space 처럼 가능한 모든 것.
+* '''07:58–09:32''' prefix = "fixed in front", suffix = 뒤. prefix → network, suffix → node.
+* '''09:47–12:53''' classful: 5 class. A = 첫 비트 0 → 첫 바이트 0–127, B = 10 → 128–191, C = 110, D multicast, E reserved.
+* '''13:06–13:53''' A 는 "all different '''31-bit''' [patterns]" → 주소 공간의 절반, B 는 1/4.
+* '''14:07–19:17''' depletion: class A 는 128 조직뿐(녹음 "157" 은 ASR 오류), 조직 하나에 1,600 만 주소. "suppose that DGIST is allocated one Class A address … very difficult for one organization. Even … Samsung and SK Hynix". class B 는 삼성 같은 큰 회사에 적당(60,000). class C 는 256 이라 too small. '''16:34''' "'''It is a crucial issue of IPv4'''" — "자원 고갈".
+* '''19:17–23:24''' classless: class 없음, variable size block. "'''some important restrictions … the block size must be a power of 2'''." n = 32 → 노드 하나, n = 0 → $2^{32}$ 노드.
+* '''23:27–25:42''' slash notation: 숫자 = prefix length. "very common notation".
+* '''26:08–28:30''' 세 가지: $2^{32-n}$, first = "'''always''' all zero bits", last = "always all ones".
+* '''28:42–30:54''' Example 7.1: 27 bits prefix, 5 bits suffix, 32 addresses. "block … an interchangeable expression of network".
+* '''30:54–35:59''' ⭐ address mask: "important quantities", NOT(mask) = 31, +1 = 32. AND → prefix 보존, suffix 0. OR → last. "'''very implementable in a router'''".
+* '''36:06–36:20''' Example 7.3: "'''I recommend you to take this one as your own'''."
+* '''36:20–37:27''' network address 로 라우터가 interface 를 찾는다.
+* '''37:27–39:49''' ICANN, ISP. "'''we never directly receive an IP address'''". 세 제약: power of 2, contiguous("not allowed" 중간에 빈 곳), divisible by N.
+* '''40:00–44:11''' Example 7.4: 1000 → 1024. "10 bits for prefix, 22 bits for suffix … '''Ah, sorry about that'''" → prefix 22. first ≈ "0.3 billion" 이 1024 로 나누어떨어진다.
+* '''44:11–46:02''' subnetting: "understand … by its name", 세 규칙.
+* '''46:02–51:47''' Example 7.5: "allocate the '''largest''' first and ends with assigning the smallest". 120 → 7 bits suffix → 128, /25 … "It can look complicated, but it is '''exactly the same''' as how we divide block of the entire address space." 남는 주소 unused(교수 어림 "200", 정확히 208 used / 48).
+* '''51:58–55:38''' address aggregation = summarization: 바깥 사용자는 "coarse-grained addresses" 만.
+* '''55:38–56:26''' main and auxiliary: IP + IGMP, ICMP, ARP. ARP 는 이미 배움.
+* '''56:33–59:00''' IP: unreliable, best effort, "Need reliability → TCP", connectionless = datagram approach, 순서 바뀜·분실.
+* '''57:36–57:53''' (수업 중 휴대폰 관련 짧은 주의 — 내용 무관)
+* '''59:13–59:26''' "we should finish at this point and continue our discussion on '''IPv4 format on Thursday'''" → 11/5 p.31~ [[CH07 IPv4 데이터그램과 포워딩]].
+
+== 시험 대비 핵심 요약 ==
+# '''IPv4 address''' = 32 bits, '''connection''' 을 식별(device 가 아님) — unique · universal. 라우터가 network 3 개에 붙으면 주소 3 개. IP = '''logical''' (connection), MAC = '''physical''' (device) — 교수 "the most crucial distinction".
+# '''Address space''' = $2^{32}$ = 4,294,967,296. 표기 세 가지: binary · '''dotted decimal''' · hexadecimal (128.11.3.31 = 800B031F).
+# '''Prefix''' (n bits) = network, '''suffix''' (32 − n) = node — two-level hierarchy (postal address).
+# '''Classful''': A (0, /8, $2^7$ = 128 nets × $2^{24}$, 0–127), B (10, /16, $2^{14}$ × $2^{16}$, 128–191), C (110, /24, $2^{21}$ × $2^8$, 192–223), D (1110 multicast, 224–239), E (1111 reserved, 240–255). "$2^7$ not $2^8$" = 첫 비트가 0 으로 고정.
+# '''Address depletion''': A too big (128 조직 × 1,677 만, 대부분 unused), C too small (256) → 빨리 고갈.
+# '''Classless''': variable-size block, '''block size = power of 2''', n = 0–32, '''longer prefix → smaller network'''. '''Slash notation''' address/n = '''CIDR''' (Classless Inter-Domain Routing) — prefix 는 주소에 내장되지 않으니 꼭 /n 을 쓴다.
+# '''세 가지''': $N = 2^{32-n}$, '''first''' = suffix 전부 0 = address AND mask (= '''network address'''), '''last''' = suffix 전부 1 = address OR NOT(mask), N = NOT(mask) + 1. '''Ex 7.1''' 167.199.170.82/27 → 32 개, .64 ~ .95, mask 255.255.255.224.
+# '''Ex 7.3''': 주소만으로는 block 을 모른다 — 230.8.24.56 은 /16 → 230.8.0.0–.255.255, /20 → 230.8.16.0–.31.255, /26 → .24.0–.24.63, /27 → .24.32–.24.63, /29 → .24.56–.24.63, /31 → .24.56–.24.57.
+# '''Block allocation''': ICANN → ISP·large org (개인 ✗). CIDR block 규칙: '''power of 2 · contiguous · first divisible by N'''. '''Ex 7.4''': 1000 → 1024 → /22 → 18.14.12.0/22 ~ 18.14.15.255 (302,910,464 = 1024 × 295,811).
+# '''Subnetting''': $N_{sub}$ = power of 2, $n_{sub} = 32 - \log_2 N_{sub}$, 시작 주소는 $N_{sub}$ 의 배수, '''largest first'''. '''Ex 7.5''': 14.24.74.0/24 → a 128 /25 (.0–.127), b 64 /26 (.128–.191), c 16 /28 (.192–.207), used 208, reserve 48 (.208–.255).
+# '''Address aggregation''' (= address/route summarization): 작은 block 여러 개 → 큰 block 하나로 광고. '''Ex 7.6''': 160.70.14.0/26 · .64 · .128 · .192 → 160.70.14.0/24.
+# Network layer protocols: '''IP''' + 보조 '''ICMP'''(errors) · '''IGMP'''(multicast) · '''ARP'''(address mapping). IP = '''unreliable, best-effort, connectionless''' (corrupted · lost · out of order · delayed) → 신뢰성은 '''TCP'''.
+
+== 공식 모음 ==
+{|
+! 무엇 || 공식 || 예 (슬라이드)
+|-
+| 주소 공간 || $2^{32}$ = $(2^8)^4$ || 4,294,967,296 (p.4)
+|-
+| block 주소 수 || $N = 2^{32-n}$ || /27 → 32 (Ex 7.1), /24 → 256 (Ex 7.5), /22 → 1024 (Ex 7.4)
+|-
+| prefix 길이 || $n = 32 - \log_2 N$ || 1024 → 22 (Ex 7.4), 128 → 25, 64 → 26, 16 → 28 (Ex 7.5)
+|-
+| mask || n 개 1 + (32 − n) 개 0 || /27 → 255.255.255.224, /22 → 255.255.252.0, /25 → 255.255.255.128
+|-
+| N (mask 로) || NOT(mask) + 1 || 0.0.0.31 + 1 = 32
+|-
+| first (network address) || address AND mask || 167.199.170.82 AND 255.255.255.224 = 167.199.170.64
+|-
+| last || address OR NOT(mask) || 167.199.170.82 OR 0.0.0.31 = 167.199.170.95
+|-
+| class networks || $2^{\text{prefix} - \text{leading bits}}$ || A $2^7$, B $2^{14}$, C $2^{21}$
+|-
+| class 주소 / network || $2^{32-\text{prefix}}$ || A $2^{24}$, B $2^{16}$, C $2^8$
+|-
+| subnet || $N_{sub}$ = need 를 $2^k$ 로 올림, $n_{sub} = 32 - k$ || 120 → 128 (/25), 60 → 64 (/26), 10 → 16 (/28)
+|-
+| reserve || N − Σ $N_{sub}$ || 256 − 208 = 48
+|}
+값은 모두 python `ipaddress` 로 검산했다.
+
+== 관련 문서 ==
+* 주소 기초: [[IPv4]] · [[IPv4 address]] · [[logical address와 physical address]] · [[address space]] · [[dotted-decimal notation]] · [[prefix와 suffix]]
+* Classful: [[classful addressing]] · [[address depletion]]
+* Classless: [[classless addressing]] · [[slash notation]] · [[CIDR]] · [[block의 세 가지 정보]] · [[address mask]] · [[Example 7.1]] · [[Example 7.3]] · [[network address]]
+* 할당·분할·통합: [[block allocation]] · [[ICANN]] · [[ISP]] · [[Example 7.4]] · [[subnetting]] · [[Example 7.5 subnet 설계]] · [[address aggregation]] · [[Example 7.6]]
+* 프로토콜: [[보조 프로토콜]] · [[ICMP]] · [[IGMP]] · [[DHCP]] · [[best effort]] · [[connectionless]] · [[datagram approach]]
+* 앞 강의: [[CH07 네트워크 계층 서비스와 성능]] · [[IP]] · [[forwarding]] · [[forwarding table]]
+* 다음 (11/5): [[CH07 IPv4 데이터그램과 포워딩]] · [[IPv4 datagram format]] · [[ICMPv4]] · [[longest mask matching]]
+* 중간고사 위키: [[mid:IP 주소와 MAC 주소]] · [[mid:MAC 주소]] · [[mid:ARP]] · [[mid:주소 체계]] · [[mid:multicast]] · [[mid:라우터]] · [[mid:TCP]] · [[mid:TCP/IP 프로토콜 스위트]]

@@ -1,0 +1,29 @@
+key: Example 7.10 TTL과 protocol
+title: Example 7.10 — hex 덤프에서 TTL(9 번째 byte)과 protocol(10 번째 byte) 읽기
+category: 7강 IPv4 데이터그램, 예제
+---
+'''Example 7.10''' 은 IPv4 패킷의 앞 10 bytes(hex)에서 '''몇 hop 을 갈 수 있는지'''와 '''위층 프로토콜'''을 읽는 예제다. 답: TTL 01 → 1 hop, protocol 02 → IGMP. L13 p.41.
+
+{def}"First bytes of an IPv4 packet (hex): 45 00 00 28 00 01 00 00 01 02 … How many hops can it travel? Which upper-layer protocol? — '''TTL is the 9th byte (skip 8 bytes) → 01 → only 1 hop'''. '''Protocol is the 10th byte → 02 → IGMP'''." (p.41){/def}
+
+[[img:L13-41.png|p.41 Example 7.10 — byte 1–10 상자 45 00 00 28 00 01 00 00 | 01 02, 9 = TTL, 10 = Protocol 노랗게|medium]]
+
+== 풀이 — byte 위치 세기 ==
+<pre class="txt">
+행 1 (byte 1–4): 45 | 00 | 00 28      VER 4, HLEN 5 · service 0 · total 40
+행 2 (byte 5–8): 00 01 | 00 00        identification 1 · flags 000, offset 0
+행 3 (byte 9–12): '''01''' | '''02''' | …     TTL = 1 · protocol = 2
+TTL 1 → 첫 라우터에서 0 → '''1 hop 만'''
+protocol 2 → '''IGMP''' (1 ICMP, 2 IGMP, 6 TCP, 17 UDP)
+</pre>
+* 요령: header 는 4-byte 행. '''두 행(8 bytes)을 건너뛰면''' 셋째 행 첫 byte 가 [[TTL]], 다음이 [[protocol field|protocol]].
+* 덤으로 읽히는 것: HLEN 5 → header 20 B, total 0x0028 = 40 → data 20 B (Ex 7.9 와 같은 숫자), flags·offset 0 → 나뉘지 않은 datagram.
+
+{warn}"9 번째 byte" 를 0 부터 세서 8 번째(00)로 읽는 실수 주의. 슬라이드 그림은 '''1 부터''' 번호를 붙였다.{/warn}
+
+{analogy}🎭 '''주민등록번호 자리 읽기.''' 몇 번째 자리가 성별인지 알면 번호 전체를 해석할 필요 없이 그 자리만 본다. IPv4 header 도 "9 번째 = TTL, 10 번째 = protocol" 만 외우면 된다.{/analogy}
+
+[[sim:ipv4_header_decode]]
+
+== 관련 문서 ==
+* [[TTL]] · [[protocol field]] · [[IPv4 datagram format]] · [[Example 7.9 데이터 길이]] · [[Example 7.7 버전 판정]]

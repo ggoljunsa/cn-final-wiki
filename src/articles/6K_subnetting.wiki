@@ -1,0 +1,41 @@
+key: subnetting
+title: Subnetting — block 을 2^k 크기 subnet 으로, 큰 것부터 (세 규칙)
+category: 6강 IPv4 주소, 용어
+---
+'''Subnetting''' 은 받은 block 을 다시 더 작은 '''subnet''' 으로 나눠 '''계층을 하나 더''' 만드는 것이다(block → subnets → sub-subnets …). 규칙은 CIDR block 규칙과 같고, 설계 요령은 '''가장 큰 subnet 부터''' 놓는 것. L13 p.23–26. 교수: "It is essentially the '''same operation''' as dividing the entire address space into blocks" (50:52).
+
+{def}"Subnetting adds '''more levels of hierarchy''': Block → subnets → sub-subnets …
+Designing subnets (block of N addresses, prefix n): Subnet size $N_{sub}$, prefix $n_{sub}$. '''Assign the largest subnet first'''.
+Three rules: ① $N_{sub}$ must be a '''power of 2''' ② $n_{sub} = 32 - \log_2 N_{sub}$ ③ First address of each subnet is '''divisible by''' $N_{sub}$" (p.23){/def}
+
+[[img:L13-23.png|p.23 Subnetting 세 규칙과 Organization block = Subnet 1 · Subnet 2 · S3 · (남는 칸)|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''sub-net''' = network 의 '''아래'''(sub) network. 교수(44:23): "You can understand the mechanism of subnetting by its name … dividing the network into some sub-layer network".
+* prefix 를 늘린다: /24 block 안에 /25, /26, /28 subnet. suffix 의 앞 비트를 빌려 subnet 번호로 쓰는 셈이다.
+
+== 설계 순서 ==
+<pre class="txt">
+1. 원래 block: N = 2^(32 − n), first ~ last
+2. 각 need 를 2^k 로 올림               (규칙 ①)
+3. 큰 것부터 정렬                        (largest first)
+4. n_sub = 32 − k                        (규칙 ②)
+5. 시작 = 앞 subnet 바로 다음, ÷ N_sub 확인 (규칙 ③)
+6. last = 시작 + N_sub − 1
+7. 남은 주소 = reserve
+</pre>
+* '''왜 큰 것부터?''' 큰 것부터 놓으면 앞에 놓인 subnet 크기의 합이 늘 다음 subnet 크기의 배수 → 시작 주소가 '''자동으로''' 나누어떨어진다. 작은 것부터 빈틈없이 놓으면 64 짜리가 .16 에서 시작하는 식으로 규칙 ③ 이 깨진다 → [[Example 7.5 subnet 설계]].
+
+[[anim:subnet_split_anim|need 세 개가 2^k 로 커져 큰 것부터 놓이는 순서를 보고, 마지막의 Check 줄(0÷128, 128÷64, 192÷16)을 확인하라]]
+
+[[sim:subnet_alloc]]
+
+{exam}🎯 교수(47:31): "First thing we have to do is to allocate the '''largest''' [one] and ends with assigning the '''smallest''' [one]." / (50:35) "It can look complicated, but it is '''exactly the same''' as how we divide block of the entire address space." → 계산 문제로 나올 가능성이 큰 곳. 표(need · allocate · prefix · first · last)를 그리고 검산 줄까지 쓴다.{/exam}
+
+{analogy}🎭 '''이삿짐 트럭 싣기'''. 큰 장롱(128)부터 벽에 붙여 싣고, 그다음 냉장고(64), 마지막에 상자(16). 작은 상자부터 아무 데나 놓으면 장롱이 들어갈 '''반듯한 자리'''가 안 남는다.{/analogy}
+
+{quiz}200.10.0.0/24 를 need 50 · 25 · 100 subnet 으로 나누시오.{/quiz}
+{answer}올림: 100→128, 50→64, 25→32. 큰 것부터: '''128 /25 .0–.127''', '''64 /26 .128–.191''', '''32 /27 .192–.223'''. used 224, reserve 32 (.224–.255, 이건 2^5 이라 /27 하나로 쓸 수 있다).{/answer}
+
+== 관련 문서 ==
+* [[Example 7.5 subnet 설계]] · [[CIDR]] · [[block allocation]] · [[address aggregation]] · [[prefix와 suffix]] · [[CH07 IPv4 주소]]

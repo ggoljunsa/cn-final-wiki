@@ -1,0 +1,28 @@
+key: next hop
+title: Next hop (다음 hop) — forwarding table 이 알려 주는 "바로 다음 한 걸음"
+category: 7강 IPv4 데이터그램, 용어
+---
+'''Next hop''' 은 패킷을 목적지 방향으로 보낼 때 거칠 '''바로 다음 라우터(또는 목적지 host)'''다. host·라우터는 [[forwarding table]] 에서 next hop 주소와 내보낼 interface 를 찾는다. L13 p.56–60.
+
+{def}"Host or router looks up its forwarding table to find the '''next hop'''. Row: network address (with mask) → '''next-hop address''' → interface. Remember: network address = the first address in the network." (p.56)
+host 나 라우터는 forwarding table 에서 next hop 을 찾는다. 한 행은 network address(mask 포함) → next-hop 주소 → interface 이다.{/def}
+
+[[img:L13-56.png|p.56 Forwarding of IP Packets — Packet → Extract destination address → Search table → Interface number and next-hop address. 표: Network address including mask | Next-hop IP address | Interface|medium]]
+
+== Ex 7.19 표에서 next hop 칸 읽기 ==
+<pre class="txt">
+180.70.65.192/26   —                m2   ← R1 에 직접 연결: next hop 없음, 목적지 host 로 바로
+180.70.65.128/25   —                m0
+201.4.22.0/24      —                m3
+201.4.16.0/22      —                m1
+Default            180.70.65.200    m2   ← 그 외 전부: 다음 라우터 180.70.65.200 에게
+</pre>
+* '''—''' = 직접 연결된 네트워크(direct delivery). 주소가 적혀 있으면 다른 라우터를 거친다(indirect).
+* 라우터는 '''경로 전체가 아니라 next hop 만''' 안다 — hop-by-hop. 각 라우터가 자기 next hop 만 정확하면 전체 경로가 이어진다.
+
+{analogy}🎭 '''이어달리기의 다음 주자.''' 각 주자는 결승선까지의 코스를 몰라도 된다. "바통은 저 파란 옷 주자에게"(next hop)만 알면 된다. 결승선 바로 앞 주자는 직접 골인(—).{/analogy}
+
+[[sim:forward_lookup]]
+
+== 관련 문서 ==
+* [[forwarding table]] · [[forwarding]] · [[Example 7.19–7.21 R1 포워딩]] · [[longest mask matching]] · [[routing]]

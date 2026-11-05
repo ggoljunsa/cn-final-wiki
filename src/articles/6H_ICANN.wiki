@@ -1,0 +1,22 @@
+key: ICANN
+title: ICANN (Internet Corporation for Assigned Names and Numbers) — 주소 block 의 최상위 할당 기관
+category: 6강 IPv4 주소, 용어
+---
+'''ICANN''' 은 IP 주소 block 을 할당하는 '''전 세계 최상위 권한(global authority)''' 이다. 큰 block 을 [[ISP]] 와 대형 조직에만 주고 개인에게는 주지 않는다. L13 p.21, p.27.
+
+{def}"Global authority: '''ICANN''' (Internet Corporation for Assigned Names and Numbers). Gives large blocks to ISPs and large organizations, not to individual users." (p.21)
+"ICANN → ISP (large block) → customers (subblocks)" (p.27){/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''I'''nternet '''C'''orporation for '''A'''ssigned '''N'''ames and '''N'''umbers — 인터넷에서 '''이름'''(domain name)과 '''번호'''(IP 주소 등)를 '''배정'''하는 기관. 이 강의에서는 "Numbers" 쪽, 즉 IP 주소 block 배정만 다룬다.
+* (Forouzan 보충 — 슬라이드에 없음) 실제로는 ICANN 아래 지역 기관(아시아·태평양은 APNIC, 한국은 KISA)을 거쳐 ISP 로 내려간다.
+
+[[img:L13-21.png|p.21 ICANN 이 맨 위에서 ISP A 와 Large org 에 large blocks 를 준다|small]]
+
+{analogy}🎭 ICANN 은 '''전화번호 국번을 나눠 주는 정부 기관'''이다. 개인은 통신사(ISP)에게서 번호를 받지, 정부에 직접 신청하지 않는다.{/analogy}
+
+{quiz}ICANN 이 block 을 주는 대상과 주지 않는 대상은?{/quiz}
+{answer}주는 대상: '''ISP 와 large organizations''' (large blocks). 주지 않는 대상: '''individual users'''.{/answer}
+
+== 관련 문서 ==
+* [[block allocation]] · [[ISP]] · [[address aggregation]] · [[CIDR]]

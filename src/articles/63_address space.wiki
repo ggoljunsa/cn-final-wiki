@@ -1,0 +1,32 @@
+key: address space
+title: Address space — IPv4 의 2^32 = 4,294,967,296 개
+category: 6강 IPv4 주소, 용어
+---
+'''Address space''' 는 한 주소 체계가 만들 수 있는 '''주소의 총 개수'''다. IPv4 는 32 비트라 $2^{32}$ = '''4,294,967,296''' (약 43 억). L13 p.4.
+
+{def}"'''Address space''' = total number of addresses. IPv4: $2^{32}$ = 4,294,967,296 addresses." (p.4)
+주소 공간 = 가능한 주소의 전체 개수.{/def}
+
+[[img:L13-04.png|p.4 (필기본) 2^32 = 4,294,967,296, 세 표기 binary · dotted decimal · hex. 손글씨 "(2^8)^4"|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''space''' — 교수(07:25): "You may have heard of some space or feature space or some code space … The space means … [everything] that is possible". 즉 '''가능한 모든 값의 집합'''.
+
+== 계산 ==
+<pre class="txt">
+비트 하나 = 2 가지
+32 비트   = 2^32 가지
+         = (2^8)^4        ← 필기: 바이트(256 가지)가 4 개
+         = 256^4
+         = '''4,294,967,296'''  ≈ 43 억 (교수 "around 4 billion")
+</pre>
+* 이 공간을 class 로 고정 분할한 것이 [[classful addressing]](A 50% · B 25% · C 12.5% · D·E 각 6.25%), 가변 크기 block 으로 나눈 것이 [[classless addressing]] 이다.
+* 43 억은 지금 인터넷 장비 수보다 적다 → [[address depletion]], 그래서 IPv6 가 나왔다.
+
+{analogy}🎭 address space 는 '''전화번호 자릿수가 정하는 번호 총량'''이다. 8 자리 번호면 1 억 개가 한계이듯, 32 비트 주소는 43 억 개가 한계다. 자릿수를 늘리지 않는 한(IPv6) 아껴 나눠 쓰는 수밖에 없다.{/analogy}
+
+{quiz}IPv4 address space 의 크기를 2 의 거듭제곱과 십진수로 쓰시오.{/quiz}
+{answer}$2^{32}$ = 4,294,967,296.{/answer}
+
+== 관련 문서 ==
+* [[IPv4 address]] · [[dotted-decimal notation]] · [[classful addressing]] · [[classless addressing]] · [[address depletion]]

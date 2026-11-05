@@ -1,0 +1,63 @@
+key: IPv4 datagram format
+title: IPv4 datagram format (IPv4 데이터그램 형식) — header 20–60 bytes 의 칸 배치
+category: 7강 IPv4 데이터그램, 용어
+---
+'''IPv4 datagram format''' 은 IP 패킷([[datagram]])의 모양이다: '''header + payload''', 길이가 변한다. header 는 '''20–60 bytes''' 이고 routing·delivery 에 필요한 정보가 다 들어 있다. L13 p.31–38.
+
+{def}"IP packets are called '''datagrams'''. '''Variable length: header + payload (data)'''. Header: '''20–60 bytes''', carries what routing and delivery need." (p.31)
+"The header is drawn in '''4-byte (32-bit) rows'''." (p.32)
+IP 패킷을 datagram 이라 부른다. header + payload 의 가변 길이이고, header 는 20–60 bytes 로 라우팅·전달에 필요한 정보를 싣는다. header 는 4-byte(32-bit) 행으로 그린다.{/def}
+
+[[img:L13-32.png|p.32 Header format — 0·4·8·16·31 bit 눈금 위 VER·HLEN·Service type·Total length / Identification·Flags·Fragmentation offset / Time-to-live·Protocol·Header checksum / Source IP address / Destination IP address / Options + padding (0 to 40 bytes)|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''datagram''' = data + tele'''gram'''(전보). 한 장 한 장이 '''혼자서''' 목적지까지 가는 전보처럼, 각 datagram 은 독립적으로 처리된다([[connectionless]]). 그래서 '''주소와 처리 지시가 전부 header 안에''' 있어야 한다.
+* '''format''' = 칸의 위치가 정해진 양식. 라우터는 "몇 번째 bit 부터 몇 bits" 로 읽는다 → 위치를 외우면 hex 덤프에서 바로 값을 꺼낼 수 있다([[Example 7.10 TTL과 protocol]]).
+
+== 필드 표 ==
+{|
+! 행 || 필드 || bits || 뜻 || 사전
+|-
+| 1 || VER || 4 || version = 4 || [[Example 7.7 버전 판정]]
+|-
+| 1 || HLEN || 4 || header 길이 ÷ 4 (5–15) || [[HLEN]]
+|-
+| 1 || Service type || 8 || TOS → DiffServ || [[service type]]
+|-
+| 1 || Total length || 16 || header + data (bytes, ≤ 65,535) || [[total length]]
+|-
+| 2 || Identification || 16 || datagram 번호, fragment 에 복사 || [[identification field]]
+|-
+| 2 || Flags || 3 || − · D · M || [[flags D와 M]]
+|-
+| 2 || Fragmentation offset || 13 || 원래 위치 ÷ 8 || [[fragmentation offset]]
+|-
+| 3 || TTL || 8 || 남은 hop 수 || [[TTL]]
+|-
+| 3 || Protocol || 8 || 위층 프로토콜 번호 || [[protocol field]]
+|-
+| 3 || Header checksum || 16 || header 만 검사 || [[header checksum]]
+|-
+| 4 || Source IP address || 32 || 보낸 host — 끝까지 불변 || [[IPv4 address]]
+|-
+| 5 || Destination IP address || 32 || 받을 host — forwarding 의 열쇠 || [[forwarding table]]
+|-
+| (6) || Options + padding || 0–320 || 0–40 bytes, testing·debugging || —
+|}
+* 고정 5 행 × 4 bytes = '''20 bytes''' (HLEN = 5). options 가 있으면 HLEN 이 커진다(최대 15 → 60 bytes).
+* '''Options''': 최대 40 bytes, network testing·debugging 용, "IP software must be able to process them"(p.38). '''Payload''': 위층에서 온 data — "'''the reason the datagram exists'''".
+
+[[anim:ipv4_header_anim|32-bit 행이 한 줄씩 채워지는 순서대로 필드 이름과 bit 폭을 따라 읽어 보라]]
+
+{analogy}🎭 '''규격 송장 양식.''' 칸 위치가 정해져 있어서 택배 기사는 송장 전체를 읽지 않고 "오른쪽 아래 칸 = 받는 사람" 만 본다. IPv4 header 도 칸 위치가 고정이라 라우터가 '''몇 번째 byte''' 만 보고 바로 TTL·주소를 꺼낸다. 비고란(options)이 있으면 송장이 길어지고, 그 길이를 맨 앞 칸(HLEN)에 적어 둔다.{/analogy}
+
+[[sim:ipv4_header_decode]]
+
+{exam}🎯 칸의 '''bit 폭'''과 '''단위'''를 같이 외운다: HLEN 4 bits(×4 bytes), total length 16 bits(bytes), offset 13 bits(×8 bytes), TTL·protocol 8 bits. 계산 문제는 이 세 단위 차이에서 나온다.{/exam}
+
+{quiz}IPv4 header 의 최소·최대 길이와, 그 범위가 HLEN 필드와 어떻게 연결되는지 설명하시오.{/quiz}
+{answer}최소 20 bytes(고정 5 행, options 없음 → HLEN = 5), 최대 60 bytes(options 40 bytes → HLEN = 15). HLEN 은 4 bits 라 0–15 만 담을 수 있어 header 길이를 '''4 로 나눈 값'''을 적는다.{/answer}
+
+== 관련 문서 ==
+* [[CH07 IPv4 데이터그램과 포워딩]] · [[datagram]] · [[packetizing]] · [[HLEN]] · [[total length]] · [[TTL]] · [[protocol field]] · [[header checksum]]
+* 중간고사: [[mid:IP]] · [[mid:캡슐화]]

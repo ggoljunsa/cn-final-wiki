@@ -1,0 +1,51 @@
+key: Example 7.19–7.21 R1 포워딩
+title: Example 7.19–7.21 — R1 의 forwarding table 만들기, 비트로 보기, 180.70.65.140 찾기
+category: 7강 IPv4 데이터그램, 예제
+---
+'''Example 7.19–7.21''' 은 한 라우터 R1 을 두고 ① forwarding table 을 만들고(7.19), ② 같은 표를 비트로 보고(7.20), ③ 목적지 180.70.65.140 의 interface 를 찾는(7.21) 연작이다. 답: '''m0'''. L13 rev p.57–62.
+
+{def}"Make a forwarding table for router R1 … Solution: '''rows are sorted from the longest mask to the shortest'''." (p.60)
+"Leftmost 26 bits match row 1 → out of m2; leftmost 25 bits match row 2 → out of m0 … '''Longer prefix = smaller range of addresses'''." (p.61)
+"Packet arrives at R1 with destination 180.70.65.140. '''Apply the masks in order (longest first)'''." (p.62){/def}
+
+[[img:L13-59.png|p.59 Example 7.19 build-up — 빨간 점선 Network address(180.70.65.128/25, 201.4.16.0/22, 201.4.22.0/24, 180.70.65.192/26), 파란 점선 Connection address(R1 쪽 180.70.65.135/25, 201.4.16.2/22, 201.4.22.3/24, 180.70.65.194/26). 아래 180.70.65.200/26 라우터 → Rest of the Internet|large]]
+
+== 7.19 — 표 만들기 (p.57–60) ==
+* 개정판은 p.57(그림) → p.58('''Network address''' 빨강 표시) → p.59('''Connection address''' 파랑 추가) → p.60(해답) 순서로, '''표에는 network address(블록의 첫 주소)만 들어간다'''는 것을 보여 준다(p.56 "Remember").
+{|
+! Network address/mask || Next hop || Interface
+|-
+| 180.70.65.192/'''26''' || — || m2
+|-
+| 180.70.65.128/'''25''' || — || m0
+|-
+| 201.4.22.0/'''24''' || — || m3
+|-
+| 201.4.16.0/'''22''' || — || m1
+|-
+| Default || 180.70.65.200 || m2
+|}
+
+== 7.20 — 비트로 (p.61) ==
+<pre class="txt">
+/26  10110100 01000110 01000001 11        → m2   (64 주소)
+/25  10110100 01000110 01000001 1         → m0   (128)
+/24  11001001 00000100 00010110           → m3   (256)   ※ 슬라이드는 00011100 (오타)
+/22  11001001 00000100 000100             → m1   (1,024)
+</pre>
+{warn}'''슬라이드 오타''': p.61 셋째 행 셋째 octet 이 00011100(= 28)으로 찍혀 있다. 22 = '''00010110''' (python 검산). 개정판에도 그대로다.{/warn}
+
+== 7.21 — 180.70.65.140 찾기 (p.62) ==
+<pre class="txt">
+140 = 10001100
+행 1 /26: AND 255.255.255.192 → .128 (140 의 앞 2 bits 10) ≠ .192 ✗
+행 2 /25: AND 255.255.255.128 → .128 (140 의 앞 1 bit  1 ) = .128 ✓ → '''m0'''
+</pre>
+* 추가 연습(python 검산): 180.70.65.200 → /26 에서 .192 ✓ → '''m2''' (/25 에도 맞지만 longest 가 먼저) · 201.4.22.35 → /24 ✓ → m3 · 201.4.18.7 → /22 (AND → 201.4.16.0) ✓ → m1 · 18.24.32.78 → 전부 ✗ → '''default 180.70.65.200, m2'''.
+
+{analogy}🎭 '''우편 분류함을 가장 좁은 칸부터 대 보기.''' "65 번지 192–255 호" 칸 → 안 맞으면 "65 번지 128–255 호" 칸 → … → 마지막에 "기타 전부(default)" 칸. 좁은 칸을 먼저 보니 더 구체적인 주소가 이긴다.{/analogy}
+
+[[sim:forward_lookup]]
+
+== 관련 문서 ==
+* [[longest mask matching]] · [[forwarding table]] · [[next hop]] · [[network address]] · [[address mask]] · [[CIDR]]

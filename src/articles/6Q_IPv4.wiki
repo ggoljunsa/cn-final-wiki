@@ -1,0 +1,43 @@
+key: IPv4
+title: IPv4 (Internet Protocol version 4) — 32 비트 주소의 unreliable, best-effort, connectionless 프로토콜
+category: 6강 IPv4 주소, 용어
+---
+'''IPv4''' 는 지금 우리가 쓰는 IP 의 4 번째 버전으로, 32 비트 주소를 쓴다. L13 은 IPv4 의 '''addressing, packet format, fragmentation, ICMPv4, forwarding''' 을 다룬다(p.2). 성질은 L12 에서 본 [[IP]] 그대로 — '''unreliable, best-effort, connectionless''' (p.30). 후속 '''IPv6''' 는 "next few lectures".
+
+{def}"4. Internet Protocol Version 4 (IPv4) — Discusses IPv4, including addressing, packet format, fragmentation, ICMPv4, forwarding, and NAT." (p.2)
+"Internet Protocol (IP): '''Unreliable, best-effort delivery''' — Packets may be '''corrupted, lost, out of order, or delayed'''. Need reliability? '''Pair IP with TCP'''. '''Connectionless''' (datagram approach) — Each datagram is handled independently. Each may take a different route." (p.30){/def}
+
+[[img:L13-30.png|p.30 Sent 1 2 3 4 → Internet → Received 3 1 4 ("2 lost", "3 arrives first")|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''v4''' — 교수(01:28): "The reason that we call it v4 is that we now use '''IPv6''', which is a later version". (v5 는 실험용이라 널리 쓰이지 않았다 — 보충.)
+
+== IPv4 한 장 ==
+{|
+! 항목 || 내용 || 문서
+|-
+| 주소 || 32 bits, connection 단위, $2^{32}$ 공간 || [[IPv4 address]] · [[address space]]
+|-
+| 주소 체계 || classful(옛) → classless/CIDR(지금) || [[classful addressing]] · [[classless addressing]]
+|-
+| 신뢰성 || '''unreliable, best effort''' — corrupted · lost · out of order · delayed || [[best effort]]
+|-
+| 연결 || '''connectionless''' (datagram approach) — 독립 처리, 다른 경로 || [[connectionless]] · [[datagram approach]]
+|-
+| 신뢰성이 필요하면 || '''TCP''' 와 짝 || [[mid:TCP]]
+|-
+| 돕는 프로토콜 || ICMP(errors) · IGMP(multicast) · ARP(address mapping) || [[보조 프로토콜]] · [[ICMP]] · [[IGMP]]
+|-
+| packet 형식 이후 || datagram format, fragmentation, ICMPv4, forwarding (11/5~) || [[CH07 IPv4 데이터그램과 포워딩]] · [[IPv4 datagram format]] · [[ICMPv4]]
+|}
+* p.30 그림 읽기: 1 2 3 4 를 순서대로 보냈는데 '''2 는 분실(lost)''', '''3 이 먼저 도착'''(out of order) → 받은 순서 3 1 4. IP 는 이를 고치지 않는다.
+* p.2 목록에 NAT 가 있지만 '''11/4 개정판 덱에서 NAT 슬라이드는 삭제'''됐다 → [[시험 정보]].
+
+{analogy}🎭 IPv4 는 '''구형 일반우편'''이다. 우편번호 체계(32 비트 주소)가 오래돼 번호가 모자라고(→ IPv6), 배달은 최선을 다하지만 분실·순서 뒤바뀜을 책임지지 않는다(best effort). 확실히 받아야 하면 등기(TCP)를 붙인다.{/analogy}
+
+{quiz}p.30 에서 IP 가 unreliable 하다고 할 때 일어날 수 있는 네 가지는?{/quiz}
+{answer}'''corrupted, lost, out of order, delayed'''. 신뢰성이 필요하면 TCP 와 함께 쓴다.{/answer}
+
+== 관련 문서 ==
+* [[IP]] · [[IPv4 address]] · [[best effort]] · [[connectionless]] · [[datagram approach]] · [[보조 프로토콜]] · [[CH07 IPv4 주소]] · [[CH07 IPv4 데이터그램과 포워딩]]
+* 중간고사: [[mid:IP]] · [[mid:TCP]] · [[mid:connectionless와 unreliable]]

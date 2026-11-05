@@ -1,0 +1,40 @@
+key: Example 7.4
+title: Example 7.4 — ISP 가 1000 주소 요청 → 1024 (/22) → 18.14.12.0/22
+category: 6강 IPv4 주소, 용어
+---
+'''Example 7.4''' 는 [[block allocation]] 의 세 규칙을 숫자로 확인하는 예제다. 1000 은 2 의 거듭제곱이 아니니 1024 를 주고, prefix 는 22, 받은 block 18.14.12.0/22 의 first 가 1024 로 나누어떨어지는지 검산한다. L13 p.22.
+
+{def}"An ISP requests a block of '''1000''' addresses
+① 1000 is not a power of 2 → grant '''1024''' (= $2^{10}$)
+② Prefix: $n = 32 - \log_2 1024$ = '''22'''
+③ An available block is granted: '''18.14.12.0/22'''
+④ Check: first address = 302,910,464 = 1024 × 295,811 ✓" (p.22){/def}
+
+[[img:L13-22.png|p.22 Example 7.4 — 18.14.12.0 (first) … 1024 addresses … 18.14.15.255 (last)|large]]
+
+== 풀이 ==
+<pre class="txt">
+1. 1000 을 2 의 거듭제곱으로 올림: 2^9 = 512 < 1000 ≤ 1024 = 2^10  → N = '''1024'''
+2. suffix = log2(1024) = 10 비트 → prefix n = 32 − 10 = '''22'''
+3. 할당: 18.14.12.0/22
+4. last: suffix 10 비트 = 셋째 바이트 하위 2 비트 + 넷째 바이트 8 비트
+   셋째 바이트 12 = 000011|00 → 000011|11 = 15,  넷째 → 255   → '''18.14.15.255'''
+5. 검산: 18×2^24 + 14×2^16 + 12×2^8 + 0
+       = 301,989,888 + 917,504 + 3,072 = 302,910,464
+       302,910,464 ÷ 1024 = 295,811 (나머지 0) ✓
+   mask /22 = 255.255.252.0
+</pre>
+
+{warn}'''교수 말실수 주의 (40:50–41:44)''' — "it yields 10 bits for prefix, and 22 bits for suffix … '''Ah, sorry about that'''" 하고 정정했다. 맞는 것은 '''suffix 10 비트(주소 수 결정), prefix 22 비트'''. 주소 수 N 을 정하는 것은 항상 '''suffix''' 다.{/warn}
+
+* 낭비: 1024 − 1000 = 24 개는 안 쓰지만, classful 이었으면 1000 개 때문에 class B(65,536)를 받아야 했다 → classless 의 이득.
+
+[[sim:cidr_block]]
+
+{analogy}🎭 1,000 명 단체 예약에 '''1,024 석짜리 홀'''을 내주는 것. 좌석 수는 2 의 거듭제곱 크기 홀만 있다. 24 석은 비지만, 예전처럼 6 만 석 경기장(class B)을 통째로 내주는 것보다 훨씬 낫다.{/analogy}
+
+{quiz}ISP 가 300 주소를 요청하면 N, prefix, mask 는?{/quiz}
+{answer}N = 512 ($2^9$), prefix = 32 − 9 = '''/23''', mask = 255.255.254.0.{/answer}
+
+== 관련 문서 ==
+* [[block allocation]] · [[CIDR]] · [[ISP]] · [[block의 세 가지 정보]] · [[address mask]]

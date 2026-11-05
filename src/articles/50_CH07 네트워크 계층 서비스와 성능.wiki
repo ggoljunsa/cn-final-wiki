@@ -434,3 +434,6 @@ EECS 의 Prof. Bae 가 알아낸 바로는 '''DGIST 의 유선 캠퍼스 인프�
 * 성능: [[transmission delay]] · [[propagation delay]] · [[processing delay]] · [[queuing delay]] · [[total delay 공식]] · [[throughput]] · [[bottleneck]] · [[load와 성능]]
 * 앞 강의: [[CH05 셀룰러 동작]] · [[CH05 Satellite Network]] · [[all-IP]]
 * 중간고사 위키: [[mid:network layer]] · [[mid:캡슐화]] · [[mid:PDU]] · [[mid:라우터]] · [[mid:IP]] · [[mid:TCP]] · [[mid:latency]] · [[mid:propagation time]] · [[mid:transmission time]] · [[mid:throughput]] · [[mid:ARP]] · [[mid:Gigabit Ethernet]]
+
+----
+다음 강: [[CH07 IPv4 주소]] (11/3 — IP 가 정한다던 "주소 형식"의 실체: IPv4 addressing, CIDR, subnetting)

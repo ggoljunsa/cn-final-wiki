@@ -1,0 +1,39 @@
+key: flags D와 M
+title: Flags (3 bits) — D (do not fragment) 와 M (more fragments)
+category: 7강 IPv4 데이터그램, 용어
+---
+'''Flags''' 는 IPv4 header 둘째 행의 3 bits 로 '''− · D · M''' 순서다. 첫 bit 는 reserved, '''D''' = 1 이면 나누면 안 되고, '''M''' = 1 이면 이 fragment 뒤에 조각이 '''더 있다'''(마지막이 아님). L13 p.44, p.47.
+
+{def}"Flags (3 bits): 1st bit: reserved (not used). '''D (do not fragment): 1 → must not fragment'''. '''M (more fragments): 1 → not the last fragment'''." (p.44)
+Flags 는 3 bits: 첫 bit 예약, D 가 1 이면 fragmentation 금지, M 이 1 이면 마지막 fragment 가 아님.{/def}
+
+<pre class="ascii">
+ ┌──────────┬──────────────┬──────────────┐
+ │    −     │      D       │      M       │
+ │ reserved │ do not frag. │ more frags.  │
+ └──────────┴──────────────┴──────────────┘
+ 2진 010 → D = 1, M = 0   /   001 → D = 0, M = 1
+</pre>
+
+== 이름에서 개념 끌어내기 ==
+* '''D'''on't fragment: "나누지 마". D = 1 인 datagram 이 [[MTU]] 보다 작은 링크를 만나면 라우터는 나눌 수 없으니 '''버리고''' ICMP 로 알린다(destination unreachable — Forouzan 보충).
+* '''M'''ore fragments: "뒤에 더 있음". 마지막 조각만 M = 0. 그래서 M 과 [[fragmentation offset|offset]] 둘로 위치를 판정한다:
+{|
+! M || offset || 판정 (p.47)
+|-
+| 0 || 0 || Not fragmented
+|-
+| 1 || 0 || First fragment
+|-
+| 1 || > 0 || Middle fragment
+|-
+| 0 || > 0 || Last fragment
+|}
+{warn}'''다시 나눈 조각의 M.''' p.46 에서 F2(중간 조각)를 F2.1·F2.2 로 다시 나누면 F2.2 도 '''M = 1''' 이다. M 은 "'''원래 datagram''' 기준으로 뒤에 더 있나" 이기 때문 — 원래의 끝은 F3 이다.{/warn}
+
+{analogy}🎭 '''연재 소설 끝의 "다음 호에 계속"(M = 1)''' 과 '''표지의 "분책 금지"(D = 1)'''. "계속" 이 없는 회차가 완결편이고, 1 회인데 "계속" 이 붙어 있으면 첫 회다.{/analogy}
+
+[[sim:fragment_calc]]
+
+== 관련 문서 ==
+* [[fragmentation offset]] · [[identification field]] · [[Example 7.14 fragment 위치 판정]] · [[fragmentation]] · [[ICMP error-reporting message]]

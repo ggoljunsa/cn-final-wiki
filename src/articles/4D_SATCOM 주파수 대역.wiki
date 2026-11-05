@@ -49,5 +49,7 @@ category: 4강 위성, 용어
 {quiz}OX: SATCOM 에서 uplink 는 위성이 지구로 보내는 전송이다.{/quiz}
 {answer}✗ — '''uplink = Earth → satellite''', downlink = satellite → Earth (p.15).{/answer}
 
+{tip}'''필기 메모: "high freq"''' (p.15, Ku·Ka downlink 11.0 → 20.0 에서 화살표) — Ku/Ka 는 표에서 '''가장 높은 주파수''' 대역이라는 표시. 위 trend 와 연결된다: 높은 대역일수록 bandwidth 가 크다(Ka 3500 MHz). 단점(Forouzan 보충 — 슬라이드에 없음): 주파수가 높을수록 비·대기에 의한 감쇠가 커진다.{/tip}
+
 == 관련 문서 ==
 * [[uplink와 downlink]] · [[CH05 Satellite Network]] · [[satellite network 구성]] · [[AMPS 대역과 채널]] · [[mid:bandwidth]]
