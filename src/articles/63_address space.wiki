@@ -21,7 +21,7 @@ category: 6강 IPv4 주소, 용어
          = '''4,294,967,296'''  ≈ 43 억 (교수 "around 4 billion")
 </pre>
 * 이 공간을 class 로 고정 분할한 것이 [[classful addressing]](A 50% · B 25% · C 12.5% · D·E 각 6.25%), 가변 크기 block 으로 나눈 것이 [[classless addressing]] 이다.
-* 43 억은 지금 인터넷 장비 수보다 적다 → [[address depletion]], 그래서 IPv6 가 나왔다.
+* 43 억은 지금 인터넷 장비 수보다 적다 → [[address depletion]], 그래서 [[IPv6]] 가 나왔다.
 
 {analogy}🎭 address space 는 '''전화번호 자릿수가 정하는 번호 총량'''이다. 8 자리 번호면 1 억 개가 한계이듯, 32 비트 주소는 43 억 개가 한계다. 자릿수를 늘리지 않는 한(IPv6) 아껴 나눠 쓰는 수밖에 없다.{/analogy}
 

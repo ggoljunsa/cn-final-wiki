@@ -1,0 +1,43 @@
+key: global unicast address
+title: Global unicast address — 2000::/3, prefix · subnet · interface ID
+category: 8강 IPv6, 용어
+---
+'''Global unicast address''' 는 인터넷 위 두 host 가 1 대 1 로 통신할 때 쓰는 IPv6 주소다. 가장 흔한 IPv6 주소라서 슬라이드는 이것만 자세히 다룬다. L14 p.8–9.
+
+{def}"Global unicast: 1-to-1 communication between two hosts on the Internet. Block 2000::/3 (first 3 bits fixed: 001) → 2^125 addresses. An address has three parts" (p.8)
+→ 범위는 2000::/3 이다. 앞 3 bits 가 001 로 고정이라 $2^{125}$ 개다. 주소는 세 부분으로 나뉜다.{/def}
+
+[[img:L14-08.png|p.8 (필기본) Global routing prefix (n) 48 bits · Subnet (m) 16 bits · Interface ID (q) 64 bits|medium]]
+
+== 2000::/3 읽기 ==
+<pre class="txt">
+2000::     = 2000:0000:0000:0000:0000:0000:0000:0000   (:: 뒤가 끝까지 0)
+첫 hex 2   = 0010 → 앞 3 bits 001
+/3         = 앞 3 bits 가 prefix (IPv4 slash notation 과 같은 뜻)
+주소 수    = 2^(128 − 3) = 2^125
+범위       = 2000:: ~ 3FFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF
+</pre>
+첫 hex 자리가 2 나 3 이면 global unicast 다. 2 = 0010, 3 = 0011 이라 둘 다 001 로 시작하기 때문이다.
+{tip}필기 메모: p.8 "2000::" 과 아래 "00", 그리고 "/n : # bits of prefix". 교수는 "/n … expresses the number of bits for prefix"(11/10 09:57)라고 했고, `::` 뒤에 숫자가 없으니 끝까지 0 이라고 풀었다(10:43–10:59). 슬라이드 그림의 n · m · q 는 세 부분의 bit 수를 나타내는 기호다.{/tip}
+
+== 세 부분 ==
+[[img:L14-09.png|p.9 (필기본) 128 bits = Global routing prefix (n, Defines site) | Subnet identifier (m, Defines subnet) | Interface identifier (q, Defines interface). Recommendation n 48 · m 16 · q 64. Site 옆 손글씨 "prefix"|medium]]
+{|
+! 부분 || bits(권장) || 가리키는 것 || 개수
+|-
+| global routing prefix (n) || 48 || site (회사, 학교 같은 큰 네트워크) || 3 bits 고정 → $2^{45}$ sites/ISPs
+|-
+| subnet identifier (m) || 16 || site 안의 subnet || $2^{16} = 65{,}536$
+|-
+| [[interface ID|interface identifier]] (q) || 64 || subnet 안의 interface || IPv4 의 host ID 에 해당
+|}
+IPv4 로 치면 global routing prefix + subnet 이 [[prefix와 suffix|prefix]] 이고 interface ID 가 suffix 다. IPv4 에서 [[subnetting]] 으로 prefix 를 늘렸던 것을 IPv6 는 처음부터 subnet 칸 16 bits 로 정해 두었다.
+{tip}필기 메모: p.9 Site 옆 "↓ prefix". site 를 정하는 것이 global routing prefix 다. 라우터 바깥에서는 이 48 bits 만 보고 site 까지 길을 찾는다.{/tip}
+
+{analogy}🎭 주소 "서울시 강남구 / ○○아파트 101동 / 1502호" 와 같다. 앞부분(global routing prefix)은 단지까지, 가운데(subnet)는 동, 끝(interface ID)은 호수다.{/analogy}
+
+{quiz}global unicast 의 site 수가 $2^{48}$ 이 아니라 $2^{45}$ 인 이유는?{/quiz}
+{answer}global routing prefix 48 bits 중 앞 3 bits 가 001 로 고정이라 자유롭게 쓸 수 있는 bits 는 45 개다.{/answer}
+
+== 관련 문서 ==
+* [[interface ID]] · [[unicast·anycast·multicast]] · [[autoconfiguration]] · [[slash notation]] · [[CH07 IPv6]]

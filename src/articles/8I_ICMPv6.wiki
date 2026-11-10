@@ -1,0 +1,39 @@
+key: ICMPv6
+title: ICMPv6 — ICMP · ARP · IGMP 를 하나로
+category: 8강 IPv6, 용어
+---
+'''ICMPv6''' 는 IPv6 의 보조 프로토콜이다. IPv4 에서 따로 있던 ICMP, ARP, IGMP 세 개를 하나로 합쳤다. L14 p.27–28.
+
+{def}"ICMP, ARP, and IGMP of version 4 are combined into one protocol: ICMPv6" (p.27)
+"Four groups of ICMPv6 messages … ND (Neighbor Discovery) takes over ARP's job; MLD (Multicast Listener Discovery) takes over IGMP's" (p.28)
+→ version 4 의 ICMP · ARP · IGMP 가 ICMPv6 하나가 됐다. 메시지는 네 그룹이고, ND 가 ARP 일을, MLD 가 IGMP 일을 맡는다.{/def}
+
+[[img:L14-27.png|p.27 Network layer in version 4 (IGMP · ICMP · IPv4 · ARP) → Network layer in version 6 (ICMPv6 · IPv6)|medium]]
+
+== 네 그룹 ==
+[[img:L14-28.png|p.28 ICMPv6 Messages → Error messages · Informational messages · Neighbor discovery messages (ND Protocol) · Group membership messages (MLD Protocol)|medium]]
+{|
+! ICMPv6 그룹 || IPv4 에서 하던 프로토콜
+|-
+| Error messages || [[ICMPv4]] 의 [[ICMP error-reporting message|error-reporting]]
+|-
+| Informational messages || [[ICMPv4]] 의 query ([[echo request와 ping|echo]] 등)
+|-
+| Neighbor discovery messages ([[neighbor discovery|ND]]) || [[mid:ARP|ARP]]
+|-
+| Group membership messages ([[MLD]]) || [[IGMP]]
+|}
+교수는 앞의 두 그룹을 "the same as regular ICMPv4 messages"(11/10 40:52)라고 했다. 이름만 바뀌었다고 보면 된다. 새로 외울 것은 ND ↔ ARP, MLD ↔ IGMP 대응이다.
+
+== 이름에서 개념 끌어내기 ==
+* Internet Control Message Protocol '''v6'''. IPv4 의 ICMP 를 IPv6 용으로 고친 것이다.
+* 교수는 "you can think of it as an integration"(40:07)이라고 했다. 따로 놀던 세 프로토콜이 한 프로토콜의 메시지 그룹이 됐다.
+{info}(Forouzan 보충 — 슬라이드에 없음) ICMPv6 메시지는 IPv6 패킷 안에 실린다. IPv4 의 ICMP 가 IP datagram 안에 실렸던 것과 같다. [[autoconfiguration]] 의 router solicitation · advertisement 도 ND 그룹의 메시지다. 라우터가 큰 패킷을 버릴 때 보내는 "packet too big" 은 error 그룹이다([[IPv6 fragmentation]]).{/info}
+
+{analogy}🎭 IPv4 시절에는 민원실(ICMP), 주소 안내소(ARP), 동호회 명부 관리실(IGMP)이 따로 있었다. IPv6 는 이것을 '''주민센터 하나'''로 합치고 창구만 네 개로 나눴다.{/analogy}
+
+{quiz}ICMPv6 의 네 메시지 그룹을 쓰고, IPv4 의 ARP 와 IGMP 에 해당하는 것을 고르라.{/quiz}
+{answer}Error · Informational · Neighbor discovery(ND) · Group membership(MLD). ARP → ND, IGMP → MLD.{/answer}
+
+== 관련 문서 ==
+* [[neighbor discovery]] · [[MLD]] · [[ICMPv4]] · [[ICMP]] · [[보조 프로토콜]] · [[CH07 IPv6]]

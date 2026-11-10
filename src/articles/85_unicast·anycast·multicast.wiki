@@ -1,0 +1,33 @@
+key: unicast·anycast·multicast
+title: Unicast · Anycast · Multicast — IPv6 의 세 가지 주소 종류
+category: 8강 IPv6, 용어
+---
+IPv6 주소는 패킷을 몇 명이 받느냐에 따라 unicast, anycast, multicast 세 종류로 나뉜다. L14 p.5–7. 따로 broadcast 주소는 없다.
+
+{def}"Unicast: one interface; the packet goes to that recipient. Anycast: a group sharing one address. Delivered to only one member: the most reachable. Addresses come from the unicast block. Multicast: a group of computers. Every member gets a copy. Broadcast = a special case of multicast" (p.7)
+→ unicast 는 한 interface. anycast 는 주소 하나를 그룹이 공유하고 그중 가장 가까운 한 명만 받는다. multicast 는 그룹 전원이 copy 를 받는다. broadcast 는 multicast 의 특수한 경우다.{/def}
+
+[[img:L14-07.png|p.7 Unicast(S → 한 명) · Anycast(점선 그룹 중 nearest 한 명) · Multicast(그룹 all)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+{|
+! 이름 || 뜻 || 받는 쪽
+|-
+| uni-cast || 하나(uni)에게 보냄 || 정해진 interface 하나
+|-
+| any-cast || 아무(any)에게나 보냄 || 그룹 중 아무나 하나. 실제로는 가장 가까운 멤버
+|-
+| multi-cast || 여럿(multi)에게 보냄 || 그룹 멤버 전부
+|}
+* anycast 는 그룹이라는 점에서 multicast 와 닮았다. 대신 받는 사람이 한 명이라는 점은 unicast 와 같다. 교수 표현으로는 "It's similar to unicast, but the difference lies in the fact that we send the nearest one that shares one address"(11/10 08:19)이다.
+* anycast 전용 block 은 없다. unicast block 의 주소를 여러 장치에 같이 붙여서 쓴다.
+* IPv6 에는 broadcast 주소가 따로 없다. "모두에게" 보낼 때는 모든 장치가 멤버인 multicast 그룹으로 보낸다.
+{info}중간고사의 Ethernet 주소에도 [[mid:unicast]] · [[mid:multicast]] · [[mid:broadcast 주소|broadcast]] 가 있었다. IPv6 는 여기에 anycast 를 더하고 broadcast 를 multicast 에 흡수했다.{/info}
+
+{analogy}🎭 unicast 는 특정인에게 거는 전화, multicast 는 단체 문자, anycast 는 '''119 신고'''다. 119 라는 번호는 하나지만 가장 가까운 소방서가 받는다.{/analogy}
+
+{quiz}anycast 와 multicast 의 차이를 한 줄로.{/quiz}
+{answer}둘 다 그룹이 주소를 공유한다. anycast 는 가장 가까운(most reachable) 한 명만 받고, multicast 는 멤버 전원이 copy 를 받는다.{/answer}
+
+== 관련 문서 ==
+* [[global unicast address]] · [[IPv6 address]] · [[MLD]] · [[CH07 IPv6]]

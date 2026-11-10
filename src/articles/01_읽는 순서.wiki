@@ -67,9 +67,19 @@ category: 안내
 # 합치기: [[address aggregation]] → [[Example 7.6]]
 # 프로토콜 정리: [[보조 프로토콜]] · [[IGMP]] · [[DHCP]] · [[ICMP]] · p.30 IP = unreliable · best effort · connectionless
 
-== 7. '''[[CH07 IPv4 데이터그램과 포워딩]]''' (L13 rev p.31~, 11/5~) ==
+== 7. '''[[CH07 IPv4 데이터그램과 포워딩]]''' (L13 rev p.31–68, 11/5) ==
 # [[CH07 IPv4 데이터그램과 포워딩]] → [[IPv4 datagram format]] → [[HLEN]] · [[total length]] → Ex [[Example 7.7 버전 판정|7.7]]·[[Example 7.9 데이터 길이|7.9]]·[[Example 7.10 TTL과 protocol|7.10]] (sim ipv4_header_decode) → [[MTU]] → [[fragmentation offset]] · [[flags D와 M]] → Ex [[Example 7.14 fragment 위치 판정|7.14]]·[[Example 7.16 첫·마지막 바이트|7.16]] (sim fragment_calc) → [[ICMPv4]] → [[Example 7.19–7.21 R1 포워딩]] (sim forward_lookup) → [[longest mask matching]] → [[hierarchical routing]]
 
-== 8. 정리 ==
+== 8. '''[[CH07 IPv6]]''' (L14 p.1–32, 11/10) ==
+교수: "So far we've seen IPv4 … we move on to the next generation IP." IPv4 와 무엇이 다른지 비교하며 읽는다.
+# 주소: [[IPv6]] → [[IPv6 address]] ⭐⭐⭐ → [[colon hexadecimal notation]] → [[zero compression]] (sim ipv6_compress) → [[unicast·anycast·multicast]]
+# 구조: [[global unicast address]] (2000::/3, 48 · 16 · 64) → [[interface ID]] ⭐⭐⭐ ("please remember … 64 bits") → [[EUI-64]] (7번째 bit + FFFE)
+# 스스로 주소 만들기 ⭐⭐⭐: [[autoconfiguration]] → [[link-local address]] → [[router solicitation과 advertisement]] → [[Example 7.29]] (sim eui64)
+# 패킷: [[IPv6 base header]] (40 B 고정) → [[traffic class와 flow label]] → [[next header]] → [[extension header]] → '''[[IPv6 fragmentation]]''' ⭐⭐⭐ (시험 언급)
+# 보조: [[ICMPv6]] → [[neighbor discovery]] (= ARP) · [[MLD]] (= IGMP)
+# 전환: [[dual stack]] → [[tunneling]] → [[header translation]]
+# 한 장 정리: [[IPv4와 IPv6 비교]]
+
+== 9. 정리 ==
 * [[셀룰러 세대 비교표]] → [[공식 모음]] → [[자주 틀리는 함정 모음]]
 * 과제: [[PS1 풀이 가이드]] (마감 11/15)

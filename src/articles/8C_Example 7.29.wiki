@@ -1,0 +1,48 @@
+key: Example 7.29
+title: Example 7.29 — Ethernet 주소로 global unicast address 만들기
+category: 8강 IPv6, 용어
+---
+'''Example 7.29''' 는 Ethernet 주소 하나에서 시작해 interface ID, link-local 주소, global unicast 주소까지 차례로 만드는 예제다. [[EUI-64]] 와 [[autoconfiguration]] 을 숫자로 한 번 따라간다. L14 p.19–21.
+
+{def}"A host with Ethernet address F5-A9-23-11-9B-E2 joins the network. Global prefix: 3A21:1216:2165, subnet ID: 1232. Its global unicast address?" (p.19)
+Solution: "Interface ID from the Ethernet address: F7A9:23FF:FE11:9BE2. Link-local address = FE80:: + interface ID" (p.20) → FE80::F7A9:23FF:FE11:9BE2
+"Host appends its interface ID → global unicast address" (p.21) → 3A21:1216:2165 | 1232 | F7A9:23FF:FE11:9BE2{/def}
+
+[[img:L14-20.png|p.20 Solution — Interface ID F7A9:23FF:FE11:9BE2 (바뀐 7, FF:FE 빨강), Link-local FE80::F7A9:23FF:FE11:9BE2|medium]]
+
+== 풀이 ==
+<pre class="txt">
+① interface ID
+   MAC  F5-A9-23-11-9B-E2
+   F5 = 1111 0101 → 왼쪽부터 7번째 bit 0 → 1 → 1111 0111 = F7
+   F7 A9 23 | FF FE | 11 9B E2
+   = F7A9:23FF:FE11:9BE2
+
+② link-local
+   FE80:0000:0000:0000:F7A9:23FF:FE11:9BE2
+   = '''FE80::F7A9:23FF:FE11:9BE2'''
+
+③ unique 확인 → router solicitation → advertisement "3A21:1216:2165:1232"
+
+④ global unicast
+   3A21:1216:2165 (48) | 1232 (16) | F7A9:23FF:FE11:9BE2 (64)
+   = '''3A21:1216:2165:1232:F7A9:23FF:FE11:9BE2'''
+</pre>
+python `ipaddress` 로 ②와 ④를 검산했다. global 주소에는 0 section 이 없어서 더 줄일 수 없다.
+
+[[img:L14-21.png|p.21 3A21:1216:2165 (48 bits) | 1232 (16 bits) | F7A9:23FF:FE11:9BE2 (64 bits)|medium]]
+
+{warn}자주 하는 실수 세 가지.
+* 오른쪽 끝(8 번째) bit 를 뒤집어 F4 를 만드는 것. 뒤집는 것은 왼쪽에서 7 번째다.
+* FFFE 를 맨 뒤에 붙이는 것. FFFE 는 MAC 의 가운데(3 번째 byte 와 4 번째 byte 사이)에 들어간다.
+* global 주소에 FE80 을 남기는 것. FE80 은 link-local 의 접두사이고, global 주소의 앞부분은 router 가 준 prefix 로 바뀐다.{/warn}
+
+[[sim:eui64]]
+
+{analogy}🎭 택배 송장 쓰기와 같다. 받는 사람 이름(interface ID)은 신분증(MAC)에서 옮겨 적고, 주소의 앞부분은 관리사무소(router)에 물어서 적는다.{/analogy}
+
+{quiz}같은 host 가 다른 router(prefix 2001:0DB8:00AB, subnet 0001)가 있는 network 로 옮기면 global 주소는?{/quiz}
+{answer}interface ID 는 그대로다. 앞부분만 바뀌어 2001:0DB8:00AB:0001:F7A9:23FF:FE11:9BE2 = 2001:DB8:AB:1:F7A9:23FF:FE11:9BE2.{/answer}
+
+== 관련 문서 ==
+* [[EUI-64]] · [[link-local address]] · [[router solicitation과 advertisement]] · [[global unicast address]] · [[CH07 IPv6]]

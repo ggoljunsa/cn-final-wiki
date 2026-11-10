@@ -1,0 +1,24 @@
+key: neighbor discovery
+title: Neighbor Discovery (ND) — IPv6 에서 ARP 의 일을 맡는다
+category: 8강 IPv6, 용어
+---
+'''Neighbor Discovery (ND)''' 는 [[ICMPv6]] 의 네 메시지 그룹 중 하나다. IPv4 에서 [[mid:ARP|ARP]] 가 하던 일을 맡는다. L14 p.28.
+
+{def}"Neighbor discovery messages — ND Protocol. ND (Neighbor Discovery) takes over ARP's job" (p.28)
+→ ND 는 ARP 의 일을 넘겨받는다.{/def}
+
+[[img:L14-28.png|p.28 Neighbor discovery messages → ND Protocol|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''neighbor''' = 같은 link 에 붙은 이웃 장치(host, router). '''discovery''' = 찾아내기.
+* ARP 는 "이 IP 주소를 가진 이웃의 MAC 주소가 뭐냐" 를 물었다([[mid:ARP]]). ND 도 같은 질문을 IPv6 에서 한다. IPv4 에서는 ARP 가 IP 와 나란히 있는 별도 프로토콜이었는데, IPv6 에서는 ICMPv6 메시지 그룹이 됐다.
+* 교수: ICMPv6 의 네 그룹 중 둘이 "correspond to ARP and IGMP, but with different names, ND, MLD"(11/10 40:34).
+{info}(Forouzan 보충 — 슬라이드에 없음) ND 그룹에는 이웃의 link-layer 주소를 묻는 neighbor solicitation/advertisement 말고도, [[autoconfiguration]] 에서 쓰는 [[router solicitation과 advertisement|router solicitation/advertisement]] 가 들어 있다. 그래서 IPv6 host 는 ND 하나로 이웃의 MAC 도 알고 network prefix 도 받는다.{/info}
+
+{analogy}🎭 이사 와서 옆집 문을 두드려 "○○호 맞으세요?" 하고 얼굴(MAC)을 확인하는 것이다. IPv4 의 ARP 와 하는 일은 같고, 소속만 ICMPv6 로 바뀌었다.{/analogy}
+
+{quiz}IPv6 에서 IP 주소로 이웃의 MAC 주소를 알아내는 일은 어떤 프로토콜(그룹)이 맡나?{/quiz}
+{answer}ICMPv6 의 Neighbor Discovery(ND). IPv4 의 ARP 를 대신한다.{/answer}
+
+== 관련 문서 ==
+* [[ICMPv6]] · [[MLD]] · [[router solicitation과 advertisement]] · [[mid:ARP]] · [[mid:IP 주소와 MAC 주소]]

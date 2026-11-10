@@ -25,7 +25,7 @@ Result: addresses '''ran out fast'''; no addresses left for new organizations an
 | 문제 || '''too big''' — 1,677 만 개를 다 쓰는 조직이 없다 → 대부분 unused || (그나마 적당 — 교수: 삼성 같은 큰 회사) || '''too small''' — 256 개로 모자란 조직이 대부분
 |}
 * 교수 예(17:14–18:42): "suppose that '''DGIST''' is allocated one Class A address … assigning 16 million addresses is very difficult for one organization. Even … '''Samsung and SK Hynix''' cannot". 300 명짜리 회사가 C 로 모자라 B 를 받으면 65,236 개가 놀게 된다.
-* 해결: 단기 — '''[[classless addressing]]''' (필요한 만큼 2 의 거듭제곱 크기로). 장기 — '''IPv6''' (주소 공간 자체를 늘림, 다음 강의들).
+* 해결: 단기 — '''[[classless addressing]]''' (필요한 만큼 2 의 거듭제곱 크기로). 장기 — '''[[IPv6]]''' (주소 공간 자체를 늘림, [[CH07 IPv6]]).
 
 {analogy}🎭 '''주차장을 버스 전용(A)·소형차 전용(C)으로만 만든 것'''. 버스 칸에는 승용차 한 대가 주차해 자리가 텅 비고, 소형 칸은 SUV 가 못 들어간다. 칸은 많은데 정작 빈자리를 못 쓴다 → 고갈.{/analogy}
 

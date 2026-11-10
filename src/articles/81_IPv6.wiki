@@ -1,0 +1,30 @@
+key: IPv6
+title: IPv6 (Internet Protocol version 6) — 다음 세대 IP
+category: 8강 IPv6, 용어
+---
+'''IPv6''' 는 IPv4 다음 세대의 network layer 프로토콜이다. L14 p.2 의 절 제목이 "Next Generation IP (IPv6)" 다. 하는 일은 [[IPv4]] 와 같다. host 에서 host 로 datagram 을 보내고, [[connectionless]] · [[best effort]] 로 동작한다. 바뀐 것은 주소 크기와 header 모양, 그리고 주변 프로토콜이다.
+
+{def}"Main reason to move to IPv6: IPv4's small address space (32-bit space). IPv6 address = 128 bits" (L14 p.3)
+→ IPv4 의 32-bit 주소 공간이 작아서 IPv6 로 옮겨 간다. IPv6 주소는 128 bits 다.{/def}
+
+[[img:L14-27.png|p.27 version 4 의 network layer(IGMP · ICMP · IPv4 · ARP)와 version 6 의 network layer(ICMPv6 · IPv6)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* Internet Protocol version 6 의 줄임말이다. base header 의 Version 칸 값이 6 이다([[IPv6 base header]]).
+* "next generation" 이라고 부르지만 새로 나온 지 오래됐다. 교수는 IPv6 가 IPv4 보다 훨씬 늦게 제안돼 처음엔 사용자가 적었고, 지금은 전 세계 사용자의 거의 절반이 쓴다고 했다(11/10 01:16). 한국은 약 25% 라고 했다.
+
+== IPv4 에서 바뀐 것 ==
+* 주소 32 → 128 bits ([[IPv6 address]])
+* 서버 없이 주소를 만드는 [[autoconfiguration]]
+* 40 bytes 고정 [[IPv6 base header]] 와 [[extension header]]
+* fragmentation 은 source 만 ([[IPv6 fragmentation]])
+* ICMP · ARP · IGMP 가 [[ICMPv6]] 하나로
+전체 비교표는 [[IPv4와 IPv6 비교]] 에 있다.
+
+{analogy}🎭 IPv6 는 같은 우편 제도의 '''새 주소 체계'''다. 편지를 나르는 방식(best effort, connectionless)은 그대로이고, 주소가 길어지고 봉투 양식이 깔끔해졌다.{/analogy}
+
+{quiz}IPv6 로 옮겨 가는 주된 이유를 한 줄로.{/quiz}
+{answer}IPv4 주소 공간이 32 bits($2^{32}$ ≈ 43 억 개)라 모자라기 때문이다. IPv6 는 128 bits 다.{/answer}
+
+== 관련 문서 ==
+* [[CH07 IPv6]] · [[IPv4]] · [[IPv4와 IPv6 비교]] · [[address depletion]]

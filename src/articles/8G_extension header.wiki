@@ -1,0 +1,34 @@
+key: extension header
+title: Extension header — base header 밖으로 뺀 옵션
+category: 8강 IPv6, 용어
+---
+'''Extension header''' 는 IPv6 가 옵션과 추가 기능을 싣는 곳이다. base header 뒤, payload 의 앞쪽에 0 개 이상 붙는다. L14 p.22, p.25.
+
+{def}"Payload = zero or more extension headers + data from the upper layer. Each extension header has next header and length fields → they form a chain" (p.25)
+"Better header format: Options are separated from the base header → routers work faster" (p.22)
+→ payload 는 extension header 0 개 이상 + 위층 데이터다. 옵션을 base header 에서 떼어 냈기 때문에 라우터가 더 빨리 일한다.{/def}
+
+[[img:L14-25.png|p.25 (필기본) Base header → Extension header → … → Data: a packet from another protocol|medium]]
+
+== 왜 따로 빼나 ==
+IPv4 는 옵션이 header 안에 있었다. 그래서 header 길이가 20–60 bytes 로 바뀌었고, 라우터는 패킷마다 [[HLEN]] 을 읽고 옵션을 훑어야 했다. 교수는 이것이 라우터 처리를 느리게 했다고 설명했다(11/10 28:12–28:39).
+
+IPv6 는 base header 를 40 bytes 로 고정하고 옵션은 extension header 로 뺐다. 대부분의 라우터는 base header 만 보고 넘기면 된다. 새 기능이 필요하면 새 extension header 종류를 정의하면 되니까 프로토콜을 늘리기도 쉽다(p.22 "Allowance for extension").
+
+== 종류 (p.25 next-header codes 중 extension header) ==
+* 00 hop-by-hop option
+* 43 source-routing option
+* 44 fragmentation option ([[IPv6 fragmentation]])
+* 50 encrypted security payload, 51 authentication header (보안, [[IPSec]])
+* 60 destination option
+각 extension header 의 [[next header]] 가 다음 header 를 가리키고, length 가 자기 길이를 적는다.
+
+{tip}필기 메모: p.25 "44 → 02 → ICMPv6". fragmentation extension header 하나를 거쳐 ICMPv6 데이터로 가는 사슬이다. 자세한 설명은 [[next header]].{/tip}
+
+{analogy}🎭 base header 는 모든 상자에 붙는 표준 송장이고, extension header 는 필요한 상자에만 붙이는 '''추가 스티커'''("깨지기 쉬움", "분할 배송 2/3")다. 물류센터는 보통 송장만 보고, 스티커는 필요한 곳에서만 읽는다.{/analogy}
+
+{quiz}IPv6 에서 옵션을 extension header 로 뺀 이점 두 가지는?{/quiz}
+{answer}① base header 가 40 bytes 로 고정되어 라우터 처리가 빨라진다. ② 새 기능을 새 extension header 로 추가할 수 있어 확장이 쉽다.{/answer}
+
+== 관련 문서 ==
+* [[next header]] · [[IPv6 base header]] · [[IPv6 fragmentation]] · [[IPSec]]

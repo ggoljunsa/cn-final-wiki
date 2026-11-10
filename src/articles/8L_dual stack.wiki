@@ -1,0 +1,25 @@
+key: dual stack
+title: Dual stack — 한 장치에서 IPv4 와 IPv6 를 둘 다
+category: 8강 IPv6, 용어
+---
+'''Dual stack''' 은 IPv4 에서 IPv6 로 넘어가는 동안 쓰는 첫 번째 방법이다. host 하나가 IPv4 와 IPv6 를 둘 다 돌린다. L14 p.30.
+
+{def}"Dual stack: until the whole Internet uses IPv6, a host runs both IPv4 and IPv6. Talks IPv4 to IPv4 systems, IPv6 to IPv6 systems" (p.30)
+→ 인터넷 전체가 IPv6 로 바뀔 때까지 host 가 두 프로토콜을 다 돌린다. IPv4 장치와는 IPv4 로, IPv6 장치와는 IPv6 로 말한다.{/def}
+
+[[img:L14-30.png|p.30 Upper layers / IPv4 · IPv6 나란히 / Underlying LAN or WAN technology. To and from IPv4 system · To and from IPv6 system|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''stack''' = 프로토콜 계층을 쌓은 것. '''dual''' = 두 개. network layer 칸에 IPv4 와 IPv6 를 나란히 두 개 둔다.
+* 위층(TCP/UDP)과 아래층(LAN/WAN)은 하나를 같이 쓴다. network layer 만 둘이다.
+* 들어온 패킷의 version 을 보고 맞는 쪽으로 올려 보낸다. 교수: "your device sees IPv4 packet, then the lower layer forwards the message to IPv4 protocol"(11/10 42:12). IPv6 패킷이면 IPv6 쪽으로 간다.
+교수 평가: "It is simple, but a very stupid method, but it is very effective"(41:38). 지금 쓰는 장치 대부분이 dual stack 이라고 했다.
+{info}녹음 42:30 에 "if you see the other one, then just forwards your message to IPv4 network layer" 라는 말이 있는데, 문맥상 IPv6 를 잘못 말한 것이다.{/info}
+
+{analogy}🎭 한국어와 영어를 둘 다 하는 사람이다. 상대가 한국어로 말하면 한국어로, 영어로 말하면 영어로 답한다. 단순하지만 확실하다.{/analogy}
+
+{quiz}dual stack 에서 둘로 나뉘는 계층은 어디고, 공유하는 계층은 어디인가?{/quiz}
+{answer}network layer(IPv4 와 IPv6)만 둘이다. 위층(upper layers)과 아래 LAN/WAN 기술은 하나를 같이 쓴다.{/answer}
+
+== 관련 문서 ==
+* [[tunneling]] · [[header translation]] · [[IPv4와 IPv6 비교]] · [[CH07 IPv6]]

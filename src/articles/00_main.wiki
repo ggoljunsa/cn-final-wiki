@@ -40,14 +40,16 @@ category: 안내
 |-
 | CH07 (2) p.1–30 || [[CH07 IPv4 주소]] || '''[[IPv4 address]]''' = connection 마다(logical, MAC 은 device), [[address space]] $2^{32}$, [[prefix와 suffix]], [[classful addressing]] A–E → [[address depletion]], '''[[classless addressing]]'''·[[CIDR]] address/n, '''[[block의 세 가지 정보]]'''($N = 2^{32-n}$, first = AND [[address mask|mask]], last = OR NOT mask — [[Example 7.1]]), [[block allocation]]([[ICANN]] → [[ISP]]), '''[[subnetting]]'''(largest first — [[Example 7.5 subnet 설계]]), [[address aggregation]] — 11/3 || `sim:cidr_block` · `sim:subnet_alloc` · `sim:classful_class` · `anim:cidr_mask_anim` · `anim:subnet_split_anim` · `anim:aggregation_anim`
 |-
-| CH07 (2) p.31~ (rev) || [[CH07 IPv4 데이터그램과 포워딩]] || [[IPv4 datagram format]], fragmentation, [[ICMPv4]], forwarding — 11/5~ (7강, 별도 작성) || —
+| CH07 (2) p.31~ (rev) || [[CH07 IPv4 데이터그램과 포워딩]] || [[IPv4 datagram format]], fragmentation, [[ICMPv4]], forwarding — 11/5 (녹음 없음, 슬라이드 기준) || `sim:ipv4_header_decode` · `sim:fragment_calc` · `sim:forward_lookup` · `anim:ipv4_header_anim` · `anim:fragmentation_anim`
+|-
+| CH07 (3) p.1–32 || [[CH07 IPv6]] || '''[[IPv6 address]]''' 128 bits, [[colon hexadecimal notation]]·[[zero compression]](`::` 한 번만), [[unicast·anycast·multicast]], [[global unicast address]](2000::/3, 48·16·64), '''[[EUI-64]]'''(7번째 bit + FFFE → [[interface ID]]), '''[[autoconfiguration]]'''([[link-local address]] → [[router solicitation과 advertisement|RS/RA]], [[Example 7.29]]), [[IPv6 base header]] 40 B, [[extension header]], '''[[IPv6 fragmentation|source 만 fragmentation]]'''(시험 언급), [[ICMPv6]](ND·MLD), [[dual stack]]·[[tunneling]]·[[header translation]] — 11/10 || `sim:ipv6_compress` · `sim:eui64` · `anim:ipv6_autoconfig_anim` · `anim:ipv6_frag_anim` · `anim:ipv6_transition_anim`
 |}
 
 == 이 위키를 읽는 법 ==
 
 {tip}
 * 📖 '''정의 박스'''는 슬라이드 영어 원문이 먼저 온다. "정의 → 용어 이름" 유형에 대비해 영어 문장을 그대로 외운다.
-* 🎯 '''출제 포인트 박스'''는 교수가 수업(10/20 · 10/27 · 11/3 녹음)에서 강조한 것이다.
+* 🎯 '''출제 포인트 박스'''는 교수가 수업(10/20 · 10/27 · 11/3 · 11/10 녹음)에서 강조한 것이다.
 * ✍️ 슬라이드 캡처에는 '''내 GoodNotes 필기'''(빨간 글씨)가 그대로 있다. 필기에 "??"로 남긴 질문은 해당 문서의 💡 "필기 속 질문" 박스에서 답했고, "다시" 표시한 곳은 ⚠️ 박스로 쉽게 다시 설명했다.
 * 🎭 '''비유 박스'''는 이해가 안 될 때 먼저 읽는다.
 * ❓ '''예상문제'''는 정답이 접혀 있다. 먼저 답을 써 보고 펼친다.

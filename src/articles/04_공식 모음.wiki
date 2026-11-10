@@ -159,7 +159,28 @@ CH05 와 달리 '''이 공식들은 계산 문제로 나오기 좋은 모양'''�
 * protocol: ICMP 1 · IGMP 2 · TCP 6 · UDP 17 · OSPF 89 / ICMP type: 3·4·5·11·12, echo 8/0, timestamp 13/14
 * forwarding: dest AND mask == network address (긴 mask 부터), /n 블록 = 2^(32−n) 주소 (Ex 7.22: /18 16,384, /20 4,096)
 
+== IPv6 (CH07 (3), L14) ⭐⭐⭐ ==
+{|
+! 항목 || 식 || 값 / 예 || sim
+|-
+| [[IPv6 address|주소 수]] || $2^{128}$ || IPv4 의 $2^{96}$ 배 || —
+|-
+| [[zero compression|:: 복원]] || 숨은 0 section = 8 − 보이는 section 수 || FDEC:74::B0FF:0:FFF0 → 3 개 || `sim:ipv6_compress`
+|-
+| [[global unicast address|global unicast]] || 2000::/3 → $2^{128-3}$ || $2^{125}$ 개, n 48 · m 16 · q 64, site $2^{45}$, subnet $2^{16} = 65{,}536$ || —
+|-
+| [[EUI-64|MAC → interface ID]] || 7번째 bit 뒤집기 + 가운데 FFFE || F5-A9-23-11-9B-E2 → F7A9:23FF:FE11:9BE2 || `sim:eui64`
+|-
+| [[link-local address|link-local]] || 10 + 54 + 64 = 128 || FE80::F7A9:23FF:FE11:9BE2 || `sim:eui64`
+|-
+| [[Example 7.29|global]] || prefix 48 + subnet 16 + IID 64 || 3A21:1216:2165:1232:F7A9:23FF:FE11:9BE2 || `sim:eui64`
+|-
+| [[IPv6 base header|base header]] || (4+8+20) + (16+8+8) + 128×2 = 320 bits || 40 B 고정, payload ≤ 65,535 || —
+|}
+* next header 코드(p.25): 00 hop-by-hop · 02 ICMPv6 · 06 TCP · 17 UDP · 43 source routing · 44 fragmentation · 50 ESP · 51 AH · 59 none · 60 destination
+
 == 관련 문서 ==
+* IPv6: [[CH07 IPv6]] · [[IPv4와 IPv6 비교]] · [[EUI-64]] · [[Example 7.29]]
 * [[셀룰러 세대 비교표]] · [[GSM multiframe]] · [[AMPS 대역과 채널]] · [[자주 틀리는 함정 모음]]
 * 위성: [[Kepler's law]] · [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]] · [[SATCOM 주파수 대역]] · [[CH05 Satellite Network]]
 * network layer: [[total delay 공식]] · [[transmission delay]] · [[propagation delay]] · [[throughput]] · [[bottleneck]] · [[CH07 네트워크 계층 서비스와 성능]]

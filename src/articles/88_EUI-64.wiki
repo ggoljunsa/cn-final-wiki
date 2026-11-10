@@ -1,0 +1,44 @@
+key: EUI-64
+title: EUI-64 와 link-layer address mapping — MAC 주소로 interface ID 만들기
+category: 8강 IPv6, 용어
+---
+IPv6 는 link-layer 주소(MAC 주소)를 [[interface ID]] 로 바꿔 쓴다. 슬라이드 제목은 "Link-layer Address Mapping" 이고, 규칙은 주소 길이에 따라 두 가지다. L14 p.10–12.
+
+{def}"A link-layer address shorter than 64 bits becomes (part of) the interface ID.
+(a) 64-bit EUI-64 (IEEE): flip the 7th bit.
+(b) 48-bit Ethernet address: flip the 7th bit + insert FFFE in the middle" (p.11–12)
+→ 64-bit EUI-64 주소는 7 번째 bit 만 뒤집는다. 48-bit Ethernet 주소는 7 번째 bit 를 뒤집고 가운데에 FFFE 를 넣는다.{/def}
+
+[[img:L14-12.png|p.12 (필기본) (a) EUI-64 → 7번째 bit 0 → 1. (b) Ethernet MAC 48 bits → 앞 24 bits | added bits 11111111 11111110 | 뒤 24 bits, 7번째 bit 0 → 1. 손글씨 "64−48=16"|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''EUI-64''' 는 Extended Unique Identifier, 64 bits 의 줄임말이다. IEEE 가 정한 64-bit 장치 식별자다. 이름 끝 64 가 길이다.
+* 교수: "You don't have to memorize a specific name, it's just a standard addressing"(11/10 15:31). 규칙만 기억하면 된다.
+
+== 순서 (Ethernet 48 bits) ==
+<pre class="txt">
+1. MAC 을 반으로: 앞 24 bits | 뒤 24 bits
+2. 첫 byte 의 7번째 bit(왼쪽부터) 뒤집기
+3. 가운데에 FFFE (1111 1111 1111 1110) 넣기 → 24 + 16 + 24 = 64 bits
+4. 16 bits 씩 colon hex 로
+
+예) F5-A9-23-11-9B-E2
+  F5 = 1111 0101 → 7번째 0 → 1 → 1111 0111 = F7
+  F7A9 23 | FF FE | 11 9BE2
+  interface ID = F7A9:23FF:FE11:9BE2
+</pre>
+7 번째 bit 를 hex 로 보면 첫 byte 의 둘째 자리에서 2 를 더하거나 빼는 것과 같다. 그 자리의 2 의 자리 bit 이기 때문이다. F5 → F7, 00 → 02, 0A → 08.
+{tip}필기 메모: p.12 "64−48=16". interface ID 64 bits 에서 Ethernet 48 bits 를 빼면 16 bits 가 남는다. FFFE 가 정확히 16 bits 다. 교수: "we should fill the remaining 16 bits, right?"(17:02){/tip}
+{warn}7 번째 bit 를 오른쪽 끝(8 번째)과 헷갈리지 말 것. 첫 byte 의 8 번째 bit 는 Ethernet 에서 unicast(0)/multicast(1)를 가르는 bit 다([[mid:Ethernet 주소 판별]]). 7 번째 bit 는 그 바로 왼쪽이다. F5 의 8 번째를 뒤집으면 F4 가 돼서 틀린다.{/warn}
+{warn}녹음 15:43 의 "Always MAC layer addressing is about 64 bits" 는 말실수로 보인다. 64 bits 는 EUI-64 이고, Ethernet MAC 주소는 48 bits 다([[mid:MAC 주소]]).{/warn}
+{info}(Forouzan 보충 — 슬라이드에 없음) 7 번째 bit 는 IEEE 주소의 U/L(universal/local) bit 다. 제조사가 붙인 전 세계 유일 주소면 0 이다. IPv6 interface ID 에서는 뜻을 거꾸로 써서 1 이 "전 세계 유일" 이 된다. 그래서 뒤집는다.{/info}
+
+[[sim:eui64]]
+
+{analogy}🎭 6 자리 학번(MAC 48 bits)을 8 자리 사번(interface ID 64 bits) 칸에 옮겨 적는 규칙과 같다. 가운데에 정해진 두 자리 "FFFE" 를 끼워 넣고, 표시 칸 하나(7 번째 bit)를 바꿔 "옮겨 온 번호" 임을 표시한다.{/analogy}
+
+{quiz}MAC 00-1A-2B-3C-4D-5E 의 interface ID 는?{/quiz}
+{answer}00 = 0000 0000 → 7 번째 bit 0 → 1 → 0000 0010 = 02. 가운데 FFFE → 021A:2BFF:FE3C:4D5E. link-local 은 FE80::21A:2BFF:FE3C:4D5E (leading zero 0 하나를 지움).{/answer}
+
+== 관련 문서 ==
+* [[interface ID]] · [[Example 7.29]] · [[link-local address]] · [[mid:MAC 주소]] · [[mid:IP 주소와 MAC 주소]]

@@ -1,0 +1,53 @@
+key: IPv6 base header
+title: IPv6 base header — 40 bytes 고정
+category: 8강 IPv6, 용어
+---
+'''IPv6 base header''' 는 모든 IPv6 패킷 맨 앞에 붙는 40 bytes 고정 header 다. 옵션은 여기 없고 [[extension header]] 로 따로 붙는다. L14 p.23–24.
+
+{def}"Base header: fixed 40 bytes; payload up to 65,535 bytes" (p.23)
+→ base header 는 항상 40 bytes 이고, 뒤의 payload 는 최대 65,535 bytes 다.{/def}
+
+[[img:L14-23.png|p.23 a. IPv6 packet = Base header 40 bytes | Payload up to 65,535 bytes. b. Base header 0·4·12·16·24·31 눈금: Version | Traffic class | Flow label / Payload length | Next header | Hop limit / Source address 128 bits / Destination address 128 bits|medium]]
+
+== 필드 ==
+[[img:L14-24.png|p.24 Base header fields 표|medium]]
+{|
+! 필드 || bits || 뜻
+|-
+| Version || 4 || 값은 6
+|-
+| [[traffic class와 flow label|Traffic class]] || 8 || payload 마다 다른 전달 요구를 구분
+|-
+| [[traffic class와 flow label|Flow label]] || 20 || 한 flow 의 데이터를 특별 취급
+|-
+| Payload length || 16 || base header 를 '''뺀''' datagram 길이
+|-
+| [[next header|Next header]] || 8 || 첫 extension header 의 종류
+|-
+| Hop limit || 8 || IPv4 의 [[TTL]] 과 같음
+|-
+| Source / destination address || 128 씩 ||
+|}
+<pre class="txt">
+1 행: 4 + 8 + 20  = 32 bits
+2 행: 16 + 8 + 8  = 32 bits
+주소: 128 × 2     = 256 bits
+합  : 320 bits = 40 bytes  (주소 32 bytes + 나머지 8 bytes)
+payload length 16 bits → 최대 2^16 − 1 = 65,535 bytes
+</pre>
+
+== IPv4 header 와 비교 ==
+* 길이: IPv4 는 20–60 bytes 로 바뀌어서 [[HLEN]] 이 필요했다. IPv6 는 40 고정이라 HLEN 이 없다.
+* 길이 칸: IPv4 [[total length]] 는 header 를 포함한다. IPv6 payload length 는 base header 를 뺀다.
+* 수명: [[TTL]] 은 이름이 hop limit 로 바뀌었다. 실제로 hop 수를 셌으니 이름이 뜻에 맞게 바뀐 것이다.
+* 사라진 것: identification · flags · offset 은 fragmentation extension header 로 옮겨 갔다. (Forouzan 보충 — 슬라이드에 없음) [[header checksum]] 은 아예 없어졌다. 위·아래 계층이 이미 오류를 검사하니까 라우터가 매번 다시 계산하지 않게 했다.
+교수: "IPv4 header is kind of complicated. It has many many different fields … In this case, we have small numbers of fields in IPv6"(11/10 29:51–30:02). header 가 고정이고 단순해서 라우터 처리가 빨라진다(31:13).
+{warn}IPv6 패킷의 최대 크기를 물으면 40 + 65,535 다. 65,535 는 payload 만의 최대값이다. IPv4 는 65,535 가 header 를 포함한 datagram 전체 최대값이었다.{/warn}
+
+{analogy}🎭 base header 는 '''칸이 고정된 표준 송장'''이다. 칸이 정해져 있으니 물류센터(라우터)가 어디를 봐야 할지 바로 안다. 특수 요청(옵션)은 송장이 아니라 상자 안 별지(extension header)에 적는다.{/analogy}
+
+{quiz}IPv6 base header 에 HLEN 이 없는 이유는?{/quiz}
+{answer}base header 가 항상 40 bytes 로 고정이라 길이를 따로 적을 필요가 없다. 옵션은 extension header 로 빠졌다.{/answer}
+
+== 관련 문서 ==
+* [[extension header]] · [[next header]] · [[traffic class와 flow label]] · [[IPv4 datagram format]] · [[IPv4와 IPv6 비교]]

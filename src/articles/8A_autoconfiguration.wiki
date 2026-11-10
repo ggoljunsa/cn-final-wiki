@@ -1,0 +1,36 @@
+key: autoconfiguration
+title: Autoconfiguration — host 가 서버 없이 IPv6 주소를 만든다
+category: 8강 IPv6, 용어
+---
+'''Autoconfiguration''' 은 IPv6 host 가 서버 없이 자기 주소를 스스로 만드는 방법이다. 교수가 IPv4 와의 큰 차이로 두 번이나 짚었다. L14 p.13–18.
+
+{def}"IPv4: address is given by an admin (manually) or by a DHCP server. IPv6: a host can build its own address, with no server needed" (p.14)
+"① Create a link-local address by attaching its interface ID to the prefix FE80::/10 ② Check that it is unique on the link ③ Get a global unicast address from a router" (p.15)
+→ IPv4 는 관리자나 DHCP 서버가 준다. IPv6 는 host 가 직접 만든다. 순서는 link-local 만들기 → unique 확인 → router 에게서 global 주소 받기.{/def}
+
+[[img:L14-15.png|p.15 Autoconfiguration ①②③ 과 link-local 주소 구조|medium]]
+
+== 이름에서 개념 끌어내기 ==
+교수: "auto means it is done by self, and configuration means setting an IP address"(11/10 24:42). configuration 은 여기서 "IP 주소 설정" 이라는 뜻이다. auto 는 host 자신이 한다는 뜻이다.
+
+== 순서 ==
+# host 가 MAC 주소로 [[interface ID]] 를 만든다([[EUI-64]]).
+# FE80::/10 뒤에 붙여 [[link-local address]] 를 만든다.
+# 그 주소가 link 에서 unique 한지 확인한다.
+# router 에게 [[router solicitation과 advertisement|router solicitation]] 을 보낸다.
+# router 가 router advertisement 로 global prefix + subnet ID 를 알려 준다.
+# host 가 그 뒤에 interface ID 를 붙인다. 이것이 [[global unicast address]] 다.
+host 는 interface ID 는 혼자 만들 수 있지만 subnet 과 상위 network 정보는 모른다(23:26). 그래서 앞부분만 router 에게 받는다.
+
+[[anim:ipv6_autoconfig_anim|link-local → RS → RA → global 주소 순서를 보고, 어느 부분을 host 가 만들고 어느 부분을 router 가 주는지 구분하라]]
+
+{tip}필기 메모: p.14 "can build its own address", "no server needed" 에 형광펜. 교수: "in IPv6, a key difference is that each host can construct its own IP addresses with no server services. This is a key difference."(19:17){/tip}
+{info}IPv4 에서 주소를 자동으로 주는 [[DHCP]] 도 "자동" 이긴 하다. 차이는 누가 주소를 정하느냐다. DHCP 는 서버가 골라서 빌려준다. IPv6 autoconfiguration 은 host 가 자기 MAC 으로 만들고, router 는 prefix 만 알려 준다.{/info}
+
+{analogy}🎭 DHCP 는 호텔 프런트에서 방 번호를 받는 것이다. autoconfiguration 은 '''내 이름을 문패로 걸고''' 동네 이름만 이장님(router)에게 물어서 주소를 완성하는 것이다.{/analogy}
+
+{quiz}IPv4 와 IPv6 의 주소 설정 방식 차이를 한 줄로.{/quiz}
+{answer}IPv4 는 관리자가 손으로 넣거나 DHCP 서버가 준다. IPv6 는 host 가 서버 없이 스스로 만든다(autoconfiguration). router 에게서는 prefix 와 subnet ID 만 받는다.{/answer}
+
+== 관련 문서 ==
+* [[link-local address]] · [[router solicitation과 advertisement]] · [[Example 7.29]] · [[DHCP]] · [[CH07 IPv6]]

@@ -1,0 +1,51 @@
+key: IPv4와 IPv6 비교
+title: IPv4 와 IPv6 비교 — 한 장 표
+category: 8강 IPv6, 용어
+---
+IPv4 와 IPv6 의 차이를 한 표에 모았다. 6강–8강(L13–L14)의 내용을 같은 행끼리 맞춰 놓았다. 교수가 시험 문제로 언급한 것은 fragmentation 행이다(11/10 39:06).
+
+[[img:L14-26.png|p.26 IPv4 vs IPv6 fragmentation 표|medium]]
+
+{|
+! 항목 || IPv4 || IPv6 || 출처
+|-
+| 주소 길이 || 32 bits ($2^{32}$) || '''128 bits''' ($2^{128}$) || L14 p.3
+|-
+| 표기 || [[dotted-decimal notation]] || [[colon hexadecimal notation]] + [[zero compression]] || p.3–4
+|-
+| 주소 종류 || unicast · multicast · broadcast || unicast · '''anycast''' · multicast (broadcast 는 multicast 의 특수한 경우) || p.5–7
+|-
+| 주소와 MAC || 관계 없음 (ARP 로 찾음) || MAC 이 [[interface ID]] 안에 들어감 ([[EUI-64]]) || p.10–12
+|-
+| 주소 설정 || 관리자 수동 또는 [[DHCP]] 서버 || '''[[autoconfiguration]]''' (서버 없이 host 가 직접) || p.13–18
+|-
+| header 길이 || 20–60 bytes 가변 ([[HLEN]]) || '''40 bytes 고정''' || p.23
+|-
+| 옵션 || header 안 || [[extension header]] 로 분리 || p.22, p.25
+|-
+| 길이 칸 || [[total length]] (header 포함) || payload length (base header 제외) || p.24
+|-
+| 수명 칸 || [[TTL]] || hop limit || p.24
+|-
+| 서비스 칸 || [[service type]] (TOS) || [[traffic class와 flow label|traffic class + flow label]] || p.22
+|-
+| 위층 표시 || [[protocol field|protocol]] || [[next header]] || p.24–25
+|-
+| fragmentation || source 또는 router || '''source 만''', router 는 drop || p.26 ⭐
+|-
+| reassembly || destination || destination || p.26
+|-
+| 보조 프로토콜 || ICMP · ARP · IGMP 따로 || '''[[ICMPv6]]''' 하나 (ND = ARP, MLD = IGMP) || p.27–28
+|-
+| header checksum || 있음 || 없음 (Forouzan 보충) || —
+|}
+
+{exam}교수가 "you may be asked in exams … describing some key differences in IPv6 and IPv4" 라고 했다(39:06). 이때 쓸 첫 답은 fragmentation 이다. 교수는 "there may be other key differences aside from this one"(39:31)이라고도 했으니, 주소 길이·autoconfiguration·40 bytes 고정 header 도 같이 쓸 수 있게 해 둔다.{/exam}
+
+{analogy}🎭 같은 회사의 구형·신형 송장 양식 비교표라고 보면 된다. 하는 일(배송)은 같고 칸의 크기와 위치가 바뀌었다.{/analogy}
+
+{quiz}IPv4 의 total length 가 60 이고 HLEN 이 5 다. 같은 data 를 IPv6 로 보내면 payload length 는? (extension header 없음){/quiz}
+{answer}IPv4 data = 60 − 5 × 4 = 40 bytes. IPv6 payload length 는 base header 를 빼고 세니까 40.{/answer}
+
+== 관련 문서 ==
+* [[CH07 IPv6]] · [[IPv6]] · [[IPv4]] · [[IPv6 fragmentation]] · [[IPv6 base header]]

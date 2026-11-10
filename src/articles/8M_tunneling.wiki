@@ -1,0 +1,29 @@
+key: tunneling
+title: Tunneling — IPv6 패킷을 IPv4 패킷에 넣어 IPv4 구간을 지나기
+category: 8강 IPv6, 용어
+---
+'''Tunneling''' 은 두 IPv6 host 사이에 IPv4 만 쓰는 구간이 있을 때 쓰는 전환 방법이다. IPv6 패킷을 통째로 IPv4 패킷 안에 넣어서 그 구간을 지나간다. L14 p.31.
+
+{def}"Tunneling: two IPv6 hosts must cross a region that uses IPv4. The IPv6 packet is encapsulated in an IPv4 packet when it enters the region. Decapsulated when it leaves" (p.31)
+→ IPv4 구간에 들어갈 때 IPv6 패킷을 IPv4 패킷으로 감싸고(encapsulate), 나올 때 벗긴다(decapsulate).{/def}
+
+[[img:L14-31.png|p.31 IPv6 host — [IPv4 region: Tunnel, 위에 IPv4 header 안의 IPv6 header + Payload] — IPv6 host|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''tunnel''' = 산을 뚫은 굴. IPv4 구간이라는 산을 IPv6 패킷이 모습을 감춘 채 지나간다.
+* 감싸는 방법은 중간고사에서 배운 [[mid:캡슐화|encapsulation]] 과 같다. IPv6 header + payload 전체가 IPv4 패킷의 payload 가 된다. 교수: "just considering this one as payload of IPv4 packet"(11/10 43:44).
+<pre class="txt">
+IPv6 구간 :            [IPv6 header | payload]
+IPv4 구간 : [IPv4 header | IPv6 header | payload]   ← 입구 router 가 덧씌움
+IPv6 구간 :            [IPv6 header | payload]       ← 출구 router 가 벗김
+</pre>
+IPv4 구간의 라우터들은 바깥 IPv4 header 만 보고 전달한다. 안에 IPv6 패킷이 있는 줄 모른다.
+{info}(Forouzan 보충 — 슬라이드에 없음) 바깥 IPv4 header 의 [[protocol field|protocol]] 값은 41 이다. "payload 가 IPv6 패킷" 이라는 표시다.{/info}
+
+{analogy}🎭 외국 택배를 국내 택배 상자에 한 번 더 넣어 보내는 것이다. 국내 배송 구간(IPv4)은 바깥 상자의 주소만 보고, 국경을 넘으면 바깥 상자를 벗겨 원래 상자(IPv6)를 보낸다.{/analogy}
+
+{quiz}tunneling 과 header translation 의 차이를 한 줄로.{/quiz}
+{answer}tunneling 은 양 끝이 IPv6 이고 IPv6 header 를 그대로 둔 채 IPv4 header 를 덧씌운다. header translation 은 받는 쪽이 IPv4 만 알아서 IPv6 header 를 IPv4 header 로 바꿔 쓴다.{/answer}
+
+== 관련 문서 ==
+* [[dual stack]] · [[header translation]] · [[mid:캡슐화]] · [[CH07 IPv6]]

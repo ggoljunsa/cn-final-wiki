@@ -1,0 +1,34 @@
+key: colon hexadecimal notation
+title: Colon hexadecimal notation — IPv6 주소 표기
+category: 8강 IPv6, 용어
+---
+'''Colon hexadecimal notation''' 은 IPv6 주소를 사람이 읽기 좋게 쓰는 방법이다. IPv4 의 [[dotted-decimal notation]] 에 해당한다. L14 p.3.
+
+{def}"Written in colon hexadecimal for humans. 8 sections × 4 hex digits, separated by colons" (p.3)
+→ 16 bits 씩 8 section, 각 section 은 hex 4 자리, 사이는 콜론(:).{/def}
+
+[[img:L14-03.png|p.3 FEF6:BA98:7654:3210:ADEF:BBFF:2922:FF00|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''colon''' 으로 구분하고 '''hexadecimal''' 로 쓴다. 이름이 표기법 그대로다.
+* IPv4 는 8 bits 씩 10 진수로 쓰고 점을 찍었다. IPv6 는 128 bits 라서 10 진수로 쓰면 너무 길다. hex 한 자리가 4 bits 라서 16 bits section 이 딱 4 자리가 된다.
+{|
+! || IPv4 || IPv6
+|-
+| 묶음 || 8 bits (byte) || 16 bits (section)
+|-
+| 진법 || 10 진수 || 16 진수
+|-
+| 구분자 || 점(.) || 콜론(:)
+|-
+| 묶음 수 || 4 || 8
+|}
+교수는 128 bits 를 다 쓰는 것이 비효율적이라 "people are lazy" 해서 더 줄인 표기를 만들었다고 했다(11/10 04:43). 그것이 [[zero compression]] 이다.
+
+{analogy}🎭 긴 카드 번호를 4 자리씩 끊어 쓰는 것과 같다. 끊는 위치가 정해져 있으니 읽고 옮겨 적기 쉽다.{/analogy}
+
+{quiz}section 하나가 hex 4 자리인 이유는?{/quiz}
+{answer}section 이 16 bits 이고 hex 한 자리가 4 bits 이므로 16 / 4 = 4 자리다.{/answer}
+
+== 관련 문서 ==
+* [[IPv6 address]] · [[zero compression]] · [[dotted-decimal notation]]

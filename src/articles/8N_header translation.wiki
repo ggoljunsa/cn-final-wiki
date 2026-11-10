@@ -1,0 +1,24 @@
+key: header translation
+title: Header translation — IPv6 header 를 IPv4 header 로 바꿔 쓰기
+category: 8강 IPv6, 용어
+---
+'''Header translation''' 은 보내는 쪽이 IPv6 를 쓰는데 받는 쪽이 IPv4 만 알아들을 때 쓰는 전환 방법이다. 중간의 라우터가 IPv6 header 를 IPv4 header 로 바꾼다. L14 p.32.
+
+{def}"Header translation: most of the Internet uses IPv6, some systems still use IPv4. Sender uses IPv6, but the receiver understands only IPv4. The header is translated: IPv6 header → IPv4 header" (p.32)
+→ 인터넷 대부분이 IPv6 인데 일부가 아직 IPv4 일 때 쓴다. 송신은 IPv6, 수신은 IPv4 만 이해하니까 header 를 IPv4 로 번역한다.{/def}
+
+[[img:L14-32.png|p.32 IPv6 host (IPv6 region) → router "Header translation done here" → IPv4 host (IPv4 region)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''translation''' = 번역. header 의 언어를 IPv6 에서 IPv4 로 바꾼다. payload 는 그대로 둔다.
+* 받는 쪽이 IPv4 만 아니까 tunneling 처럼 IPv6 header 를 안에 넣어 보낼 수 없다. 받은 쪽이 IPv6 header 를 읽지 못하기 때문이다.
+* 교수: 중간 라우터가 IPv6 header 의 정보를 같은 뜻의 IPv4 header 로 옮긴다(11/10 45:18). 대신 "some functions that could not be served by IPv4 could be omitted"(45:33). 예를 들어 IPv4 에 없는 flow label 이나 extension header 기능은 사라진다.
+{warn}주소가 128 bits 에서 32 bits 로 줄어드니 IPv6 주소를 IPv4 주소로 바꾸는 규칙도 필요하다. 슬라이드는 이 부분을 다루지 않는다. 시험 답안은 "IPv6 header → IPv4 header 로 번역, 경계 router 에서, IPv6 전용 기능은 손실" 정도로 쓰면 된다.{/warn}
+
+{analogy}🎭 한국어로 쓴 편지 봉투를 받는 사람이 영어만 읽을 수 있을 때, 우체국이 '''봉투의 주소만 영어로 다시 써 주는''' 것이다. 한국어에만 있는 표기(존칭 같은 것)는 영어 봉투에 옮길 칸이 없어서 빠진다.{/analogy}
+
+{quiz}header translation 에서 정보 일부가 사라지는 이유는?{/quiz}
+{answer}IPv4 header 에는 IPv6 에만 있는 기능(flow label, extension header 등)을 담을 칸이 없기 때문이다.{/answer}
+
+== 관련 문서 ==
+* [[dual stack]] · [[tunneling]] · [[IPv6 base header]] · [[CH07 IPv6]]

@@ -190,10 +190,26 @@ OX: ① 167.199.170.82/27 의 network address 는 167.199.170.82 다. ② /24 bl
 * '''offset 0 ≠ 안 나뉨''': M 까지 봐야 한다(M1·off0 = first) → [[Example 7.14 fragment 위치 판정]]
 * '''다시 나눈 조각의 offset·M 도 원래 datagram 기준''': F2.2 offset 275, M = 1 → [[fragmentation offset]]
 * '''fragment data 는 8 의 배수''': MTU 1000 → 980 이 아니라 976 → [[MTU]]
-* '''재조립은 destination 만''' (라우터는 나누기만) → [[reassembly]]
+* '''재조립은 destination 만''' (라우터는 나누기만) → [[reassembly]]. IPv6 는 라우터가 나누지도 않는다 → [[IPv6 fragmentation]]
 * '''ICMP 는 보고만, 정정 ✗, 항상 original source 로''' / echo reply 는 type 0 → [[ICMP error-reporting message]] · [[echo request와 ping]]
 * '''forwarding table 은 긴 mask 부터''': 180.70.65.200 은 /25 에도 맞지만 /26 → m2. 표에는 network address(첫 주소), connection address ✗ → [[longest mask matching]]
 * '''슬라이드 p.61 오타''': 201.4.22.0 셋째 octet = 00010110 (슬라이드 00011100) → [[Example 7.19–7.21 R1 포워딩]]
 
+== IPv6 (CH07 (3), L14) ==
+* '''`::` 는 주소마다 한 번만''': `2001:DB8::1::1` ✗ (숨은 0 을 어떻게 나눴는지 모름) → [[zero compression]]
+* '''leading zero 만 지운다''': `FFF0` → `FFF` ✗, `B0FF` → `BFF` ✗ → [[zero compression]]
+* '''bit 수 4 배 ≠ 주소 수 4 배''': $2^{128} / 2^{32} = 2^{96}$ 배 → [[IPv6 address]]
+* '''7번째 bit 는 왼쪽부터''': F5 → F7 (8번째를 뒤집어 F4 ✗). 이미 1 이면 0 으로(0A → 08) → [[EUI-64]]
+* '''FFFE 는 가운데''' (앞 3 bytes 와 뒤 3 bytes 사이). EUI-64(64 bits)에는 넣지 않는다 → [[EUI-64]]
+* '''interface ID 는 64 bits''' (교수 "please remember"). global = 48 + 16 + 64 → [[interface ID]]
+* '''global 주소 앞에 FE80 을 남기지 않는다''': FE80 은 link-local 접두사, global 은 router 가 준 prefix → [[Example 7.29]]
+* '''router advertisement 에는 interface ID 가 없다''': prefix + subnet ID 만 → [[router solicitation과 advertisement]]
+* '''autoconfiguration 은 서버가 없다''': DHCP(서버가 빌려줌)와 구분 → [[autoconfiguration]]
+* '''payload length 는 base header 제외''' (IPv4 total length 는 header 포함), base header 40 B 고정이라 HLEN 없음 → [[IPv6 base header]]
+* '''IPv6 fragmentation 은 source 만''', router 는 drop. reassembly 는 둘 다 destination (교수 시험 언급) → [[IPv6 fragmentation]]
+* '''ND = ARP, MLD = IGMP''' (거꾸로 외우지 말 것) → [[ICMPv6]]
+* '''tunneling 은 덧씌우고 header translation 은 바꿔 쓴다''': 수신자가 IPv4 만 알면 translation → [[tunneling]] · [[header translation]]
+* '''flow label 은 TCP flow control 과 다르다''' → [[traffic class와 flow label]]
+
 == 관련 문서 ==
-* [[공식 모음]] · [[셀룰러 세대 비교표]] · [[시험 정보]] · [[CH05 Satellite Network]] · [[CH07 네트워크 계층 서비스와 성능]] · [[IP가 제공하는 서비스]] · [[CH07 IPv4 주소]] · [[subnetting]] · [[address mask]]
+* [[IPv4와 IPv6 비교]] · [[공식 모음]] · [[셀룰러 세대 비교표]] · [[시험 정보]] · [[CH05 Satellite Network]] · [[CH07 네트워크 계층 서비스와 성능]] · [[IP가 제공하는 서비스]] · [[CH07 IPv4 주소]] · [[subnetting]] · [[address mask]]

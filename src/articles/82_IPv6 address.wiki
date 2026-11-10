@@ -1,0 +1,29 @@
+key: IPv6 address
+title: IPv6 address — 128 bits, 8 sections
+category: 8강 IPv6, 용어
+---
+'''IPv6 address''' 는 128 bits 짜리 주소다. IPv4 처럼 [[logical address와 physical address|logical address]] 이고 connection(interface)마다 붙는다. L14 p.3.
+
+{def}"IPv6 address = 128 bits. Written in colon hexadecimal for humans: 8 sections × 4 hex digits, separated by colons" (p.3)
+→ 128 bits 를 16 bits 씩 8 개 section 으로 나누고, section 하나를 hex 4 자리로 써서 콜론으로 잇는다.{/def}
+
+[[img:L14-03.png|p.3 Binary (128 bits) 1111111011110110 … 1111111100000000 = Colon Hexadecimal FEF6:BA98:7654:3210:ADEF:BBFF:2922:FF00|medium]]
+
+== 크기 ==
+<pre class="txt">
+128 bits = 8 sections × 16 bits = hex 32 자리
+주소 수  = 2^128 ≈ 3.4 × 10^38
+IPv4 대비 = 2^128 / 2^32 = 2^96 배   (4 배가 아님)
+</pre>
+교수는 IP 주소가 connection 에 붙는다는 점을 다시 짚었다(11/10 03:04). 장치 하나가 주소를 여러 개 쓰니까 사람 수보다 주소가 훨씬 많이 필요하다. 그래서 32 bits 로는 부족했다([[IPv4 address]], [[address depletion]]).
+
+== 구조 ==
+가장 흔한 [[global unicast address]] 는 세 부분이다. global routing prefix 48 bits, subnet 16 bits, [[interface ID]] 64 bits. 주소 종류는 [[unicast·anycast·multicast]] 세 가지다.
+
+{analogy}🎭 IPv4 주소가 8 자리 전화번호라면 IPv6 주소는 32 자리 번호다. 너무 길어서 4 자리씩 끊어 읽고(colon hex), 0 이 이어지는 부분은 줄여 읽는다([[zero compression]]).{/analogy}
+
+{quiz}IPv6 주소를 hex 로 쓰면 몇 자리이고 section 은 몇 개인가?{/quiz}
+{answer}hex 32 자리, section 8 개(section 하나 = 16 bits = hex 4 자리).{/answer}
+
+== 관련 문서 ==
+* [[colon hexadecimal notation]] · [[zero compression]] · [[global unicast address]] · [[IPv4 address]] · [[address space]]

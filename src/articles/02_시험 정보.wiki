@@ -20,6 +20,8 @@ category: 안내
 |-
 | 교수 강조 (CH07 (2) addressing) || "the important key word here is '''connections, not devices'''" — "the most crucial distinction from MAC address"([[logical address와 physical address]]), address depletion "a crucial issue of IPv4", block size "must be a '''power of 2'''", subnetting 은 "'''largest first'''", Example 7.3 은 "take this one as your own"(직접 풀어 보기) || 11/3 녹음 02:52 · 05:19 · 16:34 · 21:01 · 36:13 · 47:31
 |-
+| 교수 강조 (CH07 (3) IPv6) || "'''a key difference between IPv4 and IPv6. Then you may be asked in exams''' … you should respond it this way, fragmentation … please remember that one" — IPv6 는 '''source 만''' fragmentation, router 는 큰 패킷을 drop([[IPv6 fragmentation]]). 그 밖에 "interface ID … 64 bits, please remember", autoconfiguration 은 "a key difference" || 11/10 녹음 39:06–39:45 · 15:47 · 19:17
+|-
 | '''과제 PS1''' || '''Problem Set 1 — 11/4 배포, 마감 11/15(일), LMS 제출'''. 범위: CH05 (1)(2), CH07 (1), CH07 (2) addressing · header · fragmentation → [[PS1 풀이 가이드]] || LMS (11/4)
 |-
 | 형식(참고) || 중간고사는 필기(손으로 작성)였고 OX·객관식(4~5지선다)·계산/단답·서술 유형이 섞였다. 교수는 "교재에만 있는 문제는 내지 않는다 — 슬라이드 중심"이라고 했다 || 9/22·10/6·10/8 녹음
@@ -27,7 +29,7 @@ category: 안내
 
 == 미확정 ==
 * 기말고사 '''날짜·시간·장소'''
-* '''범위의 끝''' — 10/20 공지: "다음 수업(목 10/22)에 satellite networks(WAN 의 마지막)를 하고 network layer 로 넘어간다"(73:00). 10/27 에 '''CH07 Network Layer: Data Transfer (1)''' 을 끝까지 나갔으므로 범위는 지금 '''CH05 (1)(2) + CH07 (1) + CH07 (2) p.1–30''' 까지 진행. 교수: "network and transport, these two layers are the '''most important''' layers"(10/27 00:32). 10/29 는 녹음이 없고, 11/3 에 '''CH07 (2) p.1–30 IPv4 addressing''' 을 나갔다(11/5 p.31~ 예정).
+* '''범위의 끝''' — 10/20 공지: "다음 수업(목 10/22)에 satellite networks(WAN 의 마지막)를 하고 network layer 로 넘어간다"(73:00). 10/27 에 '''CH07 Network Layer: Data Transfer (1)''' 을 끝까지 나갔으므로 범위는 지금 '''CH05 (1)(2) + CH07 (1) + CH07 (2) p.1–30''' 까지 진행. 교수: "network and transport, these two layers are the '''most important''' layers"(10/27 00:32). 10/29 는 녹음이 없고, 11/3 에 '''CH07 (2) p.1–30 IPv4 addressing''', 11/5 에 p.31–68(추정, 녹음 없음), 11/10 에 '''CH07 (3) IPv6''' 전부를 나갔다. 11/12 에 CH07 남은 부분 예정.
 * 기말이 누적(중간 범위 포함)인지 여부
 * '''NAT 범위 여부''' — 11/4 에 올라온 개정판 덱(`CH07_Network Layer - Data Transfer (2) rev.pdf`, 68쪽)에서 '''NAT 슬라이드(구 덱 p.64–67)가 삭제'''됐다. p.2 목차에는 아직 "NAT" 가 남아 있다. 범위에서 빠졌을 가능성이 크지만 교수에게 확인 필요.
 
@@ -51,7 +53,11 @@ category: 안내
 |-
 | 11/4 (수) || '''PS1 배포''' (마감 11/15 일, LMS). 개정판 덱 `… (2) rev.pdf` 게시 — p.1–50 동일, '''NAT 삭제''' || — || [[PS1 풀이 가이드]]
 |-
-| 11/5 (목) || CH07 (2) p.31~ '''datagram format 부터 예정''' (11/3 녹음 59:13 "continue our discussion on IPv4 format on Thursday") || '''녹음 대기''' || [[CH07 IPv4 데이터그램과 포워딩]]
+| 11/5 (목) || CH07 (2) rev '''p.31–68 (추정)''' — datagram format, fragmentation, ICMPv4, forwarding. 11/3 끝에 "continue our discussion on IPv4 format on Thursday"(59:13)라고 했고, 11/10 이 "So far we've seen IPv4" 로 시작해 IPv6 로 넘어갔으므로 11/5 에 덱 끝까지 나간 것으로 본다 || '''녹음 없음''' (슬라이드 기준) || [[CH07 IPv4 데이터그램과 포워딩]]
+|-
+| 11/10 (화) || '''CH07 Network Layer: Data Transfer (3) p.1–32 전부 (IPv6)''' — 128-bit 주소·표기·`::` 한 번만, unicast/anycast/multicast, global unicast(48·16·64), EUI-64(7번째 bit + FFFE), autoconfiguration(link-local → RS/RA, Ex 7.29), base header 40 B·extension header, '''fragmentation 은 source 만(시험 언급)''', ICMPv6(ND=ARP, MLD=IGMP), dual stack·tunneling·header translation. 끝: "continue … remaining part of chapter 7 on Thursday" || `녹음본/1110_컴네.txt` (47분, whisper) || [[CH07 IPv6]]
+|-
+| 11/12 (목) || CH07 남은 부분 (예고) || 대기 || —
 |}
 
 {warn}

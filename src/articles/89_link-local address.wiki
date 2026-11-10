@@ -1,0 +1,40 @@
+key: link-local address
+title: Link-local address — FE80::/10 + interface ID
+category: 8강 IPv6, 용어
+---
+'''Link-local address''' 는 host 가 [[autoconfiguration]] 의 첫 단계에서 스스로 만드는 주소다. 같은 link(같은 LAN) 안에서만 쓴다. L14 p.14–15, p.20.
+
+{def}"Create a link-local address by attaching its interface ID to the prefix FE80::/10" (p.14)
+Link-local address (128 bits) = 1111 1110 10 (10 bits) | 54 zeros (54 bits) | 64-bit interface ID (64 bits) (p.14 그림)
+→ FE80::/10 접두사 뒤에 자기 interface ID 를 붙인다.{/def}
+
+[[img:L14-15.png|p.15 Link-local address = 1111 1110 10 | 54 zeros | 64-bit interface ID|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''link-local''' = 그 link 에서만(local) 통하는 주소. 라우터는 이 주소를 다른 network 로 넘기지 않는다.
+* 서버도 router 도 없이 만들 수 있다. 그래서 router 와 처음 대화할 때(router solicitation) 이 주소를 쓴다.
+
+== 비트 구성 ==
+<pre class="txt">
+FE80 = 1111 1110 1000 0000
+       └─ 앞 10 bits 1111111010 = /10 ─┘
+10 + 54 + 64 = 128
+FE80:0000:0000:0000 : interface ID  →  FE80:: + interface ID
+</pre>
+FE80 의 뒤쪽 6 bits 와 그 뒤 3 sections 가 모두 0 이라서 54 zeros 다(6 + 48 = 54). 그래서 표기할 때 `FE80::` 로 줄어든다.
+
+== Example 7.29 ==
+<pre class="txt">
+interface ID = F7A9:23FF:FE11:9BE2
+link-local   = FE80:0000:0000:0000:F7A9:23FF:FE11:9BE2
+             = '''FE80::F7A9:23FF:FE11:9BE2'''
+</pre>
+만든 다음에는 link 안에서 unique 한지 확인한다(p.15 ②). interface ID 가 MAC 에서 왔으니 보통 겹치지 않지만, 확인은 한다.
+
+{analogy}🎭 link-local 주소는 '''같은 층 사람끼리만 쓰는 내선 번호'''다. 외부로 전화하려면 회사 대표번호(global 주소)가 필요하고, 그 번호는 교환실(router)에 물어서 받는다.{/analogy}
+
+{quiz}link-local 주소에 54 zeros 가 들어가는 이유는?{/quiz}
+{answer}128 bits 중 prefix 가 10 bits, interface ID 가 64 bits 라서 128 − 10 − 64 = 54 bits 가 남는다. 이 자리는 0 으로 채운다.{/answer}
+
+== 관련 문서 ==
+* [[autoconfiguration]] · [[interface ID]] · [[router solicitation과 advertisement]] · [[Example 7.29]]

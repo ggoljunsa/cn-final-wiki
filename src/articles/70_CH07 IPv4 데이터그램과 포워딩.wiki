@@ -4,7 +4,7 @@ category: 7강 IPv4 데이터그램, 메인
 ---
 '''CH07 IPv4 데이터그램과 포워딩''' 은 L13 덱 — 교수가 11/4 에 올린 '''개정판''' `CH07_Network Layer - Data Transfer (2) rev.pdf`(68쪽) — 의 '''p.31–68''' 이다. 페이지 번호는 모두 '''rev 기준'''. 앞부분 p.1–30(IPv4 주소: classful → [[CIDR|classless]], mask, subnetting, aggregation)은 [[CH07 IPv4 주소]] 에서 다룬다. 11/3(화) 수업은 p.30 까지 나갔고, 교수는 끝에서 "'''continue our discussion on IPv4 format on Thursday'''"(59:13)라고 했다 — 이 문서의 범위가 11/5(목) 수업이다.
 
-{info}11/5(목) 수업 전 선제 작성 — 녹음이 오면 🎙 절과 ⭐ 조정{/info}
+{info}11/5(목) 수업은 녹음이 없다. 그래서 이 문서는 슬라이드(rev p.31–68)만 보고 썼고 ⭐ 는 슬라이드 구성으로 추정한 것이다. 11/10 수업이 "So far we've seen IPv4" 로 시작해 IPv6([[CH07 IPv6]])로 넘어갔으니 11/5 에 이 덱을 끝까지 나간 것으로 본다.{/info}
 
 {info}11/4 개정판에서 NAT 슬라이드 4장이 삭제됨 — 시험 범위에서 빠졌을 가능성(교수 확인 전). 다만 rev p.2 개요에는 아직 NAT 가 언급돼 있다(슬라이드 정리 누락으로 보임).{/info}
 
@@ -17,7 +17,7 @@ category: 7강 IPv4 데이터그램, 메인
 
 페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다. rev PDF 는 '''필기 없는 원본'''이다(p.31–68 손글씨 없음 — 구판 GoodNotes 본도 수업이 p.30 에서 끝나 이 범위엔 필기가 없었다). 구판 대비 변경: p.51 ICMP 형식 신규, Ex 7.19 build-up 3 장(p.57–59) + 해답(p.60), aggregation build-up 2 장(p.64–65) 추가, NAT 4 장 삭제. p.33–38 은 같은 header 표에서 강조 칸만 바뀌는 build-up 이라 캡처는 대표 장(p.32 전체 형식)과 설명 장을 섞어 쓴다.
 
-{exam}🎯 출제 예상 (슬라이드 구성 기준 추정 — 수업 후 조정)
+{exam}🎯 출제 예상 (슬라이드 구성 기준 추정 — 11/5 녹음 없음)
 * '''계산·판정 예제 7 개'''(Ex 7.7 · 7.9 · 7.10 · 7.14 · 7.16 · 7.19–7.21)에 전부 '''풀이'''가 달려 있다. 앞 덱의 Kepler 처럼 '''계산 문제로 나오기 딱 좋은 모양'''이다. 특히 '''HLEN × 4''', '''offset × 8''', '''last byte = first + data − 1''', '''AND mask''' 네 동작은 손에 익혀 둔다.
 * 정의형: MTU, "who fragments / who reassembles", ICMP "reports, not corrects", error-reporting vs query, "network address = the first address"(p.56 Remember).
 * 11/3 녹음(56:43–59:00)에서 교수가 다시 짚은 IP 의 성질: "'''unreliable''' … '''best-effort delivery''' … packets may be '''corrupted, lost, out of order, or even delayed'''" → 그래서 header 에 checksum 은 있어도 recovery 는 없고, 오류는 ICMP 가 '''보고'''만 한다.{/exam}
@@ -143,6 +143,7 @@ hex :  45 00 00 28 00 01 00 00 01 02
 * '''나누는 쪽''': source host 또는 경로 위 '''아무 라우터'''. '''여러 번''' 나뉠 수 있다.
 * '''합치는 쪽''': '''destination host 만'''([[reassembly]]). 중간 라우터는 합치지 않는다 — fragment 마다 경로가 달라질 수 있으니까([[datagram approach]]).
 * fragment 마다 header 대부분을 복사, '''바뀌는 것 = flags, fragmentation offset, total length''' + '''checksum 재계산'''. (L12 p.9 "header is copied to every fragment, with a few changes" 의 그 "few changes" 가 이것이다.)
+{exam}IPv6 는 source 에서만 fragmentation 한다(11/10 39:06). IPv4 는 위처럼 source 와 아무 router 가 나누지만, IPv6 router 는 next MTU 보다 큰 패킷을 drop 한다. 교수가 "you may be asked in exams" 라고 한 IPv4 ↔ IPv6 차이다 → [[IPv6 fragmentation]]{/exam}
 
 == p.44 — Identification, Flags ⭐⭐⭐ ==
 * '''[[identification field|Identification]]''' (16 bits): source 가 datagram 마다 붙이는 번호. 모든 fragment 에 '''그대로 복사''' → destination 이 "같은 datagram 조각끼리" 묶는다.
