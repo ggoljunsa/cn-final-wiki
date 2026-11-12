@@ -1,0 +1,35 @@
+key: link state routing
+title: Link state routing — 모든 node 가 같은 지도를 갖고 직접 계산한다
+category: 9강 라우팅, 용어
+---
+'''Link state routing''' 은 세 routing 알고리즘 중 두 번째다. 각 node 가 네트워크 전체 지도([[LSDB]])를 갖고, 그 지도로 [[Dijkstra algorithm]] 을 돌려 자기 [[least-cost tree]] 를 만든다. 프로토콜로는 [[OSPF]] 가 이 방식이다. L15 p.17–25.
+
+{def}"Each node needs the complete map of the network." (p.17) "Every node keeps the same LSDB." (p.18) "How does every node get the whole LSDB? Flooding." (p.19) "Dijkstra algorithm: each node builds its least-cost tree from the LSDB." (p.20)
+→ 각 node 는 네트워크의 완전한 지도가 필요하다. 모든 node 가 같은 LSDB 를 가진다. LSDB 는 flooding 으로 모으고, Dijkstra 로 least-cost tree 를 만든다.{/def}
+
+== 왜 나왔나 ==
+[[distance vector routing]] 은 이웃의 말만 믿어서 [[count to infinity와 two-node loop|count to infinity]] 가 생겼다. 땜질([[split horizon]], [[poison reverse]])은 3 노드 이상에서 실패했다. 교수의 진단은 "each node does not have global information … That's the core key problem"(12:31)이었다. 그래서 각 node 에게 global information 을 준다.
+
+== 세 단계 ==
+# 이웃에게 인사해서 link cost 를 안다.
+# [[flooding과 LSP|flooding]]: 자기 link 정보를 LSP 에 담아 모두에게 뿌린다. 받은 쪽은 newer 면 보관하고 다시 forward.
+# 모든 LSP 가 모이면 모든 node 가 같은 [[LSDB]] 를 갖는다. 각자 Dijkstra 로 tree 를 그린다.
+[[anim:lsp_flooding_anim|A 의 LSP 하나가 일곱 node 로 퍼지는 장면. 버려지는 중복 메시지가 flooding traffic 이다]]
+
+== 장점과 약점 ==
+* 장점: global topology 를 아니까 link 가 끊겨도 다른 길로 바로 돌아간다. DV 의 instability 가 없다.
+* 약점: 교수 표현으로는 "managing global information in every node is not that easy … it can lead to some congestion problems"(15:17). link 하나가 바뀌어도 그 소식을 네트워크 전체에 broadcast 한다. p.28 표의 Weak point 는 '''Flooding traffic''' 이다. [[OSPF area|OSPF 의 area]] 가 이 약점을 줄이는 방법이다.
+
+{analogy}🎭 DV 가 길을 물어물어 가는 방식이라면 LS 는 모든 사람에게 같은 지도책을 나눠 주는 방식이다. 지도책을 최신으로 유지하려면 도로 공사 소식을 전국에 방송해야 해서 시끄럽다.{/analogy}
+
+{mini}
+# p.28 표에서 link state 의 "To whom" 과 "A node knows" 칸을 쓰라.
+# DV 의 어떤 약점이 LS 에서 사라지고, 대신 어떤 약점이 생기는가?
+{/mini}
+{answer}
+# Everyone (flooding) · The whole map (LSDB).
+# count to infinity(이웃의 낡은 값을 믿는 문제)가 사라지고, flooding traffic 이 생긴다.
+{/answer}
+
+== 관련 문서 ==
+* [[CH08 라우팅]] · [[LSDB]] · [[flooding과 LSP]] · [[Dijkstra algorithm]] · [[OSPF]] · [[라우팅 알고리즘 비교]]

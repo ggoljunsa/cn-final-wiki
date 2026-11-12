@@ -179,7 +179,25 @@ CH05 와 달리 '''이 공식들은 계산 문제로 나오기 좋은 모양'''�
 |}
 * next header 코드(p.25): 00 hop-by-hop · 02 ICMPv6 · 06 TCP · 17 UDP · 43 source routing · 44 fragmentation · 50 ESP · 51 AH · 59 none · 60 destination
 
+== 라우팅 (CH08, L15) ⭐⭐⭐ ==
+{|
+! 항목 || 식 / 값 || 예 || 시뮬레이터
+|-
+| [[Bellman-Ford equation|Bellman-Ford]] || $D_{xy} = \min(D_{xy},\ c_{xz} + D_{zy})$ || p.11: B ← A → D = 5, B ← E → F = 6 || `sim:dv_update`
+|-
+| [[count to infinity와 two-node loop|two-node loop]] || 고장 뒤 A·B 가 1 씩 (link cost 씩) 올림, 16 = ∞ || cost 1: 15 번 · cost 2: 8 번 · cost 3: 5 번 || `sim:dv_update`
+|-
+| [[Dijkstra algorithm|Dijkstra]] update || $D(v) = \min(D(v),\ D(u) + c(u,v))$ || root A: [0, 2, 7, 3, 6, 8, 9], 순서 B D E C F G || `sim:dijkstra_ls`
+|-
+| [[hop count]] (RIP) || 지나는 network 수, max 15 || p.31: R3 1, R2 2, R1 3 || —
+|-
+| [[OSPF]] weight || 지나는 network weight 합 || p.34: R3 4, R2 7, R1 12 || —
+|-
+| [[path vector routing|path vector]] || policy 로 선택 || p.27: least S-B-D 2, policy S-A-C-D 6 || —
+|}
+
 == 관련 문서 ==
+* 라우팅: [[CH08 라우팅]] · [[라우팅 알고리즘 비교]] · [[Bellman-Ford equation]] · [[Dijkstra algorithm]]
 * IPv6: [[CH07 IPv6]] · [[IPv4와 IPv6 비교]] · [[EUI-64]] · [[Example 7.29]]
 * [[셀룰러 세대 비교표]] · [[GSM multiframe]] · [[AMPS 대역과 채널]] · [[자주 틀리는 함정 모음]]
 * 위성: [[Kepler's law]] · [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]] · [[SATCOM 주파수 대역]] · [[CH05 Satellite Network]]

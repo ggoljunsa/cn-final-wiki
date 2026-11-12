@@ -1,0 +1,38 @@
+key: intra-AS와 inter-AS routing
+title: Intra-AS 와 inter-AS routing — AS 안(IGP)과 AS 사이(EGP)
+category: 9강 라우팅, 용어
+---
+hierarchical routing 은 routing 을 두 층으로 나눈다. [[autonomous system|AS]] 안의 '''intra-AS routing''' 과 AS 사이의 '''inter-AS routing''' 이다. L15 p.30.
+
+{def}"Inside an AS: intra-AS routing (intradomain, IGP), e.g., RIP, OSPF. Between ASs: inter-AS routing (interdomain, EGP), e.g., BGP." (p.30)
+→ AS 안: intra-AS routing(intradomain, IGP), 예 RIP·OSPF. AS 사이: inter-AS routing(interdomain, EGP), 예 BGP.{/def}
+
+== 이름 정리 ==
+{|
+! 위치 || 이름 1 || 이름 2 || 이름 3 || 프로토콜 || 알고리즘
+|-
+| AS 안 || intra-AS || intradomain || IGP (Interior Gateway Protocol) || RIP, OSPF || DV, LS
+|-
+| AS 사이 || inter-AS || interdomain || EGP (Exterior Gateway Protocol) || BGP || PV
+|}
+intra 는 "안", inter 는 "사이" 다. intranet(사내망)과 internet(망들 사이)의 그 접두사다.[* IGP·EGP 의 풀네임은 슬라이드에 약자로만 나온다. Interior / Exterior Gateway Protocol 이다. (Forouzan 보충)]
+
+== 왜 다른 알고리즘을 쓰나 ==
+* AS 안은 한 회사가 관리하니 목표가 단순하다. 가장 싼 길(least cost)이면 된다 → DV(RIP) 나 LS(OSPF).
+* AS 사이는 서로 다른 회사들의 관계다. 비용보다 계약과 정책이 중요하다 → PV(BGP). 교수: path vector 는 "chosen by internet service providers that do the business"(25:41).
+
+[[img:L15-30.png|p.30 — 파란 점선 상자(AS) 안은 intra-AS, 상자 사이 빨간 선은 inter-AS|medium]]
+
+{analogy}🎭 회사 안 택배(사내 우편)는 회사가 정한 규칙대로 가장 빠른 길로 보낸다. 다른 회사로 보낼 때는 어느 택배사와 계약했는지(정책)가 먼저다.{/analogy}
+
+{mini}
+# OSPF 는 IGP 인가 EGP 인가?
+# "inter-AS routing 은 least cost 를 목표로 한다." O/X.
+{/mini}
+{answer}
+# IGP (intradomain).
+# X. inter-AS 의 BGP 는 path vector 라 policy 가 목표다.
+{/answer}
+
+== 관련 문서 ==
+* [[autonomous system]] · [[hierarchical routing]] · [[RIP]] · [[OSPF]] · [[BGP4]] · [[라우팅 알고리즘 비교]]

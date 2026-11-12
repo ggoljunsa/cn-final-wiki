@@ -1,0 +1,46 @@
+key: Dijkstra algorithm
+title: Dijkstra algorithm (라우팅 관점) — LSDB 로 least-cost tree 를 그린다
+category: 9강 라우팅, 용어
+---
+'''Dijkstra algorithm''' 은 [[link state routing]] 에서 각 node 가 [[LSDB]] 로 자기 [[least-cost tree]] 를 만드는 절차다. 가장 가까운 node 를 하나씩 tree 에 넣고, 그때마다 남은 node 의 cost 를 다시 계산한다. L15 p.20–25.
+
+{def}"Dijkstra algorithm: each node builds its least-cost tree from the LSDB. ① Init: make itself the root; set every node's cost from the LSDB. ② Select: among nodes not in the tree, add the one closest to the root. ③ Update: recompute the costs of the remaining nodes (paths may change). ④ Repeat ②–③ until all nodes are in the tree." (p.20)
+→ ① 자기를 root 로, cost 는 LSDB 의 자기 행. ② tree 밖에서 root 에 가장 가까운 node 를 넣는다. ③ 남은 node 의 cost 를 다시 계산한다(경로가 바뀔 수 있다). ④ 모두 들어갈 때까지 반복.{/def}
+
+[[img:L15-25.png|p.25 — root A 의 Initialization 과 Iteration 1–6|large]]
+
+== root A 손 추적 (p.21–25) ==
+<pre class="txt">
+ 단계     추가    A  B  C  D  E  F  G
+ Init     A       0  2  ∞  3  ∞  ∞  ∞
+ Iter 1   B(2)    0  2  7  3  6  ∞  ∞     C = 2+5, E = 2+4
+ Iter 2   D(3)    0  2  7  3  6  ∞  ∞     E via D = 8 > 6
+ Iter 3   E(6)    0  2  7  3  6  8  ∞     F = 6+2
+ Iter 4   C(7)    0  2  7  3  6  8  10    G = 7+3
+ Iter 5   F(8)    0  2  7  3  6  8  9     G = min(10, 8+1) = 9  ← paths may change
+ Iter 6   G(9)    Done
+</pre>
+결과는 p.5 의 A 의 tree 와 같다.
+[[sim:dijkstra_ls]]
+
+== Update 식 ==
+방금 tree 에 넣은 node u 의 이웃 v 마다
+$$D(v) = \min\{D(v),\ D(u) + c(u, v)\}$$
+[[Bellman-Ford equation]] 과 같은 모양이다. 차이는 갱신할 곳을 고르는 방식이다. Bellman-Ford(DV)는 이웃이 보내오는 대로 다 갱신한다. Dijkstra 는 가장 가까운 node 하나를 골라 그 이웃만 갱신한다. 그래서 한 번 tree 에 들어간 node 의 cost 는 다시 바뀌지 않는다.[* 이 성질은 cost 가 음수가 아닐 때만 성립한다. 라우팅의 cost 는 hop count 나 weight 라서 음수가 없으니 문제가 없다.]
+
+== 교수 ==
+"I think you should hear of this one in your data structure course as well … we will not discuss in detail on this Dijkstra algorithm."(19:26–19:47) 절차 네 줄과 예제 순서(B → D → E → C …)만 짚었다.
+
+{analogy}🎭 물에 돌을 던지면 파문이 가까운 곳부터 차례로 닿는다. Dijkstra 는 root 에서 파문을 퍼뜨려 가장 먼저 닿는 node 부터 확정하는 방식이다. 먼저 닿은 곳은 나중에 더 빨리 닿을 수 없으니 확정해도 된다.{/analogy}
+
+{mini}
+# root B 로 돌리면 tree 에 들어가는 순서는? (동점이면 알파벳 순)
+# Iter 4 에서 C(7)를 F(8)보다 먼저 넣는 이유는?
+{/mini}
+{answer}
+# B → A(2) → E(4) → C(5) → D(5) → F(6) → G(7). C·D 가 5 로 동점이라 C 먼저. C 가 들어오면 G = 8, F 가 들어오면 G = min(8, 6+1) = 7.
+# Select 는 tree 밖에서 cost 가 가장 작은 node 를 고른다. 7 < 8.
+{/answer}
+
+== 관련 문서 ==
+* [[link state routing]] · [[LSDB]] · [[least-cost tree]] · [[Bellman-Ford equation]] · [[OSPF]]

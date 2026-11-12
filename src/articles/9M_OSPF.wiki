@@ -1,0 +1,48 @@
+key: OSPF
+title: OSPF (Open Shortest Path First) — link state 를 쓰는 intradomain 프로토콜
+category: 9강 라우팅, 용어
+---
+'''OSPF'''(Open Shortest Path First)는 [[link state routing]] 에 기반한 intradomain 프로토콜이다. cost 로 hop count 대신 link 마다 weight 를 쓰고, 각 라우터가 [[Dijkstra algorithm]] 으로 shortest-path tree 를 만든다. 큰 AS 는 [[OSPF area|area]] 로 나눈다. L15 p.34–35.
+
+{def}"Intradomain protocol based on link-state routing. Metric: each link gets a weight (throughput, round-trip time, reliability, …). Unlike RIP, the cost is not just hop count. Each router builds its shortest-path tree with Dijkstra, then makes its forwarding table." (p.34)
+→ link state 기반 intradomain 프로토콜. link 마다 weight(throughput, RTT, reliability 등)를 준다. RIP 와 달리 hop count 만이 아니다. 라우터마다 Dijkstra 로 shortest-path tree 를 만들고 forwarding table 을 만든다.{/def}
+
+[[img:L15-34.png|p.34 — network weight N1 4, N2 5, N3 3, N4 4 → R3 4, R2 7, R1 12|medium]]
+
+== 이름에서 ==
+"Shortest Path First" 는 가장 짧은 경로부터 확정하는 Dijkstra 의 방식을 가리킨다. "Open" 은 공개 표준이라는 뜻이다.[* Open 의 뜻은 슬라이드에 없다. 특정 회사의 독점 프로토콜이 아니라 공개 규격이라는 의미로 붙은 이름이다. (Forouzan 보충)]
+
+== weight 계산 (p.34) ==
+<pre class="txt">
+R3 → N4 : 4               = 4
+R2 → N4 : 3 + 4           = 7
+R1 → N4 : 5 + 3 + 4       = 12     (같은 길의 hop count 는 3)
+</pre>
+교수: weight 는 "more like continuous version" 이고 throughput·round trip time·reliability 를 합친 값이라 "more delicate, more precise"(33:00–33:35).
+
+== RIP 와 비교 ==
+{|
+! || RIP || OSPF
+|-
+| 알고리즘 || distance vector (Bellman-Ford) || link state (Dijkstra)
+|-
+| cost || hop count (max 15) || weight
+|-
+| 보내는 대상 || 이웃 || 모두 (flooding, area 안)
+|-
+| 약점 || count to infinity || flooding traffic → area 로 줄임
+|}
+
+{analogy}🎭 RIP 가 정거장 수로 길을 고른다면 OSPF 는 소요 시간, 혼잡도, 고장 확률까지 반영한 점수로 고른다.{/analogy}
+
+{mini}
+# p.34 에서 N2 의 weight 가 1 로 바뀌면 R1 → N4 의 total cost 는?
+# OSPF 의 Weak point 를 줄이는 방법은?
+{/mini}
+{answer}
+# 1 + 3 + 4 = 8.
+# AS 를 area 로 나눠 각 area 안에서만 LSP 를 flooding 한다(p.35).
+{/answer}
+
+== 관련 문서 ==
+* [[OSPF area]] · [[link state routing]] · [[Dijkstra algorithm]] · [[RIP]] · [[hop count]] · [[라우팅 알고리즘 비교]]

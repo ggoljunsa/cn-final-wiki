@@ -1,0 +1,433 @@
+key: CH08 라우팅
+title: CH08 Network Layer: Routing of Packets (9강 — least-cost routing, distance vector, link state, path vector, RIP·OSPF·BGP)
+category: 9강 라우팅, 메인
+---
+== 개요 ==
+'''CH08 라우팅'''은 L15 덱 `CH08_Network Layer - Routing of Packets.pdf`(37쪽)를 다룬다. 11/12(목) 수업에서 37쪽을 한 번에 끝냈다. 교수는 마지막 장에서 "this is the last slide" 라고 하고 출석을 불렀다.[* 11/10 수업 끝에서 교수는 "continue … remaining part of chapter 7 on Thursday" 라고 했다. 그런데 11/12 에 실제로 나간 것은 CH08 이다. CH07 의 남은 부분이 무엇이었는지는 녹음에 나오지 않는다. 시험 범위를 정리할 때 이 점을 같이 확인해 두자.]
+
+앞의 세 강의([[CH07 IPv4 주소]] · [[CH07 IPv4 데이터그램과 포워딩]] · [[CH07 IPv6]])는 패킷 하나가 라우터에 도착했을 때 무슨 일이 일어나는지를 봤다. 라우터는 [[forwarding table]] 을 보고 목적지 주소에 맞는 줄을 찾아 패킷을 내보낸다. 이 덱이 묻는 것은 그 앞 단계다. 그 표는 누가, 어떻게 채우는가. 이 일이 [[routing]] 이다.
+
+이야기는 이렇게 흐른다. 먼저 인터넷을 숫자가 붙은 그래프로 바꾸고 "가장 싼 길" 을 정의한다. 그다음 그 길을 찾는 방법 세 가지를 차례로 본다. 이웃끼리 숫자만 주고받는 [[distance vector routing]], 지도 전체를 모두에게 뿌리는 [[link state routing]], 비용 대신 정책으로 고르는 [[path vector routing]] 이다. 첫 번째 방법의 약점이 두 번째 방법이 나온 이유이고, 두 방법이 모두 "가장 싼 길" 만 본다는 점이 세 번째 방법이 나온 이유다. 끝으로 인터넷 전체를 [[autonomous system|AS]] 단위로 나누고, 실제로 쓰는 프로토콜 [[RIP]] · [[OSPF]] · [[BGP4]] 를 하나씩 붙인다.
+
+페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다. 같은 화면에 한 줄씩 덧붙이는 build-up 이 많아서(p.2–3, p.4–5, p.8–9, p.12–13, p.14–16, p.17–18, p.21–25, p.26–27, p.36–37) 캡처는 대부분 마지막 장이다. 녹음은 09:39 에 시작해서 p.13 부터만 있다.[* 수업 앞 40분쯤(p.1–12: 도입, least-cost routing, Bellman-Ford, 벡터 교환)은 녹음이 없다. 이 부분은 슬라이드 기준으로 썼다. 녹음 첫 문장이 p.12 "bad news" 를 칠판 예로 설명하는 중간이다.]
+
+== 문제: 길이 여러 개면 어느 길로 보낼까 ==
+[[img:L15-03.png|p.3 — S 에서 D 로 가는 패킷. R1 에서 R4 까지 길이 둘 이상이다(R2 경유, R3 경유, R2–R3 를 둘 다 지나는 길). 아래 상자: routing 은 표를 만들고 forwarding 은 그 표를 쓴다|medium]]
+p.2–3 의 그림에서 S 가 D 에게 패킷을 보낸다. 패킷은 hop by hop 으로 간다. 각 hop 에서 라우터가 forwarding table 을 보고 다음 라우터를 고른다. 표가 필요한 것은 라우터뿐이다. 슬라이드 표현으로는 라우터가 "glue networks together" 하는 장치다.[* host 에도 작은 표가 있긴 하다. 보통 "모르는 목적지는 default router 로" 한 줄이다. 그래서 "길을 고른다" 는 일은 사실상 라우터만 한다. CH07 (2) 의 [[next hop]] 이야기와 같다.]
+
+routing problem 은 source router(R1)에서 destination router(R4)까지 가는 문제다. 그림에는 가운데 물음표가 있다. R1→R2→R4 로 갈 수도 있고 R1→R3→R4 로 갈 수도 있다. 슬라이드 질문은 "Which route should the packet take?" 다.
+
+맨 아래 상자는 CH07 과 이 덱을 잇는 한 줄이다. "Routing builds the forwarding tables; forwarding uses them, packet by packet." routing 은 미리, 가끔 한다. forwarding 은 패킷이 올 때마다 한다.[* 10/27 수업([[CH07 네트워크 계층 서비스와 성능]])에서 교수가 routing = "building the table", forwarding = "pushing the packet" 이라고 했던 그 구분이다. 이번 덱은 그 중 "building" 쪽 이야기다.]
+
+== 인터넷을 그래프로: least-cost routing ==
+[[img:L15-04.png|p.4 — (a) 실제 internet(라우터, LAN, WAN) 을 (b) weighted graph 로 바꿨다. node A–G 가 라우터, 선이 network, 숫자가 cost|medium]]
+"best" 를 정하려면 비교할 숫자가 있어야 한다. p.4 는 인터넷을 '''weighted graph''' 로 본다. node 는 라우터이고, edge 는 라우터 사이의 link(network)이며, edge 마다 cost 가 붙는다. 위 그림 왼쪽 (a) 의 실제 internet 이 오른쪽 (b) 의 그래프가 된다. 이 7-node 그래프(A–G)는 덱 끝까지 예제로 계속 나온다.
+{|
+! edge || A–B || A–D || B–C || B–E || C–F || C–G || D–E || E–F || F–G
+|-
+| cost || 2 || 3 || 5 || 4 || 4 || 3 || 5 || 2 || 1
+|}
+best route 는 '''least-cost route''' 다. source router 는 가능한 모든 경로 중에서 cost 합이 가장 작은 것을 고른다. → [[least-cost routing]]
+
+[[img:L15-05.png|p.5 — 라우터 7개마다 자기를 root 로 한 least-cost tree 가 하나씩 있다. 빨간 숫자는 root 에서 그 node 까지의 total cost|medium]]
+p.5 는 그 결과를 '''[[least-cost tree]]''' 로 그린다. root 는 source router 이고, tree 는 모든 node 를 잇는다. root 에서 어떤 node 로 가는 tree 위의 길이 곧 그 node 까지의 least-cost path 다. 라우터마다 자기 tree 가 있으니 7 routers 면 7 trees 다.
+
+위 그림 왼쪽 위 A 의 tree 를 보자. A 에서 G 까지는 A→B→E→F→G 로 2 + 4 + 2 + 1 = 9 다. A→B→C→G 는 2 + 5 + 3 = 10 이라 더 비싸다. 그래서 G 옆 숫자가 9 다.[* 일곱 개 tree 의 숫자는 모두 Python 으로 Dijkstra 를 돌려 확인했다. 표로 펴면 대각선 대칭이다. A 에서 G 까지 9 면 G 에서 A 까지도 9 다. link cost 가 양방향으로 같다고 놓았기 때문이다.]
+
+p.6 은 행 8 개와 열 3 개만 있는 빈 표다. 열은 Distance vector · Link state · Path vector 이고, 행은 "A node sends, To whom, A node knows, Algorithm, Goal, Weak point, Protocol, Used" 다. 덱을 다 읽고 p.28 에서 이 표를 채운다.
+
+{mini}
+# p.5 의 B 의 tree 에서 G 까지 cost 와 경로를 쓰라.
+# "least-cost tree 는 네트워크 전체에 하나만 있다." O/X 와 이유 한 줄.
+# p.4 그래프에서 D 에서 C 까지 가는 길 중 cost 가 10 인 것과 11 인 것을 각각 쓰라.
+{/mini}
+{answer}
+# 7. B→E→F→G = 4 + 2 + 1. B→C→G 는 5 + 3 = 8 이라 더 비싸다.
+# X. root 가 다르면 tree 도 다르다. 라우터 7 개면 tree 7 개다(p.5).
+# 10: D→A→B→C = 3 + 2 + 5. 11: D→E→F→C = 5 + 2 + 4. 그래서 p.5 D 의 tree 에서 C 옆 숫자가 10 이다.
+{/answer}
+
+== 이웃 말만 듣고 길 찾기: Bellman-Ford ==
+[[img:L15-07.png|p.7 — (a) x 에서 y 로 가는 길을 이웃 a·b·c 를 거쳐 각각 계산하고 가장 싼 것을 고른다. (b) 이미 아는 D_xy 와 새 이웃 z 를 거치는 길을 비교한다|medium]]
+가장 싼 길을 찾는 첫 번째 방법은 이웃에게 물어보는 것이다. p.7 의 '''[[Bellman-Ford equation]]''' 이 그 생각을 식으로 쓴 것이다.
+
+x 에서 y 까지 가는 least cost 를 $D_{xy}$ 라고 하자. x 가 아는 것은 두 가지다. 하나는 자기 이웃 a 까지의 link cost $c_{xa}$ 이고, 다른 하나는 그 이웃이 알려 준 a 에서 y 까지의 least cost $D_{ay}$ 다. 첫 hop 을 a 로 하면 전체 비용은 $c_{xa} + D_{ay}$ 다. 이웃이 여럿이면 하나씩 다 해 보고 가장 싼 것을 고른다.
+$$D_{xy} = \min\{c_{xa} + D_{ay},\ c_{xb} + D_{by},\ c_{xc} + D_{cy},\ \dots\}$$
+위 그림 (a) 에서 점선이 $c_{xa}, c_{xb}, c_{xc}$ 이고 실선이 이웃들이 알려 준 $D_{ay}, D_{by}, D_{cy}$ 다.
+
+(b) 는 실제로 더 자주 쓰는 모양이다. x 는 이미 $D_{xy}$ 라는 값을 하나 갖고 있다. 그런데 이웃 z 가 새 정보를 보내왔다. 그러면 지금 값과 z 를 거치는 값 중 작은 것을 남긴다.
+$$D_{xy} = \min\{D_{xy},\ c_{xz} + D_{zy}\}$$
+이 식에서 x 는 y 까지 가는 길 전체를 알 필요가 없다. 첫 hop 만 정하고 그 뒤는 이웃의 말을 믿는다. 이 "믿는다" 가 나중에 문제를 일으킨다.[* 같은 갱신 식(relaxation)을 그래프 전체에 반복 적용하는 알고리즘이 자료구조·알고리즘 시간에 배우는 Bellman-Ford 최단경로 알고리즘이다. 네트워크에서는 그 계산을 한 컴퓨터가 하지 않고 라우터들이 나눠서 한다. 각 라우터가 자기 칸만 갱신하고 이웃에게 알리는 분산 버전이다.]
+
+== 숫자 한 줄로 요약한 tree: distance vector ==
+[[img:L15-09.png|p.9 — (a) A 의 least-cost tree 를 (b) 숫자 일곱 개짜리 1-D 배열로 바꾼 것이 A 의 distance vector|medium]]
+p.8–9 는 least-cost tree 를 더 간단하게 적는 법을 보여 준다. tree 에서 경로 모양은 빼고 root 에서 각 node 까지의 cost 만 남기면 1-D 배열이 된다. 이것이 '''[[distance vector]]''' 다. index 는 destination 이고 값은 least cost 다. 위 그림 (b) 의 A 의 벡터는 [A 0, B 2, C 7, D 3, E 6, F 8, G 9] 다. 왼쪽 tree 의 빨간 숫자를 위에서부터 옮겨 적은 것과 같다.
+
+[[img:L15-10.png|p.10 — 부팅 직후 각 node 의 벡터. 이웃까지만 숫자가 있고 나머지는 ∞(노란 칸)|medium]]
+그런데 이 벡터는 처음부터 완성돼 있지 않다. p.10 처럼 부팅 직후의 node 는 자기 이웃밖에 모른다. 이웃까지는 link cost 를 적고, 나머지는 ∞(아는 연결 없음)로 적는다. 슬라이드는 이것을 '''rudimentary vector''' 라고 부른다. 위 그림에서 노란 칸이 ∞ 다. A 는 B(2)와 D(3)만 알고, G 는 C(3)와 F(1)만 안다. 벡터는 node 마다 부팅할 때 따로따로 만들어진다. 슬라이드 표현으로는 "asynchronously" 다.
+
+이 벡터만으로는 패킷을 제대로 보낼 수 없다. A 는 G 로 가는 길을 전혀 모른다. 그래서 이웃끼리 벡터를 교환해야 한다.
+
+== 벡터를 주고받으며 채우기 ⭐⭐⭐ ==
+[[img:L15-11.png|p.11 — (a) B 가 A 의 벡터를 받아 D 칸이 ∞ → 5 (b) 이어서 E 의 벡터를 받아 F 칸이 ∞ → 6. 검은 칸이 바뀐 칸이다|large]]
+p.11 의 규칙은 세 줄이다.
+# 각 node 는 자기 벡터의 copy 를 이웃에게 보낸다.
+# 받은 node x 는 보낸 이웃 z 의 벡터로 Bellman-Ford 갱신을 한다. $D_{xy} = \min(D_{xy},\ c_{xz} + D_{zy})$.
+# 어떤 벡터도 바뀌지 않을 때까지 반복한다.
+
+위 그림 (a) 는 B 가 A 의 벡터를 받는 장면이다. B–A 의 link cost 가 2 이니까 식은 `B[ ] = min(B[ ], 2 + A[ ])` 다. 여기서 `X[ ]` 는 벡터 전체를 뜻한다(그림 오른쪽 위 Note). 칸마다 계산해 보자.
+<pre class="txt">
+ dest   Old B    A    2 + A    New B
+  A       2      0      2      min(2, 2)  = 2
+  B       0      2      4      min(0, 4)  = 0
+  C       5      ∞      ∞      5
+  D       ∞      3      5      min(∞, 5)  = '''5'''   ← 바뀜 (B→A→D)
+  E       4      ∞      ∞      4
+  F       ∞      ∞      ∞      ∞
+  G       ∞      ∞      ∞      ∞
+</pre>
+B 는 D 를 몰랐다. A 가 "D 까지 3" 이라고 알려 줬으니 B→A→D = 2 + 3 = 5 라는 길이 생겼다.
+
+(b) 는 같은 B 가 이어서 E 의 벡터 [∞, 4, ∞, 5, 0, 2, ∞] 를 받는 장면이다. B–E 의 cost 는 4 다.
+<pre class="txt">
+ dest   Old B    E    4 + E    New B
+  D       5      5      9      min(5, 9)  = 5     (A 경유가 더 싸서 그대로)
+  F       ∞      2      6      min(∞, 6)  = '''6'''   ← 바뀜 (B→E→F)
+  G       ∞      ∞      ∞      ∞         (E 도 아직 G 를 모른다)
+ (나머지 칸은 4 + E 가 더 크거나 ∞ 라 그대로)
+</pre>
+[[sim:dv_update]]
+시뮬레이터 첫 장면이 이 두 event 를 칸 하나씩 밟는다. 두 번째 장면은 7 node 가 모두 동시에 교환한다고 놓고 라운드별로 돌린 것이다. 라운드 3 에서 마지막 값이 바뀌고 라운드 4 에서 아무것도 안 바뀐다. 그때 7 개 벡터가 p.5 의 7 개 tree 숫자와 같아진다. 동기 라운드는 설명을 위한 가정이다. 실제로는 p.10 대로 벡터가 asynchronously 오가니까 순서가 섞인다. 그래도 link cost 가 바뀌지 않는다면 결국 같은 값에 도착한다.
+
+라운드를 따라가면 재미있는 장면이 하나 있다. 라운드 2 에서 A 는 G 까지 10 을 적는다. A→B→C→G 다. 라운드 3 에서 B 가 E 를 거친 G 7 을 알려 주니 A 는 10 을 9 로 고친다. 처음 알게 된 값이 최종값이 아닐 수 있다. 그래도 더 싼 길은 몇 라운드 안에 퍼진다.
+
+{mini}
+# p.10 의 초기 벡터에서 D 가 E 의 벡터를 받았다. D–E 의 cost 는 5 다. D 의 새 벡터를 쓰라.
+# 빈칸: 받은 node x 는 보낸 이웃 z 의 벡터로 $D_{xy} = \min(D_{xy},\ \_\_\_)$ 를 계산한다.
+# "B 가 A 의 벡터를 받은 뒤 B 의 벡터에 ∞ 가 하나도 남지 않는다." O/X.
+{/mini}
+{answer}
+# D = [3, 9, ∞, 0, 5, 7, ∞]. B 는 5 + 4 = 9, F 는 5 + 2 = 7 이 새로 생긴다. A 는 원래 3 이 5 + ∞ 보다 싸니 그대로다. C 와 G 는 E 도 모르니 ∞.
+# $c_{xz} + D_{zy}$. 이웃까지의 link cost 와 그 이웃이 말한 cost 를 더한다.
+# X. A 를 받은 뒤 B 는 [2, 0, 5, 5, 4, ∞, ∞] 다. F 와 G 는 아직 ∞ 다. A 도 F 와 G 를 모르기 때문이다.
+{/answer}
+
+== 좋은 소식은 빠르고 나쁜 소식은 느리다 ==
+p.12 는 거의 빈 슬라이드에 두 줄만 있다. '''Good news'''(cost 가 줄어드는 소식)는 빨리 퍼지고, '''bad news'''(cost 가 늘어나는 소식)는 느리게 퍼진다. link 가 끊기면 모든 라우터가 ∞ 를 적을 때까지 update 가 아주 많이 필요하다.
+
+녹음은 이 슬라이드 설명 중간부터 시작한다. 교수는 network A 와 B 사이에 라우터가 딱 하나 있는 예를 들었다. 그 라우터가 고장 나면 A 와 B 는 서로의 cost 를 바로 ∞ 로 바꿔야 한다. 그 라우터가 유일한 연결(single point of failure)이니까. 교수 표현으로는 "in distance vector routing, it is often not possible … it takes very long time and very many, many numbers of updates" 다.
+
+왜 나쁜 소식만 느린지는 Bellman-Ford 식을 다시 보면 알 수 있다. 식은 min 을 고른다. 더 싼 값이 오면 바로 받아들인다. 더 비싼 값이 오면 지금 값이 그대로 남는다. 그래서 "길이 끊겼다" 는 소식은 min 에 막혀서 잘 안 퍼진다. 그 사이 이웃이 들고 있던 옛날 값이 다시 돌아온다.
+
+== 서로의 옛 정보를 믿는 두 라우터: two-node loop ⭐⭐⭐ ==
+[[img:L15-13.png|p.13 (필기본) — a 고장 전 A 1, B 2 → b 고장 후 A 16 → c B 의 2 를 받아 A 3 → d A 의 3 을 받아 B 4 → … → e 둘 다 ∞. 손글씨 "Two-node instability", "=old", "=∞", "2+1 → cost to B"|large]]
+p.13 이 그 현상을 그림으로 보여 준다. 이름은 '''two-node loop''' 이고, 교수는 two-node instability 라고도 불렀다. 슬라이드 설명은 "A and B keep using each other's stale routes to X" 다. stale 은 오래돼서 이제는 틀린 정보라는 뜻이다.[* 교수가 이 단어를 한국어로 풀어 줬다. "Style means, in Korean, 한물간, 예전, old info."(02:15–02:26) 전사기는 stale 을 계속 "Style" 로 받아 적었다. 필기에도 stale 밑줄 옆에 "=old" 가 있다.]
+
+위 그림에서 X 는 A 에 붙은 network 이고, A–B 사이도 한 hop 이다. 각 라우터 위의 상자는 [목적지 X | cost | 셋째 칸] 이다. 단계별로 읽어 보자.
+# '''a. Before failure.''' A 는 X 에 바로 붙어 있으니 1, B 는 A 를 거쳐 1 + 1 = 2.
+# '''b. After link failure.''' X–A 가 끊겼다. 이웃인 A 는 바로 알아채고 X 를 16 으로 바꾼다. 여기서 16 은 ∞ 다.[* 교수: "you can just think of 16 equal to infinity … in many protocols we just consider 16 as infinity, and I will explain that one later."(04:19–04:39) 그 "later" 가 p.31 RIP 의 max 15 다. 필기의 "=∞" 도 이 16 위에 있다.] 여기까지는 잘 됐다. A 가 이 사실을 B 에게 먼저 알렸다면 B 도 ∞ 가 되고 끝났을 것이다.
+# '''c. After A is updated by B.''' 그런데 A 가 알리기 '''전에''' B 의 벡터가 먼저 도착했다. B 는 아직 X = 2 라고 말한다. A 는 Bellman-Ford 대로 계산한다. $\min(16,\ 1 + 2) = 3$. B 가 X 로 가는 다른 길을 찾은 줄 아는 것이다. 교수 표현으로는 "oh, maybe B finds a way to send packets to X, so it shows me the cost to X is 2" 다. 실제로 B 의 2 는 A 를 거치는 길이었다.[* 필기의 "2+1 → cost to B" 가 이 계산이다. B 가 말한 2 에 A–B 의 link cost 1 을 더했다. A 에서 X 쪽으로 돌아가는 곡선 화살표는 A 가 X 에 가려고 B 로 보내고, B 는 다시 A 로 보내는 고리를 그린 것이다.]
+# '''d. After B is updated by A.''' 이번엔 B 가 A 의 벡터(X = 3)를 받는다. B 의 X 경로는 원래 A 를 거친다. 그래서 값이 올라가도 받아들인다. 1 + 3 = 4.
+# 이렇게 둘이 1 씩 올리며 주고받는다. '''e. Finally''' 둘 다 ∞ 가 될 때까지 계속한다.
+<pre class="txt">
+ 갱신  받는 쪽   계산            A    B
+  0   (고장)     —              16    2
+  1   A ← B     1 + 2           3    2
+  2   B ← A     1 + 3           3    4
+  3   A ← B     1 + 4           5    4
+  4   B ← A     1 + 5           5    6
+  …                             …    …
+ 13   A ← B     1 + 14          15   14
+ 14   B ← A     1 + 15          15   16
+ 15   A ← B     1 + 16 → 16     16   16    ← '''15 번''' 만에 끝
+</pre>
+교수는 "at the end of the day, we would see infinite cost in both nodes" 라고 했다. 결국 맞는 값에 도착하긴 한다. 문제는 속도다. 그동안 X 로 가는 패킷은 A 와 B 사이를 왔다 갔다 한다. p.28 의 비교표는 이 약점을 '''count to infinity''' 라고 적는다.[* 그림의 셋째 칸은 c·d 에서도 "A" 로 남아 있다. 경로로 따지면 c 이후 A 의 next router 는 B 여야 한다. Forouzan 원 그림 표기 그대로라 시험에서는 cost 칸만 보면 된다.] → [[count to infinity와 two-node loop]]
+[[anim:count_to_infinity_anim|위 줄은 A·B 가 1 씩 올리며 16 까지 가는 장면이고, 아래 줄은 split horizon 을 쓴 경우다. 둘의 update 횟수를 비교해 보라]]
+
+{mini}
+# p.13 에서 A–B 의 link cost 가 1 이 아니라 3 이라고 하자(X–A 는 1, 고장 전 B 의 X 는 4). 고장 뒤 c 단계에서 A 의 값은? 둘 다 16 이 될 때까지 update 는 몇 번인가?
+# c 단계에서 A 가 3 을 적은 이유를 Bellman-Ford 식으로 한 줄로 쓰라.
+# "two-node loop 은 결국 끝나지 않는다." O/X.
+{/mini}
+{answer}
+# A = min(16, 3 + 4) = 7. 이어서 B 10, A 13, B 16, A 16 이라 '''5 번'''이다. link cost 가 크면 16 에 빨리 닿는다. 그래서 RIP 처럼 무한대를 16 으로 작게 잡는 것이 이 문제를 줄이는 방법이기도 하다.
+# $D_{AX} = \min(D_{AX},\ c_{AB} + D_{BX}) = \min(16,\ 1 + 2) = 3$. B 의 2 가 이미 낡은 값인 줄 모른다.
+# X. 결국 둘 다 ∞ 가 된다. 문제는 그때까지 걸리는 update 횟수와 그동안 생기는 loop 다.
+{/answer}
+
+== 땜질 두 가지: split horizon, poison reverse ==
+[[img:L15-16.png|p.16 — X–A 가 끊긴 상황. B 가 A 에게 "X = ∞" 라고 알리는 것이 poison reverse. 맨 아래 줄은 three-node instability|medium]]
+p.14–16 은 이 문제를 줄이는 방법 두 가지와 그 한계를 보여 준다.
+
+'''[[split horizon]]''' 의 규칙은 "Don't advertise a route back to the neighbor you learned it from" 이다. 어떤 경로를 이웃에게서 배웠으면 그 이웃에게는 그 경로를 되돌려 말하지 않는다. 위 그림에서 B 는 X 로 가는 길을 A 를 통해 배웠다. 그래서 B 는 A 에게 X 에 대해 아무것도 말하지 않는다. 그러면 c 단계가 생길 수 없다. A 는 16 을 그대로 들고 있다가 B 에게 알리고, B 도 16 이 된다. 한동안 어떤 경로에 대한 소식이 없으면 timer 로 지운다.[* 교수: "It has fancy name, but the fundamental is very easy."(08:24) 이름은 수평선을 나눈다는 뜻인데, 실제로는 "배운 쪽으로는 말하지 않는다" 한 줄이다. 필기에도 "learned it from" 에 동그라미가 있다. 규칙의 조건이 이 세 단어에 다 들어 있다.]
+
+'''[[poison reverse]]''' 는 말을 아예 안 하는 대신 cost 를 ∞ 로 말한다. 그림의 노란 상자 "B → A: X = ∞" 가 그것이다. 괄호 속 설명은 "don't use me to reach X" 다. split horizon 만 쓰면 A 입장에서는 B 가 침묵하는 이유를 모른다. 경로가 없어서인지 그냥 안 말한 것인지 timer 가 끝날 때까지 기다려야 한다. poison reverse 는 "나를 거쳐서는 못 간다" 를 바로 알려 준다.
+
+그런데 교수는 두 방법을 소개한 뒤 바로 선을 그었다. "But this is not a fundamental cure for this instability."(11:17) 노드가 셋 이상이면 문제가 다시 생긴다. 이것이 '''[[three-node instability]]''' 다. 슬라이드 표현으로는 "These fixes can't guarantee stability among 3+ nodes" 다.[* 슬라이드에는 세 노드 예가 없다. Forouzan 교재의 예는 이렇다. A·B·C 가 서로 이웃이고 A–X 가 끊긴다. A 가 B 와 C 에게 X = ∞ 를 보냈는데 C 에게 가는 메시지만 늦게 도착한다. C 는 아직 X = 2(via A) 를 들고 있다. split horizon 은 "A 에게만" 말하지 말라는 규칙이니 C 는 B 에게 X = 2 를 말한다. B 는 C 를 거쳐 X = 3 을 적고, 그걸 A 에게 말한다. 셋이 돌아가며 다시 count to infinity 가 된다.]
+
+{exam}
+교수가 이 대목에서 강조한 원인 진단(12:17–13:08): "the problem starts from the fact that '''each node does not have global information''' … it just totally relies upon neighborhood information. That's the core key problem." 그래서 근본 해결은 node 마다 네트워크 전체 정보를 갖게 하는 것이고, 그것이 link state routing 이다. "split horizon · poison reverse 의 한계는?" "link state 가 나온 이유는?" 류 서술에 그대로 쓸 수 있다.
+{/exam}
+
+{mini}
+# p.13 상황에 split horizon 을 쓰면 c 단계에서 A 가 받는 B 의 벡터에는 X 칸이 어떻게 되는가? 둘 다 ∞ 가 될 때까지 update 는 몇 번인가?
+# 옳은 것을 모두 고르라. (a) poison reverse 는 경로를 알리되 cost 를 ∞ 로 알린다. (b) split horizon 은 배운 이웃에게도 같은 경로를 알린다. (c) 두 방법을 같이 쓰면 노드가 몇 개든 instability 가 없다. (d) split horizon 은 소식이 없는 경로를 timer 로 지운다.
+{/mini}
+{answer}
+# X 칸이 아예 없다(B 는 A 에게서 배웠으니 말하지 않는다). A 는 16 을 유지하고, A 가 16 을 알리면 B 가 1 + 16 → 16. '''1 번'''이다. 시뮬레이터 `dv_update` 의 split horizon 장면과 같다.
+# (a), (d). (b) 는 정반대다. (c) 는 three-node instability 때문에 틀렸다. 교수 표현으로는 "not a fundamental cure" 다.
+{/answer}
+
+== 지도 전체를 모두에게: link state routing ⭐⭐⭐ ==
+[[img:L15-18.png|p.18 — (a) 같은 7-node 그래프를 (b) 7×7 표로 옮긴 것이 LSDB. 칸 = 그 link 의 cost, link 가 없으면 ∞(노란 칸)|large]]
+DV 의 문제가 "이웃 말만 듣는다" 였으니 해결책은 지도 전체를 갖는 것이다. p.17–18 의 첫 줄이 "Each node needs the complete map of the network" 다.
+
+그 지도가 '''[[LSDB]]'''(link-state database)다. 모든 link 의 상태를 담은 2-D 표이고, 칸 하나가 그 link 의 cost 다. link 가 없으면 ∞ 다. 위 그림 (b) 의 A 행은 [0, 2, ∞, 3, ∞, ∞, ∞] 다. p.10 의 A 의 초기 벡터와 똑같다. 즉 LSDB 는 일곱 node 의 초기 벡터를 한 표에 쌓은 것이다. DV 에서는 각 node 가 자기 행만 갖고 있었고, link state 에서는 모든 node 가 일곱 행을 다 갖는다.
+
+슬라이드의 마지막 줄은 "Every node keeps the same LSDB" 다. 한 네트워크 안에서는 모든 node 의 표가 같아야 한다. 교수도 "It should be the same in the one network, in every node" 라고 두 번 말했다. 교수는 이 표를 보여 주면서 "You have experience of seeing these metrics of expressing the graph information in your data structure"(14:13) 라고 했다. 자료구조 시간의 adjacency matrix 다. 전사에는 matrix 가 "metrics" 로 적혀 있다.
+
+== LSDB 를 모으는 법: flooding ==
+[[img:L15-19.png|p.19 — node 마다 이웃과 link cost 를 담은 표(LSP)를 만들고, 빨간 화살표처럼 모든 interface 로 내보낸다|large]]
+그럼 모든 node 가 어떻게 같은 LSDB 를 얻을까. p.19 의 답이 '''flooding''' 이다.[* 교수: "the wording is from flood … it's like a flood."(16:49–17:46) 홍수처럼 쏟아 붓는다는 뜻이다.]
+# 켜지면 이웃에게 인사(greet)해서 이웃의 identity 와 link cost 를 알아낸다. 교수 표현으로는 "they say hello to their neighbors" 다.
+# 그 정보를 '''LSP'''(link-state packet)에 담아 모든 interface 로 내보낸다. 위 그림의 주황 표가 node 별 LSP 다. A 는 {B 2, D 3}, G 는 {C 3, F 1} 이다.
+# LSP 를 받은 node 는 그것이 자기가 가진 copy 보다 '''newer''' 이면 보관하고 다시 forward 한다. 아니면 discard 한다.[* 위 그림에서 E 의 LSP 표 셋째 줄은 "E 2" 로 적혀 있다. E 의 이웃은 B·D·F 이니 "F 2" 가 맞다. Forouzan 원 그림의 오타로 보인다.]
+[[anim:lsp_flooding_anim|A 의 LSP 하나가 퍼지는 장면이다. 같은 LSP 를 두 번 받은 node 가 두 번째 것을 버리는 순간(빨강)을 찾아보고, 버려진 메시지가 몇 개인지 세어 보라]]
+3 번 규칙 덕분에 LSP 는 영원히 돌지 않는다. 대신 위 그림에서 보듯 같은 정보가 여러 길로 중복 도착한다. 교수는 이 방식이 "kind of inefficient … especially in some congestion problems" 라고 했다. link 하나가 끊겨도 그 소식이 네트워크 전체에 broadcast 되기 때문이다. 그래도 각 node 가 global topology 를 알기 때문에, 길이 끊기면 다른 길로 바로 돌아갈 수 있다. DV 의 instability 를 피하는 대가로 traffic 을 쓰는 셈이다. → [[flooding과 LSP]]
+
+{analogy}🎭 distance vector 는 '''길을 물어물어 가는 여행자'''다. 갈림길마다 옆 사람에게 "서울까지 몇 km 예요?" 하고 묻고, 제일 짧다는 쪽으로 간다. 옆 사람이 어제 들은 소문을 말해도 확인할 방법이 없다. link state 는 '''모든 사람에게 같은 지도책을 나눠 주는 방식'''이다. 도로 하나가 막히면 그 소식을 전국에 방송해야 해서 시끄럽지만, 각자 지도를 펴고 직접 최단 경로를 계산한다.{/analogy}
+
+{mini}
+# LSDB 에서 B 행을 쓰라. 이 행은 p.10 의 무엇과 같은가?
+# 옳은 것을 모두 고르라. (a) link state 에서 node 는 이웃에게만 LSP 를 보낸다. (b) 받은 LSP 가 내 copy 보다 오래됐으면 버린다. (c) 같은 네트워크의 모든 node 는 같은 LSDB 를 가진다. (d) flooding 은 traffic 이 많아 congestion 을 일으킬 수 있다.
+{/mini}
+{answer}
+# [2, 0, 5, ∞, 4, ∞, ∞]. p.10 의 B 의 초기(rudimentary) 벡터와 같다.
+# (b), (c), (d). (a) 는 DV 의 특징이다. link state 는 LSP 를 모든 interface 로 내보내고, 받은 쪽이 또 forward 하니 결국 '''모두에게''' 간다(p.28 "Everyone (flooding)"). 처음 한 hop 만 보면 이웃이지만, 표의 "To whom" 칸은 Everyone 이다.
+{/answer}
+
+== 지도로 tree 만들기: Dijkstra ⭐⭐⭐ ==
+[[img:L15-20.png|p.20 — ① Init(root 만) → ② 가장 가까운 node 추가 → ③ 남은 cost 갱신 → 남은 node 가 있으면 ② 로, 없으면 Done|medium]]
+LSDB 는 지도일 뿐이고, 라우터가 쓰려면 지도에서 least-cost tree 를 뽑아야 한다. 그 방법이 '''[[Dijkstra algorithm]]''' 이다. p.20 의 네 줄을 그대로 옮기면 이렇다.
+# '''Init''': 자기 자신을 root 로 둔다. 각 node 의 cost 는 LSDB 에서 자기 행을 읽어 정한다.
+# '''Select''': tree 에 아직 없는 node 중 root 에 가장 가까운 것을 tree 에 넣는다.
+# '''Update''': 남은 node 들의 cost 를 다시 계산한다. 방금 넣은 node u 를 거치는 길이 더 싸면 바꾼다. 식은 $D(v) = \min(D(v),\ D(u) + c(u, v))$ 다. 괄호 속 "paths may change" 가 이 뜻이다.
+# 모든 node 가 tree 에 들어갈 때까지 2–3 을 반복한다.
+Update 식은 Bellman-Ford 와 같은 모양이다. 다른 점은 갱신할 node 를 고르는 방식이다. Dijkstra 는 가장 가까운 node 하나를 골라서 그 이웃만 갱신한다.[* 교수: "I think you should hear of this one in your data structure course as well … we will not discuss in detail on this Dijkstra algorithm."(19:26–19:47) 절차와 예제만 짚고 넘어갔다. 자료구조에서 배운 그 알고리즘과 같고, 여기서는 "LSDB 를 입력으로 받는다" 는 것만 새롭다.]
+
+[[img:L15-25.png|p.25 — root A 의 Initialization 과 Iteration 1–6. 하늘색이 tree 에 들어간 node, 점선이 potential path, 실선이 path, 빨간 숫자가 root 로부터의 cost|large]]
+p.21–25 는 Iteration 을 한 장씩 덧붙이는 build 이고, 위 그림이 완성된 p.25 다. 그림을 왼쪽 위부터 읽으며 표로 옮기면 이렇다.
+<pre class="txt">
+ 단계     추가    A  B  C  D  E  F  G    무슨 일
+ Init     A      '''0'''  2  ∞  3  ∞  ∞  ∞    LSDB 의 A 행
+ Iter 1   B(2)   0  '''2'''  7  3  6  ∞  ∞    C = 2+5, E = 2+4  (B 를 거쳐)
+ Iter 2   D(3)   0  2  7  '''3'''  6  ∞  ∞    E via D = 3+5 = 8 > 6 → 그대로
+ Iter 3   E(6)   0  2  7  3  '''6'''  8  ∞    F = 6+2
+ Iter 4   C(7)   0  2  '''7'''  3  6  8  10   G = 7+3
+ Iter 5   F(8)   0  2  7  3  6  '''8'''  9    G = min(10, 8+1) = 9  ← 경로가 C→G 에서 F→G 로
+ Iter 6   G(9)   0  2  7  3  6  8  '''9'''    Done
+</pre>
+Iteration 1 에서 B(2)가 D(3)보다 가까우니 B 가 먼저 들어간다. 교수도 녹음에서 "You may understand that B is closer than D, right?"(21:44) 라고 이 순서만 짚었다. 이어서 D, E("closer than node C"), C 순으로 말했다. Iteration 4 에서 G 가 10 으로 처음 잡히는데, Iteration 5 에서 F 가 들어오자 8 + 1 = 9 로 바뀐다. 그림에서 Iteration 4 의 C→G 점선이 Iteration 5 에서 F→G 점선으로 옮겨 간 것이 그 장면이다. 완성된 tree 는 p.5 의 "Tree for node A" 와 똑같다. DV 가 여러 라운드의 대화로 얻은 답을 link state 는 지도 하나로 혼자 계산한 것이다.
+[[sim:dijkstra_ls]]
+시뮬레이터에서 root 를 D 나 G 로 바꿔 p.5 의 다른 tree 와 맞춰 볼 수 있다. G 는 C 와 E 가 둘 다 3 으로 동점인 단계가 있다.[* 동점일 때 어느 쪽을 먼저 넣을지는 슬라이드에 규칙이 없다. 시뮬레이터는 알파벳 순으로 넣는다. 어느 쪽을 먼저 넣어도 최종 cost 는 같고, 같은 cost 의 다른 tree 가 나올 수는 있다.]
+
+{mini}
+# root 를 E 로 두고 Dijkstra 를 돌리면 tree 에 들어가는 순서는? (동점이면 알파벳 순)
+# Iteration 2 에서 A 의 표가 하나도 바뀌지 않은 이유를 한 줄로 쓰라.
+# 빈칸: Dijkstra 의 Select 단계는 tree 에 없는 node 중 ___ 를 고른다.
+{/mini}
+{answer}
+# E → F(2) → G(3) → B(4) → D(5) → A(6) → C(6). F 가 들어오면 C = 2 + 4 = 6, G = 2 + 1 = 3. G 가 들어와도 C 는 3 + 3 = 6 으로 같아서 그대로다. A 와 C 가 6 으로 동점이라 A 를 먼저 넣었다. 최종 cost [A 6, B 4, C 6, D 5, E 0, F 2, G 3] 은 p.5 E 의 tree 와 같다.
+# D 의 이웃 중 tree 밖에 있는 것은 E 뿐인데, D 를 거치면 3 + 5 = 8 이라 지금의 6 보다 비싸다.
+# root 에 가장 가까운(cost 가 가장 작은) node. "가장 최근에 바뀐 node" 나 "이웃 중 아무거나" 가 아니다.
+{/answer}
+
+== 싼 길보다 정책: path vector routing ==
+[[img:L15-27.png|p.27 — S 에서 D 로. B 를 거치면 1+1 = 2 로 가장 싸지만 B 는 untrusted. 파란 policy route S→A→C→D 는 2+2+2 = 6|medium]]
+DV 와 LS 는 둘 다 least cost 를 찾는다. p.26–27 은 여기에 반대 질문을 던진다. "least cost is not always the priority." 보내는 쪽에 policy 가 있을 수 있다. 예를 들면 어떤 네트워크는 security 나 business 이유로 피하고 싶다.
+
+위 그림에서 S→B→D 는 cost 가 2 로 가장 싸다. 그런데 B 는 믿을 수 없는(untrusted) node 다. 그래서 S 는 cost 6 인 S→A→C→D 를 고른다.[* 교수 예는 군 통신이었다. "it is actually a kind of military communication, so reliable transmission is the highest priority."(24:43) B 가 가끔 꺼지는 불안한 node 라면 비싸도 위쪽 길을 탄다. 전사에는 untrusted 대신 "not that reliable … it turns off sometimes" 라고 설명했다.]
+
+'''[[path vector routing]]''' 은 source 가 자기 policy 로 best route 를 고르는 방식이다. 슬라이드의 세 줄은 이렇다.
+* node 는 이웃과 '''경로 전체(whole paths)''' 를 주고받는다. 이웃에게만 보낸다는 점은 DV 와 같다.
+* 갱신할 때 가장 싼 경로가 아니라 policy 에 가장 맞는 경로를 남긴다.
+* ISP 사이의 routing 을 위해 설계됐다.
+경로 전체를 주고받는 이유는 policy 를 판단하려면 그 길이 어디를 지나는지 알아야 하기 때문이다. DV 처럼 숫자 하나만 받으면 B 를 거치는지 알 수 없다.[* 경로 전체를 들고 다니면 덤으로 loop 도 막힌다. 받은 경로 안에 자기 이름이 이미 있으면 버리면 된다. Forouzan 보충이고 슬라이드에는 없다. 교수도 "I'm not going to detail about the algorithms"(26:24) 라고 하고 넘어갔다.]
+
+{exam}
+교수가 path vector 의 정체로 강조한 문장(25:21–26:14): "the routing is based upon its own '''policy''', its own rule, not necessarily the cost." ISP 는 큰 회사 같은 고객에게 안정적인 전송을 보장해야 하니 "policy could matter … than the cost". DV·LS 의 Goal 은 least cost, PV 의 Goal 은 policy 라는 대비가 p.28 표의 한 줄이다.
+{/exam}
+
+== 세 알고리즘 비교 (p.28) ⭐⭐⭐ ==
+p.6 에서 비워 둔 표가 p.28 에서 채워진다. 이 표는 슬라이드 그대로 외워 두는 편이 좋다.
+{|
+! || Distance vector || Link state || Path vector
+|-
+| A node sends || Its distance vector || Its link states (LSP) || Its path vector
+|-
+| To whom || '''Neighbors only''' || '''Everyone (flooding)''' || '''Neighbors only'''
+|-
+| A node knows || Costs via neighbors || The whole map (LSDB) || Whole paths
+|-
+| Algorithm || Bellman-Ford || Dijkstra || Policy-based "best"
+|-
+| Goal || Least cost || Least cost || '''Policy'''
+|-
+| Weak point || Count to infinity || Flooding traffic || Larger messages
+|-
+| Protocol || RIP || OSPF || BGP
+|-
+| Used || Inside an AS || Inside an AS || '''Between ASs'''
+|}
+열을 세로로 읽으면 지금까지의 이야기가 그대로 나온다. DV 는 이웃의 숫자만 알아서 count to infinity 가 생겼다. LS 는 지도 전체를 모두에게 뿌려서 그 문제를 피했지만 flooding traffic 이 생겼다. PV 는 이웃에게만 보낸다는 점에서 DV 와 같지만, 숫자 대신 경로 전체를 보내서 메시지가 크다. 마지막 두 행(Protocol, Used)은 다음 절의 내용이다. → [[라우팅 알고리즘 비교]]
+
+{mini}
+# 빈칸: link state 의 Weak point 는 ___, path vector 의 Weak point 는 ___ 다.
+# 옳은 것을 모두 고르라. (a) DV 와 PV 는 둘 다 이웃에게만 보낸다. (b) PV 의 Goal 은 least cost 다. (c) OSPF 는 Dijkstra 를 쓴다. (d) BGP 는 AS 안에서 쓴다.
+{/mini}
+{answer}
+# Flooding traffic, Larger messages.
+# (a), (c). (b) PV 의 Goal 은 policy 다. (d) BGP 는 Between ASs 다. AS 안에서 BGP 정보를 퍼뜨리는 iBGP 가 있긴 하지만, 표의 "Used" 칸은 Between ASs 다.
+{/answer}
+
+== 인터넷은 한 프로토콜로 안 된다: hierarchical routing ==
+[[img:L15-29.png|p.29 — 큰 ISP 들의 backbone 이 가운데 겹쳐 있고 peering point(빨간 원)에서 만난다. 아래위로 provider network, 그 아래 customer network 가 매달린다|medium]]
+p.29 는 실제 인터넷의 모양이다. 큰 ISP 들이 운영하는 '''backbone''' 여러 개가 전 세계 연결을 맡는다. backbone 들은 '''peering point''' 에서 서로 만난다. 그 아래에 provider network 가, 그 아래에 customer network 가 매달린다. 교수는 "routing happens in some hierarchical way" 라고 했다. → [[backbone과 peering point]]
+
+[[img:L15-30.png|p.30 — AS 1 과 AS 2 안에서는 intra-AS(RIP/OSPF), 둘 사이의 빨간 선은 inter-AS(BGP)|medium]]
+그럼 이 인터넷 전체를 프로토콜 하나로 돌릴 수 있을까. p.30 의 답은 "No" 이고 이유는 두 가지다.
+* '''Scalability''': 라우터 하나가 인터넷 전체를 표에 담으면 표가 너무 커진다.
+* '''Administration''': ISP 마다 자기 네트워크를 스스로 관리하고 싶어 한다.
+그래서 '''[[hierarchical routing]]''' 을 쓴다. ISP 하나를 '''[[autonomous system]]'''(AS)으로 보고, routing 을 두 층으로 나눈다.
+* AS 안: '''intra-AS routing'''(intradomain, IGP). 예 RIP, OSPF.
+* AS 사이: '''inter-AS routing'''(interdomain, EGP). 예 BGP.
+교수는 AS1, AS2 를 SKT, KT 같은 회사로 생각하면 된다고 했다.[* hierarchical routing 이라는 말은 CH07 (2) rev p.67 에도 나왔다([[hierarchical routing]]). 거기서는 주소 block 을 ISP 단위로 묶어 forwarding table 을 줄이는 이야기였고, 여기서는 routing 프로토콜을 AS 단위로 나누는 이야기다. 둘 다 "인터넷이 너무 커서 층으로 나눈다" 는 같은 생각이다.] → [[intra-AS와 inter-AS routing]]
+
+{exam}
+교수가 RIP 로 넘어가며 구분해 준 두 낱말(29:46): "'''algorithm is very low-level procedure and protocol is a set of rules based on that specific algorithm.''' It's more like a higher level." Bellman-Ford·Dijkstra 는 algorithm 이고, RIP·OSPF·BGP 는 그 위에 메시지 형식·주기·규칙을 정한 protocol 이다. "RIP 와 distance vector 의 관계를 쓰라" 같은 문제에 이 문장으로 답한다.
+{/exam}
+
+== distance vector 를 프로토콜로: RIP ⭐⭐⭐ ==
+[[img:L15-31.png|p.31 — RIP 의 cost 는 hop count. R3 → N4 는 1 hop, R2 → N4 는 2 hops(N3, N4), R1 → N4 는 3 hops(N2, N3, N4)|medium]]
+'''[[RIP]]'''(Routing Information Protocol)는 distance vector 를 쓰는 intra-AS 프로토콜이다. p.31 은 RIP 의 cost 를 정의한다. cost 는 '''[[hop count]]''' 이고, source router 에서 destination host 까지 패킷이 지나는 '''network 수'''다. 위 그림에서 R1 이 N4 의 host 로 보내면 N2, N3, N4 를 지나니까 3 hops 다. 출발 라우터 쪽 network(N1)는 세지 않고 도착 network 는 센다.
+
+max cost 는 '''15''' 다. '''16 은 ∞''' 로 읽는다. 그래서 RIP 는 작은 AS 에 맞는다.[* 교수: "As I told you, you may remember that I told you, 16 … This is how, why. In RIP, max count of cost, max cost is just 15, and 16 is equivalent to infinity."(30:54–31:26) p.13 에서 미뤄 둔 설명을 여기서 마무리했다. 무한대를 16 으로 작게 잡으면 count to infinity 가 아무리 길어도 15 번 안팎에서 끝난다. 대신 지름이 15 hop 보다 큰 네트워크에는 쓸 수 없다.] forwarding table 의 칸은 destination network, next router, cost(hops) 세 개다.
+
+p.32 는 RIP 가 실제로 어떻게 도는지 적는다.
+* DV 와 아이디어는 같다. 다만 라우터는 벡터 대신 '''forwarding table 전체'''를 보낸다.
+* 받은 쪽은 각 cost 에 '''1 hop 을 더하고''', next router 를 보낸 라우터로 적는다. Bellman-Ford 에서 $c_{xz}$ 가 항상 1 인 셈이다.
+* 다음 세 경우에 옛 경로를 새 경로로 바꾼다.
+# 새 경로다(처음 보는 목적지).
+# 새 cost 가 더 낮다.
+# 새 cost 가 더 높지만 '''같은 next router''' 에서 왔다. 지금 쓰는 길이 나빠졌다는 소식이니 받아들인다.
+* 표는 longest prefix 가 앞에 오도록 정렬해 둔다([[longest mask matching]]).
+* 메시지는 '''UDP (port 520)''' 위에 실린다. '''30 s''' 마다, 또는 표가 바뀔 때마다 보낸다.[* 녹음 32:26 은 "update frequency is every 13 seconds" 로 전사됐다. 슬라이드는 30 s 다. thirty 와 thirteen 은 발음이 비슷해서 전사기가 자주 헷갈린다. 30 s 로 외운다.]
+3 번 규칙이 p.13 의 d 단계와 같은 이야기다. B 의 X 경로는 A 를 거쳤으니 A 가 3 을 말하면 2 보다 커도 받아들였다. 이 규칙이 없으면 끊긴 길이 영원히 표에 남는다.[* 교수는 "RIP is based upon UDP, which is a protocol of higher layer, which is transport layer"(32:12) 라고 짚었다. 라우팅 프로토콜인데 transport layer 위에 실려 다닌다. routing 은 network layer 의 일이지만, 라우터끼리 표를 주고받는 메시지 자체는 평범한 응용 메시지처럼 UDP 로 보낸다는 뜻이다.]
+
+[[img:L15-33.png|p.33 — R1–R4 와 N1–N6. 아래 표는 교환이 끝나 안정된 뒤 네 라우터의 forwarding table(Des., N.R., Cost)|large]]
+p.33 은 라우터 네 개가 표를 주고받아 안정된(stabilized) 뒤의 결과다. 위 그림에서 R1 은 N1·N2·N3, R2 는 N3·N4·N5, R3 은 N4·N6, R4 는 N5·N6 에 붙어 있다. R4 의 N1 줄을 검산해 보자. R4 → N5 → R2 → N3 → R1 → N1 이니까 지나는 network 는 N5, N3, N1 세 개다. cost 3, next router R2 로 표와 같다.[* 동점도 있다. R4 → N4 는 R2 를 거쳐도(N5, N4) R3 을 거쳐도(N6, N4) 2 hops 다. 표는 R2 를 적었다. RIP 의 교체 규칙 2 는 "더 낮을 때" 만 바꾸니까 같은 값이면 먼저 들어온 쪽이 남는다.] → [[RIP forwarding table 예제]]
+
+{mini}
+# p.33 에서 R1 의 N6 줄(next router R2, cost 3)을 경로로 검산하라.
+# R2 가 R1 에게서 "N1 1" 이라는 줄을 받았다. R2 의 표에 적히는 줄은?
+# RIP 에서 어떤 목적지의 cost 가 16 으로 적혀 있다. 무슨 뜻인가?
+# R3 의 N1 줄이 (R2, 3) 인데 R2 가 "N1 15" 를 보내왔다. R3 은 이 줄을 어떻게 하는가?
+{/mini}
+{answer}
+# R1 → N3 → R2 → N4 → R3 → N6 (또는 N5 → R4 → N6). 지나는 network 3 개, 첫 next router R2.
+# N1, next router R1, cost 1 + 1 = 2. p.33 Final R2 의 첫 줄과 같다.
+# 도달할 수 없다(∞). RIP 의 max 는 15 다.
+# 받아들여 (R2, 16) = ∞ 로 바꾼다. 15 + 1 = 16 은 지금 3 보다 크지만 같은 next router(R2)에서 온 소식이라 교체 규칙 3 에 해당한다.
+{/answer}
+
+== link state 를 프로토콜로: OSPF ⭐⭐⭐ ==
+[[img:L15-34.png|p.34 — OSPF 는 network 마다 weight 를 둔다. N1 4, N2 5, N3 3, N4 4 → R3 의 total cost 4, R2 는 7, R1 은 12|medium]]
+'''[[OSPF]]'''(Open Shortest Path First)는 link state 에 기반한 intradomain 프로토콜이다. RIP 와 가장 크게 다른 점은 cost 다. OSPF 는 link 마다 '''weight''' 를 둔다. weight 에는 throughput, round-trip time, reliability 같은 것이 들어간다. 슬라이드 표현으로는 "Unlike RIP, the cost is not just hop count" 다.[* 교수는 이 weight 를 "more like continuous version" 이라고 했다(33:00). RIP 의 hop count 는 1, 2, 3 처럼 정수로 세는 값이고, OSPF 의 weight 는 성능 지표를 섞어 만든 연속적인 값이라는 뜻이다. 그래서 "more delicate, more precise" 하다고 했다.]
+
+위 그림은 p.31 과 같은 모양의 네트워크에 weight 를 붙인 것이다. N1 4, N2 5, N3 3, N4 4 다.
+<pre class="txt">
+R3 → N4 : 4                 = 4
+R2 → N4 : 3 (N3) + 4 (N4)   = 7
+R1 → N4 : 5 + 3 + 4         = 12        (RIP 로 세면 1, 2, 3 hops)
+</pre>
+각 라우터는 LSDB 로 Dijkstra 를 돌려 shortest-path tree 를 만들고, 그 tree 로 forwarding table 을 만든다.
+
+[[img:L15-35.png|p.35 — AS 하나를 Area 1, Area 2, Area 0(backbone) 으로 나눴다. area border router 가 backbone 과 다른 area 를 잇고, AS boundary router 가 다른 AS 로 나가는 출구다|large]]
+그런데 link state 의 약점은 flooding traffic 이었다. AS 가 크면 LSP 를 AS 전체에 뿌리는 양이 감당이 안 된다. p.35 의 해결책은 AS 를 '''area''' 로 나누는 것이다. 각 area 는 자기 안에서만 LSP 를 flooding 한다. area 하나는 '''backbone (area 0)''' 이고, '''area border router''' 가 backbone 과 다른 area 를 잇는다. 위 그림 오른쪽 아래의 '''AS boundary router''' 는 이 AS 밖, 다른 AS 로 나가는 출구다. → [[OSPF area]]
+
+{mini}
+# p.34 에서 N3 의 weight 가 3 이 아니라 10 이면 R1 → N4 와 R2 → N4 의 total cost 는?
+# 옳은 것을 모두 고르라. (a) OSPF 의 cost 는 hop count 다. (b) OSPF 는 Dijkstra 로 shortest-path tree 를 만든다. (c) area 를 나누면 LSP 는 그 area 안에서만 flooding 된다. (d) backbone area 의 번호는 0 이다.
+{/mini}
+{answer}
+# R1: 5 + 10 + 4 = 19. R2: 10 + 4 = 14. R3 은 그대로 4.
+# (b), (c), (d). (a) 는 RIP 다. OSPF 는 throughput·RTT·reliability 를 반영한 weight 를 쓴다.
+{/answer}
+
+== AS 사이의 유일한 프로토콜: BGP4 ⭐⭐⭐ ==
+[[img:L15-37.png|p.37 — AS 1 의 R1 과 AS 2 의 R4 를 잇는 빨간 실선이 eBGP session, 각 AS 안의 파란 점선이 iBGP sessions|medium]]
+마지막 프로토콜은 '''[[BGP4]]'''(Border Gateway Protocol version 4)다. p.36 은 두 줄이다. BGP 는 인터넷에서 쓰이는 '''유일한 interdomain''' routing 프로토콜이고, path-vector routing 에 기반한다. p.36 의 그림은 AS1 이 AS2·AS3·AS4 와 point-to-point WAN 으로 연결된 모습이다.
+
+p.37 은 BGP 를 두 종류로 나눈다. → [[eBGP와 iBGP]]
+* '''eBGP'''(external BGP): 서로 다른 두 AS 의 border router 끼리, 물리적으로 연결된 쌍 사이에서 돈다. 논리적인 '''TCP 연결(port 179)''' 위에서 돈다. 위 그림의 R1–R4 빨간 실선이다.
+* '''iBGP'''(internal BGP): 한 AS 안의 아무 두 router 사이의 session 이다. border router 가 eBGP 로 배운 것을 AS 전체에 퍼뜨린다. 위 그림의 파란 점선이다.
+AS 하나에 border router 만 다른 AS 를 직접 본다. 그런데 AS 안의 다른 라우터도 "AS 밖의 그 network 로 가려면 어느 출구로 나가야 하는지" 를 알아야 한다. iBGP 가 그 정보를 안으로 나른다.[* RIP 는 UDP 520, BGP 는 TCP 179 다. BGP 가 TCP 를 쓰는 이유는 슬라이드에 없다. 교재 설명은 BGP 메시지(경로 전체를 담은 표)가 크고 순서대로 정확히 전달돼야 해서 신뢰성 있는 연결이 낫다는 것이다. (Forouzan 보충)]
+
+{exam}
+교수(34:51–35:00): "this is '''the only inter-domain''' … routing protocol, which is used in the internet. And it is based on path vector routing, which is about policy oriented." 이어서 external BGP 와 internal BGP 를 짚고 "this is the last slide" 로 덱을 끝냈다. BGP = 유일한 interdomain = path vector(policy) 를 한 묶음으로 기억한다.
+{/exam}
+
+{mini}
+# p.36 그림에서 AS1 의 R1 과 AS2 의 R5 사이 session 은 eBGP 인가 iBGP 인가? AS1 의 R1 과 R3 사이는?
+# 빈칸: eBGP 는 ___ 연결(port ___) 위에서 돈다.
+# "BGP 는 path vector 라서 cost 와 상관없이 정책으로 경로를 고를 수 있다." O/X.
+{/mini}
+{answer}
+# R1–R5 는 서로 다른 AS 의 border router 끼리라 eBGP. R1–R3 은 같은 AS 안이라 iBGP.
+# TCP, 179. (RIP 는 UDP 520 이다. 헷갈리기 쉬우니 짝으로 외운다.)
+# O. path vector 의 Goal 은 policy 다(p.28).
+{/answer}
+
+== 🎙 실제 수업 기록 (11/12 목, 녹음본 기준) ==
+녹음은 `../녹음본/1112_컴네.txt` 다. 원본 `컴네 261112_093949.m4a`(35 분 51 초)를 faster-whisper 로 영어 전사했다. 09:39 에 시작해서 p.13 부터 들어 있고, 수업 앞부분 p.1–12 는 녹음이 없다. 전사 오인식은 이렇다. "Style" = stale, "top/hook count" = hop count, "LINQ" = link state, "extra algorithm / Dijkstra code" = Dijkstra algorithm, "PG PG P" = BGP, "IP or SPF" = RIP, OSPF, "two months" = two nodes.
+* '''00:00–01:45''' (p.12) A 와 B 사이에 라우터가 하나뿐인 예. 그 라우터가 고장 나면 cost 를 ∞ 로 빨리 바꿔야 하는데 DV 에서는 "it takes very long time and very many numbers of updates".
+* '''01:49–02:29''' "It is often called two node loop or two node instability." stale 을 한국어로 "한물간, 예전, old info" 라고 풀어 줬다.
+* '''04:19–04:39''' "you can just think of 16 equal to infinity … I will explain that one later."
+* '''05:11–06:13''' A 가 고장을 알리기 전에 B 의 벡터를 받으면 문제가 생긴다. A 는 B 가 X 로 가는 길을 찾은 줄 알고 Bellman-Ford 로 갱신한다.
+* '''07:12–07:54''' 결국 둘 다 ∞ 가 되지만 "this update is not that fast". 이 지연을 two-node loop 이라고 부른다.
+* '''08:17–10:50''' split horizon. "It has fancy name, but the fundamental is very easy." B 는 A 를 통해 배웠으니 A 에게 말하지 않는다. 한동안 update 가 없으면 지운다.
+* '''10:53–11:17''' poison reverse. "But this is not a fundamental cure for this instability."
+* '''11:42–12:09''' 노드가 셋 이상이면 three-node instability. "these remedies do not hold for more than two [nodes]".
+* '''12:17–13:30''' 근본 원인은 global information 이 없다는 것. "That's the core key problem." 해결은 link state. DV 는 "very simple and efficient" 하지만 instability 가 있다.
+* '''14:13–15:17''' 그래프를 표로 나타내는 건 자료구조에서 봤을 것. 모든 node 가 같은 LSDB 를 가진다.
+* '''15:17–16:49''' 단점은 global 정보 유지가 어렵고, 링크 하나가 끊겨도 전체에 broadcast 돼 congestion·inefficiency 가 생긴다는 것. 장점은 global topology 를 알아서 다른 길로 돌아갈 수 있다는 것.
+* '''16:49–19:06''' flooding("the wording is from flood"), LSP 는 network layer packet, 켜지면 hello, newer 면 keep & forward, 아니면 discard. "kind of inefficient".
+* '''19:19–22:46''' Dijkstra 는 "data structure course" 에서 들었을 것, "we will not discuss in detail". Init → Select → Update. 예제는 B(2 < 3) → D → E → C 순서만 짚었다.
+* '''22:57–26:24''' path vector. 군 통신 예(B 가 가끔 꺼짐), ISP 비즈니스. "policy could matter … than the cost". 알고리즘 세부는 생략.
+* '''26:29–29:34''' 비교표 → 프로토콜 RIP · OSPF · BGP. backbone 과 peering point. 하나의 프로토콜로 인터넷 전체를 다룰 수 없어 AS(SKT, KT 같은) 단위로 나눈다. AS 안 RIP·OSPF, AS 사이 BGP.
+* '''29:37–29:59''' algorithm = low-level procedure, protocol = 그 위의 a set of rules.
+* '''30:04–31:54''' RIP 의 cost = hop count. "max count is 15 … 16 is equivalent to infinity." 표 칸 destination network, next router, cost.
+* '''31:54–32:35''' RIP 는 UDP 위. "every 13 seconds" 로 전사됐지만 슬라이드는 30 s.
+* '''32:46–34:29''' OSPF 는 link state 기반, weight 는 throughput·RTT·reliability 를 합친 값. Dijkstra 로 tree. 큰 네트워크는 area 로 나눠 그 안에서만 flooding. 다른 AS 와 잇는 boundary router.
+* '''34:29–35:40''' BGP 는 "the only inter-domain … routing protocol", path vector(policy oriented), external BGP 와 internal BGP. "this is the last slide". 끝에 출석 체크.
+* 시험 공지와 PS1 언급은 없었다.
+
+== 시험 직전 체크 ==
+* routing = 표 만들기, forwarding = 표 쓰기. least-cost tree 는 라우터마다 하나(7 → 7).
+* Bellman-Ford: $D_{xy} = \min(D_{xy},\ c_{xz} + D_{zy})$. p.11: B 가 A 를 받아 D = 5, E 를 받아 F = 6.
+* two-node loop: A 16 → B 의 stale 2 를 받아 3 → 4 → … 16. 16 = ∞, 15 번.
+* split horizon(배운 쪽엔 말 안 함) · poison reverse(∞ 로 말함) · 3 노드 이상은 보장 못 함.
+* 원인 = global information 없음 → link state: 같은 LSDB, flooding(LSP, newer 면 forward), Dijkstra.
+* Dijkstra root A: B, D, E, C, F, G. G 는 10 → 9.
+* path vector: policy(untrusted B 회피, cost 6 > 2).
+* DV-RIP / LS-OSPF / PV-BGP, 앞 둘은 AS 안, BGP 는 AS 사이(유일).
+* RIP: hop count, max 15, UDP 520, 30 s. OSPF: weight, area(backbone 0). BGP: eBGP(다른 AS, TCP 179) / iBGP(같은 AS).
+
+== 관련 문서 ==
+* 앞 강의: [[CH07 IPv6]] · [[CH07 IPv4 데이터그램과 포워딩]] · [[CH07 네트워크 계층 서비스와 성능]] · [[routing]] · [[forwarding table]] · [[hierarchical routing]]
+* 기초: [[least-cost routing]] · [[least-cost tree]]
+* distance vector: [[distance vector routing]] · [[Bellman-Ford equation]] · [[distance vector]] · [[count to infinity와 two-node loop]] · [[split horizon]] · [[poison reverse]] · [[three-node instability]]
+* link state: [[link state routing]] · [[LSDB]] · [[flooding과 LSP]] · [[Dijkstra algorithm]]
+* path vector: [[path vector routing]] · [[라우팅 알고리즘 비교]]
+* 인터넷 구조: [[backbone과 peering point]] · [[autonomous system]] · [[intra-AS와 inter-AS routing]] · [[ISP]]
+* 프로토콜: [[RIP]] · [[hop count]] · [[RIP forwarding table 예제]] · [[OSPF]] · [[OSPF area]] · [[BGP4]] · [[eBGP와 iBGP]]

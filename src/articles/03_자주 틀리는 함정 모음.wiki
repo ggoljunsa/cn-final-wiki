@@ -211,5 +211,17 @@ OX: ① 167.199.170.82/27 의 network address 는 167.199.170.82 다. ② /24 bl
 * '''tunneling 은 덧씌우고 header translation 은 바꿔 쓴다''': 수신자가 IPv4 만 알면 translation → [[tunneling]] · [[header translation]]
 * '''flow label 은 TCP flow control 과 다르다''' → [[traffic class와 flow label]]
 
+== 라우팅 (CH08, L15) ==
+* '''Bellman-Ford 는 link 가 싼 이웃이 아니라 합이 싼 이웃을 고른다''': min(3 + 4, 1 + 7) = 7 → 첫 hop 은 cost 3 쪽 → [[Bellman-Ford equation]]
+* '''two-node loop 에서 A 는 16 을 바로 적는다''': 문제는 그 뒤 B 의 stale 값(X = 2)을 믿어 3 이 되는 것. 16 까지 15 번 → [[count to infinity와 two-node loop]]
+* '''split horizon 은 "배운 이웃에게만" 말하지 않는다''': 다른 이웃에게는 말한다. 그래서 3 노드 이상에서 실패 → [[split horizon]] · [[three-node instability]]
+* '''LSDB 의 칸은 link cost 이지 least cost 가 아니다''' → [[LSDB]]
+* '''link state 의 "To whom" 은 Everyone(flooding)''': DV·PV 만 Neighbors only → [[라우팅 알고리즘 비교]]
+* '''Dijkstra 는 tree 밖에서 가장 가까운 node 를 고른다''': root A 의 순서 B, D, E, C, F, G. G 는 Iter 4 에 10, Iter 5 에 9 → [[Dijkstra algorithm]]
+* '''RIP 의 hop count 는 지나는 network 수''': 출발 라우터 쪽 network 는 안 센다. max 15, 16 = ∞ → [[hop count]]
+* '''RIP 는 UDP 520 / 30 s, BGP 는 TCP 179''' (녹음의 "13 seconds" 는 오인식) → [[RIP]] · [[eBGP와 iBGP]]
+* '''RIP 교체 규칙 ③''': cost 가 올라가도 같은 next router 에서 온 소식이면 받아들인다 → [[RIP]]
+* '''BGP 는 path vector(policy), OSPF 는 link state(Dijkstra)''': 둘을 섞지 않는다 → [[BGP4]] · [[OSPF]]
+
 == 관련 문서 ==
 * [[IPv4와 IPv6 비교]] · [[공식 모음]] · [[셀룰러 세대 비교표]] · [[시험 정보]] · [[CH05 Satellite Network]] · [[CH07 네트워크 계층 서비스와 성능]] · [[IP가 제공하는 서비스]] · [[CH07 IPv4 주소]] · [[subnetting]] · [[address mask]]

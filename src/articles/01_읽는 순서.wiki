@@ -80,6 +80,16 @@ category: 안내
 # 전환: [[dual stack]] → [[tunneling]] → [[header translation]]
 # 한 장 정리: [[IPv4와 IPv6 비교]]
 
-== 9. 정리 ==
+== 9. '''[[CH08 라우팅]]''' (L15 p.1–37, 11/12) ==
+교수: "the problem starts from the fact that each node does not have global information". distance vector 의 약점이 link state 를, least cost 의 한계가 path vector 를 부른다는 흐름으로 읽는다.
+# 출발: [[routing]] (표 만들기) → [[least-cost routing]] → [[least-cost tree]] ⭐⭐⭐
+# distance vector: [[Bellman-Ford equation]] ⭐⭐⭐ → [[distance vector]] → [[distance vector routing]] (sim dv_update)
+# 나쁜 소식: [[count to infinity와 two-node loop]] ⭐⭐⭐ (16 = ∞) → [[split horizon]] · [[poison reverse]] → [[three-node instability]]
+# link state: [[link state routing]] → [[LSDB]] → [[flooding과 LSP]] → [[Dijkstra algorithm]] ⭐⭐⭐ (sim dijkstra_ls)
+# 정책: [[path vector routing]] → '''[[라우팅 알고리즘 비교]]''' ⭐⭐⭐ (p.28 표 통째로)
+# 인터넷 구조: [[backbone과 peering point]] → [[autonomous system]] → [[intra-AS와 inter-AS routing]] → [[hierarchical routing]]
+# 프로토콜: [[RIP]] → [[hop count]] → [[RIP forwarding table 예제]] → [[OSPF]] → [[OSPF area]] → [[BGP4]] → [[eBGP와 iBGP]]
+
+== 10. 정리 ==
 * [[셀룰러 세대 비교표]] → [[공식 모음]] → [[자주 틀리는 함정 모음]]
 * 과제: [[PS1 풀이 가이드]] (마감 11/15)

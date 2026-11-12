@@ -23,5 +23,7 @@ Regional ISP  120.14.64.0/18   2^(32−18) = '''16,384'''  → 바깥에는 이 
 
 {analogy}🎭 '''우편번호 체계.''' 다른 도시 우체국은 "대구 = 4xxxx" 만 알면 된다. 대구 안에서 구 → 동 → 번지로 점점 자세히 나눈다. 바깥에서는 대구의 내부 구획을 모른다(does not see the division).{/analogy}
 
+{info}9강([[CH08 라우팅]], L15 p.30)에서 hierarchical routing 이 한 번 더 나온다. 거기서는 주소가 아니라 routing 프로토콜을 [[autonomous system|AS]] 단위로 나눈다. AS 안은 RIP·OSPF, AS 사이는 BGP 다 → [[intra-AS와 inter-AS routing]].{/info}
+
 == 관련 문서 ==
 * [[address aggregation]] · [[longest mask matching]] · [[forwarding table]] · [[CIDR]] · [[subnetting]] · [[CH07 IPv4 데이터그램과 포워딩]]

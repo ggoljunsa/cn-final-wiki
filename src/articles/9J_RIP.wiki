@@ -1,0 +1,41 @@
+key: RIP
+title: RIP (Routing Information Protocol) — distance vector 를 쓰는 작은 AS 용 프로토콜
+category: 9강 라우팅, 용어
+---
+'''RIP'''(Routing Information Protocol)는 [[distance vector routing]] 을 쓰는 intra-AS 프로토콜이다. cost 는 [[hop count]] 이고, 최대 15, 16 은 ∞ 다. L15 p.31–33.
+
+{def}"Cost = hop count: number of networks a packet passes from the source router to the destination host. Max cost = 15. 16 means ∞ (no connection) → RIP suits small ASs. Forwarding table: destination network | next router | cost (hops)." (p.31)
+"Same idea as distance vector, but a router sends its whole forwarding table. Receiver: add 1 hop to each cost, and set next router = the sender. … Messages ride on UDP (port 520); sent every 30 s or whenever the table changes." (p.32){/def}
+
+[[img:L15-31.png|p.31 — R3 → N4 1 hop, R2 → N4 2 hops, R1 → N4 3 hops|medium]]
+
+== 동작 (p.32) ==
+* 라우터는 forwarding table 전체를 이웃에게 보낸다.
+* 받은 쪽은 cost 에 '''1''' 을 더하고 next router 를 보낸 라우터로 적는다.
+* 옛 경로를 바꾸는 세 경우
+# 처음 보는 목적지다.
+# 새 cost 가 더 낮다.
+# 새 cost 가 더 높지만 '''같은 next router''' 에서 왔다(내 경로가 나빠졌다).
+* 표는 longest prefix first 로 정렬한다.
+* '''UDP port 520''', '''30 s''' 마다 또는 표가 바뀔 때.
+{warn}녹음 32:26 은 "every 13 seconds" 로 전사됐지만 슬라이드는 30 s 다. thirty 를 thirteen 으로 잘못 받아 적은 것이다.{/warn}
+
+== 16 = ∞ 인 이유 ==
+교수가 p.13 에서 "16 equal to infinity … I will explain that one later" 라고 한 것을 여기서 풀었다. "In RIP, max count of cost, max cost is just 15, and 16 is equivalent to infinity."(31:08) 무한대를 작게 잡으면 [[count to infinity와 two-node loop|count to infinity]] 가 오래 가지 않는다. 대신 15 hop 보다 먼 곳이 있는 큰 AS 에는 못 쓴다.
+
+== algorithm 과 protocol ==
+교수: "algorithm is very low-level procedure and protocol is a set of rules based on that specific algorithm"(29:46). RIP 는 DV 알고리즘에 "cost 는 hop count, 16 은 ∞, UDP 520, 30 초" 같은 규칙을 얹은 프로토콜이다.
+
+{analogy}🎭 지하철 "몇 정거장" 으로 거리를 재는 방식이다. 정거장 사이가 멀든 가깝든 한 정거장은 1 이다. 단순해서 좋지만 16 정거장 넘게 떨어진 역은 "못 간다" 로 친다.{/analogy}
+
+{mini}
+# RIP 메시지는 어느 transport protocol 의 몇 번 port 를 쓰는가? 몇 초마다 보내는가?
+# R 의 표에 (N7, next R5, 4) 가 있다. R5 가 "N7 6" 을 보내왔다. 새 줄은?
+{/mini}
+{answer}
+# UDP 520, 30 s.
+# (N7, R5, 7). 6 + 1 = 7 은 4 보다 크지만 같은 next router(R5)에서 왔으니 교체 규칙 ③ 으로 받아들인다.
+{/answer}
+
+== 관련 문서 ==
+* [[hop count]] · [[RIP forwarding table 예제]] · [[distance vector routing]] · [[OSPF]] · [[CH08 라우팅]]

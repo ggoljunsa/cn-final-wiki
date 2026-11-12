@@ -2,7 +2,7 @@ key: main
 title: 컴네위키 기말 — DGIST CSE403 Computer Network 기말고사
 category: 안내
 ---
-'''컴네위키 기말'''은 DGIST [CSE403] Computer Network (Prof. Soobin Um, 2026 Fall) '''기말고사 범위''' — 지금은 '''CH05 Wide Area Networks'''(Cellular · Satellite)와 '''CH07 Network Layer: Data Transfer (1)(2)''' — 를 나무위키 스타일로 정리한 학습 위키다. 중간고사 범위(CH01–CH04)는 전편 [[mid:main|컴네위키]]에 있고, 이 위키에서 보라색 ↗중간 표시가 붙은 링크는 그쪽 문서로 넘어간다(새 탭).
+'''컴네위키 기말'''은 DGIST [CSE403] Computer Network (Prof. Soobin Um, 2026 Fall) '''기말고사 범위''' — 지금은 '''CH05 Wide Area Networks'''(Cellular · Satellite)와 '''CH07 Network Layer: Data Transfer (1)(2)(3)''', '''CH08 Routing of Packets''' — 를 나무위키 스타일로 정리한 학습 위키다. 중간고사 범위(CH01–CH04)는 전편 [[mid:main|컴네위키]]에 있고, 이 위키에서 보라색 ↗중간 표시가 붙은 링크는 그쪽 문서로 넘어간다(새 탭).
 
 중간고사 위키와 똑같이 세 가지를 약속한다.
 
@@ -43,13 +43,15 @@ category: 안내
 | CH07 (2) p.31~ (rev) || [[CH07 IPv4 데이터그램과 포워딩]] || [[IPv4 datagram format]], fragmentation, [[ICMPv4]], forwarding — 11/5 (녹음 없음, 슬라이드 기준) || `sim:ipv4_header_decode` · `sim:fragment_calc` · `sim:forward_lookup` · `anim:ipv4_header_anim` · `anim:fragmentation_anim`
 |-
 | CH07 (3) p.1–32 || [[CH07 IPv6]] || '''[[IPv6 address]]''' 128 bits, [[colon hexadecimal notation]]·[[zero compression]](`::` 한 번만), [[unicast·anycast·multicast]], [[global unicast address]](2000::/3, 48·16·64), '''[[EUI-64]]'''(7번째 bit + FFFE → [[interface ID]]), '''[[autoconfiguration]]'''([[link-local address]] → [[router solicitation과 advertisement|RS/RA]], [[Example 7.29]]), [[IPv6 base header]] 40 B, [[extension header]], '''[[IPv6 fragmentation|source 만 fragmentation]]'''(시험 언급), [[ICMPv6]](ND·MLD), [[dual stack]]·[[tunneling]]·[[header translation]] — 11/10 || `sim:ipv6_compress` · `sim:eui64` · `anim:ipv6_autoconfig_anim` · `anim:ipv6_frag_anim` · `anim:ipv6_transition_anim`
+|-
+| CH08 p.1–37 || [[CH08 라우팅]] || 인터넷 = weighted graph, [[least-cost tree]], '''[[distance vector routing]]'''([[Bellman-Ford equation]], [[count to infinity와 two-node loop|two-node loop]] → [[split horizon]]·[[poison reverse]]·[[three-node instability]]), '''[[link state routing]]'''([[LSDB]], [[flooding과 LSP|flooding]], [[Dijkstra algorithm|Dijkstra]]), [[path vector routing]](policy), '''[[라우팅 알고리즘 비교]]''', [[autonomous system|AS]]·[[intra-AS와 inter-AS routing|intra/inter-AS]], [[RIP]](hop count, 16 = ∞) · [[OSPF]]([[OSPF area|area]]) · [[BGP4]]([[eBGP와 iBGP|eBGP/iBGP]]) — 11/12 || `sim:dv_update` · `sim:dijkstra_ls` · `anim:count_to_infinity_anim` · `anim:lsp_flooding_anim`
 |}
 
 == 이 위키를 읽는 법 ==
 
 {tip}
 * 📖 '''정의 박스'''는 슬라이드 영어 원문이 먼저 온다. "정의 → 용어 이름" 유형에 대비해 영어 문장을 그대로 외운다.
-* 🎯 '''출제 포인트 박스'''는 교수가 수업(10/20 · 10/27 · 11/3 · 11/10 녹음)에서 강조한 것이다.
+* 🎯 '''출제 포인트 박스'''는 교수가 수업(10/20 · 10/27 · 11/3 · 11/10 · 11/12 녹음)에서 강조한 것이다.
 * ✍️ 슬라이드 캡처에는 '''내 GoodNotes 필기'''(빨간 글씨)가 그대로 있다. 필기에 "??"로 남긴 질문은 해당 문서의 💡 "필기 속 질문" 박스에서 답했고, "다시" 표시한 곳은 ⚠️ 박스로 쉽게 다시 설명했다.
 * 🎭 '''비유 박스'''는 이해가 안 될 때 먼저 읽는다.
 * ❓ '''예상문제'''는 정답이 접혀 있다. 먼저 답을 써 보고 펼친다.

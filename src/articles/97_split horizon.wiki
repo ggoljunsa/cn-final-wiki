@@ -1,0 +1,40 @@
+key: split horizon
+title: Split horizon — 배운 쪽으로는 되돌려 말하지 않는다
+category: 9강 라우팅, 용어
+---
+'''Split horizon''' 은 [[count to infinity와 two-node loop|two-node loop]] 을 막는 규칙이다. 어떤 경로를 이웃에게서 배웠으면, 그 이웃에게는 그 경로를 알리지 않는다. L15 p.14.
+
+{def}"Split horizon: Don't advertise a route back to the neighbor you learned it from. B learned the route to X via A → B tells A nothing about X. No news about a route for a while → delete it (timer)." (p.14)
+→ 경로를 배운 이웃에게는 그 경로를 되돌려 알리지 않는다. B 는 X 로 가는 길을 A 를 통해 배웠으니 A 에게 X 에 대해 아무것도 말하지 않는다. 한동안 소식이 없는 경로는 timer 로 지운다.{/def}
+
+[[img:L15-14.png|p.14 (필기본) — X–A 가 끊긴 그림과 split horizon 규칙. "learned it from" 에 동그라미|medium]]
+
+== 이름에서 ==
+horizon(수평선)을 split(나눈다)한다. 이웃마다 보여 주는 시야를 나눠서, A 쪽으로는 A 에게서 온 정보를 보여 주지 않는다는 뜻이다. 교수 말로는 "It has fancy name, but the fundamental is very easy"(08:24)다.
+
+== p.13 에 적용하면 ==
+<pre class="txt">
+b. X–A 고장          A 16    B 2
+   B → A 벡터        X 칸 없음 (A 에게서 배운 경로라 말하지 않음)
+   A → B 벡터        X = 16 → B 의 next router 가 A 라 받아들임 → 16
+끝                   A 16    B 16   '''update 1 번''' (규칙이 없으면 15 번)
+</pre>
+[[sim:dv_update]]
+B 가 침묵하면 A 는 X 에 대한 정보를 아예 못 받는다. 그래서 timer 가 필요하다. 한동안 아무도 X 를 말하지 않으면 지운다.
+
+== 한계 ==
+교수: "this is not a fundamental cure"(11:17). split horizon 은 "배운 그 이웃에게만" 말하지 않는다. 노드가 셋이면 C 가 B 에게(A 가 아닌 쪽으로) 낡은 경로를 말할 수 있다 → [[three-node instability]].
+
+{analogy}🎭 친구 A 에게 들은 소문을 A 에게 또 들려주지 않는 습관이다. A 는 자기가 퍼뜨린 소문을 내 입으로 다시 듣고 "확인됐다" 고 착각할 일이 없다.{/analogy}
+
+{mini}
+# B 가 X 로 가는 길을 A 에게서 배웠다. split horizon 아래에서 B 가 C 에게 보내는 벡터에는 X 가 들어가는가?
+# split horizon 에 timer 가 필요한 이유를 한 줄로.
+{/mini}
+{answer}
+# 들어간다. split horizon 은 "배운 이웃(A)에게만" 말하지 않는 규칙이다.
+# 침묵만으로는 경로가 끊겼는지 알 수 없으니, 한동안 소식이 없으면 지워야 한다.
+{/answer}
+
+== 관련 문서 ==
+* [[poison reverse]] · [[count to infinity와 two-node loop]] · [[three-node instability]] · [[distance vector routing]]

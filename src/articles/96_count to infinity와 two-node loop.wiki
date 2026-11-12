@@ -1,0 +1,52 @@
+key: count to infinity와 two-node loop
+title: Count to infinity 와 two-node loop — 두 라우터가 서로의 옛 값을 믿고 16 까지 센다
+category: 9강 라우팅, 용어
+---
+'''Two-node loop'''(two-node instability)은 link 가 끊긴 뒤 이웃한 두 라우터가 서로의 오래된(stale) 경로를 계속 쓰는 현상이다. cost 가 ∞ 에 닿을 때까지 1 씩 올라가서 '''count to infinity''' 라고도 부른다(p.28 비교표의 DV Weak point). L15 p.12–13.
+
+{def}"Good news (cost decrease) spreads fast. Bad news (cost increase) spreads slowly. A broken link takes many updates before every router records ∞." (p.12)
+"Two-node loop: A and B keep using each other's stale routes to X." (p.13)
+→ 좋은 소식은 빨리, 나쁜 소식은 느리게 퍼진다. link 가 끊기면 모든 라우터가 ∞ 를 적기까지 update 가 많이 필요하다. two-node loop 은 A 와 B 가 X 로 가는 서로의 stale 경로를 계속 쓰는 것이다.{/def}
+
+[[img:L15-13.png|p.13 (필기본) — a 고장 전 → b A 16 → c A 3 → d B 4 → … → e 둘 다 ∞|large]]
+
+== 이름에서 ==
+* stale 은 "김빠진, 오래돼서 이제는 틀린" 이라는 뜻이다. 교수는 "한물간, 예전, old info" 라고 풀었다(02:21).
+* two-node loop 은 두 node 사이를 패킷이 맴도는 고리, count to infinity 는 cost 가 무한대까지 하나씩 세어 올라가는 모습에서 온 이름이다.
+
+== 단계별 ==
+X–A cost 1, A–B cost 1. 16 = ∞.
+<pre class="txt">
+ a. 고장 전          A 1     B 2   (B 는 A 를 거쳐)
+ b. X–A 고장         A 16    B 2
+ c. A ← B (X = 2)    A 3     B 2   min(16, 1 + 2): B 의 2 가 A 를 거치는 길인 줄 모름
+ d. B ← A (X = 3)    A 3     B 4   B 의 next router 가 A 라 올라가도 받아들임
+    …                5 6 7 …
+ e. 끝               A 16    B 16  고장 뒤 '''15 번'''
+</pre>
+c 단계가 문제의 시작이다. A 가 자기 16 을 먼저 알렸다면 B 도 16 이 되고 끝났다. 순서가 엇갈려서 B 의 낡은 값이 먼저 도착한 것이다.
+[[anim:count_to_infinity_anim|위 줄의 A·B 숫자가 16 에 닿는 데 몇 번 걸리는지 세고, 아래 줄 split horizon 과 비교하라]]
+[[sim:dv_update]]
+
+== 왜 나쁜 소식만 느린가 ==
+Bellman-Ford 는 min 을 고른다. 더 싼 값은 바로 받아들이니 좋은 소식은 빠르다. 더 비싼 값은 min 에 막히거나, 그 사이 이웃이 들고 있던 옛 값이 돌아와 덮어쓴다. 교수가 짚은 근본 원인은 "each node does not have global information"(12:31)이다.
+
+== 줄이는 법 ==
+* [[split horizon]]: B 는 A 에게서 배운 X 를 A 에게 말하지 않는다.
+* [[poison reverse]]: 말하되 ∞ 로 말한다.
+* 무한대를 작게 잡는다. [[RIP]] 는 16 을 ∞ 로 쓴다. link cost 가 클수록 빨리 닿는다.
+* 노드가 셋 이상이면 위 두 방법도 보장 못 한다 → [[three-node instability]] → [[link state routing]].
+
+{analogy}🎭 A 가 "그 가게 문 닫았대" 라고 말하기 전에 B 가 "그 가게 내가 알아, 나한테 오면 2 분이야" 라고 말한다. 사실 B 는 A 에게 들은 길을 말한 것이다. A 는 B 를 믿고, B 는 다시 A 를 믿고, 둘이 서로를 가리키며 1 분씩 늘려 간다.{/analogy}
+
+{mini}
+# A–B 의 link cost 가 2 이면(고장 전 B 의 X = 3) 고장 뒤 c 단계의 A 값과, 둘 다 16 이 될 때까지의 update 횟수는?
+# c 단계에서 A 가 저지른 실수를 한 문장으로 쓰라.
+{/mini}
+{answer}
+# A = min(16, 2 + 3) = 5. 이어서 B 7, A 9, B 11, A 13, B 15, A 16, B 16 이라 '''8 번'''이다.
+# B 가 말한 X = 2 가 사실은 A 자신을 거치는 경로였는데, 그걸 모르고 새 길로 믿었다.
+{/answer}
+
+== 관련 문서 ==
+* [[CH08 라우팅]] · [[distance vector routing]] · [[split horizon]] · [[poison reverse]] · [[three-node instability]] · [[RIP]]

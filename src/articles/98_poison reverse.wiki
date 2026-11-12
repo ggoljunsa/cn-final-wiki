@@ -1,0 +1,43 @@
+key: poison reverse
+title: Poison reverse — 되돌려 말하되 ∞ 로 말한다
+category: 9강 라우팅, 용어
+---
+'''Poison reverse''' 는 [[split horizon]] 의 변형이다. 배운 이웃에게도 경로를 알리긴 하는데 cost 를 ∞ 로 알린다. L15 p.15.
+
+{def}"Poison reverse: Still advertise it, but with cost ∞ ("don't use me to reach X")." (p.15) 그림 설명: B → A: "X = ∞", "poison reverse: A won't think it can reach X through B".
+→ 경로를 계속 알리되 cost 를 ∞ 로 알린다. "X 에 가려고 나를 쓰지 마" 라는 뜻이다.{/def}
+
+[[img:L15-15.png|p.15 — B 가 A 쪽으로 "X = ∞" 를 보낸다|medium]]
+
+== 이름에서 ==
+경로에 독(poison)을 발라 되돌려(reverse) 보낸다. 받은 쪽은 그 경로를 고르지 않는다.
+
+== split horizon 과의 차이 ==
+{|
+! 비교 || split horizon || poison reverse
+|-
+| B → A 벡터의 X 칸 || 없음(침묵) || ∞
+|-
+| A 가 아는 것 || B 에게서 X 정보가 안 옴 || "B 를 거쳐서는 X 에 못 간다" 를 바로 앎
+|-
+| timer || 필요(소식 없으면 삭제) || ∞ 로 바로 알 수 있음
+|}
+p.13 상황에서는 둘 다 update 1 번으로 끝난다. A 는 min(16, 1 + ∞) = 16 을 유지한다.
+[[sim:dv_update]]
+
+== 한계 ==
+교수: "But this is not a fundamental cure for this instability"(11:17). 3 개 이상 node 사이에서는 보장되지 않는다 → [[three-node instability]].
+
+{analogy}🎭 침묵하는 대신 "나한테 묻지 마, 나도 못 가" 라고 분명히 말해 주는 친구다. 듣는 쪽이 기다릴 필요가 없다.{/analogy}
+
+{mini}
+# poison reverse 에서 B 가 A 에게 보내는 X 의 cost 는?
+# "poison reverse 를 쓰면 three-node instability 도 사라진다." O/X.
+{/mini}
+{answer}
+# ∞ (RIP 라면 16).
+# X. 교수 말대로 근본 해결이 아니다.
+{/answer}
+
+== 관련 문서 ==
+* [[split horizon]] · [[count to infinity와 two-node loop]] · [[three-node instability]] · [[distance vector routing]]

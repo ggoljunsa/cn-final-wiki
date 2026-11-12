@@ -1,0 +1,40 @@
+key: eBGP와 iBGP
+title: eBGP 와 iBGP — AS 사이의 session 과 AS 안의 session
+category: 9강 라우팅, 용어
+---
+[[BGP4]] 는 session 을 두 종류로 나눈다. 서로 다른 AS 의 border router 끼리 맺는 '''eBGP''' 와, 한 AS 안의 라우터끼리 맺는 '''iBGP''' 다. L15 p.37.
+
+{def}"eBGP (external BGP): Between border routers of two different ASs that are physically connected. Runs over a logical TCP connection (port 179). iBGP (internal BGP): A session between any pair of routers inside one AS. Spreads what the border routers learned to the whole AS." (p.37)
+→ eBGP: 물리적으로 연결된 서로 다른 두 AS 의 border router 사이. 논리적 TCP 연결(port 179) 위에서 돈다. iBGP: 한 AS 안의 아무 두 router 사이의 session. border router 가 배운 것을 AS 전체에 퍼뜨린다.{/def}
+
+[[img:L15-37.png|p.37 — R1–R4 빨간 실선 eBGP session, AS 안 파란 점선 iBGP sessions|medium]]
+
+== 비교 ==
+{|
+! || eBGP || iBGP
+|-
+| 누구 사이 || 서로 다른 AS 의 border router || 같은 AS 안의 아무 두 router
+|-
+| 물리 연결 || 직접 연결된 쌍 || 직접 연결 아니어도 됨(논리적 session)
+|-
+| 하는 일 || 이웃 AS 에서 경로 정보를 받아 옴 || 받아 온 것을 AS 전체에 퍼뜨림
+|-
+| 위 그림 || R1–R4 || R1–R2, R1–R3, R2–R3, R4–R5, R4–R6, R5–R6
+|}
+
+== iBGP 가 왜 필요한가 ==
+AS 밖을 직접 보는 것은 border router(위 그림 R1, R4)뿐이다. 그런데 AS1 안의 R2, R3 도 AS2 쪽 network 로 패킷을 보내야 한다. 그러려면 "AS2 의 network 는 R1 을 통해 나간다" 는 정보가 필요하다. iBGP 가 그걸 전해 준다. 그래서 iBGP session 은 직접 연결된 쌍이 아니어도 된다(R2–R3 점선).[* iBGP 가 정보를 나르고 실제로 AS 안에서 R1 까지 가는 길은 RIP·OSPF 같은 intra-AS 프로토콜이 맡는다. BGP 는 "어느 출구로" 를, intra-AS 프로토콜은 "그 출구까지 어떻게" 를 정한다. (Forouzan 보충)]
+
+{analogy}🎭 eBGP 는 두 회사 대표가 맺는 계약이고, iBGP 는 대표가 계약 내용을 사내 모든 부서에 공지하는 것이다.{/analogy}
+
+{mini}
+# p.37 에서 R5 와 R6 사이 session 은? R1 과 R4 사이는?
+# eBGP 가 쓰는 transport protocol 과 port 번호는?
+{/mini}
+{answer}
+# R5–R6 은 같은 AS2 안이라 iBGP. R1–R4 는 서로 다른 AS 의 border router 끼리라 eBGP.
+# TCP, 179.
+{/answer}
+
+== 관련 문서 ==
+* [[BGP4]] · [[autonomous system]] · [[intra-AS와 inter-AS routing]] · [[path vector routing]]

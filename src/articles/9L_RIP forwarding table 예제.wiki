@@ -1,0 +1,55 @@
+key: RIP forwarding table 예제
+title: RIP forwarding table 예제 — 네 라우터가 안정된 뒤의 표 (p.33)
+category: 9강 라우팅, 용어
+---
+L15 p.33 은 라우터 R1–R4 가 [[RIP]] 로 표를 주고받아 안정(stabilize)된 뒤의 forwarding table 이다. 각 줄이 Des.(destination network), N.R.(next router), Cost(hops) 다.
+
+{def}"Routers keep exchanging tables until they stabilize: every router knows how to reach every network." (p.33)
+→ 라우터들은 표가 안정될 때까지 계속 교환한다. 안정되면 모든 라우터가 모든 network 로 가는 법을 안다.{/def}
+
+[[img:L15-33.png|p.33 — 위 토폴로지와 아래 Final R1–R4 표. N.R. 칸의 가로줄은 직접 연결(next router 없음)|large]]
+
+== 토폴로지 ==
+<pre class="txt">
+R1: N1, N2, N3       R2: N3, N4, N5
+R3: N4, N6           R4: N5, N6
+</pre>
+
+== 안정된 표 ==
+{|
+! Des. || R1 || R2 || R3 || R4
+|-
+| N1 || —, 1 || R1, 2 || R2, 3 || R2, 3
+|-
+| N2 || —, 1 || R1, 2 || R2, 3 || R2, 3
+|-
+| N3 || —, 1 || —, 1 || R2, 2 || R2, 2
+|-
+| N4 || R2, 2 || —, 1 || —, 1 || R2, 2
+|-
+| N5 || R2, 2 || —, 1 || R2, 2 || —, 1
+|-
+| N6 || R2, 3 || R3, 2 || —, 1 || —, 1
+|}
+
+== 검산 ==
+<pre class="txt">
+R3 → N1 : N4 → R2 → N3 → R1 → N1      지나는 network N4, N3, N1 = 3, 첫 next router R2
+R1 → N6 : N3 → R2 → N4 → R3 → N6      N3, N4, N6 = 3, next R2
+R2 → N6 : N4 → R3 → N6 = 2 (next R3)  또는 N5 → R4 → N6 = 2 (next R4) — 동점
+</pre>
+동점이 몇 군데 있다. R2 → N6 은 R3·R4 둘 다 2, R3 → N5 는 R2·R4 둘 다 2, R4 → N4 는 R2·R3 둘 다 2 다. 표는 그중 하나만 적었다. RIP 의 교체 규칙 ② 는 "더 낮을 때" 만 바꾸니까 같은 cost 가 오면 먼저 들어온 쪽이 남는다.
+
+{analogy}🎭 반 친구들이 쪽지로 "나한테서 ○○까지 몇 정거장" 을 계속 돌리다 보면, 어느 순간 아무도 숫자를 고치지 않는다. 그때의 쪽지가 안정된 표다.{/analogy}
+
+{mini}
+# R1 이 R2 의 표(N6, R3, 2)를 받았다. R1 의 N6 줄은?
+# R4 의 N3 줄 (R2, 2) 를 검산하라.
+{/mini}
+{answer}
+# (N6, R2, 3). 받은 cost 2 에 1 을 더하고 next router 를 보낸 라우터 R2 로 적는다.
+# R4 → N5 → R2 → N3. 지나는 network N5, N3 = 2, next R2.
+{/answer}
+
+== 관련 문서 ==
+* [[RIP]] · [[hop count]] · [[forwarding table]] · [[distance vector routing]]

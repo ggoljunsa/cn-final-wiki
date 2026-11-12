@@ -1,0 +1,39 @@
+key: distance vector routing
+title: Distance vector routing — 이웃과 벡터를 주고받아 표를 채운다
+category: 9강 라우팅, 용어
+---
+'''Distance vector routing''' 은 세 routing 알고리즘 중 첫 번째다. 각 node 가 자기 [[distance vector]] 를 이웃에게만 보내고, 받은 쪽은 [[Bellman-Ford equation]] 으로 갱신한다. 프로토콜로는 [[RIP]] 가 이 방식이다. L15 p.7–16.
+
+{def}"Each node sends a copy of its vector to its neighbors. A receiving node x updates with Bellman-Ford equation (z = the sender): $D_{xy} = \min(D_{xy}, c_{xz} + D_{zy})$. Repeat until no vector changes." (p.11)
+→ 각 node 는 자기 벡터의 copy 를 이웃에게 보낸다. 받은 node 는 Bellman-Ford 로 갱신한다. 어떤 벡터도 바뀌지 않을 때까지 반복한다.{/def}
+
+[[img:L15-11.png|p.11 — B 가 A 의 벡터를 받아 D = 5, E 의 벡터를 받아 F = 6 (검은 칸)|large]]
+
+== 동작 ==
+# 부팅: 이웃까지만 아는 rudimentary vector(p.10).
+# 교환: 자기 벡터를 이웃에게 보낸다.
+# 갱신: 받은 벡터에 link cost 를 더해 칸마다 min.
+# 반복: 바뀌는 칸이 없으면 끝.
+p.10 의 일곱 벡터에서 시작해 모두가 동시에 교환한다고 하면 라운드 3 에 마지막 칸이 바뀌고 라운드 4 에 변화가 없다.
+[[sim:dv_update]]
+
+== 장점과 약점 ==
+교수는 DV 가 "very simple and efficient" 하다고 했다(13:21). 이웃과 숫자 몇 개만 주고받으면 된다. 대신 각 node 는 네트워크 전체를 모르고 이웃의 말만 믿는다. 그래서 나쁜 소식(link 고장)이 느리게 퍼진다.
+* [[count to infinity와 two-node loop]] (p.13)
+* 땜질: [[split horizon]] · [[poison reverse]] (p.14–15)
+* 그래도 남는 문제: [[three-node instability]] (p.16)
+* 근본 해결: [[link state routing]]
+
+{analogy}🎭 전화 연락망이다. 나는 내 앞뒤 두 사람에게만 소식을 전하고 받는다. 연락망 전체 명단은 모른다. 간단하지만, 누가 옛날 소식을 다시 돌리면 그게 틀렸는지 확인할 방법이 없다.{/analogy}
+
+{mini}
+# DV 에서 node 가 벡터를 보내는 대상은? (p.28 표 "To whom")
+# DV 의 Weak point 를 p.28 표의 이름으로 쓰라.
+{/mini}
+{answer}
+# Neighbors only.
+# Count to infinity.
+{/answer}
+
+== 관련 문서 ==
+* [[CH08 라우팅]] · [[distance vector]] · [[Bellman-Ford equation]] · [[RIP]] · [[라우팅 알고리즘 비교]]

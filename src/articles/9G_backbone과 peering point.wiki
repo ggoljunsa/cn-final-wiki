@@ -1,0 +1,38 @@
+key: backbone과 peering point
+title: Backbone 과 peering point — 큰 ISP 들이 만나는 인터넷의 뼈대
+category: 9강 라우팅, 용어
+---
+L15 p.29 "Unicast Routing Protocols" 는 실제 인터넷의 모양을 보여 준다. 큰 ISP 들이 운영하는 '''backbone''' 이 가운데 있고, backbone 끼리는 '''peering point''' 에서 만난다. L15 p.29.
+
+{def}"Several backbones (large ISPs) give global connectivity. Backbones meet at peering points; provider and customer networks hang below them." (p.29)
+→ 여러 backbone(큰 ISP)이 전 세계 연결을 맡는다. backbone 은 peering point 에서 만나고, 그 아래에 provider network 와 customer network 가 매달린다.{/def}
+
+[[img:L15-29.png|p.29 — 겹쳐 있는 색색의 Backbones, 빨간 원 Peering point, 위아래 Provider network, 맨 끝 Customer network|medium]]
+
+== 이름에서 ==
+* backbone 은 등뼈다. 인터넷의 몸통을 지탱하는 굵은 연결이다.
+* peering 은 "동등한 상대(peer)끼리" 연결한다는 뜻이다. 큰 ISP 둘이 서로의 트래픽을 주고받기로 한 지점이 peering point 다.
+
+== 층 ==
+<pre class="txt">
+ Customer network  (회사, 학교, 가정)
+        │
+ Provider network  (지역·국가 ISP)
+        │
+ Backbones ── peering point ── Backbones   (큰 ISP)
+</pre>
+이 구조 때문에 인터넷 전체를 프로토콜 하나로 돌리지 않고 층으로 나눈다([[hierarchical routing]], [[autonomous system]]). 교수: "routing happens in some hierarchical way"(27:27).[* 6강의 [[ISP]] 와 [[block allocation]] 이야기와 같은 그림이다. 주소 block 이 ICANN → 큰 ISP → 작은 ISP → 고객으로 내려가듯, 연결도 backbone → provider → customer 로 내려간다.]
+
+{analogy}🎭 고속도로망이다. 큰 고속도로(backbone)끼리는 분기점(peering point)에서 만나고, 고속도로에서 국도(provider), 국도에서 동네 길(customer)로 갈라진다.{/analogy}
+
+{mini}
+# backbone 끼리 만나는 지점을 무엇이라 부르는가?
+# provider network 와 customer network 중 backbone 에 더 가까운 것은?
+{/mini}
+{answer}
+# peering point.
+# provider network.
+{/answer}
+
+== 관련 문서 ==
+* [[autonomous system]] · [[hierarchical routing]] · [[intra-AS와 inter-AS routing]] · [[ISP]] · [[CH08 라우팅]]

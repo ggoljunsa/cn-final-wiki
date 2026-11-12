@@ -1,0 +1,34 @@
+key: autonomous system
+title: Autonomous system (AS) — 스스로 routing 을 관리하는 ISP 한 덩어리
+category: 9강 라우팅, 용어
+---
+'''Autonomous system'''(AS)은 hierarchical routing 에서 하나의 관리 단위다. 슬라이드는 ISP 하나를 AS 하나로 본다. AS 안의 routing 은 그 AS 가 알아서 하고, AS 사이의 routing 은 공통 프로토콜(BGP)로 한다. L15 p.30.
+
+{def}"Hierarchical routing: each ISP = an autonomous system (AS). Inside an AS: intra-AS routing (intradomain, IGP), e.g., RIP, OSPF. Between ASs: inter-AS routing (interdomain, EGP), e.g., BGP." (p.30)
+→ ISP 하나 = AS 하나. AS 안은 intra-AS routing(RIP, OSPF), AS 사이는 inter-AS routing(BGP).{/def}
+
+[[img:L15-30.png|p.30 — AS 1, AS 2 안은 RIP/OSPF, 둘 사이 빨간 선은 BGP|medium]]
+
+== 이름에서 ==
+autonomous 는 "자율적인, 스스로 다스리는" 이다. 자기 안의 라우터를 어떤 프로토콜로, 어떤 cost 로 돌릴지 스스로 정한다는 뜻이다. 그래서 p.30 이 든 이유 중 하나가 '''Administration''' 이다. "each ISP wants its own control."
+
+== 예 ==
+교수는 AS1, AS2 를 "SKT or KT or something like that"(28:39)이라고 했다. 통신사 하나가 AS 하나라고 생각하면 된다.[* 실제 인터넷에서는 AS 마다 AS number 라는 번호가 붙는다. 큰 통신사, 대학, 클라우드 회사가 각각 자기 AS 번호를 가진다. 슬라이드 범위 밖이다. (Forouzan 보충)]
+
+== AS 를 쓰는 이유 (p.30) ==
+* '''Scalability''': 인터넷 전체를 한 표에 담으면 표가 너무 커진다.
+* '''Administration''': ISP 마다 자기 네트워크를 스스로 관리하고 싶다.
+
+{analogy}🎭 나라마다 자기 도로법과 신호 체계가 있다(intra-AS). 국경을 넘을 때는 국제 협약(BGP)을 따른다. 각 나라가 autonomous 하다.{/analogy}
+
+{mini}
+# p.30 이 든 "One protocol for the whole Internet? No" 의 이유 두 가지는?
+# AS 안에서 쓰는 프로토콜 두 개와 AS 사이에서 쓰는 프로토콜 하나는?
+{/mini}
+{answer}
+# Scalability(표가 너무 커짐), Administration(ISP 마다 자기 control).
+# 안: RIP, OSPF. 사이: BGP.
+{/answer}
+
+== 관련 문서 ==
+* [[intra-AS와 inter-AS routing]] · [[hierarchical routing]] · [[backbone과 peering point]] · [[BGP4]] · [[ISP]]

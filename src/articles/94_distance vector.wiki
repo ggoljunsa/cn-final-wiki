@@ -1,0 +1,38 @@
+key: distance vector
+title: Distance vector — least-cost tree 를 숫자 한 줄로
+category: 9강 라우팅, 용어
+---
+'''Distance vector''' 는 root 에서 모든 node 까지의 least cost 를 담은 1-D 배열이다. index 는 destination, 값은 least cost 다. L15 p.8–10.
+
+{def}"Distance vector: a 1-D array of the least costs from the root to every node. Index = destination, value = least cost." (p.9)
+"At boot, a node knows only its neighbors → a rudimentary vector. Cost to a neighbor = link cost. Cost to others = ∞ (no connection known). Vectors are made asynchronously." (p.10)
+→ root 에서 모든 node 까지의 least cost 를 담은 1 차원 배열. 부팅 직후에는 이웃만 알아서 나머지는 ∞ 인 rudimentary vector 로 시작한다.{/def}
+
+[[img:L15-09.png|p.9 — 왼쪽 A 의 tree 의 빨간 숫자를 오른쪽 배열로 옮긴 것이 A 의 distance vector|medium]]
+
+== 이름에서 ==
+distance 는 거리(cost), vector 는 숫자를 한 줄로 늘어놓은 것이다. "목적지마다의 거리 목록" 이라는 뜻 그대로다. tree 에 있던 경로 모양은 버리고 숫자만 남긴다.
+
+== 시작과 끝 ==
+A 의 벡터를 처음과 끝으로 비교해 보자.
+<pre class="txt">
+          A  B  C  D  E  F  G
+부팅 직후  0  2  ∞  3  ∞  ∞  ∞    (p.10, 이웃 B·D 만)
+수렴 후    0  2  7  3  6  8  9    (p.9, p.5 의 tree 와 같음)
+</pre>
+처음의 ∞ 칸이 이웃과 벡터를 주고받으면서 채워진다. 동기 라운드로 돌리면 라운드 3 에 A 의 마지막 칸(G: 10 → 9)이 정해진다.
+[[sim:dv_update]]
+
+{analogy}🎭 집 앞 이정표다. "서울 120 km, 부산 300 km, 대전 50 km". 어느 길로 가는지는 안 적혀 있고 거리만 있다. 처음에는 바로 옆 마을 이정표만 세울 수 있다. 옆 마을들이 자기 이정표를 알려 주면 그걸 더해서 먼 도시 이정표를 늘려 간다.{/analogy}
+
+{mini}
+# p.10 에서 G 의 rudimentary vector 를 쓰라.
+# "벡터는 모든 node 가 동시에 만든다." O/X.
+{/mini}
+{answer}
+# [∞, ∞, 3, ∞, ∞, 1, 0]. G 의 이웃은 C(3)와 F(1)뿐이다.
+# X. 슬라이드 표현으로 "asynchronously", 각 node 가 부팅할 때마다 따로 만든다.
+{/answer}
+
+== 관련 문서 ==
+* [[distance vector routing]] · [[Bellman-Ford equation]] · [[least-cost tree]] · [[LSDB]] (초기 벡터 7 개를 쌓은 표)

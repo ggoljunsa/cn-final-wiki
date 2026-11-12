@@ -1,0 +1,36 @@
+key: least-cost routing
+title: Least-cost routing — 인터넷을 weighted graph 로 보고 가장 싼 길을 고른다
+category: 9강 라우팅, 용어
+---
+'''Least-cost routing''' 은 "best route 가 무엇인가" 에 대한 이 덱의 답이다. 인터넷을 숫자가 붙은 그래프로 바꾸고, cost 합이 가장 작은 길을 best 로 정한다. L15 p.4.
+
+{def}"Model the internet as a weighted graph. Nodes = routers, edges = links (networks) between them, each edge has a cost. Best route = the least-cost route. The source router picks the route with the smallest total cost among all possible routes." (p.4)
+→ 인터넷을 weighted graph 로 모델링한다. node 는 라우터, edge 는 라우터 사이의 link(network), edge 마다 cost 가 있다. best route 는 cost 합이 가장 작은 route 다.{/def}
+
+[[img:L15-04.png|p.4 — (a) 실제 internet 이 (b) 7-node weighted graph 로 바뀐다|medium]]
+
+== 이름에서 ==
+least cost 는 "가장 적은 비용" 이다. 비용이 무엇인지는 프로토콜이 정한다. [[RIP]] 는 지나는 network 수([[hop count]])를 비용으로 쓰고, [[OSPF]] 는 throughput·RTT·reliability 를 섞은 weight 를 쓴다. 어느 쪽이든 "숫자가 작을수록 좋은 길" 이라는 점은 같다.
+
+== 이 덱의 예제 그래프 ==
+위 그림 (b) 의 그래프가 p.5 · p.10 · p.18 · p.25 에 계속 나온다.
+{|
+! edge || A–B || A–D || B–C || B–E || C–F || C–G || D–E || E–F || F–G
+|-
+| cost || 2 || 3 || 5 || 4 || 4 || 3 || 5 || 2 || 1
+|}
+예를 들어 A 에서 G 로 가는 길은 여러 개다. A→B→C→G 는 10, A→B→E→F→G 는 9, A→D→E→F→G 는 11 이다. least-cost route 는 9 짜리다. 이렇게 모든 목적지까지의 최선을 모아 그리면 [[least-cost tree]] 가 된다.
+
+{analogy}🎭 내비게이션의 "최단 시간" 경로와 같다. 도로마다 걸리는 시간(cost)이 있고, 내비는 합이 가장 작은 길을 고른다. 다만 내비가 "유료 도로 회피" 를 고르면 가장 빠른 길이 아니라 조건에 맞는 길을 고른다. 그게 [[path vector routing]] 의 policy 다.{/analogy}
+
+{mini}
+# p.4 그래프에서 A 에서 F 까지의 least cost 와 경로는?
+# "least-cost routing 에서 cost 는 언제나 hop count 다." O/X.
+{/mini}
+{answer}
+# 8. A→B→E→F = 2 + 4 + 2. A→D→E→F 는 3 + 5 + 2 = 10.
+# X. RIP 는 hop count 지만 OSPF 는 weight 를 쓴다.
+{/answer}
+
+== 관련 문서 ==
+* [[CH08 라우팅]] · [[least-cost tree]] · [[distance vector routing]] · [[link state routing]] · [[path vector routing]]

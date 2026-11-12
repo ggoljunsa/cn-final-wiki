@@ -1,0 +1,50 @@
+key: least-cost tree
+title: Least-cost tree — 라우터마다 하나씩 있는 최단 경로 나무
+category: 9강 라우팅, 용어
+---
+'''Least-cost tree''' 는 source router 를 root 로 하고 모든 node 를 잇는 tree 다. root 에서 어느 node 로 가든 tree 위의 길이 그 node 까지의 least-cost path 다. L15 p.5.
+
+{def}"Least-cost tree: a tree rooted at the source router that spans all nodes. The tree path from the root to any node is its least-cost path. Every router has its own tree (7 routers → 7 trees)." (p.5)
+→ source router 를 root 로, 모든 node 를 잇는 tree. root 에서 각 node 로 가는 tree 경로가 least-cost path 다. 라우터마다 자기 tree 가 있다.{/def}
+
+[[img:L15-05.png|p.5 — 7 개 라우터의 tree. 파란 원이 root, 빨간 숫자가 root 로부터의 total cost|medium]]
+
+== 7 개 tree 를 숫자로 ==
+위 그림의 빨간 숫자를 표로 옮기면 이렇다. 행이 root 다.
+{|
+! root || A || B || C || D || E || F || G
+|-
+| A || 0 || 2 || 7 || 3 || 6 || 8 || 9
+|-
+| B || 2 || 0 || 5 || 5 || 4 || 6 || 7
+|-
+| C || 7 || 5 || 0 || 10 || 6 || 4 || 3
+|-
+| D || 3 || 5 || 10 || 0 || 5 || 7 || 8
+|-
+| E || 6 || 4 || 6 || 5 || 0 || 2 || 3
+|-
+| F || 8 || 6 || 4 || 7 || 2 || 0 || 1
+|-
+| G || 9 || 7 || 3 || 8 || 3 || 1 || 0
+|}
+표가 대각선 대칭이다. link cost 가 양방향으로 같으니 A→G 가 9 면 G→A 도 9 다. 다만 tree 모양은 root 마다 다르다.[* 일곱 개 행은 Dijkstra 를 7 번 돌려 슬라이드와 맞춰 봤다. 시뮬레이터 `dijkstra_ls` 에서 root 를 A·D·G 로 바꿔 직접 확인할 수 있다.]
+
+== tree 를 얻는 두 길 ==
+* [[distance vector routing]]: tree 를 숫자 한 줄([[distance vector]])로 줄여서 이웃과 주고받다 보면 각 node 가 자기 행을 얻는다.
+* [[link state routing]]: 지도 전체([[LSDB]])를 받은 다음 [[Dijkstra algorithm]] 으로 tree 를 직접 그린다.
+두 방법의 결과는 같다. p.25 Dijkstra 의 마지막 그림이 p.5 의 A 의 tree 와 똑같다.
+
+{analogy}🎭 집에서 동네 모든 가게까지 가는 최단 길을 지도에 형광펜으로 칠하면 나무 모양이 된다. 친구 집에서 칠하면 다른 나무가 나온다. 라우터마다 자기 형광펜 지도가 하나씩 있는 셈이다.{/analogy}
+
+{mini}
+# C 의 tree 에서 D 까지는 10 이다. 경로를 쓰라.
+# 라우터가 20 개인 네트워크에는 least-cost tree 가 몇 개 있는가?
+{/mini}
+{answer}
+# C→B→A→D = 5 + 2 + 3. C→F→E→D 는 4 + 2 + 5 = 11 이라 더 비싸다.
+# 20 개. 라우터마다 자기를 root 로 한 tree 가 하나씩 있다.
+{/answer}
+
+== 관련 문서 ==
+* [[CH08 라우팅]] · [[least-cost routing]] · [[distance vector]] · [[Dijkstra algorithm]]

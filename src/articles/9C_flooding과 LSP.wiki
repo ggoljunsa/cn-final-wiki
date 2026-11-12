@@ -1,0 +1,51 @@
+key: flooding과 LSP
+title: Flooding 과 LSP — 자기 link 정보를 모두에게 쏟아 붓기
+category: 9강 라우팅, 용어
+---
+'''Flooding''' 은 모든 node 가 같은 [[LSDB]] 를 얻는 방법이다. 각 node 는 자기 link 정보를 '''LSP'''(link-state packet)에 담아 모든 interface 로 내보내고, 받은 쪽은 새것이면 보관하고 다시 내보낸다. L15 p.19.
+
+{def}"How does every node get the whole LSDB? Flooding. ① Greet neighbors → learn their identity and the link cost. ② Put it in an LSP (link-state packet) and send it out of every interface. ③ On receiving an LSP: newer than my copy → keep and forward; otherwise → discard." (p.19)
+→ ① 이웃에게 인사해 identity 와 link cost 를 안다. ② LSP 에 담아 모든 interface 로 보낸다. ③ LSP 를 받으면 내 copy 보다 newer 면 보관하고 forward, 아니면 버린다.{/def}
+
+[[img:L15-19.png|p.19 — node 마다 주황 LSP 표(이웃, cost)와 모든 방향으로 나가는 빨간 화살표|large]]
+
+== 이름에서 ==
+flood 는 홍수다. 교수: "the wording is from flood, it's like a flood"(16:49). 물이 낮은 곳을 가리지 않고 퍼지듯 LSP 가 모든 방향으로 퍼진다. LSP 는 network layer packet 이다(교수 17:21).
+
+== 각 node 의 LSP (p.19) ==
+{|
+! node || LSP 내용
+|-
+| A || B 2, D 3
+|-
+| B || A 2, C 5, E 4
+|-
+| C || B 5, F 4, G 3
+|-
+| D || A 3, E 5
+|-
+| E || B 4, D 5, F 2
+|-
+| F || C 4, E 2, G 1
+|-
+| G || C 3, F 1
+|}
+{warn}슬라이드 그림의 E 표 셋째 줄은 "E 2" 로 적혀 있다. E 의 이웃은 B·D·F 이니 "F 2" 가 맞다. 원 그림의 오타로 보인다.{/warn}
+
+== 퍼지는 모습 ==
+[[anim:lsp_flooding_anim|A 의 LSP 하나가 퍼지면서 같은 정보가 여러 번 도착하는 장면. ③ 규칙 때문에 중복은 버려지고 LSP 가 영원히 돌지 않는다]]
+③ 의 "newer" 가 중요하다. 이미 가진 것과 같거나 오래된 LSP 는 버리니까 LSP 가 무한히 돌지 않는다. 그래도 같은 LSP 가 여러 길로 중복 도착하니 traffic 이 많다. 교수: "it is kind of inefficient … especially in some congestion problems"(18:53–19:00).[* LSP 가 newer 인지 어떻게 아는지는 슬라이드에 없다. 실제 프로토콜은 LSP 에 sequence number 를 붙여서 큰 번호를 새것으로 본다. (Forouzan 보충)]
+
+{analogy}🎭 반 단톡방에 내 전화번호를 올리면 모두가 받는다. 그런데 여기서는 단톡방이 없어서, 받은 사람이 자기 옆 사람들에게 다시 돌린다. 이미 받은 사람은 "또 왔네" 하고 지운다. 결국 모두 받지만 메시지가 아주 많이 오간다.{/analogy}
+
+{mini}
+# E 가 B 에게서 A 의 LSP 를 받은 직후 D 에게서 같은 LSP 를 또 받았다. E 는 두 번째 LSP 를 어떻게 하는가?
+# flooding 의 단점을 p.28 표의 말로 쓰라.
+{/mini}
+{answer}
+# discard. 내 copy 보다 newer 가 아니다.
+# Flooding traffic.
+{/answer}
+
+== 관련 문서 ==
+* [[link state routing]] · [[LSDB]] · [[OSPF area]] · [[Dijkstra algorithm]]

@@ -1,0 +1,40 @@
+key: BGP4
+title: BGP4 (Border Gateway Protocol version 4) — 인터넷의 유일한 interdomain 프로토콜
+category: 9강 라우팅, 용어
+---
+'''BGP4'''(Border Gateway Protocol version 4)는 AS 사이의 routing 을 맡는 프로토콜이다. 인터넷에서 쓰이는 유일한 interdomain 프로토콜이고, [[path vector routing]] 에 기반한다. L15 p.36–37.
+
+{def}"The only interdomain routing protocol used in the Internet. Based on path-vector routing." (p.36)
+→ 인터넷에서 쓰이는 유일한 interdomain routing protocol. path-vector routing 기반.{/def}
+
+[[img:L15-36.png|p.36 — AS1(R1–R4) 이 AS2(R5)·AS3(R6–R8)·AS4(R9) 와 point-to-point WAN(N5, N6, N7)으로 연결|large]]
+
+== 이름에서 ==
+border gateway 는 AS 의 경계(border)에 있는 라우터(gateway)다. AS 의 출입구끼리 쓰는 프로토콜이라는 뜻이다. 4 는 버전이다.
+
+== 특징 ==
+* AS 사이(Between ASs)에서 쓴다. p.28 표의 path vector 열이다.
+* policy 로 경로를 고른다. 교수: "it is based on path vector routing, which is about policy oriented"(35:11).
+* 두 종류: [[eBGP와 iBGP|eBGP(서로 다른 AS 사이) 와 iBGP(한 AS 안)]].
+* eBGP 는 TCP 연결(port 179) 위에서 돈다. RIP 의 UDP 520 과 짝으로 외운다.
+
+== p.36 그림 읽기 ==
+AS1 은 가운데 큰 AS 다. R1 은 N5 로 AS2 의 R5 와, R2 는 N6 으로 AS3 의 R6 과, R4 는 N7 로 AS4 의 R9 와 연결된다. 이 연결 하나하나가 eBGP session 이다. AS1 안의 R1–R4 는 서로 iBGP 로 바깥 정보를 나눈다.
+
+{exam}
+교수(34:51): "this is '''the only inter-domain''' … routing protocol, which is used in the internet." BGP = 유일한 interdomain = path vector(policy). 이 세 개를 한 줄로 쓸 수 있어야 한다.
+{/exam}
+
+{analogy}🎭 나라와 나라 사이의 항공 협정이다. 비행기가 어느 나라 영공을 지날지는 거리보다 협정(policy)이 정한다. 세계에 협정 방식이 하나뿐이라 모두가 그 방식을 쓴다.{/analogy}
+
+{mini}
+# BGP 가 기반한 routing 알고리즘은?
+# p.36 에서 AS1 이 직접 연결된 AS 는 몇 개인가?
+{/mini}
+{answer}
+# path vector routing.
+# 3 개 (AS2, AS3, AS4).
+{/answer}
+
+== 관련 문서 ==
+* [[eBGP와 iBGP]] · [[path vector routing]] · [[autonomous system]] · [[intra-AS와 inter-AS routing]] · [[CH08 라우팅]]

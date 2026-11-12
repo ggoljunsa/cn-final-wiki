@@ -1,0 +1,36 @@
+key: three-node instability
+title: Three-node instability — 셋 이상이면 split horizon 도 못 막는다
+category: 9강 라우팅, 용어
+---
+'''Three-node instability''' 는 노드가 셋 이상일 때 [[split horizon]] 과 [[poison reverse]] 를 써도 count to infinity 가 다시 생기는 현상이다. L15 p.16.
+
+{def}"Three-node instability: These fixes can't guarantee stability among 3+ nodes." (p.16)
+→ 두 해결책은 3 개 이상 node 사이에서는 안정을 보장하지 못한다.{/def}
+
+[[img:L15-16.png|p.16 — split horizon, poison reverse, three-node instability 가 한 화면에|medium]]
+
+== 어떻게 생기나 ==
+슬라이드에는 그림이 없다. 아래는 Forouzan 교재의 예다(Forouzan 보충). A·B·C 가 서로 이웃이고, X 는 A 에 붙어 있다. B 와 C 는 둘 다 A 를 거쳐 X = 2 다.
+# X–A 가 끊긴다. A 는 B 와 C 에게 X = ∞ 를 보낸다.
+# B 는 받았는데 C 에게 가는 메시지가 늦게 도착한다. C 는 아직 X = 2(via A).
+# C 는 split horizon 을 지킨다. A 에게서 배웠으니 A 에게만 말하지 않는다. B 에게는 X = 2 를 말한다.
+# B 는 C 를 거쳐 X = 3 을 적고, A 에게 X = 3 을 말한다. B 는 C 에게서 배웠으니 A 에게는 말해도 된다.
+# A 는 B 를 거쳐 X = 4 를 적고 C 에게 말한다. 세 node 가 돌아가며 다시 count to infinity.
+고리가 세 node 를 도니까 "배운 이웃에게만 말하지 않는다" 는 규칙에 걸리지 않는다.
+
+== 교수의 결론 ==
+"these remedies do not hold for more than two [nodes] … It does not guarantee completely addressing this problem."(11:58–12:09) 바로 이어서 원인을 짚었다. "each node does not have global information … That's the core key problem." 그래서 다음 절이 [[link state routing]] 이다.
+
+{analogy}🎭 둘 사이 소문은 "들은 사람에게 되돌려 말하지 않기" 로 막을 수 있다. 셋이 원을 그리고 앉으면 A→B→C→A 로 소문이 한 바퀴 돌아 A 에게 돌아온다. 각자는 규칙을 지켰는데도 그렇다.{/analogy}
+
+{mini}
+# 위 예에서 C 가 B 에게 X = 2 를 말하는 것은 split horizon 위반인가?
+# three-node instability 를 근본적으로 피하려면 어떤 routing 으로 가야 하는가? 이유 한 줄.
+{/mini}
+{answer}
+# 위반이 아니다. C 는 X 를 A 에게서 배웠으니 A 에게만 말하지 않으면 된다.
+# link state routing. 각 node 가 LSDB 로 네트워크 전체를 알아서 이웃의 말에 기대지 않는다.
+{/answer}
+
+== 관련 문서 ==
+* [[split horizon]] · [[poison reverse]] · [[count to infinity와 two-node loop]] · [[link state routing]]

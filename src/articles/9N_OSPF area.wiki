@@ -1,0 +1,32 @@
+key: OSPF area
+title: OSPF area — flooding 을 작은 구역 안에 가둔다
+category: 9강 라우팅, 용어
+---
+'''Area''' 는 [[OSPF]] 가 큰 AS 를 나누는 단위다. LSP flooding 을 area 안에서만 하게 해서 traffic 을 줄인다. L15 p.35.
+
+{def}"Flooding LSPs in a large AS creates heavy traffic. Hence: Divide the AS into areas. Each area floods LSPs only inside itself. One area is the backbone (area 0); area border routers connect it to the others." (p.35)
+→ 큰 AS 에서 LSP 를 flooding 하면 traffic 이 많다. 그래서 AS 를 area 로 나눈다. 각 area 는 자기 안에서만 flooding 한다. area 하나는 backbone(area 0)이고, area border router 가 backbone 과 다른 area 를 잇는다.{/def}
+
+[[img:L15-35.png|p.35 — Area 1, Area 2 와 Area 0 (backbone). Area border router, Backbone router, AS boundary router(→ To other ASs)|large]]
+
+== 라우터 종류 (그림) ==
+* '''area border router''': area 와 backbone 의 경계에 있다. 위 그림에서 Area 1 과 Area 0 사이, Area 2 와 Area 0 사이의 큰 라우터다.
+* '''backbone router''': area 0 안의 라우터.
+* '''AS boundary router''': AS 밖, 다른 AS 로 나가는 출구(오른쪽 빨간 화살표 "To other ASs"). 여기서부터는 [[BGP4]] 의 영역이다.
+
+== 왜 줄어드나 ==
+[[link state routing]] 은 link 하나가 바뀌어도 그 LSP 를 모두에게 뿌린다. area 로 나누면 Area 1 안의 변화는 Area 1 안에서만 퍼진다. 교수: "flooding can lead to congestion in large networks, so with OSPF, we divide one big network in some segments … to allow flooding only under that area"(33:52–34:14).
+
+{analogy}🎭 전교 방송 대신 학년별 방송을 쓰는 것이다. 1 학년 교실 공지는 1 학년 층에만 울리고, 학년 사이 연락은 교무실(backbone)을 거친다.{/analogy}
+
+{mini}
+# backbone area 의 번호는?
+# Area 1 의 link 하나가 끊겼다. 그 LSP 는 어디까지 flooding 되는가?
+{/mini}
+{answer}
+# 0.
+# Area 1 안. (다른 area 에는 area border router 를 통해 요약된 정보만 전달된다, Forouzan 보충.)
+{/answer}
+
+== 관련 문서 ==
+* [[OSPF]] · [[flooding과 LSP]] · [[link state routing]] · [[autonomous system]]

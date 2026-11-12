@@ -1,0 +1,43 @@
+key: Bellman-Ford equation
+title: Bellman-Ford equation — 이웃을 하나씩 거쳐 보고 가장 싼 합을 고른다
+category: 9강 라우팅, 용어
+---
+'''Bellman-Ford equation''' 은 [[distance vector routing]] 이 쓰는 갱신 식이다. x 에서 y 까지의 least cost 를 이웃들의 말로 계산한다. L15 p.7, p.11.
+
+{def}"Bellman-Ford equation: least cost $D_{xy}$ from x to y. Given: $c_{xa}$, the cost from x to each neighbor a, and $D_{ay}$, the least cost from a to y. Try every neighbor and keep the cheapest total." (p.7)
+→ x 에서 각 이웃 a 까지의 cost 와 a 에서 y 까지의 least cost 를 더해 보고, 가장 싼 합을 남긴다.{/def}
+
+[[img:L15-07.png|p.7 — (a) 이웃 a·b·c 를 거치는 세 길 중 최소 (b) 지금 값과 새 이웃 z 를 거치는 길 비교|medium]]
+
+== 두 가지 모양 ==
+(a) 이웃이 여럿일 때 한꺼번에:
+$$D_{xy} = \min\{c_{xa} + D_{ay},\ c_{xb} + D_{by},\ c_{xc} + D_{cy},\ \dots\}$$
+(b) 이미 값이 있는데 이웃 z 가 새 정보를 보냈을 때:
+$$D_{xy} = \min\{D_{xy},\ c_{xz} + D_{zy}\}$$
+실제 프로토콜은 (b) 를 쓴다. 이웃의 벡터가 하나 도착할 때마다 칸마다 (b) 를 계산한다. 벡터 전체로 쓰면 `X[ ] = min(X[ ], c_XZ + Z[ ])` 다(p.11).
+
+== 손으로 한 번 ==
+p.11 (a): B 가 A 의 벡터 [0, 2, ∞, 3, ∞, ∞, ∞] 를 받았다. $c_{BA} = 2$.
+<pre class="txt">
+D 칸: min(∞, 2 + 3) = 5     ← B 는 A 를 거쳐 D 로 가는 길을 처음 알게 됨
+A 칸: min(2, 2 + 0) = 2
+C 칸: min(5, 2 + ∞) = 5
+</pre>
+[[sim:dv_update]]
+
+== 이 식이 믿는 것 ==
+식은 이웃이 말한 $D_{zy}$ 가 맞다고 가정한다. 이웃의 값이 오래된(stale) 것이면 틀린 값이 들어온다. p.13 의 [[count to infinity와 two-node loop|two-node loop]] 이 그 예다. A 는 B 의 낡은 "X = 2" 를 믿고 $\min(16, 1 + 2) = 3$ 을 적었다.[* 같은 갱신 식(relaxation)을 그래프 전체에 n−1 번 돌리는 것이 자료구조·알고리즘 시간의 Bellman-Ford 최단경로 알고리즘이다. 네트워크에서는 라우터들이 그 계산을 나눠서 한다.]
+
+{analogy}🎭 서울 가는 길을 옆 마을 세 곳에 묻는다. "너희 마을에서 서울까지 얼마야?" 답에 우리 마을에서 그 마을까지의 거리를 더하고, 가장 작은 쪽 마을로 간다. 옆 마을이 어제 끊긴 다리를 아직 모르고 대답하면 틀린 길을 고른다.{/analogy}
+
+{mini}
+# x 의 이웃이 a(c 3), b(c 1)이고 $D_{ay} = 4$, $D_{by} = 7$ 이다. $D_{xy}$ 는? 첫 hop 은?
+# p.11 (b) 에서 B 가 E 의 벡터를 받았을 때 F 칸 계산을 쓰라.
+{/mini}
+{answer}
+# min(3 + 4, 1 + 7) = min(7, 8) = 7. 첫 hop 은 a. link 가 싼 b 가 아니라 합이 싼 a 를 고른다.
+# min(∞, 4 + 2) = 6. B–E 의 cost 4 에 E 가 말한 F 까지 2 를 더했다.
+{/answer}
+
+== 관련 문서 ==
+* [[distance vector routing]] · [[distance vector]] · [[Dijkstra algorithm]] · [[CH08 라우팅]]
