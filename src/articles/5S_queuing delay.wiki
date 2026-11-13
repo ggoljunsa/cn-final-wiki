@@ -2,15 +2,15 @@ key: queuing delay
 title: Queuing delay (큐잉 지연) — 라우터에서만, load 에 따라 커진다
 category: 5강 네트워크 계층, 용어
 ---
-'''Queuing delay''' ($\text{Delay}_{qu}$)는 패킷이 '''라우터의 input queue 와 output queue''' 에서 '''차례를 기다리는''' 시간이다. '''라우터에서만''' 생기고, 트래픽(load)이 늘수록 커진다. 그래서 total delay 에서 queuing 만 '''n''' 번(라우터 수), 나머지는 n + 1 번이다. L12 p.31–33, p.37–38.
+'''Queuing delay''' ($\text{Delay}_{qu}$)는 패킷이 라우터의 input queue 와 output queue 에서 차례를 기다리는 시간이다. 이 지연은 '''라우터에서만''' 생기고, 트래픽(load)이 늘수록 커진다. 그래서 total delay 에서 queuing 만 n 번(라우터 수) 세고, 나머지는 n + 1 번 센다. 슬라이드는 L12 p.31–33, p.37–38 이다.
 
-{def}"'''Queuing delay''' ($\text{Delay}_{qu}$): Time a packet '''waits''' in a router's '''input and output queues'''. Happens in '''routers'''; '''grows with traffic load'''." (p.31)
+{def}"Queuing delay ($\text{Delay}_{qu}$): Time a packet waits in a router's input and output queues. Happens in routers; grows with traffic load." (p.31)
 "'''Queue only at the n routers'''." / "queuing happens only at n routers" (p.32–33){/def}
 
 [[img:L12-31.png|p.31 Inside a router — input queue 아래 Delay_qu, Process 아래 Delay_pr, output queue 아래 Delay_qu|medium]]
 
 == 이름에서 개념 끌어내기 ==
-* '''queue''' = 줄, 대기열. 라우터는 한 번에 한 패킷씩만 처리·전송할 수 있으니, 그사이 도착한 패킷은 '''줄을 선다'''. 줄이 길수록 오래 기다린다.
+* '''queue''' = 줄, 대기열. 라우터는 한 번에 한 패킷씩만 내보낼 수 있으니, 그사이 도착한 패킷은 '''줄을 선다'''. 줄이 길수록 오래 기다린다.
 
 {exam}🎯 "'''Just remember that queuing delay is involved with routers, not with source and destination.'''" (10/27 녹음 50:43) · "it involves specifically in routers, not in source and destination … if traffic increases, then queue can be more crowded" (47:55–48:04).
 → 공식: $\text{Total} = (n+1)(\text{Delay}_{tr} + \text{Delay}_{pg} + \text{Delay}_{pr}) + \mathbf{n} \cdot \text{Delay}_{qu}$. queuing 을 n + 1 번 세면 틀린다.{/exam}
@@ -24,7 +24,7 @@ category: 5강 네트워크 계층, 용어
 
 [[sim:total_delay]]
 
-{analogy}🎭 '''놀이공원 인기 기구 줄.''' 기구가 한 번 도는 시간(processing)은 늘 같지만, 손님이 몰리면(load) 줄 서는 시간(queuing)이 몇 배로 늘어난다. 그리고 줄은 '''기구 앞'''(라우터)에만 있다 — 집(source)과 숙소(destination)에는 줄이 없다.{/analogy}
+{analogy}🎭 '''놀이공원 인기 기구 줄.''' 기구가 한 번 도는 시간(processing)은 늘 같지만, 손님이 몰리면(load) 줄 서는 시간(queuing)이 몇 배로 늘어난다. 그리고 줄은 '''기구 앞'''(라우터)에만 있다. 집(source)과 숙소(destination)에는 줄이 없다.{/analogy}
 
 == 관련 문서 ==
 * [[processing delay]] · [[total delay 공식]] · [[load와 성능]] · [[congestion control]]

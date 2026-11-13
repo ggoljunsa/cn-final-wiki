@@ -7,12 +7,12 @@ category: 8강 IPv6, 용어
 {def}"Host sends a router solicitation to a local router. Router replies with a router advertisement: global unicast prefix + subnet prefix. Host appends its interface ID → its global unicast address" (p.18)
 → host 가 묻고(solicitation), router 가 prefix + subnet ID 로 답한다(advertisement). host 는 그 뒤에 interface ID 를 붙인다.{/def}
 
-[[img:L14-18.png|p.18 ① Router solicitation (Host → Router) ② Router advertisement: prefix + subnet ID (Router → Host) ③ Global prefix | Subnet ID | Interface ID (from host) = Global unicast address|medium]]
+[[img:L14-18.png|p.18 — ① Router solicitation (Host → Router) ② Router advertisement: prefix + subnet ID (Router → Host) ③ Global prefix | Subnet ID | Interface ID (from host) = Global unicast address|medium]]
 
 == 이름에서 개념 끌어내기 ==
 * '''solicitation''' = 요청, 간청. 교수: "solicitation is just asking … you can think of it as asking or requesting"(11/10 22:21–22:28).
 * '''advertisement''' = 알림, 광고. router 가 "이 network 의 prefix 는 이것이다" 라고 알린다.
-* 둘 다 [[ICMPv6]] 의 [[neighbor discovery]] 메시지다(Forouzan 보충 — 슬라이드는 메시지 그룹 이름만 있음).
+* 둘 다 [[ICMPv6]] 의 [[neighbor discovery]] 메시지다(Forouzan 보충. 슬라이드에는 메시지 그룹 이름만 있다).
 
 == Example 7.29 의 경우 ==
 <pre class="txt">
@@ -27,8 +27,12 @@ host 는 solicitation 을 보낼 때 이미 만든 link-local 주소를 쓴다. 
 
 {analogy}🎭 이사 온 사람이 관리사무소에 "여기 주소가 어떻게 되나요?" 라고 묻는 것이 solicitation 이다. 관리사무소가 "○○시 ○○구 ○○아파트 101동" 이라고 알려 주는 것이 advertisement 다. 호수(interface ID)는 본인이 이미 알고 있다.{/analogy}
 
-{quiz}router advertisement 에 들어 있는 것은? interface ID 도 들어 있나?{/quiz}
-{answer}global (unicast) prefix + subnet ID(subnet prefix)만 들어 있다. interface ID 는 host 가 자기 MAC 으로 만든 것을 뒤에 붙인다.{/answer}
+{mini}
+# router advertisement 에 들어 있는 것은? interface ID 도 들어 있나?
+{/mini}
+{answer}
+# global (unicast) prefix + subnet ID(subnet prefix)만 들어 있다. interface ID 는 host 가 자기 MAC 으로 만든 것을 뒤에 붙인다.
+{/answer}
 
 == 관련 문서 ==
 * [[autoconfiguration]] · [[link-local address]] · [[neighbor discovery]] · [[Example 7.29]]

@@ -2,15 +2,15 @@ key: block allocation
 title: Block allocation — ICANN → ISP·대형 조직 → 고객, 그리고 CIDR block 세 규칙
 category: 6강 IPv4 주소, 용어
 ---
-'''Block allocation''' 은 주소 block 을 '''누가, 어떤 규칙으로''' 나눠 주느냐다. 전 세계 최상위 권한은 [[ICANN]] 이고, ICANN 은 '''큰 block''' 을 [[ISP]] 와 대형 조직에만 준다. 개인은 ISP·조직에게서 받는다. L13 p.21–22.
+'''Block allocation''' 은 주소 block 을 누가, 어떤 규칙으로 나눠 주느냐의 문제다(L13 p.21–22). 맨 위 권한은 [[ICANN]] 이다. ICANN 은 큰 block 을 [[ISP]] 와 대형 조직에만 주고, 개인은 ISP 나 조직에게서 받는다.
 
 {def}"Global authority: '''ICANN''' (Internet Corporation for Assigned Names and Numbers). Gives '''large blocks''' to ISPs and large organizations, '''not to individual users'''.
 Restrictions on a CIDR block: Size N must be a '''power of 2'''. Addresses must be '''contiguous (no gaps)'''. The first address must be '''divisible by N'''." (p.21){/def}
 
-[[img:L13-21.png|p.21 ICANN → large blocks → ISP A, Large org / ISP A → cust. cust. cust. (smaller subblocks)|large]]
+[[img:L13-21.png|p.21 — 맨 위 ICANN 에서 ISP A 와 Large org 로 large blocks 가 내려가고, ISP A 에서 cust. 들로 smaller subblocks 가 내려가는 것을 보라|large]]
 
 == 이름에서 개념 끌어내기 ==
-* '''allocate''' = 할당하다. 위에서 아래로 '''나눠 주는''' 흐름: ICANN → ISP → 고객. 아래로 갈수록 block 이 작아진다(subblock).
+* allocate 는 할당하다라는 뜻이다. 위에서 아래로 나눠 주는 흐름이라 ICANN → ISP → 고객으로 갈수록 block 이 작아진다.
 
 == 할당 계층 ==
 <pre class="txt">
@@ -18,21 +18,27 @@ ICANN  ──(large blocks)──►  ISP A ──►  cust. / cust. / cust.   (
                        └──►  Large org (대학, 대기업)
 개인 사용자는 ICANN 에서 직접 받지 않는다 → ISP·조직을 통해서
 </pre>
-* 교수(38:19): "In fact we '''never directly receive an IP address'''. We always get the address by ISPs or organizations."
-* ISP 가 고객에게 나눠 주는 것은 [[subnetting]] 과 같은 연산, 거꾸로 고객 block 들을 바깥에 하나로 알리는 것이 [[address aggregation]] (p.27 "ICANN → ISP (large block) → customers (subblocks)").
+* 교수: "In fact we never directly receive an IP address. We always get the address by ISPs or organizations."(38:19)
+* ISP 가 고객에게 나눠 주는 일은 [[subnetting]] 과 같은 계산이다. 거꾸로 고객 block 들을 바깥에 하나로 알리는 일이 [[address aggregation]] 이다(p.27 "ICANN → ISP (large block) → customers (subblocks)").
 
 == CIDR block 세 규칙 ==
-# '''power of 2''' — 요청 수를 위로 올림(1000 → 1024, [[Example 7.4]]).
-# '''contiguous''' — 중간에 빈 주소 없음(교수 39:24 "This one is used or unused. It is not allowed").
-# '''first divisible by N''' — first 의 suffix 가 전부 0 이 되도록.
-자세한 이유는 [[CIDR]].
+# '''power of 2''': 요청한 수를 2 의 거듭제곱으로 올린다(1000 → 1024, [[Example 7.4]]).
+# '''contiguous''': 중간에 빠진 주소가 없어야 한다. 교수는 칠판의 block 가운데를 짚으며 "This one is used or unused. It is not allowed." 라고 했다(39:24).
+# '''first divisible by N''': first 의 suffix 가 전부 0 이 되게 한다.
+각 규칙의 이유는 [[CIDR]] 에 있다.
 
 [[sim:cidr_block]]
 
-{analogy}🎭 '''토지 분양'''. 국가(ICANN)는 개인에게 땅을 바로 팔지 않고 큰 필지를 건설사(ISP)·대기업에 준다. 건설사는 그 땅을 2 의 거듭제곱 평수로, 빈틈 없이, 눈금에 맞춰 잘라 입주자(고객)에게 분양한다.{/analogy}
+{analogy}🎭 '''토지 분양'''과 같다. 국가(ICANN)는 개인에게 땅을 바로 팔지 않고 큰 필지를 건설사(ISP)나 대기업에 준다. 건설사는 그 땅을 2 의 거듭제곱 평수로, 빈틈없이, 눈금에 맞춰 잘라 입주자(고객)에게 분양한다.{/analogy}
 
-{quiz}OX: ① 개인 사용자는 ICANN 에서 직접 IP block 을 받는다. ② CIDR block 의 first address 는 N 으로 나누어떨어져야 한다.{/quiz}
-{answer}① ✗ (ISP·대형 조직에만, 개인은 그들을 통해) ② ○{/answer}
+{mini}
+# "개인 사용자는 ICANN 에서 직접 IP block 을 받는다." O/X.
+# "CIDR block 의 first address 는 N 으로 나누어떨어져야 한다." O/X.
+{/mini}
+{answer}
+# X. ICANN 은 ISP 와 대형 조직에만 준다. 개인은 그들을 거쳐 받는다.
+# O. 그래야 first 의 suffix 가 전부 0 이 된다.
+{/answer}
 
 == 관련 문서 ==
 * [[ICANN]] · [[ISP]] · [[CIDR]] · [[Example 7.4]] · [[subnetting]] · [[address aggregation]] · [[CH07 IPv4 주소]]

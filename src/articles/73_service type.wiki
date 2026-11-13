@@ -2,7 +2,7 @@ key: service type
 title: Service type (TOS → DiffServ)
 category: 7강 IPv4 데이터그램, 용어
 ---
-'''Service type''' 은 IPv4 header 의 둘째 byte(8 bits)로, 이 datagram 을 '''어떻게 다룰지'''(우선순위 등)를 적는다. 원래 이름은 TOS(type of service)였고 지금은 '''DiffServ'''(differentiated services) 로 재정의되었다. L13 p.33.
+'''Service type''' 은 IPv4 header 의 둘째 byte(8 bits)다. 이 칸에는 datagram 을 어떻게 다룰지(우선순위 등)를 적는다. 원래 이름은 TOS(type of service)였고, 지금은 '''DiffServ'''(differentiated services)로 다시 정의되었다. 슬라이드는 L13 p.33 이다.
 
 {def}"Service type (8 bits): Originally '''TOS''': how to handle the datagram. Redefined as '''DiffServ''' (differentiated services)." (p.33)
 Service type 은 8-bit 필드로, 원래는 datagram 처리 방식을 나타내는 TOS 였고 지금은 DiffServ 로 쓰인다.{/def}
@@ -10,8 +10,8 @@ Service type 은 8-bit 필드로, 원래는 datagram 처리 방식을 나타내�
 [[img:L13-33.png|p.33 — VER (4 bits) version = 4, HLEN (4 bits) header length in 4-byte words (5 → 20 bytes min, 15 → 60 bytes max), Service type (8 bits) originally TOS, redefined as DiffServ. 오른쪽 header 표에서 VER·HLEN·Service type 칸 강조|medium]]
 
 == 이름에서 개념 끌어내기 ==
-* '''differentiated services''' = 서비스를 '''차등'''한다. 음성·영상처럼 급한 트래픽을 일반 트래픽과 '''구별해서''' 다루라는 표시. L12 의 [[QoS]] 와 이어진다 — 다만 L12 p.18 은 "IP 자체는 QoS 를 제공하지 않는다(upper layers)" 였다. 칸은 있지만 IP 가 보장해 주지는 않는다(best effort)는 점을 함께 기억.
-* 계산 문제에서는 거의 항상 `00` — Ex 7.10 의 둘째 byte 도 00.
+* '''differentiated services''' 는 서비스에 차등을 둔다는 뜻이다. 음성이나 영상처럼 급한 트래픽을 일반 트래픽과 구별해서 다루라는 표시다. L12 의 [[QoS]] 와 이어지는 이야기다. 다만 L12 p.18 은 IP 자체가 QoS 를 제공하지 않는다(upper layers 몫)고 했다. 칸은 있어도 IP 가 보장해 주지는 않는다(best effort).
+* 계산 문제에서는 이 byte 가 거의 늘 `00` 이다. Ex 7.10 의 둘째 byte 도 00 이다.
 
 {analogy}🎭 '''택배 송장의 "취급 주의 / 빠른 배송" 체크칸.''' 칸은 있지만, 체크했다고 배송이 반드시 빨라지는 것은 아니다(best effort). 물류센터가 그 칸을 존중해 주는 곳에서만 효과가 있다.{/analogy}
 

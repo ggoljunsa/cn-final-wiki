@@ -2,7 +2,7 @@ key: host-to-host delivery
 title: Host-to-host delivery (호스트 간 전달)
 category: 5강 네트워크 계층, 용어
 ---
-'''Host-to-host delivery''' 는 [[network layer]] 가 제공하는 핵심 서비스 — 패킷을 '''출발 host(source)에서 도착 host(destination)까지''' 전달하는 것이다. L12 p.3–5 그림 아래 양방향 화살표에 적힌 말이다.
+'''Host-to-host delivery''' 는 [[network layer]] 가 맡는 일이다. 패킷을 '''출발 host(source)에서 도착 host(destination)까지''' 전달한다. L12 p.3–5 그림 아래 양방향 화살표에 적힌 말이다.
 
 {def}"Network layer: delivers packets '''host-to-host''', from source to destination. Routers on the path choose the best route for each packet." (p.3)
 그림: Source host → R1 → R2 → R3 → Destination host, 위에 "each router picks the '''next hop'''", 아래에 "'''host-to-host delivery'''".{/def}
@@ -23,7 +23,7 @@ category: 5강 네트워크 계층, 용어
 |-
 | 길 찾기 || 없음 (옆 node 로 넘기면 끝) || 라우터마다 next hop 결정 ([[routing]] · [[forwarding]])
 |}
-→ 중간고사 [[mid:end-to-end와 hop-to-hop]] 과 같은 구분이다. (transport layer 는 그 위에서 '''process-to-process''' 를 맡는다 — Forouzan 보충, 슬라이드에 없음.)
+→ 중간고사 [[mid:end-to-end와 hop-to-hop]] 과 같은 구분이다. (Forouzan 보충, 슬라이드에 없음: transport layer 는 그 위에서 process-to-process 를 맡는다.)
 
 {analogy}🎭 '''비행기 환승 여행.''' 인천 → 도쿄 → 하와이로 가는 여행 전체가 host-to-host delivery 이고, 각 비행 구간(인천→도쿄)이 data-link 의 hop 이다. 환승 공항(라우터)은 내 탑승권의 '''최종 목적지'''만 보고 다음 비행기를 정한다.{/analogy}
 

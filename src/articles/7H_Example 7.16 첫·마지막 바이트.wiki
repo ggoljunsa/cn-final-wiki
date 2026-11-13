@@ -2,9 +2,9 @@ key: Example 7.16 첫·마지막 바이트
 title: Example 7.16 — offset 100, HLEN 5, total length 100 → bytes 800–879
 category: 7강 IPv4 데이터그램, 예제
 ---
-'''Example 7.16''' 은 fragment 의 header 값(offset, HLEN, total length)에서 그 fragment 가 들고 있는 '''원래 datagram 의 첫·마지막 byte 번호'''를 구하는 예제다. 답 '''800–879'''. L13 p.48.
+'''Example 7.16''' 은 fragment 의 header 값(offset, HLEN, total length)으로 그 fragment 가 들고 있는 원래 datagram 의 첫 byte 와 마지막 byte 번호를 구하는 예제다. 답은 '''800–879''' 다. 슬라이드는 L13 p.48 이다.
 
-{def}"Offset = 100, HLEN = 5, total length = 100. First and last byte numbers? — First byte = 100 × 8 = '''800'''. Data = 100 − 5 × 4 = 80 bytes. Last byte = 800 + 80 − 1 = '''879'''." (p.48){/def}
+{def}"Offset = 100, HLEN = 5, total length = 100. First and last byte numbers? Solution: First byte = 100 × 8 = '''800'''. Data = 100 − 5 × 4 = 80 bytes. Last byte = 800 + 80 − 1 = '''879'''." (p.48){/def}
 
 [[img:L13-48.png|p.48 Example 7.16 — "data of this fragment: 80 bytes" 막대, 왼쪽 끝 800, 오른쪽 끝 879|medium]]
 
@@ -15,11 +15,15 @@ header     = HLEN × 4                 = 5 × 4        = 20
 data       = total length − header    = 100 − 20     = 80 bytes
 last byte  = first + data − 1         = 800 + 80 − 1 = '''879'''
 </pre>
-* 이 예제 하나에 '''단위 세 개'''가 다 나온다: offset ×8, HLEN ×4, total length ×1. 시험 직전에 이 문제 하나만 다시 풀어도 단위 실수를 막는다.
+* 이 예제 하나에 단위 셋이 다 나온다. offset 은 × 8, HLEN 은 × 4, total length 는 그대로다. 시험 직전에 이 문제를 한 번 더 풀어 두면 단위 실수를 줄일 수 있다.
 
-{warn}오답 패턴: ① first = 100 (×8 누락) ② data = 100 (header 안 뺌) ③ last = 880 (−1 누락; 800 부터 80 개면 800, 801, …, 879) ④ data = 100 − 5 = 95 (HLEN ×4 누락).{/warn}
+{warn}자주 나오는 오답은 이렇다.
+* first = 100: × 8 을 빼먹었다.
+* data = 100: header 를 안 뺐다.
+* last = 880: −1 을 빼먹었다. 800 부터 80 개면 800, 801, …, 879 다.
+* data = 100 − 5 = 95: HLEN 에 × 4 를 안 했다.{/warn}
 
-{analogy}🎭 '''아파트 동 번호 × 8 = 층 시작.''' "100 번 블록(8 층씩)" 이면 800 층부터. 이 조각에는 80 개 층이 있으니 800 층부터 879 층까지 — 880 층은 다음 조각이다.{/analogy}
+{analogy}🎭 '''아파트 동 번호 × 8 = 층 시작.''' "100 번 블록(8 층씩)" 이면 800 층부터. 이 조각에는 80 개 층이 있으니 800 층부터 879 층까지다. 880 층은 다음 조각이다.{/analogy}
 
 [[sim:fragment_calc]]
 

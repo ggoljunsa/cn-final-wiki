@@ -2,35 +2,35 @@ key: packetizing
 title: Packetizing (패킷화) — encapsulate · decapsulate, 라우터는 header 만
 category: 5강 네트워크 계층, 용어
 ---
-'''Packetizing''' 은 network layer 의 첫 번째 서비스로, 위층에서 받은 payload 를 '''바꾸지도 쓰지도 않고''' 패킷에 담아 나르는 일이다. source 가 header 를 붙이고(encapsulate), destination 이 뗀다(decapsulate). '''라우터는 decapsulate 하지 않는다''' — 유일한 예외가 [[fragmentation]]. [[IP]] 가 제공한다(✓ Yes). L12 p.8–9, p.18.
+'''Packetizing''' 은 network layer 의 첫 번째 서비스다. 위층에서 받은 payload 를 바꾸지도, 쓰지도 않고 패킷에 담아 나른다. source 가 header 를 붙이고(encapsulate), destination 이 그 header 를 뗀다(decapsulate). 중간의 라우터는 decapsulate 하지 않는다. 예외는 [[fragmentation]] 하나뿐이다. p.18 표에서 IP 는 이 서비스를 제공한다(Yes). 슬라이드는 L12 p.8–9, p.18 이다.
 
-{def}"'''Packetizing''': carry the payload '''without changing or using it'''. Source: '''encapsulate''' (add a header). Destination: '''decapsulate''' (remove the header). Header: '''source & destination addresses + control info'''. '''Routers do not decapsulate''' the packet. '''Only exception: fragmentation''' (packet too large) — Header is copied to every fragment, with a few changes." (p.8–9)
+{def}"Packetizing: carry the payload without changing or using it. Source: encapsulate (add a header). Destination: decapsulate (remove the header). Header: source & destination addresses + control info. Routers do not decapsulate the packet. Only exception: fragmentation (packet too large) — Header is copied to every fragment, with a few changes." (p.8–9)
 "Packetizing — ✓ Yes — Encapsulation at source, decapsulation at destination" (p.18){/def}
 
 [[img:L12-09.png|p.9 Packetizing — Source: Payload → encapsulate → [Header|Payload] / Destination: decapsulate → Payload → to upper layer / Router: [Header|Payload(회색)] reads the header only|large]]
 
 == 이름에서 개념 끌어내기 ==
-* '''packet + ize''' = 패킷으로 '''만들기'''. 위층의 데이터(segment)는 그대로 두고, 그 앞에 '''주소가 적힌 header''' 를 붙여 network layer 가 나를 수 있는 모양(packet = [[datagram]])으로 만든다.
-* 중간고사의 [[mid:캡슐화]](encapsulation/decapsulation)와 같은 말이다 — 교수: "we learned it in several different terminologies" (10/27 녹음 11:38).
+* packet + ize 는 패킷으로 만든다는 뜻이다. 위층의 데이터(segment)는 그대로 두고, 그 앞에 주소가 적힌 '''header''' 를 붙인다. 그러면 network layer 가 나를 수 있는 모양(packet = [[datagram]])이 된다.
+* 중간고사의 [[mid:캡슐화]](encapsulation/decapsulation)와 같은 말이다. 교수: "we learned it in several different terminologies" (10/27 녹음 11:38).
 
 == 누가 무엇을 하나 ==
 {|
 ! 위치 || 하는 일 || header || payload
 |-
-| '''Source''' || '''encapsulate''' — header 붙이기 || 만든다 || 받기만 함
+| '''Source''' || '''encapsulate''': header 붙이기 || 만든다 || 받기만 함
 |-
 | '''Router''' || '''reads the header only''' → next hop 결정 || 읽는다 (DA) || 손대지 않음 (회색)
 |-
-| '''Destination''' || '''decapsulate''' — header 떼고 upper layer 로 || 뗀다 || 위층에 넘김
+| '''Destination''' || '''decapsulate''': header 떼고 upper layer 로 || 뗀다 || 위층에 넘김
 |}
 
 [[anim:encap_decap|source 의 encapsulate → 라우터 두 곳의 "reads the header only" → destination 의 decapsulate 순서를 따라가고, 끝 장면의 fragmentation 예외를 보라]]
 
-{exam}🎯 "Specifically '''routers do not decapsulate'''. It just read the header and understand where the destination address is … But there is '''one exception''' where it uses '''fragmentation''' where package is too big. Header it just '''copies to every fragment'''." (12:58–13:35) — OX 로 "라우터는 패킷을 decapsulate 해서 payload 를 확인한다" ✗.{/exam}
+{exam}🎯 교수는 라우터가 하는 일을 이렇게 설명했다(12:58–13:35). "Specifically '''routers do not decapsulate'''. It just read the header and understand where the destination address is … But there is one exception where it uses fragmentation where package is too big. Header it just copies to every fragment." OX 로 "라우터는 패킷을 decapsulate 해서 payload 를 확인한다" 가 나오면 틀린 문장이다.{/exam}
 
-{analogy}🎭 '''이삿짐 상자.''' 보내는 집에서 상자에 짐을 넣고 송장을 붙인다(encapsulate). 중간 물류센터는 송장만 스캔하고 상자는 '''열지 않는다'''. 받는 집에서 상자를 연다(decapsulate). 단, 상자가 너무 커서 트럭에 안 들어가면 물류센터가 '''두 상자로 나눠 담고 송장을 복사해 각각 붙인다'''(fragmentation).{/analogy}
+{analogy}🎭 이삿짐 상자를 떠올리면 된다. 보내는 집에서 상자에 짐을 넣고 송장을 붙인다(encapsulate). 중간 물류센터는 송장만 스캔하고 상자는 '''열지 않는다'''. 받는 집에서 상자를 연다(decapsulate). 상자가 너무 커서 트럭에 안 들어가면 그때만 물류센터가 짐을 두 상자로 나눠 담고, 송장을 복사해 각각 붙인다(fragmentation).{/analogy}
 
-{tip}'''필기 메모: 제목 "Packetizing" 의 "etizing" 동그라미 (p.8), "reads the header only" 의 header 동그라미 + Router 에서 이어진 화살표 (p.9)''' — packet + -ize = "패킷으로 만들다" 라는 동사형이라는 표시로 읽힌다. p.9 그림에서 Router 는 payload 가 회색(손대지 않음)이고 '''header 만 읽는다''' — 목적지 주소를 보고 다음 hop 을 고르기 위해서다. 그래서 "routers do not decapsulate" 다. 예외는 [[fragmentation]].{/tip}
+{tip}'''필기 메모: 제목 "Packetizing" 의 "etizing" 동그라미 (p.8), "reads the header only" 의 header 동그라미 + Router 에서 이어진 화살표 (p.9)''': packet + -ize = "패킷으로 만들다" 라는 동사형이라는 표시로 읽힌다. p.9 그림에서 Router 는 payload 가 회색(손대지 않음)이고 '''header 만 읽는다'''. 목적지 주소를 보고 다음 hop 을 고르기 위해서다. 그래서 "routers do not decapsulate" 다. 예외는 [[fragmentation]].{/tip}
 
 == 관련 문서 ==
 * [[fragmentation]] · [[datagram]] · [[segment·datagram·frame]] · [[IP가 제공하는 서비스]] · [[forwarding]]

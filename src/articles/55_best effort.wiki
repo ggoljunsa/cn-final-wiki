@@ -2,13 +2,13 @@ key: best effort
 title: Best effort (최선형 서비스) — 노력은 하지만 보장은 없다
 category: 5강 네트워크 계층, 용어
 ---
-'''Best effort''' 는 [[IP]] 의 두 번째 큰 성질로, 패킷을 '''전달하려고 최선을 다하지만 아무것도 보장하지 않는다'''는 뜻이다. 슬라이드는 구체적으로 '''flow control 없음, congestion control 없음, error recovery 없음(checksum 은 header 만)''' 이라고 적는다. L12 p.4, p.18. 교수는 이를 "'''very important'''" 라고 했다(10/27 녹음 05:59).
+'''Best effort''' 는 [[IP]] 의 두 번째 큰 성질이다. IP 는 패킷을 전달하려고 최선을 다하지만 아무것도 보장하지 않는다. 슬라이드는 구체적으로 세 가지가 없다고 적는다. flow control 이 없고, congestion control 이 없고, error recovery 도 없다(checksum 은 header 만 본다). 출처는 L12 p.4, p.18 이다. 교수는 이 성질을 "very important" 라고 했다(10/27 녹음 05:59).
 
-{def}"'''Best effort''': no flow or congestion control, no error recovery (checksum covers the header only)." (p.4)
-"IP itself is connectionless and '''best effort''': anything more is added by other protocols." (p.18){/def}
+{def}"Best effort: no flow or congestion control, no error recovery (checksum covers the header only)." (p.4)
+"IP itself is connectionless and best effort: anything more is added by other protocols." (p.18){/def}
 
 == 이름에서 개념 끌어내기 ==
-* '''best + effort''' = "최선의 노력". 노력은 '''최선'''이지만 결과는 '''약속하지 않는다'''. 패킷이 버려져도, 깨져도, 늦어도 IP 는 책임지지 않는다.
+* best + effort 는 "최선의 노력" 이다. 노력은 최선이지만 결과는 '''약속하지 않는다'''. 패킷이 버려지거나 깨지거나 늦어도 IP 는 책임지지 않는다.
 
 == best effort 가 "안 하는" 것 세 가지 ==
 {|
@@ -18,15 +18,21 @@ category: 5강 네트워크 계층, 용어
 |-
 | [[congestion control]] (망이 막히지 않게) || 라우터는 '''drop''' 만, 속도 줄이기는 '''TCP''' || [[congestion control]]
 |-
-| error '''recovery''' (오류 고치기·재전송) || 위층. IP 는 header checksum 으로 '''검출'''만, 알림은 [[ICMP]] || [[IP의 error control]]
+| error '''recovery''' (오류 고치기·재전송) || 위층. IP 는 header checksum 으로 찾아내기만 하고, 알림은 [[ICMP]] || [[IP의 error control]]
 |}
 
-{tip}교수 설명(06:22–06:43): "it has no control of flow and congestion and it has no error recovery. Error recovery and flow and congestion control are '''served by other layers'''." — 녹음에서 "So we call it SDS" 로 전사된 부분이 "best effort" 다(ASR 오인식).{/tip}
+{tip}교수 설명(06:22–06:43): "it has no control of flow and congestion and it has no error recovery. Error recovery and flow and congestion control are '''served by other layers'''." 녹음에서 "So we call it SDS" 로 전사된 부분이 "best effort" 다(ASR 오인식).{/tip}
 
 {analogy}🎭 '''best effort = 동네 퀵서비스 "최대한 빨리 갖다 드릴게요".''' 열심히 달리지만 늦어도 환불 없고, 물건이 깨져도 포장 겉면(header)만 확인했다고 말한다. 꼭 도착해야 하는 물건이면 '''보험·추적 서비스(TCP)''' 를 따로 붙여야 한다.{/analogy}
 
-{quiz}"IP 는 best effort 이다" 를 설명할 때 반드시 들어가야 할 세 가지 "없음" 은?{/quiz}
-{answer}'''flow control 없음''', '''congestion control 없음''', '''error recovery 없음'''(checksum 은 header 만 검사, 검출만). 이런 기능은 다른 프로토콜(TCP 등)이 더한다.{/answer}
+{mini}
+# "IP 는 best effort 이다" 를 설명할 때 들어가야 할 세 가지 "없음" 을 쓰라.
+# O/X: best effort 이므로 IP 는 오류가 난 datagram 을 다시 보내 준다.
+{/mini}
+{answer}
+# flow control 없음, congestion control 없음, error recovery 없음(checksum 은 header 만, 찾아내기만 한다). 이런 기능은 TCP 같은 다른 프로토콜이 더한다.
+# X. no error recovery 다. 다시 보내는 일은 위층이 한다.
+{/answer}
 
 == 관련 문서 ==
 * [[IP]] · [[connectionless]] · [[IP가 제공하는 서비스]] · [[flow control]] · [[congestion control]] · [[IP의 error control]]

@@ -2,21 +2,21 @@ key: prefix와 suffix
 title: Prefix 와 suffix — network 를 가리키는 앞부분, node 를 가리키는 뒷부분
 category: 6강 IPv4 주소, 용어
 ---
-IPv4 주소는 '''두 단계 계층(two-level hierarchy)''' 이다. 앞 '''n 비트 = prefix''' 는 '''network''' 를, 뒤 '''32 − n 비트 = suffix''' 는 그 network 안의 '''node(connection)''' 를 가리킨다. L13 p.5, p.9, p.11.
+IPv4 주소는 '''두 단계 계층(two-level hierarchy)''' 으로 되어 있다(L13 p.5, p.9, p.11). 앞 n 비트인 '''prefix''' 는 network 를 가리키고, 뒤 32 − n 비트인 '''suffix''' 는 그 network 안의 node(connection)를 가리킨다.
 
 {def}"Two-level hierarchy (like a postal address). '''Prefix''' (n bits): identifies the '''network'''. '''Suffix''' (32 − n bits): identifies the '''node'''." (p.5)
 "No classes: prefix = block (network), suffix = node." (p.9){/def}
 
-[[img:L13-05.png|p.5 32 bits = Prefix (n bits, "Defines network") | Suffix ((32 − n) bits, "Defines connection to the node")|medium]]
+[[img:L13-05.png|p.5 — 32 비트 막대의 왼쪽 n 비트(Prefix, "Defines network")와 오른쪽 32 − n 비트(Suffix, "Defines connection to the node")를 보라|medium]]
 
 == 이름에서 개념 끌어내기 ==
-* 교수(08:10–08:39): "'''Prefix''' means fixed in pre-position … '''post-fix''' usually means after something". pre = 앞, suf(sub) = 뒤에 붙는. 영단어 접두사(pre-)·접미사(-tion)와 똑같다.
+* 교수는 이렇게 풀었다. "Prefix means it is fixed in front of something."(08:24–08:39) suffix 는 뒤에 붙는 부분이다. 영어 문법의 접두사(pre-)·접미사(-tion)와 같은 말이다.
 
-== 핵심 성질 ==
-* 같은 network 의 모든 노드는 '''prefix 가 같다''' → 라우터는 prefix(= [[network address]])만 보고 길을 찾는다.
-* n 이 크면 prefix 가 길고 suffix 가 짧다 → block 이 작다: '''longer prefix → smaller network''' (p.9), 주소 수 $N = 2^{32-n}$ → [[block의 세 가지 정보]].
-* classful 에서는 n 이 8/16/24 로 고정([[classful addressing]]), classless 에서는 0–32 중 아무거나라 '''/n''' 으로 적어 줘야 한다([[slash notation]]).
-* [[subnetting]] 은 suffix 의 앞쪽 비트를 빌려 prefix 를 늘리는 것, [[address aggregation]] 은 prefix 뒤쪽 비트를 suffix 로 돌려 prefix 를 줄이는 것이다.
+== 성질 ==
+* 같은 network 의 노드는 모두 prefix 가 같다. 그래서 라우터는 prefix(= [[network address]])만 보고 길을 찾는다.
+* n 이 크면 prefix 가 길고 suffix 가 짧다. 그러면 block 이 작아진다. 슬라이드 표현으로는 "longer prefix → smaller network" 다(p.9). 주소 수는 $N = 2^{32-n}$ 이다 → [[block의 세 가지 정보]].
+* classful 에서는 n 이 8/16/24 로 정해져 있었다([[classful addressing]]). classless 에서는 0–32 중 아무거나 되니까 /n 으로 적어 줘야 한다([[slash notation]]).
+* [[subnetting]] 은 suffix 의 앞쪽 비트를 빌려 prefix 를 늘린다. [[address aggregation]] 은 반대로 prefix 의 뒤쪽 비트를 suffix 로 돌려 prefix 를 줄인다.
 
 <pre class="txt">
 167.199.170.82/27
@@ -25,10 +25,16 @@ IPv4 주소는 '''두 단계 계층(two-level hierarchy)''' 이다. 앞 '''n 비
           (어느 network)           (그 안의 어느 node)
 </pre>
 
-{analogy}🎭 '''우편 주소'''(p.5 "like a postal address"). "대구 달성군 DGIST 학생기숙사" 가 prefix(동네), "A 동 412 호" 가 suffix(집). 집배원은 먼저 동네까지 가고, 동네 안에서 호수를 찾는다.{/analogy}
+{analogy}🎭 '''우편 주소'''다(p.5 "like a postal address"). "대구 달성군 DGIST 학생기숙사" 가 prefix(동네), "A 동 412 호" 가 suffix(집)다. 집배원은 먼저 동네까지 가고, 그다음 동네 안에서 호수를 찾는다.{/analogy}
 
-{quiz}/20 주소에서 suffix 는 몇 비트이고, 한 network 의 주소 수는?{/quiz}
-{answer}suffix = 32 − 20 = '''12''' 비트, 주소 수 = $2^{12}$ = '''4,096'''.{/answer}
+{mini}
+# /20 주소에서 suffix 는 몇 비트이고, 한 network 의 주소는 몇 개인가?
+# 같은 network 에 있는 두 host 주소에서 반드시 같은 부분은 prefix 와 suffix 중 어느 쪽인가?
+{/mini}
+{answer}
+# suffix = 32 − 20 = 12 비트, 주소 수 = $2^{12}$ = 4,096 개.
+# prefix. suffix 까지 같으면 같은 주소가 되어 unique 성질이 깨진다.
+{/answer}
 
 == 관련 문서 ==
 * [[IPv4 address]] · [[classful addressing]] · [[classless addressing]] · [[slash notation]] · [[block의 세 가지 정보]] · [[network address]] · [[subnetting]]

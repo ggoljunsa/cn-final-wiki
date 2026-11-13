@@ -2,10 +2,10 @@ key: congestion control
 title: Congestion control (혼잡 제어) — vicious cycle, IP ✗
 category: 5강 네트워크 계층, 용어
 ---
-'''Congestion''' 은 인터넷의 '''한 지역에 datagram 이 너무 많은''' 상태다. 라우터가 datagram 을 버리기(drop) 시작하고, 위층이 잃어버린 것을 다시 보내면서(duplicates) 트래픽이 '''더''' 늘어나는 '''악순환(vicious cycle)''' 이 생긴다. '''Congestion control''' 은 이를 막는 것인데 '''[[IP]] 는 하지 않는다''' — 라우터는 버리기만 하고, 속도를 줄이는 건 TCP. L12 p.14, p.18, p.38.
+'''Congestion''' 은 인터넷의 한 지역에 datagram 이 너무 많은 상태다. 그러면 라우터가 datagram 을 버리기(drop) 시작한다. 위층은 잃어버린 것을 다시 보내고(duplicates), 그 바람에 트래픽이 더 늘어난다. 슬라이드가 말하는 악순환(vicious cycle)이 이것이다. '''Congestion control''' 은 이 악순환을 막는 일이다. [[IP]] 는 이 일을 하지 않는다. 라우터는 버리기만 하고, 속도를 줄이는 쪽은 TCP 다. 슬라이드는 L12 p.14, p.18, p.38 이다.
 
-{def}"'''Congestion Control''' — '''Congestion''': too many datagrams in one area of the Internet. Routers start to '''drop''' datagrams. Upper layers then '''resend''' the lost ones (duplicates) → even more traffic: the situation can get '''worse'''." (p.14)
-"Congestion control — '''✗ No''' — Routers only drop packets; TCP slows down" (p.18){/def}
+{def}"Congestion Control — Congestion: too many datagrams in one area of the Internet. Routers start to drop datagrams. Upper layers then resend the lost ones (duplicates) → even more traffic: the situation can get worse." (p.14)
+"Congestion control — ✗ No — Routers only drop packets; TCP slows down" (p.18){/def}
 
 [[img:L12-14.png|p.14 Too many datagrams → Routers drop packets → Senders resend duplicates → (다시) Too many datagrams — "a vicious cycle"|medium]]
 
@@ -28,12 +28,18 @@ category: 5강 네트워크 계층, 용어
 
 [[anim:load_curves|capacity 를 넘는 순간 throughput 곡선이 무너지는 것이 바로 이 vicious cycle 의 결과다]]
 
-{warn}'''flow control 과 헷갈리지 말 것''': flow control 은 '''receiver 하나'''를 보호(buffer), congestion control 은 '''망 전체'''를 보호. 둘 다 IP 는 안 하고 TCP 가 한다 → [[flow control]].{/warn}
+{warn}flow control 과 헷갈리기 쉽다. flow control 은 '''receiver 하나'''의 buffer 를 보호한다. congestion control 은 '''망 전체'''를 보호한다. 둘 다 IP 는 안 하고 TCP 가 한다. → [[flow control]]{/warn}
 
-{analogy}🎭 '''명절 고속도로.''' 차가 너무 많으면(too many datagrams) 톨게이트가 진입을 막고(drop), 막힌 사람들이 다른 시간에 '''또''' 출발하면서(resend) 정체가 더 길어진다. 정체를 줄이려면 '''출발하는 쪽이 덜 출발해야'''(TCP slows down) 한다 — 도로(IP) 자체는 아무 조절도 안 한다.{/analogy}
+{analogy}🎭 명절 고속도로를 떠올리면 된다. 차가 너무 많으면(too many datagrams) 톨게이트가 진입을 막는다(drop). 막힌 사람들이 다른 시간에 또 출발하면(resend) 정체는 더 길어진다. 정체를 줄이려면 출발하는 쪽이 덜 출발해야 한다(TCP slows down). 도로(IP) 자체는 아무것도 조절하지 않는다.{/analogy}
 
-{quiz}congestion 이 생겼을 때 IP(라우터)와 TCP 가 각각 하는 일은?{/quiz}
-{answer}라우터(IP)는 패킷을 '''drop''' 할 뿐 congestion control 을 하지 않는다. '''TCP 가 보내는 속도를 줄인다'''(slows down). (p.18){/answer}
+{mini}
+# congestion 이 생겼을 때 라우터(IP)와 TCP 가 각각 하는 일은?
+# p.14 의 vicious cycle 에서 상황을 더 나쁘게 만드는 단계는 무엇인가?
+{/mini}
+{answer}
+# 라우터는 패킷을 drop 할 뿐이고, TCP 가 보내는 속도를 줄인다(p.18 "Routers only drop packets; TCP slows down").
+# 보낸 쪽의 재전송(Senders resend duplicates)이다. 버려진 만큼 다시 보내니 트래픽이 더 늘어난다.
+{/answer}
 
 == 관련 문서 ==
 * [[flow control]] · [[load와 성능]] · [[queuing delay]] · [[best effort]] · [[IP가 제공하는 서비스]]

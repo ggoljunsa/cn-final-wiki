@@ -4,11 +4,11 @@ category: 8강 IPv6, 용어
 ---
 '''Next header''' 는 IPv6 base header 와 각 extension header 에 있는 8-bit 칸이다. 자기 바로 뒤에 오는 것이 무엇인지를 번호로 적는다. 이 번호를 따라가면 header 들이 사슬처럼 이어진다. L14 p.24–25.
 
-{def}"Next header 8 bits — Type of the first extension header" (p.24)
+{def}"Next header 8 bits: Type of the first extension header" (p.24)
 "Each extension header has next header and length fields → they form a chain" (p.25)
 → base header 의 next header 는 첫 extension header 의 종류다. extension header 마다 next header 와 length 가 있어서 사슬이 된다.{/def}
 
-[[img:L14-25.png|p.25 (필기본) Base header Next header → Extension header(Next header | Length) → … → Data. Some next-header codes 표. 손글씨 "44", "02", "→ ICMPv6"|medium]]
+[[img:L14-25.png|p.25 (필기본) — Base header Next header → Extension header(Next header | Length) → … → Data. Some next-header codes 표. 손글씨 "44", "02", "→ ICMPv6"|medium]]
 
 == 번호 (p.25) ==
 {|
@@ -47,8 +47,12 @@ ICMPv6 data
 
 {analogy}🎭 next header 는 보물찾기 쪽지다. 쪽지마다 "다음 쪽지는 ○○에 있다" 고 적혀 있어서 순서대로 따라가면 마지막에 보물(위층 데이터)이 나온다.{/analogy}
 
-{quiz}extension header 가 없는 TCP segment 를 실은 IPv6 패킷에서 base header 의 next header 값은?{/quiz}
-{answer}06 (TCP). extension header 가 없으면 next header 가 바로 위층 프로토콜을 가리킨다.{/answer}
+{mini}
+# extension header 가 없는 TCP segment 를 실은 IPv6 패킷에서 base header 의 next header 값은?
+{/mini}
+{answer}
+# 06 (TCP). extension header 가 없으면 next header 가 바로 위층 프로토콜을 가리킨다.
+{/answer}
 
 == 관련 문서 ==
 * [[extension header]] · [[IPv6 base header]] · [[protocol field]] · [[IPv6 fragmentation]]

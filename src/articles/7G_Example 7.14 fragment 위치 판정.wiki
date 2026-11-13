@@ -4,7 +4,7 @@ category: 7강 IPv4 데이터그램, 예제
 ---
 '''Example 7.14''' 는 [[flags D와 M|M bit]] 와 [[fragmentation offset|offset]] 두 값으로 패킷이 first / middle / last fragment 중 무엇인지 판정하는 예제다. 답: '''first fragment'''. L13 p.47.
 
-{def}"A packet arrives with M = 1 and offset = 0. First, last, or middle? — '''M = 1 → first or middle'''. '''Offset = 0 → it is the first fragment'''." (p.47){/def}
+{def}"A packet arrives with M = 1 and offset = 0. First, last, or middle? Solution: '''M = 1 → first or middle'''. '''Offset = 0 → it is the first fragment'''." (p.47){/def}
 
 [[img:L13-47.png|p.47 Example 7.14 + Summary 표: M 0·Offset 0 Not fragmented / 1·0 First fragment / 1·>0 Middle fragment / 0·>0 Last fragment|medium]]
 

@@ -2,17 +2,17 @@ key: footprint
 title: Footprint (위성 커버리지 영역)
 category: 4강 위성, 용어
 ---
-'''Footprint''' 는 위성 하나가 지상에서 '''서비스할 수 있는 영역'''이다. L11 p.21 LEO 그림에서 위성 아래 점선 타원 두 개에 "Footprint" 라고 적혀 있다. LEO 에서는 이 footprint 가 셀룰러의 [[cell]] 역할을 하지만 '''위성을 따라 움직인다'''는 점이 다르다 — 슬라이드의 "similar to the cellular telephone system" 이 바로 이 그림이다.
+'''Footprint''' 는 위성 하나가 지상에서 서비스할 수 있는 영역이다. L11 p.21 LEO 그림에서 위성 아래 점선 타원 두 개에 "Footprint" 라고 적혀 있다. LEO 에서는 footprint 가 셀룰러의 [[cell]] 역할을 한다. 다만 위성을 따라 움직인다. 슬라이드가 LEO 를 "similar to the cellular telephone system" 이라고 한 것이 이 그림 이야기다.
 
-{def}슬라이드: p.21 LEO 그림 — 각 위성 아래 지상의 점선 타원 "'''Footprint'''", 그 안의 사용자 폰(UML)과 gateway(GWL). 두 footprint 는 가운데서 '''겹친다'''.
+{def}슬라이드: p.21 LEO 그림. 각 위성 아래 지상의 점선 타원 "'''Footprint'''", 그 안의 사용자 폰(UML)과 gateway(GWL). 두 footprint 는 가운데서 '''겹친다'''.
 (Forouzan 보충) LEO 의 footprint 는 보통 지름 수천 km(약 8000 km).
 Footprint = 위성 신호가 닿는 지상 영역.{/def}
 
-[[img:L11-21.png|p.21 LEO — 두 위성 아래의 점선 타원 Footprint 두 개(가운데 겹침), 안에 사용자 폰과 gateway|large]]
+[[img:L11-21.png|p.21 — 두 위성 아래 점선 타원 Footprint 두 개가 가운데서 겹치는 것과, 그 안의 폰과 gateway 를 보라|large]]
 
 == 이름에서 개념 끌어내기 ==
-* '''foot + print''' = '''발자국'''. 위성이 하늘에서 땅을 "밟고" 지나간 자국. 손전등을 바닥에 비췄을 때 생기는 '''빛 동그라미'''를 떠올리면 된다.
-* 발자국은 '''걸어가면 따라 움직인다''' — LEO 가 지나가면 footprint 도 땅 위를 미끄러져 간다. (GEO 는 멈춰 있으니 footprint 도 고정 — 보충)
+* foot + print 는 발자국이다. 위성이 하늘에서 땅을 밟고 지나간 자국이다. 손전등을 바닥에 비췄을 때 생기는 빛 동그라미를 떠올리면 된다.
+* 발자국은 걸어가면 따라 움직인다. LEO 가 지나가면 footprint 도 땅 위를 미끄러져 간다. GEO 는 멈춰 있으니 footprint 도 고정된다(보충).
 
 == cell 과의 비교 ==
 {|
@@ -20,7 +20,7 @@ Footprint = 위성 신호가 닿는 지상 영역.{/def}
 |-
 | 중심 || 땅 위 [[base station]] || 하늘의 LEO 위성
 |-
-| 움직임 || '''고정''' || 위성과 함께 '''이동'''
+| 움직임 || 고정 || 위성과 함께 이동
 |-
 | 크기 || 수백 m ~ 수 km || 수천 km (보충)
 |-
@@ -28,14 +28,20 @@ Footprint = 위성 신호가 닿는 지상 영역.{/def}
 |-
 | 경계 || 이웃 cell 과 겹침(soft handoff 구간) || 이웃 footprint 와 겹침 (p.21 그림)
 |}
-* 높이가 높을수록 footprint 는 넓다 — [[GEO]] 한 기는 지구의 약 40% 를 덮고([[line-of-sight]], 보충 — 슬라이드에 없음), [[LEO]] 는 그보다 훨씬 좁아 위성 수가 많아야 한다.
+위성이 높을수록 footprint 가 넓다([[line-of-sight]]). [[GEO]] 한 기는 지구의 큰 조각을 덮고, [[LEO]] 는 그보다 훨씬 좁아서 위성 수가 많아야 한다(보충).
 
-[[anim:leo_footprint|footprint 원이 위성을 따라 땅 위를 미끄러지고, 두 footprint 가 겹치는 구간에서 사용자가 다음 위성으로 넘어가는 것을 보라]]
+[[anim:leo_footprint|footprint 가 위성을 따라 땅 위를 미끄러지고, 두 footprint 가 겹치는 구간에서 사용자가 다음 위성으로 넘어가는 것을 보라]]
 
-{analogy}🎭 '''무대 위를 지나가는 스포트라이트.''' 조명(위성)이 움직이면 바닥의 빛 동그라미(footprint)도 따라 움직인다. 배우(사용자)가 계속 빛 안에 있으려면, 첫 조명이 벗어나기 전에 다음 조명이 와서 비춰 줘야 한다 — 두 동그라미가 겹치는 순간이 바로 넘겨주는 때다.{/analogy}
+{analogy}🎭 '''무대 위를 지나가는 스포트라이트.''' 조명(위성)이 움직이면 바닥의 빛 동그라미(footprint)도 따라 움직인다. 배우(사용자)가 계속 빛 안에 있으려면 첫 조명이 벗어나기 전에 다음 조명이 와서 비춰 줘야 한다. 두 동그라미가 겹치는 순간이 넘겨주는 때다.{/analogy}
 
-{quiz}LEO 에서 footprint 가 셀룰러의 cell 과 '''다른''' 점 한 가지는?{/quiz}
-{answer}cell 은 땅에 '''고정'''되지만 LEO 의 footprint 는 위성과 함께 '''움직인다'''. 그래서 사용자가 가만히 있어도 위성 간 handoff 가 일어난다.{/answer}
+{mini}
+# LEO 에서 footprint 가 셀룰러의 cell 과 다른 점 한 가지를 쓰라.
+# p.21 그림에서 두 footprint 가 겹치는 구간은 어떤 일에 쓰이나?
+{/mini}
+{answer}
+# cell 은 땅에 고정되지만 LEO 의 footprint 는 위성과 함께 움직인다. 그래서 사용자가 가만히 있어도 위성 간 handoff 가 일어난다.
+# 사용자를 한 위성에서 다음 위성으로 넘겨줄 때 쓴다. 셀룰러에서 이웃 cell 이 겹치는 구간과 같은 역할이다.
+{/answer}
 
 == 관련 문서 ==
 * [[LEO]] · [[UML과 GWL]] · [[ISL]] · [[cell]] · [[handoff]] · [[line-of-sight]] · [[Starlink]]

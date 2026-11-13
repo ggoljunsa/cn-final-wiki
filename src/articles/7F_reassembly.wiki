@@ -2,7 +2,7 @@ key: reassembly
 title: Reassembly (재조립) — destination host 만 한다
 category: 7강 IPv4 데이터그램, 용어
 ---
-'''Reassembly''' 는 fragment 들을 모아 원래 datagram 으로 되돌리는 일이다. IPv4 에서는 '''destination host 만''' 한다 — 중간 라우터는 나누기만 하고 합치지 않는다. L13 p.43, p.46.
+'''Reassembly''' 는 fragment 들을 모아 원래 datagram 으로 되돌리는 일이다. IPv4 에서는 '''destination host 만''' 합친다. 중간 라우터는 나누기만 하고 합치지 않는다. L13 p.43, p.46.
 
 {def}"Who fragments? The source host or any router on the path. '''Who reassembles? The destination host only.''' A datagram may be fragmented several times." (p.43)
 fragmentation 은 source 나 경로 위 어느 라우터든 할 수 있지만, 재조립은 destination host 만 한다. 한 datagram 이 여러 번 나뉠 수 있다.{/def}
@@ -10,8 +10,8 @@ fragmentation 은 source 나 경로 위 어느 라우터든 할 수 있지만, �
 [[img:L13-43.png|p.43 — Source → R1 (fragments, 조각 2 개) → R2 (fragments again, 조각 3 개) → Destination (reassembles). 바뀌는 필드: flags, fragmentation offset, total length; checksum recalculated|medium]]
 
 == 왜 destination 만? ==
-* IP 는 [[datagram approach]] — fragment 마다 '''경로가 달라질 수 있다'''(p.46 그림에서 F2.1·F2.2 는 다른 라우터를 거친다). 중간 라우터는 조각을 다 본다는 보장이 없다.
-* 중간에서 합쳐 봤자 다음 링크 MTU 가 또 작으면 다시 나눠야 한다 — 낭비.
+* IP 는 [[datagram approach]] 를 쓰니까 조각마다 경로가 달라질 수 있다. p.46 그림에서도 F2.1·F2.2 는 다른 라우터를 거친다. 그래서 중간 라우터가 조각을 다 본다는 보장이 없다.
+* 중간에서 합쳐도 다음 링크 MTU 가 또 작으면 다시 나눠야 한다. 헛수고가 된다.
 
 == 재조립 절차 ==
 <pre class="txt">

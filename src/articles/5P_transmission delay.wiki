@@ -2,14 +2,14 @@ key: transmission delay
 title: Transmission delay (전송 지연) — Delay_tr = Packet length / Transmission rate
 category: 5강 네트워크 계층, 용어
 ---
-'''Transmission delay''' 는 패킷의 '''모든 비트를 링크 위에 밀어 넣는''' 데 걸리는 시간이다. 패킷이 길수록, 링크의 transmission rate 가 낮을수록 길다. 링크마다 한 번씩 생기므로 n 라우터 경로에서는 '''n + 1''' 번 → [[total delay 공식]]. L12 p.28–29. 중간고사 [[mid:transmission time]] 과 같은 개념.
+'''Transmission delay''' 는 패킷의 모든 비트를 링크 위에 밀어 넣는 데 걸리는 시간이다. 패킷이 길수록, 링크의 transmission rate 가 낮을수록 길어진다. 링크마다 한 번씩 생기니 라우터가 n 개인 경로에서는 '''n + 1''' 번 센다([[total delay 공식]]). 슬라이드는 L12 p.28–29 이다. 중간고사 [[mid:transmission time]] 과 같은 개념이다.
 
-{def}"'''Transmission delay''': time to put '''all bits''' of the packet on the link." (p.29)
+{def}"Transmission delay: time to put all bits of the packet on the link." (p.29)
 $$\text{Delay}_{tr} = \frac{\text{Packet length}}{\text{Transmission rate}}$$
 그림: A 에서 비트 상자들이 줄지어 나오며 "'''tr: push all bits out'''" (p.29–30){/def}
 
 == 이름에서 개념 끌어내기 ==
-* '''transmit''' = 내보내다. "내보내기" 가 끝나는 건 '''마지막 비트가 링크에 올라간 순간'''이다. 그래서 '''비트 수(L) ÷ 초당 내보낼 수 있는 비트 수(R)'''.
+* transmit 은 내보낸다는 뜻이다. 내보내기는 '''마지막 비트가 링크에 올라간 순간''' 끝난다. 그래서 비트 수(L)를 초당 내보낼 수 있는 비트 수(R)로 나눈다.
 
 == 계산 ==
 <pre class="txt">

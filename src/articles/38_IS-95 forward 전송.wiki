@@ -2,14 +2,14 @@ key: IS-95 forward 전송
 title: IS-95 Forward Transmission (Downlink, BS→MS)
 category: 3강 CDMA–4G, 용어
 ---
-'''IS-95 forward transmission''' 은 기지국(BS)이 이동국(MS)들에게 보내는 '''downlink''' 다. BS 는 한 1.228 MHz 채널 안에서 '''64 개 digital channel''' 을 각각 '''[[Walsh code]] W0–W63''' 으로 곱해 더한 '''하나의 합성 신호'''를 보낸다([[CDMA]]). W0 은 [[pilot channel]] 이다. L10 p.29.
+'''IS-95 forward transmission''' 은 기지국(BS)이 이동국(MS)들에게 보내는 downlink 다. BS 는 1.228 MHz 채널 하나 안에서 64 개 digital channel 에 각각 [[Walsh code]] W0–W63 을 곱하고, 모두 더해 합성 신호 하나로 보낸다([[CDMA]]). W0 은 [[pilot channel]] 이다. L10 p.29.
 
-{def}p.29 블록도 (왼쪽 → 오른쪽): "3 kHz Voice → '''Digitizer''' → 9.6 kbps → '''Error correcting, repeating, interleaving''' → 19.2 ksps → ⊕ (ESN → '''Long code generator''' 1.228 Mcps → '''Decimator''' → 19.2 ksps) → × '''W1''' … ; Digital channel 0 ('''Pilot channel''') all 1s × '''W0''' ; … Digital channel 63 × '''W63''' → '''Σ''' → 1.228 Mcps → '''QPSK''' → Channel 01 … Channel 20 ('''FDMA''', 25-MHz band)"{/def}
+{def}p.29 블록도 (왼쪽 → 오른쪽): "3 kHz Voice → '''Digitizer''' → 9.6 kbps → '''Error correcting, repeating, interleaving''' → 19.2 ksps → ⊕ (ESN → Long code generator 1.228 Mcps → Decimator → 19.2 ksps) → × W1 … ; Digital channel 0 (Pilot channel) all 1s × W0 ; … Digital channel 63 × W63 → Σ → 1.228 Mcps → '''QPSK''' → Channel 01 … Channel 20 (FDMA, 25-MHz band)"{/def}
 
-[[img:L10-29.png|p.29 IS-95 forward — 왼쪽 음성 처리, 가운데 점선 "CDMA"(W0–W63), 오른쪽 점선 "FDMA"(20 채널) (필기본: "64 user", W1·W2 겹침 스케치)|large]]
+[[img:L10-29.png|p.29 — 왼쪽 음성 처리, 가운데 점선 "CDMA"(W0–W63), 오른쪽 점선 "FDMA"(20 채널) (필기본: "64 user", W1·W2 겹침 스케치)|large]]
 
 == 이름에서 개념 끌어내기 ==
-* '''forward''' = '''앞으로''' — 망(BS) 쪽에서 사용자 쪽으로 "내려보내는" 방향. 반대가 [[IS-95 reverse 전송|reverse]]. AMPS 에서도 BS 대역을 forward 라고 불렀다 → [[uplink와 downlink]].
+* '''forward''' 는 "앞으로" 라는 뜻이다. 망(BS) 쪽에서 사용자 쪽으로 내려보내는 방향이다. 반대가 [[IS-95 reverse 전송|reverse]] 다. AMPS 에서도 BS 쪽 대역을 forward 라고 불렀다. → [[uplink와 downlink]]
 
 == 단계별 ==
 <pre class="txt">
@@ -24,23 +24,27 @@ category: 3강 CDMA–4G, 용어
 </pre>
 
 [[sim:is95_rates]]
-위 시뮬레이터의 옵션 '''forward''' 로 rate 가 9.6 k → 19.2 k → 1.2288 M 으로 바뀌는 것을 확인하라.
+시뮬레이터에서 forward 를 고르면 rate 가 9.6 k → 19.2 k → 1.2288 M 으로 바뀌는 것을 볼 수 있다.
 
-== 2 단 구조: CDMA 안, FDMA 밖 ==
-* 점선 상자 '''"CDMA"'''(필기 동그라미): W0–W63 곱하고 Σ — 한 채널 안의 64 개를 '''코드'''로 나눔.
-* 점선 상자 '''"FDMA"''': 25 MHz 안의 20 채널 — '''주파수'''로 나눔.
-* 왜 decimator 가 필요한가: long code 는 1.228 Mcps 로 나오는데 데이터는 19.2 ksps 라 속도가 64 배 다르다. 64 칩 중 1 개만 골라(decimate) '''19.2 ksps 로 맞춘 뒤''' 더한다. $1.2288\text{ M} / 64 = 19.2\text{ k}$.
+== 2 단 구조: 안은 CDMA, 밖은 FDMA ==
+* 위 그림 가운데 점선 상자 "CDMA"(필기 동그라미)는 W0–W63 을 곱하고 Σ 로 더하는 부분이다. 한 채널 안의 64 개를 코드로 나눈다.
+* 오른쪽 점선 상자 "FDMA" 는 25 MHz 안의 20 채널이다. 여기서는 주파수로 나눈다.
+* decimator 가 필요한 이유는 속도 차이 때문이다. long code 는 1.228 Mcps 로 나오는데 데이터는 19.2 ksps 라 64 배 차이가 난다. 그래서 64 칩 중 1 개만 골라(decimate) 19.2 ksps 로 맞춘 뒤 더한다. $1.2288\text{ M} / 64 = 19.2\text{ k}$.
 
-{tip}💡 '''필기 속 질문: "64 user"''' — 1.228 MHz 채널 하나에 Walsh code 64 개 = '''digital channel 64 개'''. W0 은 pilot 이므로 사용자는 최대 63, 실제 표준은 sync(W32)·paging(W1–W7)도 빼서 traffic 약 55 개 (Forouzan 보충 — 슬라이드에 없음).{/tip}
+{tip}💡 '''필기 속 질문: "64 user"''' 1.228 MHz 채널 하나에 Walsh code 64 개, 즉 digital channel 64 개가 들어간다. W0 은 pilot 이라 사용자는 최대 63 이다. 실제 표준은 sync(W32)와 paging(W1–W7)도 빼서 traffic 이 약 55 개다(Forouzan 보충, 슬라이드에 없음).{/tip}
 
-{analogy}🎭 '''방송국 송출실.''' 64 개 프로그램(digital channel)마다 고유 워터마크(Walsh code)를 찍어 한 전파에 섞어 내보낸다. 0 번 채널은 프로그램이 아니라 "여기 방송국 있어요" 라는 '''시보음(pilot)'''. 각 집의 TV(MS)는 자기 워터마크만 골라 본다.{/analogy}
+{analogy}🎭 '''방송국 송출실.''' 64 개 프로그램(digital channel)마다 고유 워터마크(Walsh code)를 찍어 한 전파에 섞어 내보낸다. 0 번 채널은 프로그램이 아니고 "여기 방송국 있어요" 라는 시보음(pilot)이다. 각 집의 TV(MS)는 자기 워터마크만 골라 본다.{/analogy}
 
-{exam}🎯 교수(10/20, 62:32): "the important part is: '''to implement DSSS, IS-95 introduces these blocks''' … CDMA uses different codes across users and they are aggregated into one signal … these aggregated '''64 user''' signals are modulated … to be one frequency channel of 1.228 MHz." 그리고 64:45: "'''You don't have to understand the different technical details''' … but you have to remember that the medium is shared across codes, to spread the spectrum wide to avoid interference."
-→ 외울 것: '''사용자마다 다른 code → 합쳐서 하나의 넓은 채널'''(64 code, W0 = pilot). 블록별 rate 는 원리 확인용.{/exam}
+{exam}🎯 교수(10/20, 1:02:32)는 "the important part is: to implement DSSS, IS-95 introduces these blocks" 라고 했다. 이어서 사용자마다 다른 code 를 쓰고 하나의 신호로 합친다고 설명했고, "these aggregated 64 user signals" 가 1.228 MHz 주파수 채널 하나에 실린다고 했다. 1:04:45 에는 "You don't have to understand the different technical details" 라고 덧붙였다. 외울 것은 "사용자마다 다른 code 로 합쳐 넓은 채널 하나에 싣는다(64 code, W0 = pilot)" 이고, 블록별 rate 는 원리 확인용이다.{/exam}
 
-{quiz}IS-95 forward 에서 19.2 ksps 의 데이터가 1.228 Mcps 가 되는 이유와, long code 경로에 decimator 가 있는 이유를 쓰시오.{/quiz}
-{answer}* 각 symbol 에 64 칩짜리 Walsh code 를 곱하므로 $19.2\text{ k} \times 64 = 1.2288\text{ Mcps}$.
-* long code 는 1.228 Mcps 로 생성되므로, 19.2 ksps 데이터와 더하려면 64 칩 중 1 개만 남겨 '''속도를 19.2 ksps 로 낮춰야''' 한다.{/answer}
+{mini}
+# Walsh code 가 32 chips 라면(가상) 19.2 ksps 데이터의 chip rate 는?
+# decimator 가 long code 를 몇 분의 1 로 줄이는지, 왜 그래야 하는지 쓰라.
+{/mini}
+{answer}
+# 19.2 k × 32 = 614.4 kcps. 64 chips 일 때의 절반이다.
+# 1/64. long code 는 1.2288 Mcps, 데이터는 19.2 ksps 라 64 칩 중 1 개만 남겨야 속도가 맞아 ⊕ 로 더할 수 있다.
+{/answer}
 
 == 관련 문서 ==
 * [[IS-95 reverse 전송]] · [[Walsh code]] · [[pilot channel]] · [[long code와 ESN]] · [[chip rate]] · [[QPSK]] · [[IS-95 대역과 채널]]

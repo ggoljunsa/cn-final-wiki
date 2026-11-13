@@ -2,13 +2,13 @@ key: VCI
 title: VCI (Virtual-Circuit Identifier) — virtual circuit 의 flow label
 category: 5강 네트워크 계층, 용어
 ---
-'''VCI (virtual-circuit identifier)''' 는 [[virtual-circuit approach]] 에서 각 패킷이 달고 다니는 '''flow label''' 이다. 라우터는 destination address 대신 이 '''label''' 로 [[forwarding table]] 을 찾는다 — p.11 의 "forwarding value (e.g., destination address '''or label''')" 중 '''label''' 쪽. L12 p.11, p.25–26.
+'''VCI (virtual-circuit identifier)''' 는 [[virtual-circuit approach]] 에서 각 패킷이 달고 다니는 flow label 이다. 라우터는 destination address 대신 이 label 로 [[forwarding table]] 을 찾는다. p.11 은 forwarding value 를 "destination address or label" 이라고 적었는데, VCI 가 그 label 쪽이다. 슬라이드는 L12 p.11, p.25–26 이다.
 
-{def}"Each packet carries a '''flow label''': the '''virtual-circuit identifier (VCI)'''." (p.25)
+{def}"Each packet carries a flow label: the virtual-circuit identifier (VCI)." (p.25)
 "Router decides by — Datagram: Destination address / Virtual circuit: '''Label (VCI)'''" (p.26){/def}
 
 == 이름에서 개념 끌어내기 ==
-* '''virtual-circuit + identifier''' = "어느 가상 회선인지 알려 주는 '''번호표'''". 주소처럼 "어디로 가는가" 가 아니라 "'''어느 흐름(flow)에 속하는가'''" 를 말한다 — 그래서 flow label.
+* '''virtual-circuit + identifier''' = "어느 가상 회선인지 알려 주는 '''번호표'''". 주소는 "어디로 가는가" 를 말한다. VCI 는 "어느 흐름(flow)에 속하는가" 를 말한다. 그래서 flow label 이라고 부른다.
 
 == 어떻게 쓰이나 (Forouzan 보충 — 슬라이드는 "flow label: VCI" 까지만) ==
 <pre class="txt">
@@ -25,7 +25,7 @@ setup 때 각 라우터 표에 "(들어오는 port, VCI) → (나가는 port, �
 
 [[sim:datagram_vs_vc]]
 
-{exam}🎯 교수가 p.11 에서 "forwarding value" 라는 말을 일부러 쓴 이유: "'''this is why I mentioned the forwarding value'''" (10/27 녹음 39:40). forwarding value = datagram 에서는 '''destination address''', virtual circuit 에서는 '''label(VCI)'''.{/exam}
+{exam}🎯 교수는 p.11 에서 "forwarding value" 라는 말을 일부러 썼다고 했다. "This is why I mentioned the forwarding value."(10/27 녹음 39:40) forwarding value 는 datagram 에서는 '''destination address''', virtual circuit 에서는 '''label(VCI)''' 이다.{/exam}
 
 {analogy}🎭 '''놀이공원 패스트패스 손목밴드.''' 입장할 때(setup) "파란 밴드 = 3 번 코스" 라고 정해 두면, 직원(라우터)은 사람 이름·집 주소(destination address)를 볼 필요 없이 '''밴드 색(VCI)''' 만 보고 줄을 안내한다.{/analogy}
 

@@ -2,12 +2,12 @@ key: fragmentation
 title: Fragmentation (단편화) — 라우터가 패킷을 여는 유일한 예외
 category: 5강 네트워크 계층, 용어
 ---
-'''Fragmentation''' 은 패킷이 '''너무 커서'''(packet too large) 다음 링크로 그대로 못 보낼 때 라우터가 패킷을 여러 조각(fragment)으로 나누는 것이다. [[packetizing]] 에서 "routers do not decapsulate" 의 '''유일한 예외'''이며, 이때 header 는 '''모든 fragment 에 복사'''되고 몇 군데만 바뀐다. L12 p.9.
+'''Fragmentation''' 은 패킷이 너무 커서(packet too large) 다음 링크로 그대로 못 보낼 때 라우터가 패킷을 여러 조각(fragment)으로 나누는 일이다. [[packetizing]] 에서 "routers do not decapsulate" 라고 했는데, fragmentation 은 그 규칙의 '''유일한 예외'''다. 나눌 때 header 는 모든 fragment 에 복사되고, 몇 군데만 바뀐다. 슬라이드는 L12 p.9 다.
 
-{def}"Routers do not decapsulate the packet. '''Only exception: fragmentation''' ('''packet too large'''). '''Header is copied to every fragment, with a few changes'''." (p.9){/def}
+{def}"Routers do not decapsulate the packet. Only exception: fragmentation (packet too large). Header is copied to every fragment, with a few changes." (p.9){/def}
 
 == 이름에서 개념 끌어내기 ==
-* '''fragment''' = 깨진 조각, 파편. 큰 datagram 을 '''조각'''으로 나눈다. 나눠도 각 조각이 혼자 목적지까지 가야 하니, 주소가 적힌 '''header 가 조각마다 필요'''하다 → 복사.
+* fragment 는 깨진 조각, 파편이다. 큰 datagram 을 조각으로 나눈다. 나눈 조각도 각자 혼자 목적지까지 가야 하니, 주소가 적힌 header 가 조각마다 있어야 한다. 그래서 '''header 를 복사'''한다.
 
 == 그림으로 ==
 <pre class="ascii">
@@ -18,16 +18,16 @@ category: 5강 네트워크 계층, 용어
    [ Header′ | Payload 앞부분 ]   [ Header′ | Payload 뒷부분 ]
      ↑ 원래 header 를 복사 + "a few changes"
 </pre>
-* "a few changes" 가 무엇인지(Forouzan 보충 — 슬라이드에 없음): 전체 길이, 이 조각이 원래 payload 의 '''어디서부터'''인지(fragment offset), '''뒤에 조각이 더 있는지'''(more fragments flag) 같은 값이 바뀌고, header checksum 도 다시 계산한다. 조각을 다시 합치는(reassembly) 일은 '''최종 destination''' 이 한다.
+* "a few changes" 가 무엇인지는 슬라이드에 없다(Forouzan 보충). 바뀌는 값은 전체 길이, 이 조각이 원래 payload 의 어디서부터인지(fragment offset), 뒤에 조각이 더 있는지(more fragments flag) 같은 것이다. header checksum 도 다시 계산한다. 조각을 다시 합치는 일(reassembly)은 '''최종 destination''' 이 한다.
 * 왜 "너무 큰" 일이 생기나(보충): 링크마다 frame 이 실을 수 있는 최대 크기(MTU)가 다르다. 예: Ethernet frame 의 data 는 최대 1500 bytes([[mid:프레임 길이 제한]]).
 
 [[anim:encap_decap|마지막 장면(10초 이후): 큰 패킷이 라우터를 지나며 두 fragment 로 나뉘고, 각 fragment 앞에 복사된 header H′ 가 붙는 것을 보라]]
 
-{tip}중간고사의 [[mid:fragmentation]] 은 '''802.11(WiFi) MAC''' 의 fragmentation — 무선 링크에서 큰 '''frame''' 을 잘게 나눠 오류 확률을 줄이는 것이었다. 여기서는 '''network layer 의 datagram''' 을 라우터가 나누는 것이다. "큰 것을 나눈다"는 생각은 같고, 계층·이유가 다르다.{/tip}
+{tip}중간고사의 [[mid:fragmentation]] 은 802.11(WiFi) MAC 의 fragmentation 이었다. 무선 링크에서 큰 frame 을 잘게 나눠 오류 확률을 줄이는 기법이다. 여기서는 라우터가 '''network layer 의 datagram''' 을 나눈다. 큰 것을 나눈다는 생각은 같지만 계층과 이유가 다르다.{/tip}
 
 {analogy}🎭 '''엘리베이터에 안 들어가는 소파.''' 이삿짐센터(라우터)는 원래 상자를 열지 않지만, 소파가 엘리베이터(다음 링크)에 안 들어가면 어쩔 수 없이 분해해서 여러 번 나른다. 조각마다 '''같은 배송지 스티커'''(복사된 header)와 "3 개 중 1 번째" 표시(a few changes)를 붙인다.{/analogy}
 
-{tip}'''필기 메모: 노란 형광펜 + 손그림 + "Fragmented"''' (p.9) — "fragmentation" 과 "Header is copied to every fragment" 에 형광펜. 손그림: 긴 패킷 [H | …………] 이 화살표 뒤에 [H | …] 두 조각으로 나뉘고, 각 조각 앞에 header 가 붙은 모습에 "Fragmented" 라고 적었다. 위 그림 설명과 같다: 조각마다 header 가 복사된다.{/tip}
+{tip}'''필기 메모: 노란 형광펜 + 손그림 + "Fragmented"''' (p.9): "fragmentation" 과 "Header is copied to every fragment" 에 형광펜. 손그림: 긴 패킷 [H | …………] 이 화살표 뒤에 [H | …] 두 조각으로 나뉘고, 각 조각 앞에 header 가 붙은 모습에 "Fragmented" 라고 적었다. 위 그림 설명과 같다: 조각마다 header 가 복사된다.{/tip}
 
 {info}L13(7강) 에서 자세히: 누가 나누고 합치나·identification·flags·offset 계산 → [[CH07 IPv4 데이터그램과 포워딩]] · [[fragmentation offset]] · [[flags D와 M]] · [[MTU]] · [[reassembly]]{/info}
 

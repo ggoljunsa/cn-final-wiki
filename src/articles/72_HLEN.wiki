@@ -8,7 +8,7 @@ category: 7강 IPv4 데이터그램, 용어
 HLEN 은 header 길이를 4-byte 단위로 나타낸 4-bit 필드다. 5 면 20 bytes(최소), 15 면 60 bytes(최대).{/def}
 
 == 이름에서 개념 끌어내기 ==
-* '''H'''eader '''LEN'''gth. 그런데 "길이" 라고 bytes 수를 그대로 적으면 4 bits(최대 15)로는 60 을 못 담는다 → '''4 로 나눠서''' 적는다. 그래서 header 는 항상 '''4 의 배수''' 길이이고, options 뒤에 padding 이 붙는다.
+* '''H'''eader '''LEN'''gth 의 줄임말이다. 그런데 bytes 수를 그대로 적으면 4 bits(최대 15)로는 60 을 못 담는다. 그래서 4 로 나눠서 적는다. 이 때문에 header 길이는 늘 4 의 배수이고, 모자라면 options 뒤에 padding 을 붙인다.
 
 == 값 표 ==
 {|
@@ -29,9 +29,9 @@ HLEN 은 header 길이를 4-byte 단위로 나타낸 4-bit 필드다. 5 면 20 b
 data = total length − HLEN × 4
 </pre>
 
-{warn}'''HLEN 6 을 "6 bytes" 로 읽는 실수.''' 단위가 4 bytes 라서 24 bytes 다. 마찬가지로 Ex 7.7 의 HLEN 2 는 "2 bytes" 가 아니라 8 bytes — 그래도 20 미만이라 버린다.{/warn}
+{warn}'''HLEN 6 을 "6 bytes" 로 읽는 실수.''' 단위가 4 bytes 라서 24 bytes 다. Ex 7.7 의 HLEN 2 도 2 bytes 로 읽지 말고 8 bytes 로 읽는다. 8 도 20 보다 작으니 결국 버린다.{/warn}
 
-{analogy}🎭 '''박스 단위로 적는 창고 장부.''' 칸이 좁아 "물건 20 개" 대신 "4 개들이 박스 5 개" 라고 적는다. 읽는 사람은 박스 수 × 4 로 되돌린다. 박스가 5 개보다 적다고 적혀 있으면 — 기본 물품만 해도 20 개인데 — 장부가 잘못된 것이다(Ex 7.7).{/analogy}
+{analogy}🎭 '''박스 단위로 적는 창고 장부.''' 칸이 좁아 "물건 20 개" 대신 "4 개들이 박스 5 개" 라고 적는다. 읽는 사람은 박스 수 × 4 로 되돌린다. 기본 물품만 해도 20 개라서 박스가 5 개보다 적다고 적혀 있으면 장부가 잘못된 것이다(Ex 7.7).{/analogy}
 
 [[sim:ipv4_header_decode]]
 

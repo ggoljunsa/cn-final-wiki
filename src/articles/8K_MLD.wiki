@@ -4,10 +4,10 @@ category: 8강 IPv6, 용어
 ---
 '''MLD (Multicast Listener Discovery)''' 는 [[ICMPv6]] 의 group membership 메시지 그룹이다. IPv4 에서 [[IGMP]] 가 하던 일을 맡는다. L14 p.28.
 
-{def}"Group membership messages — MLD Protocol. MLD (Multicast Listener Discovery) takes over IGMP's" (p.28)
+{def}"Group membership messages: MLD Protocol. MLD (Multicast Listener Discovery) takes over IGMP's" (p.28)
 → MLD 는 IGMP 의 일을 넘겨받는다.{/def}
 
-[[img:L14-28.png|p.28 Group membership messages → MLD Protocol|medium]]
+[[img:L14-28.png|p.28 — Group membership messages → MLD Protocol|medium]]
 
 == 이름에서 개념 끌어내기 ==
 * '''multicast listener''' = multicast 그룹의 데이터를 받겠다는 host. '''discovery''' = 라우터가 그런 host 가 있는지 찾아낸다.
@@ -16,8 +16,12 @@ category: 8강 IPv6, 용어
 
 {analogy}🎭 동호회 단톡방 관리자가 "이 방 공지 받을 사람 손?" 하고 묻는 것이다. IPv4 의 IGMP 와 하는 일은 같고 이름과 소속만 바뀌었다.{/analogy}
 
-{quiz}IGMP 와 ARP 를 대신하는 ICMPv6 의 두 그룹을 짝지어라.{/quiz}
-{answer}IGMP → MLD(group membership messages), ARP → ND(neighbor discovery messages).{/answer}
+{mini}
+# IGMP 와 ARP 를 대신하는 ICMPv6 의 두 그룹을 짝지어라.
+{/mini}
+{answer}
+# IGMP → MLD(group membership messages), ARP → ND(neighbor discovery messages).
+{/answer}
 
 == 관련 문서 ==
 * [[ICMPv6]] · [[neighbor discovery]] · [[IGMP]] · [[unicast·anycast·multicast]]

@@ -3,7 +3,7 @@ title: CH08 Network Layer: Routing of Packets (9강 — least-cost routing, dist
 category: 9강 라우팅, 메인
 ---
 == 개요 ==
-'''CH08 라우팅'''은 L15 덱 `CH08_Network Layer - Routing of Packets.pdf`(37쪽)를 다룬다. 11/12(목) 수업에서 37쪽을 한 번에 끝냈다. 교수는 마지막 장에서 "this is the last slide" 라고 하고 출석을 불렀다.[* 11/10 수업 끝에서 교수는 "continue … remaining part of chapter 7 on Thursday" 라고 했다. 그런데 11/12 에 실제로 나간 것은 CH08 이다. CH07 의 남은 부분이 무엇이었는지는 녹음에 나오지 않는다. 시험 범위를 정리할 때 이 점을 같이 확인해 두자.]
+'''CH08 라우팅'''은 L15 덱 `CH08_Network Layer - Routing of Packets.pdf`(37쪽)를 다룬다. 11/12(목) 수업에서 37쪽을 한 번에 끝냈다. 교수는 마지막 장에서 "this is the last slide" 라고 하고 출석을 불렀다.[* 11/10 수업 끝에서 교수는 "Let's continue about our remaining part of chapter 7 …" 라고 했다(요일 부분은 전사가 깨져 있다). 그런데 11/12 에 실제로 나간 것은 CH08 이다. CH07 의 남은 부분이 무엇이었는지는 녹음에 나오지 않는다. 시험 범위를 정리할 때 이 점을 같이 확인해 두자.]
 
 앞의 세 강의([[CH07 IPv4 주소]] · [[CH07 IPv4 데이터그램과 포워딩]] · [[CH07 IPv6]])는 패킷 하나가 라우터에 도착했을 때 무슨 일이 일어나는지를 봤다. 라우터는 [[forwarding table]] 을 보고 목적지 주소에 맞는 줄을 찾아 패킷을 내보낸다. 이 덱이 묻는 것은 그 앞 단계다. 그 표는 누가, 어떻게 채우는가. 이 일이 [[routing]] 이다.
 

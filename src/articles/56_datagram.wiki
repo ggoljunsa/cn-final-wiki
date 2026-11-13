@@ -2,13 +2,13 @@ key: datagram
 title: Datagram (데이터그램) — IP packet = header + payload
 category: 5강 네트워크 계층, 용어
 ---
-'''Datagram''' 은 network layer 의 데이터 단위, 즉 '''IP packet''' 이다. '''header + payload''' 로 이루어진다. 교수: datagram 은 "'''packet''' 과 interchangeably used, means the same" (10/27 녹음 05:16). L12 p.4, p.12, p.21.
+'''Datagram''' 은 network layer 의 데이터 단위, 곧 IP packet 이다. 구조는 header 와 payload 두 부분이다. 교수는 datagram 이 packet 과 같은 말이라고 했다. 교수 표현으로는 "interchangeably used, means the same" 이다(10/27 녹음 05:16). 슬라이드는 L12 p.4, p.12, p.21 이다.
 
-{def}"Its unit is the '''datagram''': an IP packet ('''header + payload''')." (p.4)
-"Each numbered box = '''one datagram'''; together, 1–4 carry '''one message'''." (p.21){/def}
+{def}"Its unit is the datagram: an IP packet (header + payload)." (p.4)
+"Each numbered box = one datagram; together, 1–4 carry one message." (p.21){/def}
 
 == 이름에서 개념 끌어내기 ==
-* '''data + telegram''' = 데이터로 된 '''전보'''. 전보는 한 장 한 장이 '''받는 사람 주소를 달고 혼자''' 배달된다. datagram 도 각자 주소(header)를 달고 독립적으로 간다 → [[connectionless]].
+* data + telegram, 곧 데이터로 된 전보다. 전보는 한 장 한 장이 받는 사람 주소를 달고 혼자 배달된다. datagram 도 각자 주소(header)를 달고 독립적으로 간다. 그래서 [[connectionless]] 와 잘 맞는다.
 
 == 구조 ==
 <pre class="ascii">
@@ -25,7 +25,7 @@ category: 5강 네트워크 계층, 용어
 
 [[img:L12-13.png|p.13 IP datagram — Header(checked ✓) | Payload(not checked by IP)|medium]]
 
-{tip}'''datagram vs datagram approach''': '''datagram''' 은 데이터 단위(명사), '''[[datagram approach]]''' 는 그 단위를 connectionless 로 나르는 packet switching 방식이다. 이름이 같은 건, 이 방식에서는 패킷 하나하나가 독립된 datagram 이기 때문.{/tip}
+{tip}'''datagram vs datagram approach''': datagram 은 데이터 단위(명사)다. [[datagram approach]] 는 그 단위를 connectionless 로 나르는 packet switching 방식이다. 이 방식에서는 패킷 하나하나가 독립된 datagram 이라서 이름이 같다.{/tip}
 
 {analogy}🎭 datagram 은 '''송장이 붙은 택배 상자'''다. 송장(header)에는 보내는 곳·받는 곳 주소, 상자 안(payload)에는 내 물건. 물류센터는 송장만 읽는다.{/analogy}
 

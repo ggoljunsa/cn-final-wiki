@@ -18,25 +18,25 @@ window.SIMS = window.SIMS || {};
       unit: us, linksMul: 1, prMul: 1, quMul: 0, wrong: false
     },
     routers: {
-      name: "라우터 n = 3 개 경로 (예시 수치)", n: 3,
-      L: 8000, Ltxt: "8,000 bits", R: 10e6, Rtxt: "10 Mbps",
-      d: 200e3, dtxt: "200 km (링크마다)", s: 2e8, stxt: "2 × 10^8 m/s",
-      pr: 50e-6, prtxt: "50 μs", qu: 2e-3, qutxt: "2 ms",
-      unit: ms, linksMul: 4, prMul: 4, quMul: 3, wrong: false
+      name: "라우터 n = 2 개 경로 (예시 수치)", n: 2,
+      L: 8000, Ltxt: "8,000 bits", R: 20e6, Rtxt: "20 Mbps",
+      d: 300e3, dtxt: "300 km (링크마다)", s: 2e8, stxt: "2 × 10^8 m/s",
+      pr: 40e-6, prtxt: "40 μs", qu: 2e-3, qutxt: "2 ms",
+      unit: ms, linksMul: 3, prMul: 3, quMul: 2, wrong: false
     },
     trap_qu: {
-      name: "함정 ① — queuing 을 n + 1 번 셈", n: 3,
-      L: 8000, Ltxt: "8,000 bits", R: 10e6, Rtxt: "10 Mbps",
-      d: 200e3, dtxt: "200 km (링크마다)", s: 2e8, stxt: "2 × 10^8 m/s",
-      pr: 50e-6, prtxt: "50 μs", qu: 2e-3, qutxt: "2 ms",
-      unit: ms, linksMul: 4, prMul: 4, quMul: 4, wrong: "qu"
+      name: "함정 ① — queuing 을 n + 1 번 셈", n: 2,
+      L: 8000, Ltxt: "8,000 bits", R: 20e6, Rtxt: "20 Mbps",
+      d: 300e3, dtxt: "300 km (링크마다)", s: 2e8, stxt: "2 × 10^8 m/s",
+      pr: 40e-6, prtxt: "40 μs", qu: 2e-3, qutxt: "2 ms",
+      unit: ms, linksMul: 3, prMul: 3, quMul: 3, wrong: "qu"
     },
     trap_links: {
-      name: "함정 ② — 링크를 n 개로 셈", n: 3,
-      L: 8000, Ltxt: "8,000 bits", R: 10e6, Rtxt: "10 Mbps",
-      d: 200e3, dtxt: "200 km (링크마다)", s: 2e8, stxt: "2 × 10^8 m/s",
-      pr: 50e-6, prtxt: "50 μs", qu: 2e-3, qutxt: "2 ms",
-      unit: ms, linksMul: 3, prMul: 3, quMul: 3, wrong: "links"
+      name: "함정 ② — 링크를 n 개로 셈", n: 2,
+      L: 8000, Ltxt: "8,000 bits", R: 20e6, Rtxt: "20 Mbps",
+      d: 300e3, dtxt: "300 km (링크마다)", s: 2e8, stxt: "2 × 10^8 m/s",
+      pr: 40e-6, prtxt: "40 μs", qu: 2e-3, qutxt: "2 ms",
+      unit: ms, linksMul: 2, prMul: 2, quMul: 2, wrong: "links"
     }
   };
 
@@ -95,7 +95,7 @@ window.SIMS = window.SIMS || {};
     options: [
       { key: "case", label: "예제", values: [
         { value: "slide", label: "p.30 예제 확장 (n = 0, 2,000 m)" },
-        { value: "routers", label: "라우터 n = 3 (예시)" },
+        { value: "routers", label: "라우터 n = 2 (예시)" },
         { value: "trap_qu", label: "함정 ①: queuing 을 n+1 번" },
         { value: "trap_links", label: "함정 ②: 링크를 n 개로" }
       ] }
@@ -148,13 +148,13 @@ window.SIMS = window.SIMS || {};
       }
       var formula, calc;
       if (c.wrong === "qu") {
-        formula = "(✗) (n+1)(tr + pg + pr + qu) = 4 × (" + U(tr) + " + " + U(pg) + " + " + U(c.pr) + " + " + U(c.qu) + ")";
+        formula = "(✗) (n+1)(tr + pg + pr + qu) = " + (c.n + 1) + " × (" + U(tr) + " + " + U(pg) + " + " + U(c.pr) + " + " + U(c.qu) + ")";
       } else if (c.wrong === "links") {
-        formula = "(✗) n(tr + pg + pr) + n·qu = 3 × " + U(per) + " + 3 × " + U(c.qu);
+        formula = "(✗) n(tr + pg + pr) + n·qu = " + c.n + " × " + U(per) + " + " + c.n + " × " + U(c.qu);
       } else if (c.n === 0) {
         formula = "(0+1)(" + U(tr) + " + " + U(pg) + " + 0) + 0";
       } else {
-        formula = "(3+1) × (" + U(tr) + " + " + U(pg) + " + " + U(c.pr) + ") + 3 × " + U(c.qu) + " = 4 × " + U(per) + " + " + U(3 * c.qu);
+        formula = "(" + c.n + "+1) × (" + U(tr) + " + " + U(pg) + " + " + U(c.pr) + ") + " + c.n + " × " + U(c.qu) + " = " + (c.n + 1) + " × " + U(per) + " + " + U(c.n * c.qu);
       }
       st.total = U(got) + (c.wrong ? " ✗" : "");
       calc = c.wrong
@@ -164,7 +164,7 @@ window.SIMS = window.SIMS || {};
         c.wrong === "qu" ? "차이 " + U(got - right) + " = Delay_qu 하나. 목적지(destination)에는 queuing 이 없다." :
         c.wrong === "links" ? "차이 " + U(right - got) + " = 링크 하나의 tr + pg + pr. n 개 라우터 사이와 양 끝을 합치면 링크는 n + 1 개." :
         c.n === 0 ? "transmission (80 μs) 이 propagation (10 μs) 보다 8 배 크다 — 짧은 케이블에서는 비트를 밀어내는 시간이 지배한다." :
-        "가장 큰 항은 queuing 3 × 2 ms = 6 ms. 트래픽이 늘면 이 항이 커진다 → [[load와 성능]].");
+        "성분별로 보면 propagation 3 × 1.5 ms = 4.5 ms 가 가장 크고, queuing 2 × 2 ms = 4 ms 가 다음이다. 트래픽이 늘면 queuing 항이 커진다 → [[load와 성능]].");
 
       return {
         panels: [{ id: "P", title: "공식 (p.29–33)", lang: "txt", lines: lines }],

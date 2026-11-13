@@ -4,8 +4,6 @@ category: 8강 IPv6, 용어
 ---
 IPv4 와 IPv6 의 차이를 한 표에 모았다. 6강–8강(L13–L14)의 내용을 같은 행끼리 맞춰 놓았다. 교수가 시험 문제로 언급한 것은 fragmentation 행이다(11/10 39:06).
 
-[[img:L14-26.png|p.26 IPv4 vs IPv6 fragmentation 표|medium]]
-
 {|
 ! 항목 || IPv4 || IPv6 || 출처
 |-
@@ -44,8 +42,12 @@ IPv4 와 IPv6 의 차이를 한 표에 모았다. 6강–8강(L13–L14)의 내�
 
 {analogy}🎭 같은 회사의 구형·신형 송장 양식 비교표라고 보면 된다. 하는 일(배송)은 같고 칸의 크기와 위치가 바뀌었다.{/analogy}
 
-{quiz}IPv4 의 total length 가 60 이고 HLEN 이 5 다. 같은 data 를 IPv6 로 보내면 payload length 는? (extension header 없음){/quiz}
-{answer}IPv4 data = 60 − 5 × 4 = 40 bytes. IPv6 payload length 는 base header 를 빼고 세니까 40.{/answer}
+{mini}
+# IPv4 의 total length 가 60 이고 HLEN 이 5 다. 같은 data 를 IPv6 로 보내면 payload length 는? (extension header 없음)
+{/mini}
+{answer}
+# IPv4 data = 60 − 5 × 4 = 40 bytes. IPv6 payload length 는 base header 를 빼고 세니까 40.
+{/answer}
 
 == 관련 문서 ==
 * [[CH07 IPv6]] · [[IPv6]] · [[IPv4]] · [[IPv6 fragmentation]] · [[IPv6 base header]]

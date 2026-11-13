@@ -2,17 +2,17 @@ key: longest mask matching
 title: Longest mask matching (최장 prefix 일치) — 맞는 행이 여럿이면 mask 가 긴 쪽
 category: 7강 IPv4 데이터그램, 용어
 ---
-'''Longest mask matching''' 은 목적지 주소가 forwarding table 의 '''여러 행에 동시에 맞을 때 mask(prefix)가 가장 긴 행을 고르는''' 규칙이다. 행을 긴 mask → 짧은 mask 순으로 정렬해 두면 '''위에서부터 처음 맞는 행'''이 곧 longest match 다. L13 p.60–62, p.66.
+'''Longest mask matching''' 은 목적지 주소가 forwarding table 의 여러 행에 동시에 맞을 때 쓰는 규칙이다. 그때는 mask(prefix)가 '''가장 긴 행'''을 고른다. 행을 긴 mask 부터 짧은 mask 순으로 정렬해 두면, 위에서부터 처음 맞는 행이 곧 longest match 다. 슬라이드는 L13 p.60–62, p.66 이다.
 
-{def}"Solution: rows are sorted from the '''longest mask to the shortest'''." (p.60)
-"Rows go from the longest prefix (top) to the shortest. '''Longer prefix = smaller range''' of addresses." (p.61)
+{def}"Solution: rows are sorted from the longest mask to the shortest." (p.60)
+"Rows go from the longest prefix (top) to the shortest. Longer prefix = smaller range of addresses." (p.61)
 "What if one organization is not close to the others? Keep a separate row for it, and sort rows from the longest mask to the shortest. '''The router uses the longest match'''." (p.66)
 forwarding table 은 긴 mask 부터 정렬하고, 라우터는 가장 길게 일치하는 행을 쓴다. 긴 prefix 일수록 주소 범위가 좁다.{/def}
 
 [[img:L13-66.png|p.66 — Organization 4 (140.24.7.192/26) 가 R2 쪽에 떨어져 있음. R2 표: 140.24.7.192/26 → m1 / 140.24.7.0/24 → address of R1, m0 / 0.0.0.0/0 → default router, m2|large]]
 
 == 왜 긴 쪽인가 ==
-* '''Longer prefix = smaller range''' = '''더 구체적인 정보'''. /24(256 주소) 전체는 R1 쪽이지만, 그 안의 /26(64 주소)만은 예외로 R2 옆에 있다 — "예외 규칙이 일반 규칙보다 우선".
+* "Longer prefix = smaller range" 다. 범위가 좁을수록 '''더 구체적인 정보'''다. p.66 에서 /24(256 주소)는 R1 쪽이지만, 그 안의 /26(64 주소)만 예외로 R2 옆에 있다. 예외를 적은 행이 일반 행보다 앞선다.
 * [[address aggregation]] 으로 블록을 크게 묶되, 떨어진 조각은 따로 긴 mask 행으로 남겨 두면 두 행이 '''겹친다'''. 겹침을 푸는 규칙이 longest match.
 
 <pre class="txt">
@@ -27,8 +27,12 @@ R2 의 표 (p.66)              140.24.7.200 도착             140.24.7.42 도�
 
 [[sim:forward_lookup]]
 
-{quiz}R1 의 표(/26 m2, /25 m0, /24 m3, /22 m1, default m2)에서 목적지 180.70.65.200 은 어느 interface 로 나가는가? /25 행에도 맞는데 왜 그쪽이 아닌가?{/quiz}
-{answer}180.70.65.200 AND /26 = 180.70.65.192 → 행 1 일치 → '''m2'''. /25 로 AND 해도 180.70.65.128 로 맞지만, mask 가 더 긴(/26, 범위가 더 좁은) 행이 우선하는 longest mask matching 때문에 m2 다.{/answer}
+{mini}
+# R1 의 표(/26 m2, /25 m0, /24 m3, /22 m1, default m2)에서 목적지 180.70.65.200 은 어느 interface 로 나가나? /25 행에도 맞는데 왜 그쪽으로 안 가나?
+{/mini}
+{answer}
+# 180.70.65.200 AND /26 = 180.70.65.192 라서 첫 행에 맞고 m2 로 나간다. /25 로 AND 해도 180.70.65.128 로 맞지만, mask 가 더 긴(범위가 좁은) /26 행이 먼저다.
+{/answer}
 
 == 관련 문서 ==
 * [[forwarding table]] · [[Example 7.19–7.21 R1 포워딩]] · [[address aggregation]] · [[hierarchical routing]] · [[address mask]] · [[CIDR]] · [[next hop]]

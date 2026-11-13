@@ -9,7 +9,7 @@ IPv6 는 link-layer 주소(MAC 주소)를 [[interface ID]] 로 바꿔 쓴다. �
 (b) 48-bit Ethernet address: flip the 7th bit + insert FFFE in the middle" (p.11–12)
 → 64-bit EUI-64 주소는 7 번째 bit 만 뒤집는다. 48-bit Ethernet 주소는 7 번째 bit 를 뒤집고 가운데에 FFFE 를 넣는다.{/def}
 
-[[img:L14-12.png|p.12 (필기본) (a) EUI-64 → 7번째 bit 0 → 1. (b) Ethernet MAC 48 bits → 앞 24 bits | added bits 11111111 11111110 | 뒤 24 bits, 7번째 bit 0 → 1. 손글씨 "64−48=16"|medium]]
+[[img:L14-12.png|p.12 (필기본) — (a) EUI-64 → 7번째 bit 0 → 1. (b) Ethernet MAC 48 bits → 앞 24 bits | added bits 11111111 11111110 | 뒤 24 bits, 7번째 bit 0 → 1. 손글씨 "64−48=16"|medium]]
 
 == 이름에서 개념 끌어내기 ==
 * '''EUI-64''' 는 Extended Unique Identifier, 64 bits 의 줄임말이다. IEEE 가 정한 64-bit 장치 식별자다. 이름 끝 64 가 길이다.
@@ -37,8 +37,12 @@ IPv6 는 link-layer 주소(MAC 주소)를 [[interface ID]] 로 바꿔 쓴다. �
 
 {analogy}🎭 6 자리 학번(MAC 48 bits)을 8 자리 사번(interface ID 64 bits) 칸에 옮겨 적는 규칙과 같다. 가운데에 정해진 두 자리 "FFFE" 를 끼워 넣고, 표시 칸 하나(7 번째 bit)를 바꿔 "옮겨 온 번호" 임을 표시한다.{/analogy}
 
-{quiz}MAC 00-1A-2B-3C-4D-5E 의 interface ID 는?{/quiz}
-{answer}00 = 0000 0000 → 7 번째 bit 0 → 1 → 0000 0010 = 02. 가운데 FFFE → 021A:2BFF:FE3C:4D5E. link-local 은 FE80::21A:2BFF:FE3C:4D5E (leading zero 0 하나를 지움).{/answer}
+{mini}
+# MAC 00-1A-2B-3C-4D-5E 의 interface ID 는?
+{/mini}
+{answer}
+# 00 = 0000 0000 → 7 번째 bit 0 → 1 → 0000 0010 = 02. 가운데 FFFE → 021A:2BFF:FE3C:4D5E. link-local 은 FE80::21A:2BFF:FE3C:4D5E (leading zero 0 하나를 지움).
+{/answer}
 
 == 관련 문서 ==
 * [[interface ID]] · [[Example 7.29]] · [[link-local address]] · [[mid:MAC 주소]] · [[mid:IP 주소와 MAC 주소]]

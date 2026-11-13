@@ -2,20 +2,20 @@ key: connectionless
 title: Connectionless (비연결형) — no setup, datagram 마다 독립
 category: 5강 네트워크 계층, 용어
 ---
-'''Connectionless''' 서비스는 데이터를 보내기 전에 '''연결을 미리 맺는 단계(setup)가 없고''', 각 패킷(datagram)을 '''서로 무관하게 독립적으로''' 처리하는 방식이다. [[IP]] 의 첫 번째 큰 성질. 반대말은 '''connection-oriented''' ([[virtual-circuit approach]], [[IPSec]]). L12 p.4, p.23, p.26.
+'''Connectionless''' 서비스는 데이터를 보내기 전에 연결을 맺는 단계(setup)가 없는 방식이다. 각 패킷(datagram)은 서로 상관없이 따로 다뤄진다. 이것이 [[IP]] 의 첫 번째 큰 성질이다. 반대말은 '''connection-oriented''' 다([[virtual-circuit approach]], [[IPSec]]). 슬라이드는 L12 p.4, p.23, p.26 이다.
 
-{def}"'''Connectionless''': '''no setup'''; each datagram is handled '''independently'''." (p.4)
+{def}"Connectionless: no setup; each datagram is handled independently." (p.4)
 "Datagram Approach: Connectionless Service — Each packet is handled independently (no relation to other packets). Router decides using only the destination address. Packets of one message may take different paths and arrive out of order." (p.23){/def}
 
 == 이름에서 개념 끌어내기 ==
-* '''connection + less''' = 연결이 '''없는'''. "연결" 은 전선이 아니라 '''양 끝이 미리 합의한 상태'''(경로·순서 번호 등)를 말한다. 그 합의가 없으니 각 패킷은 '''혼자''' 다닌다.
+* '''connection + less''' = 연결이 '''없는'''. 여기서 "연결" 은 양 끝이 미리 합의해 둔 상태(경로, 순서 번호 등)를 말한다. 전선 이야기는 아니다. 그 합의가 없으니 각 패킷은 혼자 다닌다.
 * 교수: "Remembering some previous protocols … we have some '''handshaking process''' to set up a connection, but in IP protocol, we don't have that setup" (10/27 녹음 04:31–05:02).
 
 == connectionless 이면 생기는 일 ==
 # setup 이 없으니 '''바로''' 보낼 수 있다.
 # 라우터는 패킷마다 '''destination address''' 만 보고 따로 결정한다 → [[datagram approach]].
 # 그래서 같은 메시지의 패킷도 '''다른 경로'''로 갈 수 있고, '''순서가 뒤섞여(out of order)''' 도착할 수 있다 (p.22 그림: 1 3 4 2).
-# 순서 맞추기·재전송은 위층(TCP)의 몫.
+# 순서를 다시 맞추고 재전송하는 일은 위층(TCP)이 한다.
 
 {|
 ! || connectionless || connection-oriented

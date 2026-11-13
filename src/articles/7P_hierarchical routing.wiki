@@ -2,10 +2,10 @@ key: hierarchical routing
 title: Hierarchical routing (계층적 라우팅) — ISP 계층과 Example 7.22
 category: 7강 IPv4 데이터그램, 용어
 ---
-'''Hierarchical routing''' 은 주소 블록을 '''Backbone·national ISP → local ISP → customer''' 계층으로 나눠 주고, 바깥에는 큰 블록 '''prefix 하나'''만 보이게 해서 forwarding table 을 작게 유지하는 방식이다. [[address aggregation]] 을 인터넷 규모로 쓴 것. L13 p.67–68.
+'''Hierarchical routing''' 은 주소 블록을 계층으로 나눠 주는 방식이다. 계층은 Backbone·national ISP, local ISP, customer 순서다. 바깥에는 큰 블록의 prefix 하나만 보이게 하니 forwarding table 이 작게 유지된다. [[address aggregation]] 을 인터넷 규모로 쓴 것이다. 슬라이드는 L13 p.67–68 이다.
 
-{def}"Address aggregation '''solves the problem of gigantic forwarding tables'''. Backbone & national ISPs → local ISPs → customers. A local ISP gets '''one large block (one prefix)'''; it divides the block for its customers; '''the rest of the Internet does not see the division'''; all packets for the block go to the local ISP — inside, routers find the customer." (p.67)
-aggregation 은 거대한 forwarding table 문제를 푼다. local ISP 는 큰 블록 하나를 받아 고객에게 나누고, 나머지 인터넷은 그 분할을 보지 못한다. 블록으로 가는 패킷은 모두 local ISP 로 가고 안에서 고객을 찾는다.{/def}
+{def}"Address aggregation solves the problem of gigantic forwarding tables. Backbone & national ISPs → local ISPs → customers. A local ISP gets one large block (one prefix); it divides the block for its customers; the rest of the Internet does not see the division; all packets for the block go to the local ISP; inside, routers find the customer." (p.67)
+aggregation 은 거대한 forwarding table 문제를 푼다. local ISP 는 큰 블록 하나를 받아 고객에게 나눠 준다. 나머지 인터넷은 그 분할을 보지 못한다. 그래서 블록으로 가는 패킷은 모두 local ISP 로 가고, local ISP 안의 라우터가 고객을 찾는다.{/def}
 
 [[img:L13-68.png|p.68 Example 7.22 — Regional ISP 120.14.64.0/18 (Total 16,384) ← Local ISP 1 /20 (Small ISP 1–8 각 /23, 가구 H001–H128 각 /30), Unused 120.14.80.0/20, Local ISP 2 120.14.96.0/20 (LOrg 01–04 각 /22), Local ISP 3 120.14.112.0/20 (SOrg 01–16 각 /24)|large]]
 
@@ -23,7 +23,7 @@ Regional ISP  120.14.64.0/18   2^(32−18) = '''16,384'''  → 바깥에는 이 
 
 {analogy}🎭 '''우편번호 체계.''' 다른 도시 우체국은 "대구 = 4xxxx" 만 알면 된다. 대구 안에서 구 → 동 → 번지로 점점 자세히 나눈다. 바깥에서는 대구의 내부 구획을 모른다(does not see the division).{/analogy}
 
-{info}9강([[CH08 라우팅]], L15 p.30)에서 hierarchical routing 이 한 번 더 나온다. 거기서는 주소가 아니라 routing 프로토콜을 [[autonomous system|AS]] 단위로 나눈다. AS 안은 RIP·OSPF, AS 사이는 BGP 다 → [[intra-AS와 inter-AS routing]].{/info}
+{info}9강([[CH08 라우팅]], L15 p.30)에서 hierarchical routing 이 한 번 더 나온다. 거기서 나누는 것은 주소 블록이 아니고 routing 프로토콜이다. 인터넷을 [[autonomous system|AS]] 단위로 나눠 AS 안에서는 RIP·OSPF, AS 사이에서는 BGP 를 쓴다. → [[intra-AS와 inter-AS routing]]{/info}
 
 == 관련 문서 ==
 * [[address aggregation]] · [[longest mask matching]] · [[forwarding table]] · [[CIDR]] · [[subnetting]] · [[CH07 IPv4 데이터그램과 포워딩]]

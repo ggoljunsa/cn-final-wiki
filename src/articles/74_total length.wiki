@@ -2,7 +2,7 @@ key: total length
 title: Total length — header + data 의 전체 바이트 수
 category: 7강 IPv4 데이터그램, 용어
 ---
-'''Total length''' 는 IPv4 header 첫 행 오른쪽 16 bits 로, '''header + data''' 전체 길이를 '''bytes''' 로 적는다. 최대 65,535 bytes. 위층이 준 data 의 길이는 여기서 header 를 빼서 구한다. L13 p.34.
+'''Total length''' 는 IPv4 header 첫 행 오른쪽 16 bits 다. 이 칸은 header 와 data 를 합친 전체 길이를 bytes 로 적고, 최댓값은 65,535 bytes 다. 위층이 준 data 의 길이는 total length 에서 '''header 길이를 빼서''' 구한다. 슬라이드는 L13 p.34 이다.
 
 {def}"Total length (16 bits): '''Header + data, in bytes'''. Up to 65,535 bytes; real datagrams are much smaller. Data length from the upper layer: '''Data = Total length − HLEN × 4'''." (p.34)
 Total length 는 header 와 data 를 합한 길이(bytes)다. 최대 65,535 bytes 이고, data 길이 = total length − HLEN × 4.{/def}
@@ -10,7 +10,7 @@ Total length 는 header 와 data 를 합한 길이(bytes)다. 최대 65,535 byte
 [[img:L13-34.png|p.34 — Total length (16 bits): Header + data, in bytes, up to 65,535 bytes; Data = Total length − HLEN × 4 (굵게). 오른쪽 표에서 HLEN 과 Total length 칸이 함께 강조|medium]]
 
 == 이름에서 개념 끌어내기 ==
-* '''total''' = header 까지 '''전부'''. "data 길이" 가 아니다. 그래서 data 를 구하려면 header 를 빼야 하고, header 는 HLEN × 4 다.
+* '''total''' 은 header 까지 포함한 길이라는 뜻이다. 그래서 data 길이를 구하려면 header(HLEN × 4)를 빼야 한다.
 * 16 bits 라서 최대 $2^{16} - 1 = 65{,}535$. 실제로는 [[MTU]](Ethernet 1500 B) 때문에 훨씬 작다.
 
 <pre class="txt">

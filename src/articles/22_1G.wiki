@@ -2,14 +2,14 @@ key: 1G
 title: 1G (1st Generation — 아날로그 셀룰러)
 category: 2강 1G–2G, 용어
 ---
-'''1G(1st Generation)'''는 최초의 셀룰러 세대로, 음성을 '''아날로그 파형 그대로''' 무선으로 보냈다. 슬라이드의 대표는 북미의 [[AMPS]] 다(L10 p.18–20).
+'''1G(1st Generation)'''는 최초의 셀룰러 세대다. 음성을 아날로그 파형 그대로 무선으로 보냈다. 슬라이드의 대표는 북미의 [[AMPS]] 다(L10 p.18–20).
 
 {def}"1st Generation (1G): AMPS (Advanced Mobile Phone System) — One of the leading '''analog cellular systems''' in North America. AMPS uses '''FDMA''' to separate channels in a link." (p.18){/def}
 
 == 이름에서 개념 끌어내기 ==
-"1G" 라는 말은 2G 가 나온 뒤에 붙은 '''뒤늦은 이름'''이다. 당시엔 그냥 "cellular" 였다. 그래서 1G 를 정의하는 특징은 '''2G 와의 차이''' — '''analog'''(2G 는 digital)와 '''FDMA 만'''(2G 는 그 위에 TDMA·CDMA)이다.
+"1G" 는 2G 가 나온 뒤에 붙은 이름이다. 당시에는 그냥 "cellular" 라고 불렀다. 그래서 1G 의 특징은 2G 와 비교해야 잘 보인다. 1G 는 '''analog''' 이고 2G 는 digital 이다. 1G 는 FDMA 만 쓰고, 2G 는 그 위에 TDMA 나 CDMA 를 얹는다.
 
-{analogy}🎭 '''워키토키 수백 대를 채널 다이얼만 다르게 맞춰 놓은 것.''' 각 통화가 자기 주파수(30 kHz) 하나를 통째로 차지하고, 목소리는 [[FM]] 라디오처럼 파형 그대로 실린다. 말을 쉬는 동안에도 주파수는 그 통화 몫이다.{/analogy}
+{analogy}🎭 '''워키토키 수백 대를 채널 다이얼만 다르게 맞춰 놓은 것.''' 통화마다 30 kHz 주파수 하나를 통째로 차지하고, 목소리는 [[FM]] 라디오처럼 파형 그대로 실린다. 말을 쉬는 동안에도 그 주파수는 그 통화 몫이다.{/analogy}
 
 == 특징 ==
 {|
@@ -17,7 +17,7 @@ category: 2강 1G–2G, 용어
 |-
 | 정보 표현 || '''analog''' (voice → [[FM]])
 |-
-| 다중 접속 || [[FDMA]] — 30 kHz 채널 1개 = 사용자 1명
+| 다중 접속 || [[FDMA]], 30 kHz 채널 1개 = 사용자 1명
 |-
 | 대역 || 824–849 MHz (uplink) / 869–894 MHz (downlink), 각 25 MHz = 832 채널 → [[AMPS 대역과 채널]]
 |-
@@ -28,9 +28,13 @@ category: 2강 1G–2G, 용어
 | reuse factor || 7 → [[reuse factor]]
 |}
 
-[[img:L10-20.png|p.20 AMPS Transmission — 1G 의 전형: 3 kHz voice → FM → 30 kHz 칸 하나 (FDMA)|medium]]
+[[img:L10-20.png|p.20 — 1G 의 전형. 3 kHz voice 가 FM 을 지나 30 kHz 칸 하나(FDMA)를 차지하는 것을 보라|medium]]
 
-* 약점: 대역 효율이 낮다(사용자당 30 kHz), 도청이 쉽다(FM 라디오처럼 수신기만 있으면 들림 — 보충), 데이터 서비스 없음. → 디지털 [[2G]] 로.
+위 그림에서 voice 한 줄이 30 kHz 칸 하나를 통째로 쓴다. 그래서 1G 에는 약점이 있었다.
+* 대역 효율이 낮다. 사용자 한 명이 30 kHz 를 쓴다.
+* 도청이 쉽다. FM 라디오처럼 수신기만 있으면 들린다(보충).
+* 데이터 서비스가 없다.
+이 약점을 디지털 [[2G]] 가 풀었다.
 
 == 관련 문서 ==
 * [[셀룰러 세대]] · [[2G]] · [[AMPS]] · [[FDMA]] · [[CH05 1G–2G 셀룰러]]

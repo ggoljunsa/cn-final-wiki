@@ -7,7 +7,7 @@ IPv6 주소는 패킷을 몇 명이 받느냐에 따라 unicast, anycast, multic
 {def}"Unicast: one interface; the packet goes to that recipient. Anycast: a group sharing one address. Delivered to only one member: the most reachable. Addresses come from the unicast block. Multicast: a group of computers. Every member gets a copy. Broadcast = a special case of multicast" (p.7)
 → unicast 는 한 interface. anycast 는 주소 하나를 그룹이 공유하고 그중 가장 가까운 한 명만 받는다. multicast 는 그룹 전원이 copy 를 받는다. broadcast 는 multicast 의 특수한 경우다.{/def}
 
-[[img:L14-07.png|p.7 Unicast(S → 한 명) · Anycast(점선 그룹 중 nearest 한 명) · Multicast(그룹 all)|medium]]
+[[img:L14-07.png|p.7 — Unicast(S → 한 명) · Anycast(점선 그룹 중 nearest 한 명) · Multicast(그룹 all)|medium]]
 
 == 이름에서 개념 끌어내기 ==
 {|
@@ -26,8 +26,12 @@ IPv6 주소는 패킷을 몇 명이 받느냐에 따라 unicast, anycast, multic
 
 {analogy}🎭 unicast 는 특정인에게 거는 전화, multicast 는 단체 문자, anycast 는 '''119 신고'''다. 119 라는 번호는 하나지만 가장 가까운 소방서가 받는다.{/analogy}
 
-{quiz}anycast 와 multicast 의 차이를 한 줄로.{/quiz}
-{answer}둘 다 그룹이 주소를 공유한다. anycast 는 가장 가까운(most reachable) 한 명만 받고, multicast 는 멤버 전원이 copy 를 받는다.{/answer}
+{mini}
+# anycast 와 multicast 의 차이를 한 줄로.
+{/mini}
+{answer}
+# 둘 다 그룹이 주소를 공유한다. anycast 는 가장 가까운(most reachable) 한 명만 받고, multicast 는 멤버 전원이 copy 를 받는다.
+{/answer}
 
 == 관련 문서 ==
 * [[global unicast address]] · [[IPv6 address]] · [[MLD]] · [[CH07 IPv6]]

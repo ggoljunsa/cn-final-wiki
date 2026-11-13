@@ -2,16 +2,20 @@ key: 2G
 title: 2G (2nd Generation — 디지털 셀룰러)
 category: 2강 1G–2G, 용어
 ---
-'''2G(2nd Generation)'''는 음성을 '''디지털화'''한 셀룰러 세대다. 슬라이드는 세 시스템을 다룬다 — 북미의 [[D-AMPS]](TDMA), 유럽의 [[GSM]](TDMA), 북미·한국의 [[IS-95]](CDMA). L10 p.21–32.
+'''2G(2nd Generation)'''는 음성을 디지털로 바꾼 셀룰러 세대다. 슬라이드는 세 시스템을 다룬다. 북미의 [[D-AMPS]](TDMA), 유럽의 [[GSM]](TDMA), 북미와 한국의 [[IS-95]](CDMA)다. L10 p.21–32.
 
 {def}"2nd Generation (2G): Digital AMPS (D-AMPS) — The evolution of the analog AMPS into a '''digital''' system." (p.21)
 "2nd Generation: GSM — A European standard for a common 2G technology for all Europe." (p.23)
 "2nd Generation: IS-95 — One of the dominant 2G standards in North America (and South Korea). Based on DSSS and CDMA." (p.27){/def}
 
 == 이름에서 개념 끌어내기 ==
-1G 와 2G 를 가르는 단어는 단 하나 — '''digital'''. 음성을 비트로 바꾸자 세 가지가 가능해졌다: ① '''압축'''(3 kHz 음성 → 수 kbps), ② 압축한 비트를 짧은 시간 슬롯에 '''몰아 보내기'''([[TDMA]]) 또는 코드로 '''퍼뜨리기'''([[CDMA]]), ③ '''오류 제어 비트'''를 붙이기(GSM 의 65 → 114 bits). 결과는 같은 대역에서 '''더 많은 사용자'''.
+1G 와 2G 를 가르는 말은 '''digital''' 이다. 음성을 비트로 바꾸자 할 수 있는 일이 늘었다.
+* 압축: 3 kHz 음성을 수 kbps 로 줄인다.
+* 나눠 쓰기: 줄인 비트를 짧은 시간 슬롯에 몰아 보내거나([[TDMA]]), code 로 퍼뜨린다([[CDMA]]).
+* 오류 제어: 비트를 덧붙여 오류를 고친다. GSM 의 65 → 114 bits 가 그 예다.
+그 결과 같은 대역에 더 많은 사용자를 넣을 수 있었다.
 
-{analogy}🎭 '''손편지(1G) → 이메일(2G).''' 손편지는 한 장에 한 사람 글씨가 그대로 담기지만(아날로그), 이메일은 글자를 비트로 바꾸니 압축·암호화·오류 검사를 할 수 있고, 한 회선으로 여러 사람의 메일을 번갈아 보낼 수 있다.{/analogy}
+{analogy}🎭 '''손편지(1G)에서 이메일(2G)로.''' 손편지는 한 장에 한 사람의 글씨가 그대로 담긴다(아날로그). 이메일은 글자를 비트로 바꾸니 압축도, 오류 검사도 할 수 있고, 한 회선으로 여러 사람의 메일을 번갈아 보낼 수 있다.{/analogy}
 
 [[anim:generations_timeline|2G 칸에 D-AMPS·GSM(TDMA)과 IS-95(CDMA) 두 갈래가 함께 쌓이는 것을 보라]]
 
@@ -30,9 +34,11 @@ category: 2강 1G–2G, 용어
 | 디지털 음성 || 7.95 kbps || 13 kbps || 9.6 kbps
 |}
 
-[[img:L10-22.png|p.22 AMPS(analog) vs D-AMPS(digitized) — 1G → 2G 의 차이가 한 장에|medium]]
+[[img:L10-22.png|p.22 — 왼쪽 AMPS 의 "voice: analog" 와 오른쪽 D-AMPS 의 "voice: digitized" 를 나란히 보라. 1G 와 2G 의 차이가 한 장에 있다|medium]]
 
-{exam}"2G 의 핵심 변화는?" → '''analog → digital'''. 그 덕에 '''TDMA'''(D-AMPS, GSM) 또는 '''CDMA'''(IS-95) 로 한 주파수 채널을 여러 사용자가 공유.{/exam}
+위 그림 오른쪽에서 음성 셋이 Digitizer 를 지난 뒤 슬롯 1 2 3 으로 섞여 30 kHz 칸 하나에 들어간다. 디지털화가 먼저 있어서 TDMA 가 가능해진 장면이다.
+
+{exam}2G 에서 가장 크게 달라진 것은 analog → digital 이다. 교수 표현으로는 "In 2G, almost all cellular systems are built upon digital communication" 이다(10/20, 51:52). 그 덕에 TDMA(D-AMPS, GSM)나 CDMA(IS-95)로 주파수 채널 하나를 여러 사용자가 나눠 쓴다.{/exam}
 
 == 관련 문서 ==
 * [[셀룰러 세대]] · [[1G]] · [[3G]]

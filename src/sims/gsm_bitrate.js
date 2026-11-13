@@ -64,9 +64,7 @@ window.SIMS = window.SIMS || {};
       }
       // 결과
       if (level >= 6) {
-        var res = mode === "channel" ? "channel bit rate = 270.833 kbps ≈ 270.8 kbps"
-          : mode === "user" ? "사용자 1명(slot 1개) = 33.85 kbps"
-          : "순수 user data = 13 kbps";
+        var res = "channel bit rate = 270.833 kbps ≈ 270.8 kbps";
         s += '<rect x="20" y="' + (my + 92) + '" width="320" height="24" rx="4" fill="#fff3bf" stroke="#d6a017"/>';
         s += '<text x="180" y="' + (my + 108) + '" text-anchor="middle" font-weight="700">' + res + "</text>";
       }
@@ -81,18 +79,18 @@ window.SIMS = window.SIMS || {};
     options: [
       { key: "mode", label: "계산 대상", values: [
         { value: "channel", label: "channel bit rate (슬라이드)" },
-        { value: "user", label: "사용자 1명 (slot 1개) rate" },
-        { value: "data", label: "순수 user data rate" }
+        // 사용자 1명·순수 user data 모드는 PS1 1(b)(c) 의 답이라 11/13 에 코드째 뺐다.
+        // 원본은 OneDrive 밖 ~/study/2학기/컴퓨터네트워크/기말고사/_ps1_stash/gsm_bitrate.full.js — 마감(11/15) 뒤 되돌린다.
       ] }
     ],
     build: function (opts) {
-      var mode = opts.mode || "channel";
+      var mode = "channel";
       var USER = 65, ERR = 114, SLOT = 156.25, NSLOT = 8, NFRAME = 26, NTRAFFIC = 24, T = 0.120;
       var frameBits = NSLOT * SLOT;            // 1250
       var multiBits = NFRAME * frameBits;      // 32500
       var chRate = multiBits / T;              // 270833.33 bps
-      var userBits = NFRAME * SLOT;            // 4062.5
-      var userRate = userBits / T;             // 33854.17 bps
+      var userBits = NFRAME * SLOT;
+      var userRate = userBits / T;             
       var dataBits = USER * NTRAFFIC;          // 1560
       var dataRate = dataBits / T;             // 13000 bps
       var frameMs = T * 1000 / NFRAME;         // 4.615 ms
@@ -109,14 +107,7 @@ window.SIMS = window.SIMS || {};
         lines.push("multiframe 비트 = " + NFRAME + " × " + NSLOT + " × " + SLOT + " = " + multiBits + " bits");
         lines.push("rate = " + multiBits + " bits ÷ 0.120 s = " + fmt(chRate, 2) + " bps");
         lines.push("= " + fmt(chRate / 1000) + " kbps ≈ 270.8 kbps");
-      } else if (mode === "user") {
-        lines.push("한 사용자 = frame 마다 slot 1개 → " + NFRAME + " × " + SLOT + " = " + userBits + " bits / 120 ms");
-        lines.push("rate = " + userBits + " ÷ 0.120 s = " + fmt(userRate, 2) + " bps");
-        lines.push("= " + fmt(userRate / 1000, 2) + " kbps (= 270.833 ÷ 8)");
-      } else {
-        lines.push("user data 는 traffic frame 24개에만: " + USER + " × " + NTRAFFIC + " = " + dataBits + " bits / 120 ms");
-        lines.push("rate = " + dataBits + " ÷ 0.120 s = " + fmt(dataRate) + " bps");
-        lines.push("= " + fmt(dataRate / 1000) + " kbps");
+
       }
 
       var vars = [
@@ -156,22 +147,7 @@ window.SIMS = window.SIMS || {};
         st.rate = fmt(chRate / 1000) + " kbps ≈ 270.8 kbps";
         push("'''channel bit rate ≈ 270.8 kbps''' — 슬라이드 공식 (1/120 ms) × 26 × 8 × 156.25 = 270.8 kbps 와 같다.", 9, 6,
           "시험 포인트: 곱하는 네 수의 의미 — 1/120 ms(multiframe 시간), 26(frame 수), 8(slot 수), 156.25(slot 비트).");
-      } else if (mode === "user") {
-        st.bits = userBits;
-        push("사용자 한 명은 frame 마다 '''자기 slot 1개'''만 쓴다(파란 칸). multiframe 동안 26 × 156.25 = 4062.5 bits.", 7, 5);
-        st.rate = fmt(userRate, 2) + " bps";
-        push("rate = 4062.5 ÷ 0.120 s = 33854.17 bps.", 8, 5);
-        st.rate = fmt(userRate / 1000, 2) + " kbps";
-        push("'''사용자 1명 ≈ 33.85 kbps''' = channel bit rate 270.833 kbps ÷ 8. 8명이 한 채널을 똑같이 나눴으니 당연하다.", 9, 6,
-          "이 값은 슬라이드에 없는 파생값이다(overhead 포함 rate).");
-      } else {
-        st.bits = dataBits;
-        push("순수 user data 는 slot 안의 '''65 bits''' 뿐이고, control frame 2개에는 음성이 없다 → traffic frame 24개 × 65 = 1560 bits.", 7, 5);
-        st.rate = fmt(dataRate) + " bps";
-        push("rate = 1560 ÷ 0.120 s = 13000 bps.", 8, 5);
-        st.rate = fmt(dataRate / 1000) + " kbps";
-        push("'''순수 user data ≈ 13 kbps''' — GSM full-rate 음성 코덱 속도와 일치. 33.85 kbps 중 대부분이 error control·TDMA control·control frame 이라는 뜻이다.", 9, 6,
-          "이 값은 p.25 그림의 Digitizer 출력 13 kbps 와 같다 — 65×24/120 ms 로 검산.");
+
       }
 
       return {

@@ -2,36 +2,38 @@ key: Starlink
 title: Starlink / Starshield (SpaceX 위성망)
 category: 1강 셀룰러 동작, 용어
 ---
-'''Starlink''' 는 SpaceX 가 운영하는 저궤도(LEO) [[satellite network]] 다. 슬라이드 p.6 은 Satellite Networks 의 예로 "'''Starlink'''" 를, p.7 은 "'''Starlink / Starshield'''" 를 적었다. '''Starshield''' 는 같은 기술의 정부·군용 버전이다. 슬라이드에는 이름과 BBC 그림만 있고, 아래 수치는 '''(일반 보충 — 슬라이드에 없음)'''.
+'''Starlink'''는 SpaceX 가 운영하는 저궤도(LEO) [[satellite network]] 다. 슬라이드 p.6 은 Satellite Networks 의 예로 "Starlink" 를 적었고, p.7 은 "Starlink / Starshield" 로 고쳤다. '''Starshield''' 는 같은 기술의 정부·군용 버전이다. L10 슬라이드에는 이름과 BBC 그림만 있다. 아래 수치 중 L11 표시가 없는 것은 일반 보충이다.
 
-{def}"Satellite Networks — '''Starlink''' / '''Starshield'''." (p.6–7)
-BBC 그림 제목: "How SpaceX satellites are used on the battlefield" — ① Spotter drone sends location of enemy tank ② Command centre alerts battlefield unit (Starlink/Starshield 경유) ③ Drone operator flies killer drone to target.{/def}
+{def}"Satellite Networks: '''Starlink''' / '''Starshield'''." (p.6–7)
+BBC 그림 제목은 "How SpaceX satellites are used on the battlefield" 다. 단계는 세 개다.
+# Spotter drone sends location of enemy tank
+# Command centre alerts battlefield unit (Starlink/Starshield 경유)
+# Drone operator flies killer drone to target{/def}
 
-[[img:L10-07.png|p.7 오른쪽 BBC 그림 — 드론 → Starlink/Starshield → 지휘소 → 부대. Satellite Networks 의 예 (필기본)|medium]]
+[[img:L10-07.png|p.7 오른쪽 아래 — BBC 그림. 드론의 정보가 Starlink/Starshield 를 거쳐 지휘소와 부대로 간다|medium]]
 
 == 이름에서 개념 끌어내기 ==
-* '''Star + link''' — 별(하늘의 위성)들로 만든 연결. 수천 개의 작은 위성이 '''별자리(constellation)'''처럼 하늘을 덮는다.
-* '''Star + shield''' — 방패. 군·정부용(보안 강화) 버전이라 shield.
-* 녹음 전사에는 "Starship"(SpaceX 로켓 이름)으로 깨져 있지만, 슬라이드 기준으로 '''Starlink/Starshield''' 다.
+* '''Star + link''': 별(하늘의 위성)들로 만든 연결이다. 작은 위성 수천 개가 별자리(constellation)처럼 하늘을 덮는다.
+* '''Star + shield''': shield 는 방패다. 보안을 강화한 군·정부용이라 이런 이름이 붙었다.
+* 녹음 전사에는 "Starship"(SpaceX 로켓 이름)으로 깨져 있다. 슬라이드 기준으로는 Starlink/Starshield 다.
 
-(보충) 특징
-* 고도 약 550 km 의 '''LEO''' — GEO(약 36,000 km)보다 수십 배 가까워 지연이 짧다.
-* 위성이 빠르게 지나가므로 사용자 단말은 몇 분마다 다른 위성으로 넘어간다 — 셀룰러의 [[handoff]] 를 하늘에서 하는 셈.
-* 지상 infrastructure 가 없거나 파괴된 곳에서도 접속이 된다 → 전쟁·재난 지역.
+Starlink 의 특징을 보면 셀룰러와 닮은 점이 많다.
+* 고도 약 550 km 의 LEO 다. GEO(약 36,000 km)보다 수십 배 가까우니 지연이 짧다.
+* 위성이 빠르게 지나가서 사용자 단말은 몇 분마다 다른 위성으로 넘어간다. 셀룰러의 [[handoff]] 를 하늘에서 하는 셈이다.
+* 지상 infrastructure 가 없거나 부서진 곳에서도 접속된다. 그래서 전쟁이나 재난 지역에서 쓰인다.
 
-{info}교수(10/20 녹음 19:00–21:04)는 발신 절차 뒤에 "wireless communications … are '''heavily dependent on this infrastructure'''" 라고 강조하며, '''Ukraine''' 이 최근 미국의 정책 때문에 Starlink/Starshield 연결이 제한돼 데이터 통신과 '''드론 제어'''에 어려움을 겪는다는 예를 들었다. 슬라이드 BBC 그림(드론-위성-지휘소)과 같은 맥락이다.{/info}
+{info}교수(10/20 녹음 19:00–21:04)는 cellular 통신이 "heavily dependent on this infrastructure" 라고 강조하면서 우크라이나 예를 들었다. 최근 미국의 정책 때문에 Starlink/Starshield 연결이 제한되면서 데이터 통신과 드론 제어에 어려움을 겪고 있다는 이야기다. 슬라이드 BBC 그림과 같은 맥락이다.{/info}
 
-{analogy}🎭 '''하늘을 지나가는 기지국 행렬.''' 셀룰러는 기지국이 땅에 고정되고 내가 움직이지만, Starlink 는 '''기지국(위성)이 머리 위를 줄지어 지나간다'''. 한 위성이 지평선 너머로 사라지기 전에 다음 위성이 와서 통신을 이어받는다.{/analogy}
-
+{analogy}🎭 '''머리 위를 줄지어 지나가는 기지국.''' 셀룰러는 기지국이 땅에 고정돼 있고 내가 움직인다. Starlink 는 기지국(위성)이 머리 위를 줄지어 지나간다. 한 위성이 지평선 너머로 사라지기 전에 다음 위성이 와서 통신을 이어받는다.{/analogy}
 
 == 4강에서: LEO 의 key instance (L11 p.3, p.14, p.20–21) ==
-* '''LEO''': L11 p.21 "LEO … '''Key instance: Starlink'''". LEO = polar and inclined orbits, 500–2000 km, 90–120 min, "similar to the cellular telephone system" → [[LEO]].
-* '''고도 341 miles''': p.14·p.21 그림 "Starlink '''341 miles'''" vs "Normal satellites '''621+ miles'''" — 341 miles ≈ 550 km, 621 miles ≈ 1,000 km. 보통 LEO 보다도 낮게 띄웠다. Kepler 로 계산하면 $(1/100)(550 + 6378)^{1.5} \approx 5{,}766$ s ≈ '''96 min''' → [[Kepler's law]].
-* '''System architecture''' (p.3): '''Space segment'''(위성들 + '''[[ISL]]''') · '''User segment'''(User Terminals) · '''Ground segment'''(Starlink Gateway → Internet) → [[satellite network 구성]].
-* '''ISL''': 위성끼리 직접 데이터를 넘겨, gateway 가 보이는 위성까지 하늘에서 전달한다 → [[ISL]] · [[UML과 GWL]].
-* '''footprint''': 위성 하나가 비추는 지상 영역. 위성을 따라 움직이므로 사용자는 몇 분마다 다음 위성으로 넘어간다 → [[footprint]].
+* '''LEO''': L11 p.21 은 "LEO … Key instance: Starlink" 라고 적는다. LEO 는 polar·inclined orbit, 500–2000 km, 주기 90–120 min 이고, "similar to the cellular telephone system" 이다. → [[LEO]]
+* '''고도 341 miles''': p.14·p.21 그림에 "Starlink 341 miles" 와 "Normal satellites 621+ miles" 가 나온다. 341 miles 는 약 550 km, 621 miles 는 약 1,000 km 다. 보통 LEO 보다도 낮게 띄웠다. 주기는 [[Kepler's law]] 로 직접 구해 볼 수 있다(PS1 2(a) 와 같은 계산이라 답은 적지 않는다).
+* '''System architecture''' (p.3): Space segment(위성들 + [[ISL]]), User segment(User Terminals), Ground segment(Starlink Gateway → Internet). → [[satellite network 구성]]
+* '''ISL''': 위성끼리 직접 데이터를 넘긴다. 그래서 gateway 가 보이는 위성까지 하늘에서 전달할 수 있다. → [[ISL]] · [[UML과 GWL]]
+* '''footprint''': 위성 하나가 비추는 지상 영역이다. 위성을 따라 움직이니 사용자는 몇 분마다 다음 위성으로 넘어간다. → [[footprint]]
 
-[[img:L11-21.png|L11 p.21 LEO — ISL 로 이어진 위성 2 기, UML·GWL, Footprint, 오른쪽 아래 "Starlink 341 miles" vs "Normal satellites 621+ miles"|medium]]
+[[img:L11-21.png|L11 p.21 — ISL 로 이어진 위성 2 기, UML·GWL, Footprint. 오른쪽 아래 "Starlink 341 miles" 와 "Normal satellites 621+ miles" 를 비교하라|medium]]
 
 == 관련 문서 ==
 * [[satellite network]] · [[WAN 분류]] · [[handoff]] · [[CH05 셀룰러 동작]]

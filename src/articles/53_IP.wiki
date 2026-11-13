@@ -2,7 +2,7 @@ key: IP
 title: IP (Internet Protocol) — 인터넷의 network layer 프로토콜
 category: 5강 네트워크 계층, 용어
 ---
-'''IP (Internet Protocol)''' 은 인터넷 [[network layer]] 의 주 프로토콜이다. L12 p.4–5, p.17–18, p.26. 교수 정리: IP 의 '''두 큰 성질은 [[connectionless]] 와 [[best effort]]''' 이고, 그 밖의 서비스는 TCP·application·[[IPSec]] 같은 '''다른 프로토콜'''이 한다(10/27 녹음 28:28). 주소(addressing)는 다음 수업(10/29)의 주제다. 중간고사 위키의 [[mid:IP]] 도 참고.
+'''IP (Internet Protocol)''' 는 인터넷 [[network layer]] 의 주 프로토콜이다. 슬라이드는 L12 p.4–5, p.17–18, p.26 이다. 교수는 IP 의 두 큰 성질로 [[connectionless]] 와 [[best effort]] 를 꼽았다. 그 밖의 서비스는 TCP, application, [[IPSec]] 같은 다른 프로토콜이 맡는다(10/27 녹음 28:28). 주소(addressing)는 다음 수업의 주제다. 중간고사 위키의 [[mid:IP]] 도 참고.
 
 {def}"'''Internet Protocol (IP)''': the main protocol of the Internet
 * Defines the format and structure of '''addresses'''
@@ -13,7 +13,7 @@ category: 5강 네트워크 계층, 용어
 "The Internet's network layer (IP) uses the '''datagram approach'''." (p.26){/def}
 
 == 이름에서 개념 끌어내기 ==
-* '''Inter-net''' = 망'''들 사이'''(inter)를 잇는 것. 서로 다른 LAN·WAN 을 하나로 묶는 공통 규칙이 IP 다. 그래서 '''주소 형식'''을 정하는 게 첫 번째 일이다 — 모두가 같은 주소 체계를 써야 망을 넘나들 수 있다.
+* Inter-net 은 망'''들 사이'''(inter)를 잇는다는 뜻이다. 서로 다른 LAN 과 WAN 을 하나로 묶는 공통 규칙이 IP 다. 그래서 IP 가 맨 먼저 하는 일은 주소 형식을 정하는 것이다. 모두가 같은 주소 체계를 써야 망을 넘나들 수 있다.
 
 == IP 를 한 장으로 ==
 {|
@@ -21,9 +21,9 @@ category: 5강 네트워크 계층, 용어
 |-
 | 주소 || format and structure of addresses (IP address) || [[mid:IP 주소와 MAC 주소]]
 |-
-| 서비스 형태 || '''connectionless''' — setup 없이 datagram 마다 독립 || [[connectionless]]
+| 서비스 형태 || '''connectionless''': setup 없이 datagram 마다 따로 || [[connectionless]]
 |-
-| 신뢰성 || '''best effort''' — 보장 없음 || [[best effort]]
+| 신뢰성 || '''best effort''': 보장 없음 || [[best effort]]
 |-
 | 단위 || '''datagram''' = header + payload || [[datagram]]
 |-
@@ -36,14 +36,22 @@ category: 5강 네트워크 계층, 용어
 | 돕는 프로토콜 || [[ICMP]], IGMP, DHCP, ARP || [[보조 프로토콜]]
 |}
 
-{exam}🎯 "I would like to highlight '''two big properties of IP''', which is '''connectionless''' … and anything other services [are] served by '''higher layer protocol''' such as TCP, application layer and IPSec." (28:28) — 그리고 best effort 를 "very important" 라고 했다(05:59). → '''"IP = connectionless + best effort"''' 한 줄을 외운다.{/exam}
+{exam}🎯 교수는 IP 를 정리하며 이렇게 말했다(28:28). "I would like to highlight two big properties of IP, which is '''connectionless''' … and anything other services [are] served by higher layer protocol such as TCP, application layer and IPSec." best effort 도 "very important" 라고 했다(05:59). "IP = connectionless + best effort" 한 줄을 외운다.{/exam}
 
 {analogy}🎭 IP 는 '''일반 우편'''이다. 봉투에 주소만 정확히 쓰면(주소 형식) 우체국이 최선을 다해 배달하지만(best effort), 등기처럼 도착 확인을 해 주지도, 편지 여러 통이 보낸 순서대로 온다고 약속하지도 않는다(connectionless). 그런 보장이 필요하면 '''등기 서비스(TCP)''' 를 위에 덧붙인다.{/analogy}
 
-{quiz}OX: ① IP 는 데이터를 보내기 전에 연결 setup 을 한다. ② IP 의 checksum 은 payload 까지 검사한다. ③ 인터넷의 network layer 는 virtual-circuit approach 를 쓴다.{/quiz}
-{answer}① ✗ (connectionless — no setup) ② ✗ (checksum covers the '''header only''') ③ ✗ (IP 는 '''datagram approach''', p.26){/answer}
+{mini}
+# O/X: IP 는 데이터를 보내기 전에 연결 setup 을 한다.
+# O/X: IP 의 checksum 은 payload 까지 검사한다.
+# O/X: 인터넷의 network layer 는 virtual-circuit approach 를 쓴다.
+{/mini}
+{answer}
+# X. connectionless 라서 setup 이 없다(p.4 "no setup").
+# X. checksum 은 header 만 덮는다(p.4 "checksum covers the header only").
+# X. IP 는 datagram approach 다(p.26).
+{/answer}
 
-{tip}'''필기 메모: 노란 형광펜''' (p.4) — "the main protocol of the Internet", "Connectionless", "Best effort" 에 형광펜. 즉 IP 를 한 줄로 말하라면 '''인터넷의 핵심 프로토콜 + connectionless + best effort''' 이다 → [[connectionless]] · [[best effort]]. (같은 장 그림 옆의 동그라미 친 R 두 개는 라우터 표시로 보이며 별도 설명이 필요한 질문은 아니다.){/tip}
+{tip}'''필기 메모: 노란 형광펜''' (p.4): "the main protocol of the Internet", "Connectionless", "Best effort" 에 형광펜이 있다. IP 를 한 줄로 말하면 "인터넷의 main protocol, connectionless, best effort" 다 → [[connectionless]] · [[best effort]]. (같은 장 그림 옆의 동그라미 친 R 두 개는 라우터 표시로 보이며 별도 설명이 필요한 질문은 아니다.){/tip}
 
 == 관련 문서 ==
 * [[connectionless]] · [[best effort]] · [[datagram]] · [[IP가 제공하는 서비스]] · [[datagram approach]] · [[ICMP]] · [[IPSec]]

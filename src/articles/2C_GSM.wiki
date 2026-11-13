@@ -2,24 +2,25 @@ key: GSM
 title: GSM (Global System for Mobile Communication — 2G, 유럽)
 category: 2강 1G–2G, 용어
 ---
-'''GSM(Global System for Mobile Communication)'''은 유럽 전체의 공통 [[2G]] 표준으로 만든 디지털 셀룰러 시스템이다. 대역은 890–915 MHz(uplink) / 935–960 MHz(downlink), 각 25 MHz 를 200 kHz × 124 채널로 나누고([[FDMA]]), 채널마다 8 명이 [[TDMA]] 로 공유한다. 채널 bit rate 270.8 kbps, 변조 [[GMSK]]. L10 p.23–26.
+'''GSM(Global System for Mobile Communication)'''은 유럽 전체의 공통 [[2G]] 표준으로 만든 디지털 셀룰러 시스템이다. 대역은 890–915 MHz(uplink)와 935–960 MHz(downlink)이고, 각 25 MHz 를 200 kHz × 124 채널로 나눈다([[FDMA]]). 채널마다 8 명이 [[TDMA]] 로 나눠 쓴다. 채널 bit rate 는 270.8 kbps, 변조는 [[GMSK]] 다. L10 p.23–26.
 
 {def}"2nd Generation: GSM (Global System for Mobile Communication) — A '''European''' standard for a common 2G technology '''for all Europe'''." (p.23){/def}
 
 == 이름에서 개념 끌어내기 ==
-'''G'''lobal '''S'''ystem for '''M'''obile communication. 원래 약자는 프랑스어 ''Groupe Spécial Mobile''(표준을 만든 위원회 이름)이었고, 나중에 영어 이름으로 바꿨다(보충). 출발점은 "'''for all Europe'''" — 1G 시절 유럽은 나라마다 방식이 달라 국경을 넘으면 폰이 안 됐다. 하나의 공통 표준을 만들자 → 결국 전 세계로 퍼져 이름처럼 '''global''' 해졌다.
+Global System for Mobile communication 의 약자다. 원래 GSM 은 표준을 만든 위원회의 프랑스어 이름 ''Groupe Spécial Mobile'' 의 약자였고, 나중에 같은 약자에 영어 이름을 붙였다(보충). 출발점은 "for all Europe" 였다. 1G 시절 유럽은 나라마다 방식이 달라서 국경을 넘으면 폰이 안 됐다. 그래서 공통 표준을 만들었고, 이 표준이 유럽 밖으로도 퍼지면서 이름처럼 global 해졌다.
 
-{analogy}🎭 '''유로화.''' 나라마다 다른 화폐(1G 방식)를 쓰다가 하나의 통화(GSM)로 통일하니 국경을 넘어도 그대로 쓸 수 있다 — GSM 의 [[roaming]] 이 유럽에서 자연스러웠던 이유.{/analogy}
+{analogy}🎭 '''유로화.''' 나라마다 다른 화폐(1G 방식)를 쓰다가 하나의 통화(GSM)로 통일하니 국경을 넘어도 그대로 쓸 수 있다. 유럽에서 GSM [[roaming]] 이 자연스러웠던 이유다.{/analogy}
 
-[[img:L10-23.png|p.23 GSM 구성 — MS · BS(= Cell) → MSC(Mobile-Services Switching Center) → PSTN → Telephone, MSC 옆에 HLR (그림의 "HRL- Home Loaction Register" 는 오타) (필기본)|medium]]
+[[img:L10-23.png|p.23 (필기본) — 빨간 원 "Cell" 안의 MS 와 BS, 그 뒤 MSC, MSC 위 원통 HLR("HRL- Home Loaction Register" 는 오타), 오른쪽 PSTN|medium]]
 
 == 구성 (p.23) ==
-* [[mobile station]] + [[base station]] = 한 [[cell]] (필기 빨간 원)
-* [[MSC]] — 그림에서는 '''Mobile-Services Switching Center''' (일반 셀룰러 용어 Mobile Switching Center 와 같은 장비)
-* [[HLR]] — 가입자·위치 데이터베이스
-* [[PSTN]] — 일반 전화망으로 연결
+위 그림을 왼쪽부터 읽으면 이렇다.
+* [[mobile station]] 과 [[base station]] 이 한 [[cell]] 이다(필기 빨간 원).
+* [[MSC]] 는 그림에 Mobile-Services Switching Center 라고 적혀 있다. 일반 셀룰러 용어 Mobile Switching Center 와 같은 장비다.
+* [[HLR]] 은 가입자와 위치를 기록하는 데이터베이스다.
+* [[PSTN]] 을 거쳐 일반 전화망과 이어진다.
 
-== 수치 한눈에 (참고 — 암기 불필요) ==
+== 수치 한눈에 (참고, 외우지 않아도 된다) ==
 {|
 ! 항목 || 값 || 문서
 |-
@@ -44,9 +45,9 @@ category: 2강 1G–2G, 용어
 
 [[sim:gsm_bitrate]]
 
-{info}Forouzan 보충(슬라이드에 없음): GSM 의 reuse factor 는 3 정도까지 가능하다고 교재는 쓴다(디지털 + 오류 제어 덕에 간섭에 강함). AMPS 의 7 과 비교해 같은 대역을 더 촘촘히 재사용한다.{/info}
+{info}Forouzan 보충(슬라이드에 없음): 교재는 GSM 의 reuse factor 가 3 정도까지 가능하다고 쓴다. 디지털과 오류 제어 덕에 간섭에 강하기 때문이다. AMPS 의 7 보다 같은 대역을 더 촘촘히 다시 쓴다.{/info}
 
-{exam}GSM = '''European''' 표준(교수: AMPS 는 North America, "different regions employ different standards"; GSM 은 "very successful" 이지만 '''한국에서는 안 쓰고 IS-95''') · '''digital''' · '''TDMA 와 FDMA 의 hybrid''' (54:05) · 채널이 AMPS 보다 넓음(200 kHz vs 30 kHz) · 변조 GMSK. 수치(124, 270.8 kbps)는 외울 필요 없다고 했다(41:54, 46:00).{/exam}
+{exam}GSM 은 European 표준이다. 교수는 AMPS 가 North America 용이라며 "different regions employ different standards" 라고 했고, GSM 은 "very successful" 이지만 한국에서는 쓰지 않고 IS-95 를 썼다고 했다. GSM 은 digital 이고, '''TDMA 와 FDMA 의 hybrid''' 다(54:05). 채널이 AMPS 보다 넓고(200 kHz 대 30 kHz), 변조는 GMSK 다. 124, 270.8 kbps 같은 수치는 외울 필요 없다고 했다(41:54, 46:00).{/exam}
 
 == 관련 문서 ==
 * [[GSM 대역]] · [[GSM 프레임 구조]] · [[GSM multiframe]] · [[GSM channel bit rate]] · [[GMSK]] · [[HLR]]

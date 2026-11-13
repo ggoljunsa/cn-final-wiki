@@ -8,7 +8,7 @@ category: 8강 IPv6, 용어
 Link-local address (128 bits) = 1111 1110 10 (10 bits) | 54 zeros (54 bits) | 64-bit interface ID (64 bits) (p.14 그림)
 → FE80::/10 접두사 뒤에 자기 interface ID 를 붙인다.{/def}
 
-[[img:L14-15.png|p.15 Link-local address = 1111 1110 10 | 54 zeros | 64-bit interface ID|medium]]
+[[img:L14-15.png|p.15 — Link-local address = 1111 1110 10 | 54 zeros | 64-bit interface ID|medium]]
 
 == 이름에서 개념 끌어내기 ==
 * '''link-local''' = 그 link 에서만(local) 통하는 주소. 라우터는 이 주소를 다른 network 로 넘기지 않는다.
@@ -33,8 +33,12 @@ link-local   = FE80:0000:0000:0000:F7A9:23FF:FE11:9BE2
 
 {analogy}🎭 link-local 주소는 '''같은 층 사람끼리만 쓰는 내선 번호'''다. 외부로 전화하려면 회사 대표번호(global 주소)가 필요하고, 그 번호는 교환실(router)에 물어서 받는다.{/analogy}
 
-{quiz}link-local 주소에 54 zeros 가 들어가는 이유는?{/quiz}
-{answer}128 bits 중 prefix 가 10 bits, interface ID 가 64 bits 라서 128 − 10 − 64 = 54 bits 가 남는다. 이 자리는 0 으로 채운다.{/answer}
+{mini}
+# link-local 주소에 54 zeros 가 들어가는 이유는?
+{/mini}
+{answer}
+# 128 bits 중 prefix 가 10 bits, interface ID 가 64 bits 라서 128 − 10 − 64 = 54 bits 가 남는다. 이 자리는 0 으로 채운다.
+{/answer}
 
 == 관련 문서 ==
 * [[autoconfiguration]] · [[interface ID]] · [[router solicitation과 advertisement]] · [[Example 7.29]]

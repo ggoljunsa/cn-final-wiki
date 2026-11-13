@@ -2,17 +2,17 @@ key: flow control
 title: Flow control (흐름 제어) — receiver 가 감당할 속도로, IP ✗ → TCP
 category: 5강 네트워크 계층, 용어
 ---
-'''Flow control''' 은 보내는 쪽의 속도를 '''받는 쪽(receiver)이 감당할 수 있는 만큼'''(그 buffer 안)으로 맞추는 것이다. network layer 가 줄 수 있는 서비스지만 '''[[IP]] 는 하지 않는다 → TCP 가 한다'''(receive window). L12 p.13, p.18.
+'''Flow control''' 은 보내는 쪽의 속도를 받는 쪽(receiver)이 감당할 수 있는 만큼, 곧 receiver buffer 안으로 맞추는 일이다. network layer 가 줄 수 있는 서비스이긴 하다. 하지만 [[IP]] 는 하지 않고, '''TCP''' 가 receive window 로 한다. 슬라이드는 L12 p.13, p.18 이다.
 
-{def}"'''Flow Control''' — Keep the sender's rate within what the '''receiver''' can handle (its '''buffer'''). '''IP does not provide it → done by TCP'''." (p.13)
-"Flow control — '''✗ No''' — TCP (receive window)" (p.18){/def}
+{def}"Flow Control — Keep the sender's rate within what the receiver can handle (its buffer). IP does not provide it → done by TCP." (p.13)
+"Flow control — ✗ No — TCP (receive window)" (p.18){/def}
 
 [[img:L12-13.png|p.13 아래 그림 — Sender → Receiver "too fast?", "IP: no flow control → TCP does it"|medium]]
 
 == 이름에서 개념 끌어내기 ==
 * '''flow''' = 물의 흐름. 수도꼭지(sender)를 너무 세게 틀면 컵(receiver buffer)이 넘친다. 흐름을 '''컵 크기에 맞게''' 조절하는 것.
 
-{warn}'''flow control ≠ congestion control''' — 둘 다 "속도를 줄여라" 지만 '''누구를 보호하나'''가 다르다.
+{warn}'''flow control ≠ congestion control'''. 둘 다 "속도를 줄여라" 지만 '''누구를 보호하나'''가 다르다.
 {|
 ! || [[flow control]] || [[congestion control]]
 |-
@@ -23,7 +23,7 @@ category: 5강 네트워크 계층, 용어
 | IP 는? || ✗ → TCP (receive window) || ✗ → 라우터는 drop 만, TCP 가 slow down
 |}{/warn}
 
-{exam}🎯 교수가 두 번 말했다: "Flow control. Flow control is '''not served by IP'''." (14:59) · "flow control is not [served] by IP. It is [served] by '''TCP''', which is in the transport layer." (22:54) — OX "IP 는 flow control 을 제공한다" ✗.{/exam}
+{exam}🎯 교수가 두 번 말했다: "Flow control. Flow control is '''not served by IP'''." (14:59) · "flow control is not [served] by IP. It is [served] by '''TCP''', which is in the transport layer." (22:54) OX 로 "IP 는 flow control 을 제공한다" 가 나오면 ✗ 다.{/exam}
 
 {analogy}🎭 '''택배 받는 사람의 현관 앞 공간.''' 하루에 상자 3 개밖에 못 놓는데 10 개를 보내면 넘친다. "하루 3 개씩만 보내 주세요" 라고 '''받는 사람이''' 알려 주는 것이 flow control(TCP 의 receive window). 택배 회사(IP)는 그런 조절을 안 한다.{/analogy}
 

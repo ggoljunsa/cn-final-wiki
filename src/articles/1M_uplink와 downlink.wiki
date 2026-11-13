@@ -2,41 +2,43 @@ key: uplink와 downlink
 title: Uplink 와 Downlink (reverse · forward)
 category: 1강 셀룰러 동작, 용어
 ---
-셀룰러에서 '''uplink''' 는 '''MS → BS''' 방향(폰이 탑으로 '''올려''' 보냄), '''downlink''' 는 '''BS → MS''' 방향(탑이 폰으로 '''내려''' 보냄)이다. 셀룰러 교재·슬라이드는 같은 것을 '''reverse'''(= uplink) / '''forward'''(= downlink) 라고도 부른다. 1G AMPS 부터 두 방향에 '''서로 다른 대역'''을 줘서 동시에 말하고 듣는다(FDD). 이 문서는 1강 구조(MS·BS)를 바탕으로 2강·3강의 대역 이야기를 미리 정리한다.
+셀룰러에서 '''uplink''' 는 MS → BS 방향이다. 폰이 탑으로 올려 보낸다. '''downlink''' 는 BS → MS 방향이다. 탑이 폰으로 내려 보낸다. 슬라이드는 같은 것을 reverse(= uplink), forward(= downlink) 라고도 부른다. 1G AMPS 부터 두 방향에 서로 다른 대역을 줘서 동시에 말하고 듣는다(FDD). 이 문서는 1강의 구조(MS, BS)를 바탕으로 2강·3강의 대역 이야기를 미리 묶어 둔다.
 
-{def}AMPS 대역 슬라이드(L10 p.19) 표현: MS 가 보내는 대역 '''824–849 MHz''' = '''reverse''' (mobile → base), BS 가 보내는 대역 '''869–894 MHz''' = '''forward''' (base → mobile). IS-95 블록도(p.29–30)도 forward / reverse 로 나뉜다.
+{def}AMPS 대역 슬라이드(L10 p.19) 그림 라벨:
+* "Reverse communication: mobile to base" → Mobile station band 824–849 MHz
+* "Forward communication: base to mobile" → Base station band 869–894 MHz
+IS-95 블록도(p.29–30)도 forward 와 reverse 로 나뉜다.
 uplink(reverse) = MS → BS, downlink(forward) = BS → MS.{/def}
 
-[[img:L10-19.png|p.19 AMPS bands — 824–849 MHz (MS 송신 = reverse = uplink) 와 869–894 MHz (BS 송신 = forward = downlink), 각 25 MHz 를 30 kHz 채널로 나눔 (필기본, "다시" 표시)|medium]]
+[[img:L10-19.png|p.19 — 824–849 MHz 는 MS 가 보내는 reverse(필기 "uplink"), 869–894 MHz 는 BS 가 보내는 forward(필기 "Downlink"). 오른쪽 위 필기 그림 MS ↔ BS 의 up/down 화살표를 보라 (필기본, "다시" 표시)|medium]]
 
 == 이름에서 개념 끌어내기 ==
-* '''up / down''' — BS 탑은 높은 곳, 폰은 땅. 폰 → 탑은 '''위로(up)''', 탑 → 폰은 '''아래로(down)'''. 위성 통신(지상국 → 위성 = uplink)에서 널리 쓰이던 말이다 (보충 — 슬라이드에 없음).
-* '''forward / reverse''' — 망(BS)을 기준으로, 망이 사용자에게 '''앞으로 내보내는''' 방향이 forward, 사용자가 망으로 '''거슬러 보내는''' 방향이 reverse.
+'''up / down''': BS 탑은 높은 곳에 있고 폰은 땅에 있다. 폰 → 탑은 위로(up), 탑 → 폰은 아래로(down)다. 위 그림 오른쪽 위 필기도 MS 에서 BS 로 가는 화살표에 up, 반대쪽에 Down 을 적었다. 이 말은 원래 위성 통신(지상국 → 위성 = uplink)에서 널리 쓰였다(보충, 슬라이드에 없음).
+
+'''forward / reverse''': 망(BS)을 기준으로 붙인 이름이다. 망이 사용자에게 내보내는 방향이 forward, 사용자가 망으로 거슬러 보내는 방향이 reverse 다.
 
 {|
 ! 방향 || 별칭 || 송신자 → 수신자 || AMPS 대역 (p.19) || IS-95 (p.29–30)
 |-
-| '''uplink''' || '''reverse''' || MS → BS || 824–849 MHz || reverse 전송 → [[IS-95 reverse 전송]]
+| '''uplink''' || reverse || MS → BS || 824–849 MHz || reverse 전송 → [[IS-95 reverse 전송]]
 |-
-| '''downlink''' || '''forward''' || BS → MS || 869–894 MHz || forward 전송 → [[IS-95 forward 전송]]
+| '''downlink''' || forward || BS → MS || 869–894 MHz || forward 전송 → [[IS-95 forward 전송]]
 |}
-* 두 대역을 나눠 쓰는 것 = [[mid:duplexing과 multiple access|duplexing]] 의 한 방식인 '''FDD'''(frequency division duplexing). 같은 대역 안에서 사용자들을 나누는 것은 따로 [[FDMA]]·[[TDMA]]·[[CDMA]] — '''duplexing ≠ multiple access''' (중간고사 Bluetooth 에서 교수가 강조한 구분, Bluetooth 는 시간으로 나누는 TDD 였다 → [[mid:TDD-TDMA]]).
-* 1강 동작과의 연결: 발신 ①(MS → BS 번호 송신)은 '''uplink''', 수신 ②의 paging·④ ringing(BS → MS)은 '''downlink'''.
+두 방향에 대역을 따로 주는 것은 [[mid:duplexing과 multiple access|duplexing]] 의 한 방식인 FDD(frequency division duplexing)다. 같은 대역 안에서 여러 사용자를 나누는 것은 별개의 문제로, [[FDMA]]·[[TDMA]]·[[CDMA]] 가 맡는다. duplexing 과 multiple access 를 구분하라는 것은 중간고사 Bluetooth 때 교수가 강조한 내용이다. Bluetooth 는 시간으로 방향을 나누는 TDD 였다(→ [[mid:TDD-TDMA]]).
 
-{analogy}🎭 '''2차선 도로.''' 올라가는 차선(uplink)과 내려오는 차선(downlink)을 따로 깔아 두면 양쪽 차가 동시에 달린다(full-duplex). AMPS 는 두 차선 사이에 45 MHz 의 중앙분리대를 둔 셈이다(824→869, 849→894).{/analogy}
+1강 동작과 연결하면 이렇다.
+* 발신 ① 에서 MS 가 BS 로 번호를 보내는 것은 uplink 다.
+* 수신의 paging(②)과 ringing(④)처럼 BS 가 MS 로 보내는 것은 downlink 다.
 
+{analogy}🎭 '''2차선 도로.''' 올라가는 차선(uplink)과 내려오는 차선(downlink)을 따로 깔아 두면 양쪽 차가 동시에 달린다(full-duplex). AMPS 는 두 차선 사이에 45 MHz 짜리 중앙분리대를 둔 셈이다(824 → 869, 849 → 894).{/analogy}
 [[anim:amps_bands|MS 가 uplink(824–849 MHz) 채널 하나와 downlink(869–894 MHz) 채널 하나를 짝으로 잡는 모습을 보라]]
 
-{quiz}AMPS 에서 BS 가 MS 에게 보내는 방향의 이름 두 가지와 그 대역은?{/quiz}
-{answer}'''downlink''' = '''forward''' (base → mobile), '''869–894 MHz''' (p.19).{/answer}
-
 == 위성의 uplink 와 downlink (L11 p.15, 4강) ⭐⭐⭐ ==
-{def}"'''Uplink''': transmission from '''the Earth to the satellite'''. '''Downlink''': transmission from '''the satellite to the Earth'''." (L11 p.15 Frequency bands for SATCOM){/def}
+{def}"'''Uplink''': transmission from the Earth to the satellite. '''Downlink''': transmission from the satellite to the Earth." (L11 p.15 Frequency bands for SATCOM){/def}
 
-위성망에서는 송신자·수신자가 MS·BS 가 아니라 '''지구(지상국·user terminal·gateway)'''와 '''위성'''이다. 방향을 정하는 규칙("위로 올려 보내면 up")은 같다 — 위에서 말했듯 uplink/downlink 는 위성 통신에서 널리 쓰이던 말이다 (보충).
+위성망에서는 양 끝이 MS 와 BS 가 아니다. 지구 쪽(지상국, user terminal, gateway)과 위성이다. 방향을 정하는 규칙은 같다. 위로 올려 보내면 up 이다.
 
-[[img:L11-15.png|L11 p.15 Frequency bands for SATCOM — Uplink: Earth → satellite, Downlink: satellite → Earth, 대역 표 L/S/C/Ku/Ka|medium]]
-
+[[img:L11-15.png|L11 p.15 — Uplink: Earth → satellite, Downlink: satellite → Earth. 아래 L/S/C/Ku/Ka 대역 표에서 uplink 열이 downlink 열보다 큰 것을 보라|medium]]
 {|
 ! Band || Downlink, GHz || Uplink, GHz || Bandwidth, MHz
 |-
@@ -50,23 +52,29 @@ uplink(reverse) = MS → BS, downlink(forward) = BS → MS.{/def}
 |-
 | Ka || 20.0 || 30.0 || 3500
 |}
-* 숫자는 참고. trend: 대역이 높을수록 bandwidth↑, 그리고 '''모든 대역에서 uplink 주파수 > downlink 주파수''' → [[SATCOM 주파수 대역]].
-* uplink·downlink 에 '''다른 주파수'''를 쓰는 것은 AMPS 의 두 대역(824–849 / 869–894 MHz)과 같은 방식(FDD)이다.
+* 숫자는 참고용이다. 흐름은 두 가지다. 대역이 높을수록 bandwidth 가 넓고, 모든 대역에서 uplink 주파수가 downlink 주파수보다 높다. → [[SATCOM 주파수 대역]]
+* uplink 와 downlink 에 다른 주파수를 쓰는 것은 AMPS 의 두 대역(824–849 / 869–894 MHz)과 같은 방식(FDD)이다.
 
-{exam}🎯 '''셀룰러 vs 위성 — 같은 단어, 다른 양 끝''' (교수 10/20 41:54: "memorize uplink and downlink")
+{exam}교수(10/20 녹음 40:00): "I recommend you to memorize these uplink and downlink by imagining this illustration." 숫자는 외우지 말라고 한 바로 뒤에도 "But I would recommend you to memorize uplink and downlink" 라고 다시 말했다(42:20). 같은 단어가 셀룰러와 위성에서 양 끝만 바뀐다.
 {|
 ! || uplink || downlink
 |-
-| 셀룰러 (L10 p.19, AMPS) || '''MS → BS''' = reverse (824–849 MHz) || '''BS → MS''' = forward (869–894 MHz)
+| 셀룰러 (L10 p.19, AMPS) || MS → BS = reverse (824–849 MHz) || BS → MS = forward (869–894 MHz)
 |-
-| 위성 (L11 p.15, SATCOM) || '''Earth → satellite''' || '''satellite → Earth'''
+| 위성 (L11 p.15, SATCOM) || Earth → satellite || satellite → Earth
 |}
-* 공통: '''up = 높은 쪽(탑·위성)으로 올려 보냄'''.
-* 함정: 위성 문제에서 "uplink = MS → BS" 라고 쓰면 틀린다. 지상의 gateway(BS 같은 장비)라도 '''위성으로 보내면 uplink''' 다.
-* 위성 uplink/downlink 에는 forward/reverse 라는 별칭을 쓰지 않는다(슬라이드 기준).{/exam}
+* 공통 규칙은 높은 쪽(탑, 위성)으로 올려 보내면 up 이라는 것이다.
+* 위성 문제에서 "uplink = MS → BS" 라고 쓰면 틀린다. 지상 gateway 가 BS 같은 장비여도 위성으로 보내면 uplink 다.
+* 위성의 uplink/downlink 에는 forward/reverse 라는 별칭을 쓰지 않는다(슬라이드 기준).{/exam}
 
-{quiz}OX: ① 위성 통신에서 downlink 는 위성이 지구로 보내는 전송이다. ② 셀룰러에서 uplink 는 forward 라고도 부른다. ③ SATCOM C band 에서 uplink 는 4 GHz, downlink 는 6 GHz 이다.{/quiz}
-{answer}① ○ ② ✗ (uplink = '''reverse''', downlink = forward) ③ ✗ (uplink '''6''' GHz, downlink '''4''' GHz — uplink 쪽이 더 높다){/answer}
+{mini}
+# AMPS 에서 BS 가 MS 에게 보내는 방향의 이름 두 가지와 그 대역은?
+# O/X: ① 위성 통신에서 downlink 는 위성이 지구로 보내는 전송이다. ② 셀룰러에서 uplink 는 forward 라고도 부른다. ③ SATCOM C band 에서 uplink 는 4 GHz, downlink 는 6 GHz 다.
+{/mini}
+{answer}
+# downlink = forward (base to mobile), 869–894 MHz (p.19).
+# ① O. ② X. uplink 는 reverse 이고, forward 는 downlink 다. ③ X. uplink 가 6 GHz, downlink 가 4 GHz 다. uplink 쪽이 더 높다.
+{/answer}
 
 == 관련 문서 ==
 * [[AMPS 대역과 채널]] · [[IS-95 forward 전송]] · [[IS-95 reverse 전송]] · [[base station]] · [[mobile station]]

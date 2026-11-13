@@ -2,7 +2,7 @@ key: address mask
 title: Address mask — n 개의 1, AND 로 first, OR NOT 으로 last
 category: 6강 IPv4 주소, 용어
 ---
-'''Address mask''' 는 앞 n 비트가 '''1''', 뒤 32 − n 비트가 '''0''' 인 32 비트 값이다. 주소와 '''비트 연산'''만 하면 [[block의 세 가지 정보]] 가 나온다. L13 p.17–18. 교수: "with this address mask, we can easily come up with some '''important quantities'''" (31:17), "it is actually very '''implementable in a router'''" (35:46).
+'''Address mask''' 는 앞 n 비트가 1, 뒤 32 − n 비트가 0 인 32 비트 값이다(L13 p.17–18). 주소와 비트 연산만 하면 [[block의 세 가지 정보]] 가 나온다. 교수는 mask 로 "we can easily come up with some important quantities" 라고 했고(31:17), 이유를 "it is actually very implementable in a router" 라고 들었다(35:46).
 
 {def}"'''Address mask''': 32 bits with n leftmost 1s and (32 − n) 0s. Ex) /27 → 255.255.255.224" (p.17)
 "All three values come from simple bit operations:
@@ -10,10 +10,8 @@ Number of addresses N = '''NOT (mask) + 1'''
 First address = (any address in the block) '''AND''' (mask)
 Last address = (any address in the block) '''OR''' [NOT (mask)]" (p.18){/def}
 
-[[img:L13-18.png|p.18 /27 → 11111111 11111111 11111111 111 00000 = 255.255.255.224, 세 공식 표|large]]
-
 == 이름에서 개념 끌어내기 ==
-* '''mask''' = 가면, 가리개. 1 자리는 원래 비트를 '''보이게'''(통과), 0 자리는 '''가린다'''(0 으로). 페인트칠할 때 붙이는 마스킹 테이프처럼 prefix 만 남기고 suffix 를 덮는다.
+* mask 는 가리개다. 1 자리는 원래 비트를 그대로 보여 주고, 0 자리는 가린다(0 으로 만든다). 페인트칠할 때 붙이는 마스킹 테이프처럼 prefix 만 남기고 suffix 를 덮는다.
 
 == 계산 (Example 7.1, /27) ==
 <pre class="txt">
@@ -24,8 +22,8 @@ address     10100111 11000111 10101010 01010010   = 167.199.170.82
  AND mask   10100111 11000111 10101010 01000000   = '''167.199.170.64'''  first
  OR NOT(m)  10100111 11000111 10101010 01011111   = '''167.199.170.95'''  last
 </pre>
-* AND: 1 과 AND 하면 그대로, 0 과 AND 하면 0 → '''prefix 보존, suffix 0'''. 교수: "the prefix is just preserved because any address in that block should have the same prefix as the mask" (34:41).
-* OR: 0 과 OR 하면 그대로, 1 과 OR 하면 1 → NOT(mask) 의 1 자리(suffix)만 '''1 로'''.
+* AND 는 1 과 만나면 그대로, 0 과 만나면 0 이다. 그래서 prefix 는 남고 suffix 는 0 이 된다. 교수 표현으로는 "the prefix is just preserved because any address in that block should have the same prefix" 다(34:41).
+* OR 는 0 과 만나면 그대로, 1 과 만나면 1 이다. NOT(mask) 의 1 자리, 즉 suffix 만 1 로 바뀐다.
 
 == 자주 쓰는 mask ==
 {|
@@ -47,18 +45,24 @@ address     10100111 11000111 10101010 01010010   = 167.199.170.82
 |-
 | /28 || 255.255.255.240 || 16
 |}
-* 마지막 바이트 값 = 256 − (그 바이트 안의 block 크기): /27 → 256 − 32 = 224.
+마지막 바이트 값은 256 에서 그 바이트 안의 block 크기를 뺀 값이다. /27 이면 256 − 32 = 224 다.
 
-{warn}'''함정''': /27 의 mask 를 "255.255.255.27" 로 쓰면 틀린다. 27 은 '''1 의 개수'''이고, mask 는 그 1 들을 바이트로 묶어 십진수로 바꾼 값(11100000 = 224)이다.{/warn}
+{warn}'''함정''': /27 의 mask 를 "255.255.255.27" 로 쓰면 틀린다. 27 은 1 의 개수다. mask 는 그 1 들을 바이트로 묶어 십진수로 바꾼 값이다(11100000 = 224).{/warn}
 
 [[anim:cidr_mask_anim|mask 줄의 1·0 경계(빨간 점선)가 prefix·suffix 경계와 같다는 것, AND 와 OR NOT 의 결과 줄을 차례로 보라]]
 
 [[sim:cidr_block]]
 
-{analogy}🎭 mask 는 '''시험지 채점용 구멍 뚫린 종이'''다. 구멍(1) 난 자리의 답만 보이고 나머지(0)는 가려진다. 라우터는 이 종이를 패킷 주소 위에 대 보는 것만으로 "어느 network 로 가는지"(first = network address)를 읽는다.{/analogy}
+{analogy}🎭 mask 는 '''구멍 뚫린 채점용 종이'''다. 구멍(1) 난 자리의 답만 보이고 나머지(0)는 가려진다. 라우터는 이 종이를 패킷 주소 위에 대 보기만 하면 어느 network 로 가는지(first = network address)를 읽는다.{/analogy}
 
-{quiz}/26 mask 를 dotted decimal 로 쓰고, 14.24.74.150/26 의 first 를 mask 로 구하시오.{/quiz}
-{answer}11111111.11111111.11111111.11000000 = '''255.255.255.192'''. 150 = 10010110 AND 11000000 = 10000000 = 128 → first '''14.24.74.128'''.{/answer}
+{mini}
+# /26 mask 를 dotted decimal 로 쓰라.
+# 14.24.74.150/26 의 first 를 mask 로 구하라. 마지막 바이트를 2 진수로 보이라.
+{/mini}
+{answer}
+# 11111111.11111111.11111111.11000000 = 255.255.255.192.
+# 150 = 10010110, AND 11000000 → 10000000 = 128. first 는 14.24.74.128 이다.
+{/answer}
 
 == 관련 문서 ==
 * [[block의 세 가지 정보]] · [[network address]] · [[Example 7.1]] · [[slash notation]] · [[forwarding table]] · [[공식 모음]]

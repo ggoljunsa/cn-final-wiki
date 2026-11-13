@@ -2,39 +2,40 @@ key: satellite network
 title: Satellite Network (위성망)
 category: 1강 셀룰러 동작, 용어
 ---
-'''Satellite network''' 는 [[WAN 분류|Wireless WAN]] 의 두 번째 instance 다. 지상 BS 대신 '''궤도 위의 위성'''이 중계기 역할을 한다. 슬라이드(p.6–7)의 예는 '''[[Starlink]] / Starshield''' 이고, 오른쪽 BBC 그림 "How SpaceX satellites are used on the battlefield" 가 전장에서의 쓰임을 보여 준다.
+'''Satellite network'''는 [[WAN 분류|Wireless WAN]] 의 두 번째 instance 다. 지상 BS 대신 궤도 위의 위성이 중계를 맡는다. 슬라이드(p.6–7)의 예는 '''[[Starlink]] / Starshield''' 이고, 오른쪽 BBC 그림 "How SpaceX satellites are used on the battlefield" 가 전장에서 어떻게 쓰이는지 보여 준다.
 
-{def}"Wireless WANs — Cellular telephony · '''Satellite Networks''' — Starlink / Starshield." (p.6–7)
-무선 WAN 의 하나인 위성망. 예: SpaceX 의 Starlink(민간) / Starshield(정부·군용).{/def}
+{def}"Wireless WANs: Cellular telephony, '''Satellite Networks''' (Starlink / Starshield)." (p.6–7)
+무선 WAN 의 하나인 위성망이다. 예는 SpaceX 의 Starlink(민간)와 Starshield(정부·군용)다.{/def}
 
-[[img:L10-06.png|p.6 Wireless WANs — Cellular telephony(4G/5G), Satellite Networks(Starlink). 오른쪽 BBC 그림: ① 정찰 드론이 적 전차 위치 전송 → Starlink/Starshield → ② 지휘소가 부대에 알림 → ③ 드론 조종사가 공격 드론 조종 (필기본)|large]]
+[[img:L10-06.png|p.6 — 오른쪽 BBC 그림: ① 정찰 드론이 적 전차 위치를 보내고 ② Starlink/Starshield 를 거쳐 지휘소가 부대에 알리고 ③ 드론 조종사가 공격 드론을 띄운다|large]]
 
 == 이름에서 개념 끌어내기 ==
-* '''satellite''' = 위성. 기지국을 '''하늘 위에''' 띄워 놓은 셀룰러라고 생각하면 된다. 위성 하나의 커버리지(footprint)는 지상 cell 보다 훨씬 넓다.
-* 지상 infrastructure(BS·유선망)가 없거나 파괴된 곳 — 바다, 사막, 산간, '''전쟁터''' — 에서 강하다.
+satellite 는 위성이다. 기지국을 하늘 위에 띄워 놓은 셀룰러라고 생각하면 된다. 위성 하나가 덮는 영역(footprint)은 지상 cell 보다 훨씬 넓다. 그래서 지상 infrastructure 가 없거나 부서진 곳에서 강하다.
+* 바다, 사막, 산간
+* 전쟁터나 재난 지역
 
-(Forouzan 보충 — 슬라이드에 없음) 궤도 높이로 셋으로 나눈다:
+위성은 궤도 높이로 셋으로 나눈다(Forouzan 보충, 슬라이드 L10 에는 없음).
 {|
 ! 궤도 || 고도(대략) || 특징
 |-
-| GEO (Geostationary) || 약 35,786 km || 지구 자전과 같이 돌아 하늘에 '''멈춰 보임'''. 3 개면 지구 거의 전체. 대신 거리가 멀어 지연이 큼
+| GEO (Geostationary) || 약 35,786 km || 지구 자전과 같이 돌아서 하늘에 멈춘 것처럼 보인다. 3 개면 지구 거의 전체를 덮는다. 대신 멀어서 지연이 크다
 |-
-| MEO (Medium) || 수천~2 만 km || GPS 위성이 여기
+| MEO (Medium) || 수천~2 만 km || GPS 위성이 여기에 있다
 |-
-| LEO (Low) || 수백~2,000 km || 가깝다 → 지연 작음. 대신 빨리 지나가므로 '''위성 수천 개'''가 필요하고 위성 사이 handoff 가 계속 일어남. '''Starlink 가 LEO'''
+| LEO (Low) || 수백~2,000 km || 가까워서 지연이 작다. 대신 빨리 지나가서 위성이 수천 개 필요하고 위성 사이 handoff 가 계속 일어난다. Starlink 가 LEO 다
 |}
 
-{info}교수(10/20 녹음 19:00–21:04)는 발신 절차 뒤에 "wireless communications … are '''heavily dependent on this infrastructure'''" 라고 강조하며, '''Ukraine''' 이 최근 미국의 정책 때문에 Starlink/Starshield 연결이 제한돼 데이터 통신과 '''드론 제어'''에 어려움을 겪는다는 예를 들었다. 슬라이드 BBC 그림(드론-위성-지휘소)과 같은 맥락이다.{/info}
+{info}교수(10/20 녹음 19:00–21:04)는 발신 절차 뒤에 cellular 통신이 "heavily dependent on this infrastructure" 라고 강조했다. 그 예로 우크라이나를 들었다. 최근 미국의 정책 때문에 Starlink/Starshield 연결이 제한되면서 데이터 통신과 드론 제어에 어려움을 겪고 있다는 이야기다. 슬라이드 BBC 그림(드론, 위성, 지휘소)과 같은 맥락이다.{/info}
 
-{analogy}🎭 '''아주 높은 곳에 세운 기지국 탑.''' 셀룰러 BS 가 동네 언덕 위 확성기라면, 위성은 성층권보다 훨씬 위에 띄운 확성기다. 한 번에 넓은 지역에 들리지만, 멀어서 말이 도착하는 데 시간이 걸린다(지연).{/analogy}
-
+{analogy}🎭 '''아주 높은 곳에 세운 확성기.''' 셀룰러 BS 가 동네 언덕 위 확성기라면, 위성은 성층권보다 훨씬 위에 띄운 확성기다. 한 번에 넓은 지역에 들리지만, 멀어서 소리가 도착하는 데 시간이 걸린다(지연).{/analogy}
 
 == 4강에서 자세히 (L11, 10/22) ==
-{info}이 문서는 1강(L10 p.6–7)에서 이름만 나온 satellite network 의 소개다. 10/22 수업 덱 L11(`CH05_Wide Area Networks (2)`)이 위성망 전체를 다룬다 → 메인 문서 '''[[CH05 Satellite Network]]'''.{/info}
-* 정의(L11 p.2): "A '''wireless''' WAN that provides any type of communication" — [[cellular telephony]] 와 같은 문장. 구성(p.3): "a combination of nodes, '''including satellites''', that provides communication from one point on the Earth to another" → [[satellite network 구성]] · [[ISL]]
-* 궤도와 주기: [[orbit]] (equatorial / inclined / polar) · [[Kepler's law]] ($\text{Period} = \frac{1}{100}(h + 6378)^{1.5}$ 초) · [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]]
-* 위의 보충 표(GEO/MEO/LEO)는 L11 p.11–21 에서 슬라이드로 나온다 → [[위성 세 범주]] · [[GEO]] · [[MEO]]([[GPS]]) · [[LEO]]([[Starlink]], [[footprint]])
-* 위성의 uplink = '''Earth → satellite''' (p.15) → [[SATCOM 주파수 대역]] · [[uplink와 downlink]]
+이 문서는 1강(L10 p.6–7)에서 이름만 나온 satellite network 의 소개다. 10/22 수업 덱 L11(`CH05_Wide Area Networks (2)`)이 위성망 전체를 다룬다. 메인 문서는 '''[[CH05 Satellite Network]]''' 다.
+* 정의(L11 p.2)는 "A wireless WAN that provides any type of communication" 이다. [[cellular telephony]] 와 같은 문장이다.
+* 구성(p.3)은 "a combination of nodes, including satellites, that provides communication from one point on the Earth to another" 다. → [[satellite network 구성]] · [[ISL]]
+* 궤도와 주기: [[orbit]](equatorial / inclined / polar) · [[Kepler's law]]($\text{Period} = \frac{1}{100}(h + 6378)^{1.5}$ 초) · [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]]
+* 위의 GEO/MEO/LEO 표는 L11 p.11–21 에서 슬라이드로 나온다. → [[위성 세 범주]] · [[GEO]] · [[MEO]]([[GPS]]) · [[LEO]]([[Starlink]], [[footprint]])
+* 위성의 uplink 는 Earth → satellite 다(p.15). → [[SATCOM 주파수 대역]] · [[uplink와 downlink]]
 
 == 관련 문서 ==
 * '''[[CH05 Satellite Network]]''' · [[Starlink]] · [[WAN 분류]] · [[cellular telephony]] · [[handoff]] · [[위성 세 범주]]

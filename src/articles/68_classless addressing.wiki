@@ -2,7 +2,7 @@ key: classless addressing
 title: Classless addressing — class 없이, 2 의 거듭제곱 크기 block 을 필요한 만큼
 category: 6강 IPv4 주소, 용어
 ---
-'''Classless addressing''' 은 [[address depletion]] 의 '''단기 해결책'''이다. 주소 공간은 그대로 두고, 조직마다 '''크기가 다른(variable-size) block''' 을 준다. prefix 길이 n 은 0–32 아무거나, 단 '''block 크기는 2 의 거듭제곱'''. L13 p.9–11. 표기는 [[slash notation]](= [[CIDR]]).
+'''Classless addressing''' 은 [[address depletion]] 의 단기 해결책이다(L13 p.9–11). 주소 공간은 그대로 두고, 조직마다 크기가 다른(variable-size) block 을 준다. prefix 길이 n 은 0–32 중 아무거나 되지만, block 크기는 '''2 의 거듭제곱'''이어야 한다. 표기는 [[slash notation]] 이고 다른 이름은 [[CIDR]] 다.
 
 {def}"Short-term fix: same address space, but each organization gets a '''variable-size block'''.
 No classes: '''prefix = block (network), suffix = node'''.
@@ -10,35 +10,42 @@ Block size (= the number of addresses in a block) must be a '''power of 2'''.
 Prefix length n: anywhere from '''0 to 32'''.
 '''Longer prefix → smaller network'''." (p.9){/def}
 
-[[img:L13-09.png|p.9 Address space 를 크기가 제각각인 Block 1 … Block m 으로 나눔. 손글씨 "2^32"|medium]]
+[[img:L13-09.png|p.9 — 아래 막대에서 Address space 전체가 길이가 제각각인 Block 1 … Block m 으로 나뉜 것을 보라. 손글씨 "2^32"|medium]]
 
 == 이름에서 개념 끌어내기 ==
-* '''class-less''' = class 가 '''없는'''. A/B/C 같은 등급 대신 '''block''' 이 단위다. 교수: "we call block equivalently as one network" (30:24).
+* class-less 는 class 가 없다는 뜻이다. A/B/C 같은 등급 대신 block 이 단위가 된다. 교수는 block 과 network 를 같은 말로 썼다. "here we call block equivalently as one network"(30:24).
 
-== 핵심 네 가지 ==
-# '''variable-size block''' — 1,000 개가 필요하면 1,024 개([[Example 7.4]]), 120 개면 128 개([[Example 7.5 subnet 설계]]).
-# '''power of 2''' — block 크기 = suffix (32 − n) 비트의 경우의 수 = $2^{32-n}$. 교수: "some '''important restrictions''' … the block size must be a power of 2" (21:01).
-# '''n = 0 – 32''' — n = 32 → 주소 1 개(노드 하나), n = 0 → 주소 공간 전체 $2^{32}$ (교수 22:03–22:42).
-# '''longer prefix → smaller network''' — n 이 1 늘 때마다 block 이 절반.
-* prefix 길이가 주소에 들어 있지 않으니 '''/n''' 을 꼭 붙인다 → [[slash notation]] · [[Example 7.3]].
-* 주소 하나 + n → [[block의 세 가지 정보]] (N, first, last), 계산은 [[address mask]].
+== 네 가지 조건 ==
+# '''variable-size block''': 1,000 개가 필요하면 1,024 개를 준다([[Example 7.4]]). 120 개면 128 개다([[Example 7.5 subnet 설계]]).
+# '''power of 2''': block 크기는 suffix 32 − n 비트로 만드는 값의 개수 $2^{32-n}$ 이다. 교수 표현으로는 "some important restrictions … the block size must be a power of 2" 다(21:01).
+# '''n = 0 – 32''': n = 32 면 주소 1 개(노드 하나), n = 0 이면 주소 공간 전체 $2^{32}$ 가 block 하나다(교수 22:03–22:58).
+# '''longer prefix → smaller network''': n 이 1 늘 때마다 block 이 절반이 된다.
+prefix 길이가 주소에 들어 있지 않으니 /n 을 꼭 붙인다 → [[slash notation]] · [[Example 7.3]]. 주소 하나와 n 으로 [[block의 세 가지 정보]](N, first, last)를 구하고, 계산은 [[address mask]] 로 한다.
 
 {|
 ! || [[classful addressing|Classful]] || Classless
 |-
 | prefix 길이 || 8 / 16 / 24 고정 || 0 – 32 자유
 |-
-| prefix 를 아는 법 || 첫 바이트(leading bits) || '''/n''' 표기
+| prefix 를 아는 법 || 첫 바이트(leading bits) || /n 표기
 |-
 | block 크기 || $2^{24}$ / $2^{16}$ / $2^8$ 세 가지 || 아무 $2^k$
 |-
-| 결과 || depletion || 낭비 감소 (단기 해결)
+| 결과 || depletion || 낭비가 줄었다 (단기 해결)
 |}
 
-{analogy}🎭 classful 이 '''기성복 S·M·L''' 이라면 classless 는 '''치수를 2 배씩 촘촘히 나눈 맞춤복'''이다. 딱 맞진 않아도(1,000 → 1,024) 훨씬 덜 남는다.{/analogy}
+{analogy}🎭 classful 이 '''기성복 S·M·L''' 이라면 classless 는 '''치수를 두 배씩 촘촘히 나눈 옷'''이다. 몸에 딱 맞지는 않아도(1,000 → 1,024) 훨씬 덜 남는다.{/analogy}
 
-{quiz}OX: ① classless 에서 block 크기는 아무 정수나 된다. ② prefix 가 길수록 network 가 크다. ③ classless 주소는 /n 없이도 block 을 알 수 있다.{/quiz}
-{answer}① ✗ (2 의 거듭제곱) ② ✗ (longer prefix → '''smaller''' network) ③ ✗ (p.19: 주소만으로는 모른다){/answer}
+{mini}
+# "classless 에서 block 크기는 아무 정수나 된다." O/X.
+# "prefix 가 길수록 network 가 크다." O/X.
+# "classless 주소는 /n 없이도 block 을 알 수 있다." O/X.
+{/mini}
+{answer}
+# X. 2 의 거듭제곱이어야 한다.
+# X. 반대다. longer prefix → smaller network.
+# X. p.19 의 Example 7.3 처럼 같은 주소도 n 에 따라 block 이 달라진다.
+{/answer}
 
 == 관련 문서 ==
 * [[classful addressing]] · [[address depletion]] · [[slash notation]] · [[CIDR]] · [[block의 세 가지 정보]] · [[address mask]] · [[block allocation]] · [[CH07 IPv4 주소]]

@@ -2,16 +2,16 @@ key: Example 7.19–7.21 R1 포워딩
 title: Example 7.19–7.21 — R1 의 forwarding table 만들기, 비트로 보기, 180.70.65.140 찾기
 category: 7강 IPv4 데이터그램, 예제
 ---
-'''Example 7.19–7.21''' 은 한 라우터 R1 을 두고 ① forwarding table 을 만들고(7.19), ② 같은 표를 비트로 보고(7.20), ③ 목적지 180.70.65.140 의 interface 를 찾는(7.21) 연작이다. 답: '''m0'''. L13 rev p.57–62.
+'''Example 7.19–7.21''' 은 라우터 R1 하나를 두고 이어지는 예제 세 개다. 7.19 에서 forwarding table 을 만들고, 7.20 에서 같은 표를 비트로 본다. 7.21 에서는 목적지 180.70.65.140 이 나갈 interface 를 찾는다. 답은 '''m0''' 이다. 슬라이드는 L13 rev p.57–62 다.
 
-{def}"Make a forwarding table for router R1 … Solution: '''rows are sorted from the longest mask to the shortest'''." (p.60)
-"Leftmost 26 bits match row 1 → out of m2; leftmost 25 bits match row 2 → out of m0 … '''Longer prefix = smaller range of addresses'''." (p.61)
+{def}"Make a forwarding table for router R1 … Solution: rows are sorted from the longest mask to the shortest." (p.60)
+"Leftmost 26 bits match row 1 → out of m2; leftmost 25 bits match row 2 → out of m0 … Longer prefix = smaller range of addresses." (p.61)
 "Packet arrives at R1 with destination 180.70.65.140. '''Apply the masks in order (longest first)'''." (p.62){/def}
 
 [[img:L13-59.png|p.59 Example 7.19 build-up — 빨간 점선 Network address(180.70.65.128/25, 201.4.16.0/22, 201.4.22.0/24, 180.70.65.192/26), 파란 점선 Connection address(R1 쪽 180.70.65.135/25, 201.4.16.2/22, 201.4.22.3/24, 180.70.65.194/26). 아래 180.70.65.200/26 라우터 → Rest of the Internet|large]]
 
 == 7.19 — 표 만들기 (p.57–60) ==
-* 개정판은 p.57(그림) → p.58('''Network address''' 빨강 표시) → p.59('''Connection address''' 파랑 추가) → p.60(해답) 순서로, '''표에는 network address(블록의 첫 주소)만 들어간다'''는 것을 보여 준다(p.56 "Remember").
+* 개정판은 p.57(그림), p.58(Network address 빨강 표시), p.59(Connection address 파랑 추가), p.60(해답) 순서로 넘어간다. 이 순서로 보여 주려는 것은 '''표에는 network address(블록의 첫 주소)만 들어간다'''는 점이다(p.56 "Remember").
 {|
 ! Network address/mask || Next hop || Interface
 |-

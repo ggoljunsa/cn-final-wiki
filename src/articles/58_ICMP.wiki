@@ -2,14 +2,14 @@ key: ICMP
 title: ICMP (Internet Control Message Protocol) — IP 의 오류 보고자
 category: 5강 네트워크 계층, 용어
 ---
-'''ICMP''' 는 [[IP]] 를 돕는 network layer 의 [[보조 프로토콜|보조 프로토콜(auxiliary protocol)]] 중 하나로, IP 가 처리하다 생긴 '''오류를 보고'''한다. L12 p.5, p.12–13, p.18. IP 의 error control 이 "△ Partly" 인 이유의 절반이 ICMP 다: IP 는 header checksum 으로 '''검출'''만 하고, '''보고'''는 ICMP 가 한다. 고치지는(recovery) 않는다.
+'''ICMP''' 는 [[IP]] 를 돕는 network layer 의 [[보조 프로토콜|보조 프로토콜(auxiliary protocol)]] 중 하나로, IP 가 패킷을 다루다 생긴 '''오류를 보고'''한다. L12 p.5, p.12–13, p.18. p.18 표에서 IP 의 error control 이 "△ Partly" 인 것과 이어진다. IP 는 header checksum 으로 오류를 찾아내기만 하고, 알리는 일은 ICMP 가 한다. 고치는 일(recovery)은 아무도 하지 않는다.
 
 {def}"Auxiliary protocols: '''ICMP''', IGMP, DHCP, ARP" (p.5)
-"Error Control — Checksum covers the header only: detects header errors, no recovery. '''ICMP reports errors''' (e.g., '''datagram discarded''', '''bad header''')." (p.12)
+"Error Control — Checksum covers the header only: detects header errors, no recovery. ICMP reports errors (e.g., datagram discarded, bad header)." (p.12)
 "Error control — △ Partly — Header checksum (detect only) + '''ICMP reports'''; no recovery" (p.18){/def}
 
 == 이름에서 개념 끌어내기 ==
-* '''I'''nternet '''C'''ontrol '''M'''essage '''P'''rotocol — 인터넷의 '''제어 메시지'''. 데이터를 나르는 게 아니라 "'''이 datagram 버렸어'''", "'''header 가 이상해'''" 같은 '''상황 알림'''을 나른다.
+* Internet Control Message Protocol, 곧 인터넷의 제어 메시지다. ICMP 는 사용자 데이터를 나르지 않는다. 대신 "이 datagram 버렸어", "header 가 이상해" 같은 '''상황 알림'''을 나른다.
 
 == IP error control 에서 ICMP 의 자리 ==
 <pre class="txt">
@@ -21,12 +21,18 @@ datagram 도착
                      (재전송·복구는 아무도 안 함 → no recovery, 필요하면 위층)
 </pre>
 * 예(p.12): '''datagram discarded''', '''bad header'''.
-* (Forouzan 보충 — 슬라이드에 없음) 우리가 쓰는 `ping`·`traceroute` 도 ICMP 메시지(echo request/reply, time exceeded)를 이용한다.
+* (Forouzan 보충, 슬라이드에 없음) 우리가 쓰는 `ping`·`traceroute` 도 ICMP 메시지(echo request/reply, time exceeded)를 이용한다.
 
 {analogy}🎭 ICMP 는 우체국의 '''반송 안내문'''이다. "주소 불명으로 배달하지 못했습니다" 라는 쪽지를 보낸 사람에게 돌려보내 줄 뿐, 편지를 다시 써서 대신 보내 주지는 않는다.{/analogy}
 
-{quiz}IP 의 error control 이 "partly" 라고 하는 이유를 checksum 과 ICMP 로 설명하시오.{/quiz}
-{answer}checksum 이 '''header 만''' 덮어 payload 오류는 검사하지 않고, 오류를 '''검출만''' 한다. 오류(버려진 datagram, bad header)는 ICMP 가 '''보고'''하지만, '''recovery(복구·재전송)는 하지 않는다'''.{/answer}
+{mini}
+# IP 의 error control 이 "Partly" 인 이유를 checksum 과 ICMP 로 설명하라.
+# O/X: ICMP 는 버려진 datagram 을 source 대신 다시 보내 준다.
+{/mini}
+{answer}
+# checksum 은 header 만 덮고, 오류를 찾아내기만 한다. 버려진 datagram 이나 bad header 는 ICMP 가 알린다. 복구·재전송(recovery)은 하지 않는다.
+# X. ICMP 는 알리기만 한다(p.12 "ICMP reports errors"). 다시 보내는 일은 없다.
+{/answer}
 
 {info}L13 에서 자세히: [[ICMPv4]] · [[ICMP error-reporting message]] · [[echo request와 ping]] · [[time exceeded와 traceroute]]{/info}
 

@@ -2,23 +2,23 @@ key: load와 성능
 title: Load 와 성능 — near capacity, delay shoots up; beyond capacity, throughput collapses
 category: 5강 네트워크 계층, 용어
 ---
-'''Load'''(망에 넣으려는 트래픽 양)가 늘면 packet delay 와 throughput 이 어떻게 변하는지를 보여 주는 L12 p.37–38 의 그래프 두 개. 한 문장: "'''Near capacity, delay shoots up; beyond capacity, throughput collapses (congestion).'''"
+'''Load''' 는 망에 넣으려는 트래픽 양이다. L12 p.37–38 의 그래프 두 개는 load 가 늘 때 packet delay 와 throughput 이 어떻게 변하는지 보여 준다. 슬라이드는 두 그래프를 한 문장으로 묶는다. "Near capacity, delay shoots up; beyond capacity, throughput collapses (congestion)."
 
-{def}"Packet delay and throughput as a function of '''load'''." (p.37)
+{def}"Packet delay and throughput as a function of load." (p.37)
 "'''Near capacity, delay shoots up'''; '''beyond capacity, throughput collapses''' (congestion)." (p.38){/def}
 
 [[img:L12-38.png|p.38 a. Delay as a function of load — No-congestion area 에서 완만, Capacity 에서 수직 상승. b. Throughput as a function of load — Capacity 까지 직선 상승, Congestion area 에서 급락|large]]
 
 == 이름에서 개념 끌어내기 ==
-* '''load''' = 짐, 부하. 교수: "How much you use" (10/27 녹음 56:50). '''capacity''' = 망이 감당할 수 있는 최대 load. 그 왼쪽이 '''No-congestion area''', 오른쪽이 '''Congestion area'''.
+* load 는 짐, 부하다. 교수는 "how much you use" 라고 풀었다(10/27 녹음 56:50). '''capacity''' 는 망이 감당할 수 있는 최대 load 다. 그 왼쪽이 No-congestion area, 오른쪽이 Congestion area 다.
 
 == 두 그래프 읽기 ==
 {|
 ! || No-congestion area (load < capacity) || capacity 근처 || Congestion area (load > capacity)
 |-
-| '''Delay''' || 거의 일정, 천천히 증가 || '''shoots up''' (queue 가 가득) || 사실상 무한대 — 라우터가 버림
+| '''Delay''' || 거의 일정, 천천히 증가 || '''shoots up''' (queue 가 가득) || 사실상 무한대, 라우터가 버림
 |-
-| '''Throughput''' || load 에 '''비례'''해 증가 (보낸 만큼 도착) || 최고점 || '''collapses''' — drop·재전송으로 오히려 감소
+| '''Throughput''' || load 에 '''비례'''해 증가 (보낸 만큼 도착) || 최고점 || '''collapses''': drop·재전송으로 오히려 감소
 |}
 * delay 가 치솟는 이유: [[queuing delay]] 가 "grows with traffic load" (p.31). capacity 근처에서는 줄이 폭발적으로 길어진다. 교수: "We see infinite delay of network because the routers will discard information" (57:56).
 * throughput 이 무너지는 이유: 라우터가 버리기 시작하고(58:50 "routers start discarding"), 위층이 재전송하며 [[congestion control|vicious cycle]] 이 돈다.
@@ -27,7 +27,7 @@ category: 5강 네트워크 계층, 용어
 
 {warn}그림 세부: p.38 b 의 throughput 꼭대기는 capacity 선 '''바로 오른쪽'''(congestion area 안)에 그려져 있다. 시험 답은 슬라이드 문장 "beyond capacity, throughput collapses" 대로 쓴다.{/warn}
 
-{exam}🎯 교수(57:49–59:11): "In one sentence, we can say that '''near capacity delay shoots up''' … the '''throughput decreases''' because routers start discarding … you can say that '''throughput collapses'''." — 그래프 모양 서술 문제에 그대로 쓸 문장.{/exam}
+{exam}🎯 교수는 그래프를 이렇게 요약했다(57:49–59:11). "In one sentence, we can say that '''near capacity delay shoots up''' … the throughput decreases because routers start discarding … you can say that '''throughput collapses'''." 그래프 모양을 서술하라는 문제에 그대로 쓸 문장이다.{/exam}
 
 {analogy}🎭 '''출근길 도로.''' 차가 적을 때는 차가 늘수록 도로를 지나는 차 수(throughput)도 늘고 시간(delay)은 거의 그대로다. 도로 용량에 가까워지면 갑자기 정체가 시작돼 시간이 폭증하고, 용량을 넘으면 차들이 서로 막혀 '''오히려 지나가는 차 수가 줄어든다'''(교통 체증 = throughput collapse).{/analogy}
 

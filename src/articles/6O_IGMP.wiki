@@ -2,21 +2,25 @@ key: IGMP
 title: IGMP (Internet Group Management Protocol) — multicast 를 돕는 보조 프로토콜
 category: 6강 IPv4 주소, 용어
 ---
-'''IGMP''' 는 network layer 에서 [[IP]] 를 돕는 보조 프로토콜 중 '''multicast''' 담당이다. L13 p.29 그림에서 IGMP 는 ICMP·IP·ARP 와 함께 network layer 칸에 있고, 설명은 "help it (errors, '''multicast''', address mapping)". L12 p.5 의 [[보조 프로토콜]] 목록에도 있다.
+'''IGMP''' 는 network layer 에서 [[IP]] 를 돕는 보조 프로토콜 가운데 multicast 를 맡는다. L13 p.29 그림에서 IGMP 는 ICMP·IP·ARP 와 함께 network layer 칸에 있고, 설명 문구는 "help it (errors, multicast, address mapping)" 이다. L12 p.5 의 [[보조 프로토콜]] 목록에도 들어 있다.
 
 {def}"IP delivers datagrams; ICMP, '''IGMP''', and ARP help it (errors, '''multicast''', address mapping)" (p.29)
 "Auxiliary protocols: ICMP, '''IGMP''', DHCP, ARP" (L12 p.5){/def}
 
-[[img:L13-29.png|p.29 TCP/IP suite — Network layer 칸에 IGMP · ICMP · IP · ARP|medium]]
+[[img:L13-29.png|p.29 — 노란 Network layer 칸 왼쪽 위의 작은 IGMP 상자가 가운데 IP 옆에 붙어 있는 것을 보라|medium]]
 
 == 이름에서 개념 끌어내기 ==
-* '''I'''nternet '''G'''roup '''M'''anagement '''P'''rotocol — 인터넷에서 '''그룹'''을 '''관리'''한다. 여기서 그룹 = 같은 multicast 주소로 데이터를 받는 host 들의 모임.
-* (Forouzan 보충 — 슬라이드에 없음) host 가 "나 이 multicast 그룹에 가입/탈퇴할래" 를 근처 라우터에 알리는 메시지를 나른다. classful 의 '''class D (224–239)''' 가 multicast 주소다 → [[classful addressing]].
+* Internet Group Management Protocol, 즉 인터넷에서 그룹을 관리하는 프로토콜이다. 여기서 그룹은 같은 multicast 주소로 데이터를 받는 host 들의 모임이다.
+* (Forouzan 보충, 슬라이드에 없음) host 가 "이 multicast 그룹에 들어가겠다/나가겠다" 를 근처 라우터에 알리는 메시지를 나른다. classful 의 class D(224–239)가 multicast 주소다 → [[classful addressing]].
 
-{analogy}🎭 IGMP 는 '''단체 문자 수신 명단 관리'''다. "이 공지방에 넣어 주세요 / 빼 주세요" 를 받아 명단(그룹)을 갱신한다. 실제 문자를 보내는 건 IP.{/analogy}
+{analogy}🎭 IGMP 는 '''단체 문자 수신 명단 관리'''와 같다. "이 공지방에 넣어 주세요, 빼 주세요" 를 받아 명단(그룹)을 고친다. 실제 문자를 나르는 것은 IP 다.{/analogy}
 
-{quiz}p.29 의 세 보조 프로토콜 ICMP · IGMP · ARP 가 각각 돕는 일은?{/quiz}
-{answer}ICMP = '''errors''', IGMP = '''multicast''', ARP = '''address mapping''' (IP → MAC).{/answer}
+{mini}
+# p.29 의 세 보조 프로토콜 ICMP · IGMP · ARP 가 각각 돕는 일은?
+{/mini}
+{answer}
+# ICMP = errors, IGMP = multicast, ARP = address mapping (IP → MAC).
+{/answer}
 
 == 관련 문서 ==
 * [[보조 프로토콜]] · [[ICMP]] · [[DHCP]] · [[IP]] · [[classful addressing]]

@@ -2,9 +2,9 @@ key: Example 7.7 버전 판정
 title: Example 7.7 — 첫 8 bits 01000010 인 패킷을 버리는 이유
 category: 7강 IPv4 데이터그램, 예제
 ---
-'''Example 7.7''' 은 IPv4 패킷의 첫 byte 만 보고 "왜 버렸나" 를 설명하는 예제다. 답: VER 는 맞지만 [[HLEN]] 이 2 → header 8 bytes 라서, header 최소 20 bytes 를 못 채운다 → 전송 중 손상. L13 p.39.
+'''Example 7.7''' 은 IPv4 패킷의 첫 byte 만 보고 "왜 버렸나" 를 설명하는 예제다. 답은 이렇다. VER 는 맞다. 그런데 [[HLEN]] 이 2 라서 header 가 8 bytes 인데, header 는 최소 20 bytes 다. 그러니 전송 중에 깨진 패킷이다. L13 p.39.
 
-{def}"An IPv4 packet arrives with the first 8 bits 01000010. The receiver discards it. Why? — First 4 bits 0100 = 4 → version is correct. Next 4 bits 0010 = 2 → header = 2 × 4 = 8 bytes. '''A header must be at least 20 bytes''' → the packet was '''corrupted in transmission'''." (p.39){/def}
+{def}"An IPv4 packet arrives with the first 8 bits 01000010. The receiver discards it. Why? Solution: First 4 bits 0100 = 4 → version is correct. Next 4 bits 0010 = 2 → header = 2 × 4 = 8 bytes. '''A header must be at least 20 bytes''' → the packet was '''corrupted in transmission'''." (p.39){/def}
 
 [[img:L13-39.png|p.39 Example 7.7 — 0100 (초록, VER = 4 ✓) | 0010 (빨강, HLEN = 2 → 8 B ✗)|medium]]
 
@@ -17,7 +17,10 @@ HLEN = 0010 = 2           → header = 2 × '''4''' = 8 bytes
 8 < 20 → 불가능한 header → '''corrupted → discard'''
 </pre>
 
-{warn}흔한 오답 ① "version 이 틀려서" — 아니다, 0100 = 4 로 맞다. ② "HLEN 2 = 2 bytes 라서" — 단위는 4 bytes, 8 bytes 다(결론은 같지만 계산 과정이 감점). ③ "checksum 이 틀려서" — 문제는 첫 8 bits 만 주었다. 첫 byte 만으로 판정 가능하다는 것이 이 예제의 요점.{/warn}
+{warn}흔한 오답은 셋이다.
+* "version 이 틀려서": 0100 = 4 라서 버전은 맞다.
+* "HLEN 2 = 2 bytes 라서": 단위가 4 bytes 라서 8 bytes 다. 결론은 같아도 계산 과정에서 깎일 수 있다.
+* "checksum 이 틀려서": 문제는 첫 8 bits 만 주었다. 첫 byte 만 보고도 버릴지 정할 수 있다는 것을 보여 주는 예제다.{/warn}
 
 {analogy}🎭 '''"총 2 장짜리 계약서" 라고 적힌 표지.''' 계약서는 필수 조항만 5 장인데 2 장이라 적혀 있으면, 내용을 읽기 전에 표지만 보고도 "뭔가 망가졌다" 고 판단해 반송한다.{/analogy}
 

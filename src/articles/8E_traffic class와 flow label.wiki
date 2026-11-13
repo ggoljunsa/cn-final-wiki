@@ -8,8 +8,6 @@ IPv6 는 IPv4 의 TOS([[service type]]) 칸을 없애고 '''traffic class''' 와
 "Traffic class (8 bits): Different delivery needs for different payloads. Flow label (20 bits): Special handling for a flow of data" (p.24)
 → traffic class(8 bits)는 payload 종류마다 다른 전달 요구를 구분한다. flow label(20 bits)은 같은 flow 에 속한 데이터를 특별히 다룬다.{/def}
 
-[[img:L14-22.png|p.22 What changed in IPv6 — Resource allocation: TOS removed; traffic class and flow label added|medium]]
-
 == 이름에서 개념 끌어내기 ==
 * '''traffic class''' = 트래픽의 등급. 영상 통화처럼 지연에 민감한 것과 파일 전송처럼 덜 민감한 것을 구분한다. IPv4 의 service type 과 같은 역할이다.
 * '''flow label''' = flow 에 붙이는 이름표. flow 는 같은 source 에서 같은 destination 으로 가는 일련의 패킷이다. 라우터가 이 이름표만 보고 같은 flow 의 패킷을 같은 방식으로 처리할 수 있다.
@@ -18,8 +16,12 @@ IPv6 는 IPv4 의 TOS([[service type]]) 칸을 없애고 '''traffic class''' 와
 
 {analogy}🎭 traffic class 는 택배의 '''일반/특급''' 표시, flow label 은 "같은 주문의 상자들" 에 붙이는 '''묶음 번호'''다.{/analogy}
 
-{quiz}IPv6 에서 IPv4 의 TOS 가 하던 일을 맡은 칸은?{/quiz}
-{answer}traffic class(8 bits). 여기에 flow 단위 처리를 위한 flow label(20 bits)이 추가됐다.{/answer}
+{mini}
+# IPv6 에서 IPv4 의 TOS 가 하던 일을 맡은 칸은?
+{/mini}
+{answer}
+# traffic class(8 bits). 여기에 flow 단위 처리를 위한 flow label(20 bits)이 추가됐다.
+{/answer}
 
 == 관련 문서 ==
 * [[IPv6 base header]] · [[service type]] · [[QoS]] · [[virtual-circuit approach]]

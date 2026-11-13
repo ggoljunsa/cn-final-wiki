@@ -2,10 +2,10 @@ key: ICMPv4
 title: ICMPv4 (Internet Control Message Protocol v4) — IP 의 두 구멍을 메우는 동반자
 category: 7강 IPv4 데이터그램, 용어
 ---
-'''ICMPv4''' 는 IPv4 에 없는 두 가지 — '''오류 보고'''와 '''host·관리용 질의''' — 를 채우는 network-layer 프로토콜이다. IP 의 companion 이지만 메시지는 '''IP datagram 안에 실려''' 간다. L13 p.49–55. L12 에서 이름만 나왔던 [[ICMP]] 를 이 덱에서 자세히 본다.
+'''ICMPv4''' 는 network-layer 프로토콜이다. IPv4 에는 오류를 보고하는 장치도, host 와 관리용 질의를 하는 장치도 없는데, ICMPv4 가 이 두 빈자리를 채운다. IP 의 companion 이지만 메시지는 '''IP datagram 안에 실려''' 간다. 슬라이드는 L13 p.49–55 다. L12 에서 이름만 나왔던 [[ICMP]] 를 이 덱에서 자세히 본다.
 
-{def}"IPv4 alone has two gaps: '''No error-reporting (or error-correcting) mechanism'''; '''No mechanism for host and management queries'''. ICMP (Internet Control Message Protocol) fills them. '''Companion of IP, also a network-layer protocol'''. Its messages are '''encapsulated in IP datagrams''', not passed directly to the data-link layer." (p.49)
-IPv4 에는 오류 보고(정정) 장치와 질의 장치가 없다. ICMP 가 이를 메운다. IP 의 동반 프로토콜로 같은 network layer 이며, 메시지는 IP datagram 에 캡슐화된다.{/def}
+{def}"IPv4 alone has two gaps: No error-reporting (or error-correcting) mechanism; No mechanism for host and management queries. ICMP (Internet Control Message Protocol) fills them. Companion of IP, also a network-layer protocol. Its messages are encapsulated in IP datagrams, not passed directly to the data-link layer." (p.49)
+IPv4 에는 오류를 보고(정정)하는 장치와 질의 장치가 없다. ICMP 가 이 빈자리를 메운다. ICMP 는 IP 의 동반 프로토콜이고, IP 와 같은 network layer 에 있다. 그래도 메시지를 data-link layer 로 바로 넘기지 않고 IP datagram 에 캡슐화해서 보낸다.{/def}
 
 [[img:L13-49.png|p.49 — "ICMP rides inside IP": Frame header | IP header | ICMP message (IP datagram 범위)|medium]]
 
@@ -36,11 +36,11 @@ IPv4 에는 오류 보고(정정) 장치와 질의 장치가 없다. ICMP 가 �
 * '''type''' = 무슨 메시지, '''code''' = 세부 이유(destination unreachable 은 code 0–15, redirection 0–3, time exceeded·parameter problem 0–1, 나머지는 0 만).
 
 == 이름에서 개념 끌어내기 ==
-* '''Internet Control Message''' — 데이터가 아니라 '''제어용 쪽지'''. "버렸어", "길 틀렸어", "살아 있니?" 같은 말.
-* "'''v4'''": IPv4 짝꿍. IPv6 에는 ICMPv6 가 따로 있다(보충).
-* network layer 인데 IP 위에 실린다 → [[protocol field|protocol]] 번호 '''1'''. 계층은 같지만 캡슐화는 IP 안 — 시험에서 "ICMP 는 data-link 로 바로 간다" 는 ✗.
+* '''Internet Control Message''' 는 제어용 쪽지라는 뜻이다. 위층 data 를 나르지 않고 "버렸어", "길 틀렸어", "살아 있니?" 같은 말을 나른다.
+* v4 는 IPv4 의 짝이라는 뜻이다. IPv6 에는 [[ICMPv6]] 가 따로 있다.
+* ICMP 는 network layer 인데도 IP 위에 실린다. 그래서 [[protocol field|protocol]] 번호 '''1''' 이 있다. 계층은 IP 와 같지만 IP datagram 안에 들어가서 간다. "ICMP 는 data-link 로 바로 간다" 는 틀린 문장이다.
 
-{exam}🎯 "'''ICMP reports errors; it does not correct them'''" (p.52) 와 "error messages always go back to the '''original source'''" 는 정의형 문제 단골. L12 의 "IP error control = header checksum(detect) + ICMP(report), no recovery" 와 연결.{/exam}
+{tip}"ICMP reports errors; it does not correct them"(p.52)와 "error messages always go back to the original source" 는 정의를 묻는 문제로 내기 좋은 문장이다. L12 에서 IP 의 error control 을 header checksum 으로 찾고 ICMP 로 알리되 복구는 없다고 정리한 것과 이어진다.{/tip}
 
 {analogy}🎭 '''우편 시스템의 반송 안내문 + 수신 확인 서비스.''' 배달 실패하면 보낸 사람에게 안내문(error-reporting)이 가고, "받는 사람 집에 있나요?" 확인 전화(query: echo)도 할 수 있다. 안내문도 결국 '''같은 우편망(IP)''' 으로 배달된다.{/analogy}
 

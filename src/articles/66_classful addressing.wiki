@@ -2,19 +2,19 @@ key: classful addressing
 title: Classful addressing — prefix 길이를 8/16/24 로 고정한 초기 설계 (class A–E)
 category: 6강 IPv4 주소, 용어
 ---
-'''Classful addressing''' 은 IPv4 초기 방식으로, 주소 공간을 '''class A–E''' 다섯으로 나누고 prefix 길이를 '''8(A) / 16(B) / 24(C)''' 로 '''고정'''했다. 주소 '''첫 몇 비트(leading bits)''' 를 보면 class 와 prefix 길이가 바로 정해진다. L13 p.6–7. 주소가 고르게 나눠지지 않아 [[address depletion]] 을 낳았고, [[classless addressing]] 으로 대체됐다.
+'''Classful addressing''' 은 IPv4 의 초기 방식이다(L13 p.6–7). 주소 공간을 class A–E 다섯으로 나누고, prefix 길이를 A 는 8, B 는 16, C 는 24 로 '''고정'''했다. 주소의 맨 앞 몇 비트(leading bits)를 보면 class 와 prefix 길이가 바로 정해진다. 주소를 고르게 나누지 못해 [[address depletion]] 을 낳았고, 지금은 [[classless addressing]] 으로 바뀌었다.
 
 {def}"Early design: three '''fixed''' prefix lengths: 8 (class A), 16 (B), 24 (C)." (p.6)
 "The '''first bits''' mark the class, so fewer bits remain for the network ID." (p.7)
 "Why $2^7$ and not $2^8$? Class A uses 8 bits, but the first bit is fixed to 0." (p.7)
-초기 설계: prefix 길이가 class 마다 고정. 첫 비트들이 class 를 표시하므로 network ID 에 쓸 비트가 그만큼 줄어든다.{/def}
+초기 설계에서는 prefix 길이가 class 마다 정해져 있었다. 첫 비트들이 class 를 표시하니까 network ID 에 쓸 비트가 그만큼 줄어든다.{/def}
 
-[[img:L13-07.png|p.7 class 표 — Leading bits, Prefix, # of networks, Addresses / network, First byte. "Why 2^7 and not 2^8?"|large]]
+[[img:L13-06.png|p.6 (필기본) — 맨 위 막대의 A 50% · B 25% · C 12.5% · D·E 6.25% 와, 아래 class 별 막대 맨 앞의 0 / 10 / 110 / 1110 / 1111 을 보라. 손글씨 "2^31 bits", "2^30 bits", "0~127"|large]]
 
 == 이름에서 개념 끌어내기 ==
-* '''class-ful''' = class 가 '''있는'''. 주소마다 등급(A·B·C·D·E)이 매겨져 있고 등급이 크기를 정한다. 반대말 class-less 는 등급이 '''없다'''.
+* class-ful 은 class 가 있다는 뜻이다. 주소마다 등급(A·B·C·D·E)이 매겨져 있고, 등급이 block 크기를 정한다. 반대말 class-less 는 등급이 없다.
 
-== 표 ==
+== 표 (p.7) ==
 {|
 ! Class || Leading bits || Prefix || # of networks || Addresses / network || First byte || 공간 몫
 |-
@@ -42,14 +42,20 @@ category: 6강 IPv4 주소, 용어
 
 [[sim:classful_class]]
 
-{warn}'''필기 p.6 "2^31 bits", "2^30 bits"''' — 막대 밑의 $2^{31}$ · $2^{30}$ · $2^{29}$ · $2^{28}$ 은 '''주소 개수'''다(비트 수 아님). class A = 첫 비트가 0 인 모든 주소 = 나머지 31 비트의 경우의 수 $2^{31}$ = 전체의 50%. 교수(13:06): "A can use all different 31-bit [patterns], so it includes the half of these addresses". 합계 $2^{31}+2^{30}+2^{29}+2^{28}+2^{28} = 2^{32}$ ✓.{/warn}
+{warn}'''필기 p.6 "2^31 bits", "2^30 bits"''' 의 숫자는 비트 수가 아니라 주소 개수다. class A 는 첫 비트가 0 인 모든 주소다. 나머지 31 비트는 아무거나 되니까 $2^{31}$ 개이고, 전체의 50% 다. 교수 설명은 "A can use all different 31-bit [patterns], so it includes the half of these addresses" 였다(13:06). 다섯 개를 더하면 $2^{31}+2^{30}+2^{29}+2^{28}+2^{28} = 2^{32}$ 로 맞는다.{/warn}
 
-{tip}'''Ex 7.3 의 230.8.24.56 은 classful 로 보면 class D(multicast)다''' (첫 바이트 230 = 1110 0110). 슬라이드는 이 주소를 classless block 예제로만 쓴다 — classless 에서는 class 가 없으니 첫 바이트와 무관하게 /n 으로 block 을 정한다. 두 방식을 섞지 말 것.{/tip}
+{tip}[[Example 7.3]] 의 230.8.24.56 은 classful 로 보면 class D(multicast)다. 첫 바이트 230 = 1110 0110 이기 때문이다. 슬라이드는 이 주소를 classless block 예제로만 쓴다. classless 에는 class 가 없으니 첫 바이트와 상관없이 /n 으로 block 을 정한다. 두 방식을 섞어 생각하지 않도록 조심하자.{/tip}
 
-{analogy}🎭 classful = '''아파트를 대형(A)·중형(B)·소형(C) 세 평형으로만 분양'''하는 것. 10 명 가족에게 대형(1,677 만 평)은 너무 넓고 소형(256 평)은 너무 좁은데, 중간 평형이 없다. → [[address depletion]].{/analogy}
+{analogy}🎭 classful 은 '''아파트를 대형(A)·중형(B)·소형(C) 세 평형으로만 분양'''하는 것과 같다. 열 명 가족에게 대형은 너무 넓고 소형은 너무 좁은데, 그 사이 평형이 없다. 그 결과가 [[address depletion]] 이다.{/analogy}
 
-{quiz}① 191.255.0.1 의 class 는? ② class B 의 network 수가 $2^{16}$ 이 아닌 이유는?{/quiz}
-{answer}① 191 = 10111111 → leading '''10''' → '''B''' (192 부터 C). ② prefix 16 비트 중 앞 2 비트(10)가 class 표시로 고정 → 자유 비트 14 → $2^{14}$ = 16,384.{/answer}
+{mini}
+# 191.255.0.1 의 class 는?
+# class B 의 network 수가 $2^{16}$ 이 아닌 이유를 한 줄로 쓰라.
+{/mini}
+{answer}
+# B. 191 = 10111111 이라 10 으로 시작한다. C 는 192 부터다. 경계값이라 자주 틀린다.
+# prefix 16 비트 중 앞 2 비트(10)가 class 표시로 고정돼 자유 비트가 14 개뿐이다. 그래서 $2^{14}$ = 16,384 다.
+{/answer}
 
 == 관련 문서 ==
 * [[address depletion]] · [[classless addressing]] · [[prefix와 suffix]] · [[address space]] · [[CH07 IPv4 주소]]

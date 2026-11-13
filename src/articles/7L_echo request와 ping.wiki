@@ -2,10 +2,10 @@ key: echo request와 ping
 title: Echo request / reply 와 ping, timestamp — ICMP query messages
 category: 7강 IPv4 데이터그램, 용어
 ---
-'''Echo request / echo reply''' 는 ICMP '''query message''' 로, 상대 host·router 가 '''살아 있는지'''(alive) 확인한다. `ping` 과 traceroute 가 쓴다. 같은 query 계열인 '''timestamp request / reply''' 는 round-trip time 측정과 두 시계의 동기 확인에 쓴다. L13 p.55, p.51.
+'''Echo request / echo reply''' 는 ICMP query message 다. 상대 host 나 router 가 살아 있는지(alive) 확인할 때 쓰고, `ping` 과 traceroute 가 이 메시지를 쓴다. 같은 query 계열인 timestamp request / reply 는 round-trip time 을 재거나 두 시계가 맞는지 확인할 때 쓴다. 슬라이드는 L13 p.55, p.51 이다.
 
-{def}"Echo request / echo reply: '''Is that host or router alive?''' Used by '''ping and traceroute'''. Timestamp request / reply: '''Measure round-trip time'''; '''Check if two clocks are synchronized'''." (p.55)
-Echo request/reply 는 상대가 살아 있는지 확인하며 ping 과 traceroute 가 쓴다. Timestamp request/reply 는 RTT 를 재고 두 시계가 맞는지 확인한다.{/def}
+{def}"Echo request / echo reply: Is that host or router alive? Used by ping and traceroute. Timestamp request / reply: Measure round-trip time; Check if two clocks are synchronized." (p.55)
+Echo request/reply 는 상대가 살아 있는지 확인한다. ping 과 traceroute 가 이것을 쓴다. Timestamp request/reply 는 RTT 를 재고 두 시계가 맞는지 확인한다.{/def}
 
 [[img:L13-55.png|p.55 — Host A → echo request → Host B, Host B → echo reply (파랑) → Host A. "ping B" → B is alive, RTT measured|medium]]
 
@@ -17,18 +17,18 @@ Echo request/reply 는 상대가 살아 있는지 확인하며 ping 과 tracerou
 |-
 | Timestamp request / reply || 13 / 14 || 0 만
 |}
-* query 형식의 둘째 행 '''identifier · sequence number''' 로 어느 request 의 reply 인지 짝짓는다 — ping 이 1, 2, 3 … 번 응답을 구별하는 방법.
+* query 형식의 둘째 행 '''identifier · sequence number''' 로 어느 request 에 대한 reply 인지 짝을 맞춘다. ping 이 1, 2, 3 … 번 응답을 구별하는 방법이 이것이다.
 
 == 이름에서 개념 끌어내기 ==
-* '''echo''' = 메아리. 보낸 것을 '''그대로 돌려받으면''' 상대가 살아 있고, 걸린 시간이 RTT.
-* '''ping''' = 잠수함 소나의 "핑" 소리. 쏘고 반사돼 오는 시간을 잰다.
+* '''echo''' 는 메아리다. 보낸 것을 그대로 돌려받으면 상대가 살아 있다는 뜻이고, 걸린 시간이 RTT 다.
+* '''ping''' 은 잠수함 소나의 "핑" 소리에서 따온 이름이다. 소리를 쏘고 반사돼 돌아오는 시간을 잰다.
 
 <pre class="sh">
 $ ping B
 reply from B: seq=1 time=3.2 ms   ← echo reply, RTT
 </pre>
 
-{analogy}🎭 '''산 정상에서 "야호".''' 메아리가 돌아오면 건너편 산이 있다는 것이고, 돌아오는 시간이 거리다. 메아리가 없으면 — 상대가 없거나 소리가 중간에 막혔다(destination unreachable 등).{/analogy}
+{analogy}🎭 '''산 정상에서 "야호".''' 메아리가 돌아오면 건너편 산이 있다는 것이고, 돌아오는 시간이 거리다. 메아리가 없으면 상대가 없거나 소리가 중간에 막힌 것이다(destination unreachable 등).{/analogy}
 
 == 관련 문서 ==
 * [[ICMPv4]] · [[time exceeded와 traceroute]] · [[ICMP error-reporting message]]

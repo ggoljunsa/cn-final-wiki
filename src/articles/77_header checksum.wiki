@@ -2,7 +2,7 @@ key: header checksum
 title: Header checksum — header 만, 매 라우터에서 다시
 category: 7강 IPv4 데이터그램, 용어
 ---
-'''Header checksum''' 은 IPv4 header 셋째 행 오른쪽 16 bits 로, '''header 의 오류만''' 검사한다(payload 는 검사하지 않음). header 가 hop 마다 바뀌므로 '''매 라우터에서 다시 계산'''한다. L13 p.37.
+'''Header checksum''' 은 IPv4 header 셋째 행 오른쪽 16 bits 다. 이 값은 header 의 오류만 검사하고, payload 는 검사하지 않는다. header 는 hop 마다 바뀌니(TTL 등) checksum 도 '''라우터마다 다시 계산'''한다. 슬라이드는 L13 p.37 이다.
 
 {def}"Header checksum (16 bits): Checks errors in the '''header only''', not the payload. '''Recalculated at every router''' (e.g., TTL changes)." (p.37)
 Header checksum 은 header 의 오류만 검사하고 payload 는 검사하지 않는다. TTL 처럼 바뀌는 값이 있어 라우터마다 다시 계산한다.{/def}
@@ -10,9 +10,9 @@ Header checksum 은 header 의 오류만 검사하고 payload 는 검사하지 �
 [[img:L13-37.png|p.37 — Header checksum (16 bits): header only, recalculated at every router. Source / Destination IP address (32 bits each): must stay unchanged from source host to destination host. 오른쪽 표에서 Header checksum·Source·Destination 칸 강조|medium]]
 
 == 이름에서 개념 끌어내기 ==
-* '''header''' + '''checksum''': 범위가 이름에 박혀 있다 — '''header 만'''. payload 오류는 위층(TCP·UDP 자체 checksum)이 맡는다. L12 의 "IP error control = △ partly" 가 바로 이것([[IP의 error control]]).
-* 왜 매번 재계산? TTL 이 hop 마다 1 줄고, fragmentation 이면 flags·offset·total length 도 바뀐다 → header 가 바뀌면 checksum 도 바뀌어야 한다.
-* 왜 payload 는 안 보나: 라우터마다 payload 전체를 검사하면 느리다. header 만 보면 계산이 작고, header 가 깨지면 '''엉뚱한 곳으로 배달'''되므로 header 가 더 중요하다.
+* 이름에 검사 범위가 들어 있다. '''header''' 의 checksum 이니까 header 만 본다. payload 오류는 위층(TCP·UDP 의 자체 checksum)이 맡는다. L12 에서 IP 의 error control 을 "△ partly" 로 적은 이유가 이것이다([[IP의 error control]]).
+* 매번 다시 계산하는 이유는 header 가 hop 마다 바뀌기 때문이다. TTL 이 hop 마다 1 줄고, 나뉘면 flags·offset·total length 도 바뀐다.
+* payload 를 안 보는 이유도 있다. 라우터마다 payload 전체를 검사하면 느리다. header 만 보면 계산이 작다. 그리고 header 가 깨지면 패킷이 엉뚱한 곳으로 가니까, 라우터 입장에서는 header 가 더 급하다.
 
 <pre class="txt">
 datagram 도착 → header checksum 검사
@@ -22,8 +22,12 @@ datagram 도착 → header checksum 검사
 
 {analogy}🎭 '''송장만 확인하는 검수원.''' 물류센터마다 송장 글씨(header)가 멀쩡한지만 확인하고 상자 속 물건(payload)은 열지 않는다. 그리고 "환승 횟수"를 지우고 새로 적었으니 확인 도장도 새로 찍는다(재계산).{/analogy}
 
-{quiz}IPv4 의 header checksum 이 매 라우터에서 다시 계산되는 이유를 쓰시오.{/quiz}
-{answer}TTL 이 라우터마다 1 씩 줄어(그리고 fragmentation 시 flags·offset·total length 도 바뀌어) header 내용이 바뀌기 때문이다. checksum 은 header 만 덮으므로 header 가 바뀌면 새로 계산해야 한다.{/answer}
+{mini}
+# IPv4 의 header checksum 을 라우터마다 다시 계산하는 이유를 한 줄로 쓰라.
+{/mini}
+{answer}
+# TTL 이 라우터마다 1 씩 줄어 header 내용이 바뀌기 때문이다(나뉘면 flags·offset·total length 도 바뀐다). checksum 은 header 를 덮으니 header 가 바뀌면 새로 계산해야 한다.
+{/answer}
 
 == 관련 문서 ==
 * [[IPv4 datagram format]] · [[TTL]] · [[IP의 error control]] · [[ICMPv4]] · [[fragmentation]]

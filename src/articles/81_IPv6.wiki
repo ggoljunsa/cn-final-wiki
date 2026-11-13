@@ -7,7 +7,7 @@ category: 8강 IPv6, 용어
 {def}"Main reason to move to IPv6: IPv4's small address space (32-bit space). IPv6 address = 128 bits" (L14 p.3)
 → IPv4 의 32-bit 주소 공간이 작아서 IPv6 로 옮겨 간다. IPv6 주소는 128 bits 다.{/def}
 
-[[img:L14-27.png|p.27 version 4 의 network layer(IGMP · ICMP · IPv4 · ARP)와 version 6 의 network layer(ICMPv6 · IPv6)|medium]]
+[[img:L14-27.png|p.27 — version 4 의 network layer(IGMP · ICMP · IPv4 · ARP)와 version 6 의 network layer(ICMPv6 · IPv6)|medium]]
 
 == 이름에서 개념 끌어내기 ==
 * Internet Protocol version 6 의 줄임말이다. base header 의 Version 칸 값이 6 이다([[IPv6 base header]]).
@@ -23,8 +23,12 @@ category: 8강 IPv6, 용어
 
 {analogy}🎭 IPv6 는 같은 우편 제도의 '''새 주소 체계'''다. 편지를 나르는 방식(best effort, connectionless)은 그대로이고, 주소가 길어지고 봉투 양식이 깔끔해졌다.{/analogy}
 
-{quiz}IPv6 로 옮겨 가는 주된 이유를 한 줄로.{/quiz}
-{answer}IPv4 주소 공간이 32 bits($2^{32}$ ≈ 43 억 개)라 모자라기 때문이다. IPv6 는 128 bits 다.{/answer}
+{mini}
+# IPv6 로 옮겨 가는 주된 이유를 한 줄로.
+{/mini}
+{answer}
+# IPv4 주소 공간이 32 bits($2^{32}$ ≈ 43 억 개)라 모자라기 때문이다. IPv6 는 128 bits 다.
+{/answer}
 
 == 관련 문서 ==
 * [[CH07 IPv6]] · [[IPv4]] · [[IPv4와 IPv6 비교]] · [[address depletion]]

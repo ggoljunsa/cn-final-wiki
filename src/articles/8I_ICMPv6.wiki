@@ -8,10 +8,10 @@ category: 8강 IPv6, 용어
 "Four groups of ICMPv6 messages … ND (Neighbor Discovery) takes over ARP's job; MLD (Multicast Listener Discovery) takes over IGMP's" (p.28)
 → version 4 의 ICMP · ARP · IGMP 가 ICMPv6 하나가 됐다. 메시지는 네 그룹이고, ND 가 ARP 일을, MLD 가 IGMP 일을 맡는다.{/def}
 
-[[img:L14-27.png|p.27 Network layer in version 4 (IGMP · ICMP · IPv4 · ARP) → Network layer in version 6 (ICMPv6 · IPv6)|medium]]
+[[img:L14-27.png|p.27 — Network layer in version 4 (IGMP · ICMP · IPv4 · ARP) → Network layer in version 6 (ICMPv6 · IPv6)|medium]]
 
 == 네 그룹 ==
-[[img:L14-28.png|p.28 ICMPv6 Messages → Error messages · Informational messages · Neighbor discovery messages (ND Protocol) · Group membership messages (MLD Protocol)|medium]]
+[[img:L14-28.png|p.28 — ICMPv6 Messages → Error messages · Informational messages · Neighbor discovery messages (ND Protocol) · Group membership messages (MLD Protocol)|medium]]
 {|
 ! ICMPv6 그룹 || IPv4 에서 하던 프로토콜
 |-
@@ -32,8 +32,12 @@ category: 8강 IPv6, 용어
 
 {analogy}🎭 IPv4 시절에는 민원실(ICMP), 주소 안내소(ARP), 동호회 명부 관리실(IGMP)이 따로 있었다. IPv6 는 이것을 '''주민센터 하나'''로 합치고 창구만 네 개로 나눴다.{/analogy}
 
-{quiz}ICMPv6 의 네 메시지 그룹을 쓰고, IPv4 의 ARP 와 IGMP 에 해당하는 것을 고르라.{/quiz}
-{answer}Error · Informational · Neighbor discovery(ND) · Group membership(MLD). ARP → ND, IGMP → MLD.{/answer}
+{mini}
+# ICMPv6 의 네 메시지 그룹을 쓰고, IPv4 의 ARP 와 IGMP 에 해당하는 것을 고르라.
+{/mini}
+{answer}
+# Error · Informational · Neighbor discovery(ND) · Group membership(MLD). ARP → ND, IGMP → MLD.
+{/answer}
 
 == 관련 문서 ==
 * [[neighbor discovery]] · [[MLD]] · [[ICMPv4]] · [[ICMP]] · [[보조 프로토콜]] · [[CH07 IPv6]]

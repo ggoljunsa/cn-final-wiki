@@ -2,9 +2,7 @@ key: IP가 제공하는 서비스
 title: IP 가 제공하는 서비스 — p.18 "What IP Provides" 표 (2 ✓ · 1 △ · 4 ✗)
 category: 5강 네트워크 계층, 용어
 ---
-network layer 가 '''줄 수 있는''' 서비스 7 가지 중 [[IP]] 가 실제로 주는 것을 정리한 L12 p.17–18 의 표. 교수: "the most important one is about '''each role and each service'''" (10/27 녹음 01:49). 이 덱에서 가장 외울 가치가 큰 표다.
-
-[[img:L12-18.png|p.18 Network-Layer Services: What IP Provides — 7 행 표와 "IP itself is connectionless and best effort: anything more is added by other protocols."|large]]
+network layer 가 줄 수 있는 서비스는 7 가지다. 그중 [[IP]] 가 실제로 주는 것을 L12 p.17–18 이 표로 정리했다. 교수는 이 장에서 "the most important one is about each role and each service" 라고 했다(10/27 녹음 01:49). 그래서 이 덱에서 가장 외울 가치가 큰 표다.
 
 {|
 ! Service || IP provides? || Who handles it / note || 문서
@@ -24,7 +22,7 @@ network layer 가 '''줄 수 있는''' 서비스 7 가지 중 [[IP]] 가 실제�
 | Security || '''✗ No''' || Added on top: IPSec || [[IPSec]]
 |}
 
-{def}"IP itself is '''connectionless''' and '''best effort''': anything more is added by '''other protocols'''." (p.18){/def}
+{def}"IP itself is connectionless and best effort: anything more is added by other protocols." (p.18){/def}
 
 == 외우는 법 ==
 <pre class="txt">
@@ -36,18 +34,22 @@ network layer 가 '''줄 수 있는''' 서비스 7 가지 중 [[IP]] 가 실제�
 * ✗ 넷의 공통점: '''보장(guarantee)''' 이 필요한 것들이다. IP 는 [[best effort]] 라 보장을 하지 않는다.
 * 교수 정리(28:28): IP 의 두 성질 '''connectionless + best effort''', 나머지는 "higher layer protocol such as TCP, application layer and IPSec".
 
-{exam}🎯 예상 OX
-* IP 는 packetizing 을 제공한다 → ○
-* IP 는 flow control 을 제공한다 → ✗ (TCP)
-* congestion 이 생기면 라우터가 sender 의 속도를 줄인다 → ✗ (라우터는 drop 만, TCP 가 slow down)
-* IP 의 error control 은 payload 오류를 복구한다 → ✗ (header 만, detect only)
-* QoS 는 주로 network layer 에서 구현된다 → ✗ (upper layers, network layer 는 untouched)
-* security 는 IP 가 직접 제공한다 → ✗ (IPSec 을 위에 덧붙임){/exam}
+{exam}🎯 교수가 이 덱에서 가장 중요하다고 한 것: "the most important one is about '''each role and each service'''" (01:49). 서비스마다 ✓/△/✗ 와 "누가 대신 하나" 를 같이 쓸 수 있어야 한다.{/exam}
 
 {analogy}🎭 IP 는 '''기본형 택배 요금제'''다. 포장(packetizing)과 배송 경로(routing)는 기본 포함, 송장 확인(error control 일부)도 해 준다. 하지만 "받는 사람 사정에 맞춰 천천히"(flow), "도로 정체 피해서"(congestion), "프리미엄 빠른 배송"(QoS), "금고 배송"(security)은 '''모두 추가 옵션'''이고 다른 회사(TCP, 앱, IPSec)가 판다.{/analogy}
 
-{quiz}network layer 서비스 7 가지를 쓰고, IP 가 제공하는지(✓/△/✗)와 제공하지 않으면 누가 하는지 쓰시오.{/quiz}
-{answer}packetizing ✓ · routing/forwarding ✓ · error control △ (header checksum detect only + ICMP, no recovery) · flow control ✗ (TCP, receive window) · congestion control ✗ (routers only drop; TCP slows down) · QoS ✗ (upper layers) · security ✗ (IPSec){/answer}
+{mini}
+# network layer 서비스 7 가지를 쓰고, IP 가 해 주는지(Yes / Partly / No)와 안 해 주면 누가 하는지 쓰라.
+# O/X: congestion 이 생기면 라우터가 sender 의 속도를 줄인다.
+# O/X: QoS 는 주로 network layer 에서 구현된다.
+# O/X: security 는 IP 가 직접 제공한다.
+{/mini}
+{answer}
+# packetizing ✓ · routing/forwarding ✓ · error control △(header checksum detect only + ICMP, no recovery) · flow control ✗(TCP, receive window) · congestion control ✗(routers only drop; TCP slows down) · QoS ✗(upper layers) · security ✗(IPSec).
+# X. 라우터는 drop 만 하고, 속도를 줄이는 것은 TCP 다.
+# X. upper layers 에서 한다. network layer 는 untouched 로 둔다(p.15).
+# X. IPSec 을 위에 덧붙인다(p.16). IPSec 은 IP 와 같은 층의 다른 프로토콜이다.
+{/answer}
 
 == 관련 문서 ==
 * [[IP]] · [[best effort]] · [[connectionless]] · [[CH07 네트워크 계층 서비스와 성능]] · [[자주 틀리는 함정 모음]]

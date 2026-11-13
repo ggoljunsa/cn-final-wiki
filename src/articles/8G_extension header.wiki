@@ -8,7 +8,7 @@ category: 8강 IPv6, 용어
 "Better header format: Options are separated from the base header → routers work faster" (p.22)
 → payload 는 extension header 0 개 이상 + 위층 데이터다. 옵션을 base header 에서 떼어 냈기 때문에 라우터가 더 빨리 일한다.{/def}
 
-[[img:L14-25.png|p.25 (필기본) Base header → Extension header → … → Data: a packet from another protocol|medium]]
+[[img:L14-25.png|p.25 (필기본) — Base header → Extension header → … → Data: a packet from another protocol|medium]]
 
 == 왜 따로 빼나 ==
 IPv4 는 옵션이 header 안에 있었다. 그래서 header 길이가 20–60 bytes 로 바뀌었고, 라우터는 패킷마다 [[HLEN]] 을 읽고 옵션을 훑어야 했다. 교수는 이것이 라우터 처리를 느리게 했다고 설명했다(11/10 28:12–28:39).
@@ -27,8 +27,12 @@ IPv6 는 base header 를 40 bytes 로 고정하고 옵션은 extension header �
 
 {analogy}🎭 base header 는 모든 상자에 붙는 표준 송장이고, extension header 는 필요한 상자에만 붙이는 '''추가 스티커'''("깨지기 쉬움", "분할 배송 2/3")다. 물류센터는 보통 송장만 보고, 스티커는 필요한 곳에서만 읽는다.{/analogy}
 
-{quiz}IPv6 에서 옵션을 extension header 로 뺀 이점 두 가지는?{/quiz}
-{answer}① base header 가 40 bytes 로 고정되어 라우터 처리가 빨라진다. ② 새 기능을 새 extension header 로 추가할 수 있어 확장이 쉽다.{/answer}
+{mini}
+# IPv6 에서 옵션을 extension header 로 뺀 이점 두 가지는?
+{/mini}
+{answer}
+# ① base header 가 40 bytes 로 고정되어 라우터 처리가 빨라진다. ② 새 기능을 새 extension header 로 추가할 수 있어 확장이 쉽다.
+{/answer}
 
 == 관련 문서 ==
 * [[next header]] · [[IPv6 base header]] · [[IPv6 fragmentation]] · [[IPSec]]

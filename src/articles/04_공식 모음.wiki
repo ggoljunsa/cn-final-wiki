@@ -15,9 +15,7 @@ CH05 (1)은 공식이 많은 장이 아니다. 계산은 '''[[GSM channel bit ra
 |-
 | [[GSM channel bit rate]] || $\frac{1}{120\text{ ms}} \times 26 \times 8 \times 156.25$ || '''270.8 kbps''' || `sim:gsm_bitrate`
 |-
-| GSM 사용자 1명(slot 1개) || $270.8 / 8$ || ≈ 33.85 kbps || `sim:gsm_bitrate`
 |-
-| GSM 순수 user data || $65 \times 24 / 120\text{ ms}$ || 13 kbps (p.25 그림의 Digitizer 값; 65×24/120 ms 로 검산) || `sim:gsm_bitrate`
 |-
 | [[AMPS 대역과 채널|AMPS 채널 수]] || $25\text{ MHz} / 30\text{ kHz} \approx 833$ || 832 채널 → provider 당 416 (control 21, voice 395) || `sim:band_channels`
 |-
@@ -91,14 +89,14 @@ CH05 와 달리 '''이 공식들은 계산 문제로 나오기 좋은 모양'''�
 |-
 | [[propagation delay]] || $\text{Delay}_{pg} = \frac{\text{Distance}}{\text{Propagation speed}}$ || '''2,000 m / (2×10^8 m/s) = 10 μs''' (p.30) || `sim:total_delay`
 |-
-| [[total delay 공식]] || $(n+1)(\text{Delay}_{tr} + \text{Delay}_{pg} + \text{Delay}_{pr}) + n \cdot \text{Delay}_{qu}$ || n = 3, tr 0.8 ms, pg 1 ms, pr 50 μs, qu 2 ms → '''13.4 ms''' (가정값) || `sim:total_delay`
+| [[total delay 공식]] || $(n+1)(\text{Delay}_{tr} + \text{Delay}_{pg} + \text{Delay}_{pr}) + n \cdot \text{Delay}_{qu}$ || n = 2, tr 0.4 ms, pg 1.5 ms, pr 40 μs, qu 2 ms → '''9.82 ms''' (가정값) || `sim:total_delay`
 |-
 | [[throughput]] (경로) || $\min(\text{link rates})$ = [[bottleneck]] || '''min(200, 100, 150) = 100 kbps''' (p.35) || `sim:bottleneck_throughput`
 |-
 | 전송 시간 (보충) || 데이터 크기 / 경로 throughput || 1 GB / 300 Mbps ≈ 26.7 s (DGIST 일화) || `sim:bottleneck_throughput`
 |}
 * 세는 법: 라우터 '''n''' → 링크 '''n + 1''' → tr·pg '''n + 1''' 번, processing '''n + 1''' 번(라우터 + 목적지), queuing '''n''' 번(라우터만).
-* 함정 값(같은 가정): queuing 을 n+1 번 → 15.4 ms ✗, 링크를 n 개 → 11.55 ms ✗.
+* 함정 값(같은 가정): queuing 을 n+1 번 → 11.82 ms ✗, 링크를 n 개 → 7.88 ms ✗.
 * 단위: L 은 bits(bytes × 8), R 은 bps, 거리 m ↔ 속도 m/s. 진공 $3 \times 10^8$ m/s, 케이블은 더 느림(예 $2 \times 10^8$).
 
 

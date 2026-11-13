@@ -2,7 +2,7 @@ key: identification field
 title: Identification (16 bits) — 같은 datagram 의 fragment 끼리 묶는 번호
 category: 7강 IPv4 데이터그램, 용어
 ---
-'''Identification''' 은 IPv4 header 둘째 행 왼쪽 16 bits 로, source 가 '''datagram 마다 붙이는 번호'''다. fragmentation 이 일어나면 '''모든 fragment 에 그대로 복사'''되어, destination 이 어느 조각들이 한 datagram 이었는지 안다. L13 p.44.
+'''Identification''' 은 IPv4 header 둘째 행 왼쪽 16 bits 다. source 가 datagram 마다 붙이는 번호다. fragmentation 이 일어나면 이 값은 '''모든 fragment 에 그대로 복사'''된다. 그래서 destination 은 어느 조각들이 한 datagram 이었는지 알 수 있다. 슬라이드는 L13 p.44 다.
 
 {def}"Identification (16 bits): '''A number for each datagram sent by the source'''. '''Copied into all fragments''' → destination knows which fragments belong together." (p.44)
 Identification 은 source 가 보내는 datagram 마다 붙는 번호이고, 모든 fragment 에 복사되어 destination 이 같은 datagram 의 조각을 알아본다.{/def}
@@ -10,9 +10,9 @@ Identification 은 source 가 보내는 datagram 마다 붙는 번호이고, 모
 [[img:L13-44.png|p.44 — Identification (16 bits) / Flags (3 bits): 1st bit reserved, D (do not fragment), M (more fragments). 오른쪽 Flags field 그림: − | D | M (reserved / do not fragment / more fragments)|medium]]
 
 == 이름에서 개념 끌어내기 ==
-* '''identify''' = 신원 확인. fragment 는 서로 다른 경로로, 다른 datagram 의 조각들과 '''섞여''' 도착한다. "너는 누구네 조각이냐" 를 판별하는 열쇠가 identification(+ source address).
-* fragment 가 바꾸는 필드(flags · offset · total length)와 달리 identification 은 '''절대 안 바뀐다'''. 바뀌면 재조립이 불가능.
-* p.46 그림 값: '''14,567''' — 원래 datagram, F1, F2, F3, F2.1, F2.2 모두 14,567.
+* '''identify''' 는 신원을 확인한다는 뜻이다. 조각들은 서로 다른 경로로, 다른 datagram 의 조각들과 섞여 도착한다. 어느 datagram 의 조각인지 가르는 값이 identification(과 source address)이다.
+* 나뉠 때 flags · offset · total length 는 바뀌지만 identification 은 '''바뀌지 않는다'''. 바뀌면 destination 이 조각을 모을 수 없다.
+* p.46 그림에서는 원래 datagram 과 F1, F2, F3, F2.1, F2.2 가 모두 '''14,567''' 이다.
 
 {analogy}🎭 '''이삿짐 상자에 쓴 "김씨네 302 호".''' 트럭 여러 대에 나눠 실어 다른 길로 와도, 같은 표시가 붙은 상자끼리 모아 한 집 살림을 복원한다.{/analogy}
 

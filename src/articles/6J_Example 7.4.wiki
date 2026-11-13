@@ -2,7 +2,7 @@ key: Example 7.4
 title: Example 7.4 — ISP 가 1000 주소 요청 → 1024 (/22) → 18.14.12.0/22
 category: 6강 IPv4 주소, 용어
 ---
-'''Example 7.4''' 는 [[block allocation]] 의 세 규칙을 숫자로 확인하는 예제다. 1000 은 2 의 거듭제곱이 아니니 1024 를 주고, prefix 는 22, 받은 block 18.14.12.0/22 의 first 가 1024 로 나누어떨어지는지 검산한다. L13 p.22.
+'''Example 7.4''' 는 [[block allocation]] 의 세 규칙을 숫자로 확인하는 예제다(L13 p.22). 1000 은 2 의 거듭제곱이 아니니 1024 를 주고, prefix 는 22 다. 받은 block 18.14.12.0/22 의 first 가 1024 로 나누어떨어지는지 검산한다.
 
 {def}"An ISP requests a block of '''1000''' addresses
 ① 1000 is not a power of 2 → grant '''1024''' (= $2^{10}$)
@@ -10,7 +10,7 @@ category: 6강 IPv4 주소, 용어
 ③ An available block is granted: '''18.14.12.0/22'''
 ④ Check: first address = 302,910,464 = 1024 × 295,811 ✓" (p.22){/def}
 
-[[img:L13-22.png|p.22 Example 7.4 — 18.14.12.0 (first) … 1024 addresses … 18.14.15.255 (last)|large]]
+[[img:L13-22.png|p.22 — 아래 막대의 왼쪽 끝 18.14.12.0 (first) 과 오른쪽 끝 18.14.15.255 (last) 사이가 1024 개인 것을 보라|large]]
 
 == 풀이 ==
 <pre class="txt">
@@ -25,16 +25,22 @@ category: 6강 IPv4 주소, 용어
    mask /22 = 255.255.252.0
 </pre>
 
-{warn}'''교수 말실수 주의 (40:50–41:44)''' — "it yields 10 bits for prefix, and 22 bits for suffix … '''Ah, sorry about that'''" 하고 정정했다. 맞는 것은 '''suffix 10 비트(주소 수 결정), prefix 22 비트'''. 주소 수 N 을 정하는 것은 항상 '''suffix''' 다.{/warn}
+{warn}'''교수 말실수 주의 (40:50–41:44)''': "it yields 10 bits for prefix, and 22 bits for suffix … Ah, sorry about that" 하고 바로잡았다. 맞는 것은 suffix 10 비트, prefix 22 비트다. 주소 수 N 을 정하는 쪽은 항상 suffix 다.{/warn}
 
-* 낭비: 1024 − 1000 = 24 개는 안 쓰지만, classful 이었으면 1000 개 때문에 class B(65,536)를 받아야 했다 → classless 의 이득.
+* 1024 − 1000 = 24 개는 쓰지 않고 남는다. 그래도 classful 이었다면 1000 개 때문에 class B(65,536 개)를 받아야 했다. classless 로 바꾼 덕이다.
 
 [[sim:cidr_block]]
 
-{analogy}🎭 1,000 명 단체 예약에 '''1,024 석짜리 홀'''을 내주는 것. 좌석 수는 2 의 거듭제곱 크기 홀만 있다. 24 석은 비지만, 예전처럼 6 만 석 경기장(class B)을 통째로 내주는 것보다 훨씬 낫다.{/analogy}
+{analogy}🎭 1,000 명 단체 예약에 1,024 석짜리 홀을 내주는 것과 같다. 홀은 2 의 거듭제곱 크기만 있다. 24 석이 비지만, 예전처럼 6 만 석 경기장(class B)을 통째로 내주는 것보다 훨씬 낫다.{/analogy}
 
-{quiz}ISP 가 300 주소를 요청하면 N, prefix, mask 는?{/quiz}
-{answer}N = 512 ($2^9$), prefix = 32 − 9 = '''/23''', mask = 255.255.254.0.{/answer}
+{mini}
+# ISP 가 600 개를 요청하면 N, prefix, mask 는?
+# 18.14.12.0/22 에서 18.14.16.1 은 block 안에 있는가?
+{/mini}
+{answer}
+# N = 1024 ($2^{10}$, 512 는 모자란다), prefix 32 − 10 = /22, mask 255.255.252.0.
+# 없다. block 은 18.14.12.0 ~ 18.14.15.255 이고 셋째 바이트 16 은 그 범위를 넘는다.
+{/answer}
 
 == 관련 문서 ==
 * [[block allocation]] · [[CIDR]] · [[ISP]] · [[block의 세 가지 정보]] · [[address mask]]

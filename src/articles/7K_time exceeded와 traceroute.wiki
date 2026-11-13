@@ -2,10 +2,13 @@ key: time exceeded와 traceroute
 title: Time exceeded (type 11) 와 traceroute
 category: 7강 IPv4 데이터그램, 용어
 ---
-'''Time exceeded''' 는 ICMP error-reporting message type '''11''' 로, 두 경우에 보낸다: ① 라우터에서 [[TTL]] 이 '''0''' 이 됨, ② destination 에서 '''fragment 가 제한 시간 안에 다 오지 않음'''. traceroute 는 ①을 일부러 일으켜 경로 위 라우터를 하나씩 알아낸다. L13 p.53–55.
+'''Time exceeded''' 는 ICMP error-reporting message type 11 이다. 보내는 경우는 두 가지다.
+# 라우터에서 [[TTL]] 이 0 이 되었다.
+# destination 에서 fragment 가 제한 시간 안에 다 오지 않았다.
+traceroute 는 첫 번째 경우를 일부러 일으켜서 경로 위 라우터를 하나씩 알아낸다. 슬라이드는 L13 p.53–55 다.
 
-{def}"Time exceeded: '''TTL reaches 0''', or '''Not all fragments arrive within a time limit'''." (p.54)
-"Echo request / echo reply … Used by '''ping and traceroute'''." (p.55)
+{def}"Time exceeded: TTL reaches 0, or Not all fragments arrive within a time limit." (p.54)
+"Echo request / echo reply … Used by ping and traceroute." (p.55)
 Time exceeded 는 TTL 이 0 이 되었거나, 제한 시간 안에 모든 fragment 가 도착하지 않았을 때 보낸다.{/def}
 
 [[img:L13-54.png|p.54 TTL running out — Host —TTL=3→ R1 —TTL=2→ R2 —TTL=1→ R3 (TTL=0 discard), Time exceeded (type 11) 빨간 점선이 Host 로. 왼쪽: Parameter problem code 0 / code 1|medium]]

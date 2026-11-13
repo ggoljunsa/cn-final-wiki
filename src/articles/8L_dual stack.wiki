@@ -7,7 +7,7 @@ category: 8강 IPv6, 용어
 {def}"Dual stack: until the whole Internet uses IPv6, a host runs both IPv4 and IPv6. Talks IPv4 to IPv4 systems, IPv6 to IPv6 systems" (p.30)
 → 인터넷 전체가 IPv6 로 바뀔 때까지 host 가 두 프로토콜을 다 돌린다. IPv4 장치와는 IPv4 로, IPv6 장치와는 IPv6 로 말한다.{/def}
 
-[[img:L14-30.png|p.30 Upper layers / IPv4 · IPv6 나란히 / Underlying LAN or WAN technology. To and from IPv4 system · To and from IPv6 system|medium]]
+[[img:L14-30.png|p.30 — Upper layers / IPv4 · IPv6 나란히 / Underlying LAN or WAN technology. To and from IPv4 system · To and from IPv6 system|medium]]
 
 == 이름에서 개념 끌어내기 ==
 * '''stack''' = 프로토콜 계층을 쌓은 것. '''dual''' = 두 개. network layer 칸에 IPv4 와 IPv6 를 나란히 두 개 둔다.
@@ -18,8 +18,12 @@ category: 8강 IPv6, 용어
 
 {analogy}🎭 한국어와 영어를 둘 다 하는 사람이다. 상대가 한국어로 말하면 한국어로, 영어로 말하면 영어로 답한다. 단순하지만 확실하다.{/analogy}
 
-{quiz}dual stack 에서 둘로 나뉘는 계층은 어디고, 공유하는 계층은 어디인가?{/quiz}
-{answer}network layer(IPv4 와 IPv6)만 둘이다. 위층(upper layers)과 아래 LAN/WAN 기술은 하나를 같이 쓴다.{/answer}
+{mini}
+# dual stack 에서 둘로 나뉘는 계층은 어디고, 공유하는 계층은 어디인가?
+{/mini}
+{answer}
+# network layer(IPv4 와 IPv6)만 둘이다. 위층(upper layers)과 아래 LAN/WAN 기술은 하나를 같이 쓴다.
+{/answer}
 
 == 관련 문서 ==
 * [[tunneling]] · [[header translation]] · [[IPv4와 IPv6 비교]] · [[CH07 IPv6]]

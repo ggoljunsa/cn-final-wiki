@@ -7,7 +7,7 @@ category: 8강 IPv6, 용어
 {def}"Header translation: most of the Internet uses IPv6, some systems still use IPv4. Sender uses IPv6, but the receiver understands only IPv4. The header is translated: IPv6 header → IPv4 header" (p.32)
 → 인터넷 대부분이 IPv6 인데 일부가 아직 IPv4 일 때 쓴다. 송신은 IPv6, 수신은 IPv4 만 이해하니까 header 를 IPv4 로 번역한다.{/def}
 
-[[img:L14-32.png|p.32 IPv6 host (IPv6 region) → router "Header translation done here" → IPv4 host (IPv4 region)|medium]]
+[[img:L14-32.png|p.32 — IPv6 host (IPv6 region) → router "Header translation done here" → IPv4 host (IPv4 region)|medium]]
 
 == 이름에서 개념 끌어내기 ==
 * '''translation''' = 번역. header 의 언어를 IPv6 에서 IPv4 로 바꾼다. payload 는 그대로 둔다.
@@ -17,8 +17,12 @@ category: 8강 IPv6, 용어
 
 {analogy}🎭 한국어로 쓴 편지 봉투를 받는 사람이 영어만 읽을 수 있을 때, 우체국이 '''봉투의 주소만 영어로 다시 써 주는''' 것이다. 한국어에만 있는 표기(존칭 같은 것)는 영어 봉투에 옮길 칸이 없어서 빠진다.{/analogy}
 
-{quiz}header translation 에서 정보 일부가 사라지는 이유는?{/quiz}
-{answer}IPv4 header 에는 IPv6 에만 있는 기능(flow label, extension header 등)을 담을 칸이 없기 때문이다.{/answer}
+{mini}
+# header translation 에서 정보 일부가 사라지는 이유는?
+{/mini}
+{answer}
+# IPv4 header 에는 IPv6 에만 있는 기능(flow label, extension header 등)을 담을 칸이 없기 때문이다.
+{/answer}
 
 == 관련 문서 ==
 * [[dual stack]] · [[tunneling]] · [[IPv6 base header]] · [[CH07 IPv6]]

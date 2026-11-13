@@ -8,7 +8,7 @@ category: 8강 IPv6, 용어
 Solution: "Interface ID from the Ethernet address: F7A9:23FF:FE11:9BE2. Link-local address = FE80:: + interface ID" (p.20) → FE80::F7A9:23FF:FE11:9BE2
 "Host appends its interface ID → global unicast address" (p.21) → 3A21:1216:2165 | 1232 | F7A9:23FF:FE11:9BE2{/def}
 
-[[img:L14-20.png|p.20 Solution — Interface ID F7A9:23FF:FE11:9BE2 (바뀐 7, FF:FE 빨강), Link-local FE80::F7A9:23FF:FE11:9BE2|medium]]
+[[img:L14-20.png|p.20 — Solution: Interface ID F7A9:23FF:FE11:9BE2 (바뀐 7, FF:FE 빨강), Link-local FE80::F7A9:23FF:FE11:9BE2|medium]]
 
 == 풀이 ==
 <pre class="txt">
@@ -30,7 +30,7 @@ Solution: "Interface ID from the Ethernet address: F7A9:23FF:FE11:9BE2. Link-loc
 </pre>
 python `ipaddress` 로 ②와 ④를 검산했다. global 주소에는 0 section 이 없어서 더 줄일 수 없다.
 
-[[img:L14-21.png|p.21 3A21:1216:2165 (48 bits) | 1232 (16 bits) | F7A9:23FF:FE11:9BE2 (64 bits)|medium]]
+[[img:L14-21.png|p.21 — 3A21:1216:2165 (48 bits) | 1232 (16 bits) | F7A9:23FF:FE11:9BE2 (64 bits)|medium]]
 
 {warn}자주 하는 실수 세 가지.
 * 오른쪽 끝(8 번째) bit 를 뒤집어 F4 를 만드는 것. 뒤집는 것은 왼쪽에서 7 번째다.
@@ -41,8 +41,12 @@ python `ipaddress` 로 ②와 ④를 검산했다. global 주소에는 0 section
 
 {analogy}🎭 택배 송장 쓰기와 같다. 받는 사람 이름(interface ID)은 신분증(MAC)에서 옮겨 적고, 주소의 앞부분은 관리사무소(router)에 물어서 적는다.{/analogy}
 
-{quiz}같은 host 가 다른 router(prefix 2001:0DB8:00AB, subnet 0001)가 있는 network 로 옮기면 global 주소는?{/quiz}
-{answer}interface ID 는 그대로다. 앞부분만 바뀌어 2001:0DB8:00AB:0001:F7A9:23FF:FE11:9BE2 = 2001:DB8:AB:1:F7A9:23FF:FE11:9BE2.{/answer}
+{mini}
+# 같은 host 가 다른 router(prefix 2001:0DB8:00AB, subnet 0001)가 있는 network 로 옮기면 global 주소는?
+{/mini}
+{answer}
+# interface ID 는 그대로다. 앞부분만 바뀌어 2001:0DB8:00AB:0001:F7A9:23FF:FE11:9BE2 = 2001:DB8:AB:1:F7A9:23FF:FE11:9BE2.
+{/answer}
 
 == 관련 문서 ==
 * [[EUI-64]] · [[link-local address]] · [[router solicitation과 advertisement]] · [[global unicast address]] · [[CH07 IPv6]]

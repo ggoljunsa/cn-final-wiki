@@ -2,225 +2,314 @@ key: CH07 IPv6
 title: CH07 Network Layer: Data Transfer (3) (8강 — IPv6 addressing, autoconfiguration, packet format, ICMPv6, transition)
 category: 8강 IPv6, 메인
 ---
-'''CH07 IPv6''' 는 L14 덱 `CH07_Network Layer - Data Transfer (3).pdf`(32쪽)를 다룬다. 11/10(화) 수업에서 p.1–32 를 한 번에 끝냈다. 교수는 "So far we've seen IPv4" 로 시작해서 다음 세대 IP 인 '''[[IPv6]]''' 로 넘어갔다. 앞 덱의 [[CH07 IPv4 주소]] · [[CH07 IPv4 데이터그램과 포워딩]] 과 같은 순서(주소 → 패킷 형식 → ICMP)로 진행하니까, IPv4 에서 무엇이 바뀌었는지를 비교하면서 읽으면 된다.
+== 개요 ==
+'''CH07 IPv6''' 는 L14 덱 `CH07_Network Layer - Data Transfer (3).pdf`(32쪽)를 다룬다. 11/10(화) 수업에서 32쪽을 한 번에 끝냈다. 교수는 "So far we've seen IPv4" 라는 말로 수업을 열고 다음 세대 IP 인 [[IPv6]] 로 넘어갔다.[* 11/5 수업(CH07 (2) rev 후반)은 녹음이 없다. 11/10 수업이 이 문장으로 시작하니까 11/5 에 IPv4 를 p.68 까지 끝낸 것으로 본다.]
 
-이 덱은 다섯 덩어리로 나뉜다.
-* 주소 (p.3–12): 128 bits, [[colon hexadecimal notation]], [[zero compression]], 주소 종류 세 가지, [[global unicast address]], [[EUI-64]] 로 MAC 주소에서 [[interface ID]] 만들기.
-* [[autoconfiguration]] (p.13–21): host 가 서버 없이 자기 주소를 만든다. [[Example 7.29]] 가 계산 예제다.
-* 패킷 형식 (p.22–26): 40 bytes 고정 [[IPv6 base header]], [[extension header]] 사슬, [[IPv6 fragmentation|source 에서만 하는 fragmentation]].
-* [[ICMPv6]] (p.27–28): IPv4 의 ICMP · ARP · IGMP 를 하나로 합쳤다.
-* 전환 (p.29–32): [[dual stack]], [[tunneling]], [[header translation]].
+앞의 두 강의([[CH07 IPv4 주소]] · [[CH07 IPv4 데이터그램과 포워딩]])는 IPv4 를 주소, 패킷 형식, ICMP 순서로 봤다. 이 덱도 같은 순서로 IPv6 를 다시 훑는다. 그래서 읽는 내내 "IPv4 에서는 어땠지?" 를 옆에 두면 편하다.
 
-페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다. PDF 는 사용자의 GoodNotes '''필기본'''이다. 손글씨는 p.4 · p.8 · p.9 · p.12 · p.14 · p.25 에 있고 "??" 질문이나 "다시" 표시는 없다. 같은 슬라이드가 한 줄씩 늘어나는 build-up 묶음(p.5–7, p.10–12, p.13–15, p.16–18, p.19–20)은 가장 완성된 마지막 장을 캡처했다.
+이야기의 출발점은 주소가 모자란다는 것이다. 주소를 128 bits 로 늘리고 나면 적는 법, 나눠 쓰는 법, 주소를 받는 법이 줄줄이 바뀐다. 그다음 header 를 단순하게 다시 짠다. 그 결과 라우터는 fragmentation 을 더 하지 않는다. IPv4 옆에 붙어 있던 보조 프로토콜 셋은 [[ICMPv6]] 하나로 합친다. 마지막 절은 IPv4 와 IPv6 가 섞여 있는 지금을 버티는 방법 세 가지다. 교수는 지금을 "hybrid era" 라고 불렀다. 전 세계 인터넷 사용자의 거의 절반이 IPv6 를 쓰는데 한국은 약 25% 라고 했다.[* 교수: "in Korea, the user rate is just by quarter, approximately 25%, and I don't know exactly why this happens, but anyway."(01:16) 통계 출처는 말하지 않았다.]
 
-{exam}🎯 교수가 "시험에 나올 수 있다" 고 직접 말한 것 (11/10 녹음 39:06–39:45)
-* IPv6 에서는 '''fragmentation 을 source 만''' 한다. 라우터는 next MTU 보다 큰 패킷을 받으면 나누지 않고 버린다(drop).
-* 교수 원문: "this is a key difference between IPv4 and IPv6. Then you may be asked in exams or somewhere with describing some key differences in IPv6 and IPv4, then you should respond it this way, fragmentation." 그리고 "please remember that one."
-* 같은 수업에서 "please remember" 를 붙인 것이 하나 더 있다. [[interface ID]] 는 64 bits 다(15:47).{/exam}
+페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다. PDF 는 사용자의 GoodNotes 필기본이고, 손글씨는 p.4 · p.8 · p.9 · p.12 · p.14 · p.25 에 있다. "??" 질문이나 "다시" 표시는 없다. 한 줄씩 덧붙이는 build-up 묶음(p.5–7, p.10–12, p.13–15, p.16–18, p.19–20)은 마지막 장을 캡처했다.
 
-{analogy}🎭 IPv4 에서 IPv6 로 가는 것은 '''전화번호 자릿수를 크게 늘리는 개편'''과 비슷하다. 번호가 길어졌으니 읽기 좋게 끊어 쓰고(colon hex), 0 이 이어지면 줄여 쓴다(::). 새 번호의 뒷자리는 휴대폰 기기 번호(MAC 주소)로 채우고, 앞자리는 동네 교환국(라우터)에 물어서 받는다(autoconfiguration). 옛 번호만 쓰는 사람과도 통화해야 하니까 한동안은 전화기 하나에 두 번호를 같이 쓴다(dual stack).{/analogy}
+{analogy}🎭 IPv4 에서 IPv6 로 가는 것은 전화번호 자릿수를 크게 늘리는 개편과 비슷하다. 번호가 길어졌으니 끊어서 쓰고(colon hex), 0 이 이어지면 줄여 쓴다(::). 새 번호의 뒷자리는 휴대폰 기기 번호(MAC 주소)로 채우고, 앞자리는 동네 교환국(라우터)에 물어서 받는다(autoconfiguration). 옛 번호만 쓰는 사람과도 통화해야 하니까 한동안은 전화기 하나에 두 번호를 같이 쓴다(dual stack).{/analogy}
 
-== 한눈에 보기 ==
-기호를 까먹었을 때 이 절만 다시 보면 된다.
-<pre class="ascii">
- IPv6 주소 128 bits = 8 sections × 16 bits (hex 4 자리)
- ┌──────────────────────────┬─────────────┬──────────────────────────────────┐
- │ global routing prefix n  │ subnet  m   │ [[interface ID]]  q                    │
- │ 48 bits (site)           │ 16 bits     │ 64 bits (host 쪽, MAC 에서 만듦)     │
- └──────────────────────────┴─────────────┴──────────────────────────────────┘
-   2000::/3 → 앞 3 bits 001 고정 → 2^125 개           ← [[global unicast address]]
+== 주소가 모자라다: 128 bits 로 늘리기 ==
+[[img:L14-03.png|p.3 — 위 줄의 128-bit 2진수가 아래 줄에서 16 bits 씩 hex 4 자리로 바뀐다. 콜론이 section 경계다|medium]]
+p.2 는 5절 표지다. addressing, autoconfiguration, packet format, ICMPv6 를 다룬다고 적혀 있다. p.3 은 곧바로 동기부터 말한다. 슬라이드 표현으로는 "Main reason to move to IPv6: IPv4's small address space (32-bit space)" 다.
 
- 줄여 쓰기: 0074 → 74, 0000 → 0, 연속된 0 section 들 → '''::''' (주소마다 한 번만)
- [[EUI-64|MAC 48 bits → interface ID]]: 7번째 bit 뒤집기 + 가운데 FFFE 넣기
-   F5-A9-23-11-9B-E2 → F7A9:23FF:FE11:9BE2
- [[link-local address]] = FE80::/10 + interface ID      (서버 없이 스스로 만든다)
- [[router solicitation과 advertisement|RS → RA]](prefix + subnet ID) → global = prefix + subnet + interface ID
-
- [[IPv6 base header|base header]] 40 bytes 고정, payload ≤ 65,535 bytes, 옵션은 [[extension header]] 사슬
- fragmentation: '''source 만''' / 큰 패킷 받은 라우터는 '''drop'''
- [[ICMPv6]] = ICMP + ARP([[neighbor discovery|ND]]) + IGMP([[MLD]])
- 전환: [[dual stack]] · [[tunneling]] · [[header translation]]
-</pre>
-
-== p.2–3 — Next Generation IP, 128-bit address ⭐⭐⭐ ==
-[[img:L14-03.png|p.3 IPv6 Addressing — 옮겨 가는 주된 이유는 IPv4 의 작은 address space(32-bit). IPv6 address = 128 bits, 사람이 읽을 때는 colon hexadecimal(8 sections × 4 hex digits). 예: FEF6:BA98:7654:3210:ADEF:BBFF:2922:FF00|medium]]
-p.2 는 5절 표지다. 이번 절에서 addressing, autoconfiguration, packet format, ICMPv6 를 다룬다고 적혀 있다.
-
-p.3 은 IPv6 가 왜 필요한지부터 말한다. IPv4 주소는 32 bits 라서 $2^{32}$ ≈ 43 억 개밖에 없다. IP 주소는 connection 마다 하나씩 붙으니까 장치 하나가 주소를 여러 개 쓰기도 한다. 그래서 금방 모자란다([[address depletion]]). IPv6 는 주소를 '''128 bits''' 로 늘렸다.
+IPv4 주소는 32 bits 라서 $2^{32}$ ≈ 43 억 개다. 지구 인구보다도 적다. 게다가 IP 주소는 사람마다 하나가 아니고 connection 마다 하나씩 붙는다. 교수 표현으로는 "IP address is really relevant to a connection, not a device" 다(03:04). 노트북 하나가 유선 LAN 과 Wi-Fi 에 같이 붙어 있으면 주소도 두 개다. 그래서 32 bits 는 금방 바닥났다([[address depletion]]). IPv6 는 주소를 '''128 bits''' 로 늘렸다.
 <pre class="txt">
-IPv4: 2^32  = 4,294,967,296  (약 43억)
-IPv6: 2^128 = 340,282,366,920,938,463,463,374,607,431,768,211,456  (약 3.4 × 10^38)
+IPv4: 2^32  = 4,294,967,296                                       (약 43억)
+IPv6: 2^128 = 340,282,366,920,938,463,463,374,607,431,768,211,456 (약 3.4 × 10^38)
 배율: 2^128 / 2^32 = 2^96 ≈ 7.9 × 10^28 배
 </pre>
-128 bits 를 2진수로 쓰면 너무 길다. 그래서 16 bits 씩 8 개 section 으로 자르고, 각 section 을 hex 4 자리로 쓴 다음 콜론으로 잇는다. 이것이 [[colon hexadecimal notation]] 이다.
-{warn}bit 수가 4 배(32 → 128)라고 주소 개수도 4 배인 것은 아니다. 개수는 $2^{96}$ 배가 된다. 교수도 "4 times more bits … exponentially many addresses"(04:08)라고 했다.{/warn}
+bit 수는 4 배가 됐지만 주소 개수는 4 배가 아니다. bit 가 하나 늘 때마다 개수가 두 배가 되니까 96 bits 가 늘면 $2^{96}$ 배다. 교수도 "4 times more bits … exponentially many addresses"(04:08) 라고 짚었다.[* 이름이 IPv5 를 건너뛰고 IPv6 인 데는 사연이 있다. IP header 의 version 값 5 는 이미 실험용 프로토콜(Internet Stream Protocol, ST)에 배정돼 있었다. 그래서 다음 번호인 6 을 받았다. 슬라이드에는 없는 이야기다.]
 
-== p.4 — 줄여 쓰기: leading zeros, zero compression ⭐⭐⭐ ==
-[[img:L14-04.png|p.4 (필기본) — Original FDEC:0074:0000:0000:0000:B0FF:0000:FFF0 → Abbreviated FDEC:74:0:0:0:B0FF:0:FFF0 → More abbreviated FDEC:74::B0FF:0:FFF0 (Gap). "Allowed only once per address" 에 형광펜|medium]]
-p.4 는 긴 주소를 줄이는 규칙 두 개를 보여 준다. 첫째, 한 section 안의 앞쪽 0 은 지운다. 둘째, 0 으로만 된 section 이 연달아 있으면 통째로 `::` 로 바꾼다.
+128 bits 를 2진수로 쓰면 0 과 1 이 128 개다. 사람이 읽고 옮겨 적을 수가 없다. 그래서 16 bits 씩 잘라 section 8 개를 만들고, section 하나를 hex 4 자리로 쓴 다음 콜론으로 잇는다. 이것이 [[colon hexadecimal notation]] 이다. 위 그림에서 첫 16 bits `1111111011110110` 이 `FEF6` 이 되고, 마지막 16 bits `1111111100000000` 이 `FF00` 이 된다. hex 한 자리가 4 bits 니까 16 bits section 은 딱 4 자리다.
+
+== 긴 주소를 줄여 쓰는 두 규칙 ==
+[[img:L14-04.png|p.4 (필기본) — 노란 Original 이 파란 Abbreviated, 분홍 More abbreviated 로 줄어든다. Gap 화살표가 `::` 자리다. "Allowed only once per address" 에 형광펜|medium]]
+hex 로 바꿔도 32 자리는 길다. 교수는 128 bits 를 다 적는 게 비효율적이라 "people are lazy" 해서 더 줄인 표기가 생겼다고 했다(04:43).[* 실제로 IPv6 주소에는 0 이 많다. 위 그림의 원래 주소도 8 section 중 4 개가 `0000` 이다. 줄이는 규칙이 있으면 이런 주소가 거의 반으로 짧아진다.] p.4 의 규칙은 두 개다.
+* 한 section 안의 앞쪽 0 은 지운다. `0074` → `74`, `000F` → `F`, `0000` → `0` 이다.
+* 0 으로만 된 section 이 연달아 있으면 통째로 `::` 로 바꾼다. 이것이 [[zero compression]] 이다.
+
+위 그림을 위에서 아래로 따라가 보자. 노란 줄에서 앞쪽 0 을 지우면 파란 줄이 된다. 파란 줄의 가운데에 `0` section 이 세 개 이어져 있다. 이것을 `::` 로 바꾸면 분홍 줄이 된다.
 <pre class="txt">
-Original          FDEC:0074:0000:0000:0000:B0FF:0000:FFF0
-① leading zeros   FDEC:74:0:0:0:B0FF:0:FFF0        (0074→74, 0000→0)
-② zero compression FDEC:74::B0FF:0:FFF0           (가운데 0 세 개 → ::)
-되돌리기: section 이 5 개 보임 → 8 − 5 = 3 개가 :: 자리에 숨어 있다
+Original           FDEC:0074:0000:0000:0000:B0FF:0000:FFF0
+① leading zeros    FDEC:74:0:0:0:B0FF:0:FFF0
+② zero compression FDEC:74::B0FF:0:FFF0
+되돌리기           보이는 section 5 개 → 8 − 5 = 3 개가 :: 자리에 숨어 있다
 </pre>
-뒤쪽 `:0:` 는 0 이 하나뿐이라 그대로 뒀다. `::` 는 이미 한 번 썼으니 여기서 또 쓸 수 없다.
-{tip}필기 메모: p.4 "Allowed only once per address" 에 형광펜. 교수도 06:18 에 "note that it is allowed only once per address" 라고 짚었고, 이유는 "to avoid some confusion in decoding"(06:43)이다. `::` 가 두 번 있으면 각 자리에 0 section 이 몇 개씩 숨었는지 알 수 없다. 예를 들어 `FDEC:74::B0FF::FFF0` 는 숨은 4 개를 1+3, 2+2, 3+1 중 어떻게 나눴는지 모른다.{/tip}
+지우는 것은 앞쪽 0 뿐이다. `FFF0` 의 끝 0 이나 `B0FF` 의 가운데 0 은 값의 일부라서 지울 수 없다. 그리고 분홍 줄 뒤쪽의 `:0:` 는 그대로 남았다. `::` 를 이미 한 번 썼기 때문이다.
+
+왜 한 번만 쓸 수 있을까. 주소를 되돌릴 때는 "보이는 section 수" 로 숨은 0 의 개수를 센다. `::` 가 하나면 숨은 개수가 8 − (보이는 수) 로 딱 정해진다. `::` 가 두 개면 그 숫자를 두 자리에 어떻게 나눴는지 알 수 없다. 예를 들어 `FDEC:74::B0FF::FFF0` 는 보이는 section 이 4 개라 숨은 0 이 4 개인데, 1 + 3 인지 2 + 2 인지 3 + 1 인지 모른다.
+
+{exam}
+교수가 06:18 에 따로 짚었다. "But note that it is allowed only once per address." 이유도 바로 붙였다. "This is to avoid some confusion in decoding address."(06:43) 필기에도 이 줄에 형광펜이 있다. `::` 가 두 번 들어간 주소를 주고 맞는 표기인지 묻는 문제에 대비해 둔다.
+{/exam}
 [[sim:ipv6_compress]]
-→ [[zero compression]]
+→ [[colon hexadecimal notation]] · [[zero compression]]
 
-== p.5–7 — Three Address Types ⭐⭐ ==
-[[img:L14-07.png|p.7 Three Address Types — Unicast: one interface. Anycast: a group sharing one address, delivered to only one member (the most reachable, "nearest"), addresses from the unicast block. Multicast: every member gets a copy ("all"), broadcast = a special case of multicast|medium]]
-p.5–7 은 한 줄씩 늘어나는 build-up 이다. IPv6 주소는 받는 쪽이 몇 명인지에 따라 세 종류로 나뉜다.
-{|
-! 종류 || 받는 쪽 || 그림
-|-
-| '''unicast''' || interface 하나 || S → 한 명
-|-
-| '''anycast''' || 같은 주소를 공유하는 그룹 중 '''가장 가까운(most reachable) 한 명''' || S → 점선 그룹 중 nearest 하나
-|-
-| '''multicast''' || 그룹의 '''모든''' 멤버가 copy 를 받음 || S → 그룹 전체(all)
-|}
-* anycast 주소는 따로 block 이 없고 unicast block 에서 가져다 쓴다.
-* IPv6 에는 broadcast 가 따로 없다. 슬라이드 표현으로는 "Broadcast = a special case of multicast" 다.
-→ [[unicast·anycast·multicast]]
+{mini}
+# IPv6 주소 공간은 IPv4 의 몇 배인가? "4 배" 가 왜 틀렸는지 한 줄로.
+# `2001:0DB8:0000:0000:0008:0800:200C:417A` 를 가장 짧게 쓰라.
+# `1080::8:800:200C:417A` 를 8 section 전부 4 자리로 펴라.
+# `2001:DB8::FF::1` 은 맞는 표기인가?
+{/mini}
+{answer}
+# $2^{96}$ 배. bit 수가 4 배(32 → 128)일 뿐이고, 개수는 bit 하나에 두 배씩 늘어서 $2^{128} / 2^{32} = 2^{96}$ 이다.
+# `2001:DB8::8:800:200C:417A`. 0 section 네 개를 `::` 로 줄이고, `0008` → `8`, `0800` → `800` 이다. `0800` 의 끝 0 두 개는 못 지운다.
+# `1080:0000:0000:0000:0008:0800:200C:417A`. 보이는 section 이 5 개라 `::` 자리에 3 개가 숨어 있다.
+# 틀렸다. `::` 가 두 번이라 숨은 0 section 3 개를 두 자리에 어떻게 나눴는지 알 수 없다.
+{/answer}
 
-== p.8–9 — Address Space Allocation, Global Unicast Address ⭐⭐⭐ ==
-[[img:L14-08.png|p.8 (필기본) — Global unicast: 1-to-1 communication. Block 2000::/3 (first 3 bits 001) → 2^125 addresses. 세 부분: Global routing prefix (n) 48 bits · Subnet (m) 16 bits · Interface ID (q) 64 bits. 손글씨 "2000::", "/n : # bits of prefix"|medium]]
-p.8 은 가장 많이 쓰는 global unicast 주소의 범위와 구조를 보여 준다. 범위는 `2000::/3` 이다. `/3` 은 IPv4 의 [[slash notation]] 과 같은 뜻이라서 앞 3 bits 가 prefix 로 고정된다는 말이다.
+== 누구에게 보내나: unicast · anycast · multicast ==
+[[img:L14-07.png|p.7 — 오른쪽 세 그림에서 S 가 보낸 화살표 수를 보라. unicast 는 하나, anycast 는 점선 그룹 중 nearest 하나, multicast 는 그룹 all|medium]]
+p.5–7 은 한 줄씩 늘어나는 build-up 이다. IPv4 처럼 IPv6 주소도 받는 쪽이 몇 명인지에 따라 세 종류로 나뉜다. 위 그림 오른쪽을 위에서부터 읽으면 된다.
+* '''unicast''': S 의 화살표가 정해진 interface 하나로 간다. 교수는 "This is a common case, right? Very common."(07:27) 이라고 했다.
+* '''anycast''': 점선 상자 안의 그룹이 주소 하나를 같이 쓴다. 패킷은 그중 '''한 명'''에게만 간다. 슬라이드 표현으로는 "the most reachable" 이고 그림에는 "nearest" 라고 적혀 있다. anycast 용 block 은 따로 없고 unicast block 의 주소를 가져다 쓴다.[* anycast 를 실제로 쓰는 대표적인 곳이 DNS root server 다. 같은 root server 주소를 세계 여러 곳의 서버가 같이 쓰고, 질의는 가까운 서버로 간다. 슬라이드 범위 밖 이야기다.]
+* '''multicast''': 그룹의 모든 멤버가 copy 를 받는다. 그림의 화살표 세 개가 "all" 이다.
+
+IPv6 에는 broadcast 주소가 따로 없다. 슬라이드 표현으로는 "Broadcast = a special case of multicast" 다. 모두에게 보내고 싶으면 "모든 장치" 가 멤버인 multicast 그룹으로 보낸다.[* 같은 link 의 모든 node 가 들어 있는 multicast 그룹 주소가 `FF02::1` 이다. IPv4 의 broadcast 를 이 그룹이 대신한다. 슬라이드에는 없고 표준(RFC 4291)에 있는 값이다.] → [[unicast·anycast·multicast]]
+
+== 가장 흔한 주소의 구조: global unicast ==
+p.8 은 가장 많이 쓰는 주소인 [[global unicast address]] 를 자세히 본다. 슬라이드 표현으로는 "1-to-1 communication between two hosts on the Internet" 이다. 이 주소는 `2000::/3` 블록에 있다. `/3` 은 IPv4 의 [[slash notation]] 과 같은 뜻이라 앞 3 bits 가 prefix 로 고정된다. 교수는 "You may remember slash n notation, right?"(09:51) 하고 IPv4 를 다시 불러냈다.
 <pre class="txt">
 2000::/3
- 2000 의 첫 hex 2 = 0010 → 앞 3 bits = 001 (고정)
- :: 뒤는 전부 0         → 2000:0000:0000:0000:0000:0000:0000:0000
-주소 수 = 2^(128−3) = 2^125
-범위 = 2000:: ~ 3FFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF
-global routing prefix 48 bits 중 3 bits 고정 → site 수 2^45
-subnet 16 bits → 2^16 = 65,536 subnets
+ 2000 의 첫 hex 2 = 0010   → 앞 3 bits = 001 (고정)
+ :: 뒤는 전부 0           → 2000:0000:0000:0000:0000:0000:0000:0000
+주소 수 = 2^(128 − 3) = 2^125
+범위    = 2000:: ~ 3FFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF
 </pre>
-{tip}필기 메모: p.8 "2000::" 아래 "00" 과 화살표, 그리고 "/n : # bits of prefix". 교수는 09:51 에 "You may remember slash n notation … this expresses the number of bits for prefix" 라고 했고, 10:43 에 `::` 뒤에 아무 숫자도 없으니 끝까지 전부 0 이라고 풀었다. `2000::` 은 첫 section 2000 뒤 7 개 section 이 모두 0 인 주소다.{/tip}
-[[img:L14-09.png|p.9 (필기본) Global unicast address — 128 bits = Global routing prefix (n bits, Defines site) | Subnet identifier (m bits, Defines subnet) | Interface identifier (q bits, Defines interface). Recommendation n 48, m 16, q 64. Site 옆 손글씨 "prefix"|medium]]
-p.9 는 세 부분이 실제 네트워크에서 무엇을 가리키는지 그림으로 보여 준다.
-* global routing prefix (n = 48): site 를 정한다. 회사나 학교 같은 큰 단위 네트워크다.
-* subnet identifier (m = 16): site 안의 subnet 을 정한다.
-* interface identifier (q = 64): subnet 안의 interface 를 정한다. IPv4 의 host ID 에 해당한다.
-{tip}필기 메모: p.9 Site 상자 옆 "↓ prefix". site 를 정하는 것이 global routing prefix 라는 메모다. IPv4 로 치면 ISP 에게 받은 block 의 prefix 와 같은 역할이다([[prefix와 suffix]]).{/tip}
-→ [[global unicast address]] · [[interface ID]]
+첫 hex 자리가 2 나 3 이면 global unicast 다. 2 = 0010, 3 = 0011 이라 둘 다 001 로 시작하기 때문이다.[* p.8 필기에 "2000::" 아래 "00" 과 화살표, 그리고 "/n : # bits of prefix" 가 있다. 교수가 10:43–10:59 에 "`::` 뒤에 다른 숫자가 없으니 끝까지 전부 0" 이라고 풀어 준 것을 받아 적었다.]
 
-== p.10–12 — Link-layer Address Mapping (EUI-64) ⭐⭐⭐ ==
-[[img:L14-12.png|p.12 (필기본) — (a) 64-bit EUI-64: flip the 7th bit → interface identifier. (b) 48-bit Ethernet MAC address: flip the 7th bit + insert FFFE(11111111 11111110, added bits) in the middle → 64 bits. 손글씨 "64−48=16"|medium]]
-p.10–12 는 interface ID 64 bits 를 어디서 가져오는지 보여 준다. link-layer 주소(MAC 주소)가 64 bits 이하면 그것으로 interface ID 를 만든다. IPv4 에서는 IP 주소와 MAC 주소 사이에 아무 관계가 없었다. IPv6 에서는 MAC 주소가 IP 주소 안에 들어간다.
-* (a) 64-bit EUI-64 주소: 7 번째 bit 만 뒤집는다.
-* (b) 48-bit Ethernet 주소: 7 번째 bit 를 뒤집고, 가운데(앞 24 bits 와 뒤 24 bits 사이)에 `FFFE` 16 bits 를 넣는다.
+주소는 세 부분으로 나뉜다. 슬라이드에 적힌 권장 크기와 개수는 이렇다.
+{|
+! 부분 || bits || 가리키는 것 || 개수
+|-
+| global routing prefix (n) || 48 || site(회사, 학교 같은 큰 네트워크) || 3 bits 고정 → $2^{45}$ sites / ISPs
+|-
+| subnet (m) || 16 || site 안의 subnet || $2^{16} = 65{,}536$
+|-
+| [[interface ID]] (q) || 64 || subnet 안의 interface || IPv4 의 host ID 와 비슷
+|}
+[[img:L14-09.png|p.9 (필기본) — 위 막대의 세 칸에서 내려온 화살표를 따라가 보라. n 은 Site 상자 전체, m 은 Subnet 하나, q 는 노트북 하나를 가리킨다|medium]]
+p.9 는 이 세 칸이 실제 네트워크에서 무엇을 가리키는지 그림으로 보여 준다. 위 그림에서 n bits 의 화살표는 바깥 Site 상자로 간다. m bits 의 화살표는 그 안의 Subnet 상자 하나로, q bits 의 화살표는 노트북 하나로 간다. Site 상자 아래의 라우터가 "To the Internet" 으로 나가는 출구다.[* 필기에는 Site 옆에 "↓ prefix" 가 있다. site 를 정하는 것이 global routing prefix 라는 메모다. 인터넷 쪽 라우터들은 이 48 bits 만 보고 site 까지 길을 찾는다.]
+
+IPv4 로 옮겨 보면 global routing prefix 와 subnet 을 합친 것이 [[prefix와 suffix|prefix]] 이고, interface ID 가 suffix 다. IPv4 에서는 [[subnetting]] 으로 prefix 를 그때그때 늘렸다. IPv6 는 처음부터 subnet 칸을 16 bits 로 정해 두었다. 교수는 interface ID 를 "similar to host ID in IPv4"(12:31) 라고 했다.
+
+{mini}
+# anycast 와 multicast 는 둘 다 그룹이 주소를 공유한다. 받는 쪽 수가 어떻게 다른가?
+# 다음 중 global unicast 블록(`2000::/3`)에 드는 주소를 모두 고르라. (a) `2A00::1` (b) `4000::1` (c) `3FFF::1` (d) `1FFF::1`
+# 권장 크기(n 48, m 16, q 64)에서 subnet 하나에 들어갈 수 있는 interface ID 는 몇 개인가? site 하나가 만들 수 있는 subnet 은?
+# "IPv6 에는 broadcast 전용 주소 block 이 있다." O/X.
+{/mini}
+{answer}
+# anycast 는 그룹 중 가장 가까운(most reachable) 한 명만 받는다. multicast 는 멤버 전원이 copy 를 받는다.
+# (a), (c). 첫 hex 2 = 0010, 3 = 0011 이라 앞 3 bits 가 001 이다. 4 = 0100, 1 = 0001 은 001 로 시작하지 않는다.
+# interface ID 는 $2^{64}$ 개, subnet 은 $2^{16} = 65{,}536$ 개.
+# X. broadcast 는 multicast 의 특수한 경우다(p.7).
+{/answer}
+
+== 뒤 64 bits 는 MAC 에서 가져온다 ==
+[[img:L14-12.png|p.12 (필기본) — (a) 는 7번째 칸 0 이 1 로만 바뀐다. (b) 는 48-bit MAC 이 앞뒤로 갈라지고 가운데 검은 added bits(11111111 11111110)가 끼어 64 bits 가 된다. 손글씨 "64−48=16"|medium]]
+interface ID 64 bits 는 어디서 가져올까. p.10 의 답은 "A link-layer address shorter than 64 bits becomes (part of) the interface ID" 다. 장치에 이미 붙어 있는 link-layer 주소(MAC 주소)로 만든다는 말이다.
+
+IPv4 에서는 IP 주소와 MAC 주소 사이에 아무 관계가 없었다. 그래서 IP 주소로 MAC 주소를 알아내려면 [[mid:ARP|ARP]] 로 물어봐야 했다. IPv6 에서는 MAC 주소가 IP 주소 안에 들어간다. 교수도 이 점을 "we can have some connection between the link layer address and IPv6 address"(15:09) 라고 짚었다.
+
+규칙은 MAC 주소 길이에 따라 둘이다.
+* (a) 64-bit [[EUI-64]] 주소: 7 번째 bit 하나만 뒤집는다. 위 그림 (a) 에서 첫 byte 의 일곱째 칸만 0 에서 1 로 바뀌었고 나머지 칸은 그대로다.
+* (b) 48-bit Ethernet 주소: 7 번째 bit 를 뒤집고, 가운데에 `FFFE` 를 넣는다. 위 그림 (b) 에서 MAC 의 앞 24 bits 는 왼쪽으로, 뒤 24 bits 는 오른쪽으로 내려가고, 그 사이에 검은 칸 `11111111 11111110` 이 들어간다.[* 필기의 "64−48=16" 이 (b) 의 이유다. interface ID 는 64 bits 인데 Ethernet 주소는 48 bits 라서 16 bits 가 모자란다. 그 16 bits 가 `FFFE` 다. 교수 표현으로는 "we should fill the remaining 16 bits, right?"(17:02) 다.]
+
+7 번째 bit 는 첫 byte 를 2진수로 쓰고 '''왼쪽에서 일곱째''' 자리다. hex 로 보면 첫 byte 의 둘째 자리에서 2 를 더하거나 빼는 것과 같다. 그 bit 의 자릿값이 2 이기 때문이다.
 <pre class="txt">
-MAC  F5-A9-23 | 11-9B-E2          (48 bits)
-첫 byte F5 = 1111 0101
-             1234 567↑8  ← 7번째 bit (왼쪽부터) = 0
-뒤집기       1111 0111 = F7
-가운데 FFFE  F7A9:23FF:FE11:9BE2  (64 bits)
+MAC      F5-A9-23 | 11-9B-E2              (48 bits)
+첫 byte  F5 = 1111 0101
+              1234 567↑8   ← 7번째 bit = 0
+뒤집기        1111 0111 = F7               (hex 로는 5 → 7, 2 를 더함)
+가운데   F7-A9-23 | FF-FE | 11-9B-E2
+결과     F7A9:23FF:FE11:9BE2              (64 bits)
 </pre>
-{tip}필기 메모: p.12 "64−48=16". interface ID 는 64 bits 인데 Ethernet 주소는 48 bits 라서 16 bits 가 모자란다. 그 16 bits 를 FFFE(1111 1111 1111 1110)로 채운다. 교수 설명도 같다: "we should fill the remaining 16 bits, right?"(17:02).{/tip}
-{info}교수: EUI-64 라는 이름은 "You don't have to memorize a specific name, it's just a standard addressing"(15:31). 이름보다 규칙(7 번째 bit, FFFE)을 기억하면 된다.{/info}
-{warn}녹음 15:43 에 "Always MAC layer addressing is about 64 bits" 라는 말이 있는데, 말실수로 보인다. 64 bits 인 것은 EUI-64 이고 Ethernet MAC 주소는 48 bits 다([[mid:MAC 주소]]). 그래서 p.12 (b) 에 FFFE 가 필요하다.{/warn}
-→ [[EUI-64]]
+왜 하필 7 번째 bit 를 뒤집을까. 이 bit 는 IEEE 주소에서 "제조사가 붙인 전 세계 유일 주소인가" 를 표시하는 칸이다.[* 이름은 U/L(universal/local) bit 다. IEEE MAC 주소에서는 전 세계 유일 주소일 때 0 이다. IPv6 interface ID 에서는 뜻을 뒤집어서 1 이 "전 세계 유일" 이 되게 정했다. 그래서 MAC 을 옮겨 올 때 이 bit 를 뒤집는다. 슬라이드에는 없는 내용이고 시험은 "7 번째 bit 를 뒤집는다" 로 충분하다.] 바로 오른쪽의 8 번째 bit 와 헷갈리면 안 된다. 8 번째 bit 는 Ethernet 에서 unicast 와 multicast 를 가르는 bit 다([[mid:Ethernet 주소 판별]]). F5 의 8 번째 bit 를 뒤집으면 F4 가 돼서 틀린다.
 
-== p.13–15 — Autoconfiguration ①②: link-local address ⭐⭐⭐ ==
-[[img:L14-15.png|p.15 Autoconfiguration — IPv4: admin(manually) 또는 DHCP server. IPv6: host 가 서버 없이 스스로. ① FE80::/10 에 interface ID 를 붙여 link-local address ② link 에서 unique 한지 확인 ③ router 에게 global unicast address. 아래: Link-local address = 1111 1110 10 (10 bits) | 54 zeros | 64-bit interface ID|medium]]
-p.13–15 는 IPv4 와 IPv6 가 주소를 받는 방법을 비교한다. IPv4 에서는 관리자가 손으로 넣거나 [[DHCP]] 서버가 준다. IPv6 host 는 서버 없이 자기 주소를 스스로 만든다. 이것을 [[autoconfiguration]] 이라고 한다.
-# '''link-local address''' 를 만든다. 접두사 `FE80::/10` 뒤에 자기 interface ID 를 붙인다.
+{exam}
+교수가 이 슬라이드에서 "please remember" 를 붙였다. "please remember that our interface ID address space has 64 bits, right?"(15:47) 바로 앞에서는 EUI-64 라는 이름은 외울 필요 없다고 했다. "You don't have to memorize a specific name, it's just a standard addressing."(15:31) 이름보다 64 bits 와 두 규칙(7 번째 bit, FFFE)을 기억한다.
+{/exam}
+녹음 15:43 에는 "Always MAC layer addressing is about 64 bits, right?" 라는 말이 있다.[* 말실수로 보인다. 64 bits 인 것은 EUI-64 이고, 중간고사 범위의 Ethernet MAC 주소는 48 bits 다([[mid:MAC 주소]]). 그래서 p.12 (b) 에 FFFE 가 필요하다.] Ethernet 주소는 48 bits 라는 점을 그대로 기억하면 된다.[* MAC 주소가 IP 주소 안에 그대로 들어가면 장치가 어느 네트워크로 옮겨 가도 뒤 64 bits 가 같다. 그래서 그 장치를 추적할 수 있다는 문제가 지적됐다. 지금 운영체제들은 interface ID 를 무작위로 만드는 방식(privacy extension)을 같이 쓴다. 슬라이드 범위 밖이다.] → [[EUI-64]] · [[interface ID]]
+
+{mini}
+# MAC `3C-22-FB-01-02-03` 의 interface ID 를 쓰라.
+# MAC `02-50-56-AB-CD-EF` 의 interface ID 를 쓰라. 첫 byte 의 7 번째 bit 는 0 에서 1 로 바뀌는가, 1 에서 0 으로 바뀌는가?
+# 64-bit EUI-64 주소 `12-34-56-78-9A-BC-DE-F0` 의 interface ID 를 쓰라.
+# 어떤 학생이 F5-A9-23-11-9B-E2 의 첫 byte 를 F4 로 바꿨다. 무엇을 잘못했나?
+{/mini}
+{answer}
+# `3E22:FBFF:FE01:0203`. 3C = 0011 1100 → 7 번째 bit 0 → 1 → 0011 1110 = 3E. 가운데에 FFFE.
+# `0050:56FF:FEAB:CDEF`. 02 = 0000 0010 이라 7 번째 bit 가 이미 1 이다. 뒤집으면 0 이 되어 00. "항상 1 로 만든다" 가 아니고 "뒤집는다" 다.
+# `1034:5678:9ABC:DEF0`. 64 bits 라서 FFFE 는 넣지 않는다. 12 = 0001 0010 → 0001 0000 = 10.
+# 8 번째(오른쪽 끝) bit 를 뒤집었다. 뒤집을 것은 왼쪽에서 7 번째라 F5 → F7 이다.
+{/answer}
+
+== 서버 없이 주소 만들기: autoconfiguration ==
+IPv4 host 는 자기 주소를 스스로 정하지 못했다. p.13 의 말로는 "address is given by an admin (manually) or by a DHCP server" 다. 관리자가 손으로 넣거나 [[DHCP]] 서버가 빌려줬다. p.14 는 여기에 IPv6 를 맞세운다. "a host can build its own address, with no server needed." 이 방법이 [[autoconfiguration]] 이다.[* 교수: "auto means it is done by self, and configuration means setting an IP address."(24:42) 이름 그대로 "스스로 하는 주소 설정" 이다.]
+
+{exam}
+교수는 이 차이를 두 번 연달아 강조했다. "But in IPv6, a key difference is that each host can construct its own IP addresses with no server services. This is a key difference."(19:17–19:35) 이어서 19:46 에 한 번 더 "a key difference between IPv4 and IPv6" 라고 했다. 필기에도 "can build its own address", "no server needed" 에 형광펜이 있다. IPv4 와 IPv6 의 차이를 쓰라는 문제에서 fragmentation 다음으로 쓸 거리다.
+{/exam}
+
+[[img:L14-15.png|p.15 — 아래 막대가 link-local 주소다. 노란 10 bits `1111 1110 10`, 초록 54 zeros, 파란 64-bit interface ID 를 더하면 128|medium]]
+그럼 host 는 어떻게 혼자 주소를 만들까. p.15 의 순서는 세 단계다.
+# '''[[link-local address]]''' 를 만든다. 접두사 `FE80::/10` 뒤에 자기 interface ID 를 붙인다.
 # 그 주소가 같은 link 안에서 unique 한지 확인한다.
-# router 에게서 global unicast address 의 앞부분을 받는다(다음 절).
+# router 에게서 global unicast address 를 받는다(다음 슬라이드).
+
+위 그림의 막대를 bit 로 읽어 보자. 앞 10 bits 가 `1111 1110 10` 이고, 뒤 64 bits 가 interface ID 다. 나머지 54 bits 는 0 으로 채운다.
 <pre class="txt">
 link-local = 1111 1110 10 | 54 zeros | 64-bit interface ID
-             └ 10 bits ┘   └ 54 ┘     └ 64 ┘   합 128
+             └ 10 bits ┘   └ 54 ┘     └ 64 ┘          10 + 54 + 64 = 128
 FE80 = 1111 1110 1000 0000 → 앞 10 bits 1111111010 이 /10
+FE80 의 뒤 6 bits + 그다음 3 sections(48 bits) = 54 zeros → 그래서 FE80:: 로 줄어든다
 </pre>
-{tip}필기 메모: p.14 "can build its own address", "no server needed" 에 형광펜. 교수도 19:17 과 19:46 에 "a key difference" 라고 두 번 말했다. IPv4 에서는 host 가 주소를 고를 수 없었는데 IPv6 에서는 직접 만든다.{/tip}
-→ [[link-local address]] · [[autoconfiguration]]
+link-local 주소는 이름대로 그 link 안에서만 통한다. 라우터는 이 주소를 다른 network 로 넘기지 않는다. 인터넷으로 나가려면 global unicast 주소가 따로 있어야 한다.
 
-== p.16–18 — Autoconfiguration ③: router solicitation, router advertisement ⭐⭐⭐ ==
-[[img:L14-18.png|p.18 — ① Host → Router: Router solicitation. ② Router → Host: Router advertisement (prefix + subnet ID). ③ Global unicast address = Global prefix | Subnet ID | Interface ID (from host)|medium]]
-link-local 주소는 같은 link 안에서만 쓸 수 있다. 인터넷으로 나가려면 global unicast 주소가 필요한데, host 는 자기 interface ID 만 알고 앞의 prefix 와 subnet ID 는 모른다. 그래서 가까운 router 에게 물어본다.
-# host 가 '''router solicitation''' 을 보낸다. solicitation 은 "요청" 이라는 뜻이다.
-# router 가 '''router advertisement''' 로 global prefix 와 subnet ID 를 알려 준다.
-# host 가 받은 prefix + subnet ID 뒤에 자기 interface ID 를 붙인다. 이것이 global unicast address 다.
+[[img:L14-18.png|p.18 — 위의 두 화살표가 오가는 순서(① 검은 Router solicitation, ② 파란 Router advertisement)와 아래 막대에서 어느 칸이 router 에게서 오고 어느 칸이 host 에게서 오는지 보라|medium]]
+그런데 host 는 global 주소의 뒷부분(interface ID)만 안다. 앞의 global prefix 와 subnet ID 는 모른다. 교수 설명으로는 "all hosts know is each interface ID, not the subnet and higher level network ID"(23:26) 다. 그래서 가까운 router 에게 물어본다. p.16–18 이 그 대화다.
+# host 가 '''router solicitation''' 을 보낸다.[* 교수: "solicitation is just asking … You can think of it as asking or requesting."(22:21–22:28) 전사기는 router 를 계속 "laurel", "louder" 로 받아 적었다.]
+# router 가 '''router advertisement''' 로 global prefix 와 subnet ID 를 알려 준다. 위 그림의 파란 화살표다.
+# host 가 받은 prefix + subnet ID 뒤에 자기 interface ID 를 붙인다. 위 그림 아래 막대의 노란 칸과 초록 칸이 router 에게서 왔고, 파란 칸 "Interface ID (from host)" 는 host 가 만들었다.
+host 는 router solicitation 을 보낼 때 1 단계에서 만든 link-local 주소를 쓴다. 아직 global 주소가 없으니 같은 link 안에서 통하는 주소로 묻는 것이다.[* router solicitation 과 router advertisement 는 [[ICMPv6]] 의 neighbor discovery 그룹에 드는 메시지다(Forouzan 보충). 이 덱 끝의 p.28 에서 다시 만난다. 또 IPv6 에도 서버가 주소를 나눠 주는 DHCPv6 가 따로 있다. 슬라이드는 다루지 않는다.]
 [[anim:ipv6_autoconfig_anim|host 가 link-local 주소를 만들고, RS 를 보내고, RA 로 받은 prefix 에 interface ID 를 붙이는 순서를 본 뒤 아래 Example 7.29 를 손으로 풀어 보라]]
-→ [[router solicitation과 advertisement]]
+→ [[autoconfiguration]] · [[router solicitation과 advertisement]]
 
-== p.19–21 — Example 7.29 ⭐⭐⭐ ==
-[[img:L14-20.png|p.20 Example 7.29 — Ethernet address F5-A9-23-11-9B-E2, Global prefix 3A21:1216:2165, subnet ID 1232. Solution: Interface ID F7A9:23FF:FE11:9BE2, Link-local address = FE80::F7A9:23FF:FE11:9BE2|medium]]
-p.19–21 은 앞의 두 절을 숫자로 한 번 따라가는 예제다. MAC 주소로 interface ID 를 만들고, link-local 주소를 거쳐 global unicast 주소까지 간다.
+{mini}
+# 빈칸: autoconfiguration 의 순서는 ① ___ 만들기 → ② ___ 확인 → ③ router 에게 ___ 를 보내고 ___ 를 받기 → interface ID 붙이기.
+# interface ID 가 `3E22:FBFF:FE01:0203` 인 host 의 link-local 주소를 가장 짧게 쓰라.
+# router advertisement 에 들어 있지 '''않은''' 것은? (a) global prefix (b) subnet ID (c) interface ID
+# link-local 주소에 0 이 54 bits 들어가는 이유를 계산으로 쓰라.
+{/mini}
+{answer}
+# ① link-local 주소 ② link 에서 unique 한지 ③ router solicitation, router advertisement.
+# `FE80::3E22:FBFF:FE01:203`. 마지막 section `0203` 의 앞 0 도 지운다.
+# (c). interface ID 는 host 가 자기 MAC 으로 만든다. router 는 앞부분만 알려 준다.
+# 128 − 10(prefix) − 64(interface ID) = 54.
+{/answer}
+
+== 손으로 한 번 따라가기: Example 7.29 ==
+p.19–21 은 앞의 두 절을 숫자로 한 번 끝까지 따라가는 예제다. 문제는 이렇다. Ethernet 주소가 `F5-A9-23-11-9B-E2` 인 host 가 network 에 들어왔다. router 가 가진 global prefix 는 `3A21:1216:2165`, subnet ID 는 `1232` 다. 이 host 의 global unicast 주소는?
 <pre class="txt">
-주어진 것: MAC F5-A9-23-11-9B-E2, global prefix 3A21:1216:2165, subnet ID 1232
 1. 첫 byte F5 = 1111 0101 → 7번째 bit 뒤집기 → 1111 0111 = F7
-2. F7-A9-23 | FF-FE | 11-9B-E2   (가운데 FFFE)
+2. F7-A9-23 | FF-FE | 11-9B-E2            (가운데 FFFE)
 3. interface ID = F7A9:23FF:FE11:9BE2
-4. link-local = FE80:0000:0000:0000 + interface ID = '''FE80::F7A9:23FF:FE11:9BE2'''
-5. unique 확인 → router solicitation → advertisement 3A21:1216:2165:1232
+4. link-local   = FE80:0000:0000:0000:F7A9:23FF:FE11:9BE2
+                = '''FE80::F7A9:23FF:FE11:9BE2'''
+5. unique 확인 → router solicitation → advertisement "3A21:1216:2165:1232"
 6. global = 3A21:1216:2165 | 1232 | F7A9:23FF:FE11:9BE2
-          = '''3A21:1216:2165:1232:F7A9:23FF:FE11:9BE2'''   (48 + 16 + 64 = 128)
+          = '''3A21:1216:2165:1232:F7A9:23FF:FE11:9BE2'''    (48 + 16 + 64 = 128)
 </pre>
-[[img:L14-21.png|p.21 Solution (cont'd) — 3A21:1216:2165 (48 bits) | 1232 (16 bits) | F7A9:23FF:FE11:9BE2 (64 bits). 바뀐 글자 7, FF:FE 는 빨강|medium]]
-교수 표현으로는 "This is very easy, just following the rule"(27:22)이다. 규칙만 지키면 계산이 끝난다.
-{warn}7 번째 bit 는 첫 byte 의 '''왼쪽에서 7 번째'''다. 오른쪽 끝(8 번째) bit 를 뒤집으면 F5 → F4 가 돼서 틀린다. 오른쪽 끝 bit 는 Ethernet 에서 unicast/multicast 를 가르는 bit 다([[mid:Ethernet 주소 판별]]).{/warn}
+[[img:L14-21.png|p.21 — 마지막 막대에서 빨간 글자(7, FF:FE)가 MAC 에서 바뀌거나 끼워 넣은 부분이다. 노란 48 bits 와 초록 16 bits 는 router 가 준 것|medium]]
+위 그림의 파란 칸에서 빨간 글자만 따라가면 MAC 에서 무엇이 바뀌었는지 알 수 있다. F5 의 5 가 7 로 바뀌었고, 가운데에 FF:FE 가 들어갔다. 나머지 글자는 MAC 을 그대로 옮긴 것이다. global 주소에는 0 section 이 없어서 더 줄일 수도 없다. 교수 표현으로는 "This is very easy, just following the rule."(27:22) 다.[* 주어진 prefix `3A21` 의 첫 hex 3 = 0011 이라 앞 3 bits 가 001 이다. 그래서 이 주소는 앞 절의 global unicast 블록 `2000::/3` 안에 제대로 들어 있다.]
+
+자주 틀리는 곳은 세 군데다.
+* 오른쪽 끝(8 번째) bit 를 뒤집어 F4 를 만드는 것.
+* FFFE 를 맨 뒤에 붙이는 것. FFFE 는 MAC 의 3 번째 byte 와 4 번째 byte 사이에 들어간다.
+* global 주소에 FE80 을 남기는 것. FE80 은 link-local 의 접두사이고, global 주소의 앞부분은 router 가 준 prefix 로 채운다.
 [[sim:eui64]]
 → [[Example 7.29]]
 
-== p.22 — What changed in IPv6 ⭐⭐ ==
-[[img:L14-22.png|p.22 What changed in IPv6 — Better header format(options separated → routers work faster) · New options · Allowance for extension · Resource allocation(TOS removed; traffic class and flow label added) · More security|medium]]
-p.22 는 주소 말고 프로토콜 자체가 바뀐 점 다섯 개를 상자로 정리한다.
-* Better header format: 옵션을 base header 에서 떼어 냈다. 그래서 라우터가 header 를 빨리 읽는다.
+{mini}
+# MAC `A4-5E-60-12-34-56` 인 host 가 global prefix `2001:0DB8:ACAD`, subnet ID `0010` 인 network 에 들어왔다. interface ID, link-local 주소, global 주소를 차례로 쓰라(가장 짧은 표기).
+# 같은 host 가 같은 site 의 subnet `0020` 으로 옮겼다. global 주소에서 바뀌는 부분은 어디인가?
+{/mini}
+{answer}
+# A4 = 1010 0100 → 1010 0110 = A6. interface ID `A65E:60FF:FE12:3456`. link-local `FE80::A65E:60FF:FE12:3456`. global `2001:DB8:ACAD:10:A65E:60FF:FE12:3456`. `0DB8` → `DB8`, `0010` → `10` 으로 앞 0 만 지운다. 참고로 `2001:DB8::/32` 는 문서와 교재 예시용으로 떼어 둔 블록이라 실제 인터넷에서는 쓰지 않는다.
+# subnet 칸 16 bits 만 `10` → `20` 으로 바뀐다. `2001:DB8:ACAD:20:A65E:60FF:FE12:3456`. interface ID 는 MAC 에서 왔으니 그대로다.
+{/answer}
+
+== header 를 다시 짠 이유 ==
+주소 이야기가 끝나면 p.22 가 프로토콜 자체에서 바뀐 점 다섯 가지를 상자로 보여 준다.
+* Better header format: 옵션을 base header 에서 떼어 냈다. 그래서 라우터가 더 빨리 일한다.
 * New options: 새 기능을 위한 옵션이 생겼다.
 * Allowance for extension: 새 기술이 나오면 프로토콜을 늘릴 수 있다.
 * Resource allocation: IPv4 의 TOS([[service type]])를 없애고 [[traffic class와 flow label|traffic class 와 flow label]] 을 넣었다.
 * More security: 보안 지원이 나아졌다.
-교수는 첫 번째를 길게 설명했다. IPv4 header 는 옵션 때문에 길이가 20–60 bytes 로 바뀌고, 라우터가 패킷마다 header 길이부터 따져야 해서 느렸다고 했다(28:12–28:39).
+교수는 첫 번째를 길게 설명했다. IPv4 header 는 옵션 때문에 길이가 20–60 bytes 사이에서 바뀌었다. 그래서 라우터는 패킷마다 header 길이부터 읽고 옵션을 훑어야 했고, 그만큼 느렸다(28:12–28:39). 교수 표현으로는 "Remember that IPv6 and IPv4 header is kind of complicated."(29:51) 다. 바로 뒤에 "It has many many different fields" 라고 하고 IPv6 는 칸이 적다고 했으니, 복잡하다는 것은 IPv4 header 다.
 
-== p.23–24 — Base header 40 bytes ⭐⭐⭐ ==
-[[img:L14-23.png|p.23 — a. IPv6 packet = Base header 40 bytes + Payload up to 65,535 bytes. b. Base header: Version 4 · Traffic class 8 · Flow label 20 / Payload length 16 · Next header 8 · Hop limit 8 / Source address 128 bits / Destination address 128 bits|medium]]
-p.23 은 IPv6 packet 의 모양이다. base header 는 '''40 bytes 고정'''이고 그 뒤에 payload 가 최대 65,535 bytes 붙는다. IPv4 header 가 20–60 bytes 로 길이가 바뀌던 것과 다르다.
+[[img:L14-23.png|p.23 — a 는 패킷 전체(40 bytes 고정 base header + 최대 65,535 bytes payload), b 는 base header 를 32 bits 줄 단위로 편 것. 파란 두 줄과 주황 주소 두 칸을 비교해 보라|medium]]
+p.23 이 새 header 다. 위 그림 a 에서 base header 는 '''40 bytes 고정'''이고, 그 뒤에 payload 가 최대 65,535 bytes 붙는다. b 는 base header 를 32 bits 씩 줄로 편 것이다. 위 두 줄(파랑)이 제어용 칸이고, 아래 주황 두 칸이 source 와 destination 주소다. 주소가 128 bits 씩이라 header 의 대부분을 주소가 차지한다.
 <pre class="txt">
-4 + 8 + 20       = 32 bits  (1 행: Version, Traffic class, Flow label)
-16 + 8 + 8       = 32 bits  (2 행: Payload length, Next header, Hop limit)
-128 + 128        = 256 bits (Source, Destination)
-합 = 320 bits = '''40 bytes'''   (주소만 32 bytes, 나머지 8 bytes)
+1 행: Version 4 + Traffic class 8 + Flow label 20      = 32 bits
+2 행: Payload length 16 + Next header 8 + Hop limit 8  = 32 bits
+주소: Source 128 + Destination 128                     = 256 bits
+합  : 320 bits = '''40 bytes'''   (주소 32 bytes + 나머지 8 bytes)
 </pre>
-[[img:L14-24.png|p.24 Base header fields 표 — Version 4 bits (6) · Traffic class 8 · Flow label 20 · Payload length 16 (excluding the base header) · Next header 8 (type of the first extension header) · Hop limit 8 (same as TTL) · Source/destination 128 bits each|medium]]
+p.24 는 각 칸의 뜻을 표로 적었다. IPv4 의 같은 칸과 나란히 놓으면 이렇다.
 {|
-! 필드 || bits || 뜻 || IPv4 에서는
+! 필드 || bits || 뜻 (p.24) || IPv4 에서는
 |-
 | Version || 4 || 값은 6 || VER = 4
 |-
-| [[traffic class와 flow label|Traffic class]] || 8 || payload 마다 다른 전달 요구 || [[service type]]
+| [[traffic class와 flow label|Traffic class]] || 8 || payload 마다 다른 전달 요구를 구분 || [[service type]]
 |-
 | [[traffic class와 flow label|Flow label]] || 20 || 한 flow 의 데이터를 특별 취급 || 없음
 |-
-| Payload length || 16 || base header 를 '''뺀''' 길이 || [[total length]] 는 header 포함
+| Payload length || 16 || base header 를 '''뺀''' datagram 길이 || [[total length]] 는 header 포함
 |-
 | [[next header|Next header]] || 8 || 첫 extension header 의 종류 || [[protocol field|protocol]] 와 비슷
 |-
-| Hop limit || 8 || TTL 과 같음 || [[TTL]]
+| Hop limit || 8 || TTL 과 같다 || [[TTL]]
 |-
-| Source / Destination || 128 씩 || 주소 || 32 씩
+| Source / destination address || 128 씩 || 주소 || 32 씩
 |}
-{warn}Payload length 는 base header 40 bytes 를 '''빼고''' 센다. IPv4 의 total length 는 header 를 포함했다. 그래서 IPv4 는 "data = total length − HLEN × 4" 로 계산했지만, IPv6 는 payload length 가 그대로 payload 크기다. 또 IPv6 base header 에는 HLEN 이 없다. 길이가 40 으로 고정이니까 적을 필요가 없다.{/warn}
-→ [[IPv6 base header]]
+flow label 에 대해 교수는 "This is interesting because IP does not serve some flow control."(32:36) 이라고 했다.[* 이름에 flow 가 들어 있지만 TCP 의 flow control(보내는 속도 조절)과는 다른 이야기다. flow label 은 같은 흐름에 속한 패킷들을 묶어서 라우터가 같은 방식으로 다루게 하는 이름표다.]
 
-== p.25 — Extension headers, next header 사슬 ⭐⭐ ==
-[[img:L14-25.png|p.25 (필기본) — Payload = zero or more extension headers + data. Base header 의 Next header → Extension header(Next header | Length) → … → Data. Some next-header codes: 00 Hop-by-hop, 02 ICMPv6, 06 TCP, 17 UDP, 43 Source-routing, 44 Fragmentation, 50 ESP, 51 AH, 59 Null, 60 Destination option. 손글씨 "44", "02", "→ ICMPv6"|medium]]
-IPv4 의 옵션은 header 안에 있었다. IPv6 는 옵션을 base header 밖으로 빼서 payload 앞쪽에 extension header 로 붙인다. extension header 는 0 개일 수도 있고 여러 개일 수도 있다.
+여기서 두 가지를 조심한다. 첫째, payload length 는 base header 40 bytes 를 빼고 센다. IPv4 의 total length 는 header 를 포함했다. 그래서 IPv6 패킷 전체 크기는 40 + payload length 다. 둘째, base header 에는 [[HLEN]] 칸이 없다. 길이가 40 으로 정해져 있으니 적을 필요가 없다.[* IPv4 에 있던 [[header checksum]] 도 IPv6 base header 에는 없다. hop 마다 TTL 이 바뀌어서 라우터가 checksum 을 매번 다시 계산해야 했는데, 위아래 계층이 이미 오류를 검사하니까 아예 뺐다. (Forouzan 보충 — 슬라이드에 없음)] → [[IPv6 base header]]
 
-각 header 는 [[next header]] 칸에 "내 다음에 오는 것이 무엇인지" 를 적는다. 그래서 base header → extension header → … → data 가 사슬처럼 이어진다.
+{mini}
+# base header 40 bytes 중 주소가 아닌 부분은 몇 bytes 인가?
+# extension header 없이 payload 가 1,200 bytes 인 IPv6 패킷의 payload length 값과 패킷 전체 크기를 쓰라.
+# IPv6 base header 에 HLEN 이 없는 이유를 한 줄로.
+# IPv4 의 TTL 에 해당하는 IPv6 칸의 이름은?
+{/mini}
+{answer}
+# 8 bytes. 40 − 16 × 2 = 8. 1 행과 2 행이 32 bits 씩이다.
+# payload length = 1,200, 전체 = 40 + 1,200 = 1,240 bytes. payload length 에 40 을 넣으면 틀린다.
+# base header 가 항상 40 bytes 로 고정이라 길이를 적을 필요가 없다. 옵션은 extension header 로 빠졌다.
+# Hop limit. 실제로 hop 수를 세던 칸이라 이름이 뜻에 맞게 바뀌었다.
+{/answer}
+
+== 옵션은 사슬로: extension header 와 next header ==
+[[img:L14-25.png|p.25 (필기본) — 왼쪽에서 base header 의 Next header 점선이 첫 Extension header 로, 그 Next header 가 다음 것으로, 마지막이 Data 로 이어진다. 손글씨 "44", "02", "→ ICMPv6"|medium]]
+옵션을 base header 에서 뺐다면 어디에 둘까. p.25 의 답은 payload 의 앞쪽이다. 슬라이드 표현으로는 "Payload = zero or more extension headers + data from the upper layer" 다. 옵션이 필요 없으면 [[extension header]] 는 하나도 없고, 필요하면 여러 개 붙는다.
+
+여러 개를 어떻게 이어 붙일까. 위 그림을 왼쪽 위부터 따라가 보자. base header 의 Next header 칸에서 점선이 나와 첫 extension header 를 가리킨다. 그 extension header 에도 Next header 칸과 Length 칸이 있고, 그 Next header 가 다음 extension header 를 가리킨다. 마지막 화살표는 "Data: a packet from another protocol" 로 간다. 칸마다 "내 다음에 오는 것" 의 번호를 적으니 header 들이 사슬이 된다. 교수 표현으로는 "It is like chaining, right?"(34:53) 다.
+
+그림 오른쪽의 번호표에는 두 종류가 섞여 있다.
+* extension header 번호: 00 hop-by-hop option, 43 source-routing option, 44 fragmentation option, 50 encrypted security payload, 51 authentication header, 60 destination option.
+* 위층 데이터 번호: 02 ICMPv6, 06 TCP, 17 UDP.
+* 59 Null 은 "뒤에 아무것도 없다" 는 뜻이다.
+TCP 6 과 UDP 17 은 IPv4 의 [[protocol field]] 값과 같다. 그래서 extension header 가 하나도 없을 때 base header 의 next header 는 곧바로 위층 프로토콜을 가리키고, IPv4 protocol 칸과 같은 일을 한다.[* 슬라이드(Forouzan 그림)는 ICMPv6 를 02 로 적었다. 실제 표준 번호(IANA)는 58 이고, 02 는 IPv4 에서 IGMP 의 번호다. 시험은 슬라이드 표대로 02 로 답한다. → [[next header]]]
+
+교수는 fragmentation 을 쓰는 ICMPv6 패킷으로 사슬을 보여 줬다(34:21–35:47).
 <pre class="txt">
 base header      Next header = 44  → 다음은 Fragmentation extension header
-fragment header  Next header = 02  → 다음은 ICMPv6 메시지 (data)
+fragment header  Next header = 02  → 다음은 ICMPv6 메시지(data)
 ICMPv6 data
 </pre>
-{tip}필기 메모: p.25 base header 의 Next header 옆 "44", 첫 extension header 옆 "02", data 쪽 "→ ICMPv6". 교수가 든 예(34:21–35:34)를 받아 적은 것이다. fragmentation 을 쓰려면 base header 의 next header 에 44 를 넣는다. 그 extension header 의 next header 에 02 를 넣으면 뒤에 ICMPv6 가 온다는 뜻이다. 추가 기능이 없으면 extension header 없이 next header 가 곧바로 TCP(06)나 UDP(17)를 가리킨다.{/tip}
-→ [[extension header]] · [[next header]]
+필기의 "44", "02", "→ ICMPv6" 가 이 예를 받아 적은 것이다. 위 그림에서 base header 의 Next header 옆에 44, 첫 extension header 옆에 02 가 있다. 추가 기능을 하나도 쓰지 않으면 extension header 없이 base header 바로 뒤에 data 가 온다(35:53–36:13). → [[extension header]] · [[next header]]
 
-== p.26 — Fragmentation only by the source ⭐⭐⭐ ==
-[[img:L14-26.png|p.26 — IPv6 datagrams are fragmented only by the source. 표: Who fragments? IPv4 Source or any router / IPv6 Source only. Who reassembles? Destination / Destination. Router gets a packet larger than the next MTU: IPv4 Fragments it / IPv6 Drops it|medium]]
-p.26 은 IPv4 와 IPv6 의 fragmentation 을 표 하나로 비교한다. IPv4 에서는 source 도, 경로 위의 아무 라우터도 패킷을 나눌 수 있었다([[CH07 IPv4 데이터그램과 포워딩]] p.43). IPv6 에서는 '''source 만''' 나눈다. source 가 미리 크기를 확인하고 나눌지 정한다.
+{mini}
+# extension header 없이 UDP datagram 을 실은 IPv6 패킷에서 base header 의 next header 값은?
+# base header 의 next header = 44, 그 extension header 의 next header = 06 이다. 이 패킷에는 어떤 header 들이 어떤 순서로 있는가?
+# hop-by-hop option 하나를 붙여 UDP 를 보낸다. base header 와 hop-by-hop header 의 next header 값을 각각 쓰라.
+{/mini}
+{answer}
+# 17. extension header 가 없으면 next header 가 바로 위층 프로토콜을 가리킨다.
+# base header → fragmentation extension header → TCP segment.
+# base header 00, hop-by-hop header 17. 각 칸은 "자기 다음" 을 적는다. base header 에 17 을 쓰면 hop-by-hop header 를 건너뛰게 된다.
+{/answer}
+
+== 라우터는 더 이상 나누지 않는다: fragmentation ==
+p.26 은 header 를 바꾼 결과 중 가장 큰 것 하나를 표로 보여 준다. IPv4 에서는 source 도, 경로 위의 아무 라우터도 패킷을 나눌 수 있었다([[CH07 IPv4 데이터그램과 포워딩]]). 라우터가 다음 링크의 [[MTU]] 보다 큰 패킷을 받으면 그 자리에서 쪼갰다. IPv6 에서는 '''source 만''' 나눈다. 슬라이드 표현으로는 "IPv6 datagrams are fragmented only by the source; the source checks the size and decides" 다.
 {|
 ! 질문 || IPv4 || IPv6
 |-
@@ -230,87 +319,95 @@ p.26 은 IPv4 와 IPv6 의 fragmentation 을 표 하나로 비교한다. IPv4 �
 |-
 | router 가 next MTU 보다 큰 패킷을 받으면 || 나눈다 || '''버린다(drop)'''
 |}
+그럼 IPv6 라우터가 너무 큰 패킷을 받으면 어떻게 할까. 교수가 직접 이 질문을 던지고 답했다. "Then one may wonder what happens if routers encounter a package, large package compared to the capacity?" 답은 "It just drops."(38:40–38:56) 다. 나누지도 돌려보내지도 않고 버린다.
+
+왜 이렇게 바꿨을까. IPv4 라우터는 fragmentation 을 할 때 할 일이 많았다. 패킷을 자르고, header 를 복사하고, flags 와 offset 과 total length 를 고치고, checksum 을 다시 계산했다. IPv6 는 이 일을 라우터에서 없앴다. 라우터는 크기만 보고 맞으면 보내고 크면 버린다. 대신 source 가 미리 경로의 크기를 알고 맞춰 보내야 한다. 둘째 행 "누가 합치나" 는 두 버전이 같다는 것도 같이 기억한다.[* 녹음 37:50 에서 교수는 IPv4 를 두고 "fragmentation can happen in hosts and sources, both" 라고 했다. 문맥상 "source 와 router" 를 잘못 말한 것이다. 바로 다음 문장이 "It cannot happen in routers, intermediate routers" 다.]
 [[anim:ipv6_frag_anim|위 IPv4 줄에서는 라우터가 큰 패킷을 나누고, 아래 IPv6 줄에서는 같은 패킷을 버리는 것을 비교한 뒤 표의 셋째 행을 외워라]]
-{exam}교수 강조(39:06–39:45): "a key difference between IPv4 and IPv6 … you may be asked in exams … you should respond it this way, fragmentation … please remember that one." IPv4 와 IPv6 의 차이를 쓰라는 문제가 나오면 fragmentation(source only, router drops)을 적는다.{/exam}
-{info}라우터가 나누지 않으니 라우터 일이 줄어든다. 대신 source 가 경로의 MTU 를 미리 알아야 한다. (Forouzan 보충 — 슬라이드에 없음) 라우터가 패킷을 버릴 때 ICMPv6 의 "packet too big" 오류를 source 로 보내서 크기를 알려 준다.{/info}
-→ [[IPv6 fragmentation]]
+버려진 패킷의 source 는 어떻게 알까. 슬라이드에는 없지만, 라우터가 [[ICMPv6]] 의 "packet too big" 오류로 그 링크의 MTU 를 source 에 알려 준다. source 는 그 크기에 맞춰 다시 나눠 보낸다.[* (Forouzan 보충 — 슬라이드에 없음) 그래서 IPv6 에서는 fragmentation 정보(identification, offset, M bit)가 base header 에 없고, next header 44 인 fragmentation extension header 에 들어간다. 나누는 패킷에만 이 header 를 붙이면 된다. 또 IPv6 는 모든 링크가 최소 1,280 bytes 는 통과시키도록 정했다.]
 
-== p.27–28 — ICMPv6 ⭐⭐⭐ ==
-[[img:L14-27.png|p.27 — Network layer in version 4: IGMP · ICMP · IPv4 · ARP. Network layer in version 6: ICMPv6 · IPv6. ICMP, ARP, IGMP of version 4 are combined into one protocol: ICMPv6|medium]]
-IPv4 의 network layer 에는 IP 옆에 보조 프로토콜이 세 개 있었다([[보조 프로토콜]]). IPv6 에서는 이것을 '''ICMPv6''' 하나로 합쳤다.
-[[img:L14-28.png|p.28 Four groups of ICMPv6 messages — Error messages · Informational messages · Neighbor discovery messages (ND Protocol) · Group membership messages (MLD Protocol). ND takes over ARP's job; MLD takes over IGMP's|medium]]
+{exam}
+교수가 이 덱에서 유일하게 시험을 직접 언급한 대목이다(39:06–39:45). "And this is a key difference between IPv4 and IPv6. Then you may be asked in exams or somewhere with describing some key differences in IPv6 and IPv4, then you should respond it this way, fragmentation." 그리고 "So please remember that one." 답안은 이렇게 쓴다. IPv4 는 source 와 router 모두 fragmentation 할 수 있다. IPv6 는 source 만 하고, next MTU 보다 큰 패킷을 받은 router 는 drop 한다. reassembly 는 둘 다 destination 이다.
+{/exam}
+→ [[IPv6 fragmentation]] · [[IPv4와 IPv6 비교]]
+
+{mini}
+# IPv6 라우터가 1,500 bytes 패킷을 받았는데 다음 링크의 MTU 가 1,280 bytes 다. 라우터는 어떻게 하는가? 같은 상황의 IPv4 라우터는(D bit = 0)?
+# 옳은 것을 모두 고르라. (a) IPv6 에서 reassembly 는 마지막 라우터가 한다. (b) IPv6 에서 fragmentation 은 source 가 크기를 확인하고 정한다. (c) IPv4 와 IPv6 모두 destination 이 합친다. (d) IPv6 base header 에 fragmentation offset 칸이 있다.
+# "IPv4 와 IPv6 의 key difference 를 하나 쓰라" 에 대한 답을 두 문장으로 쓰라.
+{/mini}
+{answer}
+# IPv6 라우터는 drop 한다. IPv4 라우터는 나눠서 보낸다(D bit 가 1 이면 IPv4 도 버린다).
+# (b), (c). (a) 합치는 것은 destination 이다. (d) fragmentation 정보는 extension header(44)에 있다.
+# IPv4 는 source 와 경로 위 router 모두 fragmentation 을 한다. IPv6 는 source 만 하고, next MTU 보다 큰 패킷을 받은 router 는 버린다.
+{/answer}
+
+== 보조 프로토콜 셋을 하나로: ICMPv6 ==
+[[img:L14-27.png|p.27 — 위 상자(version 4)에는 IPv4 둘레에 IGMP · ICMP · ARP 가 따로 있고, 아래 상자(version 6)에는 IPv6 옆에 ICMPv6 하나만 있다|medium]]
+IPv4 의 network layer 에는 IP 옆에 보조 프로토콜이 셋 있었다([[보조 프로토콜]]). 위 그림 위 상자의 IGMP, ICMP, ARP 다. 아래 상자의 IPv6 쪽에는 ICMPv6 하나만 남았다. 슬라이드 표현으로는 "ICMP, ARP, and IGMP of version 4 are combined into one protocol: ICMPv6" 이고, 교수는 "you can think of it as an integration"(40:07) 이라고 했다.
+
+p.28 은 ICMPv6 메시지를 네 그룹으로 나눈 나무 그림이다. 그룹마다 IPv4 에서 누가 하던 일인지 짝지으면 이렇다.
 {|
-! IPv4 || IPv6 (ICMPv6 안의 메시지 그룹)
+! ICMPv6 메시지 그룹 || IPv4 에서는
 |-
-| [[ICMPv4]] error-reporting || Error messages
+| Error messages || [[ICMPv4]] 의 error-reporting
 |-
-| [[ICMPv4]] query (echo 등) || Informational messages
+| Informational messages || [[ICMPv4]] 의 query(echo 등)
 |-
-| [[mid:ARP|ARP]] || Neighbor discovery messages = [[neighbor discovery|ND]] protocol
+| Neighbor discovery messages = [[neighbor discovery|ND]] protocol || [[mid:ARP|ARP]]
 |-
-| [[IGMP]] || Group membership messages = [[MLD]] protocol
+| Group membership messages = [[MLD]] protocol || [[IGMP]]
 |}
-교수는 앞의 두 그룹을 "the same as regular ICMPv4 messages"(40:52)라고 했다. 새로 외울 것은 ND 와 MLD 가 각각 ARP 와 IGMP 의 일을 맡는다는 대응이다.
-→ [[ICMPv6]] · [[neighbor discovery]] · [[MLD]]
+교수는 앞의 두 그룹을 "the same as regular ICMPv4 messages"(40:52) 라고 했다. 이름만 바뀌었다고 보면 된다. 새로 외울 것은 슬라이드 아래 상자의 두 줄이다. ND(Neighbor Discovery)가 ARP 의 일을, MLD(Multicast Listener Discovery)가 IGMP 의 일을 맡는다. 교수는 이 둘을 "these two are actually correspond to ARP and IGMP, but with different names"(40:34) 라고 소개했다.[* ARP 는 "이 IP 주소 누구냐" 를 LAN 전체에 broadcast 로 물었다. IPv6 에는 broadcast 가 없으니 ND 는 같은 질문을 multicast 로 묻는다. 슬라이드 범위 밖 이야기다.] → [[ICMPv6]]
 
-== p.29–32 — Transition from IPv4 to IPv6 ⭐⭐⭐ ==
-p.29 는 6절 표지다. 지금 인터넷은 IPv4 와 IPv6 가 섞여 있다. 교수는 "we are living in the hybrid era"(00:42)라고 했다. 그래서 둘이 함께 돌아가게 하는 방법이 세 가지 있다.
+{mini}
+# ICMPv6 의 네 메시지 그룹을 쓰라.
+# 짝짓기: ARP → ___, IGMP → ___, ICMPv4 의 echo request → ___ 그룹.
+# "IPv6 network layer 에도 ARP 가 별도 프로토콜로 남아 있다." O/X.
+{/mini}
+{answer}
+# Error messages, Informational messages, Neighbor discovery messages(ND), Group membership messages(MLD).
+# ND, MLD, Informational.
+# X. ARP 의 일은 ICMPv6 안의 ND 가 맡는다(p.27 아래 상자에 ARP 가 없다).
+{/answer}
 
-=== p.30 Dual stack ===
-[[img:L14-30.png|p.30 Dual stack — Upper layers 아래에 IPv4 와 IPv6 를 나란히, 그 아래 Underlying LAN or WAN technology. 빨간 화살표: To and from IPv4 system / To and from IPv6 system|medium]]
-host 하나가 IPv4 와 IPv6 를 둘 다 돌린다. IPv4 장치와는 IPv4 로, IPv6 장치와는 IPv6 로 말한다. 들어온 패킷이 IPv4 면 IPv4 층으로, IPv6 면 IPv6 층으로 올려 보낸다. 교수 표현으로는 "simple, but a very stupid method, but it is very effective"(41:38)이고, 지금 쓰는 장치 대부분이 이렇게 동작한다고 했다. → [[dual stack]]
+== 한동안은 둘이 같이 산다: IPv4 에서 IPv6 로 ==
+p.29 는 6절 표지다. 인터넷 전체를 하루아침에 IPv6 로 바꿀 수는 없다. 교수는 "we are living in the hybrid era"(00:42) 라고 했다. 그래서 IPv4 와 IPv6 가 섞여 있는 동안 둘이 같이 돌아가게 하는 방법이 세 가지 있다.
 
-=== p.31 Tunneling ===
-[[img:L14-31.png|p.31 Tunneling — IPv6 host — (IPv4 region, Tunnel) — IPv6 host. 터널 위: IPv4 header 안에 IPv6 header + Payload. 들어갈 때 encapsulate, 나올 때 decapsulate|medium]]
-양 끝은 IPv6 host 인데 중간에 IPv4 만 쓰는 구간이 있을 때 쓴다. IPv6 패킷 전체를 IPv4 패킷의 payload 로 넣어서 그 구간을 지나간다. 구간이 끝나면 IPv4 header 를 벗기고 원래 IPv6 패킷을 보낸다. → [[tunneling]]
+=== 장치 하나에 둘 다: dual stack ===
+[[img:L14-30.png|p.30 — Upper layers 와 아래 LAN/WAN 사이에 IPv4 와 IPv6 가 나란히 있다. 빨간 화살표 둘이 각각 IPv4 system, IPv6 system 과 오간다|medium]]
+가장 단순한 방법은 host 하나가 IPv4 와 IPv6 를 둘 다 돌리는 것이다. 위 그림에서 위층(TCP, UDP)과 아래 LAN/WAN 은 하나를 같이 쓰고, network layer 칸만 둘로 나뉘어 있다. IPv4 장치와는 IPv4 로, IPv6 장치와는 IPv6 로 말한다. 들어온 패킷이 IPv4 면 IPv4 칸으로, IPv6 면 IPv6 칸으로 올려 보낸다(42:12).[* 녹음 42:30 에는 "if you see the other one, then just forwards your message to IPv4 network layer" 라는 말이 있다. 문맥상 IPv6 를 잘못 말한 것이다.] 교수 평가는 이랬다. "It is simple, but a very stupid method, but it is very effective."(41:38) 지금 쓰는 장치는 거의 다 dual stack 으로 동작한다고 했다. → [[dual stack]]
 
-=== p.32 Header translation ===
-[[img:L14-32.png|p.32 Header translation — IPv6 host (IPv6 region) → router "Header translation done here" → IPv4 host (IPv4 region). IPv6 header + Payload 가 IPv4 header + Payload 로 바뀜|medium]]
-대부분이 IPv6 를 쓰는데 받는 쪽이 IPv4 만 알아들을 때 쓴다. 경계의 라우터가 IPv6 header 를 같은 뜻의 IPv4 header 로 바꿔 쓴다. 이때 IPv4 에 없는 IPv6 기능은 버려진다(45:33). → [[header translation]]
+=== IPv4 구간을 굴로 지나기: tunneling ===
+[[img:L14-31.png|p.31 — 양 끝은 IPv6 host, 가운데 노란 IPv4 region 위의 Tunnel 에서만 IPv6 header + Payload 가 IPv4 header 에 싸여 있다|medium]]
+두 IPv6 host 가 대화하는데 중간에 IPv4 만 쓰는 구간이 있으면 어떻게 할까. 위 그림에서 왼쪽 host 가 보낸 패킷은 [IPv6 header | Payload] 다. 노란 IPv4 region 에 들어가는 라우터가 이 패킷 전체를 IPv4 패킷의 payload 로 넣는다. 그림 가운데 Tunnel 위의 상자가 그 모습이다. IPv4 구간의 라우터들은 바깥 IPv4 header 만 보고 전달한다. 구간을 나오는 라우터가 IPv4 header 를 벗기면 원래 IPv6 패킷이 오른쪽 host 로 간다. 감싸는 방법은 중간고사에서 본 [[mid:캡슐화|encapsulation]] 과 같다.[* (Forouzan 보충 — 슬라이드에 없음) 바깥 IPv4 header 의 protocol 값은 41 이다. "payload 가 IPv6 패킷" 이라는 표시다.] → [[tunneling]]
 
-[[anim:ipv6_transition_anim|dual stack → tunneling → header translation 세 장면에서 header 가 어떻게 바뀌는지 보고, 어떤 상황에 어떤 방법을 쓰는지 짝지어 보라]]
-{|
-! 방법 || 상황 || header
-|-
-| dual stack || 장치 하나가 양쪽과 통신 || 그대로, 두 층 중 하나로
-|-
-| tunneling || IPv6 ↔ IPv6, 중간에 IPv4 구간 || IPv4 header 를 바깥에 덧씌움 → 나오면 벗김
-|-
-| header translation || IPv6 송신, IPv4 수신 || IPv6 header 를 IPv4 header 로 바꿈
-|}
+=== header 를 바꿔 쓰기: header translation ===
+세 번째 상황은 거꾸로다. 인터넷 대부분이 IPv6 를 쓰는데 받는 쪽이 IPv4 만 알아듣는다. 이때는 tunneling 을 쓸 수 없다. IPv6 header 를 안에 넣어 보내도 받는 쪽이 읽지 못하기 때문이다. 그래서 경계의 라우터가 IPv6 header 를 같은 뜻의 IPv4 header 로 바꿔 쓴다(45:18). p.32 그림의 "Header translation done here" 가 그 라우터다. 바꾸는 과정에서 IPv4 에 칸이 없는 IPv6 기능은 빠진다. 교수 표현으로는 "some functions that could not serve by IPv4 could be omitted and we should expect that one."(45:33) 다. flow label 이나 extension header 의 기능이 그런 예다. → [[header translation]]
+[[anim:ipv6_transition_anim|dual stack, tunneling, header translation 세 장면에서 header 가 어떻게 바뀌는지 보고, 어떤 상황에 어떤 방법을 쓰는지 짝지어 보라]]
 
-== 공식 모음 ==
-{|
-! 항목 || 값
-|-
-| 주소 길이 || IPv6 128 bits = 8 sections × 16 bits = hex 32 자리
-|-
-| 주소 수 || $2^{128}$ (IPv4 의 $2^{96}$ 배)
-|-
-| global unicast || `2000::/3` → $2^{125}$ 개, n 48 · m 16 · q 64, site $2^{45}$, subnet $2^{16} = 65{,}536$
-|-
-| `::` 복원 || 숨은 0 section 수 = 8 − (보이는 section 수)
-|-
-| Ethernet → interface ID || 7 번째 bit 뒤집기 + 가운데 FFFE (48 + 16 = 64)
-|-
-| link-local || FE80::/10 + 54 zeros + 64-bit interface ID
-|-
-| base header || 40 bytes 고정 (주소 32 + 나머지 8), payload ≤ 65,535 bytes
-|-
-| Ex 7.29 || F5-A9-23-11-9B-E2 → F7A9:23FF:FE11:9BE2 → FE80::F7A9:23FF:FE11:9BE2 → 3A21:1216:2165:1232:F7A9:23FF:FE11:9BE2
-|}
+{mini}
+# 상황에 맞는 전환 방법을 고르라. (가) IPv6 host 가 IPv6 host 에게 보내는데 중간 ISP 가 IPv4 만 지원한다. (나) 노트북이 IPv4 웹서버와 IPv6 웹서버에 모두 접속해야 한다. (다) IPv6 host 가 IPv4 만 아는 오래된 서버에게 보낸다.
+# tunneling 중 IPv4 구간의 라우터가 읽는 header 는 무엇인가?
+# header translation 을 거친 패킷에서 flow label 은 어떻게 되는가? 이유와 함께.
+{/mini}
+{answer}
+# (가) tunneling, (나) dual stack, (다) header translation.
+# 바깥의 IPv4 header. 안의 IPv6 header 는 payload 취급이라 읽지 않는다.
+# 사라진다. IPv4 header 에는 flow label 을 담을 칸이 없다. 교수 말대로 IPv4 가 못 하는 기능은 빠진다.
+{/answer}
 
 == 🎙 실제 수업 기록 (11/10 화, 녹음본 기준) ==
 녹음은 `../녹음본/1110_컴네.txt`(whisper 영어 전사, 47 분)다. ASR 이라 용어가 많이 깨져 있다. "Any Guest" = anycast, "Global Unitecast" = global unicast, "laurel/louder solicitation" = router solicitation, "sfse" = FFFE, "IGFP, ICFP" = IGMP, ICMP, "MLP" = MLD, "two-step/dualsmeck" = dual stack 이다. 46:45 이후는 잡음이 같은 문장으로 반복된 환각이라 무시했다.
 * '''00:00''' "So far we've seen IPv4, which is the key part of the IP layer, and we move on to the next generation IP." 11/5 수업(CH07 (2) 후반)에 이어서 IPv6 로 넘어갔다.
-* '''00:42–01:45''' 지금은 IPv4 와 IPv6 를 같이 쓰는 hybrid era 다. 전 세계 인터넷 사용자의 거의 절반이 IPv6 를 쓰지만, 한국은 약 25% 라고 했다.
-* '''02:04–03:19''' 가장 큰 차이는 주소다. 동기는 address space 다. 교수 표현으로는 "IP address is really relevant to a connection, not a device" 다. 그래서 32 bits 로는 모자란다(6강 [[IPv4 address]] 이야기를 다시 꺼냄).
+* '''00:42–01:45''' 지금은 IPv4 와 IPv6 를 같이 쓰는 hybrid era 다. 전 세계 인터넷 사용자의 거의 절반이 IPv6 를 쓰고, 한국은 약 25% 라고 했다.
+* '''02:04–03:19''' 가장 큰 차이는 주소이고, IPv6 의 동기도 address space 다. "IP address is really relevant to a connection, not a device." 그래서 32 bits 로는 모자란다.
+* '''04:08''' "4 times more … bits … exponentially many addresses". '''04:43''' 사람들이 "lazy" 해서 줄인 표기를 만들었다.
 * '''05:10–06:53''' 줄여 쓰기 규칙 두 개. "note that it is allowed only once per address … to avoid some confusion in decoding."
-* '''07:01–08:45''' unicast / anycast("nearest one that shares one address", unicast block 에서 가져옴) / multicast(broadcast 와 비슷).
+* '''07:01–08:45''' unicast("very common") / anycast(주소 하나를 공유하는 그룹 중 nearest, unicast block 에서 가져옴) / multicast(broadcast 와 비슷).
 * '''09:51–11:25''' "/n notation … expresses the number of bits for prefix." `2000::/3` 에서 `::` 뒤는 끝까지 0, 3 bits 고정이라 $2^{125}$.
 * '''12:31''' interface ID 는 IPv4 의 host ID 와 비슷하다.
 * '''14:30–15:09''' IPv4 에서는 IP 주소와 physical 주소가 무관했는데 IPv6 에서는 link-layer 주소가 interface ID 의 일부가 된다.
-* '''15:31''' EUI-64 라는 이름은 외울 필요 없다. '''15:47''' "please remember that our interface ID address space has 64 bits."
+* '''15:31''' EUI-64 라는 이름은 외울 필요 없다. '''15:43''' "Always MAC layer addressing is about 64 bits" (말실수, Ethernet 은 48). '''15:47''' "please remember that our interface ID address space has 64 bits."
 * '''16:14–17:51''' EUI-64 는 7 번째 bit 만 뒤집는다. Ethernet 48 bits 는 16 bits 가 모자라니 7 번째 bit 를 뒤집고 가운데에 FFFE 를 넣는다.
 * '''18:29–19:46''' autoconfiguration. IPv4 는 관리자나 서버가 주소를 준다. IPv6 는 host 가 스스로 만든다. "This is a key difference."
 * '''20:09–22:06''' ① link-local(interface ID + prefix) ② uniqueness 확인 ③ router 와 통신해서 완성.
@@ -318,36 +415,35 @@ host 하나가 IPv4 와 IPv6 를 둘 다 돌린다. IPv4 장치와는 IPv4 로, 
 * '''24:42''' "auto means it is done by self, and configuration means setting an IP address."
 * '''25:24–27:22''' Example 7.29. "This is very easy, just following the rule."
 * '''28:00–28:54''' IPv4 header 는 옵션 때문에 길이가 바뀌어서 라우터 처리가 느렸다. IPv6 는 header 형식을 바꿔 속도를 높였다.
-* '''29:51–31:13''' "IPv4 header is kind of complicated." IPv6 base header 는 40 bytes 고정이고, 세부 기능은 extension header 가 맡는다.
-* '''32:27–33:35''' flow label, payload length(가변이라 적어야 함), next header, hop limit = TTL.
+* '''29:51–31:13''' "Remember that IPv6 and IPv4 header is kind of complicated." IPv6 base header 는 40 bytes 고정이고, 세부 기능은 extension header 가 맡는다.
+* '''32:27–33:35''' flow label("interesting because IP does not serve some flow control"), payload length(가변이라 적어야 함), next header, hop limit = TTL.
 * '''33:45–36:56''' next header 사슬 예: fragmentation(44) → ICMPv6(02). 추가 기능이 없으면 extension header 도 없다.
-* '''37:23–39:45''' ⭐ IPv4 는 source 와 router 모두 fragmentation 을 했다. IPv6 는 source 만 한다. 라우터는 큰 패킷을 "just drops". "you may be asked in exams … please remember that one."
+* '''37:23–39:45''' IPv4 는 source 와 router 모두 fragmentation 을 했다(37:50 "hosts and sources" 는 말실수). IPv6 는 source 만 한다. 라우터는 큰 패킷을 "just drops". "you may be asked in exams … please remember that one."
 * '''39:52–40:58''' IGMP, ICMP, ARP 가 ICMPv6 로 합쳐졌다. 네 그룹 중 ND 와 MLD 가 ARP 와 IGMP 에 대응한다. 나머지 둘은 ICMPv4 메시지와 같다.
-* '''41:02–42:39''' dual stack: "simple, but a very stupid method, but it is very effective." 거의 모든 장치가 dual stack 으로 동작한다.
+* '''41:02–42:39''' dual stack: "simple, but a very stupid method, but it is very effective." 거의 모든 장치가 dual stack 으로 동작한다. 42:30 의 "forwards … to IPv4" 는 IPv6 를 잘못 말한 것이다.
 * '''42:54–44:16''' tunneling: IPv6 패킷 전체를 IPv4 payload 로 넣어 IPv4 구간을 지난 뒤 decapsulate.
 * '''44:16–46:10''' header translation: 중간 라우터가 IPv6 header 를 IPv4 header 로 바꾼다. IPv4 가 못 하는 기능은 빠진다.
-* '''46:17–46:23''' "this is the last part of this lecture … let's continue about our remaining part of chapter 7 on Thursday." 다음 수업은 11/12(목), CH07 남은 부분이다.
+* '''46:17–46:23''' "this is the last part of this lecture … let's continue about our remaining part of chapter 7 …" 요일 부분은 전사가 깨져 있다. 실제 다음 수업(11/12 목)에서는 CH08 이 나갔다.
 * 시험 일정 공지는 없었다.
 
-== 시험 대비 핵심 요약 ==
-# IPv6 주소 = '''128 bits''', 8 sections × hex 4 자리, 콜론으로 구분. 동기는 IPv4 32-bit 주소 공간 부족.
-# 줄여 쓰기: section 의 leading zero 제거, 연속 0 section 은 `::` 로. '''`::` 는 주소마다 한 번만'''(두 번 쓰면 복원 불가).
-# unicast(하나) · anycast(그룹 중 가장 가까운 하나, unicast block 사용) · multicast(그룹 전부). broadcast 는 multicast 의 특수한 경우.
-# global unicast = `2000::/3`(앞 3 bits 001, $2^{125}$ 개) = global routing prefix 48 + subnet 16 + '''interface ID 64'''.
-# Ethernet MAC 48 bits → interface ID: '''7 번째 bit 뒤집기 + 가운데 FFFE'''. EUI-64(64 bits)는 bit 만 뒤집는다.
-# autoconfiguration: host 가 서버 없이 ① FE80::/10 + interface ID = link-local ② unique 확인 ③ router solicitation → router advertisement(prefix + subnet ID) → global 주소.
-# Ex 7.29: F5-A9-23-11-9B-E2 → F7A9:23FF:FE11:9BE2 → FE80::F7A9:23FF:FE11:9BE2 → 3A21:1216:2165:1232:F7A9:23FF:FE11:9BE2.
-# base header '''40 bytes 고정''', payload ≤ 65,535. 필드: version 6, traffic class, flow label(20), payload length(base header 제외), next header, hop limit(= TTL), 주소 128 × 2.
-# 옵션은 extension header 로 빼고 next header 로 사슬을 만든다(44 fragmentation, 02 ICMPv6, 06 TCP, 17 UDP).
-# ⭐ '''fragmentation 은 source 만'''. 라우터는 next MTU 보다 큰 패킷을 drop. reassembly 는 둘 다 destination(교수 시험 언급).
-# ICMPv6 = ICMP + ARP + IGMP. ND 가 ARP, MLD 가 IGMP 의 일을 맡는다. 메시지 4 그룹: error, informational, ND, group membership(MLD).
-# 전환 세 가지: dual stack(둘 다 돌림) · tunneling(IPv6 를 IPv4 에 encapsulate) · header translation(IPv6 header → IPv4 header, IPv6 전용 기능은 사라짐).
+== 시험 직전 체크 ==
+* 128 bits = 8 sections × hex 4 자리. 개수는 IPv4 의 $2^{96}$ 배. 앞 0 지우기, `::` 는 '''한 번만'''(숨은 수 = 8 − 보이는 수).
+* unicast(하나) · anycast(그룹 중 nearest 하나, unicast block) · multicast(전원). broadcast 는 multicast 의 특수한 경우.
+* global unicast `2000::/3` → $2^{125}$. n 48 · m 16 · q 64, '''interface ID 64 bits'''.
+* Ethernet 48 → 7 번째 bit 뒤집기 + 가운데 FFFE. EUI-64 64 → 뒤집기만. F5 → F7(F4 아님).
+* autoconfiguration: FE80::/10 + IID = link-local → unique 확인 → RS → RA(prefix + subnet ID) → + IID.
+* Ex 7.29: `3A21:1216:2165:1232:F7A9:23FF:FE11:9BE2`, link-local `FE80::F7A9:23FF:FE11:9BE2`.
+* base header 40 bytes 고정, payload length 는 base header 제외, HLEN 없음, hop limit = TTL.
+* next header 사슬: 44 fragmentation, 02 ICMPv6(슬라이드 값), 06 TCP, 17 UDP, 59 Null.
+* '''fragmentation 은 source 만, router 는 drop, reassembly 는 destination'''. ICMPv6 = ICMP + ARP(ND) + IGMP(MLD).
+* 전환: dual stack(둘 다) · tunneling(IPv4 로 감쌌다 벗김) · header translation(IPv6 → IPv4 header, 기능 손실).
 
 == 관련 문서 ==
-* 앞 강의: [[CH07 IPv4 주소]] · [[CH07 IPv4 데이터그램과 포워딩]] · [[CH07 네트워크 계층 서비스와 성능]]
+* 앞 강의: [[CH07 IPv4 주소]] · [[CH07 IPv4 데이터그램과 포워딩]] · [[CH07 네트워크 계층 서비스와 성능]] · 다음 강의: [[CH08 라우팅]]
 * 주소: [[IPv6]] · [[IPv6 address]] · [[colon hexadecimal notation]] · [[zero compression]] · [[unicast·anycast·multicast]] · [[global unicast address]] · [[interface ID]] · [[EUI-64]] · [[link-local address]]
 * 설정: [[autoconfiguration]] · [[router solicitation과 advertisement]] · [[Example 7.29]]
 * 패킷: [[IPv6 base header]] · [[traffic class와 flow label]] · [[next header]] · [[extension header]] · [[IPv6 fragmentation]]
 * 보조: [[ICMPv6]] · [[neighbor discovery]] · [[MLD]]
 * 전환: [[dual stack]] · [[tunneling]] · [[header translation]] · [[IPv4와 IPv6 비교]]
-* 중간고사: [[mid:MAC 주소]] · [[mid:ARP]] · [[mid:캡슐화]]
+* 중간고사: [[mid:MAC 주소]] · [[mid:ARP]] · [[mid:캡슐화]] · [[mid:Ethernet 주소 판별]]
+* 공식: [[공식 모음]]

@@ -2,20 +2,20 @@ key: slash notation
 title: Slash notation — address/n (prefix 길이를 주소 뒤에)
 category: 6강 IPv4 주소, 용어
 ---
-'''Slash notation''' 은 classless 주소 뒤에 '''/n''' 을 붙여 '''prefix 길이'''를 밝히는 표기다. classless 에서는 prefix 길이가 주소 안에 들어 있지 않기 때문이다. [[CIDR]] notation 이라고도 한다. L13 p.10.
+'''Slash notation''' 은 classless 주소 뒤에 /n 을 붙여 prefix 길이를 밝히는 표기다(L13 p.10). classless 에서는 prefix 길이가 주소 안에 들어 있지 않기 때문에 따로 적어야 한다. [[CIDR]] notation 이라고도 한다.
 
 {def}"Prefix length is '''not built into''' the address, so we must state it.
 '''Slash notation''' (CIDR: Classless Inter-Domain Routing): '''address/n'''" (p.10)
-prefix 길이는 주소에 내장되어 있지 않으므로 반드시 /n 으로 적는다.{/def}
+prefix 길이는 주소에 들어 있지 않으므로 반드시 /n 으로 적는다.{/def}
 
-[[img:L13-10.png|p.10 byte . byte . byte . byte / n (Prefix length). Examples: 12.24.76.8/8, 23.14.67.92/12, 220.8.24.255/25|medium]]
+[[img:L13-10.png|p.10 — byte . byte . byte . byte 뒤의 노란 칸 n 이 Prefix length 다. 오른쪽 Examples 세 개의 빨간 숫자를 보라|medium]]
 
 == 이름에서 개념 끌어내기 ==
-* '''slash''' = 빗금 "/". 빗금 뒤 숫자 = '''앞에서부터 몇 비트가 prefix 인가'''. 교수: "the number after the slash means the length of prefix" (24:23).
+* slash 는 빗금 "/" 다. 빗금 뒤 숫자는 앞에서부터 몇 비트가 prefix 인지를 뜻한다. 교수 표현으로는 "the number after the slash means the length of prefix" 다(24:23).
 
 == 슬라이드 예 풀어 보기 ==
 {|
-! 표기 || prefix || suffix || N || block (python 검산)
+! 표기 || prefix || suffix || N || block (Python 검산)
 |-
 | 12.24.76.8/8 || 8 || 24 || $2^{24}$ = 16,777,216 || 12.0.0.0 ~ 12.255.255.255
 |-
@@ -23,16 +23,22 @@ prefix 길이는 주소에 내장되어 있지 않으므로 반드시 /n 으로 
 |-
 | 220.8.24.255/25 || 25 || 7 || $2^7$ = 128 || 220.8.24.128 ~ 220.8.24.255
 |}
-* 23.14.67.92/12 의 suffix 는 '''20''' 비트다 — 교수가 25:00 에 "25 bits for the last one" 이라 말한 것은 말실수.
-* 220.8.24.255/25 는 block 의 '''마지막''' 주소다. 주어진 주소가 block 의 시작이라고 가정하지 말 것.
-* /n 과 [[address mask]] 는 같은 정보다: /27 ⇔ 255.255.255.224.
+* 23.14.67.92/12 의 suffix 는 20 비트다. 교수가 25:00 에 "25 bits for the last one" 이라고 한 것은 말실수다.
+* 220.8.24.255/25 는 주어진 주소가 block 의 마지막 주소다. 주어진 주소가 block 의 시작이라고 가정하면 틀린다.
+* /n 과 [[address mask]] 는 같은 정보다. /27 과 255.255.255.224 는 같은 말이다.
 
 [[sim:cidr_block]]
 
-{analogy}🎭 "서울시 강남구 테헤란로 123 / 3" 처럼 '''주소 뒤에 "앞의 몇 단어까지가 동네 이름인지"''' 를 적어 두는 것. 숫자가 없으면 "테헤란로" 가 동네인지 집인지 알 수 없다.{/analogy}
+{analogy}🎭 주소 뒤에 "앞에서 몇 단어까지가 동네 이름인지" 를 적어 두는 것과 같다. "서울시 강남구 테헤란로 123 / 3" 처럼 숫자가 있어야 "테헤란로" 가 동네 이름에 들어가는지 알 수 있다.{/analogy}
 
-{quiz}167.199.170.82 만 주어지면 이 주소의 block 을 구할 수 있는가?{/quiz}
-{answer}구할 수 없다. prefix 길이가 주소에 내장되지 않았기 때문이다. /27 이면 .64–.95, /24 이면 .0–.255 처럼 n 에 따라 달라진다 → [[Example 7.3]].{/answer}
+{mini}
+# 167.199.170.82 만 주어지면 이 주소의 block 을 구할 수 있는가?
+# 12.24.76.8/8 에서 suffix 는 몇 비트인가?
+{/mini}
+{answer}
+# 구할 수 없다. prefix 길이가 주소에 들어 있지 않기 때문이다. /27 이면 .64–.95, /24 면 .0–.255 처럼 n 에 따라 달라진다 → [[Example 7.3]].
+# 32 − 8 = 24 비트.
+{/answer}
 
 == 관련 문서 ==
 * [[CIDR]] · [[classless addressing]] · [[block의 세 가지 정보]] · [[address mask]] · [[Example 7.3]] · [[prefix와 suffix]]

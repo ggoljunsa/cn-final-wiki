@@ -2,203 +2,171 @@ key: CH05 Satellite Network
 title: CH05 Satellite Network (4강 — 궤도, Kepler's law, GEO·MEO·LEO)
 category: 4강 위성, 메인
 ---
-'''CH05 Satellite Network''' 는 L11 덱(`CH05_Wide Area Networks (2).pdf`, 21쪽) 전부다. 10/22(목) 수업 범위이고, 교수는 10/20 에 "목요일에 satellite networks — WAN 의 마지막 — 를 하고 network layer 로 넘어간다"고 예고했다. 1강 [[WAN 분류]]에서 Wireless WAN 의 두 번째 instance 로 이름만 나왔던 [[satellite network]] 를 이제 제대로 본다.
+== 개요 ==
+'''CH05 Satellite Network'''는 L11 덱 `CH05_Wide Area Networks (2).pdf`(21쪽)를 다룬다. 10/22(목) 수업 범위다. 교수는 10/20 수업 끝에서 목요일에 satellite networks 를 하고 network layer 로 넘어간다고 예고했다.[* 10/20 녹음 73:00 의 공지다. "we will study satellite networks, which is the last part of WAN, and move on to the network layer, which is one of the most crucial parts in this course." 실제로 다음 덱인 CH07 (1) 은 10/27 에 나갔다.] 10/22 수업은 녹음이 없어서 이 문서는 슬라이드를 기준으로 썼다.
 
-{warn}이 문서는 '''수업 전 선제 작성'''이다(녹음 없음). 교수의 강조점·공지는 10/22 녹음이 오면 `🎙 실제 수업 기록` 절에 반영하고 ⭐ 도 조정한다. 지금의 ⭐ 는 슬라이드 구성과 10/20 교수 지침(아래)으로 추정한 것이다.{/warn}
+1강 [[WAN 분류]]에서 wireless WAN 은 두 갈래였다. 하나는 땅 위에 [[base station]] 탑을 촘촘히 세우는 [[cellular telephony]] 이고, 다른 하나는 중계기를 하늘로 올리는 [[satellite network]] 다. 1강부터 3강까지 앞의 것을 봤고, 이 덱은 뒤의 것을 본다.
 
-이 덱이 던지는 질문은 — '''"지상 infrastructure 없이 지구 위 한 점에서 다른 점으로 통신하려면, 위성을 어디에(어떤 궤도·어떤 높이에) 띄워야 하나?"'''
-답: 위성은 '''[[orbit]]''' 을 돈다(적도면 [[equatorial orbit|equatorial]] / 기울어진 [[inclined orbit|inclined]] / 극을 지나는 [[polar orbit|polar]]). 한 바퀴 도는 시간 '''[[period of a satellite|period]]''' 는 높이로 정해진다 — '''[[Kepler's law]]''' $\text{Period} = C \times \text{distance}^{1.5}$ ($C \approx 1/100$). 높이에 따라 위성은 '''[[위성 세 범주|세 범주]]''': 35,786 km 의 '''[[GEO]]'''(주기 24 h = 지구 자전 → 하늘에 멈춰 보임, '''[[geostationary]]'''), [[Van Allen belt]] 두 개 사이의 '''[[MEO]]'''([[GPS]], [[trilateration]]), 500–2000 km 의 '''[[LEO]]'''([[Starlink]], cellular 처럼 움직이는 [[footprint]]).
+덱은 위성을 얼마나 높이 띄울지를 따라 흘러간다. 먼저 위성망이 무엇으로 이루어지는지 그림 한 장으로 보고(p.2–3), 위성이 도는 길의 모양 세 가지를 본다(p.4). 그다음 높이에 따라 한 바퀴 도는 시간이 어떻게 바뀌는지 [[Kepler's law]] 로 계산하는데, 예제가 두 개 붙어 있다(p.5–10). 그 결과로 위성을 높이별 세 범주로 나누고(p.11–14), 위성과 땅 사이에 쓰는 주파수 대역을 본 뒤(p.15), 세 범주 [[GEO]] · [[MEO]] · [[LEO]] 를 하나씩 본다(p.16–21).
 
-페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다. L11 PDF 는 '''필기 없는 원본'''이고, p.5–6, 7–8, 9–10, 11–14, 16–17, 18–19, 20–21 은 한 줄씩 늘어나는 build-up 이라 캡처는 마지막 장을 쓴다.
+페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다. p.5–6, 7–8, 9–10, 11–14, 16–17, 18–19, 20–21 은 같은 화면에 한 줄씩 덧붙는 build-up 이라 캡처는 마지막 장만 썼다.[* 사용자 필기본(`CH05_Wide Area Networks (2)_필기.pdf`)에는 질문이나 "다시" 표시가 없고 짧은 메모만 있다. p.3 "지상국", p.6 "8:21", p.8 그림 r·d 와 용어 메모, p.11 "정지궤도", p.15 "high freq" 다. 각 메모는 해당 절의 각주에서 다룬다. p.6 의 "8:21" 은 녹음 위치를 적어 둔 것으로 보이지만 맞춰 볼 녹음 파일이 없다.]
 
-{exam}🎯 교수 학습 지침 (10/20 녹음 41:54, 셀룰러 세대 설명 중): "I'm not going to recommend you to '''memorize all these specific numbers''' … '''understand''' how communication systems '''evolve''' … But I would recommend you to '''memorize uplink and downlink'''."
-→ 이 덱에 적용하면:
-* '''개념'''(orbit 3종의 모양, GEO·MEO·LEO 의 특징과 대표 instance, 왜 GEO 는 3 기가 필요한가, LEO 가 왜 cellular 와 닮았나)이 ⭐ 대상.
-* 고도·대역 숫자는 '''표로 참고'''.
-* '''예외 — Kepler's law 계산(⭐⭐⭐)''': 슬라이드에 '''풀이가 달린 Example 두 개'''(p.8, p.10)가 있다. 계산 문제로 나오기 딱 좋은 모양이다. 공식과 '''반지름 6378 km 를 더하는 것'''은 외운다.
-* '''uplink/downlink''': 이 덱에서 뜻이 바뀐다 — 위성은 '''uplink = Earth → satellite''' (p.15). 셀룰러(MS → BS)와 짝지어 외운다.{/exam}
+{analogy}🎭 '''하늘에 띄운 기지국을 몇 층에 둘까.''' 꼭대기 층(GEO)에 두면 한 대가 지구의 큰 조각을 내려다보고 하늘에 가만히 서 있는 것처럼 보인다. 대신 너무 멀어서 말이 늦게 닿는다. 1층(LEO)에 두면 가까워서 말은 빠르다. 그런데 빠르게 지나가 버리니까 수천 대를 줄 세워 계속 넘겨줘야 한다. 중간층(MEO)은 방사능 띠 두 개 사이에 있는 빈 층이고, 여기에 GPS 가 산다.{/analogy}
 
-{analogy}🎭 '''하늘에 띄운 기지국을 어느 층에 둘 것인가.''' 셀룰러는 동네마다 낮은 탑(BS)을 세웠다. 위성망은 탑을 하늘로 올린다. '''꼭대기 층(GEO)'''에 올리면 한 대가 지구의 1/3 을 내려다보고 하늘에 가만히 서 있는 것처럼 보이지만, 너무 멀어 말이 늦게 닿는다. '''1층(LEO)'''에 두면 가까워서 말이 빠르지만, 엘리베이터처럼 빠르게 지나가 버리니 수천 대를 줄 세워 계속 넘겨줘야 한다 — 그게 셀룰러의 handoff 를 하늘에서 하는 Starlink 다. '''중간층(MEO)'''은 방사능 띠 두 개 사이 빈 층에 GPS 를 놓았다.{/analogy}
+[[anim:satellite_orbits|고도축 위에 LEO, Lower Van Allen belt, MEO, Upper Van Allen belt, GEO 가 차례로 쌓인다. 오른쪽에서 높을수록 한 바퀴가 느려지고 GEO 는 지구와 같이 도는 것을 보라]]
 
-[[anim:satellite_orbits|고도축 위에 LEO → Lower Van Allen belt → MEO → Upper Van Allen belt → GEO 가 차례로 쌓이는 것을 보고, 오른쪽에서 높을수록 한 바퀴가 느려져 GEO 는 지구와 같이 돈다(정지해 보임)는 것을 확인하라]]
+== 땅 위의 탑 대신 하늘의 중계기: satellite network ==
+p.2 의 정의는 한 줄이다. 슬라이드 표현으로는 "A wireless WAN that provides any type of communication." 이다. any type 은 voice, text, data 를 다 싣는다는 뜻이다. 1강 L10 p.8 에서 본 cellular telephony 의 정의와 글자까지 같다. 두 망은 하는 일이 같고, 중계기를 땅에 두느냐 궤도에 두느냐만 다르다.[* 그래서 덱 제목에 "2." 가 붙어 있다. L10 의 "1. Cellular Telephony" 다음 순서라는 뜻이다. 이 덱의 정식 제목도 "Wide Area Networks (2)" 다.]
 
-== 한눈에 보기 ==
-기호를 까먹었을 때 이 절만 다시 읽으면 된다.
+[[img:L11-03.png|p.3 — 위성 네 기가 빨간 ISL 로 이어진 Space segment, 왼쪽 아래 User segment, 오른쪽 아래 Ground segment 의 Gateway 와 Internet 을 보라|large]]
+p.3 은 정의를 조금 더 자세히 쓴다. "A combination of nodes, including satellites, that provides communication from one point on the Earth to another." 여기서 including 이 중요하다. node 에 위성도 들어간다는 말이지, 위성만 node 라는 말이 아니다. 출발점과 도착점은 둘 다 땅 위에 있다. 위성은 그 사이를 이어 주는 다리다.
 
-<pre class="ascii">
- 고도(km)
- 35,786 ─ ─ ─ ─ '''[[GEO]]''' ─ ─ ─ ─   적도면, 주기 24 h → [[geostationary|정지해 보임]], 최소 3 기로 전 지구
-          (Upper [[Van Allen belt]])
- 15,000 ┌──────────────────┐
-        │      '''[[MEO]]'''        │   두 Van Allen belt 사이, [[GPS]] (≈18,000 km, 24 기, [[trilateration]])
-  5,000 └──────────────────┘
-          (Lower Van Allen belt)
-  2,000 ┌──────────────────┐
-        │      '''[[LEO]]'''        │   polar / inclined, 500–2000 km, 90–120 min, cellular 와 비슷 → [[Starlink]]
-      0 └── Earth surface ───┘
-</pre>
+위 그림은 Starlink 의 구조도이고, 점선으로 세 구역을 나눴다.[* 그림 제목은 "Startlink System Architecture" 로 적혀 있다. Starlink 의 오타다.] 자세한 설명은 [[satellite network 구성]]에 있다.
+* '''Space segment''': 궤도의 위성들이다. 위성끼리는 빨간 화살표 [[ISL]](Inter-Satellite Link)로 직접 데이터를 넘긴다.[* 슬라이드는 ISL 을 약자로만 쓰고 풀어 쓰지 않는다. Inter-Satellite Link 는 Forouzan 교재의 표현이다.]
+* '''User segment''': 집 지붕의 User Terminal 안테나다. 노란 빔으로 위성과 통신한다.
+* '''Ground segment''': Starlink Gateway 안테나다. 파란 점선으로 위성과 이어지고, 회색 선으로 지상 Internet 에 붙는다.[* 필기본에는 Gateway 안테나 옆에 "지상국" 이라고 적혀 있다. Gateway 가 곧 지상국(ground station)이다. 위성이 받은 데이터는 이 지상국을 거쳐야 땅의 Internet 으로 들어간다.]
 
-{|
-! 슬라이드 || 내용 || 문서
-|-
-| p.2 || Satellite network 정의 — "A '''wireless''' WAN that provides any type of communication" || [[satellite network]]
-|-
-| p.3 || 구성 — space / ground / user segment, [[ISL]] (Starlink system architecture) || [[satellite network 구성]]
-|-
-| p.4 || [[orbit]] 3종 — [[equatorial orbit|equatorial]] · [[inclined orbit|inclined]] · [[polar orbit|polar]] || [[orbit]]
-|-
-| p.5–6 || [[period of a satellite]] + '''[[Kepler's law]]''' || [[Kepler's law]]
-|-
-| p.7–10 || '''[[Example 5.1 달의 주기]]''' · '''[[Example 5.2 정지궤도 주기]]''' || 계산 ⭐⭐⭐
-|-
-| p.11–14 || [[위성 세 범주]] — 고도 그림, [[Van Allen belt]] || [[위성 세 범주]]
-|-
-| p.15 || [[SATCOM 주파수 대역]] — '''uplink = Earth → satellite''' || [[uplink와 downlink]]
-|-
-| p.16–17 || [[GEO]] — equatorial plane, [[line-of-sight]], 최소 3 기 || [[geostationary]]
-|-
-| p.18–19 || [[MEO]] — Van Allen belt 사이, [[GPS]], [[trilateration]] || [[GPS]]
-|-
-| p.20–21 || [[LEO]] — polar/inclined, Starlink, [[UML과 GWL]], [[ISL]], [[footprint]] || [[LEO]]
-|}
+집에서 인터넷을 쓰면 데이터는 User Terminal → 위성 → (ISL 로 옆 위성) → Gateway → Internet 순서로 간다. 1강의 셀룰러에 겹쳐 보면 위성은 BS 자리, User Terminal 은 MS 자리, Gateway 는 BS 가 유선망([[MSC]], [[PSTN]])에 붙는 자리다. 이 대응은 슬라이드에 없는 보충이지만, 덱 끝의 LEO 에서 슬라이드도 같은 비교를 한다.
 
-== p.2 — 2. Satellite Network ==
-{def}"'''2. Satellite Network''' — A '''wireless''' WAN that provides '''any type''' of communication. Any type: voice, text, and data comm." (p.2){/def}
-* 1강 [[cellular telephony]] 의 정의(L10 p.8)와 '''글자 그대로 같다'''. 둘 다 [[WAN 분류|Wireless WAN]] 이고 voice·text·data 를 다 실어 나른다. 차이는 중계기(BS)가 '''땅 위의 탑'''이냐 '''궤도 위의 위성'''이냐다. 덱 제목의 "2." 도 "1. Cellular Telephony" 다음 순서라는 뜻.
+{mini}
+# "Satellite network 의 node 는 궤도에 있는 위성뿐이다." O/X 와 이유 한 줄.
+# p.3 그림에서 집의 User Terminal 이 보낸 데이터가 Internet 에 닿을 때까지 거치는 segment 를 순서대로 쓰라.
+# ISL 이 잇는 것은 무엇과 무엇인가?
+{/mini}
+{answer}
+# X. 정의가 "a combination of nodes, '''including''' satellites" 다. User Terminal 과 Gateway 같은 지상 장비도 node 다.
+# User segment → Space segment → Ground segment. 위성 사이를 ISL 로 건너는 구간도 Space segment 안이다.
+# 위성과 위성. 사용자 단말이나 gateway 와 잇는 링크는 다른 이름(UML, GWL)이 붙는다(p.21).
+{/answer}
 
-== p.3 — A Satellite Network: 구성 ⭐ ==
-[[img:L11-03.png|p.3 Starlink System Architecture — 위: Space segment(위성 4 기가 빨간 ISL 화살표로 연결), 왼쪽 아래: User segment(집마다 User Terminal 안테나, 노란 빔), 오른쪽 아래: Ground segment(Starlink Gateway 안테나 ↔ Internet). 그림 제목의 "Startlink" 는 슬라이드 오타|large]]
+== 위성이 도는 길: orbit 세 가지 ==
+[[img:L11-04.png|p.4 — 고리가 적도를 따라 도는 a, 비스듬한 b, 남극과 북극을 지나는 c 를 비교하라|large]]
+위성을 띄우려면 먼저 어떤 길로 돌릴지 정해야 한다. p.4 는 [[orbit]] 을 "The path in which it travels around Earth" 라고 정의하고, 궤도면의 방향에 따라 세 가지를 보여 준다.
+* [[equatorial orbit]]: 위 그림 a 처럼 고리가 적도를 따라간다. 궤도면이 적도면과 같다.
+* [[inclined orbit]]: b 처럼 고리가 비스듬하다. 위성이 북쪽과 남쪽을 오르내리며 지나간다.
+* [[polar orbit]]: c 처럼 고리가 남극과 북극 위를 지난다.
 
-{def}"A Satellite Network — A combination of '''nodes, including satellites''', that provides communication '''from one point on the Earth to another'''." (p.3){/def}
+이 구분은 덱 뒤쪽에서 다시 쓰인다. GEO 는 "The orbit occurs at the equatorial plane"(p.16) 이고, LEO 는 "Polar and inclined orbits"(p.20) 다. p.17 과 p.21 에 p.4 의 그림이 그대로 다시 나온다.
 
-* '''node''' 에 위성'''도''' 포함된다 — 위성만 있는 게 아니라 지상의 user terminal, gateway 도 node 다([[mid:node와 link|node]]).
-* 그림(Starlink)은 세 segment 로 나뉜다 → [[satellite network 구성]]
-* '''Space segment''' = 궤도의 위성들 + 위성끼리 잇는 '''[[ISL]]'''(Inter-Satellite Link) · '''User segment''' = 집/폰의 '''User Terminal''' · '''Ground segment''' = '''Gateway''' 안테나가 지상 '''Internet''' 에 붙는 곳.
-* 1강 셀룰러 구조와 겹쳐 보면: 위성 ≈ [[base station]], user terminal ≈ [[mobile station]], gateway ≈ BS 가 유선망(MSC→[[PSTN]])에 붙는 자리 (비교는 보충 — 슬라이드에 없음).
+GEO 가 꼭 적도면을 써야 하는 이유는 지구의 자전에 있다. 지구는 적도면 안에서 돈다. 위성이 땅에서 보기에 한 점에 멈춰 있으려면 지구와 같은 주기로, 그리고 같은 면에서 돌아야 한다. 면이 기울어져 있으면 주기를 맞춰도 위성이 하늘에서 남북으로 오르내린다.[* 주기만 24 h 이고 궤도면이 기울어진 궤도를 geosynchronous orbit 이라고 한다. 땅에서 보면 위성이 하늘에 8 자를 그린다. geostationary 는 그중 기울기가 0 인 특수한 경우다. 슬라이드에는 없는 내용이다.] 반대로 LEO 는 적도 근처만이 아니라 고위도와 극지방까지 덮어야 하니까 polar 와 inclined 를 쓴다.
 
-== p.4 — Operation: Orbits ⭐⭐ ==
-[[img:L11-04.png|p.4 Orbits — a. Equatorial-orbit(적도를 따라) b. Inclined-orbit(기울어진) c. Polar-orbit(남북극을 지나는) satellite|large]]
+{mini}
+# GEO 와 LEO 가 쓰는 orbit 을 각각 쓰라(p.16, p.20).
+# "24 h 주기로 polar orbit 을 돌면 땅에서 보기에 멈춰 있다." O/X.
+{/mini}
+{answer}
+# GEO 는 equatorial orbit, LEO 는 polar and inclined orbits. LEO 에 equatorial 을 쓰면 틀린다.
+# X. 주기가 맞아도 궤도면이 적도면이 아니면 위성이 남북으로 움직여 보인다. 정지해 보이려면 24 h 와 적도면 두 조건이 다 필요하다.
+{/answer}
 
-{def}"'''Orbit''' — The path in which it travels around Earth. e.g., '''Equatorial orbit''', '''inclined orbit''', '''polar orbit'''." (p.4){/def}
+== 얼마나 빨리 도나: period 와 Kepler's law ⭐⭐⭐ ==
+길의 모양 다음은 속도다. p.5 는 [[period of a satellite|period]] 를 정의한다. 슬라이드 표현으로는 "The time required for a satellite to make a complete trip around the Earth." 다. 지구를 한 바퀴 완전히 도는 데 걸리는 시간이다.[* 중간고사 범위 CH02 에서 신호의 period 는 한 cycle 에 걸리는 시간이었다([[mid:주기]]). 위성에서는 지구 한 바퀴가 한 cycle 이다.]
 
-{|
-! orbit || 궤도면 || 어디에 쓰이나 (이 덱 기준)
-|-
-| [[equatorial orbit]] || '''적도면''' 위 || '''GEO''' ("The orbit occurs at the equatorial plane", p.16)
-|-
-| [[inclined orbit]] || 적도면에 '''기울어진''' 면 || LEO (p.20 "Polar and inclined orbits"), GPS 도 inclined (보충)
-|-
-| [[polar orbit]] || 남극·북극을 지나는 면 || LEO (p.20)
-|}
+p.6 은 이 시간을 구하는 [[Kepler's law]] 를 준다.
+$$\text{Period [s]} = C \times \text{distance}^{1.5}, \qquad C \approx \frac{1}{100}$$
+단위가 정해져 있다. period 는 초(s)이고 distance 는 km 다. C 는 상수다.[* C 가 어디서 왔는지 궁금하면 뉴턴 역학의 원 궤도 주기 $T = 2\pi\sqrt{r^3/\mu}$ 를 보면 된다. 지구의 $\mu = GM \approx 398{,}600\ \text{km}^3/\text{s}^2$ 를 넣으면 $C = 2\pi/\sqrt{398{,}600} \approx 0.00995$ 다. 슬라이드가 "≈ 1/100" 이라고 쓴 이유다. 계산 문제는 슬라이드대로 1/100 을 쓴다.] 지수 1.5 는 케플러 제3법칙에서 나온다. 공전 주기의 제곱이 궤도 반지름의 세제곱에 비례한다는 법칙($T^2 \propto r^3$)이다. 양변에 제곱근을 씌우면 $T \propto r^{1.5}$ 가 된다.
 
-{tip}왜 GEO 는 반드시 equatorial 이어야 하나: 지구는 '''적도면 안에서''' 자전한다. 위성이 지구와 같은 주기(24 h)로 '''같은 면'''에서 돌아야 땅에서 볼 때 한 점에 멈춰 있다. 기울어진 궤도에서 24 h 로 돌면 하늘에서 남북으로 8 자를 그리며 흔들린다(보충 — 슬라이드에 없음) → [[geostationary]].{/tip}
+이 식에서 가장 많이 틀리는 곳은 distance 다. 행성 운동 법칙이니까 거리는 '''지구 중심'''부터 잰다. 그런데 문제는 보통 "○○ km above the Earth", 즉 지표면에서 잰 고도 $h$ 를 준다. 그래서 지구 반지름 6378 km 를 더해야 한다.
+$$\text{distance} = h + 6378$$
+슬라이드 식에는 6378 이 없다. 하지만 바로 뒤의 Example 두 개가 모두 6378 을 더해서 푼다.
 
-== p.5–6 — Period of a satellite & Kepler's law ⭐⭐⭐ ==
-[[img:L11-06.png|p.6 Period of a satellite — Kepler's law: Period (seconds) = C × distance^1.5 (C ≈ 1/100). Units: C a const, period seconds, distance km|large]]
-
-{def}"'''Period of a satellite''' — The time required for a satellite to make a '''complete trip around the Earth'''." (p.5)
-"'''Kepler's law''' — Period (seconds) = C × distance^1.5 (where C ≈ 1/100). Units — C: a const, period: '''seconds''', distance: '''km'''." (p.6){/def}
-
-$$\text{Period [s]} = \frac{1}{100} \times (\text{distance [km]})^{1.5}, \qquad \text{distance} = h + 6378$$
-
-* '''[[period of a satellite|period]]''' = 지구 한 바퀴 시간. 단위 '''초'''.
-* '''distance''' = '''지구 중심'''에서 위성까지의 거리(km). 문제는 보통 "지표면 위 고도 $h$" 를 주므로 '''지구 반지름 6378 km 를 더해야''' 한다 — Example 두 개의 풀이가 모두 그렇게 한다.
-* 지수 '''1.5''' → 거리가 4 배면 주기는 $4^{1.5} = 8$ 배. '''높을수록 느리게 돈다''' — 이 trend 하나로 GEO·MEO·LEO 의 주기 차이가 다 설명된다 → [[Kepler's law]].
-
-{warn}'''함정: 고도에 6378 을 더하지 않는 실수.''' 달을 $384{,}000^{1.5}/100$ 으로 계산하면 2,379,561 s — 슬라이드 답 2,439,090 s 와 다르다. 식의 distance 는 '''중심부터'''의 거리다.{/warn}
-
-== p.7–8 — Example 5.1: 달의 주기 ⭐⭐⭐ ==
-[[img:L11-08.png|p.8 Example 5.1 Solution — "The moon is located approximately 384,000 km above the Earth. The radius of the Earth is 6378 km." Period = (1/100) × (384,000 + 6378)^1.5 = 2,439,090 s = 1 month|large]]
-
-{def}"'''Example 5.1''' — What is the '''period of the moon''', according to Kepler's law?" (p.7)
-Solution: "The moon is located approximately '''384,000 km''' above the Earth. The '''radius of the Earth is 6378 km'''. … Period = (1/100) × (384,000 + 6378)^1.5 = '''2,439,090 s = 1 month'''." (p.8){/def}
-
-<pre class="txt">
-Example 5.1 — 손으로 푸는 순서
-1. 주어진 것: 고도 h = 384,000 km (지표면 위), 지구 반지름 R = '''6378 km'''
-2. distance = h + R = 384,000 + 6378 = '''390,378 km'''        ← 반지름을 꼭 더한다
-3. distance^1.5 = 390,378 × √390,378
-               = 390,378 × 624.80 ≈ '''243,909,099'''
-4. × C = × 1/100  →  Period ≈ '''2,439,091 s'''   (슬라이드: 2,439,090 s)
-5. 단위 환산: 2,439,091 s ÷ 3600 ≈ 677.5 h ÷ 24 ≈ '''28.2 일 ≈ 1 month'''
-</pre>
-→ 사전 문서: [[Example 5.1 달의 주기]]
-
-== p.9–10 — Example 5.2: 35,786 km 위성 = 24 h ⭐⭐⭐ ==
-[[img:L11-10.png|p.10 Example 5.2 Solution — Period = (1/100) × (35,786 + 6378)^1.5 = 86,579 s = 24 h. "the same as the rotation period of the Earth … stationary to the Earth … geostationary orbit"|large]]
-
-{def}"'''Example 5.2''' — What is the period of a satellite that is located at an orbit approximately '''35,786 km above the Earth'''?" (p.9)
-Solution: "Period = (1/100) × (35,786 + 6378)^1.5 = '''86,579 s = 24 h'''. This means that a satellite located at 35,786 km has a period of 24 h, which is '''the same as the rotation period of the Earth'''. A satellite like this is said to be '''stationary''' to the Earth. The orbit, as we will see, is called a '''geostationary orbit'''." (p.10){/def}
-
-<pre class="txt">
-Example 5.2 — 손으로 푸는 순서
-1. 주어진 것: 고도 h = 35,786 km, 지구 반지름 R = 6378 km
-2. distance = 35,786 + 6378 = '''42,164 km'''
-3. distance^1.5 = 42,164 × √42,164
-               = 42,164 × 205.34 ≈ '''8,657,903'''
-4. × 1/100  →  Period ≈ '''86,579 s'''
-5. 단위 환산: 86,579 ÷ 3600 ≈ '''24.05 h ≈ 24 h''' = 지구 자전 주기
-6. 결론: 지구와 같이 돈다 → 땅에서 보면 '''멈춰 있다''' → '''[[geostationary]] orbit''' = [[GEO]]
-</pre>
-→ 사전 문서: [[Example 5.2 정지궤도 주기]]
-
-{info}'''거꾸로 쓰는 법''' (보충 — 슬라이드에 없음): 주기를 주고 고도를 물을 수도 있다. $\text{distance} = (100 \times \text{Period})^{2/3}$, 그다음 6378 을 '''뺀다'''. 24 h = 86,400 s → $(8{,}640{,}000)^{2/3} \approx 42{,}105$ km → 고도 ≈ 35,728 km (슬라이드의 C 가 근사값이라 35,786 과 약간 다름).{/info}
+식을 보면 높을수록 느리게 돈다는 것을 알 수 있다. 중심까지 거리가 4 배가 되면 주기는 $4^{1.5} = 8$ 배가 된다. 거리가 늘어난 것보다 주기가 더 많이 늘어난다. GEO 가 하루에 한 바퀴를 돌고 LEO 가 한두 시간에 한 바퀴를 도는 것도 이 1.5 제곱 때문이다.
 
 [[sim:kepler_period]]
 
-{|
-! 위성 || 고도 h (km) || distance = h + 6378 || Period (s) || 환산
-|-
-| 달 (Ex 5.1) || 384,000 || 390,378 || 2,439,091 || ≈ 28.2 일 ≈ 1 month
-|-
-| GEO (Ex 5.2) || 35,786 || 42,164 || 86,579 || ≈ 24.05 h
-|-
-| GEO (p.16 의 35,405 로) || 35,405 || 41,783 || 85,408 || ≈ 23.7 h
-|-
-| MEO — GPS (p.18) || 18,000 || 24,378 || 38,062 || ≈ 10.6 h
-|-
-| LEO 하한 (p.20) || 500 || 6,878 || 5,704 || ≈ 95 min
-|-
-| LEO — Starlink (341 miles ≈ 550) || 550 || 6,928 || 5,766 || ≈ 96 min
-|-
-| LEO 상한 (p.20) || 2,000 || 8,378 || 7,669 || ≈ 128 min
-|-
-| ✗ 달, 반지름 안 더함 || 384,000 || (384,000) || 2,379,561 || 틀린 값
-|}
-값은 전부 python 으로 검산했다. 슬라이드 LEO 주기 "90 to 120 min" 은 근사(공식으로는 95–128 min).
+{mini}
+# 고도 800 km 위성의 주기를 구하라(C = 1/100, 지구 반지름 6378 km). 분 단위까지.
+# 중심까지 거리가 9 배가 되면 주기는 몇 배인가?
+# 빈칸: Kepler's law 의 distance 는 ___ 부터 잰 거리다. 그래서 고도에 ___ km 를 더한다.
+{/mini}
+{answer}
+# distance = 800 + 6378 = 7,178 km. $7{,}178^{1.5}/100 \approx 6{,}081$ s ≈ 101.4 min. LEO 범위(90–120 min) 안이다. 6378 을 빼먹으면 $800^{1.5}/100 \approx 226$ s 가 나오는데, 4 분 만에 지구를 도는 위성은 없다.
+# $9^{1.5} = 27$ 배.
+# 지구 중심, 6378.
+{/answer}
 
-== p.11–14 — Three categories of satellites ⭐⭐ ==
-[[img:L11-14.png|p.14 Three categories — 왼쪽 고도축: LEO(파랑, 0 위) → Lower Van Allen belt → MEO(초록, 5000–15,000) → Upper Van Allen belt → GEO(점선, 35,786). 오른쪽 사진: GEO/MEO/LEO 동심원(~35,786 / ~2,000–20,000 / ~500–2,000 km), 국제우주정거장, 위성 constellation, Starlink 341 miles vs normal satellites 621+ miles, KOREA 425 미션 패치, Falcon 9 발사|large]]
+== 공식을 달에 대 보자: Example 5.1 ⭐⭐⭐ ==
+새 공식을 받으면 답을 이미 아는 대상에 먼저 넣어 보는 게 좋다. p.7 의 Example 5.1 이 그 일을 한다. 질문은 "What is the period of the moon, according to Kepler's law?" 다. 달은 지구의 자연 위성이니까 답이 한 달쯤 나와야 식이 맞다.
 
-위성은 '''고도'''로 세 범주로 나뉜다 → [[위성 세 범주]]. 고도축에서 범주를 가르는 경계가 '''[[Van Allen belt]]''' 두 개다 — 위성 전자장비를 망가뜨리는 방사능 띠라 그 안에는 위성을 두지 않는다(보충 설명은 사전 문서).
+p.8 의 풀이는 달이 "approximately 384,000 km above the Earth" 에 있고 지구 반지름이 6378 km 라고 놓는다. 손으로 따라가 보자.
+<pre class="txt">
+1. distance = 384,000 + '''6378''' = 390,378 km      ← 반지름을 더한다
+2. 390,378^1.5 = 390,378 × √390,378 ≈ 390,378 × 624.80 ≈ 243,909,099
+3. × 1/100  →  Period ≈ '''2,439,091 s'''            (슬라이드: 2,439,090 s)
+4. ÷ 3600 ≈ 677.5 h,  ÷ 24 ≈ 28.2 일  →  '''≈ 1 month'''
+</pre>
+슬라이드도 "= 2,439,090 s = 1 month" 로 끝낸다. 한 달이 나왔으니 식과 단위를 제대로 쓴 것이다.[* moon 과 month 는 어원이 같다. 영어 month 는 고대 영어에서 달을 뜻하는 말에서 나왔다. 그러니 답이 "1 month" 로 떨어지는 게 우연은 아니다.] → [[Example 5.1 달의 주기]]
 
-{|
-! || [[GEO]] (정지궤도) || [[MEO]] (중궤도) || [[LEO]] (저궤도)
-|-
-| 고도 (참고) || 35,786 km (그림) / "22,000 miles ≈ 35405 km" (p.16) || 그림 5,000–15,000 km, GPS "about 18,000 km" (p.18) || 500–2000 km (p.20)
-|-
-| 위치 || '''equatorial plane''' || '''두 Van Allen belt 사이''' || Lower Van Allen belt 아래
-|-
-| orbit || [[equatorial orbit|equatorial]] || (GPS 는 inclined — 보충) || '''[[polar orbit|polar]] and [[inclined orbit|inclined]]'''
-|-
-| 주기 (Kepler) || '''24 h''' = 지구 자전 → '''정지해 보임''' || 수 시간 (18,000 km → ≈10.6 h) || '''90 to 120 min'''
-|-
-| 핵심 특징 || '''[[line-of-sight]]''' 로 넓은 지역, 그러나 곡률 때문에 '''최소 3 기''' || 24 기로 위치 측정 || '''"Similar to the cellular telephone system"''' — [[footprint]] 가 움직이는 cell
-|-
-| Key instance || (위성 방송·통신 — 보충) || '''[[GPS]]''' ([[trilateration]]) || '''[[Starlink]]'''
-|-
-| 지연 (보충) || 길다 (왕복 수백 ms) || 중간 || 짧다 (수 ms)
-|}
+{warn}6378 을 더하지 않으면 $384{,}000^{1.5}/100 \approx 2{,}379{,}561$ s 가 나온다. 약 27.5 일이라 얼핏 그럴듯해 보인다. 하지만 슬라이드 풀이와 다른 답이다. 이 과목에서는 슬라이드처럼 6378 을 더한 2,439,090 s 를 쓴다.{/warn}
 
-{warn}'''슬라이드끼리 숫자가 안 맞는 곳 두 군데''' (숫자 암기 대상이 아니니 걱정 말고, 어느 걸 쓰는지만 알아 두자)
-* GEO 고도: p.11–14 그림·Example 5.2 는 '''35,786 km''', p.16 본문은 "22,000 miles (≈ '''35405''' km)". 22,000 miles × 1.609 ≈ 35,406 km 라 본문은 "22,000 miles" 를 환산한 어림값이다. '''Kepler 계산은 Example 5.2 대로 35,786''' 을 쓴다.
-* MEO 고도: p.14 그림의 초록 띠는 '''5,000–15,000 km''' 인데 p.18 본문은 GPS 가 "about '''18,000''' km". 실제 GPS 는 약 20,200 km(보충). 오른쪽 사진은 MEO 를 "~2,000 to 20,000 km" 로 적었다. → "'''두 Van Allen belt 사이'''" 라는 개념으로 기억한다.{/warn}
+이 예제에는 작은 모순이 하나 숨어 있다. 384,000 km 는 원래 지구 중심과 달 중심 사이의 평균 거리다. 그런데 슬라이드는 이 값을 지표면에서 잰 고도로 놓고 반지름을 한 번 더 더했다.[* 지구–달 평균 거리는 약 384,400 km 이고, 중심에서 중심까지 잰 값이다. 엄밀히 따지면 6378 을 두 번 센 셈이다. 슬라이드의 풀이는 Forouzan 교재의 풀이를 그대로 옮긴 것이다. 시험에서는 슬라이드 풀이를 따른다.] 시험 답은 슬라이드를 따르면 된다.[* 필기본 p.8 에는 지구(반지름 r)와 달 사이에 화살표 d 를 그린 그림이 있다. d 를 지구 중심에서 재야 한다는 점, 즉 위 1 번 줄의 이유를 그린 것이다. 같은 장 위쪽의 "Bayes' Rule P(A|B)=" 와 "Rule ⟷ Law ⟷ Theorem / Conjecture(추측)" 는 수업 중 용어 이야기를 받아 적은 메모로 보인다. 녹음이 없어서 어떤 맥락이었는지는 확인할 수 없다.]
 
-== p.15 — Frequency bands for SATCOM ⭐⭐ ==
-[[img:L11-15.png|p.15 Frequency bands for SATCOM — Uplink: Earth → satellite, Downlink: satellite → Earth. 표 L/S/C/Ku/Ka 대역의 Downlink·Uplink GHz 와 Bandwidth MHz|large]]
+== 하루에 한 바퀴 도는 높이: Example 5.2 ⭐⭐⭐ ==
+[[img:L11-10.png|p.10 — 풀이 상자의 (35,786 + 6378)^1.5 와 그 아래 "stationary … geostationary orbit" 문장을 보라|large]]
+p.9 의 Example 5.2 는 이번에는 인공위성을 묻는다. "What is the period of a satellite that is located at an orbit approximately 35,786 km above the Earth?" 같은 순서로 풀어 보자.
+<pre class="txt">
+1. distance = 35,786 + 6378 = 42,164 km
+2. 42,164^1.5 = 42,164 × √42,164 ≈ 42,164 × 205.34 ≈ 8,657,903
+3. × 1/100  →  Period ≈ '''86,579 s'''
+4. ÷ 3600 ≈ 24.05 h  →  '''≈ 24 h'''
+</pre>
+24 h 는 지구가 한 바퀴 자전하는 시간이다. 위 그림의 풀이 상자는 여기서 멈추지 않고 이 숫자의 뜻을 적는다. 35,786 km 의 위성은 "has a period of 24 h, which is the same as the rotation period of the Earth" 다. 지구와 같이 도니까 땅에서 보면 하늘의 한 점에 멈춰 있다. 슬라이드는 이런 위성을 "stationary to the Earth" 라고 하고, 그 궤도를 '''[[geostationary]] orbit''' 이라고 부른다. 이 이름이 바로 뒤 GEO 슬라이드의 제목이 된다.[* 엄밀한 지구 자전 주기(항성일)는 약 23 h 56 min, 86,164 s 다. 86,579 s 와 조금 다른 것은 C 를 1/100 으로 어림했기 때문이다.] → [[Example 5.2 정지궤도 주기]]
 
-{def}"'''Uplink''': transmission from '''the Earth to the satellite'''. '''Downlink''': transmission from '''the satellite to the Earth'''." (p.15){/def}
+식을 거꾸로 쓸 수도 있다. 주기를 주고 고도를 물으면 $\text{distance} = (100 \times \text{Period})^{2/3}$ 를 구한 뒤 6378 을 뺀다. 더할 때와 반대로 마지막에 빼야 한다는 점만 조심하면 된다.
 
+{mini}
+# Example 5.2 를 6378 을 더하지 않고 풀면 주기는 몇 시간이 나오나? 이 답이 이상하다는 것을 어떻게 알아챌 수 있나?
+# p.16 은 GEO 고도를 35,405 km 로 적었다. 이 값을 넣으면 주기는 몇 시간인가?
+# 주기가 12 h 인 위성의 고도를 Kepler's law 로 구하라.
+{/mini}
+{answer}
+# $35{,}786^{1.5}/100 \approx 67{,}697$ s ≈ 18.8 h. "정지궤도" 라는 결론이 나오려면 24 h 가 나와야 하는데 안 나온다. 깔끔한 숫자가 안 나오면 6378 을 빠뜨렸는지부터 본다.
+# $(35{,}405 + 6378)^{1.5}/100 \approx 85{,}408$ s ≈ 23.7 h. 24 h 에 가깝지만 Example 5.2 의 값은 아니다. 계산 문제는 문제에 주어진 고도를 쓰고, 주어지지 않았으면 Example 5.2 의 35,786 을 쓴다.
+# 12 h = 43,200 s. distance = $(100 \times 43{,}200)^{2/3} \approx 26{,}525$ km, 고도 = 26,525 − 6378 ≈ 20,147 km. 마지막에 6378 을 빼야 한다. 실제 GPS 위성 고도(약 20,200 km)와 거의 같다.
+{/answer}
+
+== 높이로 나눈 세 범주와 Van Allen belt ==
+[[img:L11-14.png|p.14 — 왼쪽 고도축에서 LEO(파랑), Lower Van Allen belt, MEO(초록, 5000–15,000), Upper Van Allen belt, GEO(점선, 35,786) 의 순서를 보라|large]]
+Kepler's law 로 높이와 주기의 관계를 알았으니, 이제 위성을 높이로 나눈다. p.11–14 는 한 화면에 그림이 하나씩 늘어나는 build-up 이고, 마지막 장인 p.14 에 다 모여 있다. → [[위성 세 범주]]
+
+위 그림 왼쪽의 고도축을 아래에서부터 읽어 보자.
+* 지표면 바로 위 파란 띠가 '''[[LEO]]'''(Low Earth Orbit) 다.
+* 그 위에 '''Lower [[Van Allen belt]]''' 가 있다.
+* 5000–15,000 km 의 초록 띠가 '''[[MEO]]'''(Medium Earth Orbit) 다.
+* 그 위에 '''Upper Van Allen belt''' 가 있다.
+* 맨 위 35,786 km 의 점선이 '''[[GEO]]''' 다. Example 5.2 의 그 높이다.[* 필기본 p.11 에는 GEO 옆에 "정지궤도" 라고 적혀 있다. LEO 는 저궤도, MEO 는 중궤도로 높이를 따라 이름을 붙였는데, GEO 만 "지구에 대해 멈춰 있다" 는 성질로 이름이 붙었다.]
+
+범주 사이의 경계에는 Van Allen belt 두 개가 있다. 슬라이드는 이름과 위치만 주고 무엇인지는 설명하지 않는다. Van Allen belt 는 지구 자기장이 붙잡은 전하 입자들이 모인 도넛 모양의 띠다. 그 안은 방사선이 강해서 위성의 전자 장비가 상한다.[* 1958 년 미국의 첫 인공위성 Explorer 1 의 관측으로 James Van Allen 이 발견했고, 그래서 그의 이름이 붙었다.] 그래서 위성은 띠 아래(LEO), 두 띠 사이(MEO), 띠 위(GEO) 세 곳에 놓인다.
+
+그림 오른쪽 사진들은 장식에 가깝지만 볼 것이 몇 개 있다. 맨 위 동심원 그림은 GEO ~35,786 km, MEO ~2,000–20,000 km, LEO ~500–2,000 km 로 적었다. 아래쪽 지도는 Starlink 341 miles 와 normal satellites 621+ miles 를 비교한다. 이 지도는 p.21 에 다시 나온다.[* 오른쪽 아래 "KOREA 425" 패치는 한국군 정찰위성 사업인 425 사업의 발사 미션 패치이고, 그 옆이 Falcon 9 발사 사진이다. 425 사업 위성은 SpaceX Falcon 9 로 발사됐다.]
+
+{warn}슬라이드끼리 고도 숫자가 안 맞는 곳이 두 군데 있다.
+* GEO: p.11–14 그림과 Example 5.2 는 35,786 km 다. p.16 본문은 "22,000 miles (≈ 35405 km)" 다. 22,000 miles 를 어림으로 환산한 값이다.
+* MEO: p.14 그림의 초록 띠는 5,000–15,000 km 다. p.18 본문은 "about 18,000 km" 다. 오른쪽 사진은 ~2,000–20,000 km 다.
+MEO 는 숫자 대신 "두 Van Allen belt 사이" 로 기억하면 된다. Kepler 계산에는 Example 5.2 의 35,786 을 쓴다.{/warn}
+
+{info}10/20 수업에서 교수가 숫자 공부법을 직접 말했다(41:54). "I'm not going to recommend you to memorize all these specific numbers … understand how communication systems evolve … That trend is important." 셀룰러 세대를 설명하며 한 말이라 위성 덱을 두고 한 말은 아니다. 그래도 같은 태도로 읽으면 무리가 없다. 고도 숫자보다 LEO < MEO < GEO 의 순서, MEO 가 두 Van Allen belt 사이라는 위치, 높을수록 주기가 길다는 경향을 기억한다.[* 같은 수업 46:00 에 교수는 이런 숫자를 묻는 OX 문제는 내지 않겠다는 뜻도 밝혔다(정리본 CH05 기준). 다만 Kepler 계산은 예제가 두 개나 있어서 숫자를 넣어 푸는 문제로 나올 수 있다.]{/info}
+
+{mini}
+# 고도가 낮은 것부터 세 범주를 쓰고, Lower Van Allen belt 와 Upper Van Allen belt 가 각각 어느 두 범주 사이에 있는지 쓰라.
+# GEO(35,786 km)의 주기는 LEO 하한(500 km)의 주기의 몇 배인가?
+# "GEO 라는 이름은 LEO, MEO 처럼 높이를 뜻한다." O/X.
+{/mini}
+{answer}
+# LEO < MEO < GEO. Lower 는 LEO 와 MEO 사이, Upper 는 MEO 와 GEO 사이다.
+# 86,579 / 5,704 ≈ 15.2 배. 중심까지 거리는 42,164 / 6,878 ≈ 6.1 배인데 주기는 그보다 훨씬 많이 늘어난다. 지수 1.5 때문이다.
+# X. GEO 는 GEOstationary 의 약자다. 높이가 아니라 "지구에 대해 정지" 라는 성질에서 온 이름이다.
+{/answer}
+
+== 올려 보내는 주파수와 내려 보내는 주파수: SATCOM 대역 ⭐⭐ ==
+[[img:L11-15.png|p.15 — 표의 각 행에서 Uplink 열이 Downlink 열보다 크다는 것과, 아래로 갈수록 Bandwidth 가 커지는 것을 보라|large]]
+세 범주를 하나씩 보기 전에 p.15 가 주파수 이야기를 끼워 넣는다. 맨 위 두 줄이 정의다.
+* Uplink: "transmission from the Earth to the satellite"
+* Downlink: "transmission from the satellite to the Earth"
+
+up 은 땅에서 위로 올려 보내는 방향이고, down 은 위성에서 아래로 내려 보내는 방향이다. 누가 보내느냐로만 정한다. → [[uplink와 downlink]]
+
+표는 위성 통신(SATCOM)이 쓰는 대역 다섯 개를 보여 준다.
 {|
 ! Band || Downlink, GHz || Uplink, GHz || Bandwidth, MHz
 |-
@@ -212,120 +180,142 @@ Example 5.2 — 손으로 푸는 순서
 |-
 | Ka || 20.0 || 30.0 || 3500
 |}
-* 표의 '''trend''' 두 개(숫자 대신 이것을 기억): ① 대역이 높아질수록(L → Ka) '''bandwidth 가 커진다''' (15 → 3500 MHz) — 높은 주파수일수록 더 많은 데이터를 실을 수 있다 ([[mid:bandwidth]]). ② 모든 행에서 '''uplink 주파수 > downlink 주파수'''. (보충 — 슬라이드에 없음: 높은 주파수는 [[mid:attenuation|감쇠]]가 크다. 지상국은 큰 안테나·큰 출력을 쓸 수 있으니 힘든 높은 주파수를 uplink 로 맡고, 전력이 빠듯한 위성은 낮은 주파수로 내려보낸다.)
-* uplink·downlink 에 '''서로 다른 주파수'''를 쓰는 것 = 셀룰러 AMPS 와 같은 FDD 식 [[mid:duplexing과 multiple access|duplexing]] → [[SATCOM 주파수 대역]].
+숫자를 외울 필요는 없고, 위 그림의 표에서 경향 두 개만 읽으면 된다.
+# 대역이 높아질수록(L → Ka) bandwidth 가 커진다. 15 MHz 에서 3500 MHz 까지 늘어난다. bandwidth 가 크면 실을 수 있는 데이터가 많다([[mid:bandwidth]]).[* 필기본 p.15 에는 Ku·Ka 의 downlink 칸에서 화살표를 내려 "high freq" 라고 적어 두었다. 표에서 가장 높은 주파수 대역이라는 표시다. 주파수가 높을수록 비나 대기 때문에 신호가 더 많이 약해진다는 단점도 있다(보충).]
+# 모든 행에서 uplink 주파수가 downlink 주파수보다 높다. C 대역이면 6 GHz 로 올려 보내고 4 GHz 로 내려 받는다.[* 이유는 슬라이드에 없다. 흔히 드는 설명은 이렇다. 주파수가 높을수록 [[mid:attenuation|감쇠]]가 크다. 지상국은 큰 안테나와 큰 송신 전력을 쓸 수 있으니 불리한 높은 주파수로 올려 보낸다. 태양전지로 버티는 위성은 전력이 빠듯하니 덜 약해지는 낮은 주파수로 내려 보낸다.]
 
-{exam}🎯 '''uplink/downlink — 셀룰러 vs 위성''' (교수: "memorize uplink and downlink")
+uplink 와 downlink 에 서로 다른 주파수를 쓰니까 두 방향이 동시에 오갈 수 있다. 셀룰러 AMPS 에서 본 것과 같은 방식의 [[mid:duplexing과 multiple access|duplexing]] 이다. → [[SATCOM 주파수 대역]]
+
+{exam}🎯 교수가 10/20 수업(42:20)에서 "I would recommend you to memorize uplink and downlink, especially." 라고 했다. 셀룰러와 위성을 짝으로 외워 두자.
 {|
 ! || uplink || downlink
 |-
-| 셀룰러 (L10, AMPS p.19) || '''MS → BS''' (= reverse) || '''BS → MS''' (= forward)
+| 셀룰러 (L10 p.19) || MS → BS (reverse) || BS → MS (forward)
 |-
-| 위성 (L11 p.15) || '''Earth → satellite''' || '''satellite → Earth'''
+| 위성 (L11 p.15) || Earth → satellite || satellite → Earth
 |}
-공통 규칙: '''up = 하늘(높은 쪽 · 망 쪽)으로 올려 보냄, down = 내려 보냄'''. 위성에서는 Earth 쪽이 지상 BS·gateway 라도 그것이 '''보내면 uplink''' 다. "uplink = MS → BS" 를 위성 문제에 그대로 쓰면 틀린다 → [[uplink와 downlink]].{/exam}
+두 경우 모두 up 은 높은 쪽(BS, 위성)으로 올려 보내는 방향이다. 위성 문제에 "uplink = MS → BS" 를 그대로 쓰면 틀린다.{/exam}
 
-== p.16–17 — GEO (GEOstationary; 정지궤도) Satellites ⭐⭐ ==
-[[img:L11-17.png|p.17 GEO — 왼쪽: Equatorial-orbit satellite, 오른쪽: 지구 둘레에 120° 간격 위성 3 기가 빔을 쏨. "A minimum of 3 satellites equidistant from each other in GEO to provide full global transmission"|large]]
+{mini}
+# O/X: SATCOM 에서 uplink 는 위성이 지구로 보내는 전송이다.
+# 표에서 bandwidth 가 가장 큰 대역과 가장 작은 대역을 쓰고, 몇 배 차이인지 구하라.
+# 셀룰러 AMPS 의 uplink 는 824–849 MHz, downlink 는 869–894 MHz 다. uplink 와 downlink 주파수의 높낮이가 SATCOM 표와 어떻게 다른가?
+{/mini}
+{answer}
+# X. uplink 는 Earth → satellite 다. 위성이 지구로 보내는 것은 downlink 다.
+# Ka 3500 MHz, L 15 MHz. 3500 / 15 ≈ 233 배.
+# 반대다. AMPS 는 uplink 가 downlink 보다 낮고, SATCOM 표는 모든 행에서 uplink 가 더 높다. "uplink 는 항상 높은 주파수" 처럼 외우면 안 된다. 외울 것은 방향(누가 보내나)이다.
+{/answer}
 
-{def}"'''GEO (GEOstationary; 정지궤도) Satellites''' — The orbit occurs at '''the equatorial plane'''. Approximately '''22,000 miles (≈ 35405 km)''' away from the surface of the Earth. One satellite in orbit has '''line-of-sight contact''' with a vast number of stations, but '''the curvature of the Earth''' still keeps much of the planet out of sight — '''A minimum of 3 satellites''' equidistant from each other in GEO to provide '''full global transmission'''." (p.16–17){/def}
+== 하늘에 멈춘 위성: GEO ==
+[[img:L11-17.png|p.17 — 왼쪽은 p.4 의 equatorial orbit 그림, 오른쪽은 지구 둘레에 같은 간격으로 놓인 위성 세 기가 각자 지구의 한쪽을 비추는 그림이다|large]]
+첫 번째 범주는 Example 5.2 에서 이름을 얻은 [[GEO]] 다. 슬라이드 제목은 "GEO (GEOstationary; 정지궤도) Satellites" 이고, 설명은 세 줄이다.
 
-* '''[[geostationary]]''' = geo(지구) + stationary(정지). Example 5.2 에서 본 대로 주기 24 h = 지구 자전 → 땅에서 보면 '''하늘의 한 점에 멈춰 있다'''. 그래서 지상 안테나(위성 TV 접시)를 '''한 방향에 고정'''해도 된다.
-* '''[[line-of-sight]]''' = 직선으로 서로 보이는 사이. 높이 떠 있으니 한 기가 '''엄청나게 많은 station''' 을 본다. 그래도 지구는 둥글어서(curvature) 반대편은 가려진다.
-* 그래서 '''최소 3 기를 서로 같은 간격(120°)'''으로 놓아야 지구 전체를 덮는다 → [[GEO]].
+첫째 줄은 "The orbit occurs at the equatorial plane." 이다. 앞의 orbit 절에서 본 대로, 멈춰 보이려면 지구가 자전하는 면과 같은 면에서 돌아야 한다. 위 그림 왼쪽이 p.4 의 equatorial orbit 그림 그대로다.
 
-[[anim:geo_three|GEO 위성 1 기가 덮는 영역과 곡률로 가려지는 영역을 먼저 보고, 120° 간격 3 기가 되면 전 지구가 덮이는 순간을 확인하라]]
+둘째 줄은 고도를 "Approximately 22,000 miles (≈ 35405 km)" 로 적는다. 앞의 Example 5.2 와 그림의 35,786 km 와는 조금 다른 어림값이다.[* 22,000 × 1.609 ≈ 35,406 km 다. 슬라이드의 35405 는 22,000 miles 를 그대로 환산한 값이다. 정확한 정지궤도 고도는 35,786 km 다.]
 
-== p.18–19 — MEO (Medium Earth Orbit: 중궤도) Satellites ⭐⭐ ==
-[[img:L11-19.png|p.19 MEO — a. Two-dimensional trilateration(A·B·C 중심의 점선 원 세 개가 분홍 점 하나에서 만남) b. Three-dimensional trilateration(위성 3 기를 중심으로 한 구 세 개가 겹침)|large]]
+셋째 줄이 GEO 의 가장 중요한 성질이다. "One satellite in orbit has line-of-sight contact with a vast number of stations, but the curvature of the Earth still keeps much of the planet out of sight." 위성이 아주 높이 떠 있으니까 한 기가 엄청나게 많은 지상국과 [[line-of-sight]] 로 닿는다. line-of-sight 는 둘 사이에 가리는 것 없이 직선으로 보인다는 뜻이다. 그래도 지구가 둥글어서(curvature) 반대편은 위성에서 보이지 않는다.
 
-{def}"'''MEO (Medium Earth Orbit: 중궤도) Satellites''' — Positioned '''between the two Van Allen belts'''. Orbiting at an altitude about '''18,000 km''' and consist of '''24 satellites'''. '''Key instance: Global Positioning System (GPS)''' — '''Trilateration (삼변측량)'''." (p.18–19){/def}
+그래서 p.17 에 한 줄이 더 붙는다. "A minimum of 3 satellites equidistant from each other in GEO to provide full global transmission." 위 그림 오른쪽처럼 세 기를 같은 간격으로, 즉 120° 씩 떨어뜨려 놓으면 각자 지구의 한쪽을 맡아 전체를 덮는다.[* 엄밀히 말하면 적도 상공의 GEO 는 극지방을 거의 못 본다. 그래서 "full global" 에도 극지방은 예외다. 슬라이드에는 없는 이야기다.] → [[geostationary]]
 
-* '''[[MEO]]''' 의 자리 = Lower 와 Upper [[Van Allen belt]] '''사이'''. 대표 = '''[[GPS]]'''(24 기).
-* '''[[trilateration]]''' = 거리(변) 세 개로 위치를 정한다. 2D: 알려진 점 A·B·C 에서의 거리로 원 세 개 → '''교점 하나 = 내 위치'''. 3D: 위성 세 기에서의 거리로 구 세 개 → 교점이 두 개로 좁혀지고, 그중 지구 표면 쪽 하나가 답(보충). 실제 GPS 수신기는 시계 오차까지 풀기 위해 '''4 기 이상'''을 쓴다(보충 — 슬라이드에 없음).
-* 1강·3강과의 연결: [[IS-95]] 기지국은 이 GPS 위성의 '''시각'''을 받아 동기화한다 → [[GPS 동기화]].
+[[anim:geo_three|GEO 위성 한 기가 덮는 영역과 곡률에 가려지는 영역을 먼저 보고, 120° 간격 세 기가 되면 지구 전체가 덮이는 순간을 확인하라]]
 
-[[anim:trilateration_anim|2D 에서 원 세 개가 한 점에서 만나는 것을 보고, 3D 에서 구 세 개가 두 점으로 좁혀진 뒤 지구 쪽 한 점이 남는 것을 확인하라 — 거리 3 개 → 위치 1 개]]
+GEO 가 멈춰 보인다는 것은 실용적으로 큰 장점이다. 지상 안테나를 한 방향에 고정해 두면 된다. 위성 TV 접시가 늘 같은 방향을 보고 있는 이유다. 대신 멀다. 신호가 3만 6천 km 를 올라갔다 내려오니 지연이 길다([[mid:propagation time]]). 이 단점은 LEO 절에서 다시 나온다.
 
-== p.20–21 — LEO (Low Earth Orbit; 저궤도) Satellites ⭐⭐⭐ ==
-[[img:L11-21.png|p.21 LEO — 왼쪽 아래: 위성 2 기가 ISL 로 연결, 각 위성이 폰과 UML(검정), gateway 안테나와 GWL(분홍)로 연결, 지상에 점선 타원 Footprint 2 개가 겹침. 오른쪽: b. Inclined / c. Polar orbit, Starlink 341 miles vs Normal satellites 621+ miles|large]]
+{mini}
+# GEO 로 full global transmission 을 하려면 최소 몇 기가 필요한가? 위성 사이 간격은 몇 도인가? 이유를 슬라이드 표현으로 쓰라.
+# 옳은 것을 모두 고르라. (a) GEO 는 equatorial plane 에서 돈다. (b) GEO 는 주기가 지구 자전 주기와 같다. (c) GEO 위성 한 기는 line-of-sight 로 지구 전체와 통신한다. (d) GEO 의 지상 안테나는 위성을 따라 계속 방향을 바꿔야 한다.
+{/mini}
+{answer}
+# 최소 3 기, 120° 간격(360 / 3). 한 기가 "line-of-sight contact with a vast number of stations" 를 갖지만 "the curvature of the Earth" 때문에 많은 지역이 보이지 않는다.
+# (a), (b). (c) 는 곡률 때문에 불가능하다. 그래서 3 기가 필요하다. (d) 는 반대다. 위성이 멈춰 보이니 안테나를 고정해도 된다.
+{/answer}
 
-{def}"'''LEO (Low Earth Orbit; 저궤도) Satellites''' — '''Polar and inclined orbits'''. The altitude is between '''500 and 2000 km'''. A rotation period of '''90 to 120 min'''. '''Similar to the cellular telephone system'''. '''Key instance: Starlink'''." (p.20–21){/def}
+== 두 방사능 띠 사이: MEO 와 GPS ==
+[[img:L11-19.png|p.19 — a 에서 A·B·C 를 중심으로 한 점선 원 세 개가 분홍 점 하나에서 만나는 것, b 에서 위성 세 기를 중심으로 한 구 세 개가 겹치는 것을 보라|large]]
+두 번째 범주 [[MEO]] 의 첫 줄은 "Positioned between the two Van Allen belts" 다. 앞의 p.14 그림에서 초록 띠가 놓인 자리다. 둘째 줄은 "Orbiting at an altitude about 18,000 km and consist of 24 satellites" 다. Kepler's law 에 18,000 km 를 넣으면 주기는 약 10.6 h 가 나온다.
 
-* '''orbit''': polar 와 inclined — GEO(equatorial)와 '''반대'''다. 적도만 도는 게 아니라 고위도까지 덮어야 하니까.
-* '''고도·주기''': 가깝다(500–2000 km) → Kepler 로 '''90–120 min''' 에 한 바퀴. 땅에서 보면 몇 분 만에 하늘을 가로질러 지나간다.
-* '''"Similar to the cellular telephone system"''': 위성 하나가 지상에 비추는 영역 = '''[[footprint]]''' 가 셀룰러의 [[cell]] 역할을 한다. 다만 셀룰러는 cell 이 고정되고 사용자가 움직이는데, LEO 는 '''cell(footprint)이 위성과 함께 움직인다'''. 그래서 사용자는 계속 다음 위성으로 넘겨진다 — 하늘의 [[handoff]].
-* 그림의 링크 세 종류: '''UML'''(User Mobile Link, 위성 ↔ 사용자 폰) · '''GWL'''(GateWay Link, 위성 ↔ 지상 gateway) · '''[[ISL]]'''(Inter-Satellite Link, 위성 ↔ 위성) → [[UML과 GWL]].
-* '''[[Starlink]]''': 오른쪽 그림 "Starlink '''341 miles'''"(≈ 550 km) vs "Normal satellites 621+ miles"(≈ 1,000 km) — 보통 LEO 보다도 '''더 낮게''' 띄워 지연을 줄였다.
+p.19 에서 대표 instance 가 붙는다. 슬라이드 표현으로는 "Key instance: Global Positioning System (GPS)" 다. 그 아래에 한 단어 "Trilateration (삼변측량)" 이 있다. → [[GPS]]
 
-[[anim:leo_footprint|LEO 위성 2 기가 ISL 로 이어진 채 지나가면서 지상 footprint 원이 위성을 따라 움직이고, 사용자(UML)가 다음 위성으로 넘겨지는 순간을 보라 — 셀룰러에서 cell 이 움직이는 버전]]
+[[trilateration]] 은 위치를 아는 기준점들까지의 거리로 내 위치를 정하는 방법이다. 위 그림 a 의 2D 경우를 보자. A 에서 내 거리를 알면 나는 A 를 중심으로 한 원 위 어딘가에 있다. B 까지의 거리도 알면 두 원이 만나는 두 점 중 하나로 좁혀진다. C 까지 알면 세 원이 모두 지나는 분홍 점 하나만 남는다. 그 점이 내 위치다.
 
-{tip}'''LEO vs 1강 셀룰러, 대응표''' (보충 — 슬라이드는 "similar" 한 줄)
-{|
-! 셀룰러 (L10) || LEO (L11 p.21)
-|-
-| [[cell]] (고정) || [[footprint]] (위성과 함께 '''이동''')
-|-
-| [[base station]] || LEO 위성
-|-
-| MS ↔ BS 무선 구간 || '''UML''' (user mobile link)
-|-
-| BS ↔ MSC 유선 || '''GWL''' (위성 ↔ gateway) 또는 '''ISL''' 로 다른 위성에 전달
-|-
-| [[handoff]] — 사용자가 움직여서 || handoff — '''위성이''' 움직여서
-|}{/tip}
+그림 b 는 같은 일을 3D 로 한다. 이번에는 기준점이 위성이고, 거리 하나가 구 하나를 만든다. 구 세 개가 겹치면 후보가 두 점으로 좁혀지고, 그중 하나는 우주 공간이라 버린다. 남은 하나가 지구 위의 내 위치다.[* tri- 는 셋, lateral 은 변이라는 뜻이다. 세 변(거리)으로 잰다는 이름이다. 비슷한 이름의 triangulation(삼각측량)은 각도로 잰다. GPS 는 각도를 쓰지 않고 거리만 쓴다.]
 
-== 정리 비교표 — GEO · MEO · LEO ==
-{|
-! 비교 || [[GEO]] || [[MEO]] || [[LEO]]
-|-
-| 이름 || GEOstationary (정지궤도) || Medium Earth Orbit (중궤도) || Low Earth Orbit (저궤도)
-|-
-| orbit || equatorial plane || 두 Van Allen belt 사이 || polar and inclined
-|-
-| 고도 (참고) || 35,786 km (≈ 22,000 miles) || ≈ 18,000 km (GPS) || 500–2000 km
-|-
-| 주기 || 24 h (지구와 같이) || 수 시간 || 90–120 min
-|-
-| 필요한 위성 수 || '''최소 3 기''' (전 지구) || GPS 24 기 || 많음 (Starlink 는 수천 기 — 보충)
-|-
-| 핵심 단어 || line-of-sight, curvature, full global transmission || GPS, trilateration || similar to cellular, footprint, UML·GWL·ISL
-|-
-| Key instance || — || '''GPS''' || '''Starlink'''
-|}
+거리는 시간으로 잰다. 각 GPS 위성은 자기 위치와 신호를 보낸 시각을 계속 방송한다. 수신기는 받은 시각에서 보낸 시각을 빼고 빛의 속도를 곱해 거리를 얻는다.[* 실제 GPS 수신기는 위성을 4 기 이상 쓴다. 수신기에 달린 싼 시계의 오차도 모르는 값이라 하나 더 풀어야 하기 때문이다. 실제 GPS 위성은 약 20,200 km 고도에서 6 개 궤도면에 나뉘어 돈다. 슬라이드의 18,000 km 보다 조금 높다.] 3강에서 [[IS-95]] 기지국이 GPS 로 시계를 맞춘다고 했던 것도 이 정확한 시각 때문이다. → [[GPS 동기화]]
 
-== 공식 모음 ==
-{|
-! 무엇 || 식 || 값
-|-
-| [[Kepler's law]] || $\text{Period} = \frac{1}{100} \times (h + 6378)^{1.5}$ [s, km] || —
-|-
-| [[Example 5.1 달의 주기|Ex 5.1]] 달 || $\frac{1}{100} \times 390{,}378^{1.5}$ || 2,439,090 s ≈ 1 month
-|-
-| [[Example 5.2 정지궤도 주기|Ex 5.2]] GEO || $\frac{1}{100} \times 42{,}164^{1.5}$ || 86,579 s ≈ 24 h
-|-
-| 거꾸로 (보충) || $h = (100 \times \text{Period})^{2/3} - 6378$ || —
-|}
+[[anim:trilateration_anim|2D 에서 원 세 개가 한 점에서 만나는 것을 보고, 3D 에서 구 세 개가 두 점으로 좁혀진 뒤 지구 쪽 한 점이 남는 것을 확인하라]]
+
+{mini}
+# 2D trilateration 에서 기준점이 두 개뿐이면 위치 후보는 몇 개인가? 세 개면?
+# GPS 는 세 범주 중 어디에 속하나? "GPS 는 위치 측정용이라 늘 같은 자리에 있는 GEO 에 있다." 는 맞는 말인가?
+# p.18 의 MEO 고도 18,000 km 로 주기를 구하라.
+{/mini}
+{answer}
+# 두 개면 원 두 개의 교점 두 개 중 어느 쪽인지 모른다. 세 개면 하나로 정해진다.
+# MEO. 틀린 말이다. 슬라이드는 GPS 를 MEO 의 key instance 로 든다(p.19). 위치를 재려면 여러 방향의 위성이 동시에 보여야 하는데, GEO 는 적도 위에 몰려 있다.
+# $(18{,}000 + 6378)^{1.5}/100 \approx 38{,}062$ s ≈ 10.6 h.
+{/answer}
+
+== 하늘의 셀룰러: LEO 와 Starlink ⭐⭐⭐ ==
+[[img:L11-21.png|p.21 — 왼쪽 아래에서 위성 두 기가 ISL 로 이어지고, 각 위성이 폰과 UML, gateway 와 GWL 로 이어지며, 지상의 점선 타원 Footprint 두 개가 가운데서 겹치는 것을 보라|large]]
+마지막 범주 [[LEO]] 는 p.20–21 에 다섯 줄로 정리돼 있다.
+* "Polar and inclined orbits"
+* "The altitude is between 500 and 2000 km"
+* "A rotation period of 90 to 120 min"
+* "Similar to the cellular telephone system"
+* "Key instance: Starlink"
+
+첫 줄부터 보자. LEO 는 GEO 와 달리 적도면을 쓰지 않는다. 위성이 낮아서 한 기가 보는 땅이 좁다. 그래서 위성을 많이 깔아야 하고, 고위도와 극지방까지 덮으려고 polar 와 inclined 궤도를 쓴다. 위 그림 오른쪽 위에 p.4 의 b·c 그림이 다시 나온다.
+
+둘째와 셋째 줄은 Kepler's law 로 서로 이어진다. 500 km 를 넣으면 약 95 min, 2000 km 를 넣으면 약 128 min 이 나온다. 슬라이드의 "90 to 120 min" 은 이 범위를 둥글게 적은 것이다. 한 바퀴에 두 시간이 안 걸리니 땅에서 보면 위성이 몇 분 만에 하늘을 가로질러 지나간다.
+
+넷째 줄 "Similar to the cellular telephone system" 은 위 그림 왼쪽 아래를 보면 이해된다. 위성 하나가 땅에 비추는 영역이 점선 타원 '''[[footprint]]''' 다. footprint 는 셀룰러의 [[cell]] 과 같은 일을 한다. 그 안의 폰은 그 위성과 통신한다. 차이는 움직이는 쪽이다. 셀룰러는 cell 이 땅에 고정돼 있고 사용자가 움직인다. LEO 는 위성이 움직이니 footprint 도 함께 땅 위를 미끄러져 간다. 그래서 사용자가 가만히 있어도 다음 위성으로 계속 넘겨져야 한다. 1강의 [[handoff]] 를 하늘에서 하는 셈이다. 위 그림에서 두 footprint 가 가운데서 겹치는 구간이 넘겨주기가 일어날 수 있는 곳이다.
+
+위 그림에는 링크가 세 종류 있다. → [[UML과 GWL]]
+* '''UML'''(User Mobile Link): 위성과 사용자 폰을 잇는 검은 번개선이다. 셀룰러의 MS ↔ BS 무선 구간 자리다.
+* '''GWL'''(GateWay Link): 위성과 지상 gateway 안테나를 잇는 분홍 번개선이다. p.3 의 Ground segment 로 가는 길이다.
+* [[ISL]]: 두 위성 사이의 선이다. 내 위성 아래에 gateway 가 없으면 옆 위성으로 넘긴다.[* UML 과 GWL 도 슬라이드는 약자만 적었다. 풀어 쓴 이름은 Forouzan 교재의 것이다.]
+
+마지막 줄의 key instance 는 [[Starlink]] 다. 위 그림 오른쪽 아래 지도는 Starlink 위성이 341 miles 에 있고 보통 위성은 621+ miles 에 있다고 비교한다. 각각 약 549 km 와 약 1,000 km 다. Starlink 는 보통 LEO 보다도 더 낮게 띄운 것이다.[* 10/20 수업(L10 p.7)에서 교수는 Starlink 가 전장에서 쓰이는 BBC 기사 그림을 보여 줬다. 위성망이 실제로 얼마나 중요한 인프라인지 보여 주는 예였다. Starlink 위성은 이미 수천 기가 궤도에 올라가 있다.]
+
+LEO 의 장단점은 GEO 와 견주어 보면 알기 쉽다. GEO 는 세 기로 지구를 덮지만 멀어서 신호 지연이 길다. LEO 는 가까워서 지연이 짧으니 인터넷이나 화상 통화에 유리하다. 대신 위성이 아주 많이 필요하고, 넘겨주기를 쉬지 않고 해야 한다.
+
+[[anim:leo_footprint|LEO 위성 두 기가 ISL 로 이어진 채 지나가면서 지상 footprint 가 위성을 따라 움직이고, 사용자가 다음 위성으로 넘겨지는 순간을 보라]]
+
+{mini}
+# LEO 의 footprint 가 셀룰러의 cell 과 다른 점을 한 문장으로 쓰고, 그 때문에 무엇이 필요한지 쓰라.
+# p.21 그림에서 위성과 gateway 를 잇는 링크, 위성과 폰을 잇는 링크, 위성과 위성을 잇는 링크의 이름을 쓰라.
+# Kepler's law 로 구한 주기가 85 분보다 짧은 위성이 있을 수 있나? 고도 0 km 를 넣어 보고 답하라.
+{/mini}
+{answer}
+# cell 은 땅에 고정돼 있지만 footprint 는 위성과 함께 움직인다. 그래서 사용자가 가만히 있어도 다음 위성으로 넘겨 주는 handoff 가 계속 필요하다.
+# GWL, UML, ISL.
+# 없다. 고도 0 이면 distance = 6378, $6{,}378^{1.5}/100 \approx 5{,}094$ s ≈ 85 min 이다. 고도가 올라가면 주기는 길어지기만 한다. 그래서 LEO 의 하한도 90 분 근처다.
+{/answer}
 
 == 🎙 실제 수업 기록 ==
-(10/22 수업 후 녹음 반영 예정)
+10/22(목) 수업은 녹음이 없다. 위 내용은 모두 슬라이드와 Forouzan 교재를 기준으로 썼다. 이 덱과 관련해 녹음으로 확인되는 것은 이틀 앞선 10/20 수업의 발언뿐이다.
+* '''41:54''' 숫자 공부법. 구체적인 숫자는 외우지 말고 세대에 걸친 진화의 trend 를 이해하라고 했다.
+* '''42:20''' "I would recommend you to memorize uplink and downlink, especially."
+* '''73:00''' 다음 시간에 satellite networks 로 WAN 을 끝내고 network layer 로 넘어간다고 공지했다.
+필기본 p.6 의 "8:21" 메모는 녹음 위치로 보이지만 대응하는 녹음 파일이 없다.
 
-== 시험 대비 핵심 요약 ==
-# '''Satellite network''' = "a wireless WAN that provides any type of communication" (voice·text·data). 구성: "a combination of nodes, '''including satellites''', that provides communication from one point on the Earth to another" — space / ground / user segment, 위성끼리는 '''ISL'''.
-# '''Orbit''' = "the path in which it travels around Earth": '''equatorial / inclined / polar'''.
-# '''Period''' = "the time required for a satellite to make a complete trip around the Earth".
-# '''Kepler's law''': $\text{Period [s]} = C \times \text{distance}^{1.5}$, $C \approx 1/100$, distance [km] = '''고도 + 6378''' (지구 반지름). 높을수록 주기가 길다.
-# '''Ex 5.1''': $(1/100)(384{,}000 + 6378)^{1.5} = 2{,}439{,}090$ s ≈ 1 month. '''Ex 5.2''': $(1/100)(35{,}786 + 6378)^{1.5} = 86{,}579$ s ≈ '''24 h''' = 지구 자전 → '''stationary''' → '''geostationary orbit'''.
-# 세 범주: '''GEO'''(35,786 km, 24 h) · '''MEO'''(두 '''Van Allen belt''' 사이) · '''LEO'''(500–2000 km, 90–120 min). 높이 숫자보다 '''순서와 경계(Van Allen belt)'''를 기억.
-# '''SATCOM uplink = Earth → satellite, downlink = satellite → Earth''' (셀룰러 uplink = MS → BS 와 짝지어 외운다). 대역이 높을수록 bandwidth↑, uplink 주파수 > downlink 주파수.
-# '''GEO''': '''equatorial plane''', '''line-of-sight''' 로 넓게 보지만 '''curvature''' 때문에 '''최소 3 기 equidistant''' → full global transmission.
-# '''MEO''': between the two Van Allen belts, ≈18,000 km, 24 기, key instance '''GPS''' — '''trilateration'''(거리 3 개로 위치).
-# '''LEO''': '''polar and inclined''' orbits, 500–2000 km, 90–120 min, '''similar to the cellular telephone system''' (footprint = 움직이는 cell), key instance '''Starlink'''. 링크: '''UML'''(user) · '''GWL'''(gateway) · '''ISL'''(위성 간).
+== 시험 직전 체크 ==
+* satellite network 는 "a combination of nodes, '''including''' satellites". Space · User · Ground segment, 위성끼리는 ISL.
+* orbit: equatorial(GEO) · inclined · polar(LEO 는 polar and inclined).
+* Kepler: $\text{Period [s]} = \frac{1}{100}(h + 6378)^{1.5}$. 6378 을 더한다. 거꾸로 풀면 마지막에 뺀다.
+* Ex 5.1 달: 2,439,090 s ≈ 1 month. Ex 5.2: 35,786 km → 86,579 s ≈ 24 h → geostationary.
+* 높이 순서 LEO < MEO < GEO, 경계는 Lower · Upper Van Allen belt.
+* SATCOM uplink = Earth → satellite, downlink = satellite → Earth. 셀룰러 uplink = MS → BS.
+* GEO: equatorial plane, line-of-sight 이지만 curvature 때문에 최소 3 기(120°).
+* MEO: 두 Van Allen belt 사이, 24 기, GPS, trilateration.
+* LEO: polar·inclined, 500–2000 km, 90–120 min, cellular 와 비슷(footprint 가 움직이는 cell), UML · GWL · ISL, Starlink.
 
 == 관련 문서 ==
 * 구성: [[satellite network]] · [[satellite network 구성]] · [[ISL]] · [[Starlink]]
 * 궤도: [[orbit]] · [[equatorial orbit]] · [[inclined orbit]] · [[polar orbit]]
-* 주기: [[period of a satellite]] · [[Kepler's law]] · [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]]
+* 주기: [[period of a satellite]] · [[Kepler's law]] · [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]] · [[공식 모음]]
 * 범주: [[위성 세 범주]] · [[Van Allen belt]] · [[GEO]] · [[geostationary]] · [[line-of-sight]] · [[MEO]] · [[GPS]] · [[trilateration]] · [[LEO]] · [[footprint]] · [[UML과 GWL]]
 * 대역: [[SATCOM 주파수 대역]] · [[uplink와 downlink]]
 * 셀룰러와 비교: [[CH05 셀룰러 동작]] · [[cell]] · [[handoff]] · [[cellular telephony]] · [[GPS 동기화]] · [[WAN 분류]]

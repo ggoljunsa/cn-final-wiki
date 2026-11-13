@@ -18,7 +18,7 @@ window.SIMS = window.SIMS || {};
     moon: { h: 384000, name: "Example 5.1 — 달 (moon)", short: "달", addR: true },
     geo: { h: 35786, name: "Example 5.2 — GEO 위성", short: "GEO", addR: true },
     meo: { h: 18000, name: "MEO — GPS 위성", short: "MEO (GPS)", addR: true },
-    leo: { h: 550, name: "LEO — Starlink 위성", short: "LEO (Starlink)", addR: true },
+    leo: { h: 1200, name: "LEO — 고도 1,200 km 위성 (예)", short: "LEO (1,200 km)", addR: true },
     trap: { h: 384000, name: "함정 — 달, 반지름을 안 더함", short: "달 (틀린 풀이)", addR: false }
   };
 
@@ -90,7 +90,7 @@ window.SIMS = window.SIMS || {};
         { value: "moon", label: "Ex 5.1 달 (h = 384,000 km)" },
         { value: "geo", label: "Ex 5.2 GEO (h = 35,786 km)" },
         { value: "meo", label: "MEO GPS (h ≈ 18,000 km)" },
-        { value: "leo", label: "LEO Starlink (h = 550 km)" },
+        { value: "leo", label: "LEO 예 (h = 1,200 km)" },
         { value: "trap", label: "함정: 반지름 안 더함 (달)" }
       ] }
     ],
@@ -133,12 +133,12 @@ window.SIMS = window.SIMS || {};
         noteEnd = "이 값은 슬라이드에 없는 파생값이다 (p.18 'altitude about 18,000 km' 에 같은 공식을 적용).";
       } else if (key === "leo") {
         result = comma(Tr) + " s ≈ " + conv;
-        meaning = "'''≈ 96 min''' — 슬라이드 p.20 'rotation period of 90 to 120 min' 범위 안. [[LEO]] 는 빠르게 지나가므로 footprint 가 계속 움직인다.";
-        noteEnd = "이 값은 슬라이드에 없는 파생값이다 (Starlink 고도 550 km 가정). 범위 양 끝: h=500 → 5,704 s ≈ 95 min, h=2000 → 7,669 s ≈ 128 min.";
+        meaning = "'''≈ 110 min''' — 슬라이드 p.20 'rotation period of 90 to 120 min' 범위 안. [[LEO]] 는 빠르게 지나가므로 footprint 가 계속 움직인다.";
+        noteEnd = "이 값은 슬라이드에 없는 파생값이다 (고도 1,200 km 가정 — PS1 2(a) 와 겹치지 않게 11-13 에 550 km 에서 바꿈). 범위 양 끝: h=500 → 5,704 s ≈ 95 min, h=2000 → 7,669 s ≈ 128 min.";
       } else {
         result = comma(Tr) + " s — 틀린 값";
         meaning = "'''틀린 값''' 2,379,561 s (≈ " + conv + "). 정답 2,439,091 s 보다 약 59,530 s(≈ 0.7 일) 작다. 반지름을 빼먹으면 distance 가 작아져서 주기도 짧게 나온다.";
-        noteEnd = "distance 는 '''지구 중심'''부터의 거리다. 문제의 '384,000 km above the Earth' 는 표면부터의 고도 → h + 6378 로 바꿔야 한다. 달에서는 차이가 2.4% 지만 LEO(550 km)에서 빼먹으면 550^1.5/100 ≈ 129 s 로, 정답 5,766 s 의 약 1/45 이 된다.";
+        noteEnd = "distance 는 '''지구 중심'''부터의 거리다. 문제의 '384,000 km above the Earth' 는 표면부터의 고도 → h + 6378 로 바꿔야 한다. 달에서는 차이가 2.4% 지만 LEO(예: 1,200 km)에서 빼먹으면 1200^1.5/100 ≈ 416 s 로, 정답 6,597 s 의 약 1/16 이 된다.";
       }
       c.result = result;
 

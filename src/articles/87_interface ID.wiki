@@ -4,11 +4,11 @@ category: 8강 IPv6, 용어
 ---
 '''Interface ID''' 는 IPv6 [[global unicast address]] 의 마지막 부분이다. subnet 안에서 어느 interface 인지를 정한다. 권장 크기는 '''64 bits''' 다. L14 p.8–12.
 
-{def}"Interface ID (q) 64 bits — Like the host ID in IPv4. Can embed a link-layer address" (p.8)
+{def}"Interface ID (q) 64 bits: Like the host ID in IPv4. Can embed a link-layer address" (p.8)
 "A link-layer address shorter than 64 bits becomes (part of) the interface ID" (p.10)
 → IPv4 의 host ID 와 같은 역할이다. link-layer 주소(MAC)를 그대로 넣어 만들 수 있다.{/def}
 
-[[img:L14-09.png|p.9 Interface identifier (q bits) — Defines interface, Recommendation q 64 bits|medium]]
+[[img:L14-09.png|p.9 — 오른쪽 Interface identifier(q bits)가 노트북 하나를 가리킨다(Defines interface), Recommendation q 64 bits|medium]]
 
 == 이름에서 개념 끌어내기 ==
 * IP 주소는 connection 마다 붙는다([[IPv4 address]]). 그래서 이름도 host ID 대신 '''interface''' ID 다. 장치에 NIC 가 둘이면 interface ID 도 둘이다.
@@ -24,8 +24,12 @@ interface ID 를 host 가 혼자 만들 수 있으니까 [[autoconfiguration]] �
 
 {analogy}🎭 interface ID 는 아파트 '''호수'''다. 호수는 집(장치)마다 이미 붙어 있는 번호(MAC)로 정하고, 단지와 동 이름은 관리사무소(router)에 물어서 앞에 붙인다.{/analogy}
 
-{quiz}Ethernet 주소로 interface ID 를 만들 때 왜 16 bits 를 더 넣어야 하나?{/quiz}
-{answer}interface ID 는 64 bits 인데 Ethernet 주소는 48 bits 라서 64 − 48 = 16 bits 가 모자란다. 그 자리에 FFFE 를 넣는다.{/answer}
+{mini}
+# Ethernet 주소로 interface ID 를 만들 때 왜 16 bits 를 더 넣어야 하나?
+{/mini}
+{answer}
+# interface ID 는 64 bits 인데 Ethernet 주소는 48 bits 라서 64 − 48 = 16 bits 가 모자란다. 그 자리에 FFFE 를 넣는다.
+{/answer}
 
 == 관련 문서 ==
 * [[EUI-64]] · [[global unicast address]] · [[link-local address]] · [[mid:MAC 주소]]

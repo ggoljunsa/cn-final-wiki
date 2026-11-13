@@ -2,9 +2,9 @@ key: Example 7.10 TTL과 protocol
 title: Example 7.10 — hex 덤프에서 TTL(9 번째 byte)과 protocol(10 번째 byte) 읽기
 category: 7강 IPv4 데이터그램, 예제
 ---
-'''Example 7.10''' 은 IPv4 패킷의 앞 10 bytes(hex)에서 '''몇 hop 을 갈 수 있는지'''와 '''위층 프로토콜'''을 읽는 예제다. 답: TTL 01 → 1 hop, protocol 02 → IGMP. L13 p.41.
+'''Example 7.10''' 은 IPv4 패킷의 앞 10 bytes(hex)를 보고 두 가지를 읽는 예제다. 하나는 몇 hop 을 더 갈 수 있는지, 다른 하나는 위층 프로토콜이 무엇인지다. 답은 TTL 01 이라 1 hop, protocol 02 라 IGMP 다. 슬라이드는 L13 p.41 이다.
 
-{def}"First bytes of an IPv4 packet (hex): 45 00 00 28 00 01 00 00 01 02 … How many hops can it travel? Which upper-layer protocol? — '''TTL is the 9th byte (skip 8 bytes) → 01 → only 1 hop'''. '''Protocol is the 10th byte → 02 → IGMP'''." (p.41){/def}
+{def}"First bytes of an IPv4 packet (hex): 45 00 00 28 00 01 00 00 01 02 … How many hops can it travel? Which upper-layer protocol? Solution: '''TTL is the 9th byte (skip 8 bytes) → 01 → only 1 hop'''. '''Protocol is the 10th byte → 02 → IGMP'''." (p.41){/def}
 
 [[img:L13-41.png|p.41 Example 7.10 — byte 1–10 상자 45 00 00 28 00 01 00 00 | 01 02, 9 = TTL, 10 = Protocol 노랗게|medium]]
 

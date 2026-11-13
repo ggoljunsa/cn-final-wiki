@@ -8,8 +8,6 @@ IPv6 에서는 '''source 만''' datagram 을 나눈다. 경로 위 라우터는 
 표: Who fragments? IPv4 Source or any router / IPv6 Source only. Who reassembles? Destination / Destination. Router gets a packet larger than the next MTU: IPv4 Fragments it / IPv6 Drops it.
 → IPv6 는 source 가 크기를 확인하고 나눌지 정한다. 합치는 것은 둘 다 destination 이다. 큰 패킷을 받은 라우터는 IPv4 면 나누고 IPv6 면 버린다.{/def}
 
-[[img:L14-26.png|p.26 IPv4 vs IPv6 fragmentation 표|medium]]
-
 == IPv4 와 비교 ==
 {|
 ! || IPv4 || IPv6
@@ -33,8 +31,12 @@ IPv4 의 [[fragmentation]] 은 라우터가 할 일이 많았다. 나누고, hea
 
 {analogy}🎭 IPv4 는 큰 짐이 터널(MTU)에 안 들어가면 '''중간 물류센터가 짐을 풀어 나눠 싣는다'''. IPv6 는 중간 물류센터가 짐을 풀지 않고 돌려보낸다. 보내는 사람이 처음부터 터널 크기에 맞춰 싸야 한다.{/analogy}
 
-{quiz}IPv6 라우터가 다음 링크 MTU 보다 큰 패킷을 받았다. 어떻게 하나? IPv4 라우터라면?{/quiz}
-{answer}IPv6 라우터는 drop 한다(나누지 않음). IPv4 라우터는 fragmentation 해서 보낸다(D bit 가 1 이면 IPv4 도 버림).{/answer}
+{mini}
+# IPv6 라우터가 다음 링크 MTU 보다 큰 패킷을 받았다. 어떻게 하나? IPv4 라우터라면?
+{/mini}
+{answer}
+# IPv6 라우터는 drop 한다(나누지 않음). IPv4 라우터는 fragmentation 해서 보낸다(D bit 가 1 이면 IPv4 도 버림).
+{/answer}
 
 == 관련 문서 ==
 * [[fragmentation]] · [[MTU]] · [[CH07 IPv4 데이터그램과 포워딩]] · [[extension header]] · [[IPv4와 IPv6 비교]] · [[CH07 IPv6]]

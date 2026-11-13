@@ -2,15 +2,15 @@ key: IPv4
 title: IPv4 (Internet Protocol version 4) — 32 비트 주소의 unreliable, best-effort, connectionless 프로토콜
 category: 6강 IPv4 주소, 용어
 ---
-'''IPv4''' 는 지금 우리가 쓰는 IP 의 4 번째 버전으로, 32 비트 주소를 쓴다. L13 은 IPv4 의 '''addressing, packet format, fragmentation, ICMPv4, forwarding''' 을 다룬다(p.2). 성질은 L12 에서 본 [[IP]] 그대로 — '''unreliable, best-effort, connectionless''' (p.30). 후속 '''IPv6''' 는 "next few lectures".
+'''IPv4''' 는 지금 쓰는 IP 의 4 번째 버전이고, 32 비트 주소를 쓴다. L13 은 IPv4 의 addressing, packet format, fragmentation, ICMPv4, forwarding 을 다룬다(p.2). 성질은 L12 에서 본 [[IP]] 와 같다. unreliable, best-effort, connectionless 다(p.30). 다음 버전 [[IPv6]] 는 "next few lectures" 에서 다룬다고 했다.
 
-{def}"4. Internet Protocol Version 4 (IPv4) — Discusses IPv4, including addressing, packet format, fragmentation, ICMPv4, forwarding, and NAT." (p.2)
-"Internet Protocol (IP): '''Unreliable, best-effort delivery''' — Packets may be '''corrupted, lost, out of order, or delayed'''. Need reliability? '''Pair IP with TCP'''. '''Connectionless''' (datagram approach) — Each datagram is handled independently. Each may take a different route." (p.30){/def}
+{def}"4. Internet Protocol Version 4 (IPv4). Discusses IPv4, including addressing, packet format, fragmentation, ICMPv4, forwarding, and NAT." (p.2)
+"Internet Protocol (IP): '''Unreliable, best-effort delivery'''. Packets may be '''corrupted, lost, out of order, or delayed'''. Need reliability? '''Pair IP with TCP'''. '''Connectionless''' (datagram approach). Each datagram is handled independently. Each may take a different route." (p.30){/def}
 
-[[img:L13-30.png|p.30 Sent 1 2 3 4 → Internet → Received 3 1 4 ("2 lost", "3 arrives first")|medium]]
+[[img:L13-30.png|p.30 — 위에서 1 2 3 4 를 순서대로 보냈는데 아래에는 3 1 4 만 도착한 것을 보라. 오른쪽 "2 lost", "3 arrives first"|medium]]
 
 == 이름에서 개념 끌어내기 ==
-* '''v4''' — 교수(01:28): "The reason that we call it v4 is that we now use '''IPv6''', which is a later version". (v5 는 실험용이라 널리 쓰이지 않았다 — 보충.)
+* v4 는 version 4 다. 교수: "The reason that we call it v4 is that we now use IPv6, which is a later version"(01:28).
 
 == IPv4 한 장 ==
 {|
@@ -18,25 +18,31 @@ category: 6강 IPv4 주소, 용어
 |-
 | 주소 || 32 bits, connection 단위, $2^{32}$ 공간 || [[IPv4 address]] · [[address space]]
 |-
-| 주소 체계 || classful(옛) → classless/CIDR(지금) || [[classful addressing]] · [[classless addressing]]
+| 주소 체계 || classful(옛 방식) → classless/CIDR(지금) || [[classful addressing]] · [[classless addressing]]
 |-
-| 신뢰성 || '''unreliable, best effort''' — corrupted · lost · out of order · delayed || [[best effort]]
+| 신뢰성 || unreliable, best effort. corrupted · lost · out of order · delayed 가 생길 수 있다 || [[best effort]]
 |-
-| 연결 || '''connectionless''' (datagram approach) — 독립 처리, 다른 경로 || [[connectionless]] · [[datagram approach]]
+| 연결 || connectionless (datagram approach). datagram 을 따로따로 다루고 경로도 다를 수 있다 || [[connectionless]] · [[datagram approach]]
 |-
-| 신뢰성이 필요하면 || '''TCP''' 와 짝 || [[mid:TCP]]
+| 신뢰성이 필요하면 || TCP 와 짝을 짓는다 || [[mid:TCP]]
 |-
 | 돕는 프로토콜 || ICMP(errors) · IGMP(multicast) · ARP(address mapping) || [[보조 프로토콜]] · [[ICMP]] · [[IGMP]]
 |-
 | packet 형식 이후 || datagram format, fragmentation, ICMPv4, forwarding (11/5~) || [[CH07 IPv4 데이터그램과 포워딩]] · [[IPv4 datagram format]] · [[ICMPv4]]
 |}
-* p.30 그림 읽기: 1 2 3 4 를 순서대로 보냈는데 '''2 는 분실(lost)''', '''3 이 먼저 도착'''(out of order) → 받은 순서 3 1 4. IP 는 이를 고치지 않는다.
-* p.2 목록에 NAT 가 있지만 '''11/4 개정판 덱에서 NAT 슬라이드는 삭제'''됐다 → [[시험 정보]].
+* 위 그림에서 2 가 사라진 것이 lost 이고, 3 이 1 보다 먼저 온 것이 out of order 다. IP 는 이것을 고쳐 주지 않는다.
+* p.2 목차에는 NAT 가 있지만, 11/4 개정판 덱에서 NAT 슬라이드가 빠졌다 → [[시험 정보]].
 
-{analogy}🎭 IPv4 는 '''구형 일반우편'''이다. 우편번호 체계(32 비트 주소)가 오래돼 번호가 모자라고(→ IPv6), 배달은 최선을 다하지만 분실·순서 뒤바뀜을 책임지지 않는다(best effort). 확실히 받아야 하면 등기(TCP)를 붙인다.{/analogy}
+{analogy}🎭 IPv4 는 '''구형 일반우편'''과 같다. 우편번호 체계(32 비트 주소)가 오래돼 번호가 모자라고(그래서 IPv6), 배달은 최선을 다하지만 분실이나 순서 뒤바뀜은 책임지지 않는다(best effort). 꼭 받아야 하면 등기(TCP)를 붙인다.{/analogy}
 
-{quiz}p.30 에서 IP 가 unreliable 하다고 할 때 일어날 수 있는 네 가지는?{/quiz}
-{answer}'''corrupted, lost, out of order, delayed'''. 신뢰성이 필요하면 TCP 와 함께 쓴다.{/answer}
+{mini}
+# p.30 에서 IP 가 unreliable 하다고 할 때 일어날 수 있는 네 가지는?
+# 1 2 3 4 를 보냈는데 4 2 3 이 도착했다. 네 가지 중 어떤 일이 일어났는가?
+{/mini}
+{answer}
+# corrupted, lost, out of order, delayed. 신뢰성이 필요하면 TCP 와 함께 쓴다.
+# 1 이 사라졌고(lost) 순서가 바뀌었다(out of order).
+{/answer}
 
 == 관련 문서 ==
 * [[IP]] · [[IPv4 address]] · [[best effort]] · [[connectionless]] · [[datagram approach]] · [[보조 프로토콜]] · [[CH07 IPv4 주소]] · [[CH07 IPv4 데이터그램과 포워딩]]

@@ -4,13 +4,13 @@ category: 7강 IPv4 데이터그램, 용어
 ---
 '''TTL''' (Time-to-live) 은 IPv4 header 셋째 행 첫 8 bits 로, datagram 이 '''지나갈 수 있는 라우터(hop) 수'''를 제한한다. 라우터마다 1 씩 줄고 0 이 되면 버려진다. L13 p.35.
 
-{def}"Time-to-live (TTL) (8 bits): '''Limits the number of hops (routers) visited'''. Set to ≈ 2 × max routers between any two hosts. '''Each router decrements it by 1'''. '''Reaches 0 → router discards the datagram'''." (p.35)
+{def}"Time-to-live (TTL) (8 bits): Limits the number of hops (routers) visited. Set to ≈ 2 × max routers between any two hosts. Each router decrements it by 1. Reaches 0 → router discards the datagram." (p.35)
 TTL 은 datagram 이 거칠 수 있는 hop 수를 제한한다. 처음엔 두 host 사이 최대 라우터 수의 약 2 배로 정하고, 라우터마다 1 감소, 0 이 되면 라우터가 버린다.{/def}
 
 [[img:L13-35.png|p.35 — Identification·Flags·Fragmentation offset(2 행) 과 TTL 칸 강조. TTL: limits the number of hops, ≈ 2 × max routers, each router decrements by 1, reaches 0 → discards|medium]]
 
 == 이름에서 개념 끌어내기 ==
-* '''time to live''' = "살 수 있는 시간". 원래 설계는 '''초 단위 수명'''이었지만 실제로는 '''hop 마다 1''' 씩 깎는 '''hop count''' 로 쓰인다. 이름의 "time" 에 속지 말 것.
+* time to live 는 "살 수 있는 시간" 이다. 원래 설계는 초 단위 수명이었다. 실제로는 hop 마다 1 씩 깎는 '''hop count''' 로 쓰인다. 이름에 "time" 이 들어 있다고 시간으로 읽으면 안 된다.
 * 왜 필요한가: [[forwarding table]] 이 잘못되면 datagram 이 라우터 사이를 '''영원히 맴돌 수 있다'''(routing loop). TTL 이 0 이 되면 버려지므로 망에 유령 패킷이 쌓이지 않는다.
 
 [[img:L13-54.png|p.54 TTL running out — Host —TTL=3→ R1 —TTL=2→ R2 —TTL=1→ R3: TTL=0 discard, Time exceeded (type 11) 가 Host 로|medium]]

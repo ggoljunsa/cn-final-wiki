@@ -2,7 +2,7 @@ key: Example 7.1
 title: Example 7.1 — 167.199.170.82/27 → 32 개, 167.199.170.64 ~ .95
 category: 6강 IPv4 주소, 용어
 ---
-'''Example 7.1''' 은 [[block의 세 가지 정보]] 를 실제 주소에 적용한 대표 예제다. L13 p.12–16 (한 줄씩 늘어나는 build-up, 완성본은 p.16).
+'''Example 7.1''' 은 [[block의 세 가지 정보]] 를 실제 주소에 대 보는 예제다(L13 p.12–16). 한 줄씩 늘어나는 build-up 이고 완성본은 p.16 이다.
 
 {def}"Given '''167.199.170.82/27'''
 ① $N = 2^{32-27} = 2^5$ = '''32''' addresses
@@ -10,11 +10,9 @@ category: 6강 IPv4 주소, 용어
 ③ Last address: keep 27 bits, set the rest to 1s → 167.199.170.95/27
 Block: 167.199.170.64/27 ~ 167.199.170.95/27 (32 addresses)" (p.13–16){/def}
 
-[[img:L13-16.png|p.16 Example 7.1 완성 — 2진수 비교, Block .64/27 ~ .95/27|large]]
+[[img:L13-16.png|p.16 — 넷째 바이트 01010010 의 파란 뒤 5 비트만 00000 이면 .64, 11111 이면 .95 가 되는 것을 보라|large]]
 
-[[img:L13-12.png|p.12 (필기본) 손글씨 "←27→ ←5→ → 2^5 = 32"|small]]
-
-{tip}'''필기 p.12 "←27→ ←5→ → 2^5 = 32"''' — prefix 27 비트, suffix 5 비트, 주소 $2^5$ = 32 개. 슬라이드의 ① 을 미리 써 둔 것으로 '''정답'''이다.{/tip}
+{tip}'''필기 p.12 "←27→ ←5→ → 2^5 = 32"''' 는 prefix 27 비트, suffix 5 비트, 주소 $2^5$ = 32 개라는 뜻이다. 슬라이드가 ① 을 보여 주기 전에 먼저 써 둔 것이고, 맞는 답이다.{/tip}
 
 == 풀이 ==
 <pre class="txt">
@@ -27,17 +25,23 @@ Block: 167.199.170.64/27 ~ 167.199.170.95/27 (32 addresses)" (p.13–16){/def}
 5. ③ last : 010 11111 = 95  → '''167.199.170.95/27'''
 6. 검산: 95 − 64 + 1 = 32 ✓   64 ÷ 32 = 2 ✓   mask = 255.255.255.224
 </pre>
-* 주어진 주소 .82 는 block 의 '''중간'''에 있다 — "From any address in a block". 시작 주소가 아니다.
-* 교수(28:54–30:24): "27 bits as prefix, while 5 bits as suffix … in this block we have 32 addresses". 그리고 "block 은 network 와 interchangeable".
+* 주어진 .82 는 block 의 시작이 아니라 중간에 있다. 슬라이드 p.11 의 "From any address in a block" 이 이 뜻이다.
+* 교수는 이 예를 "27 bits as prefix, while 5 bits as suffix … in this block we have 32 addresses" 로 읽었다(28:54–30:54). 같은 대목에서 block 과 network 를 같은 말로 쓴다고 했다.
 
-[[anim:cidr_mask_anim|이 예제를 32 비트 칸으로 본다 — AND 결과가 .64, OR NOT 결과가 .95]]
+[[anim:cidr_mask_anim|이 예제를 32 비트 칸으로 본다. AND 결과가 .64, OR NOT 결과가 .95 다]]
 
 [[sim:cidr_block]]
 
-{analogy}🎭 82 번 좌석표를 들고 "내 줄이 몇 번부터 몇 번까지냐"를 묻는 것. 한 줄이 32 석이면 82 는 64–95 번 줄에 있다.{/analogy}
+{analogy}🎭 82 번 좌석표를 들고 "내 줄이 몇 번부터 몇 번까지인가" 를 묻는 것과 같다. 한 줄이 32 석이면 82 번은 64–95 번 줄에 있다.{/analogy}
 
-{quiz}같은 주소 167.199.170.82 가 /26 이면 block 은?{/quiz}
-{answer}N = 64, 64 의 배수 중 82 이하 최대 = 64 → '''167.199.170.64 ~ 167.199.170.127''' (64 개).{/answer}
+{mini}
+# 같은 주소 167.199.170.82 가 /26 이면 block 은?
+# /27 대신 /28 이면 N, first, last 는?
+{/mini}
+{answer}
+# N = 64, 64 의 배수 중 82 이하 최대는 64. 167.199.170.64 ~ 167.199.170.127 (64 개).
+# N = 16, 16 의 배수 중 82 이하 최대는 80. 167.199.170.80 ~ 167.199.170.95. prefix 가 1 비트 길어지니 block 이 절반이 됐다.
+{/answer}
 
 == 관련 문서 ==
 * [[block의 세 가지 정보]] · [[address mask]] · [[Example 7.3]] · [[slash notation]] · [[CH07 IPv4 주소]]

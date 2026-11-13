@@ -14,7 +14,7 @@ category: 안내
 |-
 | 범위 시작 || '''CH05 Wide Area Networks''' 부터. 중간고사 직전에 교수가 "WAN 은 중간고사 뒤로 미룬다"고 했고, 10/20 수업에서 CH05 (1)을 나갔다 || 10/6 녹음, 10/20 수업
 |-
-| 교수 학습 지침 || '''구체적 숫자(채널 수 등)는 외우지 말고 세대별 진화 trend 를 이해하라. uplink/downlink 는 외워라''' || 10/20 녹음 41:54
+| 교수 학습 지침 || '''구체적 숫자(채널 수 등)는 외우지 말고 세대별 진화 trend 를 이해하라. uplink/downlink 는 외워라''' || 10/20 녹음 41:54(숫자) · 40:00·42:20(uplink/downlink)
 |-
 | 교수 강조 (CH07) || "the most important one is about '''each role and each service'''" — network layer 서비스마다 IP 가 하는지/누가 하는지([[IP가 제공하는 서비스]]), routing vs forwarding, datagram vs virtual circuit, queuing 은 라우터에서만 || 10/27 녹음 01:49 · 20:47 · 39:05 · 50:43
 |-

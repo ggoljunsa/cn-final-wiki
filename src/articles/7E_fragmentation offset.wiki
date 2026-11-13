@@ -2,7 +2,7 @@ key: fragmentation offset
 title: Fragmentation offset (13 bits) — 원래 datagram 에서의 위치, 8-byte 단위
 category: 7강 IPv4 데이터그램, 용어
 ---
-'''Fragmentation offset''' 은 IPv4 header 둘째 행 오른쪽 13 bits 로, 이 fragment 의 data 가 '''원래 datagram 전체에서 어디'''에 있었는지를 '''8-byte 단위'''로 적는다. Offset = (첫 byte 번호) ÷ 8. L13 p.45–46.
+'''Fragmentation offset''' 은 IPv4 header 둘째 행 오른쪽 13 bits 다. 이 fragment 의 data 가 원래 datagram 전체에서 어디에 있었는지를 '''8-byte 단위'''로 적는다. 식으로는 Offset = (첫 byte 번호) ÷ 8 이다. 슬라이드는 L13 p.45–46 이다.
 
 {def}"Fragmentation offset (13 bits): '''the relative position of this fragment with respect to the whole datagram'''. Counted in '''units of 8 bytes''': Offset = (first byte number) ÷ 8. Ex) bytes 1400–2799 → offset = 1400 ÷ 8 = 175." (p.45, rev)
 "A fragment can be fragmented again. '''Offsets always refer to the original datagram'''." (p.46)
@@ -11,8 +11,8 @@ fragmentation offset 은 이 fragment 가 전체 datagram 에서 차지하는 �
 [[img:L13-45.png|p.45 — Byte 0000–3999 datagram(Offset = 0000/8 = 0) 이 세 조각으로: 0000–1399 Offset = 0000/8 = 0, 1400–2799 Offset = 1400/8 = 175, 2800–3999 Offset = 2800/8 = 350|medium]]
 
 == 이름에서 개념 끌어내기 ==
-* '''offset''' = 기준점에서 '''얼마나 떨어져 있나'''. 기준점은 '''원래 datagram 의 byte 0''' — 지금 조각을 나눈 라우터가 아니다.
-* 왜 '''8''' 로 나누나: 칸이 13 bits(0–8191)뿐인데 datagram 은 65,535 bytes 까지 → 8 로 나눠 적으면 $8191 \times 8 = 65{,}528$ 까지 표현. 대가로 '''마지막이 아닌 fragment 의 data 길이는 8 의 배수'''여야 한다.
+* '''offset''' 은 기준점에서 얼마나 떨어져 있는지를 뜻한다. 기준점은 '''원래 datagram 의 byte 0''' 이다. 지금 조각을 나눈 라우터가 받은 조각의 시작이 기준이 되지는 않는다.
+* 8 로 나누는 이유는 칸이 13 bits(0–8191)뿐이기 때문이다. datagram 은 65,535 bytes 까지 커지니까 8 로 나눠 적어서 $8191 \times 8 = 65{,}528$ 까지 가리킨다. 대신 마지막이 아닌 조각의 data 길이는 '''8 의 배수'''여야 한다.
 
 <pre class="txt">
 offset    = first byte ÷ 8
@@ -22,7 +22,10 @@ p.46: F1 0 · F2 1400/8 = 175 · F3 2800/8 = 350 · F2.1 175 · F2.2 2200/8 = ''
 Ex 7.16: offset 100 → first byte 800 → 800–879
 </pre>
 
-{warn}'''단위 함정 세 가지.''' ① offset 100 을 byte 100 으로 읽기(✗ → 800). ② F2.2 의 offset 을 "F2 안에서 800 번째 → 100" 으로 계산하기(✗ → 원래 기준 2200/8 = 275). ③ MTU 1000 에서 data 980 을 그대로 쓰기(✗ → 980/8 = 122.5, 정수가 안 되므로 976).{/warn}
+{warn}단위에서 자주 틀리는 곳은 셋이다.
+* offset 100 을 byte 100 으로 읽는다. 실제로는 800 번째 byte 다.
+* F2.2 의 offset 을 F2 안에서의 위치(800 ÷ 8 = 100)로 계산한다. 원래 datagram 기준 2200 ÷ 8 = 275 가 맞다.
+* MTU 1000 에서 data 980 을 그대로 쓴다. 980 ÷ 8 = 122.5 라 정수가 안 되니 976 으로 줄여야 한다.{/warn}
 
 {analogy}🎭 '''책을 여러 권으로 분책할 때의 "원본 몇 쪽부터".''' 2 권을 다시 2-1, 2-2 로 나눠도 2-2 표지에는 "원본 2200 쪽부터" 라고 적는다. 다만 표지 칸이 좁아 쪽수를 8 로 나눈 값(275)만 적는다.{/analogy}
 

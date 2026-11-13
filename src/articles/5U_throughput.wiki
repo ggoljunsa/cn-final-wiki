@@ -2,15 +2,15 @@ key: throughput
 title: Throughput (처리율) — 한 지점을 초당 지나는 비트 수, 경로는 bottleneck 이 정한다
 category: 5강 네트워크 계층, 용어
 ---
-'''Throughput''' 은 '''한 지점을 1 초에 지나가는 비트 수'''다. 여러 링크를 지나는 경로의 throughput 은 '''가장 느린 링크(the [[bottleneck]])''' 의 rate 와 같다. L12 p.34–36. 중간고사 [[mid:throughput]] 과 같은 말이고, load 에 따라 어떻게 변하는지는 [[load와 성능]].
+'''Throughput''' 은 한 지점을 1 초에 지나가는 비트 수다. 여러 링크를 지나는 경로의 throughput 은 가장 느린 링크, 곧 [[bottleneck]] 의 rate 와 같다. 슬라이드는 L12 p.34–36 이다. 중간고사 [[mid:throughput]] 과 같은 말이고, load 에 따라 어떻게 변하는지는 [[load와 성능]] 에 있다.
 
-{def}"'''Throughput''': number of bits passing a point per second." (p.34)
-"On a path, throughput = the '''slowest link''' (the '''bottleneck''')." "Ex) min(200, 100, 150) kbps = '''100 kbps'''" (p.35){/def}
+{def}"Throughput: number of bits passing a point per second." (p.34)
+"On a path, throughput = the slowest link (the bottleneck)." "Ex) min(200, 100, 150) kbps = 100 kbps" (p.35){/def}
 
 [[img:L12-36.png|p.36 a. A path through three links — TR 200 Kbps / 100 Kbps / 150 Kbps. b. Water-pipe analogy — 가는 관이 Bottleneck|large]]
 
 == 이름에서 개념 끌어내기 ==
-* '''through + put''' = "통과해서 내놓은 양". 링크가 '''낼 수 있는''' 최대(bandwidth, transmission rate)가 아니라 '''실제로 지나간''' 양이다. 교수: "There are multiple definitions of throughput depending on their context. But in the network layer performance, it means number of bits that passes one point of network" (10/27 녹음 51:38–52:00).
+* '''through + put''' = "통과해서 내놓은 양". 링크가 낼 수 있는 최대값은 bandwidth(transmission rate)이고, throughput 은 '''실제로 지나간''' 양이다. 교수: "There are multiple definitions of throughput depending on their context. But in the network layer performance, it means number of bits that passes one point of network" (10/27 녹음 51:38–52:00).
 
 == p.35 예제 ==
 <pre class="txt">
@@ -25,12 +25,18 @@ category: 5강 네트워크 계층, 용어
 {tip}'''throughput vs bandwidth vs delay'''
 * '''bandwidth / transmission rate''': 링크 '''하나'''가 낼 수 있는 최대 비트율 (p.36 그림의 "TR").
 * '''throughput''': 경로를 '''실제로''' 지나는 비트율 ≤ 가장 작은 TR.
-* '''delay''': 한 패킷이 도착하기까지의 '''시간''' — 다른 축이다. throughput 이 커도 멀면(propagation) delay 는 클 수 있다.{/tip}
+* '''delay''': 한 패킷이 도착하기까지의 '''시간'''이다. throughput 과는 다른 축이다. throughput 이 커도 멀면(propagation) delay 는 클 수 있다.{/tip}
 
-{analogy}🎭 '''수도관.''' 굵은 관 – 가는 관 – 중간 관을 이어 붙이면, 끝에서 나오는 물의 양은 '''가장 가는 관'''이 정한다. 굵은 관을 아무리 늘려도 소용없다 — p.36 의 water-pipe analogy.{/analogy}
+{analogy}🎭 '''수도관.''' 굵은 관 – 가는 관 – 중간 관을 이어 붙이면, 끝에서 나오는 물의 양은 '''가장 가는 관'''이 정한다. 굵은 관을 아무리 늘려도 소용없다. p.36 의 water-pipe analogy 가 이 그림이다.{/analogy}
 
-{quiz}링크 rate 가 1 Gbps, 300 Mbps, 10 Gbps 인 경로의 throughput 은? 그리고 1 GB 파일 전송 시간은?{/quiz}
-{answer}min(1 Gbps, 300 Mbps, 10 Gbps) = '''300 Mbps'''. 1 GB = 8×10^9 bits → 8×10^9 / 3×10^8 ≈ '''26.7 s'''. (교수가 든 DGIST 유선 300 Mbps 일화 → [[bottleneck]]){/answer}
+{mini}
+# 링크 rate 가 1 Gbps, 300 Mbps, 10 Gbps 인 경로의 throughput 은? 1 GB($10^9$ bytes) 파일 전송 시간은?
+# O/X: 경로의 throughput 은 가장 빠른 링크가 정한다.
+{/mini}
+{answer}
+# min(1 Gbps, 300 Mbps, 10 Gbps) = 300 Mbps. 1 GB = 8 × 10^9 bits 라서 8 × 10^9 / (3 × 10^8) ≈ 26.7 s. 교수가 든 DGIST 유선 300 Mbps 일화와 같은 숫자다 → [[bottleneck]].
+# X. 가장 느린 링크(bottleneck)가 정한다.
+{/answer}
 
 == 관련 문서 ==
 * [[bottleneck]] · [[load와 성능]] · [[transmission delay]] · [[total delay 공식]] · [[QoS]]

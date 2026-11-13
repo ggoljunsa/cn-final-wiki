@@ -2,26 +2,26 @@ key: UML과 GWL
 title: UML 과 GWL (User Mobile Link · GateWay Link)
 category: 4강 위성, 용어
 ---
-L11 p.21 LEO 그림에는 링크가 세 종류 있다: 위성 ↔ 사용자 폰의 '''UML''', 위성 ↔ 지상 gateway 의 '''GWL''', 위성 ↔ 위성의 '''[[ISL]]'''. 슬라이드는 약자만 적었고, 풀이(User Mobile Link, GateWay Link)는 Forouzan 의 것이다(보충).
+L11 p.21 LEO 그림에는 링크가 세 종류 있다. 위성과 사용자 폰을 잇는 '''UML''', 위성과 지상 gateway 를 잇는 '''GWL''', 위성과 위성을 잇는 [[ISL]] 이다. 슬라이드는 약자만 적었고, 풀어 쓴 이름(User Mobile Link, GateWay Link)은 Forouzan 교재의 것이다(보충).
 
-{def}슬라이드: p.21 LEO 그림 — 위성과 '''폰''' 사이 검정 번개선 "'''UML'''", 위성과 '''gateway 안테나''' 사이 분홍 번개선 "'''GWL'''", 두 위성 사이 "'''ISL'''".
+{def}슬라이드: p.21 LEO 그림. 위성과 '''폰''' 사이 검은 번개선 "'''UML'''", 위성과 '''gateway 안테나''' 사이 분홍 번개선 "'''GWL'''", 두 위성 사이 "'''ISL'''".
 (Forouzan 보충, 요지) 이동 단말은 '''user mobile link (UML)''' 로 위성과 통신하고, 위성은 '''gateway link (GWL)''' 로 지상국(gateway)과 통신한다.{/def}
 
-[[img:L11-21.png|p.21 LEO — UML(위성 ↔ 폰, 검정), GWL(위성 ↔ gateway 안테나, 분홍), ISL(위성 ↔ 위성)|large]]
+[[img:L11-21.png|p.21 — 위성과 폰 사이의 검은 UML, 위성과 gateway 안테나 사이의 분홍 GWL, 두 위성 사이의 ISL 을 구별해 보라|large]]
 
 == 이름에서 개념 끌어내기 ==
-* '''UML = User Mobile Link''' — '''사용자(user)'''의 '''이동 단말(mobile)'''과 위성을 잇는 링크. 셀룰러의 MS ↔ BS 무선 구간과 같은 자리.
-* '''GWL = GateWay Link''' — '''gateway'''(지상망의 관문)와 위성을 잇는 링크. 위성망과 지상 Internet·전화망이 만나는 문.
-* '''ISL = Inter-Satellite Link''' — 위성 '''사이'''. → [[ISL]]
+* UML = User Mobile Link. 사용자(user)의 이동 단말(mobile)과 위성을 잇는다. 셀룰러의 MS ↔ BS 무선 구간 자리다.
+* GWL = GateWay Link. 지상망의 관문(gateway)과 위성을 잇는다. 위성망과 지상 Internet·전화망이 만나는 곳이다.
+* ISL = Inter-Satellite Link. 위성 사이를 잇는다 → [[ISL]].
 
 {|
 ! 링크 || 잇는 것 || p.3 Starlink 그림에서 || 셀룰러에 빗대면 (보충)
 |-
-| '''UML''' || 위성 ↔ 사용자 단말 || 노란 빔 (User segment) || MS ↔ [[base station]]
+| UML || 위성 ↔ 사용자 단말 || 노란 빔 (User segment) || MS ↔ [[base station]]
 |-
-| '''GWL''' || 위성 ↔ 지상 gateway || 파란 점선 (Ground segment) || BS ↔ [[MSC]] (유선망 쪽)
+| GWL || 위성 ↔ 지상 gateway || 파란 점선 (Ground segment) || BS ↔ [[MSC]] (유선망 쪽)
 |-
-| '''ISL''' || 위성 ↔ 위성 || 빨간 화살표 (Space segment) || BS 끼리의 백본
+| ISL || 위성 ↔ 위성 || 빨간 화살표 (Space segment) || BS 끼리의 백본
 |}
 
 <pre class="ascii">
@@ -33,12 +33,18 @@ L11 p.21 LEO 그림에는 링크가 세 종류 있다: 위성 ↔ 사용자 폰�
 (──── footprint 1 ────)(──── footprint 2 ────)
 </pre>
 
-* 각 링크의 '''위로 가는 방향'''(폰/gateway → 위성)이 '''uplink''', 내려오는 방향이 '''downlink''' 다 → [[uplink와 downlink]] · [[SATCOM 주파수 대역]].
+각 링크에서 폰이나 gateway 가 위성으로 올려 보내는 방향이 uplink 이고, 위성이 내려 보내는 방향이 downlink 다 → [[uplink와 downlink]] · [[SATCOM 주파수 대역]].
 
-{analogy}🎭 '''하늘 위 환승역.''' UML 은 승객(폰)이 역(위성)에 오르는 '''개찰구''', GWL 은 역에서 지상 철도(Internet)로 갈아타는 '''환승 통로''', ISL 은 역과 역을 잇는 '''공중 연결 다리'''다.{/analogy}
+{analogy}🎭 '''하늘 위 환승역.''' UML 은 승객(폰)이 역(위성)에 오르는 개찰구다. GWL 은 역에서 지상 철도(Internet)로 갈아타는 환승 통로다. ISL 은 역과 역을 잇는 공중 연결 다리다.{/analogy}
 
-{quiz}p.21 그림에서 위성과 gateway 를 잇는 링크의 이름은? 위성과 사용자 폰을 잇는 링크는?{/quiz}
-{answer}위성 ↔ gateway = '''GWL''' (gateway link), 위성 ↔ 폰 = '''UML''' (user mobile link). (위성 ↔ 위성 = ISL){/answer}
+{mini}
+# p.21 그림에서 위성과 gateway 를 잇는 링크의 이름은? 위성과 사용자 폰을 잇는 링크는?
+# 폰에서 위성으로 가는 UML 구간은 uplink 인가 downlink 인가?
+{/mini}
+{answer}
+# 위성 ↔ gateway 는 GWL(gateway link), 위성 ↔ 폰은 UML(user mobile link)이다. 위성 ↔ 위성은 ISL 이다.
+# uplink. Earth → satellite 방향이다(p.15).
+{/answer}
 
 == 관련 문서 ==
 * [[ISL]] · [[LEO]] · [[footprint]] · [[satellite network 구성]] · [[uplink와 downlink]]
