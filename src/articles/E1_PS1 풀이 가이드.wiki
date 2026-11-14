@@ -1,5 +1,5 @@
 key: PS1 풀이 가이드
-title: PS1 풀이 가이드 (Problem Set 1, 마감 11/15)
+title: PS1 풀이 가이드와 해설 (Problem Set 1, 마감 11/15)
 category: 시험, 과제
 ---
 '''Problem Set 1''' 은 11/4 에 나온 과제이고 마감은 '''11/15(일)''' 이다. LMS 에 soft copy 로 내고, 과제지 지시대로 "Show all intermediate steps" 해야 한다. 계산기는 써도 된다. 문제는 다섯 개이고 소문항은 모두 20 개다.
@@ -9,17 +9,15 @@ category: 시험, 과제
 * 4번: CIDR block, subnetting, aggregation (CH07 (2) rev p.1–30, L13)
 * 5번: IPv4 header 해독과 fragmentation (CH07 (2) rev p.31–48, L13)
 
-이 문서는 마감 전 채점 과제를 다루니까 최종 답과 완성 답안은 적지 않는다.[* 운영체제 과제 가이드도 같은 원칙으로 만들었다. 위키가 GitHub Pages 에 공개돼 있어서, 여기에 답을 적으면 수강생 누구나 볼 수 있다.] 소문항마다 적은 것은 묻는 내용, 쓸 개념과 공식, 기호로 쓴 푸는 순서, 함정, 그리고 답을 말하지 않는 검산법이다. 끝까지 풀어 둔 예시는 슬라이드 예제이거나 PS1 과 다른 숫자다.
+소문항마다 두 부분이 있다. 앞부분은 묻는 내용, 쓸 개념과 공식, 푸는 순서, 함정, 자기검산이다. 뒤의 '''풀이''' 는 답안지에 쓰는 순서대로 PS1 숫자를 넣어 끝까지 푼 것이다. 서술형(1(d), 1(e), 2(c) 마지막 질문, 2(d), 3(d), 3(e))에는 제출용 영어 답안과 짧은 한국어 설명을 붙였다. 문제가 애매한 곳은 '''가정''' 으로 적었으니 답안에도 그 한 줄을 같이 쓴다. 숫자는 모두 Python 으로 검산했다. 앞부분의 예시는 슬라이드 예제이거나 PS1 과 다른 숫자라서, 풀이를 보기 전에 손을 풀어 보는 데 쓰면 된다. 최종 답만 모은 표는 문서 끝(최종 답 한눈에)에 접어 두었다.
 
 쓰는 순서는 이렇게 권한다.
 # 아래 표에서 소문항에 맞는 강의 문서의 새끼문제(✏️)를 먼저 풀어 본다.
 # 이 문서에서 그 소문항의 푸는 순서와 함정을 읽는다.
 # PS1 을 직접 푼다. 식, 대입, 중간값, 단위가 붙은 결과를 한 줄씩 적는다.
-# 소문항 끝의 자기검산으로 확인한다. 시뮬레이터는 슬라이드 예제로 순서를 익히는 데 쓴다.
+# 소문항 끝의 풀이와 맞춰 본다. 틀린 곳은 함정 목록에서 원인을 찾는다.
 
 페이지 표기는 L10 = CH05 (1), L11 = CH05 (2) Satellite, L12 = CH07 (1), L13 = CH07 (2) rev 이다. 쪽 번호는 슬라이드 인쇄 번호이고, L13 은 개정판 `rev.pdf` 쪽 번호를 따른다.[* 11/4 밤에 올라온 개정판은 p.1–50 이 원래 덱과 같다. NAT(옛 p.64–67)가 빠지고 ICMP 그림과 aggregation 그림이 들어가서 p.51 뒤의 번호가 달라졌다.]
-
-{analogy}🎭 운전 연수 강사를 떠올리면 된다. 강사는 운전대를 대신 잡지 않는다. 대신 "여기서 사이드미러를 보고(단위 변환), 저기서 깜빡이를 켜고(×8, ×4), 주차한 뒤엔 바퀴가 똑바른지 보라(검산)" 고 짚어 준다. 이 문서도 PS1 의 운전대는 넘기지 않고, 어디를 보고 무엇을 확인할지만 알려 준다.{/analogy}
 
 == 소문항별로 어디를 보면 되나 ==
 "강의 문서 · 절" 은 메인 문서와 그 안의 절 제목이다. 그 절 바로 아래에 ✏️ 새끼문제가 있으니 "연습할 새끼문제" 칸은 같은 절을 가리키는 경우가 많다.
@@ -85,12 +83,31 @@ GSM 숫자 세 개(slot 156.25 bits, frame 8 slots, multiframe 26 frames = 120 m
 
 [[sim:gsm_bitrate]]
 
+==== 풀이 ====
+<pre class="txt">
+Given: 156.25 bits/slot, 8 slots/frame, 26 frames/multiframe, 1 multiframe = 120 ms = 0.120 s
+bits in one multiframe = 26 × 8 × 156.25 = 32,500 bits
+channel bit rate = 32,500 bits / 0.120 s = 270,833.3 bps
+                 ≈ '''270.8 kbps'''
+</pre>
+L10 p.25 의 $(1/120\text{ ms}) \times 26 \times 8 \times 156.25 = 270.8$ kbps 와 같은 계산이다. 26 frames 를 모두 넣었다. control frame 2 개도 채널 위를 지나가는 비트라서 channel rate 에는 들어간다.
+
 === 1(b) 한 사용자의 bit rate (overhead 제거 전) ===
 '''묻는 것''': 한 사용자가 쓸 수 있는 bit rate 를 overhead 를 빼기 전 상태로 구하라.
 * 무엇을 묻나: 사용자 하나는 매 frame 마다 slot 하나를 받는다. 그러니까 채널을 $S$ 명이 시간으로 나눠 쓰는 셈이다.
 * 공식: $\dfrac{F \times 1 \times b}{T}$
 * 함정: 아직은 156.25 bits 와 26 frames 를 그대로 쓴다. overhead 는 1(c) 에서 뺀다.
 * 자기검산: (b) 에 $S$ 를 곱하면 (a) 가 나와야 한다.
+
+==== 풀이 ====
+<pre class="txt">
+One user gets 1 slot in every TDMA frame → 1 slot × 26 frames per multiframe
+bits for one user per multiframe = 26 × 1 × 156.25 = 4,062.5 bits
+bit rate per user = 4,062.5 bits / 0.120 s = 33,854.2 bps
+                  ≈ '''33.85 kbps'''
+check: 270,833.3 / 8 = 33,854.2 bps ✓
+</pre>
+한 채널을 8 명이 시간으로 나눠 쓰니 (a) 를 8 로 나눈 값과 같다. 아직 overhead 를 빼지 않은 값이다.
 
 === 1(c) User data rate 와 효율 ⭐⭐ ===
 '''묻는 것''': slot 의 65 bits 만 user data 이고 26 frames 중 24 개만 traffic frame 일 때 user data rate 와, (b) 에 대한 효율을 구하라.
@@ -109,6 +126,15 @@ user data = 8 × 40 / 0.05        = 6.4 kbps
 * 자기검산: $\eta$ 는 $\dfrac{b_{data}}{b} \times \dfrac{F_{traffic}}{F}$ 와 같아야 하고, 0 과 1 사이여야 한다. 위 예시처럼 두 방법으로 구해서 맞춰 본다.
 * 관련: [[GSM 프레임 구조]]
 
+==== 풀이 ====
+<pre class="txt">
+user data bits per multiframe = 24 traffic frames × 65 bits = 1,560 bits
+user data rate = 1,560 bits / 0.120 s = 13,000 bps = '''13 kbps'''
+efficiency = 13,000 / 33,854.2 = 0.384 → '''38.4 %'''
+check: (65 / 156.25) × (24 / 26) = 0.416 × 0.9231 = 0.384 ✓
+</pre>
+한 사용자 몫 33.85 kbps 중 user data 는 38.4 % 이고, 나머지 61.6 % 는 error control bits, TDMA control bits, control frame 이다. 13 kbps 는 L10 p.25 그림의 digitizer 출력(음성 코덱) 13 kbps 와 같은 값이라 검산이 된다.
+
 === 1(d) AMPS reuse factor 7 vs IS-95 reuse factor 1 (서술) ===
 '''묻는 것''': AMPS 에서 이웃 cell 이 같은 주파수 set 을 못 쓰는 이유와, IS-95 는 쓸 수 있는 이유를 설명하라.
 * 무엇을 묻나: 두 시스템이 사용자를 무엇으로 구분하는지를 비교하는 문제다. 이 구분 방식이 이웃 cell 과의 간섭을 견딜 수 있느냐를 정한다.
@@ -121,6 +147,15 @@ user data = 8 × 40 / 0.05        = 6.4 kbps
 * 자기검산: 답안에 두 시스템의 사용자 구분 축(주파수 / code)이 각각 한 번씩 이름으로 나오는지 본다.
 * 관련: [[frequency reuse]] · [[IS-95 frequency reuse]]
 
+==== 풀이 ====
+'''제출용 답안 (영어)'''
+{def}
+'''AMPS (reuse factor 7).''' AMPS separates users by frequency (FDMA): each call uses its own 30-kHz channel. If two neighboring cells used the same set of frequencies, a user near the cell boundary would receive the same frequency from both base stations at similar strength, and the two signals would interfere with each other (co-channel interference). Therefore the same frequency set can be reused only in cells that are far enough apart. AMPS groups 7 cells into one frequency reuse pattern, so the reuse factor is 7, and each cell can use only about 1/7 of the channels.
+
+'''IS-95 (reuse factor 1).''' IS-95 separates users by code, not by frequency: it uses CDMA based on DSSS. All users share the same 1.228-MHz band, and the receiver extracts the desired signal by correlating it with that user's code. Signals spread with other codes, including the signals from neighboring cells, look like low-level noise after despreading. Because the interference from neighboring cells cannot affect CDMA/DSSS transmission, neighboring cells can use the same frequency band, and the reuse factor is normally 1.
+{/def}
+'''설명''': 두 시스템이 사용자를 무엇으로 구분하느냐가 답을 가른다. AMPS 는 주파수로 구분하니까 이웃 cell 이 같은 주파수를 쓰면 경계에서 두 신호가 겹쳐서 구분할 방법이 없다(L10 p.11 "Interference for the users located near the cell boundaries"). IS-95 는 code 로 구분하니까 같은 주파수 위에 여러 신호가 있어도 자기 code 로 꺼낼 수 있다. 다른 cell 의 신호는 잡음처럼 조금 남을 뿐이다. 그래서 답안의 "cannot affect" 는 슬라이드 p.31 의 표현을 그대로 옮긴 것이고, 간섭이 아예 없다고 쓰지는 않는다.
+
 === 1(e) Hard handoff vs soft handoff (서술) ===
 '''묻는 것''': hard handoff 와 soft handoff 의 차이를 설명하고, IS-95 의 MS 가 soft handoff 를 할 수 있게 해 주는 것이 무엇인지 쓰라.
 * 무엇을 묻나: 두 handoff 를 가르는 기준 하나(MS 가 동시에 통신하는 BS 수)와, IS-95 에만 있는 장치 하나를 묻는다.
@@ -131,6 +166,19 @@ user data = 8 × 40 / 0.05        = 6.4 kbps
 * 관련: [[hard handoff]] · [[soft handoff]] · [[IS-95 soft handoff]] · [[pilot channel]]
 
 [[sim:handoff_signal]]
+
+==== 풀이 ====
+'''제출용 답안 (영어)'''
+{def}
+Handoff is the process of transferring an active call from one BS to another without interrupting service as the user moves across cells. The MSC monitors the signal level every few seconds; when the signal becomes weak, it finds a new cell that can better serve the call and changes the channel carrying the call.
+
+'''Hard handoff''': the MS communicates with only one BS at a time. The MS must release the channel of the old BS before it is connected to the new BS, so the call can be interrupted for a short time during the switch. This was used in early systems (e.g., AMPS, GSM).
+
+'''Soft handoff''': the MS can communicate with two BSs at the same time. It is connected to the new BS before it leaves the old one, so the call is not interrupted.
+
+'''What enables soft handoff in IS-95''': every BS continuously broadcasts a signal on its pilot channel, and the MS can detect the pilot signals from its own cell and from the neighboring cells. By monitoring these pilot signals, the MS knows which neighboring BS is getting stronger and can start communicating with it while it is still connected to the current BS. This is possible because neighboring IS-95 cells use the same frequency band (reuse factor 1), so the MS does not need to change its frequency to talk to the new BS.
+{/def}
+'''설명''': 차이를 가르는 기준은 "MS 가 동시에 통신하는 BS 수" 하나다(L10 p.14–16). hard 는 1 개라서 옛 BS 를 놓고 새 BS 를 잡는 사이에 끊김이 생길 수 있다. soft 는 2 개라서 새 BS 를 먼저 잡고 옛 BS 를 놓는다.[* 영어로 break-before-make, make-before-break 라고도 부른다. 슬라이드에 있는 표현은 아니니 답안에는 써도 되고 안 써도 된다.] IS-95 쪽 이유는 p.32 의 문장 두 개(pilot channel 방송, MS 가 이웃 cell 의 pilot 을 감지)를 그대로 옮기면 된다. 마지막 문장의 reuse factor 1 연결은 1(d) 와 이어지는 보충이다.
 
 == 2. Satellite networks ==
 과제지가 Kepler's law 를 $\text{Period [s]} = C \times d^{1.5}$, $C \approx 1/100$ 으로 주고, 지구 반지름 6,378 km 와 빛의 속도 $3 \times 10^8$ m/s 를 준다. 2(a)(b) 와 2(c) 는 거리를 재는 기준이 다르니 그 차이부터 잡고 들어간다.
@@ -153,6 +201,17 @@ user data = 8 × 40 / 0.05        = 6.4 kbps
 
 [[sim:kepler_period]]
 
+==== 풀이 ====
+<pre class="txt">
+distance is measured from the center of the Earth:
+d = 550 + 6,378 = 6,928 km
+√6,928 ≈ 83.235
+6,928^1.5 = 6,928 × 83.235 ≈ 576,649
+Period = (1/100) × 576,649 ≈ 5,766.5 s
+5,766.5 s / 60 ≈ '''96.1 min'''
+</pre>
+L11 p.20 의 LEO 주기 "90 to 120 min" 안에 들어간다. 6378 을 빼먹으면 $550^{1.5}/100 \approx 129$ s 가 나오는데, 2 분짜리 궤도는 있을 수 없으니 바로 틀린 줄 안다.
+
 === 2(b) GEO 고도 구하기 (주기 24 h) ⭐⭐ ===
 '''묻는 것''': 주기가 24 시간인 GEO 위성의 고도를 구하라.
 * 개념·공식: [[Example 5.2 정지궤도 주기]] 를 거꾸로 푸는 문제다. $d = (T/C)^{2/3} = (100\,T)^{2/3}$, $h = d - 6378$.
@@ -165,6 +224,17 @@ h = 26,525 − 6378 ≈ 20,147 km   (MEO 높이, 실제 GPS ≈ 20,200 km 와 �
 * 함정: 마지막에 6378 을 빼지 않는 실수. 지수를 1.5 로 그대로 쓰는 실수. 24 h 를 초로 바꿀 때 자릿수.
 * 자기검산: 구한 고도에 6378 을 다시 더해 Kepler 식에 넣고, 86,400 s 근처가 나오는지 본다. 결과는 슬라이드의 GEO 고도 35,786 km 와 비슷하지만 똑같지는 않다. $C \approx 1/100$ 이 근사값이기 때문이다.[* Example 5.2 도 35,786 km 를 넣으면 주기가 86,400 s 가 아니라 86,579 s 쯤 나온다. 답안에 "C 가 근사값이라 약간 차이가 난다" 는 한 줄을 붙여 두면 좋다.]
 * 관련: [[GEO]] · [[geostationary]]
+
+==== 풀이 ====
+<pre class="txt">
+Period = 24 h = 24 × 3,600 = 86,400 s
+86,400 = (1/100) × d^1.5
+d^1.5 = 86,400 × 100 = 8,640,000
+d = 8,640,000^(2/3) = (8,640,000^(1/3))^2 ≈ (205.197)^2 ≈ 42,106 km
+altitude h = d − 6,378 ≈ 42,106 − 6,378 = '''35,728 km'''  (≈ 35,700 km)
+check: (1/100) × 42,106^1.5 ≈ 86,400 s ✓
+</pre>
+{warn}'''가정(답안에 한 줄 적는다)''': "Using C ≈ 1/100, h ≈ 35,728 km. This is close to the usual GEO altitude of 35,786 km; the difference (about 58 km, 0.16 %) comes from the approximation C ≈ 1/100." 실제로 Example 5.2 처럼 35,786 km 를 넣으면 주기가 86,400 s 가 아니라 86,579 s 가 나온다. 문제의 C 로는 정확히 35,786 이 나올 수 없으니 35,728 km 를 답으로 쓰고 차이의 이유를 밝히면 된다.{/warn}
 
 === 2(c) One-way delay, LEO vs GEO ⭐⭐ ===
 '''묻는 것''': 바로 위의 위성 하나를 거쳐 지상국끼리 통신할 때(Earth → satellite → Earth), propagation 만 따져서 (i) 2(a) 의 LEO 와 (ii) 고도 35,786 km GEO 의 one-way delay 를 구하고, video call 같은 interactive 응용에 어느 쪽이 맞는지 답하라.
@@ -181,6 +251,29 @@ h = 26,525 − 6378 ≈ 20,147 km   (MEO 높이, 실제 GPS ≈ 20,200 km 와 �
 * 마지막 질문: 사람이 대화할 때 몇 ms 부터 어색한지 기준을 하나 정하고, 그 기준을 어디서 가져왔는지 밝힌 뒤 두 값을 비교한다.[* 자주 인용되는 기준은 ITU-T 권고 G.114 의 "one-way 150 ms 이하" 다. 슬라이드에 없는 보충이니 쓴다면 출처를 밝힌다.] L11 p.20 의 LEO 설명과 p.16–17 의 GEO 설명도 같이 읽어 둔다.
 * 관련: [[GEO]] · [[LEO]]
 
+==== 풀이 ====
+<pre class="txt">
+Assumption: the satellite is directly above both stations, so the ground–satellite distance = altitude h
+            (the Earth's radius is NOT added here)
+one-way path (Earth → satellite → Earth) = uplink + downlink = 2h
+c = 3 × 10^8 m/s
+
+(i) LEO, h = 550 km
+    distance = 2 × 550 km = 1,100 km = 1.1 × 10^6 m
+    delay = 1.1 × 10^6 / (3 × 10^8) = 3.67 × 10^-3 s ≈ '''3.67 ms'''
+
+(ii) GEO, h = 35,786 km
+    distance = 2 × 35,786 km = 71,572 km = 7.1572 × 10^7 m
+    delay = 7.1572 × 10^7 / (3 × 10^8) = 0.2386 s ≈ '''238.6 ms'''
+
+ratio: 238.6 / 3.67 ≈ 65 (= 35,786 / 550) ✓
+</pre>
+'''제출용 답안 (마지막 질문, 영어)'''
+{def}
+The LEO satellite is more suitable for interactive applications such as video calls. Its one-way propagation delay is only about 3.7 ms, while the GEO path adds about 239 ms one way (about 477 ms for a round trip) even before any other delay is added. A delay of a few hundred milliseconds is noticeable in a conversation (people start to talk over each other), whereas a few milliseconds is not.
+{/def}
+'''설명''': 실제 두 지상국은 위성 바로 밑 한 점에 있을 수 없지만, 문제가 "directly above them" 이라고 했으니 거리를 고도 그대로 잡는다. Kepler 식에서는 지구 반지름을 더했고, 여기서는 더하지 않는다. one-way 는 올라갔다 내려오는 한 번이다.[* 대화에서 자주 쓰는 기준은 ITU-T G.114 의 one-way 150 ms 다. GEO 는 propagation 만으로 이 값을 넘는다. 슬라이드에 없는 보충이라 답안에 쓰려면 출처를 같이 적는다.]
+
 === 2(d) LEO 가 서비스를 이어 가려면 (서술) ===
 '''묻는 것''': LEO 위성은 땅에 대해 빨리 움직여서 사용자 시야에 몇 분만 머문다. LEO 시스템이 끊김 없이 서비스하려면 cellular telephony 의 어떤 operation 이 필요한지 고르고 이유를 간단히 쓰라.
 * 무엇을 묻나: CH05 (1) 에서 배운 셀룰러 동작 중 하나를 골라 위성 상황에 옮겨 보는 문제다.
@@ -189,6 +282,13 @@ h = 26,525 − 6378 ≈ 20,147 km   (MEO 높이, 실제 GPS ≈ 20,200 km 와 �
 * 함정: 셀룰러에서 움직이는 것과 LEO 에서 움직이는 것이 같지 않다. 그 차이를 한 문장으로 짚어 주면 좋다. [[base station]] 과 위성, [[cell]] 과 [[footprint]] 를 짝지어 보면 정리가 쉽다.
 * 자기검산: 답안의 "이유" 부분에 2(a) 에서 구한 주기가 근거로 쓰였는지 본다.
 * 관련: [[CH05 셀룰러 동작]] · [[LEO]] · [[footprint]]
+
+==== 풀이 ====
+'''제출용 답안 (영어)'''
+{def}
+'''Handoff''' is needed. In cellular telephony, handoff transfers an active call from one BS to another without interrupting service when the user moves from one cell to another. In a LEO system, the situation is similar but the roles are reversed: the satellite moves (its period is only about 96 min from (a)), so its footprint sweeps across the ground, and a user stays in view of one satellite for only a few minutes even if the user does not move. To keep a call or a data session going, the connection must be transferred from the satellite that is leaving to the next satellite that comes into view (and between the beams of a satellite) without interruption. This is exactly the handoff operation, which is why a LEO system is described as similar to the cellular telephone system.
+{/def}
+'''설명''': 네 동작을 하나씩 대 보면 handoff 만 남는다. frequency reuse 는 주파수를 어떻게 나눠 쓰느냐의 문제이고, 발신·수신(paging)은 통화를 시작할 때의 일이고, roaming 은 다른 사업자의 망을 빌려 쓰는 일이다. "moves quickly" 와 "continuous service" 두 말이 가리키는 것은 통화 중에 연결을 옮겨 주는 handoff 다. 셀룰러에서는 MS 가 움직이고 BS 가 고정이지만, LEO 에서는 위성(BS 역할)과 footprint(cell 역할)가 움직인다는 차이를 한 문장으로 적어 주면 좋다.
 
 == 3. Network layer ==
 3(a)(b) 는 L12 p.29–33 의 delay 공식, 3(c) 는 p.34–36 의 throughput, 3(d) 는 p.21–26 의 packet switching, 3(e) 는 p.4 와 p.12–13 의 error control 이다.
@@ -213,12 +313,57 @@ n = 2 → 3 × (1.6 + 0.5 + 0.02) + 2 × 1 = 6.36 + 2 = '''8.36 ms'''
 
 [[sim:total_delay]]
 
+==== 풀이 ====
+<pre class="txt">
+Assumption: as in the slide formula (L12 p.33), processing happens at the 3 routers and at the destination
+            (n + 1 = 4 times), and queuing happens only at the n = 3 routers.
+n = 3 routers → n + 1 = 4 links
+L = 1,500 bytes × 8 = 12,000 bits
+Delay_tr = 12,000 bits / (10 × 10^6 bps) = 1.2 × 10^-3 s = 1.2 ms
+Delay_pg = (200 × 10^3 m) / (2 × 10^8 m/s) = 1.0 × 10^-3 s = 1.0 ms
+Delay_pr = 50 μs = 0.05 ms
+Delay_qu = 0.5 ms
+Total = (n + 1)(Delay_tr + Delay_pg + Delay_pr) + n × Delay_qu
+      = 4 × (1.2 + 1.0 + 0.05) + 3 × 0.5
+      = 4 × 2.25 + 1.5
+      = 9.0 + 1.5 = '''10.5 ms'''
+</pre>
+성분별로 펼치면 다음과 같다. 3(b) 비교에 그대로 쓴다.
+{|
+! 성분 || 한 번 || 횟수 || 합
+|-
+| transmission || 1.2 ms || 4 || 4.8 ms
+|-
+| propagation || 1.0 ms || 4 || 4.0 ms
+|-
+| processing || 0.05 ms || 4 || 0.2 ms
+|-
+| queuing || 0.5 ms || 3 || 1.5 ms
+|-
+| '''합''' || || || '''10.5 ms'''
+|}
+queuing 을 4 번 곱하면 11.0 ms 가 나온다. 문제가 queuing 을 "at each router" 로만 줬으니 3 번이 맞다.
+
 === 3(b) 링크 rate 를 100 Mbps 로 올리면 ===
 '''묻는 것''': 모든 링크를 100 Mbps 로 바꿨을 때 total delay 를 다시 구하고, 이제 어느 성분이 가장 큰지 답하라.
 * 개념: 네 delay 중 전송률에 따라 바뀌는 것은 $\text{Delay}_{tr}$ 하나다. 3(a) 의 성분표에서 tr 칸만 바꿔 다시 더하면 된다.
 * 비교: 네 성분 $(n+1)\,\text{tr}$, $(n+1)\,\text{pg}$, $(n+1)\,\text{pr}$, $n\,\text{qu}$ 를 횟수까지 곱한 뒤 크기를 비교한다.
 * 함정: 한 번씩의 값만 보고 비교하면 순서가 바뀔 수 있다. 곱한 뒤에 비교한다.
 * 자기검산: (b) 는 (a) 보다 작지만 (a) 의 1/10 보다는 크다. (a) − (b) 는 $(n+1)(\text{tr}_{old} - \text{tr}_{new})$ 와 같아야 한다.
+
+==== 풀이 ====
+<pre class="txt">
+Only the transmission delay changes:
+Delay_tr = 12,000 bits / (100 × 10^6 bps) = 1.2 × 10^-4 s = 0.12 ms
+Total = 4 × (0.12 + 1.0 + 0.05) + 3 × 0.5
+      = 4 × 1.17 + 1.5
+      = 4.68 + 1.5 = '''6.18 ms'''
+components: transmission 4 × 0.12 = 0.48 ms, propagation 4 × 1.0 = '''4.0 ms''',
+            processing 4 × 0.05 = 0.2 ms, queuing 3 × 0.5 = 1.5 ms
+→ the largest component is now the '''propagation delay''' (4.0 ms, about 65 % of the total)
+check: (a) − (b) = 10.5 − 6.18 = 4.32 ms = 4 × (1.2 − 0.12) ✓
+</pre>
+(a) 에서는 transmission 4.8 ms 가 가장 컸는데, rate 를 10 배 올리니 0.48 ms 로 줄었다. propagation delay 는 거리와 전파 속도로만 정해지고 rate 와는 상관이 없어서 4.0 ms 그대로 남는다. 그래서 링크를 아무리 빠르게 해도 total delay 는 4.0 + 0.2 + 1.5 = 5.7 ms 밑으로는 못 내려간다.
 
 === 3(c) Throughput 과 5-MB 파일 ===
 '''묻는 것''': 세 링크로 된 경로의 throughput 을 구하고, 5-MB 파일(1 MB = $10^6$ bytes)을 보내는 데 걸리는 시간을 구하라.
@@ -229,6 +374,15 @@ n = 2 → 3 × (1.6 + 0.5 + 0.02) + 2 × 1 = 6.36 + 2 = '''8.36 ms'''
 * 관련: [[throughput]] · [[bottleneck]]
 
 [[sim:bottleneck_throughput]]
+
+==== 풀이 ====
+<pre class="txt">
+throughput = min(10, 2, 5) Mbps = '''2 Mbps'''   (the 2-Mbps link is the bottleneck)
+file size = 5 MB = 5 × 10^6 bytes × 8 = 4 × 10^7 bits
+time = 4 × 10^7 bits / (2 × 10^6 bps) = '''20 s'''
+check: 20 s × 2 × 10^6 bps = 4 × 10^7 bits ✓
+</pre>
+가장 가는 관이 전체 흐름을 정한다(L12 p.35). 10 Mbps 링크가 아무리 빨리 보내도 2 Mbps 링크 앞에서 기다려야 한다.
 
 === 3(d) 라우터 고장: datagram vs virtual circuit (서술) ===
 '''묻는 것''': 메시지를 packet 4 개로 나눴는데 전송 중에 경로의 router 하나가 고장 났다. 남은 packet 이 두 방식에서 각각 어떻게 되는지 비교하고, 왜 datagram 방식에서만 순서가 뒤바뀔 수 있는지 설명하라.
@@ -241,6 +395,27 @@ n = 2 → 3 × (1.6 + 0.5 + 0.02) + 2 × 1 = 6.36 + 2 = '''8.36 ms'''
 
 [[sim:datagram_vs_vc]]
 
+==== 풀이 ====
+packet 4 개를 고장 순간의 위치로 나누면 표가 된다.
+{|
+! 고장 순간 packet 의 위치 || datagram approach || virtual-circuit approach
+|-
+| 이미 고장 router 를 지나감 || 영향 없음, 도착 || 영향 없음, 도착
+|-
+| 고장 router 안에 있었음 || 잃어버림 (IP 는 다시 보내지 않음) || 잃어버림
+|-
+| 아직 고장 지점 전 || routing 이 고장을 피한 새 경로를 찾으면 다른 길로 도착 (delay 는 달라질 수 있음) || 그 circuit 으로는 못 감. 새 VC 를 setup 한 뒤에야 보낼 수 있음
+|}
+'''제출용 답안 (영어)'''
+{def}
+'''Datagram approach''': each packet is handled independently, and each router chooses the next hop using only the destination address in the packet. Packets that have already passed the failed router are not affected and arrive. A packet that was inside the failed router is lost. The packets that have not yet reached that point can still be delivered: once the routing tables are updated to avoid the failed router, the remaining packets are simply forwarded on another path. No setup is needed. However, IP is best effort, so the lost packet is not recovered by the network layer; an upper layer (e.g., TCP) has to retransmit it.
+
+'''Virtual-circuit approach''': all packets of the message follow one path that was set up before the data transfer, and each router forwards them using the VCI. When a router on this path fails, the virtual circuit is broken. Packets already past the failed router arrive, the packet inside it is lost, and the remaining packets cannot be delivered on this circuit. They cannot just take another path, because the routers on another path have no table entry for this VCI. A new virtual circuit must be set up again (setup phase → data transfer → teardown) before the remaining packets can be sent.
+
+'''Out of order''': in the datagram approach, packets of the same message may take different paths, and different paths have different delays (different numbers of hops, different queuing delays). So a packet sent later can arrive earlier; here, packets rerouted after the failure can also overtake or fall behind the others. In the virtual-circuit approach, all packets follow the same path through the same routers and queues in the order they were sent, so they arrive in order.
+{/def}
+'''설명''': 고장 순간 router 안에 있던 packet 은 두 방식 모두 잃어버린다. 이것을 빼면 한쪽 방식이 완벽한 것처럼 써지니 꼭 넣는다. 두 방식의 진짜 차이는 "남은 packet 이 어떻게 되나" 에 있다. datagram 은 packet 마다 목적지 주소로 길을 고르니 남은 packet 이 바로 다른 길로 간다. VC 는 경로가 VCI 로 묶여 있어서 setup 부터 다시 해야 한다. out-of-order 는 L12 p.26 표의 "Path of packets: may differ per packet" 줄과 "Arrival order" 줄을 이어 쓰면 된다.
+
 === 3(e) Payload 만 깨진 datagram (서술) ===
 '''묻는 것''': 이전 링크에서 payload 가 깨졌지만 header 는 멀쩡한 datagram 을 router 가 받았다. IP 가 이 오류를 찾아내는지 답하고, 이 오류를 찾는 책임이 어느 계층에 있는지 쓰라.
 * 슬라이드 근거: L12 p.4 의 best effort 설명, p.12–13 의 error control 그림, p.17–18 의 "What IP provides" 표, L13 p.37 의 header checksum 설명. 이 네 곳에서 IP 의 checksum 이 무엇을 덮는지 확인한다.
@@ -249,6 +424,16 @@ n = 2 → 3 × (1.6 + 0.5 + 0.02) + 2 × 1 = 6.36 + 2 = '''8.36 ms'''
 * 함정: "IP 는 오류를 전혀 안 본다" 고 쓰면 header 쪽 이야기가 빠진다. "찾는다 / 버린다 / 다시 보낸다" 중 IP 가 하는 것과 안 하는 것을 구분한다.
 * 자기검산: 답안에 슬라이드의 checksum 범위 표현이 그대로 인용됐는지, 책임 계층 이름이 나왔는지 본다.
 * 관련: [[IP의 error control]] · [[header checksum]] · [[IP가 제공하는 서비스]]
+
+==== 풀이 ====
+'''제출용 답안 (영어)'''
+{def}
+'''No, IP will not detect this error.''' The IPv4 header checksum covers only the header, not the payload. The router recomputes the checksum over the header, finds that the header is correct, and forwards the datagram with the corrupted payload. IP checks only the header because the header changes at every router (for example, TTL is decremented and the fragmentation fields can change), so the checksum must be recalculated at each hop; checking only the 20–60-byte header keeps this fast, and the payload is checked by other layers. In addition, IP is a best-effort protocol: even for header errors it only detects and discards (and may report with ICMP); it never recovers the data.
+
+'''Responsible layer''': the transport layer. The TCP/UDP checksum covers the whole segment (header + data), so the destination host detects the corrupted payload, and TCP recovers it by retransmission. (Hop by hop, the data-link layer of the previous link can also detect the error with the CRC in its frame trailer and drop the frame; but once the datagram has been passed up to IP with a bad payload, only the transport layer at the destination can detect it.)
+{/def}
+'''설명''': L12 p.13 그림이 그대로 답이다. header 에는 "checked ✓", payload 에는 "not checked by IP" 라고 적혀 있다. L13 p.37 은 그 이유로 "Recalculated at every router (e.g., TTL changes)" 를 든다.
+{warn}'''가정(답안 첫 줄에 적는다)''': "responsible layer" 를 end-to-end 관점으로 읽어서 transport layer 로 답했다. 문제가 "corrupted on the previous link" 라고 해서 data-link layer(CRC)로 읽을 여지도 있다. 다만 router 가 이 datagram 을 받았다는 것은 그 링크의 오류 검사를 통과했거나 검사가 없었다는 뜻이라, IP 다음에 남는 검사는 목적지의 transport layer 뿐이다. 답안에는 transport layer 를 답으로 쓰고 data-link 쪽을 괄호 한 줄로 덧붙이면 두 해석을 다 덮는다.{/warn}
 
 == 4. CIDR, subnetting, aggregation ==
 4번은 L13 p.11–28 의 block 계산이다. 모든 소문항에서 마지막 byte(또는 host 비트가 걸친 byte)를 2진수로 펼쳐 쓰는 것이 기본이다.
@@ -271,6 +456,26 @@ OR              = 0101 1111 = 95  → last  = 167.199.170.95
 
 [[sim:cidr_block]]
 
+==== 풀이 ====
+<pre class="txt">
+/28 → mask = 28 ones followed by 4 zeros
+     = 11111111.11111111.11111111.11110000
+(i)  mask = '''255.255.255.240'''
+(ii) N = 2^(32 − 28) = 2^4 = '''16 addresses'''
+
+last byte of the address 39 = 0010 0111
+last byte of the mask       = 1111 0000
+AND                         = 0010 0000 = 32
+(iii) first address = 205.16.37.39 AND mask = '''205.16.37.32'''
+
+NOT mask (last byte)        = 0000 1111
+39 OR NOT mask              = 0010 1111 = 47
+(iv) last address = 205.16.37.39 OR (NOT mask) = '''205.16.37.47'''
+
+check: 47 − 32 + 1 = 16 = N ✓   32 ÷ 16 = 2 ✓   32 ≤ 39 ≤ 47 ✓
+</pre>
+앞의 세 byte 는 mask 가 255 라서 AND 해도 그대로다. block 은 205.16.37.32/28 – 205.16.37.47/28 이다.
+
 === 4(b) CIDR block 의 first address 가 될 수 있나 ===
 '''묻는 것''': 보기 네 개(/22 두 개, /27 두 개) 중 CIDR block 의 first address 가 될 수 있는 것을 고르고, 안 되는 것은 이유를 쓰라.
 * 규칙(L13 p.21–22): first address 는 host 비트가 모두 0 이어야 한다. 같은 말로, first 는 $N$ 으로 나누어떨어진다. → [[CIDR]] · [[Example 7.4]]
@@ -288,6 +493,20 @@ OR              = 0101 1111 = 95  → last  = 167.199.170.95
 </pre>
 * 함정: /22 에서 넷째 byte 가 0 인 것만 보고 가능하다고 판정하기. 셋째 byte 의 아래 비트도 host 비트다.
 * 자기검산: "가능" 으로 고른 보기는 AND mask 결과가 자기 자신과 같아야 한다. "불가" 로 고른 보기는 AND 결과가 원래 주소보다 작아야 한다.
+
+==== 풀이 ====
+first address 가 되려면 host 비트(32 − n 개)가 모두 0 이어야 한다.
+<pre class="txt">
+① 200.1.4.0/22   host bits = 10 → low 2 bits of byte 3 + all of byte 4
+   byte 3: 4 = 0000 01|00 , byte 4 = 0000 0000 → host bits all 0 → '''valid'''
+② 200.1.6.0/22   byte 3: 6 = 0000 01|10 → host bit = 1 → '''invalid'''
+   6 AND 1111 1100 = 0000 0100 = 4 → this address belongs to the block 200.1.4.0/22
+③ 150.20.33.96/27 host bits = 5 (byte 4 only)
+   96 = 011|0 0000 → host bits all 0 → '''valid'''   (96 ÷ 32 = 3)
+④ 150.20.33.80/27 80 = 010|1 0000 → host bit = 1 → '''invalid'''   (80 ÷ 32 = 2.5)
+   80 AND 1110 0000 = 0100 0000 = 64 → this address belongs to the block 150.20.33.64/27
+</pre>
+'''답: ① 과 ③''' 이 first address 가 될 수 있다. ② 는 /22 block 의 크기가 1,024 (셋째 byte 기준 4 칸)인데 셋째 byte 6 이 4 의 배수가 아니다. ④ 는 /27 block 의 크기 32 로 80 이 나누어떨어지지 않는다. 답안에는 "host bits are not all 0" 이라는 이유와 함께 위의 2진수를 적는다.
 
 === 4(c) Subblock 설계 ⭐⭐⭐ ===
 '''묻는 것''': /22 block 을 받은 조직이 크기가 다른 subblock 네 개를 원한다. 각각 할당 주소 수, prefix 길이, first, last 를 정하고, 남는 주소 수와 그것이 CIDR block 하나가 될 수 있는지 답하라.
@@ -317,6 +536,43 @@ Ex 7.5 에서는 208 개를 쓰고 48 개(.208–.255)가 남는다. 48 은 2 �
 
 [[sim:subnet_alloc]]
 
+==== 풀이 ====
+<pre class="txt">
+Assumption: as in Example 7.5, every address in a subblock is counted
+            (network/broadcast addresses are not subtracted).
+            Even if 2 addresses are reserved (302, 202, 102, 52), the allocation below does not change.
+Block 130.56.16.0/22 → N = 2^(32 − 22) = 2^10 = 1,024
+   byte 3: 16 = 0001 00|00 → first = 130.56.16.0, last = 130.56.19.255
+Round each need up to a power of 2, and place the largest first:
+   300 → 512 = 2^9 → prefix 32 − 9 = /23
+   200 → 256 = 2^8 → /24
+   100 → 128 = 2^7 → /25
+    50 →  64 = 2^6 → /26
+</pre>
+{|
+! subblock || need || allocated || prefix || first address || last address
+|-
+| 1 || 300 || 512 || /23 || 130.56.16.0/23 || 130.56.17.255/23
+|-
+| 2 || 200 || 256 || /24 || 130.56.18.0/24 || 130.56.18.255/24
+|-
+| 3 || 100 || 128 || /25 || 130.56.19.0/25 || 130.56.19.127/25
+|-
+| 4 || 50 || 64 || /26 || 130.56.19.128/26 || 130.56.19.191/26
+|}
+<pre class="txt">
+last = first + N_sub − 1 : 16.0 + 511 → 17.255 ,  18.0 + 255 → 18.255 ,
+                          19.0 + 127 → 19.127 ,  19.128 + 63 → 19.191
+alignment check (last two bytes as one number, byte3 × 256 + byte4):
+   16.0 = 4,096 ÷ 512 = 8 ✓   18.0 = 4,608 ÷ 256 = 18 ✓
+   19.0 = 4,864 ÷ 128 = 38 ✓  19.128 = 4,992 ÷ 64 = 78 ✓
+used = 512 + 256 + 128 + 64 = 960
+left = 1,024 − 960 = '''64 addresses''' : 130.56.19.192 – 130.56.19.255
+64 = 2^6 and 19.192 = 5,056 ÷ 64 = 79 ✓ (192 = 1100 0000, low 6 bits all 0)
+→ '''yes''', the remaining addresses form one CIDR block: '''130.56.19.192/26'''
+</pre>
+Ex 7.5 에서는 남은 48 개가 2 의 거듭제곱이 아니라 block 하나가 못 됐다. 여기서는 남은 개수 64 가 2 의 거듭제곱이고 시작 주소도 64 로 나누어떨어져서 block 하나가 된다.
+
 === 4(d) Aggregation ===
 '''묻는 것''': ISP 가 연속된 /26 네 개를 가지고 있다. (i) 바깥에 광고할 block 하나를 구하라. (ii) 그중 마지막 /26 이 다른 ISP 것이라면 남은 세 개를 block 하나로 광고할 수 있나? 없다면 그 세 개를 정확히 덮는 가장 작은 block 집합을 구하라.
 * 슬라이드 근거: Example 7.6(L13 p.27–28)과 rev p.63–67 의 aggregation, longest mask matching 그림. → [[address aggregation]] · [[longest mask matching]]
@@ -333,6 +589,28 @@ Ex 7.5 에서는 208 개를 쓰고 48 개(.208–.255)가 남는다. 48 은 2 �
 * 덧붙이기: 실제 라우터는 longest match 를 쓰니까 짧은 block 과 긴 block 이 표에 같이 있어도 된다(rev p.66). 문제의 "covers exactly" 는 이것과 다른 질문이라, 답안에서 둘을 섞지 않는다.
 
 [[sim:forward_lookup]]
+
+==== 풀이 ====
+<pre class="txt">
+(i) four /26 blocks: 4 × 64 = 256 = 2^8 addresses, contiguous from 140.24.7.0
+    byte 4 of the four first addresses:
+      0   = 00|00 0000
+      64  = 01|00 0000
+      128 = 10|00 0000
+      192 = 11|00 0000
+    the first 24 bits are common → prefix = 32 − 8 = 24, first 140.24.7.0 (0 ÷ 256 ✓)
+    → advertise '''140.24.7.0/24'''
+
+(ii) remaining three: 140.24.7.0/26, 140.24.7.64/26, 140.24.7.128/26
+    total = 3 × 64 = 192 addresses, 192 is not a power of 2
+    → '''no''', they cannot be one CIDR block
+      (140.24.7.0/24 would also cover 140.24.7.192/26 of the other ISP)
+    .0/26 + .64/26 → 128 addresses, start 0 ÷ 128 ✓ → 140.24.7.0/25
+    .128/26 cannot join .0/25 (that would need a /24) → stays 140.24.7.128/26
+    → smallest set = '''{140.24.7.0/25, 140.24.7.128/26}'''
+    check: 128 + 64 = 192 ✓, 0 ÷ 128 ✓, 128 ÷ 64 ✓
+</pre>
+{warn}'''가정''': "smallest set of blocks that covers exactly these three" 를 "주소가 남거나 모자라지 않게 덮는, 개수가 가장 적은 CIDR block 집합" 으로 읽었다. 그래서 답은 2 개다. 실제 Internet 에서는 원래 ISP 가 /24 를 광고하고 다른 ISP 가 더 긴 /26 을 광고해도 longest mask matching 덕분에 제대로 간다(rev p.66). 그러나 그 /24 는 남의 주소까지 덮으니 "exactly" 조건에 맞지 않는다. 답안에는 이 차이를 한 줄 적어 두면 된다.{/warn}
 
 == 5. IPv4 header, fragmentation ==
 === 5(a) 첫 10 bytes 해독 ⭐⭐⭐ ===
@@ -371,6 +649,26 @@ reserved 0, D = 0, M = 1, offset = 100 → middle, data 첫 byte 800
 
 [[sim:ipv4_header_decode]]
 
+==== 풀이 ====
+<pre class="txt">
+bytes: 45 00 00 54 1C 46 40 00 40 06
+byte 1   = 0x45 = 0100 0101 → VER = 4, HLEN = 5
+(i)  header length = 5 × 4 = '''20 bytes'''
+byte 3–4 = 0x0054 = 5 × 16 + 4 = 84 → total length = 84 bytes
+(ii) data length = 84 − 20 = '''64 bytes'''
+byte 5–6 = 0x1C46 = identification 7,238 (not needed here)
+byte 7–8 = 0x4000 = 0100 0000 0000 0000
+         = 0 | 1 | 0 | 0 0000 0000 0000
+           reserved | D | M | fragmentation offset (13 bits)
+(iii) '''D = 1, M = 0, offset = 0''' → M = 0 and offset = 0 → '''not a fragment'''
+      (D = 1: do not fragment; a router must not fragment this datagram)
+byte 9   = 0x40 = 4 × 16 = 64 → TTL = 64
+(iv) it can still travel '''64 hops'''
+byte 10  = 0x06 = 6 → (v) upper-layer protocol = '''TCP'''
+</pre>
+{warn}'''가정 (iv)''': Example 7.10 이 TTL 01 을 "only 1 hop" 으로 읽은 관례를 따라 TTL 값 = 갈 수 있는 hop 수로 답했다. 답안에 "Following Example 7.10, the TTL value is the number of hops the datagram can still travel." 한 줄을 붙인다.[* 라우터마다 TTL 을 하나씩 줄이고 0 이 되면 버린다. TTL 64 면 64 번째 router 에서 0 이 되어 버려지니, "router 를 무사히 통과하는 횟수" 로 세면 63 이 된다. 슬라이드 관례가 64 쪽이라 64 로 답하고, 63 으로 세는 방식도 있다는 것만 알아 두면 된다.]{/warn}
+D = 1 은 "쪼개지 말라" 는 뜻이지 이 datagram 이 fragment 라는 뜻이 아니다. fragment 인지는 M 과 offset 으로 판정한다(rev p.47).
+
 === 5(b) fragment 의 위치와 data 범위 ⭐⭐⭐ ===
 '''묻는 것''': M, offset, HLEN, total length 가 주어진 fragment 가 first, middle, last 중 무엇인지 답하고, 원래 datagram 에서 이 fragment 의 data 가 차지하는 첫 byte 와 마지막 byte 번호를 구하라.
 * 판정표(L13 p.47): M 0 · offset 0 은 fragment 아님, M 1 · offset 0 은 first, M 1 · offset > 0 은 middle, M 0 · offset > 0 은 last.
@@ -386,6 +684,21 @@ last  = 800 + 80 − 1 = 879
 * 관련: [[fragmentation offset]] · [[Example 7.14 fragment 위치 판정]] · [[Example 7.16 첫·마지막 바이트]] · [[fragmentation]]
 
 [[sim:fragment_calc]]
+
+==== 풀이 ====
+<pre class="txt">
+M = 1 → more fragments follow → not the last (first or middle)
+offset = 185 ≠ 0 → not the first
+→ '''middle fragment'''
+first byte = offset × 8 = 185 × 8 = 1,480
+header = HLEN × 4 = 5 × 4 = 20 bytes
+data length = total length − header = 1,020 − 20 = 1,000 bytes
+last byte = 1,480 + 1,000 − 1 = 2,479
+→ this fragment carries data bytes '''1,480 to 2,479''' of the original datagram
+check: M = 1 → data length must be a multiple of 8: 1,000 ÷ 8 = 125 ✓
+       next fragment's offset = (2,479 + 1) / 8 = 310
+</pre>
+판정은 L13 rev p.47 표대로다. M = 1 이고 offset > 0 이면 middle fragment 다. byte 번호는 0 부터 세니까 마지막에 1 을 뺀다.
 
 == 제출 전 체크리스트 ==
 * ☐ 모든 계산에 식 → 대입 → 중간값 → 단위 붙은 결과가 있다
@@ -405,7 +718,54 @@ last  = 800 + 80 − 1 = 879
 * ☐ 5(b) ×8, ×4, −1 을 했고 data 길이가 8 의 배수인지 봤다
 * ☐ 가정(3(e) 관점, 4(c) 주소 세는 관례, 5(a)(iv) TTL 관례)을 답안에 적었다
 
-{info}마감(11/15) 뒤에는 채점 결과와 정답 해설을 따로 정리한다. 그때 이 문서는 해설판으로 바뀌거나 해설 링크가 붙는다.{/info}
+{info}채점 결과가 나오면 감점된 곳과 이유를 이 문서에 덧붙인다.{/info}
+
+== 최종 답 한눈에 ==
+{answer}
+{|
+! 소문항 || 답
+|-
+| 1(a) || 270.8 kbps (270,833 bps)
+|-
+| 1(b) || 33.85 kbps (= 270.8 / 8)
+|-
+| 1(c) || 13 kbps, 효율 38.4 %
+|-
+| 1(d) || AMPS = FDMA → 이웃 cell 경계에서 같은 주파수가 간섭 → reuse 7 / IS-95 = CDMA·DSSS → 이웃 cell 간섭이 전송에 영향을 못 줌 → reuse 1
+|-
+| 1(e) || hard: BS 1 개와만 통신 / soft: BS 2 개와 동시에 통신. IS-95 는 모든 BS 가 pilot channel 을 방송하고 MS 가 이웃 cell 의 pilot 을 감지해서 soft handoff 가능
+|-
+| 2(a) || d = 6,928 km → 5,766 s ≈ 96.1 min
+|-
+| 2(b) || d ≈ 42,106 km → h ≈ 35,728 km (C ≈ 1/100 때문에 35,786 km 와 약간 다름)
+|-
+| 2(c) || LEO 3.67 ms, GEO 238.6 ms → LEO 가 interactive 응용에 적합
+|-
+| 2(d) || handoff (위성과 footprint 가 움직이니 다음 위성으로 연결을 넘긴다)
+|-
+| 3(a) || 4 × (1.2 + 1.0 + 0.05) + 3 × 0.5 = 10.5 ms
+|-
+| 3(b) || 4 × (0.12 + 1.0 + 0.05) + 1.5 = 6.18 ms, 가장 큰 성분은 propagation (4.0 ms)
+|-
+| 3(c) || 2 Mbps (bottleneck), 20 s
+|-
+| 3(d) || datagram: 남은 packet 은 다른 경로로 / VC: circuit 이 끊겨 새로 setup. 순서 바뀜은 경로가 packet 마다 다를 수 있는 datagram 에서만
+|-
+| 3(e) || IP 는 못 찾는다 (checksum 은 header 만). 책임은 transport layer (hop 단위로는 data-link CRC)
+|-
+| 4(a) || 255.255.255.240 / 16 / 205.16.37.32 / 205.16.37.47
+|-
+| 4(b) || ① 200.1.4.0/22 와 ③ 150.20.33.96/27 가능. ② ④ 는 host 비트에 1
+|-
+| 4(c) || /23 16.0–17.255 · /24 18.0–18.255 · /25 19.0–19.127 · /26 19.128–19.191, 남은 64 개 = 130.56.19.192/26 (block 하나 가능)
+|-
+| 4(d) || (i) 140.24.7.0/24 (ii) 불가 → {140.24.7.0/25, 140.24.7.128/26}
+|-
+| 5(a) || 20 B / 64 B / D = 1, M = 0, offset 0, fragment 아님 / 64 hops / TCP
+|-
+| 5(b) || middle fragment, data byte 1,480 – 2,479
+|}
+{/answer}
 
 == 관련 문서 ==
 * [[시험 정보]] · [[공식 모음]] · [[자주 틀리는 함정 모음]]

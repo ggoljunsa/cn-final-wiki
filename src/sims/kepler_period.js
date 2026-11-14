@@ -18,6 +18,7 @@ window.SIMS = window.SIMS || {};
     moon: { h: 384000, name: "Example 5.1 — 달 (moon)", short: "달", addR: true },
     geo: { h: 35786, name: "Example 5.2 — GEO 위성", short: "GEO", addR: true },
     meo: { h: 18000, name: "MEO — GPS 위성", short: "MEO (GPS)", addR: true },
+    starlink: { h: 550, name: "LEO — Starlink 위성 (h = 550 km)", short: "Starlink", addR: true },
     leo: { h: 1200, name: "LEO — 고도 1,200 km 위성 (예)", short: "LEO (1,200 km)", addR: true },
     trap: { h: 384000, name: "함정 — 달, 반지름을 안 더함", short: "달 (틀린 풀이)", addR: false }
   };
@@ -90,6 +91,7 @@ window.SIMS = window.SIMS || {};
         { value: "moon", label: "Ex 5.1 달 (h = 384,000 km)" },
         { value: "geo", label: "Ex 5.2 GEO (h = 35,786 km)" },
         { value: "meo", label: "MEO GPS (h ≈ 18,000 km)" },
+        { value: "starlink", label: "LEO Starlink (h = 550 km)" },
         { value: "leo", label: "LEO 예 (h = 1,200 km)" },
         { value: "trap", label: "함정: 반지름 안 더함 (달)" }
       ] }
@@ -109,7 +111,7 @@ window.SIMS = window.SIMS || {};
         var days = T / 86400;
         conv = fx(days, 1) + " 일";
         convLine = comma(Tr) + " s ÷ 86,400 (s/일) ≈ " + fx(days, 1) + " 일";
-      } else if (key === "leo") {
+      } else if (key === "leo" || key === "starlink") {
         var mins = T / 60;
         conv = fx(mins, 1) + " min";
         convLine = comma(Tr) + " s ÷ 60 ≈ " + fx(mins, 1) + " min";
@@ -131,10 +133,14 @@ window.SIMS = window.SIMS || {};
         result = comma(Tr) + " s ≈ " + conv;
         meaning = "'''≈ 10.6 h''' — 하루에 지구를 두 바퀴 남짓 돈다. GPS 같은 [[MEO]] 위성은 지상에서 보면 천천히 움직인다.";
         noteEnd = "이 값은 슬라이드에 없는 파생값이다 (p.18 'altitude about 18,000 km' 에 같은 공식을 적용).";
+      } else if (key === "starlink") {
+        result = comma(Tr) + " s ≈ " + conv;
+        meaning = "'''≈ 96.1 min''' — 하루에 지구를 15 바퀴쯤 돈다. 슬라이드 p.20 'rotation period of 90 to 120 min' 범위 안이다. PS1 2(a) 와 같은 계산이다.";
+        noteEnd = "고도 550 km 는 PS1 2(a) 에 주어진 [[Starlink]] 값이다. 6378 을 빼먹으면 550^1.5/100 ≈ 129 s 가 나와서 정답 5,766 s 의 약 1/45 이 된다.";
       } else if (key === "leo") {
         result = comma(Tr) + " s ≈ " + conv;
         meaning = "'''≈ 110 min''' — 슬라이드 p.20 'rotation period of 90 to 120 min' 범위 안. [[LEO]] 는 빠르게 지나가므로 footprint 가 계속 움직인다.";
-        noteEnd = "이 값은 슬라이드에 없는 파생값이다 (고도 1,200 km 가정 — PS1 2(a) 와 겹치지 않게 11-13 에 550 km 에서 바꿈). 범위 양 끝: h=500 → 5,704 s ≈ 95 min, h=2000 → 7,669 s ≈ 128 min.";
+        noteEnd = "이 값은 슬라이드에 없는 파생값이다 (고도 1,200 km 가정. PS1 2(a) 의 550 km 는 Starlink 항목에 있다). 범위 양 끝: h=500 → 5,704 s ≈ 95 min, h=2000 → 7,669 s ≈ 128 min.";
       } else {
         result = comma(Tr) + " s — 틀린 값";
         meaning = "'''틀린 값''' 2,379,561 s (≈ " + conv + "). 정답 2,439,091 s 보다 약 59,530 s(≈ 0.7 일) 작다. 반지름을 빼먹으면 distance 가 작아져서 주기도 짧게 나온다.";
