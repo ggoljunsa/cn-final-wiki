@@ -33,5 +33,7 @@ Receiver 쪽 그림    : 1 3 4 2   — "Out of order"
 
 {analogy}🎭 '''친구 넷이 각자 택시 타고 같은 식당 가기.''' 목적지(DA)는 같지만 기사마다 길을 다르게 고르니 먼저 출발한 친구가 늦게 도착할 수도 있다. 미리 "같이 가자" 고 약속(setup)하지 않았기 때문.{/analogy}
 
+{info}📝 과제 연결: PS1 3(d) 가 datagram 과 virtual circuit 을 비교하게 한다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[virtual-circuit approach]] · [[packet switching]] · [[connectionless]] · [[forwarding table]] · [[IP]] · [[datagram]]

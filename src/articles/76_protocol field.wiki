@@ -31,6 +31,8 @@ Protocol 필드는 이 datagram 을 쓰는 상위 프로토콜을 나타내고, 
 
 {analogy}🎭 '''회사 우편물의 "부서명" 칸.''' 우편실(IP)은 봉투를 열지 않고 부서명(protocol)만 보고 영업부(TCP)·총무부(UDP)·감사실(ICMP)로 나눠 보낸다.{/analogy}
 
+{info}📝 과제 연결: PS1 5(a) 가 protocol 값을 읽게 한다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[IPv4 datagram format]] · [[Example 7.10 TTL과 protocol]] · [[ICMPv4]] · [[보조 프로토콜]]
 * 중간고사: [[mid:TCP]] · [[mid:UDP]] · [[mid:multiplexing]]

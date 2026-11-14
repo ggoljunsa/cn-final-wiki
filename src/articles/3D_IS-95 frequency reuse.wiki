@@ -46,5 +46,7 @@ CDMA (IS-95)
 # 1.
 {/answer}
 
+{info}📝 과제 연결: PS1 1(d) 가 이 내용을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[frequency reuse]] · [[reuse factor]] · [[co-channel interference]] · [[CDMA]] · [[IS-95 soft handoff]] · [[IS-95]]

@@ -39,6 +39,8 @@ channel bit rate 는 사용자 한 명의 bit rate 가 아니라 채널 하나�
 # 약 541.7 kbps. 26 × 8 × 312.5 = 65,000 bits, 65,000 ÷ 0.12 s = 541,666.7 bps. slot 비트 수에 비례하니 270.8 의 두 배다.
 {/answer}
 
+{info}📝 과제 연결: PS1 1(a)·1(b) 가 이 계산을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[GSM multiframe]] · [[GSM 프레임 구조]] · [[GMSK]] · [[GSM]]
 * [[공식 모음]] · 중간고사: [[mid:bit rate|bit rate]]

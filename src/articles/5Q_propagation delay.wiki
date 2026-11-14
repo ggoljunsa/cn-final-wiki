@@ -31,6 +31,8 @@ $$\text{Delay}_{pg} = \frac{\text{Distance}}{\text{Propagation speed}}$$
 
 {analogy}🎭 '''긴 터널에 공을 굴리기.''' 공 하나가 터널 끝까지 가는 시간이 propagation delay 다. 공을 100 개 굴리든 1 개 굴리든 '''공 하나'''가 건너는 시간은 같다. 터널 길이와 공의 속도만 상관있다.{/analogy}
 
+{info}📝 과제 연결: PS1 2(c)·3(a) 가 이 식을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[transmission delay]] · [[total delay 공식]] · [[processing delay]] · [[queuing delay]] · [[GEO]]
 * 중간고사: [[mid:propagation time]] · [[mid:T_p]] · [[mid:latency]] · [[mid:bandwidth-delay product]]

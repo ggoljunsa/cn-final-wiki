@@ -51,5 +51,7 @@ p.31 과 p.32 가 같은 제목 "Frequency Reuse Factor and Handoff" 로 묶인 
 # 두 개. {BS1, BS2} 를 거쳐 {BS2} 로 간다.
 {/answer}
 
+{info}📝 과제 연결: PS1 1(e) 가 이 내용을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[soft handoff]] · [[hard handoff]] · [[handoff]] · [[pilot channel]] · [[IS-95 frequency reuse]] · [[GPS 동기화]]

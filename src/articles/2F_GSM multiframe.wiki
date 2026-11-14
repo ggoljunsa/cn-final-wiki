@@ -29,5 +29,7 @@ traffic    = 24 frames,  control = 2 frames
 
 {warn}channel bit rate 를 구할 때는 control frame 까지 포함한 26 을 쓴다. 채널 위를 실제로 흐르는 비트이기 때문이다. 순수 사용자 데이터만 따질 때는 traffic frame 수와 slot 안의 user data 비트 수를 써야 한다. 문제가 어느 쪽을 묻는지 먼저 확인한다.{/warn}
 
+{info}📝 과제 연결: PS1 1(a)–1(c) 가 multiframe 구조를 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[GSM 프레임 구조]] · [[GSM channel bit rate]] · [[GSM]] · [[TDMA]]

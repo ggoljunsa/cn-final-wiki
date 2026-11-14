@@ -38,5 +38,7 @@ category: 3강 CDMA–4G, 용어
 # X. BS 가 계속 방송하고(continuously broadcasts) MS 가 듣는다.
 {/answer}
 
+{info}📝 과제 연결: PS1 1(e) 가 이 내용을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[IS-95 soft handoff]] · [[soft handoff]] · [[handoff]] · [[Walsh code]] · [[IS-95 forward 전송]]

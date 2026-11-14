@@ -236,6 +236,7 @@ FDMA·TDMA 시스템(AMPS, GSM)은 이웃 cell 의 주파수가 다르다. 넘�
 # W0, all 1s (p.29 digital channel 0).
 # X. 방향이 반대다. BS 가 계속 방송(continuously broadcasts)하고, MS 가 자기 cell 과 이웃 cell 의 pilot 을 듣는다.
 {/answer}
+{info}📝 과제 연결: PS1 1(d)·1(e) 가 이 절의 reuse factor 1 과 soft handoff 를 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
 
 == 목소리 다음은 데이터: 3G 의 청사진 IMT-2000 ⭐⭐⭐ ==
 p.33 도 글자만 있는 슬라이드다.

@@ -26,6 +26,8 @@ category: 5강 네트워크 계층, 용어
 
 {analogy}🎭 '''놀이공원 인기 기구 줄.''' 기구가 한 번 도는 시간(processing)은 늘 같지만, 손님이 몰리면(load) 줄 서는 시간(queuing)이 몇 배로 늘어난다. 그리고 줄은 '''기구 앞'''(라우터)에만 있다. 집(source)과 숙소(destination)에는 줄이 없다.{/analogy}
 
+{info}📝 과제 연결: PS1 3(a) 가 queuing 횟수를 세게 한다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[processing delay]] · [[total delay 공식]] · [[load와 성능]] · [[congestion control]]
 * 중간고사: [[mid:latency]] (queuing time)

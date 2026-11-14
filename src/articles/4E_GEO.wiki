@@ -35,5 +35,7 @@ category: 4강 위성, 용어
 # 35,786 km(Example 5.2). 35,405 km 는 22,000 miles 를 어림 환산한 값이다. 문제에 고도가 주어지면 그 값을 쓴다.
 {/answer}
 
+{info}📝 과제 연결: PS1 2(b)·2(c) 가 GEO 의 고도와 지연을 다룬다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[geostationary]] · [[line-of-sight]] · [[equatorial orbit]] · [[Example 5.2 정지궤도 주기]] · [[위성 세 범주]] · [[MEO]] · [[LEO]] · [[CH05 Satellite Network]]

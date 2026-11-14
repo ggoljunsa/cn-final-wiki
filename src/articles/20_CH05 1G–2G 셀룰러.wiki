@@ -267,6 +267,7 @@ p.25 는 GSM 의 200 kHz 칸 하나 안에서 무슨 일이 일어나는지 보�
 # 250 kbps. 100 × 4 × 50 = 20,000 bits, 20,000 ÷ 0.08 s = 250,000 bps. ms 를 s 로 바꾸는 것을 잊으면 1,000 배가 틀린다.
 # X. frame = 8 slots, multiframe = 26 frames. 슬라이드의 "# of frames: 26" 은 multiframe 기준이다.
 {/answer}
+{info}📝 과제 연결: PS1 1(a)–1(c) 가 이 절의 bit rate 계산을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
 
 == slot 156.25 bits 안에는 무엇이 들어 있나 ⭐ ==
 [[img:L10-26.png|p.26 — 위에서 아래로 65 bits(user data) → 114 bits(+ error control) → 156.25 bits(+ TDMA control) 가 분홍 slot 하나가 되고, 노란 상자는 26 frames = 24 traffic + 2 control, 120 ms|large]]

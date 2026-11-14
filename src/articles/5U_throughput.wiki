@@ -38,6 +38,8 @@ category: 5강 네트워크 계층, 용어
 # X. 가장 느린 링크(bottleneck)가 정한다.
 {/answer}
 
+{info}📝 과제 연결: PS1 3(c) 가 이 개념을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[bottleneck]] · [[load와 성능]] · [[transmission delay]] · [[total delay 공식]] · [[QoS]]
 * 중간고사: [[mid:throughput]] · [[mid:bandwidth]] · [[mid:bit rate]]

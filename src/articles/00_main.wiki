@@ -19,7 +19,7 @@ category: 안내
 * 시험이 코앞이면 → [[공식 모음]] → [[자주 틀리는 함정 모음]]
 * network layer 서비스 중 IP 가 무엇을 하는지 헷갈리면 → [[IP가 제공하는 서비스]] (p.18 표 하나)
 * IP 주소 block 계산(N · first · last · subnet)이 막히면 → [[block의 세 가지 정보]] · [[Example 7.5 subnet 설계]] (시뮬레이터 `cidr_block` · `subnet_alloc`)
-* '''PS1 (Problem Set 1, 마감 11/15 일)''' → [[PS1 풀이 가이드]]
+* '''PS1 (Problem Set 1, 마감 11/15 일)''' → [[PS1 풀이 가이드]] (소문항마다 강의 문서 절 · 새끼문제 · 시뮬레이터로 이어 준다)
 * FDM·TDM·FSK·FHSS 가 기억 안 나면 → [[중간고사 선수 개념]]
 * 시험 날짜·범위 → [[시험 정보]] (기말 비중 40%, 날짜·범위 미공지)
 

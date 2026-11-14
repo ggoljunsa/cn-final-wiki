@@ -36,5 +36,7 @@ category: 6강 IPv4 주소, 용어
 # 합친 큰 block (p.27 "Routers outside need only the larger block's prefix").
 {/answer}
 
+{info}📝 과제 연결: PS1 4(d) 가 aggregation 을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[Example 7.6]] · [[subnetting]] · [[ISP]] · [[ICANN]] · [[CIDR]] · [[forwarding table]] · [[network address]]

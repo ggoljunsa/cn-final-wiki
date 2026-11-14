@@ -84,6 +84,7 @@ $$\text{distance} = h + 6378$$
 # $9^{1.5} = 27$ 배.
 # 지구 중심, 6378.
 {/answer}
+{info}📝 과제 연결: PS1 2(a)·2(b) 가 이 절의 Kepler's law 를 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
 
 == 공식을 달에 대 보자: Example 5.1 ⭐⭐⭐ ==
 새 공식을 받으면 답을 이미 아는 대상에 먼저 넣어 보는 게 좋다. p.7 의 Example 5.1 이 그 일을 한다. 질문은 "What is the period of the moon, according to Kepler's law?" 다. 달은 지구의 자연 위성이니까 답이 한 달쯤 나와야 식이 맞다.

@@ -35,5 +35,7 @@ slot 안 사용자 음성 비율 = 65 / 156.25 ≈ 42 %
 
 {warn}frame 이 26 개 slot 이라고 헷갈리기 쉽다. frame = 8 slots 이고, multiframe = 26 frames 다. 슬라이드 p.25 의 "# of slots: 8 · # of frames: 26" 은 "frame 당 slot 8 개, multiframe 당 frame 26 개" 라는 뜻이다.{/warn}
 
+{info}📝 과제 연결: PS1 1(c) 가 slot 안의 비트 구성을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[GSM multiframe]] · [[GSM channel bit rate]] · [[TDMA]] · [[GSM]]

@@ -40,5 +40,7 @@ category: 6강 IPv4 주소, 용어
 # block 안의 주소에 AND mask 를 하면 나오는 값이 그 block 의 first 와 달라진다. 라우터가 구한 network address 가 실제 block 과 맞지 않게 된다.
 {/answer}
 
+{info}📝 과제 연결: PS1 4(b) 가 CIDR block 의 first address 규칙을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[slash notation]] · [[classless addressing]] · [[block allocation]] · [[block의 세 가지 정보]] · [[subnetting]] · [[address aggregation]]

@@ -54,6 +54,8 @@ $$\text{Total delay} = (n + 1)\,(\text{Delay}_{tr} + \text{Delay}_{pg} + \text{D
 
 {analogy}🎭 '''기차로 n 개 환승역을 거치는 여행.''' 구간(링크)은 역보다 하나 많다(n + 1). 구간마다 타는 시간(tr)과 달리는 시간(pg)이 들고, 각 역과 종착역에서 개찰구를 지나는 시간(pr)이 들고, '''환승역에서만''' 다음 기차를 기다린다(qu). 종착역에서는 기다릴 다음 기차가 없다.{/analogy}
 
+{info}📝 과제 연결: PS1 3(a)·3(b) 가 이 식을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[transmission delay]] · [[propagation delay]] · [[processing delay]] · [[queuing delay]] · [[throughput]] · [[공식 모음]]
 * 중간고사: [[mid:latency]] · [[mid:propagation time]] · [[mid:transmission time]]

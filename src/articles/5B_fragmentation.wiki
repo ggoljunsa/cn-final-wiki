@@ -31,6 +31,8 @@ category: 5강 네트워크 계층, 용어
 
 {info}L13(7강) 에서 자세히: 누가 나누고 합치나·identification·flags·offset 계산 → [[CH07 IPv4 데이터그램과 포워딩]] · [[fragmentation offset]] · [[flags D와 M]] · [[MTU]] · [[reassembly]]{/info}
 
+{info}📝 과제 연결: PS1 5(b) 가 fragment 의 data 범위를 구하게 한다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[packetizing]] · [[datagram]] · [[forwarding]] · [[CH07 네트워크 계층 서비스와 성능]]
 * 중간고사: [[mid:fragmentation]] (802.11) · [[mid:프레임 길이 제한]]

@@ -43,5 +43,7 @@ Three rules: ① $N_{sub}$ must be a power of 2 ② $n_{sub} = 32 - \log_2 N_{su
 # 200.10.0.168/29 (8) + 200.10.0.176/28 (16) + 200.10.0.192/26 (64). 88 은 2 의 거듭제곱이 아니라 한 block 이 될 수 없다.
 {/answer}
 
+{info}📝 과제 연결: PS1 4(c) 가 subblock 설계를 시킨다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[Example 7.5 subnet 설계]] · [[CIDR]] · [[block allocation]] · [[address aggregation]] · [[prefix와 suffix]] · [[CH07 IPv4 주소]]

@@ -57,5 +57,7 @@ $$\text{Period [s]} = C \times \text{distance}^{1.5}, \quad C \approx \frac{1}{1
 # distance = $(100 \times \text{Period})^{2/3}$ 를 구한 뒤 6378 을 뺀다. 고도 → 주기는 먼저 더하고, 주기 → 고도는 마지막에 뺀다.
 {/answer}
 
+{info}📝 과제 연결: PS1 2(a)·2(b) 가 이 식을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[period of a satellite]] · [[Example 5.1 달의 주기]] · [[Example 5.2 정지궤도 주기]] · [[geostationary]] · [[GEO]] · [[LEO]] · [[CH05 Satellite Network]] · [[공식 모음]]

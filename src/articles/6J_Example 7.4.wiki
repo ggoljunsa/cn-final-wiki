@@ -42,5 +42,7 @@ category: 6강 IPv4 주소, 용어
 # 없다. block 은 18.14.12.0 ~ 18.14.15.255 이고 셋째 바이트 16 은 그 범위를 넘는다.
 {/answer}
 
+{info}📝 과제 연결: PS1 4(b) 가 first address 규칙을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[block allocation]] · [[CIDR]] · [[ISP]] · [[block의 세 가지 정보]] · [[address mask]]

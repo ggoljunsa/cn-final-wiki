@@ -30,6 +30,8 @@ category: 5강 네트워크 계층, 용어
 
 {analogy}🎭 '''4 차선 고속도로 중간의 1 차선 공사 구간.''' 앞뒤가 4 차선이어도 시간당 지나가는 차는 1 차선 구간이 정한다. 내 차(WiFi)가 아무리 좋아도 공사 구간(캠퍼스 유선)에서 막힌다.{/analogy}
 
+{info}📝 과제 연결: PS1 3(c) 가 이 개념을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[throughput]] · [[load와 성능]] · [[congestion control]] · [[CH07 네트워크 계층 서비스와 성능]]
 * 중간고사: [[mid:Gigabit Ethernet]] · [[mid:Fast Ethernet]] · [[mid:WiFi]]

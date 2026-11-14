@@ -44,6 +44,8 @@ $$\text{Delay}_{tr} = \frac{\text{Packet length}}{\text{Transmission rate}}$$
 
 {analogy}🎭 '''톨게이트에서 버스 10 대가 빠져나가는 시간'''이 transmission delay 다. 게이트가 1 초에 1 대씩 통과시키면(rate) 10 대(packet length)는 10 초. 버스가 고속도로를 달려 다음 도시까지 가는 시간은 propagation delay 다.{/analogy}
 
+{info}📝 과제 연결: PS1 3(a)·3(b) 가 이 식을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[propagation delay]] · [[processing delay]] · [[queuing delay]] · [[total delay 공식]] · [[throughput]]
 * 중간고사: [[mid:transmission time]] · [[mid:latency]] · [[mid:bit rate]]

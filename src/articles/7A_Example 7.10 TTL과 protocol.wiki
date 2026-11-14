@@ -25,5 +25,7 @@ protocol 2 → '''IGMP''' (1 ICMP, 2 IGMP, 6 TCP, 17 UDP)
 
 [[sim:ipv4_header_decode]]
 
+{info}📝 과제 연결: PS1 5(a) 가 이 예제와 같은 순서로 푼다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[TTL]] · [[protocol field]] · [[IPv4 datagram format]] · [[Example 7.9 데이터 길이]] · [[Example 7.7 버전 판정]]

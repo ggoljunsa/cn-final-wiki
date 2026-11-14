@@ -35,5 +35,7 @@ Flags 는 3 bits: 첫 bit 예약, D 가 1 이면 fragmentation 금지, M 이 1 �
 
 [[sim:fragment_calc]]
 
+{info}📝 과제 연결: PS1 5(a)·5(b) 가 D bit 와 M bit 를 읽게 한다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[fragmentation offset]] · [[identification field]] · [[Example 7.14 fragment 위치 판정]] · [[fragmentation]] · [[ICMP error-reporting message]]

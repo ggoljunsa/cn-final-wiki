@@ -62,6 +62,8 @@ IP 패킷을 datagram 이라 부른다. header + payload 의 가변 길이이고
 # 최소 20 bytes(고정 5 행, options 없음, HLEN = 5), 최대 60 bytes(options 40 bytes, HLEN = 15). HLEN 은 4 bits 라 0–15 만 담을 수 있다. 그래서 header 길이를 4 로 나눈 값을 적는다.
 {/answer}
 
+{info}📝 과제 연결: PS1 5(a) 가 header 해독을 시킨다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[CH07 IPv4 데이터그램과 포워딩]] · [[datagram]] · [[packetizing]] · [[HLEN]] · [[total length]] · [[TTL]] · [[protocol field]] · [[header checksum]]
 * 중간고사: [[mid:IP]] · [[mid:캡슐화]]

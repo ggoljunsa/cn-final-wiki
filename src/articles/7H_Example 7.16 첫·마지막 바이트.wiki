@@ -27,5 +27,7 @@ last byte  = first + data − 1         = 800 + 80 − 1 = '''879'''
 
 [[sim:fragment_calc]]
 
+{info}📝 과제 연결: PS1 5(b) 가 이 예제와 같은 순서로 푼다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[fragmentation offset]] · [[HLEN]] · [[total length]] · [[Example 7.14 fragment 위치 판정]] · [[Example 7.9 데이터 길이]]

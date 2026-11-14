@@ -123,6 +123,7 @@ protocol = 0x02 → '''IGMP'''
 # 버린다. HLEN = 3 → header 12 bytes 인데 최소 20 bytes 에 못 미친다. VER 0100 = 4 는 맞으니 버전 탓이 아니다.
 # 28 − 20 = 8 bytes. hex 로 주어진 숫자는 10 진수로 먼저 바꿔야 한다.
 {/answer}
+{info}📝 과제 연결: PS1 5(a) 가 이 절의 header 해독을 쓴다. 5(b) 는 fragment 절, 4(d) 는 aggregation 절을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
 
 == 패킷이 frame 에 안 들어가면: MTU 와 fragmentation ⭐⭐⭐ ==
 [[img:L13-42.png|p.42 — 위의 IP datagram(Header + Payload)이 통째로 아래 frame 의 Frame Payload 칸에 들어간다. 그 칸의 최대 크기가 MTU|medium]]

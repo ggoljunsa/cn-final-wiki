@@ -33,5 +33,7 @@ Ex 7.16: offset 100 → first byte 800 → 800–879
 
 [[sim:fragment_calc]]
 
+{info}📝 과제 연결: PS1 5(a)·5(b) 가 offset 계산을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[fragmentation]] · [[flags D와 M]] · [[MTU]] · [[Example 7.16 첫·마지막 바이트]] · [[Example 7.14 fragment 위치 판정]] · [[HLEN]] (같은 "단위 바꿔 적기", 4 bytes)

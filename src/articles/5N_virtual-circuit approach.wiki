@@ -42,5 +42,7 @@ category: 5강 네트워크 계층, 용어
 
 {analogy}🎭 '''단체 관광 버스.''' 출발 전에 노선을 정하고(setup), 관광객(패킷)은 모두 같은 버스 번호표(VCI)를 달고 같은 길로 순서대로 이동한다. 여행이 끝나면 노선을 해산한다(teardown). 도로를 전세 내는 건 아니라서(virtual) 다른 차도 같은 도로를 쓴다.{/analogy}
 
+{info}📝 과제 연결: PS1 3(d) 가 datagram 과 virtual circuit 을 비교하게 한다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[VCI]] · [[datagram approach]] · [[packet switching]] · [[forwarding]] · [[circuit switching과 packet switching]] · [[IPSec]] (또 다른 connection-oriented)

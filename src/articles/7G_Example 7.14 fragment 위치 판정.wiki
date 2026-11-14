@@ -30,5 +30,7 @@ category: 7강 IPv4 데이터그램, 예제
 
 [[sim:fragment_calc]]
 
+{info}📝 과제 연결: PS1 5(b) 가 이 판정을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[flags D와 M]] · [[fragmentation offset]] · [[Example 7.16 첫·마지막 바이트]] · [[fragmentation]]

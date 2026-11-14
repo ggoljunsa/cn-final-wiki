@@ -26,5 +26,7 @@ Ex 7.9 : HLEN 5, total 0x0028
 
 {warn}total length 와 HLEN 의 '''단위가 다르다'''(1 byte vs 4 bytes). "40 − 5 = 35" 라고 빼면 틀린다.{/warn}
 
+{info}📝 과제 연결: PS1 5(a)·5(b) 가 total length 로 data 길이를 구하게 한다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[HLEN]] · [[IPv4 datagram format]] · [[Example 7.9 데이터 길이]] · [[Example 7.16 첫·마지막 바이트]] · [[fragmentation]]

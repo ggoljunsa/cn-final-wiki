@@ -41,6 +41,8 @@ network layer 의 error control 가운데 [[IP]] 가 해 주는 것은 일부뿐
 # △ Partly, ICMP.
 {/answer}
 
+{info}📝 과제 연결: PS1 3(e) 가 이 내용을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[ICMP]] · [[best effort]] · [[IP가 제공하는 서비스]] · [[datagram]]
 * 중간고사: [[mid:checksum]] · [[mid:CRC]]

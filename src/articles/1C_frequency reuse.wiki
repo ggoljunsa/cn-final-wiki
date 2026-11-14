@@ -47,6 +47,8 @@ category: 1강 셀룰러 동작, 용어
 # 21 ÷ 7 = 3 개. 그 세 cell 은 서로 맞닿지 않게 놓인다.
 {/answer}
 
+{info}📝 과제 연결: PS1 1(d) 가 이 개념을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[reuse factor]] · [[co-channel interference]] · [[IS-95 frequency reuse]] · [[cell]] · [[CDMA]]
 * [[FDMA]] · [[mid:channelization]] · [[mid:FDM]]

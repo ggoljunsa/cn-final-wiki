@@ -39,5 +39,7 @@ stationary 는 "정지한" 이고, geo-stationary 는 "지구(geo)에 대해 정
 # "a period of 24 h, which is the same as the rotation period of the Earth … stationary to the Earth." 계산과 뜻을 함께 쓴다.
 {/answer}
 
+{info}📝 과제 연결: PS1 2(b) 가 이 예제를 거꾸로 푸는 계산을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[Kepler's law]] · [[Example 5.1 달의 주기]] · [[geostationary]] · [[GEO]] · [[period of a satellite]] · [[CH05 Satellite Network]]

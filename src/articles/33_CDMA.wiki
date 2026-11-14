@@ -65,5 +65,7 @@ Forouzan 예제(슬라이드에 없음)로 보면, 4 스테이션의 채널 합�
 # (+1)(+1) + (−1)(+1) + (+3)(−1) + (+1)(−1) = 1 − 1 − 3 − 1 = −4, ÷4 = −1 → bit 0.
 {/answer}
 
+{info}📝 과제 연결: PS1 1(d) 가 CDMA 로 사용자를 나누는 방식을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[DSSS]] · [[Walsh code]] · [[FDMA]] · [[TDMA]] · [[IS-95]] · [[spread spectrum]] · [[mid:channelization]] · [[IS-95 frequency reuse]]

@@ -57,5 +57,7 @@ soft handoff 는 경계 구간에서 두 BS 가 동시에 통화를 잡고 있�
 # 2 개. 그 구간이 make before break 의 "make 했지만 아직 break 하지 않은" 시간이다.
 {/answer}
 
+{info}📝 과제 연결: PS1 1(e) 가 hard handoff 와 soft handoff 를 비교하게 한다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[handoff]] · [[hard handoff]] · [[IS-95 soft handoff]] · [[pilot channel]] · [[CDMA]] · [[IS-95]]

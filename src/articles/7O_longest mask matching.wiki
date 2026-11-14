@@ -34,5 +34,7 @@ R2 의 표 (p.66)              140.24.7.200 도착             140.24.7.42 도�
 # 180.70.65.200 AND /26 = 180.70.65.192 라서 첫 행에 맞고 m2 로 나간다. /25 로 AND 해도 180.70.65.128 로 맞지만, mask 가 더 긴(범위가 좁은) /26 행이 먼저다.
 {/answer}
 
+{info}📝 과제 연결: PS1 4(d) 가 aggregation 을 다룬다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[forwarding table]] · [[Example 7.19–7.21 R1 포워딩]] · [[address aggregation]] · [[hierarchical routing]] · [[address mask]] · [[CIDR]] · [[next hop]]

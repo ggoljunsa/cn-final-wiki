@@ -229,6 +229,7 @@ AND 는 mask 가 1 인 자리의 비트를 그대로 통과시키고, 0 인 자�
 # NOT(mask) = 0.0.0.7, N = 7 + 1 = 8.
 # mask 마지막 바이트 11110000. 203 = 11001011. AND → 11000000 = 192 → first 10.1.2.192. OR 00001111 → 11001111 = 207 → last 10.1.2.207.
 {/answer}
+{info}📝 과제 연결: PS1 4(a) 가 이 절의 mask 연산을 쓴다. 4(b)–4(d) 는 이 문서의 CIDR 규칙, subnetting, aggregation 절을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
 
 == 주소만으로는 모른다, 그리고 network address ==
 p.19 의 Example 7.3 은 "An address alone does not tell which block it belongs to" 를 보여 준다. 같은 230.8.24.56 이 n 에 따라 다른 block 에 들어간다.

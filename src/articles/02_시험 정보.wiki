@@ -22,7 +22,7 @@ category: 안내
 |-
 | 교수 강조 (CH07 (3) IPv6) || "'''a key difference between IPv4 and IPv6. Then you may be asked in exams''' … you should respond it this way, fragmentation … please remember that one" — IPv6 는 '''source 만''' fragmentation, router 는 큰 패킷을 drop([[IPv6 fragmentation]]). 그 밖에 "interface ID … 64 bits, please remember", autoconfiguration 은 "a key difference" || 11/10 녹음 39:06–39:45 · 15:47 · 19:17
 |-
-| '''과제 PS1''' || '''Problem Set 1 — 11/4 배포, 마감 11/15(일), LMS 제출'''. 범위: CH05 (1)(2), CH07 (1), CH07 (2) addressing · header · fragmentation → [[PS1 풀이 가이드]] || LMS (11/4)
+| '''과제 PS1''' || '''Problem Set 1 — 11/4 배포, 마감 11/15(일), LMS 제출'''. 범위: CH05 (1)(2), CH07 (1), CH07 (2) addressing · header · fragmentation. [[PS1 풀이 가이드]] 에 소문항별 강의 문서 절 · 사전 문서 · 시뮬레이터 · 연습할 새끼문제 표와 푸는 순서·함정·자기검산이 있다(답은 마감 뒤) || LMS (11/4)
 |-
 | 형식(참고) || 중간고사는 필기(손으로 작성)였고 OX·객관식(4~5지선다)·계산/단답·서술 유형이 섞였다. 교수는 "교재에만 있는 문제는 내지 않는다 — 슬라이드 중심"이라고 했다 || 9/22·10/6·10/8 녹음
 |}

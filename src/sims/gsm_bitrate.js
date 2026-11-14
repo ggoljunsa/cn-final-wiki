@@ -85,14 +85,10 @@ window.SIMS = window.SIMS || {};
     ],
     build: function (opts) {
       var mode = "channel";
-      var USER = 65, ERR = 114, SLOT = 156.25, NSLOT = 8, NFRAME = 26, NTRAFFIC = 24, T = 0.120;
+      var USER = 65, ERR = 114, SLOT = 156.25, NSLOT = 8, NFRAME = 26, T = 0.120;
       var frameBits = NSLOT * SLOT;            // 1250
       var multiBits = NFRAME * frameBits;      // 32500
       var chRate = multiBits / T;              // 270833.33 bps
-      var userBits = NFRAME * SLOT;
-      var userRate = userBits / T;             
-      var dataBits = USER * NTRAFFIC;          // 1560
-      var dataRate = dataBits / T;             // 13000 bps
       var frameMs = T * 1000 / NFRAME;         // 4.615 ms
 
       var lines = [

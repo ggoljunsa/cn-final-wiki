@@ -318,6 +318,7 @@ n = 2, L = 8,000 bits, R = 20 Mbps, d = 300 km, s = 2 × 10^8 m/s, Delay_pr = 40
 # Delay_tr + Delay_pg + Delay_pr. 링크 1 개, processing 은 destination 에서 1 번, queuing 은 0 번이다.
 # 링크 6, processing 6, queuing 5.
 {/answer}
+{info}📝 과제 연결: PS1 3(a)·3(b) 가 이 절의 total delay 공식을 쓴다. 3(c)–3(e) 는 이 문서의 throughput, packet switching, error control 절을 쓴다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
 
 == 가장 가는 관이 정한다: throughput 과 bottleneck ==
 [[img:L12-36.png|p.36 — a 의 세 링크 rate 200·100·150 Kbps 와 b 의 수도관을 같이 보라. 가운데 가는 관이 Bottleneck 이다|large]]

@@ -239,6 +239,7 @@ handoff 는 두 종류다. 교수는 그림을 먼저 보는 게 낫다며 p.16 
 # 3 km ÷ 300 km/h = 0.01 h = 36 초. 400 ÷ 3 ≈ 133 개. 30–40 초마다 handoff 가 한 번씩 일어나는 셈이라 soft handoff 를 유지하기 어렵다. 숫자는 설명용 가정이고 슬라이드 값이 아니다.
 # X. 그건 hard handoff 의 정의다. soft 는 "two BSs at the same time".
 {/answer}
+{info}📝 과제 연결: PS1 1(e) 가 hard handoff 와 soft handoff 를 비교하게 한다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
 
 == 우리 통신사 밖으로 나가면: roaming ⭐ ==
 handoff 는 같은 통신사 안에서 cell 을 옮기는 일이었다. 그런데 사용자가 아예 내 통신사가 깔아 둔 망 밖으로 나가면 어떻게 될까. p.17 이 그 상황이다.[* 교수: "Everyone would have heard about this roaming because we have to rely upon this one when specifically we are about to travel."(33:32)]

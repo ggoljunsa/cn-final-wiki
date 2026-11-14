@@ -62,5 +62,7 @@ Low Earth Orbit 은 낮은 궤도다. 낮으면 가깝고, 가까우면 세 가�
 # $(2000 + 6378)^{1.5}/100 \approx 7{,}669$ s ≈ 128 min. 120 min 보다 조금 길다. 슬라이드 값은 범위를 둥글게 적은 것이다.
 {/answer}
 
+{info}📝 과제 연결: PS1 2(a)·2(c)·2(d) 가 LEO 의 고도와 움직임을 다룬다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[footprint]] · [[UML과 GWL]] · [[ISL]] · [[Starlink]] · [[polar orbit]] · [[inclined orbit]] · [[위성 세 범주]] · [[GEO]] · [[MEO]] · [[cell]] · [[handoff]] · [[CH05 Satellite Network]]

@@ -25,6 +25,8 @@ Source ─ R1 ─ R2 ─ … ─ Rn ─ Dest.
 
 {analogy}🎭 '''택배 물류센터의 스캔·분류 작업.''' 상자를 내려 송장을 스캔하고(header), 파손 여부를 확인하고(check errors), 맞는 출구 벨트에 올린다(pass it on). 기다리는 줄(queuing)과는 별개로, '''작업 자체'''에 드는 시간이다.{/analogy}
 
+{info}📝 과제 연결: PS1 3(a) 가 processing 횟수를 세게 한다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[queuing delay]] · [[total delay 공식]] · [[transmission delay]] · [[propagation delay]] · [[packetizing]]
 * 중간고사: [[mid:latency]]
