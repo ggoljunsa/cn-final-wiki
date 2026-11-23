@@ -1,0 +1,40 @@
+key: 전송 계층 flow control
+title: 전송 계층 flow control — push 두 곳, pull 한 곳
+category: 10강 전송 계층, 용어
+---
+transport layer 의 flow control 은 받는 쪽이 넘치지 않게 보내는 속도를 조절한다. 두 곳에서 일어나고 buffer 두 개로 구현한다. L16 p.15, p.66.
+
+{def}"Flow control at two places: sending process → sender TL (Transport Layer), sender TL → receiver TL. Implemented with two buffers. When a buffer is full, tell the other side to stop." (p.15){/def}
+
+[[img:L16-15.png|p.15 — Messages are pushed(sender), Packets are pushed(TL → TL), Messages are pulled(receiver, Requests). 빨간 Flow control 화살표 두 개|medium]]
+
+== 왜 두 곳뿐인가 ==
+교수의 설명은 push 와 pull 이다(11/17 22:33–24:43).
+{|
+! 구간 || 방식 || flow control
+|-
+| sending process → sender TL || push (그냥 밀어 넣음) || 필요
+|-
+| sender TL → receiver TL || push || 필요
+|-
+| receiver TL → receiving process || pull (process 가 요청해서 가져감) || 필요 없음
+|}
+push 는 받는 쪽이 원하지 않아도 들어온다. 그래서 "멈춰" 신호가 필요하다. pull 은 받는 쪽이 준비됐을 때만 가져가니 넘칠 일이 없다.
+
+{exam}flow control 은 UDP 에는 없고 TCP 에만 있다(11/17 25:21). 그리고 error control 과 달리 같은 기기 안 계층 사이(process ↔ TL)에서도 일어난다.{/exam}
+
+TCP 는 이것을 [[receive window와 rwnd|rwnd]] 로 한다. 이 문서의 3계층 짝은 [[flow control]] 이다(IP 는 안 함).
+
+{analogy}🎭 깔때기에 물 붓기. 위에서 붓는 사람(push)은 깔때기가 넘치기 전에 "그만" 소리를 들어야 한다. 아래에서 컵으로 받는 사람(pull)은 컵이 차면 스스로 멈춘다.{/analogy}
+
+{mini}
+# flow control 이 필요 없는 구간과 그 이유를 쓰라.
+# flow control 과 error control 중 같은 기기 안에서도 일어나는 것은?
+{/mini}
+{answer}
+# receiver TL → receiving process. process 가 요청해서 가져가는(pull) 방식이라 넘치지 않는다.
+# flow control.
+{/answer}
+
+== 관련 문서 ==
+* [[전송 계층 error control]] · [[receive window와 rwnd]] · [[flow control]] · [[CH09 전송 계층과 UDP]]

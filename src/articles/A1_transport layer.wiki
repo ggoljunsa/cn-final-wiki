@@ -1,0 +1,36 @@
+key: transport layer
+title: transport layer (전송 계층) — process 와 process 를 잇는 4계층
+category: 10강 전송 계층, 용어
+---
+'''transport layer''' 는 TCP/IP 다섯 계층 가운데 넷째 계층이다. application layer 와 network layer 사이에 있고, 서로 다른 host 의 '''process 와 process''' 를 잇는다. L16 p.4–6.
+
+{def}"Transport layer: delivers messages process to process. Builds on the network layer's host-to-host delivery. Port numbers pick the right process on the host." (p.4)
+"Transport layer sits between the application and network layers. Provides process-to-process communication between two application layers." (p.6){/def}
+
+== 이름에서 ==
+transport 는 "실어 나른다" 는 뜻이다. 무엇을 실어 나르나. application 의 메시지를 상대 application 까지 나른다. 그 아래 [[network layer]] 는 [[host-to-host delivery|host 까지만]] 데려다주니, 마지막 한 걸음(어느 process 인가)을 이 계층이 맡는다.
+
+== 어디에 있나 ==
+[[img:L16-06.png|p.6 — 빨간 Logical Connection 은 양 끝 host 의 transport layer 사이에만 있다|medium]]
+위 그림처럼 transport layer 는 '''end host 에만''' 있다. 라우터는 3계층까지라서 transport layer 가 없다. 교수는 이것을 "key distinction" 이라고 했다(11/17 07:39).
+
+== 하는 일 (p.7) ==
+* [[port number]] 로 process 구분 → [[process-to-process delivery]]
+* [[multiplexing과 demultiplexing]]
+* [[전송 계층 flow control|flow control]] · [[전송 계층 error control|error control]] · [[congestion control]]
+* [[connectionless service와 connection-oriented service|connectionless 또는 connection-oriented]] 서비스
+프로토콜은 [[UDP]] · [[TCP]] · [[SCTP]] 셋이다.
+
+{analogy}🎭 network layer 가 아파트 단지 입구까지 오는 택배차라면, transport layer 는 동·호수를 보고 집 앞까지 들고 가는 경비실이다. 택배차가 지나는 중간 물류센터(라우터)에는 경비실이 없다.{/analogy}
+
+{mini}
+# transport layer 가 있는 장치를 모두 고르라. (a) client host (b) 라우터 (c) server host (d) link-layer switch
+# network layer 와 transport layer 의 전달 단위(무엇과 무엇을 잇는가)를 쓰라.
+{/mini}
+{answer}
+# (a), (c). 라우터는 3계층, 스위치는 2계층까지다.
+# network layer 는 host to host, transport layer 는 process to process.
+{/answer}
+
+== 관련 문서 ==
+* [[CH09 전송 계층과 UDP]] · [[process-to-process delivery]] · [[network layer]] · [[mid:transport layer]]

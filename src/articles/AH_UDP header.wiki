@@ -1,0 +1,42 @@
+key: UDP header
+title: UDP header — 8 bytes, 칸 네 개
+category: 10강 전송 계층, 용어
+---
+'''UDP header''' 는 8 bytes 고정이다. 2 bytes 칸 네 개로 되어 있다. L16 p.34.
+
+{def}"Fixed 8-byte header: four 2-byte fields. Total length = header + data (≤ 65,535 − IP header, since it rides in one IP datagram)." (p.34){/def}
+
+[[img:L16-34.png|p.34 — b. Header format: 0–15 Source port number, 16–31 Destination port number / Total length, Checksum|medium]]
+
+{|
+! bits || 칸 || 뜻
+|-
+| 0–15 || Source port number || 보낸 process
+|-
+| 16–31 || Destination port number || 받을 process
+|-
+| 32–47 || Total length || header + data (bytes)
+|-
+| 48–63 || Checksum || [[pseudoheader]] + header + data 로 계산. optional(0 이면 안 씀)
+|}
+
+== 읽는 법 ==
+hex 로 16 자리가 주어지면 4 자리씩 끊는다. data = total length − 8. 작은 port(well-known) 쪽이 server. → [[Example UDP header 읽기]]
+
+[[sim:udp_header_read]]
+
+{tip}TCP header 는 20–60 bytes 다. 교수는 이 비교를 11/19 에 몇 번 했다. IPv4 header 의 [[total length]] 처럼 UDP 의 total length 도 header 를 포함한다.{/tip}
+
+{analogy}🎭 엽서 앞면의 네 칸: 보내는 사람 호수, 받는 사람 호수, 엽서 크기, 훼손 확인용 도장.{/analogy}
+
+{mini}
+# UDP header 에 sequence number 칸이 없는 이유를 UDP 의 성질로 설명하라.
+# total length = 0x0200 이다. data 길이는?
+{/mini}
+{answer}
+# connectionless 라 datagram 이 서로 독립이고 번호를 매기지 않는다(p.37). 재전송도 없으니 번호가 필요 없다.
+# 0x200 = 512, data = 504 bytes.
+{/answer}
+
+== 관련 문서 ==
+* [[UDP]] · [[Example UDP header 읽기]] · [[pseudoheader]] · [[TCP segment format]]

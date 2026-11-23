@@ -1,0 +1,41 @@
+key: three-way handshake
+title: three-way handshake — SYN, SYN+ACK, ACK 로 연결 열기
+category: 11강 TCP, 용어
+---
+{info}이 절의 p.55 이후 내용은 11/24 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
+
+TCP 는 segment 세 개를 주고받아 연결을 연다. L16 p.56–57.
+
+{def}"Server: passive open (ready to accept); client: active open (wants to connect). ① Client → SYN: synchronize its sequence number (uses 1 seq. number). ② Server → SYN + ACK: its own seq. number + ACK of the SYN (uses 1 seq. number). ③ Client → ACK: acknowledges the SYN+ACK (uses no seq. number)." (p.56){/def}
+
+[[img:L16-57.png|p.57 — SYN seq 8000 → SYN + ACK seq 15000, ack 8001, rwnd 5000 → ACK seq 8001, ack 15001, rwnd 10000|medium]]
+
+<pre class="txt">
+① Client → SYN          seq = 8000                   번호 1 개 씀
+② Server → SYN + ACK    seq = 15000, ack = 8001       번호 1 개 씀
+③ Client → ACK          seq = 8001,  ack = 15001      번호 안 씀
+   첫 data segment       seq = 8001                   (③ 이 번호를 안 썼으니)
+</pre>
+
+== 이름에서 ==
+three-way = 세 번 오감, handshake = 악수. "안녕(SYN)" "안녕, 들었어(SYN+ACK)" "응, 들었어(ACK)". 양쪽이 서로의 시작 번호를 확인해야 하니 세 번이 필요하다.
+
+[[anim:three_way_handshake_anim|세 화살표의 seq·ack 가 어떻게 이어지는지 보라]]
+
+[[sim:tcp_seq_ack]]
+
+{warn}passive open 은 server(기다림), active open 은 client(먼저 말 검). 반대로 쓰기 쉽다.{/warn}
+
+약점은 [[SYN flooding attack]] 이다. 닫을 때는 [[connection termination과 half close]].
+
+{mini}
+# client ISN 1200, server ISN 4800. 세 segment 의 seq/ack 를 쓰라.
+# SYN 이 data 없이도 번호를 쓰는 것을 확인할 수 있는 숫자는?
+{/mini}
+{answer}
+# SYN seq 1200 / SYN+ACK seq 4800 ack 1201 / ACK seq 1201 ack 4801.
+# server 의 ack = ISN + 1 (8001). SYN 이 8000 을 썼기 때문이다.
+{/answer}
+
+== 관련 문서 ==
+* [[control flags]] · [[TCP sequence number와 ISN]] · [[SYN flooding attack]] · [[CH09 TCP]]

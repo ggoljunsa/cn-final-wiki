@@ -1,0 +1,39 @@
+key: UDP를 쓰는 경우
+title: UDP 를 쓰는 경우 — 없는 기능이 장점이 될 때
+category: 10강 전송 계층, 용어
+---
+UDP 는 기능이 적지만 그 덕분에 빠르고 가볍다. 슬라이드는 언제 UDP 를 고르는지 세 가지 이유와 예를 든다. L16 p.39.
+
+{def}"Why choose UDP? Connectionless: a short request and a short reply, with no setup delay. No error control: no waiting for a resent part (bad for real-time media). No congestion control: no extra traffic in an error-prone network." (p.39){/def}
+
+[[img:L16-39.png|p.39 — Typical UDP use: Simple request-response = DNS · Real-time interactive apps = Voice / video calls · Management, route updates, multicast = SNMP, RIP (Ch. 8)|medium]]
+
+== 이유 세 가지 ==
+* connectionless → 연결 setup 시간이 없다. 짧은 질의응답에 좋다.
+* no error control → 다시 보낸 조각을 기다리지 않는다. 실시간 영상·음성은 늦게 온 조각이 쓸모없다.
+* no congestion control → 오류 많은 네트워크에 트래픽을 더 얹지 않는다.
+
+== 예 ==
+{|
+! 용도 || 예 || 교수 설명(11/19)
+|-
+| 간단한 요청-응답 || DNS || 도메인 이름 → IP 주소, 매일 쓴다(dgist.ac.kr)
+|-
+| 실시간 대화형 || voice / video call || 빠르니까
+|-
+| 관리, 경로 갱신, multicast || SNMP, [[RIP]] || 단순하고 효율적
+|}
+
+{analogy}🎭 길 묻기(DNS)는 "여기서 역 어디예요?" "저쪽이요." 로 끝난다. 굳이 악수(handshake)하고 명함 교환할 필요가 없다. 생방송은 놓친 장면을 다시 틀어 주는 것보다 그냥 다음 장면으로 넘어가는 게 낫다.{/analogy}
+
+{mini}
+# 실시간 영상 통화에서 "error control 이 없다" 가 장점인 이유를 쓰라.
+# CH08 의 어느 라우팅 프로토콜이 UDP 를 쓰는가?
+{/mini}
+{answer}
+# 잃어버린 조각을 다시 받으려 기다리면 화면·소리가 멈춘다. 늦게 온 조각은 이미 쓸모가 없다.
+# RIP (UDP port 520).
+{/answer}
+
+== 관련 문서 ==
+* [[UDP]] · [[UDP와 TCP 비교]] · [[RIP]] · [[CH09 전송 계층과 UDP]]

@@ -1,0 +1,36 @@
+key: connection termination과 half close
+title: connection termination 과 half close — FIN, FIN+ACK, ACK
+category: 11강 TCP, 용어
+---
+{info}이 절의 p.55 이후 내용은 11/24 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
+
+TCP 연결을 닫는 것도 three-way handshaking 이다. 한 방향만 닫는 half close 와 즉시 끊는 RST 도 있다. L16 p.60–61.
+
+{def}"Termination with three-way handshaking. ① Client → FIN: may carry its last data; uses 1 seq. number if no data. ② Server → FIN + ACK: confirms the client's FIN and closes its own direction. ③ Client → ACK: confirms the server's FIN. A half close is also possible: one side stops sending but keeps receiving. A connection can also be aborted with RST (reset)." (p.60){/def}
+
+[[img:L16-61.png|p.61 — Active close: FIN(seq x, ack y) → Passive close: FIN + ACK(seq y, ack x + 1) → ACK(seq x + 1, ack y + 1)|medium]]
+
+<pre class="txt">
+① FIN          seq x                 data 없으면 번호 1 개
+② FIN + ACK    seq y, ack x + 1      번호 1 개
+③ ACK          seq x + 1, ack y + 1  번호 안 씀
+</pre>
+
+== 세 가지 닫는 법 ==
+* '''three-way''': 위 순서. 양쪽 다 닫는다.
+* '''half close''': 한쪽은 보내기를 멈추고 받기만 계속한다. full-duplex 라 두 방향이 독립이어서 가능하다.
+* '''RST''': 바로 끊는다(abort).
+
+{analogy}🎭 통화 끝. "이제 끊을게(FIN)" "응 나도 끊을게(FIN+ACK)" "응(ACK)". half close 는 "난 할 말 끝났는데 너는 계속 말해" 이다.{/analogy}
+
+{mini}
+# FIN 의 seq 가 9,000(data 없음)일 때 ②의 ack 와 ③의 seq 는?
+# half close 상태에서 닫힌 쪽이 여전히 할 수 있는 일은?
+{/mini}
+{answer}
+# ② ack = 9,001, ③ seq = 9,001.
+# 받기(그리고 받은 것에 ACK 보내기).
+{/answer}
+
+== 관련 문서 ==
+* [[three-way handshake]] · [[control flags]] · [[mid:full-duplex]]

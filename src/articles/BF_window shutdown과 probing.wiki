@@ -1,0 +1,34 @@
+key: window shutdown과 probing
+title: window shutdown 과 probing — rwnd = 0 과 1-byte probe
+category: 11강 TCP, 용어
+---
+{info}이 절의 p.55 이후 내용은 11/24 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
+
+receiver 가 rwnd = 0 을 보내면 sender 는 멈춘다(window shutdown). 그래도 sender 는 가끔 1-byte segment 를 보내 본다(probing). deadlock 을 막기 위해서다. L16 p.70.
+
+{def}"Window shutdown: receiver sends rwnd = 0. Sender stops sending until a new advertisement arrives. Probing: the sender may still send a 1-byte segment. Prevents a deadlock (e.g., the new advertisement was lost)." (p.70){/def}
+
+[[img:L16-70.png|p.70 — ACK, rwnd = 0 → stop → probe (1 byte) → ACK, rwnd = 0 → ACK, rwnd = 2000 → resume|small]]
+
+== deadlock 시나리오 ==
+# receiver: rwnd = 0. sender 멈춤.
+# receiver buffer 가 비어 "rwnd = 2000" 을 보낸다. 그런데 이 segment 가 사라진다.
+# sender 는 아직 0 이라 믿고 기다린다. receiver 는 광고했으니 data 를 기다린다.
+# 둘 다 영원히 기다린다.
+probe 를 보내면 receiver 가 거기에 ACK 하면서 최신 rwnd 를 다시 알려 준다.
+
+{tip}ACK segment 는 ACK 받지 않으니(p.72), 사라진 광고를 receiver 가 알 방법이 없다. 그래서 sender 쪽에서 물어보는 장치가 필요하다.{/tip}
+
+{analogy}🎭 "지금 바빠, 연락하지 마" 라고 한 친구. 나중에 "이제 괜찮아" 문자를 보냈는데 안 갔다. 가끔 "ㅎㅇ" 한 글자를 보내 보면 답이 온다.{/analogy}
+
+{mini}
+# probe segment 의 data 크기는?
+# probing 이 없으면 생기는 문제를 한 단어로.
+{/mini}
+{answer}
+# 1 byte.
+# deadlock.
+{/answer}
+
+== 관련 문서 ==
+* [[receive window와 rwnd]] · [[send window]] · [[silly window syndrome]]

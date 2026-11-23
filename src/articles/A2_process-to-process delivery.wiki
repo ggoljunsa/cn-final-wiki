@@ -1,0 +1,30 @@
+key: process-to-process delivery
+title: process-to-process delivery — host 안의 맞는 프로그램까지
+category: 10강 전송 계층, 용어
+---
+'''process-to-process delivery''' 는 transport layer 의 첫째 서비스다. 메시지를 상대 host 의 '''맞는 process''' 까지 건넨다. L16 p.4, p.8.
+
+{def}"A process = a running application program that uses the transport layer. Network layer delivers to the right computer (host-to-host). Transport layer hands the message to the right process on it." (p.8){/def}
+
+== 이름에서 ==
+process 는 실행 중인 프로그램이다. 교수는 "You can think of it as just a program" 이라고 했다(11/17 03:54). 한 컴퓨터에 브라우저, 메신저, 음악 앱이 동시에 돌면 process 가 셋이다.
+
+== host-to-host 와의 관계 ==
+[[img:L16-05.png|p.5 — 아래 회색 선(network layer: host to host) 위에 파란 선(transport layer: process to process)이 얹혀 있다|medium]]
+[[host-to-host delivery]] 가 먼저 있어야 한다. IP 가 Host B 까지 datagram 을 가져다 놓으면, transport layer 가 [[port number]] 를 보고 P1·P2·P3 중 하나에 준다. 슬라이드 표현으로는 "Builds on the network layer's host-to-host delivery" 다.
+
+주소도 계층마다 다르다. 2계층은 MAC 주소, 3계층은 IP address, 4계층은 port number 다. 이 둘(IP + port)을 합친 것이 [[socket address]] 다.
+
+{analogy}🎭 우편물 주소 "대구 달성군 OO로 1, 302호 홍길동". 도로명 주소까지가 host-to-host, "302호" 가 process 다.{/analogy}
+
+{mini}
+# process-to-process delivery 에 필요한 두 주소를 쓰라.
+# UDP 와 TCP 중 process-to-process delivery 를 하는 것은?
+{/mini}
+{answer}
+# IP address(host 선택) + port number(process 선택) = socket address.
+# 둘 다 한다. UDP 가 IP 에 더하는 거의 유일한 기능이 이것이다(p.33).
+{/answer}
+
+== 관련 문서 ==
+* [[transport layer]] · [[port number]] · [[socket address]] · [[host-to-host delivery]] · [[CH09 전송 계층과 UDP]]

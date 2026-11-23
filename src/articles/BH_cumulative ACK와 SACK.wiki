@@ -1,0 +1,39 @@
+key: cumulative ACK와 SACK
+title: cumulative ACK 와 SACK (selective ACK)
+category: 11강 TCP, 용어
+---
+{info}이 절의 p.55 이후 내용은 11/24 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
+
+TCP ACK 는 기본이 cumulative(다음 기다리는 byte 하나)이고, 새 TCP 는 option 으로 SACK(받은 byte 덩어리 목록)을 더한다. L16 p.73, p.65.
+
+{def}"ACKs are mainly cumulative (next byte expected); newer TCP adds selective ACKs." (p.65){/def}
+
+[[img:L16-73.png|p.73 — Cumulative ACK vs Selective ACK (SACK) 표|medium]]
+{|
+! || Cumulative ACK || Selective ACK (SACK)
+|-
+| Reports || next byte expected || out of order 또는 duplicated 된 byte 덩어리
+|-
+| Meaning || 그 앞은 다 도착 || sender 를 위한 추가 정보
+|-
+| Where || ACK number 칸 || TCP option
+|-
+| Role || 주 메커니즘 || ACK 에 더할 뿐, 대신하지 않음
+|}
+
+== 왜 SACK 이 필요한가 ==
+cumulative ACK 는 빈칸 앞까지만 말한다. 1–100, 201–300, 301–400 을 받아도 ACK 는 101 이다. sender 는 201–400 이 도착했는지 모른다. SACK 은 "201–400 은 받았다" 를 option 으로 알려 빠진 101–200 만 다시 보내게 한다.
+
+{analogy}🎭 cumulative 는 "3번 문제까지 풀었어", SACK 은 "그리고 5, 6번도 풀었어" 를 덧붙이는 것.{/analogy}
+
+{mini}
+# SACK 정보는 header 의 어디에 실리는가?
+# "SACK 을 쓰면 ACK number 칸은 비운다." O/X
+{/mini}
+{answer}
+# TCP option.
+# X. SACK 은 cumulative ACK 에 더할 뿐 대신하지 않는다.
+{/answer}
+
+== 관련 문서 ==
+* [[acknowledgment number]] · [[RTO와 fast retransmission]] · [[TCP segment format]]

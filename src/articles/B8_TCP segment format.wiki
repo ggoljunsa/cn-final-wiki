@@ -1,0 +1,52 @@
+key: TCP segment format
+title: TCP segment format — header 20–60 bytes
+category: 11강 TCP, 용어
+---
+TCP segment 는 header(20–60 bytes) + data 다. header 의 고정 부분은 32-bit 줄 다섯 개(20 bytes)이고, options 가 최대 40 bytes 붙는다. L16 p.51–54.
+
+{def}"Segment = header (20–60 bytes) + data." (p.51){/def}
+
+[[img:L16-51.png|p.51 — b. Header: Source/Destination port · Sequence number · Acknowledgment number · HLEN, Reserved, URG ACK PSH RST SYN FIN, Window size · Checksum, Urgent pointer · Options and padding|medium]]
+
+{|
+! 칸 || bits || 뜻
+|-
+| Source / destination port || 16 + 16 || [[port number]]
+|-
+| Sequence number || 32 || segment 첫 byte 번호 → [[TCP sequence number와 ISN]]
+|-
+| Acknowledgment number || 32 || 다음 기다리는 byte → [[acknowledgment number]]
+|-
+| HLEN || 4 || header 길이 ÷ 4 (5–15)
+|-
+| Reserved || 6 ||
+|-
+| Control || 6 || [[control flags]]
+|-
+| Window size || 16 || rwnd (bytes, 최대 65,535) → [[receive window와 rwnd]]
+|-
+| Checksum || 16 || [[pseudoheader]] 포함, UDP 와 같은 방법
+|-
+| Urgent pointer || 16 || URG = 1 일 때만
+|-
+| Options + padding || 0–320 || 최대 40 bytes
+|}
+
+== HLEN ==
+IPv4 의 [[HLEN]] 과 같이 4 를 곱한다. 5 → 20 B, 15 → 60 B. 교수: "multiply it with 4"(11/19 35:30). 그래서 options 는 60 − 20 = 40 bytes 까지다.
+
+{exam}header 20–60 bytes(UDP 8 bytes 와 대비), HLEN × 4. 11/19 에 교수가 칸을 하나씩 짚었다.{/exam}
+
+{analogy}🎭 택배 송장이 UDP 는 네 칸짜리 스티커, TCP 는 번호·수령 확인·창고 여유·특급 표시까지 적는 서류철이다.{/analogy}
+
+{mini}
+# HLEN = 0110 이다. header 와 options 길이는?
+# options 가 최대 40 bytes 인 이유를 HLEN 으로 설명하라.
+{/mini}
+{answer}
+# 6 × 4 = 24 bytes, options 4 bytes.
+# HLEN 은 4 bits 라 최대 15 → 15 × 4 = 60 bytes. 고정 20 bytes 를 빼면 40.
+{/answer}
+
+== 관련 문서 ==
+* [[control flags]] · [[UDP header]] · [[segment]] · [[CH09 TCP]]

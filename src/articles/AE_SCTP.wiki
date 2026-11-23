@@ -1,0 +1,27 @@
+key: SCTP
+title: SCTP (Stream Control Transmission Protocol) — UDP 와 TCP 를 합친 셋째 프로토콜
+category: 10강 전송 계층, 용어
+---
+'''SCTP''' 는 인터넷 transport layer 의 셋째 프로토콜이다. 슬라이드에는 한 줄만 있다. L16 p.31.
+
+{def}"SCTP: combines features of UDP and TCP." (p.31){/def}
+
+[[img:L16-31.png|p.31 — Transport layer 칸에 SCTP · TCP · UDP 가 나란히 있다|medium]]
+
+== 수업에서 ==
+교수는 "we will not go into detail on this one in this lecture" 라고 했고, "not that famous" 라고 덧붙였다(11/17 40:00–41:04). 이름과 위 한 줄만 알면 된다.
+
+== 이름에서 ==
+Stream Control Transmission Protocol. 이름에 stream 이 들어간다. TCP 처럼 reliable 하게 보내면서 UDP 처럼 메시지 경계를 지키고, 한 연결 안에 여러 stream 을 둘 수 있다(Forouzan 보충 — 슬라이드에 없음).
+
+{analogy}🎭 택배(UDP)의 "상자 단위" 와 수도관(TCP)의 "끊기지 않고 확실하게" 를 섞은 혼합형 배송 서비스.{/analogy}
+
+{mini}
+# 인터넷 transport protocol 세 가지를 쓰라.
+{/mini}
+{answer}
+# UDP, TCP, SCTP.
+{/answer}
+
+== 관련 문서 ==
+* [[UDP]] · [[TCP]] · [[transport layer]]

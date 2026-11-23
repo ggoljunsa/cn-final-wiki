@@ -1,0 +1,46 @@
+key: 전송 계층 error control
+title: 전송 계층 error control — 손상·분실·중복·순서를 고친다
+category: 10강 전송 계층, 용어
+---
+transport layer 의 error control 은 application 이 원할 때 전달을 reliable 하게 만든다. sender 와 receiver 의 transport layer 사이에서만 일어난다. L16 p.16–21.
+
+{def}"Makes the transport layer reliable when the application needs it. Detect and discard corrupted packets. Find lost packets and resend them. Discard duplicates; buffer out-of-order packets until the missing ones arrive. Only the sending and receiving transport layers take part." (p.16){/def}
+
+[[img:L16-16.png|p.16 — Error control 화살표가 Sender 와 Receiver 의 Transport layer 사이에만 있다|small]]
+
+== 할 일 네 가지 ==
+{|
+! 문제 || 하는 일
+|-
+| corrupted (손상) || 찾아서 버린다
+|-
+| lost (분실) || 찾아서 다시 보낸다
+|-
+| duplicate (중복) || 버린다
+|-
+| out-of-order (순서 틀림) || 빠진 것이 올 때까지 buffer 에 둔다
+|}
+
+== 도구 ==
+* [[sequence number]]: 무엇이 빠졌고 무엇이 중복인지 알려면 번호가 있어야 한다.
+* [[ACK와 retransmission timer|ACK 와 timer]]: 받았다는 확인, 안 오면 다시 보내기.
+* checksum: 손상 확인.
+* [[sliding window]]: 여러 개를 보내 두고 관리.
+
+{exam}'''error control 은 sender TL ↔ receiver TL 사이에서만''' 일어난다. flow control 은 같은 기기의 계층 사이에서도 일어난다. 교수 "key distinction"(11/17 27:16).{/exam}
+
+[[UDP]] 는 optional checksum 만 있다(△). [[TCP]] 는 다 한다 → [[RTO와 fast retransmission]].
+
+{analogy}🎭 등기우편. 번호(sequence number)를 붙여 보내고, 받으면 수령 확인(ACK)을 돌려받는다. 일정 기간 확인이 안 오면 다시 보낸다(timer). 같은 번호 편지가 두 번 오면 하나는 버린다.{/analogy}
+
+{mini}
+# error control 의 네 가지 문제와 각 대응을 짝지으라.
+# UDP 의 error control 이 △ 인 이유는?
+{/mini}
+{answer}
+# 손상 → 버림, 분실 → 재전송, 중복 → 버림, 순서 틀림 → buffer 에 저장.
+# checksum 으로 손상을 알아챌 수는 있지만(optional) ACK 와 재전송이 없어서 되찾지는 못한다.
+{/answer}
+
+== 관련 문서 ==
+* [[전송 계층 flow control]] · [[sequence number]] · [[ACK와 retransmission timer]] · [[IP의 error control]]

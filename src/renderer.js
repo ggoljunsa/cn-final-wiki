@@ -5,24 +5,111 @@
 
 var BOX_TYPES = ["info", "warn", "tip", "joke", "analogy", "def", "quiz", "exam"];
 
-function renderNav(active) {
+// 사이드바: [강의 · 공통] 탭 + 접히는 강의 그룹 + 중간 위키 외부 링크 (algo-wiki renderNav 이식, 11-23).
+// 탭은 현재 문서가 속한 쪽을 따라가고(대문·공통 문서면 마지막으로 고른 탭, 처음엔 강의),
+// 그룹은 현재 문서가 든 것만 펼친다. 사용자가 연 그룹·고른 탭은 localStorage 에 기억한다.
+var NAV_SECTIONS = [
+  { id: "lecture", label: "강의", tip: "기말 범위 강의별 문서 (1강 CH05 ~)" },
+  { id: "common", label: "공통", tip: "안내 · 시험 정보 · 공식 · 함정 · 과제 · 기타 용어" }
+];
+var MID_WIKI_URL = "https://ggoljunsa.github.io/cn-wiki/";
+var navTab = null;          // 사용자가 직접 고른 탭 (없으면 문서 기준)
+var navOpenGroups = {};     // 사용자가 펼친 그룹 이름 → true/false
+
+function navLoad() {
+  try {
+    navTab = localStorage.getItem("cnf-nav-tab");
+    navOpenGroups = JSON.parse(localStorage.getItem("cnf-nav-open") || "{}") || {};
+  } catch (e) { navOpenGroups = {}; }
+}
+function navSave() {
+  try {
+    if (navTab) localStorage.setItem("cnf-nav-tab", navTab);
+    localStorage.setItem("cnf-nav-open", JSON.stringify(navOpenGroups));
+  } catch (e) {}
+}
+navLoad();
+
+function navGroups() { return typeof NAV_ORDER !== "undefined" ? NAV_ORDER : []; }
+
+function groupOf(key) {
+  var gs = navGroups();
+  for (var i = 0; i < gs.length; i++) if (gs[i].items.indexOf(key) !== -1) return gs[i];
+  return null;
+}
+
+function renderNav(active, chosenTab) {
   var nav = document.getElementById("navList");
   nav.innerHTML = "";
-  (typeof NAV_ORDER !== "undefined" ? NAV_ORDER : []).forEach(function (group) {
-    var groupHeader = document.createElement("li");
-    var gdiv = document.createElement("div");
-    gdiv.style.cssText = "font-weight:700; color:#34466b; padding:6px 4px 2px; font-size:12px;";
-    gdiv.textContent = group.group;
-    groupHeader.appendChild(gdiv);
-    nav.appendChild(groupHeader);
+  var activeGroup = groupOf(active);
+  var tab = chosenTab ||
+    ((activeGroup && activeGroup.section !== "common") ? activeGroup.section : (navTab || "lecture"));
+
+  var tabsLi = document.createElement("li");
+  tabsLi.className = "nav-tabs";
+  NAV_SECTIONS.forEach(function (s) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = s.label;
+    b.title = s.tip;
+    if (s.id === tab) b.classList.add("on");
+    b.addEventListener("click", function () { navTab = s.id; navSave(); renderNav(active, s.id); });
+    tabsLi.appendChild(b);
+  });
+  var mid = document.createElement("a");
+  mid.className = "nav-ext";
+  mid.href = MID_WIKI_URL;
+  mid.target = "_blank";
+  mid.rel = "noopener";
+  mid.title = "중간고사 범위 CH01–CH04 는 전편 컴네위키에 있다 (새 탭)";
+  mid.textContent = "중간 ↗";
+  tabsLi.appendChild(mid);
+  nav.appendChild(tabsLi);
+  renderNavGroups(nav, active, activeGroup, tab);
+}
+
+function renderNavGroups(nav, active, activeGroup, tab) {
+  navGroups().forEach(function (group) {
+    if ((group.section || "common") !== tab) return;
+    var isActiveGroup = activeGroup === group;
+    var open = (group.group in navOpenGroups) ? navOpenGroups[group.group] : isActiveGroup;
+    if (isActiveGroup) open = true;
+
+    var head = document.createElement("li");
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "nav-group" + (open ? " open" : "");
+    btn.innerHTML = '<span class="caret">' + (open ? "▾" : "▸") + "</span> " +
+      escapeNav(group.group) + ' <span class="cnt">' + group.items.length + "</span>";
+    head.appendChild(btn);
+    nav.appendChild(head);
+
+    var ul = document.createElement("ul");
+    ul.className = "nav-items";
+    if (!open) ul.hidden = true;
     group.items.forEach(function (key) {
       var li = document.createElement("li");
       var a = document.createElement("a");
       a.href = "#" + encodeURIComponent(key);
-      a.textContent = ARTICLES[key] ? ARTICLES[key].title : key;
+      // 목록에는 제목의 " — " 앞(이름)만, 끝의 "(설명)" 괄호도 뗀다 — 단 "(2)" 같은 번호 괄호는 남긴다. 전체 제목은 툴팁으로
+      var full = ARTICLES[key] ? ARTICLES[key].title : key;
+      a.textContent = full.split(" — ")[0].replace(/\s*\((?!\d+\))[^)]*\)?$/, "") || full;
+      if (full !== a.textContent) a.title = full;
       if (key === active) a.classList.add("active");
+      // 강의 메인 문서는 굵게 — 그룹 안에서 시작점이 바로 보이게
+      if ((group.mains || []).indexOf(key) !== -1) a.classList.add("lecture-main");
       li.appendChild(a);
-      nav.appendChild(li);
+      ul.appendChild(li);
+    });
+    head.appendChild(ul);
+
+    btn.addEventListener("click", function () {
+      var nowOpen = ul.hidden;
+      ul.hidden = !nowOpen;
+      btn.classList.toggle("open", nowOpen);
+      btn.querySelector(".caret").textContent = nowOpen ? "▾" : "▸";
+      navOpenGroups[group.group] = nowOpen;
+      navSave();
     });
   });
 }
@@ -71,6 +158,10 @@ function restoreScroll(key) {
     if (++tries >= 40) { __restoreY = null; return; }
     setTimeout(attempt, 50);
   })();
+}
+
+function escapeNav(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 function renderArticle(key) {

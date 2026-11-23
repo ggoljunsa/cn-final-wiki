@@ -1,0 +1,446 @@
+key: CH09 전송 계층과 UDP
+title: CH09 Transport Layer (1) — 전송 계층 서비스와 UDP (10강 — port number, multiplexing, flow·error·congestion control, sliding window, UDP)
+category: 10강 전송 계층, 메인
+---
+== 개요 ==
+'''CH09 전송 계층과 UDP'''는 L16 덱 `CH09_Transport Layer.pdf`(85쪽) 가운데 앞 40쪽을 다룬다. 11/17(화)에 p.1–31 을, 11/19(목)에 p.32–40 의 UDP 를 나갔다. 같은 덱의 TCP 부분(p.41–85)은 [[CH09 TCP]] 에 따로 정리했다.[* 덱 하나가 85쪽이라 위키에서는 두 강으로 나눴다. 교수는 11/17 첫머리에 "transport layer 를 다음 주까지" 하겠다고 했고, 11/19 는 TCP header(p.54)에서 끝났다. 덱의 큰 절은 1. Transport-Layer Services, 2. Transport-Layer Protocols, 3. UDP, 4. TCP 의 네 개다. 이 문서가 1–3 을, [[CH09 TCP]] 가 4 를 맡는다.]
+
+[[CH08 라우팅]] 까지 오면서 패킷은 어느 컴퓨터든 찾아갈 수 있게 됐다. 그런데 컴퓨터 안에서는 프로그램 여러 개가 동시에 돈다. 도착한 데이터를 어느 프로그램에 줘야 할까. 그리고 [[IP]] 는 [[best effort]] 라서 패킷이 사라지거나 순서가 바뀌어도 모른 척한다. 그건 누가 고칠까. 이 두 질문에 답하는 계층이 '''[[transport layer]]''' 다.
+
+이야기는 이렇게 흐른다. 먼저 transport layer 가 하는 일을 하나씩 본다. 프로그램을 가리키는 번호([[port number]]), 여러 프로그램의 데이터를 모으고 나누는 일([[multiplexing과 demultiplexing]]), 받는 쪽이 넘치지 않게 하는 일([[전송 계층 flow control|flow control]]), 잃어버린 것을 되찾는 일([[전송 계층 error control|error control]]), 네트워크가 막히지 않게 하는 일([[congestion control]])이다. 그다음 이 일들을 얼마나 해 주느냐에 따라 프로토콜이 둘로 갈린다. 거의 아무것도 안 해 주는 '''[[UDP]]''' 와 전부 해 주는 '''[[TCP]]''' 다. 이 문서는 UDP 까지 간다.
+
+페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다. build-up 묶음은 p.2–3, p.4–5, p.18–21, p.22–25 이고 캡처는 마지막 장을 썼다. 이 덱은 필기 없는 원본 PDF 다.
+
+== 네트워크 계층이 못 하는 일 (p.2–6) ==
+p.2–3 은 지난 두 장을 한 화면에 줄인다. network layer(Ch. 7–8)는 datagram 을 host 에서 host 로 IP 로 보낸다. 주소는 IPv4/IPv6·CIDR·NAT 이고, 길은 DV·LS·PV 로 찾아 RIP·OSPF·BGP 로 쓴다.[* p.2 의 Addressing 줄에 NAT 가 들어 있고, 11/17 녹음 01:03 의 복습에서도 교수가 "NAT or something like that" 이라고 말했다. NAT 는 11/4 개정판(rev)에서 삭제된 슬라이드다. 시험 범위에 들어가는지는 확인되지 않았다. 지금 위키에는 NAT 문서가 없고 [[CH07 IPv4 데이터그램과 포워딩]] 에 삭제 사실만 적어 두었다.] 그리고 p.3 이 묻는다. "But a host runs many processes." 그러면 두 가지가 남는다.
+* Which program gets the data? 데이터를 어느 프로그램이 받나.
+* Who fixes lost or out-of-order packets? 사라지거나 순서가 바뀐 패킷은 누가 고치나.
+
+교수는 이 질문이 자연스럽게 나온다고 했다. network layer 는 error control 도 flow control 도 하지 않고 connectionless 였기 때문이다. 그래서 그 위에 transport layer 를 얹는다.[* 11/17 녹음 02:46–03:06. "IP layer, the network layer, does not serve for error and flow control … So asking about these questions is natural, and these are why we put transport layer on top of the network." [[IP가 제공하는 서비스]] 표에서 flow·congestion control 이 ✗, error control 이 △ 였던 것과 같은 이야기다.]
+
+[[img:L16-05.png|p.5 — 아래 회색 선이 network layer(host to host), 위 파란 선이 transport layer(process to process). Host A 의 P2 에서 Host B 의 P2 로 간다|medium]]
+p.4–5 의 그림에서 Host A 와 Host B 안에는 P1·P2·P3 세 process 가 있다. 아래 회색 화살표는 IP 끼리, 즉 host 와 host 를 잇는다. 위 파란 화살표는 Host A 의 P2 에서 Host B 의 P2 로 간다. 이것이 '''[[process-to-process delivery]]''' 다. 슬라이드 표현으로는 transport layer 가 "builds on the network layer's host-to-host delivery" 한다. host 까지 오는 일은 network layer 에 맡기고, 그 안에서 어느 process 인지를 [[port number]] 로 고른다.
+
+p.5 는 인터넷의 두 주력 프로토콜을 미리 소개한다. [[UDP]] 는 connectionless, unreliable, simple 이다. [[TCP]] 는 connection-oriented, reliable 이고 flow·error·congestion control 을 다 한다.
+
+[[img:L16-06.png|p.6 — 빨간 "Logical Connection" 은 Alice 와 Bob 의 transport layer 사이에만 있다. 가운데 라우터들(R1–R7)에는 transport layer 가 없다|medium]]
+p.6 은 transport layer 가 어디에 있는지를 그림으로 보여 준다. 위 그림 오른쪽 빨간 선이 logical connection 이다. 이 선은 양 끝 host 의 transport layer 사이에만 그어진다. 가운데 라우터는 3계층까지만 있으니 transport layer 를 갖지 않는다. 교수는 이것을 "key distinction" 이라고 짚었다.[* 11/17 녹음 06:52–07:43. "transport layers are only on the end host, because every routers don't have layers above the third layer … This is key distinction from the other one." 중간고사 때 본 [[mid:end-to-end와 hop-to-hop|end-to-end 와 hop-to-hop]] 구분과 같은 그림이다. network layer 는 hop 마다 일하고 transport layer 는 끝과 끝에서만 일한다.]
+
+{exam}transport layer 는 '''end host 에만''' 있다. 라우터는 3계층까지라 transport layer 가 없다. network layer = host to host, transport layer = process to process. 교수가 "key distinction" 이라고 두 번 말했다(11/17 07:39, 05:24).{/exam}
+
+{mini}
+# network layer 와 transport layer 가 각각 무엇과 무엇을 잇는지 한 단어씩 쓰라.
+# "라우터는 TCP segment 의 port number 를 보고 길을 고른다." O/X 와 이유.
+# p.3 의 두 질문을 우리말로 쓰고, 각각 이 덱의 어느 기능이 답하는지 짝지으라.
+{/mini}
+{answer}
+# network layer 는 host 와 host, transport layer 는 process 와 process 를 잇는다.
+# X. 라우터에는 transport layer 가 없다(p.6). 라우터는 IP header 의 destination address 만 보고 forwarding 한다.
+# "데이터를 어느 프로그램이 받나" 는 port number 와 demultiplexing 이 답한다. "사라지거나 순서가 바뀐 패킷은 누가 고치나" 는 error control(sequence number, ACK, timer)이 답한다.
+{/answer}
+
+== 어느 프로그램이 받나: port number (p.8–12) ==
+p.7 은 1절 표지다. 1절은 transport layer 가 하는 일을 다룬다. port numbers, multiplexing, flow, error, congestion control 이 있고, connectionless 와 connection-oriented 서비스의 차이도 본다.
+
+p.8 은 process 를 정의한다. "A process = a running application program that uses the transport layer." 교수는 그냥 프로그램이라고 생각하면 된다고 했다.[* 11/17 녹음 03:54–04:03, 08:41–08:57. "You can think of it as just a program." 운영체제 시간에 배우는 process 와 같은 말이다. 실행 중인 프로그램 하나가 process 하나다.] network layer 는 데이터를 맞는 컴퓨터까지 데려다준다. transport layer 는 그 컴퓨터 안에서 맞는 process 에게 메시지를 건넨다.
+
+[[img:L16-09.png|p.9 — client process(port 52000, ephemeral)가 Daytime server(port 13, well-known)에 요청한다. 응답은 src 와 dst 가 뒤바뀐다|medium]]
+p.9 는 '''client-server paradigm''' 을 쓴다. client process 가 (보통 멀리 있는) server process 에게 서비스를 요청한다. process 는 '''[[port number]]''' 로 구분한다. port number 는 0 부터 65,535 까지의 정수, 즉 16 bits 다.
+
+client 와 server 는 port 를 고르는 방식이 다르다. → [[ephemeral port와 well-known port]]
+* '''client''' 는 잠깐 쓰고 버리는 '''ephemeral''' (임시의) port 를 쓴다. 1023 보다 큰 수를 권한다.
+* '''server''' 는 고정된 '''well-known''' port 를 쓴다. 그래야 client 들이 어디로 찾아가야 할지 안다.
+
+위 그림에서 client 는 52000 을, Daytime server 는 13 을 쓴다. 요청은 src 52000 → dst 13 이고 응답은 src 13 → dst 52000 이다. 응답에서는 두 번호가 자리를 바꾼다.[* 교수는 "more than 1000" 이라고 말했다(11/17 11:33, 13:13). 슬라이드는 "recommended > 1023" 이다. 0–1023 이 well-known 이라서 그 위를 쓰라는 뜻이니 슬라이드 쪽 숫자로 외우자.]
+
+교수는 이 구분을 기억하라고 했다. server 는 아무 client 에게나 서비스를 해야 하니 미리 정해 둔 번호가 필요하다. client 는 그럴 필요가 없으니 아무 번호나 잠깐 쓴다.[* 11/17 녹음 13:02–13:29. "please remember that client uses a temporary port number … while server gets a fixed well-known port number." 이 구분이 11/19 의 UDP header 예제에서 바로 쓰인다. port 번호 크기만 보고 방향을 판정한다.]
+
+{exam}'''client = ephemeral(임시) port, server = well-known(고정) port.''' 교수 "please remember"(11/17 13:04). 11/19 UDP 예제에서 이것으로 client → server 방향을 판정했다.{/exam}
+
+[[img:L16-10.png|p.10 — IP address 로 host 를 고르고, port number(52,000 · 13)로 그 host 의 process 를 고른다. 아래 두 데이터의 header 칸에 src·dst port 가 뒤바뀌어 있다|medium]]
+p.10 의 제목이 이 절을 한 줄로 말한다. "IP Address Picks the Host, Port Picks the Process." 그림 아래 두 상자에서 요청의 header 는 52,000 | 13 이고, 응답의 header 는 13 | 52,000 이다. 교수는 network layer 의 source·destination IP address 와 똑같이 transport layer 에서는 port number 가 맞는 process 를 찾게 해 준다고 했다. 아래 움직이는 그림으로 같은 장면을 볼 수 있다.
+
+[[anim:mux_demux_anim|Host A 의 세 process 가 보낸 메시지가 하나의 transport layer 로 모였다가(multiplexing) Host B 에서 destination port 로 나뉜다(demultiplexing). IP 는 host 까지만 데려다준다는 것을 보라]]
+
+[[img:L16-11.png|p.11 — ICANN 이 나눈 port 번호 세 구간. 0–1,023 well-known, 1,024–49,151 registered, 49,152–65,535 dynamic/private|medium]]
+누가 server 의 번호를 정할까. p.11 은 [[ICANN]](Internet Corporation for Assigned Names and Numbers, 국제인터넷주소관리기구)이 port 번호를 세 구간으로 나눈다고 한다. → [[port number 범위]]
+{|
+! 구간 || 범위 || 뜻
+|-
+| '''Well-known''' || 0–1,023 || ICANN 이 지정하고 관리한다. server 가 쓴다
+|-
+| '''Registered''' || 1,024–49,151 || 지정하지는 않고, 겹치지 않게 등록만 한다
+|-
+| '''Dynamic / private''' || 49,152–65,535 || 아무나 임시 port 로 쓴다
+|}
+IP 주소 block 을 나눠 주던 그 ICANN 이 port 번호도 관리한다.[* [[CH07 IPv4 주소]] 의 [[block allocation]] 에서 ICANN 이 ISP 에 큰 block 을 준다고 했다. 이름 그대로 "Assigned Names and Numbers" 를 맡는 기관이라 IP 주소, 도메인 이름, port 번호를 모두 관리한다. 교수는 11/17 15:12 에 약어를 풀어 읽고 한국어 이름도 말했다.]
+
+[[img:L16-12.png|p.12 — IP address 200.23.56.8 과 port 69 를 합친 것이 socket address|small]]
+p.12 는 새 주소를 하나 만든다. '''[[socket address]]''' = IP address + port number 다. 위 그림에서 200.23.56.8 과 69 를 붙이면 socket address 가 된다. 연결 하나에는 이것이 한 쌍 필요하다. client 의 socket address 와 server 의 socket address 다. 교수는 소프트웨어 시간에 socket 이라는 말을 들어 봤을 것이라고 했다.[* 11/17 녹음 16:00–16:40. 이제 주소가 세 종류다. 교수는 04:46 에서 "physical address, IP address, and port number" 를 나란히 놓고 층마다 쓰는 주소가 다르다고 했다. 2계층 MAC 은 [[mid:MAC 주소]], 3계층은 [[IPv4 address]], 4계층은 port number 다.]
+
+{analogy}🎭 아파트 택배다. IP address 는 아파트 동 주소, port number 는 호수다. 택배 기사(network layer)는 동 입구까지만 오고, 경비실(transport layer)이 호수를 보고 집집마다 나눠 준다. socket address 는 "OO동 OO호" 를 한 줄로 쓴 것이다. 우리 집에서 보낼 때 쓰는 호수는 그날그날 바뀌어도 되지만(ephemeral), 관리사무소 호수는 모두가 알아야 하니 고정이다(well-known).{/analogy}
+
+{mini}
+# port number 는 몇 bits 이고 범위는 얼마인가?
+# client 가 port 50000 으로 DNS server(53)에 질의했다. 응답 segment 의 src port 와 dst port 를 쓰라.
+# 다음 번호가 ICANN 의 어느 구간인지 쓰라: 80, 8080, 52000.
+# socket address 두 개로 정해지는 것은 무엇인가?
+{/mini}
+{answer}
+# 16 bits, 0–65,535.
+# src 53, dst 50000. 응답에서는 요청의 두 번호가 자리를 바꾼다(p.9).
+# 80 은 well-known(0–1,023), 8080 은 registered(1,024–49,151), 52000 은 dynamic/private(49,152–65,535).
+# 연결(connection) 하나. client socket address 와 server socket address 의 쌍이다(p.12).
+{/answer}
+
+== 포장과 분배: encapsulation, multiplexing (p.13–14) ==
+[[img:L16-13.png|p.13 — 왼쪽 client 는 process 의 Message 에 Header 를 붙여 Packet 을 만들고(encapsulation), 오른쪽 server 는 Header 를 떼고 Message 를 process 에 준다(decapsulation)|medium]]
+p.13 은 다른 계층에서 본 [[mid:캡슐화|encapsulation]] 을 transport layer 에서 다시 본다. 보내는 쪽은 process 의 message 에 transport header 를 붙여 packet 을 만든다. 받는 쪽은 header 를 떼고 message 를 process 에 건넨다. 위 그림 가운데 노란 화살표가 "Logical channel" 이다. 실제로는 아래 계층을 거쳐 가지만, transport layer 끼리는 직접 주고받는 것처럼 본다.
+
+transport layer 의 packet 은 프로토콜마다 이름이 다르다.
+* [[UDP]] 의 packet 은 '''[[user datagram]]''' 이다.
+* [[TCP]] 의 packet 은 '''[[segment]]''' 다.
+교수는 11/19 에도 이 이름 차이를 UDP 와 TCP 의 "key differences" 로 다시 짚었다.[* 3계층의 packet 은 [[datagram]] 이었다. UDP 의 "user datagram" 은 이름이 비슷해서 헷갈리기 쉽다. user datagram 은 4계층, datagram 은 3계층이다. [[segment·datagram·frame]] 표에 이 줄을 하나 더 넣어 두자.]
+
+[[img:L16-14.png|p.14 — client 의 P1·P2·P3 메시지가 Multiplexer 로 모여 나가고, 두 server 의 Demultiplexer 가 port 를 보고 알맞은 process 에 준다|medium]]
+p.14 는 '''[[multiplexing과 demultiplexing]]''' 이다.
+* '''Multiplexing''' (sender): 여러 process 의 메시지를 받아들인다.
+* '''Demultiplexing''' (receiver): 각 메시지를 port 를 보고 맞는 process 에 준다.
+위 그림 왼쪽 client 의 P1·P2·P3 가 각각 message 를 만들면 transport layer 의 Multiplexer 가 이것들을 받아 Packet 1·2·3 으로 내보낸다. Packet 1 과 3 은 위쪽 server 로, Packet 2 는 아래쪽 server 로 간다. 각 server 의 Demultiplexer 가 port 를 보고 process 를 고른다.[* 중간고사 범위에서 본 [[mid:MUX와 DEMUX]] 는 여러 신호를 한 link 에 싣는 physical layer 이야기였다. 이름은 같지만 여기서는 "여러 process ↔ 하나의 transport layer" 다. 교수도 "You may not remember this one precisely" 라고 하며 다시 설명했다(11/17 18:46).]
+
+교수는 여기서 TCP/IP 라는 이름을 짚었다. 이 프로토콜 묶음을 TCP/IP 라고 부르는 것은 TCP 와 IP 가 가장 중요한 두 프로토콜이기 때문이다. UDP 도 transport layer 에 있지만 하는 일이 아주 적어서 TCP 만큼 중요하지는 않다고 했다.[* 11/17 녹음 20:35–21:15. "This is why we call these protocol suite as TCP/IP protocol, where it means that the two important protocols in this protocol suite are TCP and IP. We also have UDP in transport layer, but it is not that significant compared to TCP because … it has minimal role." [[mid:TCP/IP 프로토콜 스위트]] 의 이름 유래다.]
+
+{mini}
+# UDP 와 TCP 의 transport-layer packet 이름을 각각 쓰라.
+# Host 에서 P1(port 5000)과 P2(port 6000)가 같은 server 로 보낸다. sender 쪽에서 일어나는 일과 receiver 쪽에서 일어나는 일의 이름을 쓰라.
+# "user datagram 과 IP datagram 은 같은 계층의 packet 이다." O/X
+{/mini}
+{answer}
+# UDP 는 user datagram, TCP 는 segment.
+# sender 쪽은 multiplexing(여러 process 의 메시지를 받아 하나의 transport layer 로 내보냄), receiver 쪽은 demultiplexing(destination port 를 보고 process 에 나눠 줌).
+# X. user datagram 은 transport layer(4계층), IP datagram 은 network layer(3계층) packet 이다.
+{/answer}
+
+== 받는 쪽이 넘치지 않게: flow control (p.15) ==
+[[img:L16-15.png|p.15 — Sender 의 Producer → Consumer(transport layer)로 "Messages are pushed", transport 끼리 "Packets are pushed", Receiver 쪽은 "Messages are pulled"(Requests). 빨간 화살표 두 개가 flow control|medium]]
+p.15 는 '''[[전송 계층 flow control|flow control]]''' 이 두 곳에서 일어난다고 한다.
+* 보내는 process → sender transport layer
+* sender transport layer → receiver transport layer
+그리고 두 개의 buffer 로 구현한다. buffer 가 차면 상대에게 멈추라고 알린다.
+
+왜 두 곳뿐일까. 교수는 데이터가 넘어가는 방식이 '''push''' 냐 '''pull''' 이냐로 설명했다.[* 11/17 녹음 22:33–24:43. 교수는 이 셋을 "a key distinction among these three connections" 라고 불렀다.]
+* 보내는 process 는 메시지가 생기면 transport layer 로 그냥 밀어 넣는다(push). transport layer 가 달라고 한 적이 없다. 그래서 transport layer 가 "그만" 이라고 말할 장치가 필요하다.
+* sender 의 transport layer 도 receiver 의 transport layer 로 그냥 밀어 넣는다(push). 그래서 여기에도 flow control 이 필요하다.
+* receiver 쪽은 다르다. 받는 process 가 준비되면 transport layer 에 '''요청해서''' 가져간다(pull). 위 그림 오른쪽 "Requests" 점선이 그것이다. 자기가 받을 수 있을 때만 가져가니 넘칠 일이 없다. 그래서 여기에는 flow control 이 없다.
+
+위 그림의 빨간 화살표 두 개(Flow control)가 바로 push 가 일어나는 두 구간에 걸려 있다.
+
+{exam}flow control 은 '''push''' 가 일어나는 두 곳(sending process → sender TL, sender TL → receiver TL)에만 있다. receiver TL → receiving process 는 '''pull'''(요청)이라 필요 없다. 그리고 UDP 에는 flow control 이 없고 TCP 에만 있다(11/17 25:21–25:37).{/exam}
+
+{analogy}🎭 식당 주방이다. 손님 주문은 주방으로 쏟아져 들어온다(push). 주방이 밀리면 "주문 잠깐 멈춰" 라고 해야 한다. 완성된 음식은 홀 직원이 손이 빌 때 가져간다(pull). 직원이 알아서 가져가니 홀 쪽에는 "그만 보내" 신호가 필요 없다.{/analogy}
+
+{mini}
+# flow control 이 필요한 두 구간을 쓰라.
+# receiver transport layer → receiving process 구간에 flow control 이 없는 이유를 한 문장으로 쓰라.
+# flow control 은 무엇으로 구현하고, 언제 멈추라고 하는가?
+{/mini}
+{answer}
+# sending process → sender transport layer, sender transport layer → receiver transport layer. 둘 다 push 다.
+# 받는 process 가 준비됐을 때 요청해서 가져가기(pull) 때문에 넘칠 일이 없다.
+# buffer 두 개로 구현하고, buffer 가 차면 상대에게 stop 을 알린다(p.15).
+{/answer}
+
+== 잃어버린 것을 되찾기: error control (p.16–21) ==
+[[img:L16-16.png|p.16 — error control 화살표는 Sender 와 Receiver 의 transport layer 사이에만 있다|small]]
+p.16 은 '''[[전송 계층 error control|error control]]''' 이 해야 할 일을 적는다. 목적은 application 이 원할 때 transport layer 를 reliable 하게 만드는 것이다.
+* 손상된(corrupted) packet 을 찾아내서 버린다.
+* 사라진(lost) packet 을 찾아서 다시 보낸다.
+* 중복(duplicate)은 버리고, 순서가 틀린(out-of-order) packet 은 빠진 것이 올 때까지 buffer 에 모아 둔다.
+* 이 일에는 sending 과 receiving '''transport layer''' 만 참여한다.
+
+마지막 줄이 flow control 과 다른 점이다. flow control 은 같은 컴퓨터 안의 application layer 와 transport layer 사이에서도 일어났다. error control 은 sender 와 receiver 의 transport layer 사이에서만 일어난다. 교수는 이것도 "key distinction" 이라고 했다.[* 11/17 녹음 26:39–27:26. "error control only takes place between sender and receiver's transport layers … Key distinction from the flow control, which can take place also in the same device, between layers."]
+
+{exam}'''error control 은 sender TL ↔ receiver TL 사이에서만''', flow control 은 같은 기기 안 계층 사이에서도 일어난다. 교수 "key distinction"(11/17 27:16).{/exam}
+
+[[img:L16-17.png|p.17 — m = 3 이면 0 부터 7 까지 쓰고 다시 0 으로 돌아간다(wrap around)|small]]
+error control 을 하려면 packet 마다 이름표가 있어야 한다. 무엇을 다시 보내야 할지, 무엇이 중복이고 무엇이 순서가 틀렸는지 알려면 번호가 필요하다. 이것이 p.17 의 '''[[sequence number]]''' 다. header 의 한 칸에 담는다. m bits 를 쓰면 0 부터 $2^m - 1$ 까지 쓰고 다시 0 으로 돌아간다(modulo $2^m$). 위 그림처럼 m = 3 이면 0 … 7 다음이 0 이다.[* [[mid:modular arithmetic]] 이 여기서 쓰인다. 녹음에서는 "two to m minus m" 처럼 들리지만 슬라이드의 $2^m - 1$ 이 맞다.]
+
+[[img:L16-21.png|p.21 — pkt 0 은 ACK 를 받았다. pkt 1 은 가다가 사라졌고(✗), timer 가 끝나자(time-out) 다시 보냈다(resent)|medium]]
+p.18–21 은 '''[[ACK와 retransmission timer]]''' 를 한 줄씩 쌓는다.
+# receiver 는 무사히 도착한 packet 에 '''ACK''' 를 보낸다. 손상된 packet 은 그냥 버린다(ACK 도 안 보낸다).
+# sender 는 packet 을 보낼 때마다 '''timer''' 를 켠다.
+# timer 가 끝날 때까지 ACK 가 안 오면 다시 보낸다.
+# 중복으로 온 packet 은 버린다. 순서가 틀린 packet 은 버리거나 저장한다.
+위 그림에서 pkt 0 은 ACK 를 받았다. pkt 1 은 중간에 ✗ 로 사라졌다. receiver 는 받은 게 없으니 ACK 를 보내지 않고, sender 의 timer 가 끝나서(time-out) pkt 1 을 다시 보낸다. 이번에는 ACK 가 돌아온다.[* 손상된 packet 에 NAK(부정 응답)를 보내지 않고 그냥 버린다는 점에 주의하자. sender 쪽에서 보면 손상과 분실이 똑같이 "ACK 가 안 온다" 로 보인다. 그래서 둘 다 timer 하나로 해결된다. [[CH09 TCP]] 의 error control 도 "Bad checksum → segment discarded, treated as lost" 다.]
+
+순서가 틀린 packet 을 버릴지 저장할지는 상황에 따라 다르다고 교수는 말했다. 자세한 것은 TCP 에서 본다.[* 11/17 녹음 32:41–32:53. "it can be discarded, or stored, depends on the context. And you will see details in the next lecture." TCP 는 저장한다(p.72 "Store out-of-order segments").]
+
+{mini}
+# sequence number 에 4 bits 를 쓴다. 쓸 수 있는 번호 범위와, 14 다음 다음 번호를 쓰라.
+# receiver 가 손상된 packet 을 받았을 때 하는 일과, sender 가 그것을 알게 되는 방법을 쓰라.
+# 다음 중 error control 이 하는 일을 모두 고르라. (a) 중복 packet 버리기 (b) buffer 가 차면 멈추라고 알리기 (c) 사라진 packet 다시 보내기 (d) 순서 틀린 packet 저장
+{/mini}
+{answer}
+# 0–15. 14 → 15 → 0 이므로 "다음 다음" 은 0 이다.
+# 그냥 버린다(ACK 를 보내지 않는다). sender 는 timer 가 끝날 때까지 ACK 가 안 오는 것으로 알고 다시 보낸다.
+# (a), (c), (d). (b) 는 flow control 이다.
+{/answer}
+
+== 보내 놓고 기다리는 범위: sliding window (p.22–26) ==
+packet 하나 보내고 ACK 를 기다린 뒤 다음 것을 보내면 너무 느리다. 그래서 ACK 를 받기 전에 여러 개를 보내 둔다. 대신 "몇 개까지" 를 정해야 한다. 이 범위가 p.22 의 '''[[sliding window]]''' 다.
+
+{def}"Sliding window: the range of sequence numbers the sender may have outstanding (처리되지 않은). Sent packets wait in the window until ACKed; an ACK makes the window slide. Drawn as a circle: 0 … 2^m − 1." (p.22){/def}
+
+outstanding 은 "보냈지만 아직 ACK 를 못 받은" 상태다. 슬라이드는 괄호 안에 한국어로 "처리되지 않은" 이라고 적었고, 교수도 수업에서 이 말을 한국어로 풀어 줬다.
+
+[[img:L16-26.png|p.26 — 같은 window 를 직선으로 폈다. a. 4 개 보냄 → b. 5 개 → c. 7 개, window 가 가득 참 → d. packet 0 의 ACK 가 와서 window 가 한 칸 미끄러짐|medium]]
+p.22–25 는 m = 4(번호 0–15)를 원으로 그렸고, p.26 은 같은 것을 직선으로 폈다. 위 그림의 검은 테두리가 window 이고, 크기는 7 칸이다.
+# a. 0, 1, 2, 3 을 보냈다. 아직 ACK 는 없지만 window 안이라 더 보낼 수 있다.
+# b. 4 도 보냈다.
+# c. 6 까지 7 개를 보냈다. '''window is full'''. 이제 ACK 가 올 때까지 기다린다.
+# d. packet 0 의 ACK 가 왔다. window 가 한 칸 미끄러져 1–7 이 된다. 7 을 보낼 수 있다.
+원 그림에서는 "seqNo of first outstanding packet" 과 "seqNo of next packet to send" 두 바늘이 이 경계를 가리킨다. 교수는 window 가 다 차면 더 보내지 않고 ACK 만 기다린다는 점, ACK 가 오면 window 가 미끄러진다는 점을 짚었다. 그리고 이것이 sequence number 로 flow 와 error 를 함께 다루는 방법이라고 했다.[* 11/17 녹음 34:47–35:52. "the important point is that we didn't receive acknowledgement packets … we're just waiting for acknowledgement packets … This is how we control flow and error with sliding window mechanism."]
+
+[[sim:sliding_window]]
+
+{mini}
+# m = 4, window 7 이다. Sf(first outstanding) = 10, Sn(next to send) = 14 일 때, 더 보낼 수 있는 번호를 모두 쓰라.
+# 위 상태에서 10, 11 의 ACK 가 왔다. 새 window 범위를 쓰라.
+# window 가 full 일 때 sender 가 하는 일은?
+{/mini}
+{answer}
+# window 는 10–16 인데 16 은 0 이므로 10, 11, 12, 13, 14, 15, 0. 이미 10–13 을 보냈으니 더 보낼 수 있는 번호는 14, 15, 0 이다.
+# 12 부터 7 칸: 12, 13, 14, 15, 0, 1, 2.
+# 더 보내지 않고 ACK 를 기다린다(timer 가 끝나면 재전송).
+{/answer}
+
+== 네트워크가 막힐 때: congestion (p.27) ==
+[[img:L16-27.png|p.27 — 여러 sender 가 한 Router 로 몰려 router queue 가 가득 찼다. 그러면 delay 가 길어지고 packet 이 버려지고, 재전송이 상황을 더 나쁘게 만든다|medium]]
+p.27 은 '''congestion''' 을 정의한다. 네트워크에 실린 load(보낸 packet 수)가 capacity 보다 크면 congestion 이다. router 와 switch 에는 처리 앞뒤로 queue(buffer)가 있어서 생긴다. '''[[congestion control]]''' 은 load 를 capacity 아래로 유지하는 일이다.
+
+위 그림 오른쪽 상자가 결과다. delay 가 길어지고 packet 이 버려진다. 그리고 버려진 packet 을 다시 보내면 load 가 더 늘어 상황이 나빠진다.[* [[CH07 네트워크 계층 서비스와 성능]] 의 [[load와 성능]] 곡선에서 load 가 capacity 를 넘으면 delay 가 치솟고 throughput 이 무너졌다. 그때 [[congestion control]] 문서에서 "IP 는 안 한다, TCP 가 한다" 고 적었던 것이 바로 이 절이다. TCP 가 실제로 어떻게 하는지는 [[CH09 TCP]] 의 [[cwnd]] 에서 본다.]
+
+== 연결을 맺느냐: connectionless 와 connection-oriented (p.28–29) ==
+[[img:L16-28.png|p.28 — connectionless. Message 0, 1, 2 가 Packet 0, 1, 2 로 따로 가고, server 에는 0, 2, 1 순서로 도착한다("Message 2 is delivered out of order")|medium]]
+p.28 은 '''connectionless service''' (예: UDP)다. chunk 하나하나가 독립된 단위이고 서로 아무 관계가 없다. 그래서 순서가 뒤바뀌어 도착할 수 있다. 위 그림에서 client 는 0, 1, 2 순서로 보냈지만 Packet 1 이 늦게 가서 server process 는 0, 2, 1 순서로 받는다. → [[connectionless service와 connection-oriented service]]
+
+[[img:L16-29.png|p.29 — connection-oriented. 노란 Connection establishment 뒤에 data 를 보내고, Packet 2 가 먼저 와도 "Message 2 hold" 했다가 1 과 2 를 순서대로 넘긴다. 끝에 Connection teardown|medium]]
+p.29 는 '''connection-oriented service''' (예: TCP)다. client 와 server 가 먼저 logical connection 을 맺고, 데이터를 순서대로 주고받고, 끝나면 연결을 끊는다(tear down). 위 그림에서 Packet 2 가 Packet 1 보다 먼저 도착하자 server transport layer 는 Message 2 를 붙잡아 두었다가(hold) 1 이 오면 1, 2 를 순서대로 process 에 준다.[* 3계층에서 본 [[virtual-circuit approach]] 도 "연결을 맺고 → 보내고 → 끊는다" 였다. 다른 점은 그쪽은 라우터들이 경로를 기억하고, 여기서는 양 끝 transport layer 만 연결 상태를 기억한다는 것이다. 가운데 IP 는 여전히 [[connectionless]] 다.]
+
+{mini}
+# p.28 그림에서 server process 가 받은 순서와, 그렇게 된 이유를 쓰라.
+# connection-oriented service 의 세 단계를 순서대로 쓰라.
+# "TCP 는 connection-oriented 이니 IP 도 connection-oriented 로 동작한다." O/X
+{/mini}
+{answer}
+# 0, 2, 1. connectionless 라서 packet 들이 서로 관계없이 독립적으로 가고, 늦게 온 1 을 기다려 주지 않는다.
+# connection establishment(setup) → data transfer → connection teardown.
+# X. 연결은 양 끝 transport layer 사이의 logical connection 이다. 그 아래 IP 는 그대로 connectionless 로 datagram 을 하나씩 보낸다(p.55 "IP delivers each segment; TCP controls the connection itself").
+{/answer}
+
+== 세 프로토콜: UDP, TCP, SCTP (p.30–31) ==
+[[img:L16-31.png|p.31 — TCP/IP 프로토콜 묶음. Transport layer 칸에 SCTP · TCP · UDP 가 나란히 있고, 그 위 application 들(SMTP, FTP, TELNET, DNS, SNMP, DHCP)이 이 중 하나를 쓴다|medium]]
+p.30 은 2절 표지, p.31 이 내용이다. 인터넷의 transport protocol 은 셋이다.
+* '''[[UDP]]''': unreliable, connectionless
+* '''[[TCP]]''': reliable, connection-oriented
+* '''[[SCTP]]''': UDP 와 TCP 의 기능을 합친 것
+교수는 SCTP 는 "not that famous" 라며 이 수업에서 자세히 다루지 않는다고 했다. 그러니 SCTP 는 이름과 "UDP 와 TCP 의 특징을 합쳤다" 한 줄만 알면 된다. 교수는 UDP 가 unreliable 한 주된 이유를 connectionless 라는 데서 찾았다.
+
+11/17 수업은 여기서 끝났다. 교수는 다음 시간부터 UDP 와 TCP 를 본다고 하고 출석을 불렀다.
+
+== UDP: IP 에 port 만 붙였다 (p.32–34) ==
+p.32 는 3절 표지다. 교수는 UDP 가 너무 간단해서 슬라이드도 열 장이 안 된다고 했다. 실제로 p.32–40, 아홉 장이다.
+
+p.33 의 '''[[UDP]]''' (User Datagram Protocol) 정의는 이렇다.
+* connectionless, unreliable transport protocol 이다.
+* IP 에 process-to-process delivery(port)를 보탠 것 말고는 아무것도 더하지 않는다.
+* 아주 간단하고 overhead 가 가장 작다.
+* 작은 메시지를 보내는데 reliability 가 별로 중요하지 않을 때 좋다.
+* TCP 보다 주고받는 것이 훨씬 적다. setup 도 없고 ACK 도 없다.
+
+슬라이드 맨 아래 상자는 한 줄로 끝낸다. "UDP = IP + port numbers + a checksum. That's about it." 교수도 같은 식으로 말했다.[* 11/19 녹음 01:58–02:13. "You can think of UDP as IP plus some port numbers and some checksums to guarantee some extent of reliability."]
+
+[[img:L16-34.png|p.34 — 위: user datagram = Header 8 bytes + Data, 전체 8 to 65,535 bytes. 아래: header 는 32-bit 두 줄, Source port · Destination port / Total length · Checksum|medium]]
+p.34 는 '''[[UDP header]]''' 다. 8 bytes 고정이고 2 bytes 칸 네 개로 되어 있다.
+{|
+! 칸 || 크기 || 내용
+|-
+| Source port number || 16 bits || 보내는 process 의 port
+|-
+| Destination port number || 16 bits || 받는 process 의 port
+|-
+| Total length || 16 bits || header + data 길이(bytes)
+|-
+| Checksum || 16 bits || 오류 검사(optional, 0 이면 안 씀)
+|}
+교수는 TCP header 가 20–60 bytes 인 것과 비교하며 간단하다는 말을 몇 번이나 했다.
+
+total length 는 16 bits 라서 숫자로는 65,535 까지 쓸 수 있다. 하지만 실제로는 그보다 작아야 한다. user datagram 은 IP datagram 하나에 통째로 실려 가기 때문이다. IP datagram 전체가 65,535 bytes 를 못 넘으니 user datagram 은 65,535 − IP header 를 넘을 수 없다.[* 11/19 녹음 03:00–03:51. IP header 가 20 bytes 라면 user datagram 은 최대 65,515 bytes 이고, data 는 거기서 8 을 뺀 65,507 bytes 다(슬라이드 밖 계산). [[total length]] 문서의 IPv4 total length 와 같은 16 bits 제한이 두 겹으로 걸리는 셈이다.]
+
+{mini}
+# UDP header 의 크기와 칸 네 개를 쓰라.
+# total length 가 0x0040 이다. data 는 몇 bytes 인가?
+# user datagram 의 크기가 65,535 bytes 보다 작아야 하는 이유는?
+{/mini}
+{answer}
+# 8 bytes. source port, destination port, total length, checksum (각 16 bits).
+# 0x40 = 64, data = 64 − 8 = 56 bytes.
+# user datagram 은 IP datagram 하나에 실려 가는데 IP datagram 전체(IP header 포함)가 65,535 bytes 를 넘을 수 없기 때문이다.
+{/answer}
+
+== 예제: UDP header 읽기 (p.35–36) ==
+[[img:L16-36.png|p.36 — CB84 · 000D · 001C · 001C 를 Source port · Destination port · Total length · Checksum 칸에 놓고 a–f 를 푼다|medium]]
+p.35 는 UDP header 를 hex 로 준다. `CB84000D001C001C`. 그리고 여섯 가지를 묻는다. → [[Example UDP header 읽기]]
+
+먼저 16 자리를 4 자리씩 끊는다. 그다음 칸마다 10진수로 바꾼다.
+<pre class="txt">
+CB84 | 000D | 001C | 001C
+a. Source port      = 0xCB84 = 12·4096 + 11·256 + 8·16 + 4 = 52100
+b. Destination port = 0x000D = 13
+c. Total length     = 0x001C = 28 bytes
+d. Data length      = 28 − 8 = 20 bytes          (header 8 B 를 뺀다)
+e. 방향: destination 13 이 well-known(0–1023), source 52100 은 ephemeral
+        → client → server
+f. port 13 = Daytime
+</pre>
+e 는 port 번호 크기로 푼다. port 번호가 작은 쪽이 server 다. destination 이 13 이니 받는 쪽이 server 이고, 그래서 이 datagram 은 client 에서 server 로 간다. 교수는 hex 는 읽기 어려워서 오른쪽에 10진수를 적어 두었다고 하면서, source 는 1000 이 넘고 destination 은 작은 고정값이니 바로 client → server 임을 알 수 있다고 했다.[* 11/19 녹음 04:54–05:41. "since source port is above some 1000 values, and destination port is used with a small fixed value, we can immediately see that this is from client to server … Port with larger values than 1000 would be client." 이 판정은 11/17 의 "client = ephemeral, server = well-known" 을 그대로 쓴 것이다.]
+
+[[sim:udp_header_read]]
+
+{exam}'''UDP header 읽기''': hex 4 자리씩 → port 두 개 · total length · checksum → data = total − 8 → '''작은 port(well-known) 쪽이 server''' 로 방향 판정. 교수가 11/19 에 한 단계씩 풀어 준 예제다.{/exam}
+
+{mini}
+# UDP header 가 `0035C35000300000` 이다. source port, destination port, data 길이, 방향을 쓰라.
+# 위 header 의 checksum 칸이 0 이다. 무슨 뜻인가?
+# p.36 예제에서 응답 datagram 의 처음 8 hex 자리(port 두 칸)를 쓰라.
+{/mini}
+{answer}
+# source 0x0035 = 53, destination 0xC350 = 50000, total 0x0030 = 48 → data 40 bytes. source 가 well-known 53(DNS)이니 server → client 응답이다.
+# 보내는 쪽이 checksum 을 계산하지 않았다. UDP 에서는 checksum 이 optional 이다(p.37).
+# `000DCB84`. 응답은 src 13, dst 52100 으로 자리가 바뀐다.
+{/answer}
+
+== UDP 가 주는 것과 안 주는 것 (p.37–38) ==
+[[img:L16-37.png|p.37 — UDP 서비스 표. Process-to-process ✓, Connection ✗, Flow control ✗, Error control △(optional checksum), Congestion control ✗, Multiplexing ✓|medium]]
+p.37 은 1절에서 본 서비스 목록에 UDP 를 대 본다. 위 표를 그대로 옮기면 이렇다.
+* Process-to-process ✓ : socket address(IP address + port)로 한다. UDP 가 있는 이유다.
+* Connection ✗ : connectionless. datagram 하나하나가 독립이고 번호도 없다.
+* Flow control ✗ : flow control 도 window 도 없다.
+* Error control △ : optional checksum 만 있다. ACK 도 재전송도 없다.
+* Congestion control ✗ : 없다.
+* Multiplexing / demultiplexing ✓ : UDP 하나가 여러 process 를 맡는다.
+교수는 error control 을 "limited fashion" 이라고 표현했다.[* 11/19 녹음 07:24–08:11. "it does provide error control, but with some limited fashion, such as checksum. No acknowledge packet or no resend process." checksum 으로 손상을 알아채면 그 datagram 을 조용히 버릴 뿐 다시 받아 오지는 않는다.]
+
+[[img:L16-38.png|p.38 — 위 검은 세 줄이 pseudoheader(32-bit source IP, 32-bit destination IP, All 0s · 8-bit protocol · 16-bit UDP total length), 그 아래 주황이 UDP header, 파랑이 data|medium]]
+p.38 은 checksum 이 무엇을 덮는지 보여 준다. checksum 은 '''[[pseudoheader]]''' + UDP header + data 를 합쳐 계산한다. pseudoheader 는 IP header 의 일부다. 위 그림 맨 위 검은 줄처럼 source IP address, destination IP address, 0 으로 채운 8 bits, protocol 번호(8 bits), UDP total length 로 되어 있다. 실제로 전송되지는 않고 checksum 을 계산할 때만 잠깐 붙인다. 그래서 이름이 pseudo(가짜) header 다.[* 왜 IP 주소까지 넣을까. 슬라이드에는 이유가 없다. Forouzan 은 datagram 이 엉뚱한 host 로 잘못 배달됐을 때도 receiver 가 알아챌 수 있게 하려는 것이라고 설명한다(Forouzan 보충). protocol 칸은 UDP 면 17 이다. [[protocol field]] 에서 본 값이다. data 뒤에는 16 bits 배수가 되도록 padding 을 붙인다(p.38 그림 맨 아래).]
+
+{mini}
+# UDP 가 제공하는 서비스를 모두 고르라. (a) process-to-process (b) flow control (c) ACK 로 재전송 (d) multiplexing (e) congestion control
+# pseudoheader 에 들어가는 다섯 칸을 쓰라.
+# pseudoheader 는 실제로 전송되는가?
+{/mini}
+{answer}
+# (a), (d). error control 은 optional checksum 만 있고 ACK·재전송은 없다.
+# source IP address(32), destination IP address(32), all 0s(8), protocol(8), UDP total length(16).
+# 아니다. checksum 계산에만 쓰고 보내지 않는다. 받는 쪽이 자기 IP header 에서 같은 값을 꺼내 다시 만들어 계산한다.
+{/answer}
+
+== 언제 UDP 를 쓰나 (p.39–40) ==
+[[img:L16-39.png|p.39 — Typical UDP use 표. Simple request-response = DNS, Real-time interactive apps = Voice / video calls, Management, route updates, multicast = SNMP, RIP(Ch. 8)|medium]]
+기능이 이렇게 적은데 왜 쓸까. p.39 는 없는 것이 오히려 장점이 되는 경우를 든다. → [[UDP를 쓰는 경우]]
+* '''connectionless''': 짧은 요청에 짧은 답이면 연결을 맺는 시간(setup delay)이 아깝다.
+* '''no error control''': 다시 보낸 조각을 기다리지 않는다. 실시간 영상·음성은 늦게 온 조각이 쓸모가 없어서 기다리는 쪽이 더 나쁘다.
+* '''no congestion control''': 오류가 많은 네트워크에 추가 트래픽을 더하지 않는다.
+
+위 표의 예가 그대로 시험에 나올 만하다. 교수가 하나씩 짚었다.
+* '''DNS''': 매일 쓰는, 도메인 이름을 IP 주소로 바꿔 주는 서비스다. UDP 위에서 돈다.[* 녹음에서 교수는 예로 dgist.ac.kr 을 들었다(11/19 11:43, 전사는 "digit.h.kr"). DNS 는 application layer 이야기라 이 덱에는 이름만 나온다.]
+* '''Voice / video calls''': 빨라서 쓴다.
+* '''SNMP, [[RIP]]''': 관리용 프로토콜이다. 단순하고 효율적이라 UDP 를 쓴다. [[CH08 라우팅]] 에서 RIP 가 UDP port 520 을 쓴다고 했던 것이 이것이다.
+
+[[img:L16-40.png|p.40 — UDP vs. TCP 표: Connection, Reliability, Unit, Flow/congestion control, Header, Good for|medium]]
+p.40 은 UDP 와 TCP 를 한 표로 맞댄다. → [[UDP와 TCP 비교]]
+{|
+! || UDP || TCP
+|-
+| Connection || connectionless || connection-oriented (setup → data → teardown)
+|-
+| Reliability || unreliable || reliable (ACK + resend)
+|-
+| Unit || user datagram (message) || byte stream → segments
+|-
+| Flow / congestion control || 없음 || 있음 (rwnd, cwnd)
+|-
+| Header || 8 bytes || 20–60 bytes
+|-
+| Good for || 짧고 delay 에 민감한 것 || 파일, 웹, 이메일
+|}
+교수는 unit 이름(user datagram vs segment)과 쓰임새(delay 에 민감한 voice call vs reliability 가 중요한 email·파일 전송)를 차이로 꼽았다.[* 11/19 녹음 12:13–13:05. rwnd 와 cwnd 는 아직 나오지 않은 말이다. receiver 가 정하는 window 와 network 사정으로 정하는 window 이고, [[CH09 TCP]] 의 [[receive window와 rwnd]] · [[cwnd]] 에서 나온다.]
+
+{mini}
+# 다음 응용에 UDP 와 TCP 중 무엇이 어울리는지 쓰라: 영상 통화, 파일 다운로드, DNS 질의, 이메일.
+# 실시간 음성에 error control 이 없는 것이 왜 장점인가?
+# UDP header 와 TCP header 의 크기를 쓰라.
+{/mini}
+{answer}
+# 영상 통화 UDP, 파일 다운로드 TCP, DNS 질의 UDP, 이메일 TCP.
+# 잃어버린 조각을 다시 받아 오려고 기다리면 소리가 끊긴다. 늦게 온 조각은 이미 쓸모가 없으니 그냥 넘어가는 편이 낫다.
+# UDP 8 bytes 고정, TCP 20–60 bytes.
+{/answer}
+
+== 🎙 실제 수업 기록 ==
+=== 11/17 (화) — p.1–31, 녹음 41분 ===
+* '''00:00–00:16''' "Welcome to the … transport layer … we have the two main layers, transport and application layers. And I think we can finish those two during this semester." 기말 범위가 application layer 까지 갈 수 있다는 뜻이다.
+* '''00:16–02:06''' 복습: network layer = datagram 을 host to host 로, IP address(2계층 physical address 와의 차이), IPv4·IPv6·CIDR·NAT, routing(DV·LS·PV → RIP·OSPF·BGP, BGP 는 ISP 사이).
+* '''02:12''' "we're going to study this transport layer up to the next week."
+* '''02:29–03:06''' 동기: network layer 가 error·flow control 을 안 하고 connectionless 라서 질문이 자연스럽다.
+* '''04:19–05:03''' process 를 고르는 주소가 port number. SSH 같은 예. 주소는 physical address, IP address, port number 세 가지.
+* '''06:52–07:43''' transport layer 는 end host 에만 있다. "This is key distinction."
+* '''10:36–13:29''' client-server paradigm. client 는 1000 이 넘는 임시 port, server 는 well-known port(예 13). "please remember".
+* '''14:58–15:48''' ICANN 약어, 세 구간(well-known 은 server 용).
+* '''16:00–16:40''' socket address = IP address + port. 소프트웨어 시간에 들어 봤을 것.
+* '''17:00–18:32''' encapsulation. UDP 는 user datagram, TCP 는 segment.
+* '''18:41–20:32''' multiplexing·demultiplexing(P1–P3 예).
+* '''20:35–21:15''' TCP/IP 라는 이름 = 가장 중요한 두 프로토콜. UDP 는 역할이 작다.
+* '''21:29–25:30''' flow control: push 두 곳, pull 한 곳. "key distinction among these three connections". buffer 가 차면 stop.
+* '''25:21–25:37''' flow control 은 UDP 에는 없고 TCP 에만 있다.
+* '''25:37–27:26''' error control 은 sender·receiver transport layer 사이에만. flow control 과의 "key distinction".
+* '''27:34–30:12''' sequence number, m bits, modulo(wrap around).
+* '''30:13–32:53''' ACK 와 retransmission timer. 중복은 버리고 순서 틀린 것은 "depends on the context".
+* '''32:56–36:45''' sliding window. outstanding 을 한국어로 풀어 줌. m = 4, window 가 차면 ACK 를 기다리고 ACK 가 오면 slide.
+* '''36:46–37:56''' congestion = load, 라우터·스위치 queue, capacity 아래로.
+* '''38:12–39:35''' connectionless(UDP) vs connection-oriented(TCP, 연결 → 순서대로 → tear down).
+* '''39:44–41:04''' UDP·TCP·SCTP. "we will not go into detail" on SCTP. 끝에 출석 체크.
+* 시험·과제 공지는 없었다.
+
+=== 11/19 (목) — p.32–40 UDP 부분, 녹음 37분 ===
+녹음은 09:16 에 시작해서 수업 앞부분(p.31 복습)이 조금 잘렸다.
+* '''00:42–01:22''' UDP = User Datagram Protocol, "less than ten slides".
+* '''01:22–02:13''' "UDP as IP plus some port numbers and some checksums".
+* '''02:13–03:00''' header 8 bytes 고정, TCP 는 20–60 bytes.
+* '''03:00–03:51''' total length 는 IP datagram 하나에 들어가야 해서 상한이 있다.
+* '''03:51–06:35''' 예제 풀이. 10진수를 옆에 적어 둠. 1000 넘는 쪽이 client → client to server. data 20 bytes.
+* '''07:24–08:11''' 서비스 표. error control 은 "limited fashion".
+* '''08:11–09:54''' pseudoheader = IP header 의 일부(주소, zero padding, protocol, UDP total length).
+* '''09:54–12:13''' 쓰는 이유와 예: DNS(dgist.ac.kr), voice·video, RIP.
+* '''12:13–13:05''' UDP vs TCP: unit 이름, delay-sensitive vs reliable.
+* 이어서 TCP 로 넘어갔다 → [[CH09 TCP]] 의 🎙 절.
+
+== 시험 직전 체크 ==
+* network layer = host to host, transport layer = process to process. transport layer 는 end host 에만 있다.
+* port 16 bits(0–65,535). client = ephemeral(> 1023), server = well-known. ICANN: 0–1,023 / 1,024–49,151 / 49,152–65,535.
+* socket address = IP address + port. 연결 = socket address 한 쌍.
+* UDP packet = user datagram, TCP packet = segment.
+* flow control 은 push 두 곳(process → TL, TL → TL), receiver 쪽은 pull. error control 은 TL ↔ TL 만.
+* sequence number m bits → 0 … $2^m - 1$ wrap around. ACK + timer, time-out 이면 재전송, 손상은 그냥 버림.
+* sliding window: outstanding 범위, full 이면 대기, ACK 오면 slide.
+* UDP = IP + port + checksum. header 8 B(src·dst port, total length, checksum). data = total − 8.
+* UDP 서비스: process-to-process ✓ · mux ✓ · error △(checksum) · connection·flow·congestion ✗. checksum 은 pseudoheader 까지 덮는다.
+* UDP 쓰는 곳: DNS, voice/video, SNMP·RIP.
+
+== 관련 문서 ==
+* 다음: [[CH09 TCP]]
+* 앞 강의: [[CH08 라우팅]] · [[CH07 네트워크 계층 서비스와 성능]] · [[IP가 제공하는 서비스]] · [[congestion control]] · [[flow control]]
+* 전송 계층 기초: [[transport layer]] · [[process-to-process delivery]] · [[port number]] · [[ephemeral port와 well-known port]] · [[port number 범위]] · [[socket address]] · [[multiplexing과 demultiplexing]]
+* 서비스: [[전송 계층 flow control]] · [[전송 계층 error control]] · [[sequence number]] · [[ACK와 retransmission timer]] · [[sliding window]] · [[connectionless service와 connection-oriented service]]
+* 프로토콜: [[UDP]] · [[user datagram]] · [[UDP header]] · [[Example UDP header 읽기]] · [[pseudoheader]] · [[UDP를 쓰는 경우]] · [[UDP와 TCP 비교]] · [[SCTP]]
+* 중간 위키: [[mid:transport layer]] · [[mid:UDP]] · [[mid:포트 번호]] · [[mid:TCP/IP 프로토콜 스위트]]

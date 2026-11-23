@@ -90,6 +90,24 @@ category: 안내
 # 인터넷 구조: [[backbone과 peering point]] → [[autonomous system]] → [[intra-AS와 inter-AS routing]] → [[hierarchical routing]]
 # 프로토콜: [[RIP]] → [[hop count]] → [[RIP forwarding table 예제]] → [[OSPF]] → [[OSPF area]] → [[BGP4]] → [[eBGP와 iBGP]]
 
-== 10. 정리 ==
+== 10. '''[[CH09 전송 계층과 UDP]]''' (L16 p.1–40, 11/17·11/19) ==
+transport layer 는 "어느 process 가 받나" 와 "잃어버린 것은 누가 고치나" 에 답한다. 기능을 하나씩 본 뒤, 그 기능을 거의 안 쓰는 UDP 로 간다.
+# 출발: [[transport layer]] → [[process-to-process delivery]] ⭐⭐ (transport layer 는 end host 에만)
+# 주소: [[port number]] → [[ephemeral port와 well-known port]] ⭐⭐⭐ → [[port number 범위]] → [[socket address]]
+# 기능: [[multiplexing과 demultiplexing]] → [[전송 계층 flow control]] ⭐⭐⭐ (push 두 곳, pull) → [[전송 계층 error control]] ⭐⭐⭐ (TL ↔ TL 만)
+# 도구: [[sequence number]] → [[ACK와 retransmission timer]] → [[sliding window]] (sim sliding_window) → [[connectionless service와 connection-oriented service]]
+# UDP: [[UDP]] → [[user datagram]] → [[UDP header]] → '''[[Example UDP header 읽기]]''' ⭐⭐⭐ (sim udp_header_read) → [[pseudoheader]] → [[UDP를 쓰는 경우]] → [[UDP와 TCP 비교]] · [[SCTP]]
+
+== 11. '''[[CH09 TCP]]''' (L16 p.41–85, 11/19 p.41–54 · p.55– 는 11/24 수업 전 선제) ==
+TCP 의 모든 기능은 byte 번호 위에 서 있다. 번호 → header → 연결 → window → 재전송 → cwnd 순서로 읽는다.
+# 서비스: [[TCP]] → [[stream delivery service]] → [[TCP 송수신 버퍼]] → [[segment]]
+# 번호: '''[[TCP sequence number와 ISN]]''' ⭐⭐⭐ → [[acknowledgment number]] → [[Example 다섯 segment의 sequence number]] (sim tcp_seq_ack)
+# header: [[TCP segment format]] (HLEN × 4) → [[control flags]]
+# 연결: '''[[three-way handshake]]''' ⭐⭐⭐ → [[SYN flooding attack]] → [[connection termination과 half close]]
+# window: [[send window]] → [[receive window와 rwnd]] → [[window shutdown과 probing]] → [[silly window syndrome]]
+# error control: [[cumulative ACK와 SACK]] → '''[[RTO와 fast retransmission]]''' ⭐⭐⭐
+# congestion: [[cwnd]] → [[slow start]] → [[congestion avoidance]] → [[fast recovery]] → '''[[Tahoe와 Reno]]''' ⭐⭐⭐ (sim cwnd_tahoe_reno)
+
+== 12. 정리 ==
 * [[셀룰러 세대 비교표]] → [[공식 모음]] → [[자주 틀리는 함정 모음]]
 * 과제: [[PS1 풀이 가이드|PS1 풀이·해설]] (마감 11/15). 소문항별로 읽을 강의 문서 절과 먼저 풀 새끼문제가 표로 있고, 소문항마다 풀이·해설이 있다

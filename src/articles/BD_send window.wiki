@@ -1,0 +1,46 @@
+key: send window
+title: send window — 보낼 수 있는 byte 범위
+category: 11강 TCP, 용어
+---
+{info}이 절의 p.55 이후 내용은 11/24 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
+
+TCP 의 '''send window''' 는 sending buffer 위의 byte 범위다. 보냈지만 ACK 없는 byte 와 더 보낼 수 있는 byte 를 포함한다. L16 p.62–63.
+
+{def}"TCP keeps two windows per direction (send + receive) → four for a two-way connection." (p.62)
+"Send window size is set by the receiver (flow control) and by congestion (congestion control). It can open, close, or shrink. Window size counts bytes, not packets. TCP uses one retransmission timer per connection." (p.63){/def}
+
+[[img:L16-62.png|p.62 — a. 200 까지 acknowledged, 201–260 outstanding(Sf=201), 261–300 usable(Sn=261), 301 부터 못 보냄. b. Left wall → Closes, Right wall → Opens / ← Shrinks|medium]]
+
+{|
+! 구간 (p.62) || 뜻
+|-
+| ~200 || ACK 받음, buffer 에서 지워도 됨
+|-
+| 201–260 || outstanding (보냈고 ACK 없음). 시작 $S_f$
+|-
+| 261–300 || usable window. 다음 보낼 byte $S_n$
+|-
+| 301~ || right edge 가 움직여야 보낼 수 있음
+|}
+
+== 움직임 ==
+* '''closes''': 새 ACK 가 와서 왼쪽 벽이 오른쪽으로.
+* '''opens''': receiver 가 광고한 rwnd 가 허락해 오른쪽 벽이 오른쪽으로.
+* '''shrinks''': 오른쪽 벽이 왼쪽으로. 많은 구현이 금지한다(p.69) → $\text{new ackNo} + \text{new rwnd} \ge \text{last ackNo} + \text{last rwnd}$.
+크기 = min(rwnd, [[cwnd]]).
+
+{tip}1절의 [[sliding window]] 와 같은 생각이다. 차이는 TCP 가 byte 로 세고, timer 를 연결당 하나 쓴다는 것이다.{/tip}
+
+{analogy}🎭 컨베이어 위 "출고 허가" 표시 구간. 왼쪽 끝은 수령 확인이 오면 밀리고, 오른쪽 끝은 받는 창고가 "더 보내도 됨" 이라고 할 때 밀린다.{/analogy}
+
+{mini}
+# 양방향 TCP 연결에서 window 는 모두 몇 개인가?
+# p.62 상태에서 ACK 231, rwnd 100 이 오면 새 send window 범위는?
+{/mini}
+{answer}
+# 4 개(방향마다 send + receive).
+# 231–330 (231 + 100 = 331 이 다음 못 보내는 byte). 왼쪽 벽은 closes, 오른쪽 벽은 opens.
+{/answer}
+
+== 관련 문서 ==
+* [[receive window와 rwnd]] · [[sliding window]] · [[cwnd]] · [[window shutdown과 probing]]

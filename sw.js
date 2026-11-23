@@ -1,5 +1,5 @@
 // 오프라인용 service worker (build.py 생성 — 직접 편집 금지)
-const VER = "a36de66cc9";
+const VER = "08c5478c5b";
 const CACHE = "cnf-wiki-" + VER;
 const CORE = ["./", "./index.html", "./manifest.webmanifest"];
 const KATEX = ["https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css", "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js", "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"];
@@ -20,7 +20,11 @@ self.addEventListener("fetch", function (e) {
   var req = e.request;
   if (req.method !== "GET") return;
   var url = new URL(req.url);
-  var isPage = req.mode === "navigate" || url.pathname.endsWith("/index.html") || url.pathname.endsWith("/");
+  // 위키 본문(루트 index.html)만 페이지로 다룬다. duo/ 같은 하위 앱 페이지는 가로채지 않는다
+  // (예전 조건은 duo/index.html 응답을 ./index.html 캐시에 덮어쓸 수 있었다 — 11-23 수정)
+  var root = new URL(self.registration.scope).pathname;
+  var isPage = url.origin === location.origin && (url.pathname === root || url.pathname === root + "index.html");
+  if (!isPage && req.mode === "navigate") return;
   if (isPage) {
     // 페이지: 네트워크 우선, 실패하면 캐시 (오프라인)
     e.respondWith(fetch(req).then(function (r) {

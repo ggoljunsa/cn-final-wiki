@@ -1,0 +1,46 @@
+key: pseudoheader
+title: pseudoheader — checksum 계산 때만 붙이는 IP header 조각
+category: 10강 전송 계층, 용어
+---
+'''pseudoheader''' 는 IP header 의 일부(주소, protocol, 길이)를 떼어 UDP·TCP checksum 계산에 넣는 가짜 header 다. 전송하지는 않는다. L16 p.38, p.54.
+
+{def}"Checksum covers: pseudoheader + UDP header + data. Pseudoheader = part of the IP header (addresses, protocol, length)." (p.38){/def}
+
+[[img:L16-38.png|p.38 — Pseudoheader: 32-bit source IP address / 32-bit destination IP address / All 0s · 8-bit protocol · 16-bit UDP total length. 그 아래 Header, Data(padding 으로 16 bits 배수)|medium]]
+
+== 이름에서 ==
+pseudo 는 "가짜" 다. header 처럼 생겼지만 실제로 보내지 않는다. 보내는 쪽은 checksum 을 계산할 때만 앞에 붙였다 떼고, 받는 쪽은 자기가 받은 IP header 에서 같은 값을 꺼내 다시 만든다.
+
+== 칸 ==
+{|
+! 칸 || 크기
+|-
+| source IP address || 32 bits
+|-
+| destination IP address || 32 bits
+|-
+| all 0s || 8 bits
+|-
+| protocol || 8 bits (UDP 17, TCP 6 — [[protocol field]])
+|-
+| UDP total length || 16 bits
+|}
+
+== 왜 IP 주소까지 넣나 ==
+슬라이드에는 이유가 없다. Forouzan 은 datagram 이 엉뚱한 host 로 잘못 배달돼도 receiver 가 알아챌 수 있게 하려는 것이라고 한다(Forouzan 보충). port 만으로는 "어느 host 의" 인지 확인할 수 없기 때문이다.
+
+TCP 도 같은 방식이다(p.54 "same procedure as UDP (with pseudoheader)").
+
+{analogy}🎭 택배 상자 안 송장 사본에 받는 집 주소까지 적어 두는 것. 상자가 엉뚱한 집에 가도 열어 본 사람이 "우리 집 것이 아니다" 를 안다.{/analogy}
+
+{mini}
+# pseudoheader 에 들어가는 IP header 정보 세 가지를 쓰라.
+# pseudoheader 는 UDP datagram 과 함께 전송된다. O/X
+{/mini}
+{answer}
+# source·destination IP address, protocol 번호, (UDP) total length.
+# X. 계산에만 쓴다.
+{/answer}
+
+== 관련 문서 ==
+* [[UDP header]] · [[header checksum]] · [[mid:checksum]] · [[TCP segment format]]

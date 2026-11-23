@@ -2,66 +2,94 @@ key: main
 title: 컴네위키 기말 — DGIST CSE403 Computer Network 기말고사
 category: 안내
 ---
-'''컴네위키 기말'''은 DGIST [CSE403] Computer Network (Prof. Soobin Um, 2026 Fall) '''기말고사 범위''' — 지금은 '''CH05 Wide Area Networks'''(Cellular · Satellite)와 '''CH07 Network Layer: Data Transfer (1)(2)(3)''', '''CH08 Routing of Packets''' — 를 나무위키 스타일로 정리한 학습 위키다. 중간고사 범위(CH01–CH04)는 전편 [[mid:main|컴네위키]]에 있고, 이 위키에서 보라색 ↗중간 표시가 붙은 링크는 그쪽 문서로 넘어간다(새 탭).
+'''컴네위키 기말'''은 DGIST [CSE403] Computer Network (Prof. Soobin Um, 2026 Fall) '''기말고사 범위'''를 나무위키 형식으로 정리한 학습 위키다. 교재는 [[mid:Forouzan|Forouzan]] 6e 이다. 강의는 영어로 하고, 문서는 한국어로 쓰되 용어는 영어 그대로 둔다.
 
-중간고사 위키와 똑같이 세 가지를 약속한다.
+중간고사 범위(CH01–CH04)는 전편 [[mid:main|컴네위키 (중간)]] 에 있다. 이 위키에서 보라색 ↗중간 표시가 붙은 링크는 그쪽 문서로 넘어간다(새 탭).
 
-# '''용어를 까먹으면 클릭한다.''' [[cell]], [[MSC]], [[reuse factor]], [[handoff]], [[GSM multiframe]] 같은 말에는 전부 사전 문서가 있다.
-# '''계산이 나오면 옆에서 값이 바뀌는 걸 본다.''' GSM 270.8 kbps, AMPS 832→416 채널, IS-95 1.228 Mcps, CDMA 복원 과정을 한 단계씩 밟는 '''시뮬레이터'''(◀ ▶).
-# '''보고만 있어도 흐름이 들어온다.''' 발신·수신, hard/soft handoff, frequency reuse, FDMA/TDMA/CDMA 를 '''움직이는 그림'''과 실제 슬라이드 캡처로 보여 준다.
+왼쪽 문서 목록 맨 위의 '''[강의 · 공통 · 중간 ↗]''' 탭으로 오간다. 강의 이름을 누르면 그 강의의 문서들이 펼쳐지고, 굵게 표시된 문서가 그 강의의 메인 문서다. 폰에서는 왼쪽 위 ☰ 목록 버튼으로 연다. 위쪽 '''📱 한입 학습''' 버튼은 짧은 문제 카드로 복습하는 별도 앱이다.
 
-[[anim:generations_timeline|이 강의의 지도. 1G 아날로그 FDMA → 2G 디지털 TDMA/CDMA → 3G IMT-2000 → 4G all-IP. 세대마다 "무엇으로 사용자를 나누는가"를 기억하면 덱 전체가 정리된다]]
+[[anim:generations_timeline|기말 범위의 첫 덱(CH05) 지도. 1G 아날로그 FDMA → 2G 디지털 TDMA/CDMA → 3G IMT-2000 → 4G all-IP]]
 
-== 어디서부터 읽나 ==
+== 기말고사 범위 ==
+=== 진도 ===
+중간고사(10/13) 뒤 수업은 이 순서로 나갔다.
+# [[CH05 셀룰러 동작]] · [[CH05 1G–2G 셀룰러]] · [[CH05 IS-95·3G·4G]] (10/20): WAN 분류, cellular 구조, handoff, 1G–4G
+# [[CH05 Satellite Network]] (10/22, 녹음 없음): orbit, Kepler's law, GEO·MEO·LEO
+# [[CH07 네트워크 계층 서비스와 성능]] (10/27): IP 의 서비스, packet switching, delay·throughput
+# [[CH07 IPv4 주소]] (11/3): classful·classless, CIDR block, subnetting, aggregation
+# [[CH07 IPv4 데이터그램과 포워딩]] (11/5, 녹음 없음): header, fragmentation, ICMPv4, forwarding
+# [[CH07 IPv6]] (11/10): 주소 표기, EUI-64, autoconfiguration, base header, 전환
+# [[CH08 라우팅]] (11/12): distance vector, link state, path vector, RIP·OSPF·BGP
+# [[CH09 전송 계층과 UDP]] (11/17·11/19): port, multiplexing, flow·error control, sliding window, UDP
+# [[CH09 TCP]] (11/19~): byte 번호, header, handshake, window, 재전송, cwnd. p.55 이후는 11/24 수업 전 선제 작성
+처음부터 읽으려면 [[읽는 순서]] 를 따라가면 된다.
 
-* 처음이면 → [[읽는 순서]] (슬라이드 순서대로, 메인 문서 3편 + 딸린 사전 문서)
-* 세대가 헷갈리면 → [[셀룰러 세대 비교표]] (1G–4G 를 한 장에)
-* 시험이 코앞이면 → [[공식 모음]] → [[자주 틀리는 함정 모음]]
-* network layer 서비스 중 IP 가 무엇을 하는지 헷갈리면 → [[IP가 제공하는 서비스]] (p.18 표 하나)
-* IP 주소 block 계산(N · first · last · subnet)이 막히면 → [[block의 세 가지 정보]] · [[Example 7.5 subnet 설계]] (시뮬레이터 `cidr_block` · `subnet_alloc`)
-* '''PS1 (Problem Set 1, 마감 11/15 일)''' → [[PS1 풀이 가이드|PS1 풀이·해설]] (소문항마다 강의 문서 절 · 새끼문제 · 시뮬레이터로 이어 주고, 끝까지 푼 풀이와 해설이 있다)
-* FDM·TDM·FSK·FHSS 가 기억 안 나면 → [[중간고사 선수 개념]]
-* 시험 날짜·범위 → [[시험 정보]] (기말 비중 40%, 날짜·범위 미공지)
-
-== 강의별 메인 문서 ==
-
+=== 강의별 메인 문서 ===
 {|
-! 구간 || 메인 문서 || 한 줄 요약 || 핵심 시뮬레이터 / 그림
+! 강 || 덱 · 쪽 || 메인 문서 || 한 줄 요약 || 시뮬레이터 / 그림
 |-
-| CH05 (1) p.1–17 || [[CH05 셀룰러 동작]] || WAN 분류, [[cell]]·[[base station]]·[[mobile station]]·[[MSC]], '''[[frequency reuse]]'''([[reuse factor]]), [[통화 발신 과정]]·[[통화 수신 과정]]([[paging]]), '''[[handoff]]'''([[hard handoff]]/[[soft handoff]]), [[roaming]] || `sim:call_flow` · `sim:handoff_signal` · `sim:reuse_pattern` · `anim:cellular_architecture` · `anim:handoff_hard_soft`
+| 1강 || CH05 (1) p.1–17 || [[CH05 셀룰러 동작]] || [[cell]]·[[base station]]·[[MSC]], [[frequency reuse]], 발신·수신([[paging]]), [[handoff]] hard/soft, [[roaming]] || `call_flow` · `handoff_signal` · `reuse_pattern`
 |-
-| CH05 (1) p.18–26 || [[CH05 1G–2G 셀룰러]] || [[1G]] [[AMPS]]([[FDMA]], 832 채널, reuse 7), [[2G]] [[D-AMPS]]([[TDMA]] 3 사용자), '''[[GSM]]'''([[GSM multiframe]] → 270.8 kbps) || `sim:band_channels` · `sim:gsm_bitrate` · `sim:damps_tdma` · `anim:amps_bands` · `anim:gsm_multiframe_anim`
+| 2강 || CH05 (1) p.18–26 || [[CH05 1G–2G 셀룰러]] || [[AMPS]]([[FDMA]]), [[D-AMPS]]([[TDMA]]), [[GSM]]([[GSM multiframe]] → 270.8 kbps) || `band_channels` · `gsm_bitrate` · `damps_tdma`
 |-
-| CH05 (1) p.27–36 || [[CH05 IS-95·3G·4G]] || '''[[IS-95]]'''([[DSSS]]·[[CDMA]], [[Walsh code]], reuse factor 1, [[pilot channel]]로 soft handoff), [[3G]] [[IMT-2000]]([[W-CDMA]]·[[CDMA 2000]]), [[4G]]([[all-IP]]) || `sim:is95_rates` · `sim:cdma_walsh` · `anim:cdma_spreading` · `anim:access_methods`
+| 3강 || CH05 (1) p.27–36 || [[CH05 IS-95·3G·4G]] || [[IS-95]]([[CDMA]], [[Walsh code]], reuse factor 1), [[IMT-2000]], [[4G]] all-IP || `is95_rates` · `cdma_walsh`
 |-
-| CH05 (2) p.1–21 || [[CH05 Satellite Network]] || [[satellite network 구성]]([[ISL]]), [[orbit]] 3종, '''[[Kepler's law]]'''(Ex 5.1 달 · Ex 5.2 → 24 h = [[geostationary]]), [[위성 세 범주]] [[GEO]]·[[MEO]]([[GPS]], [[trilateration]])·[[LEO]]([[Starlink]], [[footprint]]), [[SATCOM 주파수 대역]](uplink = Earth → satellite) — 10/22 수업 전 선제 작성 || `sim:kepler_period` · `anim:satellite_orbits` · `anim:geo_three` · `anim:leo_footprint` · `anim:trilateration_anim`
+| 4강 || CH05 (2) p.1–21 || [[CH05 Satellite Network]] || [[orbit]] 3종, [[Kepler's law]](Ex 5.1·5.2), [[GEO]]·[[MEO]]([[GPS]])·[[LEO]]([[Starlink]]) || `kepler_period`
 |-
-| CH07 (1) p.1–38 || [[CH07 네트워크 계층 서비스와 성능]] || '''[[network layer]]''' 시작: [[IP]] = [[connectionless]] + [[best effort]], 서비스 7 가지와 '''[[IP가 제공하는 서비스]]'''([[packetizing]] · [[routing]]/[[forwarding]] ✓, error control △, flow · congestion · QoS · security ✗), [[packet switching]]([[datagram approach]] vs [[virtual-circuit approach]]), delay 4 가지와 '''[[total delay 공식]]''', [[throughput]] = [[bottleneck]], [[load와 성능]] — 10/27 || `sim:total_delay` · `sim:bottleneck_throughput` · `sim:datagram_vs_vc` · `anim:encap_decap` · `anim:datagram_vs_vc_anim` · `anim:delay_four_parts` · `anim:load_curves`
+| 5강 || CH07 (1) p.1–38 || [[CH07 네트워크 계층 서비스와 성능]] || [[IP가 제공하는 서비스]], [[routing]] vs [[forwarding]], [[datagram approach]] vs [[virtual-circuit approach]], [[total delay 공식]], [[bottleneck]] || `total_delay` · `bottleneck_throughput` · `datagram_vs_vc`
 |-
-| CH07 (2) p.1–30 || [[CH07 IPv4 주소]] || '''[[IPv4 address]]''' = connection 마다(logical, MAC 은 device), [[address space]] $2^{32}$, [[prefix와 suffix]], [[classful addressing]] A–E → [[address depletion]], '''[[classless addressing]]'''·[[CIDR]] address/n, '''[[block의 세 가지 정보]]'''($N = 2^{32-n}$, first = AND [[address mask|mask]], last = OR NOT mask — [[Example 7.1]]), [[block allocation]]([[ICANN]] → [[ISP]]), '''[[subnetting]]'''(largest first — [[Example 7.5 subnet 설계]]), [[address aggregation]] — 11/3 || `sim:cidr_block` · `sim:subnet_alloc` · `sim:classful_class` · `anim:cidr_mask_anim` · `anim:subnet_split_anim` · `anim:aggregation_anim`
+| 6강 || CH07 (2) p.1–30 || [[CH07 IPv4 주소]] || [[classful addressing]] → [[CIDR]], [[block의 세 가지 정보]], [[subnetting]](largest first), [[address aggregation]] || `cidr_block` · `subnet_alloc` · `classful_class`
 |-
-| CH07 (2) p.31~ (rev) || [[CH07 IPv4 데이터그램과 포워딩]] || [[IPv4 datagram format]], fragmentation, [[ICMPv4]], forwarding — 11/5 (녹음 없음, 슬라이드 기준) || `sim:ipv4_header_decode` · `sim:fragment_calc` · `sim:forward_lookup` · `anim:ipv4_header_anim` · `anim:fragmentation_anim`
+| 7강 || CH07 (2) rev p.31–68 || [[CH07 IPv4 데이터그램과 포워딩]] || [[IPv4 datagram format]], [[fragmentation offset]], [[ICMPv4]], [[longest mask matching]] || `ipv4_header_decode` · `fragment_calc` · `forward_lookup`
 |-
-| CH07 (3) p.1–32 || [[CH07 IPv6]] || '''[[IPv6 address]]''' 128 bits, [[colon hexadecimal notation]]·[[zero compression]](`::` 한 번만), [[unicast·anycast·multicast]], [[global unicast address]](2000::/3, 48·16·64), '''[[EUI-64]]'''(7번째 bit + FFFE → [[interface ID]]), '''[[autoconfiguration]]'''([[link-local address]] → [[router solicitation과 advertisement|RS/RA]], [[Example 7.29]]), [[IPv6 base header]] 40 B, [[extension header]], '''[[IPv6 fragmentation|source 만 fragmentation]]'''(시험 언급), [[ICMPv6]](ND·MLD), [[dual stack]]·[[tunneling]]·[[header translation]] — 11/10 || `sim:ipv6_compress` · `sim:eui64` · `anim:ipv6_autoconfig_anim` · `anim:ipv6_frag_anim` · `anim:ipv6_transition_anim`
+| 8강 || CH07 (3) p.1–32 || [[CH07 IPv6]] || [[zero compression]], [[EUI-64]], [[autoconfiguration]], [[IPv6 fragmentation|source 만 fragmentation]](시험 언급), [[dual stack]]·[[tunneling]] || `ipv6_compress` · `eui64`
 |-
-| CH08 p.1–37 || [[CH08 라우팅]] || 인터넷 = weighted graph, [[least-cost tree]], '''[[distance vector routing]]'''([[Bellman-Ford equation]], [[count to infinity와 two-node loop|two-node loop]] → [[split horizon]]·[[poison reverse]]·[[three-node instability]]), '''[[link state routing]]'''([[LSDB]], [[flooding과 LSP|flooding]], [[Dijkstra algorithm|Dijkstra]]), [[path vector routing]](policy), '''[[라우팅 알고리즘 비교]]''', [[autonomous system|AS]]·[[intra-AS와 inter-AS routing|intra/inter-AS]], [[RIP]](hop count, 16 = ∞) · [[OSPF]]([[OSPF area|area]]) · [[BGP4]]([[eBGP와 iBGP|eBGP/iBGP]]) — 11/12 || `sim:dv_update` · `sim:dijkstra_ls` · `anim:count_to_infinity_anim` · `anim:lsp_flooding_anim`
+| 9강 || CH08 p.1–37 || [[CH08 라우팅]] || [[Bellman-Ford equation]], [[count to infinity와 two-node loop|two-node loop]], [[link state routing]]·[[Dijkstra algorithm]], [[path vector routing]], [[RIP]]·[[OSPF]]·[[BGP4]] || `dv_update` · `dijkstra_ls`
+|-
+| 10강 || CH09 p.1–40 || [[CH09 전송 계층과 UDP]] || [[port number]](ephemeral/well-known), [[multiplexing과 demultiplexing]], [[전송 계층 flow control|flow control]](push/pull), [[전송 계층 error control|error control]], [[sliding window]], [[UDP]]([[Example UDP header 읽기]]) || `sliding_window` · `udp_header_read` · `anim:mux_demux_anim`
+|-
+| 11강 || CH09 p.41–85 || [[CH09 TCP]] || [[TCP sequence number와 ISN|byte 번호]], [[TCP segment format]], [[three-way handshake]], [[send window]]·[[receive window와 rwnd|rwnd]], [[RTO와 fast retransmission]], [[cwnd]]·[[Tahoe와 Reno]] || `tcp_seq_ack` · `cwnd_tahoe_reno` · `anim:three_way_handshake_anim` · `anim:fast_retransmit_anim`
+|}
+
+== 시험 대비 ==
+* 시험 날짜·장소·범위 끝은 아직 공지되지 않았다. 지금까지 알려진 것은 [[시험 정보]] 에 있다(기말 비중 40%).
+* 교수가 "시험에 나올 수 있다" 고 직접 말한 것은 IPv4 와 IPv6 의 fragmentation 차이다(11/10). 그 밖에 "key distinction", "please remember" 라고 짚은 곳은 각 메인 문서의 🎯 출제 포인트 박스에 모았다.
+* 교수 학습 지침(10/20): 세대별 구체적 숫자는 외우지 말고 trend 를 이해하라. uplink/downlink 는 외워라.
+* 마지막 정리용: [[공식 모음]] → [[자주 틀리는 함정 모음]] → 각 메인 문서 끝의 "시험 직전 체크".
+* 과제: [[PS1 풀이 가이드]] (Problem Set 1, 11/15 마감, 소문항별 풀이·해설)
+
+== 공통 문서 ==
+{|
+! 문서 || 내용
+|-
+| [[읽는 순서]] || 강의별 메인 문서와 딸린 사전 문서를 슬라이드 순서로
+|-
+| [[시험 정보]] || 비중, 교수 강조, 수업별 진도와 녹음
+|-
+| [[공식 모음]] || 강의별 계산식과 슬라이드 예제 값
+|-
+| [[자주 틀리는 함정 모음]] || 강의별로 헷갈리기 쉬운 것
+|-
+| [[셀룰러 세대 비교표]] || 1G–4G 를 한 장에
+|-
+| [[중간고사 선수 개념]] || FDM·TDM·FSK·FHSS 등 중간 범위에서 끌어 쓰는 개념
+|-
+| [[PS1 풀이 가이드]] || 과제 1 풀이
 |}
 
 == 이 위키를 읽는 법 ==
-
 {tip}
-* 📖 '''정의 박스'''는 슬라이드 영어 원문이 먼저 온다. "정의 → 용어 이름" 유형에 대비해 영어 문장을 그대로 외운다.
-* 🎯 '''출제 포인트 박스'''는 교수가 수업(10/20 · 10/27 · 11/3 · 11/10 · 11/12 녹음)에서 강조한 것이다.
-* ✍️ 슬라이드 캡처에는 '''내 GoodNotes 필기'''(빨간 글씨)가 그대로 있다. 필기에 "??"로 남긴 질문은 해당 문서의 💡 "필기 속 질문" 박스에서 답했고, "다시" 표시한 곳은 ⚠️ 박스로 쉽게 다시 설명했다.
-* 🎭 '''비유 박스'''는 이해가 안 될 때 먼저 읽는다.
-* ❓ '''예상문제'''는 정답이 접혀 있다. 먼저 답을 써 보고 펼친다.
+* 📖 '''정의 박스'''는 슬라이드 영어 원문이 먼저 온다. 정의를 보고 용어를 고르는 문제에 대비해 영어 문장을 그대로 본다.
+* 🎯 '''출제 포인트'''는 교수가 수업 녹음에서 강조한 것만 넣었다.
+* ✏️ '''새끼문제'''는 절마다 있다. 먼저 답을 써 보고 아래 접힌 정답을 펼친다.
+* 각주 [1] 에는 녹음 시각, 교수 발언 원문, 슬라이드 밖 보충이 들어 있다.
 * 시뮬레이터는 ◀ ▶ 또는 키보드 ← → 로 한 단계씩 넘긴다. 움직이는 그림은 슬라이더로 멈춰 놓고 자막을 읽는다.
 {/tip}
 
 {analogy}
-셀룰러 망은 '''전국에 깔린 동네 우체국망'''이다. 동네(cell)마다 우체국(base station)이 있고, 우체국들은 중앙 집배센터(MSC)에 묶여 있다. 이웃 동네는 같은 배달 차량 번호(주파수)를 쓰면 헷갈리니 몇 동네 건너서만 다시 쓰고(frequency reuse), 내가 이사 가는 중에도 편지가 끊기지 않게 담당 우체국을 넘겨준다(handoff). 다른 회사 우체국 구역에 가도 제휴 덕분에 받을 수 있다(roaming).
+이 과목의 기말 범위는 '''편지 한 통이 가는 길'''을 아래에서 위로 따라간다. CH05 는 동네 밖 먼 길(셀룰러·위성 WAN), CH07 은 봉투에 적는 주소(IPv4·IPv6)와 우체국이 봉투를 다루는 법, CH08 은 우체국들이 길을 정하는 법, CH09 는 받는 집 안에서 '''누가''' 받는지(port)와 잃어버린 편지를 '''누가''' 다시 보내는지(TCP)다.
 {/analogy}
 
 == 관련 문서 ==
-* [[읽는 순서]] · [[시험 정보]] · [[PS1 풀이 가이드]] · [[공식 모음]] · [[셀룰러 세대 비교표]] · [[중간고사 선수 개념]]
-* 전편: [[mid:main|컴네위키 (중간고사)]] · [[mid:WAN|WAN (CH01)]] · [[mid:LAN|LAN]]
+* [[읽는 순서]] · [[시험 정보]] · [[공식 모음]] · [[자주 틀리는 함정 모음]] · [[PS1 풀이 가이드]]
+* 전편: [[mid:main|컴네위키 (중간고사)]] · [[mid:transport layer|transport layer (CH01 개관)]]

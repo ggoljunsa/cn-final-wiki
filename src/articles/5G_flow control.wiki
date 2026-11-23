@@ -27,6 +27,8 @@ category: 5강 네트워크 계층, 용어
 
 {analogy}🎭 '''택배 받는 사람의 현관 앞 공간.''' 하루에 상자 3 개밖에 못 놓는데 10 개를 보내면 넘친다. "하루 3 개씩만 보내 주세요" 라고 '''받는 사람이''' 알려 주는 것이 flow control(TCP 의 receive window). 택배 회사(IP)는 그런 조절을 안 한다.{/analogy}
 
+{info}TCP 가 실제로 어떻게 하는지는 10강·11강에 있다. transport layer 의 flow control 은 push 가 일어나는 두 곳에서만 한다([[전송 계층 flow control]]). TCP 는 receiver 가 알리는 [[receive window와 rwnd|rwnd]] 로 [[send window]] 크기를 정한다.{/info}
+
 == 관련 문서 ==
 * [[congestion control]] · [[best effort]] · [[IP가 제공하는 서비스]] · [[CH07 네트워크 계층 서비스와 성능]]
 * 중간고사: [[mid:TCP]] · [[mid:transport layer]]

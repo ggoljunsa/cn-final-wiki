@@ -89,6 +89,11 @@
     background: #1c2840; color: #ffd75e; border: 1px solid #3a4a6a; border-radius: 3px;
     padding: 5px 9px; font-size: 12px; cursor: pointer; white-space: nowrap;
   }
+  header.top .pocket-btn {
+    background: #ffd75e; color: #2a3b5a; font-weight: 700; font-size: 13px;
+    padding: 5px 10px; border-radius: 6px; text-decoration: none; white-space: nowrap;
+  }
+  header.top .pocket-btn:hover { background: #ffe58f; }
   .offline-btn.done { color: #9be59b; border-color: #2e6b3a; }
   .offline-btn.busy { color: #c8d4e6; }
   header.top .tagline {
@@ -153,6 +158,25 @@
   aside ul li a:hover { background: #f0f4fa; text-decoration: underline; }
   aside ul li a.active { background: var(--header); color: #fff; font-weight: 600; }
   aside .cat { color: var(--muted); font-size: 11px; margin-top: 10px; }
+  /* 사이드바 탭 [강의 · 공통 · 중간↗] + 접히는 강의 그룹 (algo-wiki 이식, 11-23) */
+  aside ul li.nav-tabs { display: flex; gap: 4px; padding: 2px 0 8px; position: sticky; top: -12px;
+    background: var(--paper); z-index: 1; }
+  .nav-tabs button, .nav-tabs a.nav-ext { flex: 1; font: inherit; font-size: 12px; padding: 5px 2px; cursor: pointer;
+    border: 1px solid var(--border); border-radius: 4px; background: transparent; color: var(--muted); text-align: center; }
+  .nav-tabs a.nav-ext { flex: 0.9; color: #6a4fa3; border-color: #cdbfe6; text-decoration: none; }
+  .nav-tabs a.nav-ext:hover { background: #f3eefb; text-decoration: none; }
+  .nav-tabs button.on { background: var(--header); border-color: var(--header); color: #fff; font-weight: 700; }
+  aside ul li .nav-group { display: flex; align-items: center; gap: 4px; width: 100%; text-align: left;
+    font: inherit; font-size: 13px; font-weight: 700; color: #34466b; background: transparent;
+    border: 0; border-top: 1px solid var(--border); padding: 7px 4px 5px; cursor: pointer; }
+  aside ul li:nth-child(2) > .nav-group { border-top: 0; }
+  .nav-group .caret { width: 12px; color: var(--muted); }
+  .nav-group .cnt { margin-left: auto; font-size: 11px; font-weight: 400; color: var(--muted); }
+  aside ul.nav-items { padding-left: 10px; margin-bottom: 4px; }
+  aside ul.nav-items li { padding: 1px 0; }
+  aside ul li a.lecture-main { font-weight: 700; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) aside ul li .nav-group { color: #b9c8e6; } }
+  :root[data-theme="dark"] aside ul li .nav-group { color: #b9c8e6; }
   aside.toc-side .toc-item { padding-left: 0; }
   aside.toc-side .toc-item.l2 { padding-left: 12px; }
   aside.toc-side .toc-item.l3 { padding-left: 24px; }
@@ -697,6 +721,7 @@
   <div class="search">
     <input id="searchBox" type="text" placeholder="문서 검색... (예: SNR, CRC, vulnerable time)">
   </div>
+  <a class="pocket-btn" href="duo/index.html" title="기말 범위 한입 학습 (짧은 문제 카드)">📱 한입 학습</a>
   <button class="offline-btn" id="offlineBtn" type="button" title="이미지·수식까지 폰에 저장해 인터넷 없이 봅니다">📥 오프라인 저장</button>
   <div class="tagline">DGIST CSE403 Computer Network — 기말고사 (CH05–)</div>
 </header>

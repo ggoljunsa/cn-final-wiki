@@ -223,5 +223,20 @@ OX: ① 167.199.170.82/27 의 network address 는 167.199.170.82 다. ② /24 bl
 * '''RIP 교체 규칙 ③''': cost 가 올라가도 같은 next router 에서 온 소식이면 받아들인다 → [[RIP]]
 * '''BGP 는 path vector(policy), OSPF 는 link state(Dijkstra)''': 둘을 섞지 않는다 → [[BGP4]] · [[OSPF]]
 
+== 전송 계층 (CH09, L16) ==
+* '''라우터에는 transport layer 가 없다''': transport layer 는 end host 에만. "라우터가 port 를 보고 forwarding" 은 X → [[transport layer]]
+* '''ephemeral 경계는 1023''': 교수는 "more than 1000" 이라고 말했지만 슬라이드는 > 1023 → [[ephemeral port와 well-known port]]
+* '''UDP header 방향 판정''': 작은 port(well-known) 쪽이 server. dst 13 → client → server → [[Example UDP header 읽기]]
+* '''UDP data 길이 = total length − 8''': total length 는 header 포함 → [[UDP header]]
+* '''flow control 은 receiver TL → process 구간엔 없다''' (pull). error control 은 TL ↔ TL 만 → [[전송 계층 flow control]] · [[전송 계층 error control]]
+* '''user datagram(4계층) ≠ datagram(3계층)''' → [[user datagram]]
+* '''TCP 는 byte 를 센다''': 다음 seq = 앞 seq + 앞 bytes. 10,001 + 1,000 = 11,001 (11,000 아님) → [[Example 다섯 segment의 sequence number]]
+* '''ACK number = 다음 기다리는 byte''': ACK 5643 은 5642 까지 받음 → [[acknowledgment number]]
+* '''SYN·FIN 은 번호 1 개, 순수 ACK 는 0 개''': ③ ACK 의 seq 와 첫 data seq 가 둘 다 ISN + 1 → [[three-way handshake]]
+* '''HLEN × 4''': HLEN 5 = 20 B, 15 = 60 B → [[TCP segment format]]
+* '''duplicate ACK 3 개 = 원래 ACK 빼고 3 개''' → [[RTO와 fast retransmission]]
+* '''slow start 는 exponential''' (이름과 반대). CA 가 +1 → [[slow start]]
+* '''time-out 반응은 Tahoe·Reno 같다''': 다른 건 3 dupACKs 뿐 (Reno: cwnd = ssthresh + 3) → [[Tahoe와 Reno]]
+
 == 관련 문서 ==
-* [[IPv4와 IPv6 비교]] · [[공식 모음]] · [[셀룰러 세대 비교표]] · [[시험 정보]] · [[CH05 Satellite Network]] · [[CH07 네트워크 계층 서비스와 성능]] · [[IP가 제공하는 서비스]] · [[CH07 IPv4 주소]] · [[subnetting]] · [[address mask]]
+* [[CH09 전송 계층과 UDP]] · [[CH09 TCP]] · [[IPv4와 IPv6 비교]] · [[공식 모음]] · [[셀룰러 세대 비교표]] · [[시험 정보]] · [[CH05 Satellite Network]] · [[CH07 네트워크 계층 서비스와 성능]] · [[IP가 제공하는 서비스]] · [[CH07 IPv4 주소]] · [[subnetting]] · [[address mask]]

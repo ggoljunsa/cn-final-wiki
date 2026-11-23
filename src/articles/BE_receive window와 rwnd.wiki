@@ -1,0 +1,37 @@
+key: receive window와 rwnd
+title: receive window 와 rwnd — 더 받을 수 있는 양
+category: 11강 TCP, 용어
+---
+{info}이 절의 p.55 이후 내용은 11/24 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
+
+TCP 의 '''receive window''' 는 receiving buffer 에서 더 받을 수 있는 byte 범위이고, 그 크기가 '''rwnd''' 다. receiver 는 header 의 window size 칸으로 rwnd 를 알린다. L16 p.64–65, p.67.
+
+{def}"The receiving process pulls data at its own pace. Part of the buffer holds bytes already ACKed but not yet pulled. rwnd = buffer size − bytes waiting to be pulled. ACKs are mainly cumulative (next byte expected); newer TCP adds selective ACKs." (p.65){/def}
+
+[[img:L16-64.png|p.64 — 200 까지 process 가 가져감, 201–260 받고 ACK 했지만 아직 안 가져감, 261–300 = Receive window size (rwnd)|medium]]
+
+$$\text{rwnd} = \text{buffer size} - \text{bytes waiting to be pulled}$$
+
+== 움직임 (p.67) ==
+* byte 가 도착하면 '''닫힌다''' (왼쪽 벽 → 오른쪽).
+* process 가 byte 를 가져가면 '''열린다''' (오른쪽 벽 → 오른쪽).
+* receive window 는 '''줄어들 수 없다''' (p.69).
+
+== p.68 예제 숫자 ==
+buffer 800. 200 bytes 받음 → rwnd 600. 300 bytes 더 받고 100 가져감 → 800 − 400 = 400. 200 더 가져감 → 800 − 200 = 600.
+
+{exam}send window 실제 크기 = min(rwnd, cwnd). rwnd 는 receiver(flow control), cwnd 는 network(congestion control) (p.78).{/exam}
+
+{analogy}🎭 냉장고 빈 칸. 장 본 게 들어오면 줄고, 꺼내 먹으면 는다. "빈 칸 몇 개" 를 장 보는 사람에게 계속 알려 준다.{/analogy}
+
+{mini}
+# buffer 4,000 B, 받았지만 안 가져간 byte 2,500 B. rwnd 는?
+# rwnd 를 담는 header 칸 이름과 크기는?
+{/mini}
+{answer}
+# 1,500 B.
+# window size, 16 bits.
+{/answer}
+
+== 관련 문서 ==
+* [[send window]] · [[cwnd]] · [[window shutdown과 probing]] · [[전송 계층 flow control]]

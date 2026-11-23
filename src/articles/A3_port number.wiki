@@ -1,0 +1,33 @@
+key: port number
+title: port number — process 를 고르는 16-bit 번호
+category: 10강 전송 계층, 용어
+---
+'''port number''' 는 한 host 안에서 process 를 구분하는 16-bit 정수다. 0 부터 65,535 까지 쓴다. L16 p.9–11.
+
+{def}"Processes are identified by port numbers: integers from 0 to 65,535. Client: a temporary ephemeral (임시의) port (recommended > 1023). Server: a fixed well-known port, so clients know where to reach it." (p.9)
+"IP address selects the host. Port number selects the process on that host." (p.10){/def}
+
+== 이름에서 ==
+port 는 항구, 드나드는 문이다. 컴퓨터 하나에 문이 65,536 개 있고, process 마다 자기 문을 하나씩 연다고 보면 된다.
+
+== 쓰는 방법 ==
+[[img:L16-10.png|p.10 — Daytime client 는 52,000, Daytime server 는 13. 요청 header 는 52,000 | 13, 응답 header 는 13 | 52,000|medium]]
+* client 는 [[ephemeral port와 well-known port|ephemeral port]] 를 잠깐 쓴다.
+* server 는 well-known port 에서 기다린다.
+* 요청은 src = client port, dst = server port. 응답은 둘이 자리를 바꾼다.
+* 어느 번호가 어느 용도인지는 [[ICANN]] 이 세 구간으로 나눈다 → [[port number 범위]].
+* header 에는 source port 와 destination port 가 16 bits 씩 들어간다([[UDP header]], [[TCP segment format]]).
+
+{analogy}🎭 건물 하나(host)에 사무실 65,536 개. 민원실(server)은 호수가 고정이라 다들 안다. 방문객(client)은 아무 빈 회의실 번호를 잠깐 빌려 쓰고 그 번호를 회신 주소로 적는다.{/analogy}
+
+{mini}
+# port number 는 몇 bits 인가? 쓸 수 있는 값의 개수는?
+# client 52000 이 server 13 에 요청했다. 응답의 src, dst port 는?
+{/mini}
+{answer}
+# 16 bits, $2^{16}$ = 65,536 개(0–65,535).
+# src 13, dst 52000.
+{/answer}
+
+== 관련 문서 ==
+* [[ephemeral port와 well-known port]] · [[port number 범위]] · [[socket address]] · [[multiplexing과 demultiplexing]] · [[mid:포트 번호]]

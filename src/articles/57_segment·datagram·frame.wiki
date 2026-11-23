@@ -26,6 +26,8 @@ category: 5강 네트워크 계층, 용어
 
 {analogy}🎭 '''편지 → 봉투 → 우편 자루 → 트럭'''. 편지(message)를 봉투에 넣으면 segment, 봉투에 주소 스티커를 붙여 우체국 체계에 넣으면 datagram, 그 봉투를 다음 우체국행 자루(구간마다 바뀜)에 담으면 frame 이다.{/analogy}
 
+{info}transport layer 의 packet 이름은 프로토콜마다 다르다. UDP 는 [[user datagram]], TCP 는 [[segment]] 다(L16 p.13). user datagram(4계층)과 IP datagram(3계층)을 섞지 말자.{/info}
+
 == 관련 문서 ==
 * [[datagram]] · [[packetizing]] · [[network layer]] · [[IP]]
 * 중간고사: [[mid:PDU]] · [[mid:캡슐화]] · [[mid:Ethernet 프레임 형식]]

@@ -1,0 +1,36 @@
+key: TCP sequence number와 ISN
+title: TCP sequence number 와 ISN — byte 마다 번호, 첫 번호는 무작위
+category: 11강 TCP, 용어
+---
+TCP 는 segment 가 아니라 '''byte''' 에 번호를 붙인다. segment 의 sequence number 는 그 안 첫 byte 의 번호이고, 첫 번호 ISN 은 무작위다. L16 p.47–48.
+
+{def}"They count bytes, not segments. Bytes in each direction are numbered independently. Numbering starts at a random number between 0 and 2^32 − 1." (p.47)
+"Each segment gets a sequence number = number of its first byte. First segment: ISN (initial sequence number), random. Next segment: previous seq. number + bytes carried by the previous segment." (p.48){/def}
+
+[[img:L16-48.png|p.48 — Seg 1 seq 10,001, Seg 2 seq 11,001, Seg 3 seq 12,001 (1,000 bytes per segment)|medium]]
+
+== 계산 ==
+$$\text{seq}_{k+1} = \text{seq}_k + (\text{segment } k \text{ 의 byte 수})$$
+예제는 [[Example 다섯 segment의 sequence number]].
+
+== 왜 무작위로 시작하나 ==
+교수: 양쪽이 모두 0 부터 세면 "not that identifiable" 하다(11/19 26:24). 두 방향 번호는 서로 독립이라 시작값도 다르다.
+
+== handshake 와의 관계 ==
+SYN 과 FIN 은 data 가 없어도 번호 1 개를 쓴다. 그래서 ISN 이 8000 이면 첫 data byte 는 8001 이다(p.56, p.59) → [[three-way handshake]].
+
+{warn}일반론의 [[sequence number]] (m bits, packet 단위)와 섞지 말자. TCP 는 32 bits, byte 단위, 무작위 시작이다.{/warn}
+
+{analogy}🎭 책 페이지 번호. 상자에 "이 상자는 101쪽부터" 라고 적는다. 첫 쪽 번호는 아무렇게나 정해도 된다.{/analogy}
+
+{mini}
+# 첫 data byte 가 501 이고 segment 크기가 200, 300, 250 이다. 세 seq 를 쓰라.
+# sequence number 칸은 몇 bits 인가?
+{/mini}
+{answer}
+# 501, 701, 1001.
+# 32 bits.
+{/answer}
+
+== 관련 문서 ==
+* [[acknowledgment number]] · [[Example 다섯 segment의 sequence number]] · [[three-way handshake]] · [[TCP segment format]]

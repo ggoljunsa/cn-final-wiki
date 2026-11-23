@@ -1,0 +1,35 @@
+key: ACK와 retransmission timer
+title: ACK 와 retransmission timer — 받았다는 확인과 기다리는 시간
+category: 10강 전송 계층, 용어
+---
+receiver 는 무사히 받은 packet 에 '''ACK''' (acknowledgment)를 보낸다. sender 는 packet 마다 '''timer''' 를 켜고, ACK 가 오기 전에 timer 가 끝나면 다시 보낸다. L16 p.18–21.
+
+{def}"Receiver sends an ACK for packets that arrived safe and sound. Corrupted packets are simply discarded. Sender starts a timer for each packet sent. No ACK before the timer expires → resend. Duplicates: discarded. Out-of-order: discarded or stored." (p.18–21){/def}
+
+[[img:L16-21.png|p.21 — pkt 0 은 ACK. pkt 1 은 ✗ 로 사라져 timer 가 끝나고(time-out) pkt 1 (resent) → ACK|medium]]
+
+== 순서대로 ==
+# sender 가 pkt 0 을 보내고 timer 를 켠다. ACK 가 와서 timer 를 끈다.
+# pkt 1 을 보내고 timer 를 켠다. pkt 1 이 사라진다.
+# receiver 는 받은 게 없으니 아무것도 안 보낸다.
+# timer 가 끝난다(time-out). sender 가 pkt 1 을 다시 보낸다.
+# 이번엔 ACK 가 온다.
+
+== 손상되면 ==
+receiver 는 손상된 packet 을 '''그냥 버린다'''. "잘못 왔다" 는 신호(NAK)를 따로 보내지 않는다. sender 쪽에서는 분실과 똑같이 "ACK 가 안 온다" 로 보이고, timer 하나로 둘 다 해결된다.
+
+{tip}TCP 는 packet 마다가 아니라 '''연결당 timer 하나'''를 쓴다(p.63). 그리고 timer 말고 duplicate ACK 로도 다시 보낸다 → [[RTO와 fast retransmission]].{/tip}
+
+{analogy}🎭 문자를 보내고 "읽음" 표시를 기다린다. 한참 지나도 안 뜨면 다시 보낸다. 상대가 같은 문자를 두 번 받으면 하나는 무시한다.{/analogy}
+
+{mini}
+# timer 가 끝났을 때 sender 가 하는 일은?
+# 손상된 packet 을 받은 receiver 가 하는 일은?
+{/mini}
+{answer}
+# ACK 를 못 받은 packet 을 다시 보낸다(resend).
+# 버리고 ACK 를 보내지 않는다.
+{/answer}
+
+== 관련 문서 ==
+* [[sequence number]] · [[sliding window]] · [[전송 계층 error control]] · [[RTO와 fast retransmission]]

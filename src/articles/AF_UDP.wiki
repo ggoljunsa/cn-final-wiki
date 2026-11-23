@@ -1,0 +1,44 @@
+key: UDP
+title: UDP (User Datagram Protocol) — IP 에 port 와 checksum 만 더한 프로토콜
+category: 10강 전송 계층, 용어
+---
+'''UDP''' (User Datagram Protocol)는 connectionless, unreliable transport protocol 이다. IP 에 process-to-process delivery(port)와 checksum 만 더했다. L16 p.33–40.
+
+{def}"Connectionless, unreliable transport protocol. Adds nothing to IP except process-to-process delivery (ports). Very simple, minimum overhead. Good for a small message when reliability matters little. Much less interaction than TCP (no setup, no ACKs). UDP = IP + port numbers + a checksum. That's about it." (p.33){/def}
+
+== 이름에서 ==
+User Datagram Protocol. packet 이름이 '''[[user datagram]]''' 이다. IP 의 datagram 처럼 하나씩 따로 가는 단위에 "user"(application) 의 메시지를 담았다는 뜻이다.
+
+== 무엇을 하고 무엇을 안 하나 (p.37) ==
+{|
+! 서비스 || UDP
+|-
+| process-to-process || ✓ (socket address)
+|-
+| connection || ✗ connectionless, 번호 없음
+|-
+| flow control || ✗
+|-
+| error control || △ optional checksum 만
+|-
+| congestion control || ✗
+|-
+| multiplexing / demultiplexing || ✓
+|}
+header 는 8 bytes 고정이다 → [[UDP header]]. 쓰는 곳은 DNS, voice/video, SNMP·[[RIP]] → [[UDP를 쓰는 경우]].
+
+{exam}"UDP = IP + port numbers + a checksum" (p.33, 교수 11/19 01:58). header 8 B vs TCP 20–60 B.{/exam}
+
+{analogy}🎭 일반 우편. 주소(port)만 맞게 쓰면 보내 준다. 도착했는지 알려 주지 않고, 잃어버려도 다시 보내지 않는다. 대신 싸고 빠르다.{/analogy}
+
+{mini}
+# UDP 가 IP 에 더하는 것 두 가지를 쓰라.
+# "UDP 는 손상된 datagram 을 다시 받아 온다." O/X
+{/mini}
+{answer}
+# port number(process-to-process delivery)와 checksum.
+# X. checksum 으로 알아채도 버릴 뿐 재전송은 없다.
+{/answer}
+
+== 관련 문서 ==
+* [[UDP header]] · [[user datagram]] · [[pseudoheader]] · [[UDP를 쓰는 경우]] · [[UDP와 TCP 비교]] · [[mid:UDP]]

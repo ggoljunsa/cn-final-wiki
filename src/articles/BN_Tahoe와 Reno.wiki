@@ -1,0 +1,46 @@
+key: Tahoe와 Reno
+title: Tahoe 와 Reno — 3 duplicate ACKs 에 대한 반응 차이
+category: 11강 TCP, 용어
+---
+{info}이 절의 p.55 이후 내용은 11/24 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
+
+Tahoe TCP 와 Reno TCP 는 time-out 에는 똑같이 반응하고, 3 duplicate ACKs 에 다르게 반응한다. L16 p.81–85.
+
+[[img:L16-81.png|p.81 — Event / Tahoe TCP / Reno TCP 표|medium]]
+{|
+! 사건 || Tahoe || Reno
+|-
+| time-out || ssthresh = cwnd/2, cwnd = 1 → slow start || Tahoe 와 같음
+|-
+| 3 duplicate ACKs || time-out 과 같음 || ssthresh = cwnd/2, cwnd = ssthresh + 3 → fast recovery
+|}
+
+== 상태 수 ==
+Tahoe 는 slow start ⇄ congestion avoidance 두 상태(p.82). Reno 는 [[fast recovery]] 를 더해 세 상태(p.84).
+
+== 그래프 비교 (p.83 vs p.85) ==
+<pre class="txt">
+RTT   0 1 2 3 | 3 4 5 | 6 … 13 | 13 → 이후
+Tahoe 1 2 4 8 | 1 2 4 | 5 … 12 | 3dupACKs: ssthresh 6, cwnd 1 → 2 4 6 → 7 8 9
+Reno  1 2 4 8 | 1 2 4 | 5 … 12 | 3dupACKs: ssthresh 6, cwnd 9 → FR 10 12 → new ACK 6 → 7 8 …
+       (RTT 3 time-out: 둘 다 ssthresh 4, cwnd 1)
+</pre>
+
+[[img:L16-83.png|p.83 — Tahoe cwnd 그래프|medium]]
+[[img:L16-85.png|p.85 — Reno cwnd 그래프|medium]]
+
+[[sim:cwnd_tahoe_reno]]
+
+{analogy}🎭 Tahoe 는 사고 크기와 상관없이 무조건 처음부터 다시 시작하는 조심성 많은 운전자. Reno 는 큰 사고면 처음부터, 작은 사고면 반으로 줄이고 계속 가는 운전자.{/analogy}
+
+{mini}
+# cwnd 24 에서 time-out 이 났다. Tahoe 와 Reno 의 (ssthresh, cwnd) 를 쓰라.
+# 같은 cwnd 24 에서 3 dupACKs 라면?
+{/mini}
+{answer}
+# 둘 다 (12, 1) → slow start.
+# Tahoe (12, 1) → slow start. Reno (12, 15) → fast recovery.
+{/answer}
+
+== 관련 문서 ==
+* [[fast recovery]] · [[slow start]] · [[congestion avoidance]] · [[cwnd]] · [[CH09 TCP]]

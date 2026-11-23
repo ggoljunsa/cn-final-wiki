@@ -1,0 +1,32 @@
+key: Example 다섯 segment의 sequence number
+title: Example: 다섯 segment 의 sequence number (p.49)
+category: 11강 TCP, 용어
+---
+5,000 bytes 파일을 1,000 bytes segment 다섯 개로 보낼 때 sequence number 를 구하는 예제다. 첫 byte 번호는 10,001. L16 p.49.
+
+{def}"File of 5,000 bytes, first byte = 10,001, sent in 5 segments of 1,000 bytes each. Sequence numbers?" (p.49){/def}
+
+[[img:L16-49.png|p.49 — Segment 1 → 10,001 (Range 10,001 to 11,000) … Segment 5 → 14,001 (14,001 to 15,000)|medium]]
+
+<pre class="txt">
+Segment 1  seq 10,001   bytes 10,001 ~ 11,000
+Segment 2  seq 11,001   bytes 11,001 ~ 12,000   (10,001 + 1,000)
+Segment 3  seq 12,001   bytes 12,001 ~ 13,000
+Segment 4  seq 13,001   bytes 13,001 ~ 14,000
+Segment 5  seq 14,001   bytes 14,001 ~ 15,000
+다 받으면 ACK = 15,001
+</pre>
+
+{warn}가장 흔한 실수: Segment 2 를 11,000 으로 쓰는 것. 앞 segment 의 '''마지막 byte''' 는 11,000 이고, 다음 segment 는 그 '''다음''' byte 11,001 부터다. 녹음 전사도 "eleven thousand" 로 들렸지만 슬라이드는 11,001 이다.{/warn}
+
+[[sim:tcp_seq_ack]]
+
+{mini}
+# 같은 파일을 첫 byte 20,001 에서 1,250 bytes segment 네 개로 보낸다. seq 네 개와 최종 ACK 를 쓰라.
+{/mini}
+{answer}
+# 20,001 / 21,251 / 22,501 / 23,751. 마지막 byte 25,000 이므로 ACK = 25,001.
+{/answer}
+
+== 관련 문서 ==
+* [[TCP sequence number와 ISN]] · [[acknowledgment number]] · [[CH09 TCP]]

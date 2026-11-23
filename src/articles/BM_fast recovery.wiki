@@ -1,0 +1,36 @@
+key: fast recovery
+title: fast recovery — 3 duplicate ACKs 뒤 Reno 의 셋째 상태
+category: 11강 TCP, 용어
+---
+{info}이 절의 p.55 이후 내용은 11/24 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
+
+'''fast recovery''' 는 3 duplicate ACKs(가벼운 congestion)가 왔을 때 Reno TCP 가 들어가는 상태다. cwnd 를 1 로 떨어뜨리지 않고 ssthresh + 3 에서 이어 간다. L16 p.81, p.84–85.
+
+{def}"Fast recovery: optional, used by newer TCPs (e.g., Reno). Starts on three duplicate ACKs (light congestion). Additive increase, but on each duplicate ACK: cwnd = cwnd + 1." (p.81){/def}
+
+[[img:L16-84.png|p.84 — Reno 상태도: Slow start · Congestion avoidance · Fast recovery|medium]]
+
+== 규칙 (p.84) ==
+* 들어갈 때(3 dupACKs): ssthresh = cwnd/2, cwnd = ssthresh + 3
+* 머무는 동안: duplicate ACK 마다 cwnd + 1
+* new ACK 가 오면: cwnd = ssthresh → congestion avoidance
+* time-out 이 나면: ssthresh = cwnd/2, cwnd = 1 → slow start
+
+== p.85 숫자 ==
+RTT 13 에 cwnd 12 에서 3dupACKs → ssthresh 6, cwnd 9 → 10, 12 → new ACK → 6 → CA 7, 8, …
+
+{tip}+3 은 duplicate ACK 3 개 = segment 3 개가 receiver 에 도착해 네트워크를 빠져나갔다는 뜻이라서 그만큼 더 보낸다고 보는 것이다(Forouzan 보충).{/tip}
+
+{analogy}🎭 접촉 사고 정도면 차선을 반으로만 줄이고 계속 달리다가, 사고 처리가 끝나면(new ACK) 줄인 속도로 정상 주행한다.{/analogy}
+
+{mini}
+# cwnd 20 에서 3 dupACKs. Reno 의 ssthresh 와 cwnd 는?
+# fast recovery 에서 나가는 두 사건과 각각 가는 상태를 쓰라.
+{/mini}
+{answer}
+# ssthresh 10, cwnd 13.
+# new ACK → congestion avoidance(cwnd = ssthresh), time-out → slow start(cwnd = 1).
+{/answer}
+
+== 관련 문서 ==
+* [[Tahoe와 Reno]] · [[cwnd]] · [[RTO와 fast retransmission]]

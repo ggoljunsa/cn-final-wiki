@@ -1,0 +1,36 @@
+key: sliding window
+title: sliding window — ACK 없이 보내 둘 수 있는 범위
+category: 10강 전송 계층, 용어
+---
+'''sliding window''' 는 sender 가 ACK 를 받지 않고 보내 둘 수 있는(outstanding) sequence number 의 범위다. ACK 가 오면 오른쪽으로 미끄러진다. L16 p.22–26.
+
+{def}"Sliding window: the range of sequence numbers the sender may have outstanding (처리되지 않은). Sent packets wait in the window until ACKed; an ACK makes the window slide. Drawn as a circle: 0 … 2^m − 1." (p.22){/def}
+
+[[img:L16-26.png|p.26 — a. 4 개 보냄 → b. 5 개 → c. 7 개, window is full → d. Packet 0 acknowledged, window slides|medium]]
+
+== 이름에서 ==
+창문(window)을 옆으로 밀어(sliding) 움직인다. 창 안에 보이는 번호만 보낼 수 있다. outstanding 은 "처리되지 않은", 즉 보냈지만 ACK 를 못 받은 상태다.
+
+== 움직임 (m = 4, window 7) ==
+* 보낼 때: 다음에 보낼 번호(Sn)가 오른쪽으로 간다.
+* window 끝에 닿으면 full. 더 보내지 않고 기다린다.
+* ACK 가 오면: 첫 outstanding 번호(Sf)가 오른쪽으로 가고, window 전체가 따라 미끄러진다.
+p.22–25 는 이것을 0–15 원으로, p.26 은 직선으로 그렸다. 교수는 이것이 sequence number 로 flow 와 error 를 함께 다루는 방법이라고 했다(11/17 35:43).
+
+[[sim:sliding_window]]
+
+TCP 에서는 같은 생각을 byte 단위로 쓴다 → [[send window]] · [[receive window와 rwnd]].
+
+{analogy}🎭 회전초밥 접시 7 개 한도. 접시를 7 개 내보내면 손님이 하나 집어 갈 때까지(ACK) 새 접시를 못 올린다. 하나 빠지면 한 칸 밀고 하나 올린다.{/analogy}
+
+{mini}
+# window 가 full 이 되는 조건과 그때 sender 가 하는 일을 쓰라.
+# m = 3, window 5, Sf = 6 이다. window 안의 번호를 쓰라.
+{/mini}
+{answer}
+# 보낸 뒤 ACK 를 못 받은 packet 수가 window 크기와 같아지면 full. ACK 가 올 때까지 기다린다.
+# 6, 7, 0, 1, 2 (mod 8).
+{/answer}
+
+== 관련 문서 ==
+* [[sequence number]] · [[ACK와 retransmission timer]] · [[send window]] · [[CH09 전송 계층과 UDP]]

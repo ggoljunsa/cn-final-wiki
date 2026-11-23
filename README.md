@@ -10,6 +10,12 @@ DGIST **CSE403 Computer Network** (Prof. Soobin Um, 교재 Forouzan *Data Commun
 
 1. CH05 Wide Area Networks (1) — WAN 분류, cellular 구조(cell·BS·MS·MSC), **frequency reuse**, 발신·수신, **handoff**(hard/soft), roaming (10/20 수업)
 2. CH05 (1) 세대 — 1G AMPS(FDMA), 2G D-AMPS(TDMA)·**GSM**(270.8 kbps)·**IS-95**(DSSS/CDMA, reuse factor 1, soft handoff), 3G IMT-2000, 4G
+3. CH05 (2) Satellite — orbit, Kepler's law, GEO·MEO·LEO
+4. CH07 Network Layer (1)(2)(3) — 서비스·성능, IPv4 주소·datagram·fragmentation·forwarding, IPv6
+5. CH08 Routing — distance vector, link state, path vector, RIP·OSPF·BGP4
+6. CH09 Transport Layer — port·multiplexing·flow/error control·sliding window·UDP (10강), TCP 번호·header·handshake·window·재전송·cwnd/Tahoe/Reno (11강)
+
+사이드바는 [강의 · 공통 · 중간 ↗] 탭 + 강의별 접는 그룹(현재 문서 그룹만 펼침, 메인 문서 굵게, 탭·펼침 상태 localStorage `cnf-nav-*`). 헤더의 `📱 한입 학습` 은 `duo/index.html`(별도 앱, 이 저장소에서 따로 관리).
 
 ## 구조 · 빌드
 

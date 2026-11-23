@@ -22,5 +22,7 @@ category: 6강 IPv4 주소, 용어
 # 주는 대상은 ISP 와 large organizations 다(large blocks). 주지 않는 대상은 individual users 다.
 {/answer}
 
+{info}ICANN 은 port 번호도 세 구간(well-known 0–1,023 · registered 1,024–49,151 · dynamic/private 49,152–65,535)으로 나눠 관리한다 → [[port number 범위]] (L16 p.11).{/info}
+
 == 관련 문서 ==
 * [[block allocation]] · [[ISP]] · [[address aggregation]] · [[CIDR]]

@@ -1,0 +1,33 @@
+key: SYN flooding attack
+title: SYN flooding attack — half-open 연결로 server 자원 고갈
+category: 11강 TCP, 용어
+---
+{info}이 절의 p.55 이후 내용은 11/24 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
+
+공격자가 가짜 source IP 로 SYN 을 대량으로 보내 server 의 자원을 바닥내는 denial-of-service(DoS) 공격이다. L16 p.58.
+
+{def}"Attackers send many SYN segments with fake source IP addresses. Server allocates resources (TCB tables, timers) for each one. Its SYN+ACKs go to fake clients → never answered. Server runs out of resources → real clients are refused. → a denial-of-service (DoS) attack." (p.58){/def}
+
+[[img:L16-58.png|p.58 — Attacker 의 SYN × many → Server 칸이 half-open 으로 가득(table full) → Real client refused|medium]]
+
+== 어떻게 무너지나 ==
+# 가짜 주소의 SYN 이 온다.
+# server 는 handshake 둘째 단계에서 연결 상태(TCB table)와 timer 를 잡는다.
+# SYN+ACK 가 가짜 주소로 가니 셋째 ACK 가 영영 오지 않는다(half-open).
+# 이런 칸이 다 차면 진짜 client 의 SYN 을 받을 자리가 없다.
+
+{tip}TCB(Transmission Control Block)는 연결 하나의 상태를 담는 표다(Forouzan 보충). 공격의 빌미는 server 가 상대를 확인하기도 전에 자원부터 잡는다는 점이다.{/tip}
+
+{analogy}🎭 식당에 가짜 이름으로 예약 전화를 수백 통 건다. 식당은 테이블을 잡아 두지만 아무도 안 온다. 진짜 손님은 "자리 없습니다" 를 듣는다.{/analogy}
+
+{mini}
+# half-open 연결이란 handshake 의 몇 단계까지 진행된 연결인가?
+# 이 공격이 노리는 server 자원 두 가지를 슬라이드 표현대로 쓰라.
+{/mini}
+{answer}
+# ② SYN+ACK 까지. ③ ACK 가 오지 않았다.
+# TCB tables, timers.
+{/answer}
+
+== 관련 문서 ==
+* [[three-way handshake]] · [[TCP]]

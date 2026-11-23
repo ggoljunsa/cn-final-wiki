@@ -1,0 +1,39 @@
+key: connectionless service와 connection-oriented service
+title: connectionless service 와 connection-oriented service — 연결 없이 vs 연결 맺고
+category: 10강 전송 계층, 용어
+---
+transport layer 서비스는 연결을 맺느냐에 따라 둘로 나뉜다. connectionless 는 chunk 를 하나씩 따로 보내고(UDP), connection-oriented 는 연결을 맺고 순서대로 보낸 뒤 끊는다(TCP). L16 p.28–29.
+
+{def}"Connectionless: each chunk is an independent unit. No relation between chunks → may arrive out of order." (p.28)
+"Connection-oriented: client and server first set up a logical connection → data in order → tear down." (p.29){/def}
+
+[[img:L16-28.png|p.28 — Message 0·1·2 를 보냈는데 server process 는 0, 2, 1 로 받는다(Message 2 is delivered out of order)|medium]]
+[[img:L16-29.png|p.29 — Connection establishment → Packet 2 가 먼저 와도 hold → Messages 1 and 2 순서대로 → Connection teardown|medium]]
+
+{|
+! || connectionless || connection-oriented
+|-
+| 연결 || 없음 || setup → data → teardown
+|-
+| chunk 사이 관계 || 없음(독립) || 하나의 흐름
+|-
+| 순서 || 뒤바뀔 수 있음 || 순서대로 넘김(hold 해서 맞춤)
+|-
+| 예 || UDP || TCP
+|}
+
+{warn}"connection-oriented TCP 위의 IP 도 연결이 있다" 는 틀린 말이다. 연결은 양 끝 transport layer 사이의 logical connection 이고, 그 아래 IP 는 여전히 [[connectionless]] 다(p.55). 3계층의 [[virtual-circuit approach]] 는 라우터까지 연결 상태를 기억한다는 점에서 다르다.{/warn}
+
+{analogy}🎭 connectionless 는 엽서 여러 장을 따로 부치는 것, connection-oriented 는 전화를 걸어 연결한 뒤 순서대로 말하고 끊는 것이다.{/analogy}
+
+{mini}
+# p.28 에서 out of order 가 생긴 이유를 한 문장으로 쓰라.
+# connection-oriented 에서 순서 틀린 packet 이 오면 receiver transport layer 가 하는 일은?
+{/mini}
+{answer}
+# 각 chunk 가 독립 단위라 서로 다른 시간·경로로 가고, receiver 가 순서를 맞춰 주지 않기 때문이다.
+# 빠진 것이 올 때까지 잡아 두었다가(hold) 순서대로 process 에 넘긴다.
+{/answer}
+
+== 관련 문서 ==
+* [[UDP]] · [[TCP]] · [[connectionless]] · [[three-way handshake]] · [[CH09 전송 계층과 UDP]]

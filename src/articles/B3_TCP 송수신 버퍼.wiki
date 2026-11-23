@@ -1,0 +1,39 @@
+key: TCP 송수신 버퍼
+title: TCP 송수신 버퍼 — 속도 차이를 메우는 원형 배열
+category: 11강 TCP, 용어
+---
+TCP 는 양 끝에 sending buffer 와 receiving buffer 를 둔다. 쓰는 속도와 읽는 속도가 다르기 때문이다. L16 p.44–45.
+
+{def}"Sender and receiver may write / read at different rates → buffers at both ends. Buffers are also needed for flow and error control (circular array of 1-byte cells)." (p.44){/def}
+
+[[img:L16-44.png|p.44 — sending buffer(Sent / Written but not sent / 빈칸)와 receiving buffer(Received but not read / 빈칸)|medium]]
+
+== 구역 ==
+{|
+! buffer || 구역 || 뜻
+|-
+| sending || Sent || 보냈지만 ACK 없음. 재전송 대비로 남긴다
+|-
+| sending || Written but not sent || process 가 썼지만 아직 안 보냄
+|-
+| sending || 빈칸 || 더 쓸 수 있음 (Next byte to write)
+|-
+| receiving || Received but not read || 받았지만 process 가 아직 안 읽음
+|-
+| receiving || 빈칸 || 더 받을 수 있음 → [[receive window와 rwnd|rwnd]]
+|}
+교수: producing rate 와 consuming rate 가 "must be different" 라서 buffer 가 필요하고, flow·error control 의 "very useful tool" 이다(11/19 18:33–19:35).
+
+이 buffer 위에 [[send window]] 와 receive window 를 그린다.
+
+{analogy}🎭 공장 출하장과 매장 창고. 공장은 공장 속도로 물건을 쌓고, 트럭은 트럭 속도로 싣고, 매장은 팔리는 속도로 꺼낸다. 중간 창고가 속도 차이를 흡수한다.{/analogy}
+
+{mini}
+# sending buffer 의 "Sent" 구역 byte 는 언제 지울 수 있는가?
+{/mini}
+{answer}
+# 그 byte 까지 ACK 를 받았을 때.
+{/answer}
+
+== 관련 문서 ==
+* [[stream delivery service]] · [[send window]] · [[receive window와 rwnd]] · [[TCP]]

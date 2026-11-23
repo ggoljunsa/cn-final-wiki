@@ -1,0 +1,40 @@
+key: silly window syndrome
+title: silly window syndrome — 1 byte 에 40 byte header
+category: 11강 TCP, 용어
+---
+{info}이 절의 p.55 이후 내용은 11/24 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
+
+data 가 아주 느리게 만들어지거나 소비되면 TCP 가 아주 작은 segment 를 보내게 되어 overhead 가 커지는 현상이다. L16 p.71.
+
+{def}"Silly window syndrome: data is produced or consumed very slowly. TCP may send tiny segments: a 41-byte datagram for 1 byte of data. Created by the sender → Nagle's algorithm: send the first piece at once, even 1 byte; then accumulate until an ACK arrives or a full segment is ready. Created by the receiver: Clark's solution: advertise rwnd = 0 until a full segment or half the buffer is free. Or delay the ACK (less traffic, but may cause needless retransmissions)." (p.71){/def}
+
+[[img:L16-71.png|p.71 — IP header 20 B + TCP header 20 B + 1 B, 97% overhead|small]]
+
+$$\frac{20 + 20}{20 + 20 + 1} = \frac{40}{41} \approx 97.6\%$$
+
+{|
+! 원인 || 해법 || 방법
+|-
+| sender (조금씩 씀) || Nagle's algorithm || 첫 조각은 바로, 그다음은 ACK 가 오거나 segment 가 찰 때까지 모은다
+|-
+| receiver (조금씩 읽음) || Clark's solution || segment 하나만큼 또는 buffer 절반이 빌 때까지 rwnd = 0
+|-
+| receiver || delayed ACK || ACK 를 늦춘다. 트래픽은 줄지만 쓸데없는 재전송 위험
+|}
+
+== 이름에서 ==
+silly = 바보 같은. window 가 바보같이 작게(1 byte) 열리고 닫히는 것을 말한다.
+
+{analogy}🎭 택배 상자에 사탕 하나씩 넣어 보내는 것. 상자값(header)이 내용물보다 비싸다. Nagle 은 "첫 사탕은 바로 보내고 나머지는 모아서", Clark 은 받는 쪽이 "창고가 좀 빌 때까지 보내지 마" 다.{/analogy}
+
+{mini}
+# Nagle 과 Clark 중 sender 쪽 해법은?
+# delayed ACK 의 장점과 단점을 하나씩 쓰라.
+{/mini}
+{answer}
+# Nagle's algorithm.
+# 장점: ACK 트래픽이 준다. 단점: ACK 가 늦어 sender timer 가 끝나면 쓸데없는 재전송이 생긴다.
+{/answer}
+
+== 관련 문서 ==
+* [[receive window와 rwnd]] · [[window shutdown과 probing]] · [[TCP segment format]]

@@ -38,6 +38,13 @@ ANIM_RE = re.compile(r"\[\[anim:([^\|\]\n]+)(?:\|[^\n]*?)?\]\]")
 LINK_RE = re.compile(r"\[\[([^\]]+)\]\]")
 REQUIRED_KEYS = ("key", "title", "category")
 
+# 사이드바 탭: 'N강 …' 그룹은 '강의' 탭, 안내·시험·용어는 '공통' 탭 (algo-wiki nav_section 이식, 11-23)
+LECTURE_GROUP_RE = re.compile(r"^(\d+)강")
+
+
+def nav_section(group):
+    return "lecture" if LECTURE_GROUP_RE.match(group) else "common"
+
 
 def fail(msg):
     print("ERROR: %s" % msg, file=sys.stderr)
@@ -120,8 +127,10 @@ def main():
         g = a["category"][0]
         if g not in index:
             index[g] = len(nav)
-            nav.append({"group": g, "items": []})
+            nav.append({"group": g, "section": nav_section(g), "items": [], "mains": []})
         nav[index[g]]["items"].append(a["key"])
+        if "메인" in a["category"][1:]:
+            nav[index[g]]["mains"].append(a["key"])
 
     # ---------- 3. 이미지 ----------
     os.makedirs(IMAGES_DIR, exist_ok=True)
@@ -272,7 +281,11 @@ self.addEventListener("fetch", function (e) {
   var req = e.request;
   if (req.method !== "GET") return;
   var url = new URL(req.url);
-  var isPage = req.mode === "navigate" || url.pathname.endsWith("/index.html") || url.pathname.endsWith("/");
+  // 위키 본문(루트 index.html)만 페이지로 다룬다. duo/ 같은 하위 앱 페이지는 가로채지 않는다
+  // (예전 조건은 duo/index.html 응답을 ./index.html 캐시에 덮어쓸 수 있었다 — 11-23 수정)
+  var root = new URL(self.registration.scope).pathname;
+  var isPage = url.origin === location.origin && (url.pathname === root || url.pathname === root + "index.html");
+  if (!isPage && req.mode === "navigate") return;
   if (isPage) {
     // 페이지: 네트워크 우선, 실패하면 캐시 (오프라인)
     e.respondWith(fetch(req).then(function (r) {

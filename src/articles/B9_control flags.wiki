@@ -1,0 +1,44 @@
+key: control flags
+title: control flags — URG · ACK · PSH · RST · SYN · FIN
+category: 11강 TCP, 용어
+---
+TCP header 의 control 칸은 1-bit flag 여섯 개다. flow control, 연결 설정과 종료, abort, data 전송 방식에 쓴다. L16 p.53.
+
+{def}"Control: 6 one-bit flags. Used for flow control, connection setup and termination, abort, and data-transfer mode. SYN, ACK, FIN are the ones used in connection setup and termination." (p.53){/def}
+
+[[img:L16-53.png|p.53 — URG ACK PSH RST SYN FIN 과 각 뜻|medium]]
+
+{|
+! flag || 뜻 || 어디서
+|-
+| URG || urgent pointer 가 유효 || 급한 data
+|-
+| ACK || ack number 가 유효 || 거의 모든 segment(첫 SYN 제외)
+|-
+| PSH || data 를 바로 올려라(push) || p.59 data segment
+|-
+| RST || 연결 reset || abort (p.60)
+|-
+| SYN || sequence number 맞추기 || 연결 설정 (p.56)
+|-
+| FIN || 연결 끝내기 || 연결 종료 (p.60)
+|}
+
+교수: "specifically for these three [SYN, ACK, FIN], they are used in setup phase … and termination"(11/19 36:30).
+
+== 외우는 법 ==
+순서대로 U-A-P-R-S-F. 앞 셋은 data 쪽(urgent, ack, push), 뒤 셋은 연결 쪽(reset, syn, fin)이다.
+
+{analogy}🎭 서류 귀퉁이의 도장 여섯 개: "급함", "확인함", "즉시 전달", "취소", "시작", "끝".{/analogy}
+
+{mini}
+# three-way handshake 둘째 segment 에 켜지는 flag 두 개는?
+# 연결을 즉시 끊을 때 쓰는 flag 는?
+{/mini}
+{answer}
+# SYN, ACK.
+# RST.
+{/answer}
+
+== 관련 문서 ==
+* [[TCP segment format]] · [[three-way handshake]] · [[connection termination과 half close]]

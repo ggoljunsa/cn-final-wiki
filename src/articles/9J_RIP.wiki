@@ -37,5 +37,7 @@ category: 9강 라우팅, 용어
 # (N7, R5, 7). 6 + 1 = 7 은 4 보다 크지만 같은 next router(R5)에서 왔으니 교체 규칙 ③ 으로 받아들인다.
 {/answer}
 
+{info}RIP 가 UDP 를 쓰는 이유는 [[UDP를 쓰는 경우]] 에 있다. 관리·경로 갱신 메시지는 짧고 단순해서 연결을 맺을 필요가 없다(L16 p.39).{/info}
+
 == 관련 문서 ==
 * [[hop count]] · [[RIP forwarding table 예제]] · [[distance vector routing]] · [[OSPF]] · [[CH08 라우팅]]

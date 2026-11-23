@@ -1,0 +1,27 @@
+key: stream delivery service
+title: stream delivery service — byte 를 흘려보내는 상상 속 관
+category: 11강 TCP, 용어
+---
+TCP 는 '''stream-oriented''' 다. process 는 메시지 덩어리가 아니라 byte 의 흐름(stream)을 보내고 받는다. L16 p.43.
+
+{def}"Stream-oriented: the process sends and receives a stream of bytes. As if the two processes were joined by an imaginary "tube"." (p.43){/def}
+
+[[img:L16-43.png|p.43 — Sending process 와 Receiving process 의 TCP 를 잇는 회색 관, 그 안의 Stream of bytes|medium]]
+
+== 수업에서 ==
+교수는 이 관이 "imaginary, not real … logical tube" 라고 했다. connection-oriented 라서 두 process 사이에 전용 통로가 있는 것처럼 볼 수 있다는 것이다(11/19 16:43–18:33).
+
+== UDP 와 다른 점 ==
+UDP 는 메시지 하나 = [[user datagram]] 하나다. 경계가 그대로 남는다. TCP 는 process 가 100 bytes, 200 bytes 로 나눠 써도 receiver 쪽에서는 이어진 300 bytes 로 보인다. 실제 전송은 [[segment]] 단위지만(p.45) process 는 그것을 모른다.
+
+{analogy}🎭 수도관. 위에서 컵으로 몇 번에 나눠 부어도, 아래 수도꼭지에서는 그냥 이어진 물이 나온다.{/analogy}
+
+{mini}
+# "TCP 는 process 가 쓴 메시지 경계를 receiver 에서 그대로 지켜 준다." O/X
+{/mini}
+{answer}
+# X. byte stream 이라 경계가 없다. 메시지 경계를 지키는 것은 UDP(그리고 SCTP)다.
+{/answer}
+
+== 관련 문서 ==
+* [[TCP]] · [[TCP 송수신 버퍼]] · [[segment]]

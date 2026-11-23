@@ -1,0 +1,32 @@
+key: acknowledgment number
+title: acknowledgment number — 다음에 기다리는 byte (cumulative)
+category: 11강 TCP, 용어
+---
+TCP 의 '''acknowledgment number''' 는 다음에 받기를 기다리는 byte 의 번호다. cumulative 라서 그 앞의 byte 는 다 받았다는 뜻이다. L16 p.50, p.52.
+
+{def}"ACK number = the number of the next byte expected. It is cumulative: everything before it has been received. Each side numbers its own bytes (different starting numbers)." (p.50)
+"Acknowledgment number (32 bits): received byte x → returns x + 1." (p.52){/def}
+
+[[img:L16-50.png|p.50 — received: bytes … 5640, 5641, 5642 → next expected 5643 → ACK number = 5643|medium]]
+
+== 읽는 법 ==
+ACK = 5643 은 "5642 까지 다 받았고 5643 을 기다린다" 다. "5643 을 받았다" 가 아니다.
+
+== error control 에서 ==
+교수: sender 는 ACK number 를 보고 "여기서부터 다시 보내야 한다" 를 안다(11/19 32:19). 가운데 하나가 빠지면 뒤 segment 가 계속 와도 ACK 는 같은 번호를 반복한다. 이것이 duplicate ACK 다 → [[RTO와 fast retransmission]].
+
+header 의 ACK flag 가 1 일 때만 이 칸이 유효하다 → [[control flags]]. 빠진 byte 덩어리를 더 자세히 알리려면 SACK 을 쓴다 → [[cumulative ACK와 SACK]].
+
+{analogy}🎭 "몇 쪽까지 읽었어?" 대신 "다음에 몇 쪽 펼 차례야?" 라고 답하는 방식.{/analogy}
+
+{mini}
+# 1,001–2,000 과 3,001–4,000 을 받았다(2,001–3,000 은 아직). ACK number 는?
+# ACK = 7,001 이 뜻하는 것을 쓰라.
+{/mini}
+{answer}
+# 2,001. cumulative 라 빈칸 앞까지만 확인한다.
+# 7,000 번 byte 까지 모두 받았고 7,001 번을 기다린다.
+{/answer}
+
+== 관련 문서 ==
+* [[TCP sequence number와 ISN]] · [[cumulative ACK와 SACK]] · [[RTO와 fast retransmission]]

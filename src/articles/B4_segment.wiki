@@ -1,0 +1,28 @@
+key: segment
+title: segment — TCP 의 packet
+category: 11강 TCP, 용어
+---
+'''segment''' 는 TCP 의 transport-layer packet 이다. TCP 는 byte stream 에서 byte 몇 개를 묶어 header 를 붙여 segment 를 만든다. L16 p.13, p.45, p.51.
+
+{def}"IP sends packets, not a byte stream. TCP groups bytes into a segment; segments can differ in size." (p.45)
+"Segment = header (20–60 bytes) + data." (p.51){/def}
+
+[[img:L16-45.png|p.45 — sending buffer 에서 Segment 1 … Segment N 이 잘려 나가 receiving buffer 로|medium]]
+
+== 특징 ==
+* 크기가 segment 마다 달라도 된다.
+* header 의 sequence number = segment 첫 byte 번호 → [[TCP sequence number와 ISN]].
+* segment 는 IP datagram 의 data 로 실려 간다.
+교수는 이 단위 이름을 UDP 의 [[user datagram]] 과 대비했다(11/17 18:18, 11/19 12:13).
+
+{analogy}🎭 긴 두루마리를 잘라 번호 붙인 상자들에 나눠 담는 것. 상자 크기는 그때그때 다르다.{/analogy}
+
+{mini}
+# transport layer 의 packet 이름을 UDP·TCP 각각 쓰고, 그것을 담는 3계층 packet 이름을 쓰라.
+{/mini}
+{answer}
+# UDP user datagram, TCP segment. 둘 다 IP datagram 에 담긴다.
+{/answer}
+
+== 관련 문서 ==
+* [[TCP segment format]] · [[user datagram]] · [[segment·datagram·frame]] · [[stream delivery service]]

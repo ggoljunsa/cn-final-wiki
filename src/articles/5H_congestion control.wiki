@@ -41,6 +41,8 @@ category: 5강 네트워크 계층, 용어
 # 보낸 쪽의 재전송(Senders resend duplicates)이다. 버려진 만큼 다시 보내니 트래픽이 더 늘어난다.
 {/answer}
 
+{info}TCP 의 방법은 [[CH09 TCP]] p.78–85 에 있다. 실제 window = min(rwnd, [[cwnd]]), [[slow start]] → [[congestion avoidance]], time-out·3 duplicate ACKs 에 대한 [[Tahoe와 Reno]] 의 반응.{/info}
+
 == 관련 문서 ==
 * [[flow control]] · [[load와 성능]] · [[queuing delay]] · [[best effort]] · [[IP가 제공하는 서비스]]
 * 중간고사: [[mid:TCP]]

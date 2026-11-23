@@ -1,0 +1,29 @@
+key: socket address
+title: socket address — IP address + port number
+category: 10강 전송 계층, 용어
+---
+'''socket address''' 는 IP address 와 port number 를 합친 주소다. 연결 하나는 socket address 한 쌍으로 정해진다. L16 p.12.
+
+{def}"Socket address = IP address + port number. A connection needs a pair: the client socket address and the server socket address." (p.12){/def}
+
+[[img:L16-12.png|p.12 — IP address 200.23.56.8 과 port 69 → socket address 200.23.56.8 · 69|small]]
+
+== 이름에서 ==
+socket 은 전기 콘센트다. 플러그(연결)를 꽂으려면 콘센트 두 개, 양쪽 끝이 있어야 한다. 그래서 연결 하나 = socket address 한 쌍이다. 교수는 소프트웨어 시간에 socket 을 들어 봤을 것이라고 했다(11/17 16:13).
+
+== 어디에 담기나 ==
+IP address 는 IP header 에, port 는 UDP·TCP header 에 있다. 두 header 를 같이 봐야 socket address 가 나온다. UDP 의 [[pseudoheader]] 가 checksum 에 IP 주소까지 넣는 것도 이 쌍 전체를 확인하려는 것으로 볼 수 있다.
+
+{analogy}🎭 "OO아파트 101동(IP) 302호(port)". 편지 한 통은 보내는 집 주소와 받는 집 주소, 두 개가 있어야 오간다.{/analogy}
+
+{mini}
+# client 10.0.0.5 가 port 50000 으로 200.23.56.8 의 port 13 에 연결했다. 이 연결의 socket address 쌍을 쓰라.
+# 같은 client 가 같은 server 에 두 번째 연결을 열면 무엇이 달라지는가?
+{/mini}
+{answer}
+# (10.0.0.5, 50000) – (200.23.56.8, 13).
+# client 의 ephemeral port 가 달라진다(예: 50001). 그래서 두 연결의 socket address 쌍이 서로 다르다.
+{/answer}
+
+== 관련 문서 ==
+* [[port number]] · [[process-to-process delivery]] · [[IPv4 address]]

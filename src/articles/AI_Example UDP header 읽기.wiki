@@ -1,0 +1,39 @@
+key: Example UDP header 읽기
+title: Example: UDP header 읽기 (p.35–36) — CB84000D001C001C
+category: 10강 전송 계층, 용어
+---
+p.35 가 주는 UDP header `CB84000D001C001C` 를 읽어 여섯 가지(a–f)를 답하는 예제다. 교수가 11/19 에 한 단계씩 풀었다. L16 p.35–36.
+
+{def}"Contents of a UDP header (hex): CB84000D001C001C. a. Source port? b. Destination port? c. Total length? d. Data length? e. Client → server, or server → client? f. Which client process?" (p.35){/def}
+
+[[img:L16-36.png|p.36 — Solution: 52100 · 13 · 28 bytes · 20 bytes · client → server · Daytime|medium]]
+
+<pre class="txt">
+CB84 | 000D | 001C | 001C
+a. 0xCB84 = 12·4096 + 11·256 + 8·16 + 4 = 52100
+b. 0x000D = 13
+c. 0x001C = 28 bytes
+d. 28 − 8 = 20 bytes
+e. dst 13 = well-known → 받는 쪽이 server → client → server
+f. port 13 = Daytime
+</pre>
+
+교수 설명: "since source port is above some 1000 values, and destination port is used with a small fixed value, we can immediately see that this is from client to server"(11/19 04:54–05:41).
+
+{warn}f 의 질문 "Which client process?" 는 "client 가 어떤 서비스를 부르나" 로 읽어야 한다. 답은 destination port 13 의 서비스 Daytime 이다. 52100 은 client 의 ephemeral port 라 서비스 이름이 없다.{/warn}
+
+[[sim:udp_header_read]]
+
+{analogy}🎭 엽서의 "보내는 이 52100호, 받는 이 13호(민원실)". 받는 쪽이 민원실이니 주민이 민원실에 보낸 엽서다.{/analogy}
+
+{mini}
+# header `9C40003500200000` 을 a–e 순서로 풀라.
+# 응답 datagram 이 같은 크기라면 header 의 앞 12 hex 자리는?
+{/mini}
+{answer}
+# a. 0x9C40 = 40000, b. 0x35 = 53, c. 0x20 = 32 bytes, d. 24 bytes, e. dst 53(DNS)이 well-known → client → server.
+# `00359C400020` (src 53, dst 40000, total 32).
+{/answer}
+
+== 관련 문서 ==
+* [[UDP header]] · [[ephemeral port와 well-known port]] · [[CH09 전송 계층과 UDP]]

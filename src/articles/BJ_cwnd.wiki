@@ -1,0 +1,45 @@
+key: cwnd
+title: cwnd (congestion window) — 네트워크가 받아 줄 양
+category: 11강 TCP, 용어
+---
+{info}이 절의 p.55 이후 내용은 11/24 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
+
+'''cwnd''' (congestion window)는 네트워크가 받아 줄 수 있다고 보는 byte 양이다. 실제 send window 는 rwnd 와 cwnd 중 작은 쪽이다. L16 p.78.
+
+{def}"Congestion window (cwnd): how many bytes the network can take. Send window size uses both: Actual window size = min (rwnd, cwnd). rwnd: receiver (flow), cwnd: network (congestion). TCP detects congestion by: Time-out: strong sign (segments are being lost). Three duplicate ACKs: lighter sign (one segment lost, others arrive)." (p.78){/def}
+
+[[img:L16-78.png|p.78 — Actual window size = min(rwnd, cwnd)|medium]]
+
+$$\text{Actual window size} = \min(\text{rwnd},\ \text{cwnd})$$
+
+== 신호 ==
+{|
+! 사건 || 뜻 || 세기
+|-
+| time-out || segment 들이 사라지고 있다 || 강함
+|-
+| 3 duplicate ACKs || 하나는 사라졌지만 나머지는 도착 || 약함
+|}
+
+== 어떻게 바뀌나 ==
+* [[slow start]]: 1 MSS 에서 RTT 마다 두 배
+* [[congestion avoidance]]: ssthresh 부터 RTT 마다 +1
+* 사건이 오면 ssthresh = cwnd/2 로 놓고 cwnd 를 1 또는 ssthresh + 3 으로 → [[Tahoe와 Reno]] · [[fast recovery]]
+
+[[sim:cwnd_tahoe_reno]]
+
+{tip}3계층에서 congestion control 은 IP 가 안 한다고 했다([[congestion control]]). TCP 는 라우터에 묻지 않고 자기 segment 의 운명(time-out, dup ACK)만 보고 짐작한다.{/tip}
+
+{analogy}🎭 rwnd 는 받는 집 창고 크기, cwnd 는 가는 길의 도로 사정이다. 창고가 넓어도 길이 막히면 트럭을 줄여야 한다.{/analogy}
+
+{mini}
+# rwnd = 6,000, cwnd = 4,000 B. 실제 window 는?
+# time-out 과 3 dup ACKs 중 더 심한 congestion 신호는?
+{/mini}
+{answer}
+# 4,000 B.
+# time-out.
+{/answer}
+
+== 관련 문서 ==
+* [[slow start]] · [[congestion avoidance]] · [[fast recovery]] · [[Tahoe와 Reno]] · [[receive window와 rwnd]] · [[congestion control]]

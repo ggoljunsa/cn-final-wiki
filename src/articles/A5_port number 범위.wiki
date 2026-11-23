@@ -1,0 +1,37 @@
+key: port number 범위
+title: port number 범위 — ICANN 이 나눈 세 구간
+category: 10강 전송 계층, 용어
+---
+[[ICANN]] 은 port 번호 0–65,535 를 세 구간으로 나눈다. L16 p.11.
+
+{def}"ICANN (Internet Corporation for Assigned Names and Numbers, 국제 인터넷 주소 관리 기구) divides port numbers into three ranges. Well-known (0–1023): assigned and controlled by ICANN. Registered (1024–49,151): not assigned, only registered to avoid duplication. Dynamic / private (49,152–65,535): free to use as temporary ports." (p.11){/def}
+
+[[img:L16-11.png|p.11 — 0–1,023 Well-known, 1,024–49,151 Registered, 49,152–65,535 Dynamic or private|medium]]
+{|
+! 구간 || 범위 || ICANN 이 하는 일 || 누가 쓰나
+|-
+| Well-known || 0–1,023 || 지정하고 관리한다 || server (Daytime 13, DNS 53 …)
+|-
+| Registered || 1,024–49,151 || 지정 안 함, 겹치지 않게 등록만 || 여러 서비스
+|-
+| Dynamic / private || 49,152–65,535 || 관여 안 함 || 아무나, 임시 port
+|}
+
+== 외우는 법 ==
+경계값만 외우면 된다. 1,023 과 49,151. 1,024 = $2^{10}$ 이고, 49,152 = 65,536 × 3/4 다. 그러니 마지막 구간은 전체의 위쪽 1/4 이다.
+
+{tip}ICANN 은 [[CH07 IPv4 주소]] 에서 IP 주소 block 을 나눠 주던 그 기관이다. 이름 그대로 이름(도메인)과 번호(IP, port)를 관리한다.{/tip}
+
+{analogy}🎭 전화번호 체계와 비슷하다. 112·119 같은 번호는 나라가 정해 둔다(well-known). 기업 대표번호는 신청해서 등록한다(registered). 나머지는 아무나 받아 쓴다(dynamic).{/analogy}
+
+{mini}
+# 1023, 1024, 49151, 49152 가 각각 어느 구간인지 쓰라.
+# "registered port 는 ICANN 이 지정해 준다." O/X
+{/mini}
+{answer}
+# 1023 well-known, 1024 registered, 49151 registered, 49152 dynamic/private.
+# X. 지정하지 않고 겹치지 않게 등록만 한다.
+{/answer}
+
+== 관련 문서 ==
+* [[port number]] · [[ephemeral port와 well-known port]] · [[ICANN]]

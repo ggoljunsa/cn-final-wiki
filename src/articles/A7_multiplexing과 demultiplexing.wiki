@@ -1,0 +1,33 @@
+key: multiplexing과 demultiplexing
+title: multiplexing 과 demultiplexing — 여러 process 를 하나의 transport layer 로
+category: 10강 전송 계층, 용어
+---
+sender 의 transport layer 는 여러 process 의 메시지를 받아 내보낸다(multiplexing). receiver 의 transport layer 는 port 를 보고 메시지를 알맞은 process 에 나눠 준다(demultiplexing). L16 p.14.
+
+{def}"Multiplexing (sender): accepts messages from many processes. Demultiplexing (receiver): delivers each to the right process, by port." (p.14){/def}
+
+[[img:L16-14.png|p.14 — client 의 P1·P2·P3 → Multiplexer → Packet 1·2·3, 두 server 의 Demultiplexer 가 process 를 고른다|medium]]
+
+[[anim:mux_demux_anim|세 process 의 메시지가 multiplexer 로 모였다가 Host B 에서 destination port 로 나뉜다]]
+
+== 이름에서 ==
+multi-plex 는 "여러 겹을 하나로" 다. 여럿을 한 통로로 모으는 것이 multiplexing, 그 반대가 de-multiplexing 이다.
+
+{warn}중간고사의 [[mid:MUX와 DEMUX]] 는 physical layer 에서 여러 '''신호'''를 한 link 에 싣는 것이었다. 여기서는 여러 '''process''' 의 메시지를 transport layer 하나가 맡는 것이다. 이름이 같아서 헷갈리기 쉽다.{/warn}
+
+== 누가 하나 ==
+[[UDP]] 와 [[TCP]] 둘 다 한다(p.37 표의 "one UDP, many processes", p.46). demultiplexing 의 기준은 destination port 다.
+
+{analogy}🎭 회사 우편실. 각 부서가 보낸 편지를 우편실 하나가 모아 우체국에 넘긴다(multiplexing). 들어온 편지는 받는 부서 이름(port)을 보고 나눠 준다(demultiplexing).{/analogy}
+
+{mini}
+# receiver 가 demultiplexing 할 때 보는 header 칸은?
+# multiplexing 은 sender 와 receiver 중 어느 쪽 일인가?
+{/mini}
+{answer}
+# destination port number.
+# sender.
+{/answer}
+
+== 관련 문서 ==
+* [[port number]] · [[transport layer]] · [[CH09 전송 계층과 UDP]]

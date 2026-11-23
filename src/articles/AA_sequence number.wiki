@@ -1,0 +1,33 @@
+key: sequence number
+title: sequence number — packet 에 붙이는 m-bit 번호
+category: 10강 전송 계층, 용어
+---
+'''sequence number''' 는 transport layer packet 에 붙이는 번호다. header 의 한 칸에 담고, m bits 면 0 부터 $2^m - 1$ 까지 쓴 뒤 0 으로 돌아간다. L16 p.17.
+
+{def}"Needed so the sender knows what to resend, and the receiver spots duplicates and out-of-order packets. A header field carries the sequence number. With m bits: 0 to 2^m − 1, then wrap around (modulo 2^m)." (p.17){/def}
+
+[[img:L16-17.png|p.17 — m = 3 이면 0 … 7 다음 다시 0, 1, 2, 3 (wrap around)|small]]
+
+== 왜 필요한가 ==
+* sender: 무엇을 다시 보내야 하는지 안다.
+* receiver: 중복과 순서 틀린 packet 을 알아본다.
+교수는 "ID 를 붙인다" 고 표현했다(11/17 29:00).
+
+== wrap around ==
+m = 3 이면 번호가 8 개뿐이다. 7 다음은 0 이다. [[mid:modular arithmetic]] 의 mod $2^m$ 이다. 번호가 다시 쓰이니 [[sliding window]] 크기가 $2^m$ 보다 작아야 새 0 과 옛 0 을 헷갈리지 않는다.
+
+{warn}[[TCP]] 의 sequence number 는 이것과 조금 다르다. packet 이 아니라 '''byte''' 에 번호를 붙이고, 32 bits 이며, 0 이 아니라 무작위 수(ISN)에서 시작한다 → [[TCP sequence number와 ISN]].{/warn}
+
+{analogy}🎭 번호표 기계가 000–999 까지만 찍는다면 999 다음은 다시 000 이다. 대기 인원이 1000 명을 넘지 않는 한 헷갈리지 않는다.{/analogy}
+
+{mini}
+# m = 5 일 때 번호 범위와 31 다음 번호를 쓰라.
+# 번호 6 다음 7, 0, 1 이 왔다. m 은 몇일까?
+{/mini}
+{answer}
+# 0–31, 31 다음은 0.
+# 7 다음이 0 이니 $2^m$ = 8, m = 3.
+{/answer}
+
+== 관련 문서 ==
+* [[sliding window]] · [[ACK와 retransmission timer]] · [[전송 계층 error control]] · [[TCP sequence number와 ISN]]

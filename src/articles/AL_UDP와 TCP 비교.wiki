@@ -1,0 +1,40 @@
+key: UDP와 TCP 비교
+title: UDP 와 TCP 비교 (p.40)
+category: 10강 전송 계층, 용어
+---
+p.40 은 UDP 와 TCP 를 여섯 줄로 맞댄다. 11/19 교수가 단위 이름과 쓰임새를 특히 짚었다. L16 p.40, p.31, p.37.
+
+[[img:L16-40.png|p.40 — UDP vs. TCP 표|medium]]
+
+{|
+! || UDP || TCP
+|-
+| Connection || connectionless || connection-oriented (setup → data → teardown)
+|-
+| Reliability || unreliable || reliable (ACK + resend)
+|-
+| Unit || [[user datagram]] (message) || byte stream → [[segment]]s
+|-
+| Flow / congestion control || 없음 || 있음 ([[receive window와 rwnd|rwnd]], [[cwnd]])
+|-
+| Header || 8 bytes || 20–60 bytes
+|-
+| Good for || 짧고 delay 에 민감한 것 || 파일, 웹, 이메일
+|}
+
+== 공통점 ==
+둘 다 process-to-process delivery(port), multiplexing/demultiplexing, checksum(pseudoheader 포함)을 한다.
+
+{exam}교수가 꼽은 차이: '''unit''' (user datagram vs segment)과 '''쓰임새''' (voice call 같은 delay-sensitive vs email·file transfer 같은 reliability-critical)(11/19 12:13–13:05). header 크기 8 vs 20–60 도 여러 번 말했다.{/exam}
+
+{analogy}🎭 UDP 는 엽서, TCP 는 등기 소포 + 수령 확인 + 배송 속도 조절이다.{/analogy}
+
+{mini}
+# 다음이 UDP 에만 맞는지, TCP 에만 맞는지, 둘 다인지 쓰라: port number, ACK, header 8 B, checksum, cwnd.
+{/mini}
+{answer}
+# port number 둘 다, ACK TCP, header 8 B UDP, checksum 둘 다(UDP 는 optional), cwnd TCP.
+{/answer}
+
+== 관련 문서 ==
+* [[UDP]] · [[TCP]] · [[CH09 전송 계층과 UDP]] · [[CH09 TCP]]

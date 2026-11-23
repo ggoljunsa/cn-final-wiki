@@ -1,0 +1,40 @@
+key: user datagram
+title: user datagram — UDP 의 packet 이름
+category: 10강 전송 계층, 용어
+---
+'''user datagram''' 은 UDP 의 transport-layer packet 이름이다. TCP 의 packet 은 [[segment]] 다. L16 p.13, p.34.
+
+{def}"Transport-layer packets: user datagrams (UDP) or segments (TCP)." (p.13){/def}
+
+[[img:L16-34.png|p.34 — a. UDP user datagram = Header(8 bytes) + Data, 전체 8 to 65,535 bytes|medium]]
+
+== 크기 ==
+user datagram = header 8 bytes + data. total length 칸이 16 bits 라 숫자로는 65,535 까지지만, IP datagram 하나에 실려야 하니 실제 상한은 65,535 − IP header 다(p.34).
+
+{warn}'''user datagram''' (4계층, UDP) 과 '''[[datagram]]''' (3계층, IP) 을 섞지 말자. 교수도 UDP 와 TCP 의 차이로 이 단위 이름을 짚었다(11/19 12:13).{/warn}
+
+{|
+! 계층 || packet 이름
+|-
+| application || message
+|-
+| transport || user datagram (UDP) / segment (TCP)
+|-
+| network || datagram
+|-
+| data-link || frame
+|}
+
+{analogy}🎭 엽서 한 장. 메시지 하나가 엽서 한 장에 그대로 담겨 간다. TCP 처럼 긴 글을 잘라 번호를 매기지 않는다.{/analogy}
+
+{mini}
+# UDP 와 TCP 의 packet 이름을 쓰라.
+# total length 가 100 이면 data 는 몇 bytes 인가?
+{/mini}
+{answer}
+# user datagram, segment.
+# 100 − 8 = 92 bytes.
+{/answer}
+
+== 관련 문서 ==
+* [[UDP]] · [[UDP header]] · [[segment]] · [[segment·datagram·frame]]

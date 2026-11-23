@@ -194,7 +194,37 @@ CH05 와 달리 '''이 공식들은 계산 문제로 나오기 좋은 모양'''�
 | [[path vector routing|path vector]] || policy 로 선택 || p.27: least S-B-D 2, policy S-A-C-D 6 || —
 |}
 
+== 전송 계층 (CH09, L16) ⭐⭐⭐ ==
+{|
+! 항목 || 식 / 값 || 예 || 시뮬레이터
+|-
+| [[port number 범위|port 구간]] || 0–1,023 / 1,024–49,151 / 49,152–65,535 || 13 Daytime, 53 DNS, 520 RIP || —
+|-
+| [[sequence number]] (m bits) || 0 … $2^m - 1$, mod $2^m$ || m = 3 → 0–7 || `sim:sliding_window`
+|-
+| [[UDP header]] || 8 B, data = total − 8 || p.36: 0x001C = 28 → 20 || `sim:udp_header_read`
+|-
+| [[TCP sequence number와 ISN|TCP seq]] || $	ext{seq}_{k+1} = 	ext{seq}_k + 	ext{bytes}_k$ || p.49: 10,001 / 11,001 / … / 14,001 || `sim:tcp_seq_ack`
+|-
+| [[acknowledgment number|ACK]] || 마지막 받은 byte + 1 || 5642 → 5643 || `sim:tcp_seq_ack`
+|-
+| [[three-way handshake]] || SYN x → SYN+ACK (y, x+1) → ACK (x+1, y+1) || 8000 / 15000 || `sim:tcp_seq_ack`
+|-
+| [[TCP segment format|HLEN]] || header = HLEN × 4 (20–60 B) || 1000₂ → 32 B || —
+|-
+| [[receive window와 rwnd|rwnd]] || buffer − 안 가져간 byte || p.68: 800 − 400 = 400 || —
+|-
+| shrink 금지 || new ackNo + new rwnd ≥ last ackNo + last rwnd || 601 + 400 = 1001 || —
+|-
+| [[cwnd|send window]] || min(rwnd, cwnd) || — || —
+|-
+| [[silly window syndrome]] || 40 / 41 ≈ 97% overhead || 1 B data || —
+|-
+| [[Tahoe와 Reno]] || time-out: ssthresh = cwnd/2, cwnd = 1 / Reno 3dup: cwnd = ssthresh + 3 || 12 → (6, 1) / (6, 9) || `sim:cwnd_tahoe_reno`
+|}
+
 == 관련 문서 ==
+* 전송 계층: [[CH09 전송 계층과 UDP]] · [[CH09 TCP]]
 * 라우팅: [[CH08 라우팅]] · [[라우팅 알고리즘 비교]] · [[Bellman-Ford equation]] · [[Dijkstra algorithm]]
 * IPv6: [[CH07 IPv6]] · [[IPv4와 IPv6 비교]] · [[EUI-64]] · [[Example 7.29]]
 * [[셀룰러 세대 비교표]] · [[GSM multiframe]] · [[AMPS 대역과 채널]] · [[자주 틀리는 함정 모음]]
