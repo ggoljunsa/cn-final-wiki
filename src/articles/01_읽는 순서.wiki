@@ -98,7 +98,7 @@ transport layer 는 "어느 process 가 받나" 와 "잃어버린 것은 누가 
 # 도구: [[sequence number]] → [[ACK와 retransmission timer]] → [[sliding window]] (sim sliding_window) → [[connectionless service와 connection-oriented service]]
 # UDP: [[UDP]] → [[user datagram]] → [[UDP header]] → '''[[Example UDP header 읽기]]''' ⭐⭐⭐ (sim udp_header_read) → [[pseudoheader]] → [[UDP를 쓰는 경우]] → [[UDP와 TCP 비교]] · [[SCTP]]
 
-== 11. '''[[CH09 TCP]]''' (L16 p.41–85, 11/19 p.41–54 · p.55– 는 11/24 수업 전 선제) ==
+== 11. '''[[CH09 TCP]]''' (L16 p.41–85, 11/19 p.41–54 · 11/24 p.55–68 · p.69– 는 11/26 수업 전 선제) ==
 TCP 의 모든 기능은 byte 번호 위에 서 있다. 번호 → header → 연결 → window → 재전송 → cwnd 순서로 읽는다.
 # 서비스: [[TCP]] → [[stream delivery service]] → [[TCP 송수신 버퍼]] → [[segment]]
 # 번호: '''[[TCP sequence number와 ISN]]''' ⭐⭐⭐ → [[acknowledgment number]] → [[Example 다섯 segment의 sequence number]] (sim tcp_seq_ack)

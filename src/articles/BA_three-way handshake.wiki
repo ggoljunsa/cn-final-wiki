@@ -2,8 +2,6 @@ key: three-way handshake
 title: three-way handshake — SYN, SYN+ACK, ACK 로 연결 열기
 category: 11강 TCP, 용어
 ---
-{info}이 절의 p.55 이후 내용은 11/24 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
-
 TCP 는 segment 세 개를 주고받아 연결을 연다. L16 p.56–57.
 
 {def}"Server: passive open (ready to accept); client: active open (wants to connect). ① Client → SYN: synchronize its sequence number (uses 1 seq. number). ② Server → SYN + ACK: its own seq. number + ACK of the SYN (uses 1 seq. number). ③ Client → ACK: acknowledges the SYN+ACK (uses no seq. number)." (p.56){/def}
@@ -36,6 +34,8 @@ three-way = 세 번 오감, handshake = 악수. "안녕(SYN)" "안녕, 들었어
 # SYN seq 1200 / SYN+ACK seq 4800 ack 1201 / ACK seq 1201 ack 4801.
 # server 의 ack = ISN + 1 (8001). SYN 이 8000 을 썼기 때문이다.
 {/answer}
+
+{exam}교수: "three-way handshake … this is very important"(11/24 10:04). passive open 이 먼저 일어나야 하고, 준비된 server 만 SYN + ACK 로 답한다(11:00). SYN 은 synchronization, client → server 와 server → client 두 방향의 무작위 번호를 따로 맞춘다(full-duplex).{/exam}
 
 == 관련 문서 ==
 * [[control flags]] · [[TCP sequence number와 ISN]] · [[SYN flooding attack]] · [[CH09 TCP]]

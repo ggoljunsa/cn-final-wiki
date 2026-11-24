@@ -2,8 +2,6 @@ key: send window
 title: send window — 보낼 수 있는 byte 범위
 category: 11강 TCP, 용어
 ---
-{info}이 절의 p.55 이후 내용은 11/24 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
-
 TCP 의 '''send window''' 는 sending buffer 위의 byte 범위다. 보냈지만 ACK 없는 byte 와 더 보낼 수 있는 byte 를 포함한다. L16 p.62–63.
 
 {def}"TCP keeps two windows per direction (send + receive) → four for a two-way connection." (p.62)
@@ -41,6 +39,8 @@ TCP 의 '''send window''' 는 sending buffer 위의 byte 범위다. 보냈지만
 # 4 개(방향마다 send + receive).
 # 231–330 (231 + 100 = 331 이 다음 못 보내는 byte). 왼쪽 벽은 closes, 오른쪽 벽은 opens.
 {/answer}
+
+{tip}11/24 수업(30:41–39:17): outstanding 은 보통 "뛰어난" 이지만 여기서는 "remaining, unprocessed" 다. send window 크기는 receiver 가 rwnd 로 알린 값에 맞춘다(synchronize). retransmission timer 는 "per connection, not per message or not per packet".{/tip}
 
 == 관련 문서 ==
 * [[receive window와 rwnd]] · [[sliding window]] · [[cwnd]] · [[window shutdown과 probing]]

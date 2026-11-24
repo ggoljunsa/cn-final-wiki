@@ -2,7 +2,7 @@ key: cwnd
 title: cwnd (congestion window) — 네트워크가 받아 줄 양
 category: 11강 TCP, 용어
 ---
-{info}이 절의 p.55 이후 내용은 11/24 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
+{info}이 문서의 내용(p.69 이후)은 11/26 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
 
 '''cwnd''' (congestion window)는 네트워크가 받아 줄 수 있다고 보는 byte 양이다. 실제 send window 는 rwnd 와 cwnd 중 작은 쪽이다. L16 p.78.
 

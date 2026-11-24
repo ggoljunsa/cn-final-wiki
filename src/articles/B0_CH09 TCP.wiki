@@ -3,7 +3,7 @@ title: CH09 Transport Layer (2) — TCP (11강 — byte stream, seq·ack number,
 category: 11강 TCP, 메인
 ---
 == 개요 ==
-'''CH09 TCP'''는 L16 덱 `CH09_Transport Layer.pdf` 의 4절 TCP(p.41–85)를 다룬다. 앞 절(서비스·UDP)은 [[CH09 전송 계층과 UDP]] 에 있다. 11/19(목) 수업이 p.41–54(TCP 서비스, 번호 붙이기, header)까지 나갔고, 교수는 "TCP connection 은 다음 시간에" 라고 하며 끝냈다. 그래서 p.55–85(연결 설정·종료, window, flow control, error control, congestion control)는 '''11/24 수업 전에 슬라이드만 보고 미리 쓴 것'''이다.[* 녹음이 오면 이 문서의 🎙 절에 11/24 이후 기록을 붙이고, 교수가 강조한 곳에 {exam} 을 더할 것이다. 지금 p.55 이후의 {exam} 박스는 하나도 없다. 그쪽은 아직 교수가 말한 적이 없기 때문이다.]
+'''CH09 TCP'''는 L16 덱 `CH09_Transport Layer.pdf` 의 4절 TCP(p.41–85)를 다룬다. 앞 절(서비스·UDP)은 [[CH09 전송 계층과 UDP]] 에 있다. 11/19(목) 수업이 p.41–54(TCP 서비스, 번호 붙이기, header)를, 11/24(화) 수업이 p.55–68(연결 설정·종료, send·receive window, flow control 예제)을 나갔다. 교수는 11/24 끝에 TCP 를 목요일(11/26)에 끝낸다고 했다. 그래서 '''p.69–85(shrink, probing, silly window, error control, congestion control)는 아직 수업 전이고 슬라이드만 보고 미리 쓴 것'''이다.[* 그 구간에는 {exam} 박스가 없다. 교수가 아직 그쪽을 말하지 않았기 때문이다. 11/26 녹음이 오면 🎙 절과 출제 포인트를 더한다.]
 
 [[CH09 전송 계층과 UDP]] 에서 transport layer 가 할 수 있는 일을 다 늘어놓았다. process-to-process 전달, flow control, error control, congestion control 이었다. [[UDP]] 는 그중 process-to-process 만 하고 나머지는 거의 안 했다. '''[[TCP]]''' 는 전부 한다. 이 문서는 TCP 가 그 일들을 실제로 어떻게 하는지 따라간다.
 
@@ -169,9 +169,9 @@ p.54 는 나머지 칸이다.
 {/answer}
 
 == 연결은 logical 하다 (p.55) ==
-여기서부터는 11/24 수업 전 선제 작성이다.
+11/24 수업은 여기서 시작했다.
 
-p.55 는 TCP connection 이 물리적인 길이 아니라는 점부터 못 박는다. "A TCP connection is a logical path between source and destination, not physical." segment 하나하나는 여전히 IP 가 배달한다. TCP 는 연결 자체만 관리한다.
+p.55 는 TCP connection 이 물리적인 길이 아니라는 점부터 못 박는다. "A TCP connection is a logical path between source and destination, not physical." segment 하나하나는 여전히 IP 가 배달한다. TCP 는 연결 자체만 관리한다. 교수는 IP 가 connection 을 관리하지 않으니 TCP 가 그 통제를 맡는다고 다시 짚었다.[* 11/24 녹음 01:03–02:51. "IP does not provide any connection-oriented services and error and flow control, and it does not fundamentally control anything about the connection. And TCP is the one that holds the control mechanism of the connection."]
 
 그래도 메시지 전체가 하나의 logical path 를 쓰면 ACK 와 재전송이 쉬워진다.
 * 사라지거나 손상된 segment 는 다시 보낸다.
@@ -179,11 +179,15 @@ p.55 는 TCP connection 이 물리적인 길이 아니라는 점부터 못 박�
 
 == 연결 열기: three-way handshake (p.56–58) ==
 [[img:L16-57.png|p.57 — Client 의 Active open 과 Server 의 Passive open. SYN(seq 8000) → SYN + ACK(seq 15000, ack 8001, rwnd 5000) → ACK(seq 8001, ack 15001, rwnd 10000)|medium]]
-p.56 은 연결을 여는 '''[[three-way handshake]]''' 다. 먼저 server 가 '''passive open''' 한다. 받을 준비를 해 두고 기다린다는 뜻이다. client 는 연결하고 싶을 때 '''active open''' 한다. 그다음 segment 세 개가 오간다.
+p.56 은 연결을 여는 '''[[three-way handshake]]''' 다. 먼저 server 가 '''passive open''' 한다. 받을 준비를 해 두고 기다린다는 뜻이다. client 는 연결하고 싶을 때 '''active open''' 한다. 교수는 순서를 강조했다. passive open 이 먼저 일어나야 하고, 준비된(passive open 한) server 만 SYN 에 SYN + ACK 로 답한다.[* 11/24 녹음 10:58–12:00. 이름도 여기서 나온다. server 는 기다리기만 하니 passive, client 는 먼저 메시지를 보내니 active 다(04:58).] 그다음 segment 세 개가 오간다.
 # '''Client → SYN''': 자기 sequence number 를 맞추자고 보낸다(seq = 8000). data 가 없어도 '''번호 1 개를 쓴다'''.
 # '''Server → SYN + ACK''': 자기 번호(seq = 15000)를 보내면서 client 의 SYN 을 확인한다(ack = 8001). 이것도 번호 1 개를 쓴다.
 # '''Client → ACK''': SYN + ACK 를 확인한다(seq = 8001, ack = 15001). 이 segment 는 '''번호를 쓰지 않는다'''.
-위 그림 p.57 에는 rwnd 도 보인다. server 는 SYN + ACK 에 rwnd 5000 을, client 는 ACK 에 rwnd 10000 을 실어 서로 받을 수 있는 양을 알린다.
+위 그림 p.57 에는 rwnd 도 보인다. server 는 SYN + ACK 에 rwnd 5000 을, client 는 ACK 에 rwnd 10000 을 실어 서로 받을 수 있는 양을 알린다. 교수는 rwnd 를 "receive window size" 라고 풀고, 양쪽이 receive window 크기를 맞추는(synchronize) 중요한 control 정보라고 했다(13:07–14:05).
+
+SYN 이라는 이름은 synchronization 이다. 무엇을 맞추나. client → server 방향의 sequence number 다. full-duplex 라서 반대 방향(server → client)도 따로 무작위 번호(15000)를 정해 SYN 으로 맞춘다. 그래서 SYN 이 두 번(① SYN, ② SYN + ACK) 나온다(06:08–09:50).
+
+{exam}'''three-way handshake''' (SYN seq 8000 → SYN + ACK seq 15000, ack 8001 → ACK seq 8001, ack 15001). 교수: "three-way handshake, which is used for setting up connection-oriented channel … this is very important"(11/24 10:04). passive open(server)이 active open(client)보다 먼저, SYN 은 번호 1 개를 쓴다.{/exam}
 
 ACK number 를 보자. SYN 은 data 가 없는데도 server 가 ack = 8001 을 보낸다. SYN 이 8000 번 하나를 썼기 때문이다. 마지막 ACK 는 번호를 안 쓰니, client 의 다음 data segment 도 seq = 8001 로 나간다. p.59 에서 실제로 첫 data 가 seq 8001 이다.[* 규칙은 "SYN · FIN 은 1 개를 쓰고 data 없는 ACK 는 안 쓴다" 이다. 시험에 "③ 의 seq 는?" 이 나오면 8001, "그다음 data segment 의 seq 는?" 이 나와도 8001 이다. 둘 다 8001 이라 이상해 보이지만 맞다.]
 
@@ -195,7 +199,7 @@ p.58 은 이 절차의 약점이다. '''[[SYN flooding attack]]''' 이다.
 * server 는 SYN 마다 자원(TCB table, timer)을 잡아 둔다.
 * server 의 SYN + ACK 는 가짜 client 에게 가니 답이 오지 않는다.
 * server 의 자원이 바닥나서 진짜 client 가 거절당한다.
-이것이 '''denial-of-service (DoS)''' 공격이다. 위 그림의 half-open 칸들이 "두 번째 단계까지만 하고 멈춘 연결" 이다.[* TCB 는 Transmission Control Block 으로, 연결 하나의 상태(번호, window, timer 등)를 담는 표다. 슬라이드에는 약어만 있다(Forouzan 보충). handshake 의 둘째 단계에서 server 가 먼저 자원을 잡는다는 점이 공격의 빌미다.]
+이것이 '''denial-of-service (DoS)''' 공격이다. 교수는 이것을 three-way handshake 의 "crucial drawback" 이라고 불렀고, DoS 의 여러 형태 가운데 한 예라고 했다(11/24 14:58–17:30). 위 그림의 half-open 칸들이 "두 번째 단계까지만 하고 멈춘 연결" 이다.[* TCB 는 Transmission Control Block 으로, 연결 하나의 상태(번호, window, timer 등)를 담는 표다. 슬라이드에는 약어만 있다(Forouzan 보충). handshake 의 둘째 단계에서 server 가 먼저 자원을 잡는다는 점이 공격의 빌미다.]
 
 {mini}
 # client ISN 이 3000, server ISN 이 9000 이다. handshake 세 segment 의 (seq, ack) 를 쓰라.
@@ -225,7 +229,7 @@ p.60–61 은 연결 닫기다. 이것도 three-way handshaking 이다. → [[co
 위 그림 숫자로는 FIN(seq x) → FIN + ACK(seq y, ack x + 1) → ACK(seq x + 1, ack y + 1)다. 열 때의 SYN 처럼 FIN 도 번호를 하나 쓰니 ack 가 x + 1 이 된다.
 
 닫는 방법이 두 가지 더 있다.
-* '''half close''': 한쪽은 보내기를 멈추지만 받기는 계속한다. full-duplex 라서 두 방향을 따로 닫을 수 있다.
+* '''half close''': 한쪽은 보내기를 멈추지만 받기는 계속한다. full-duplex 라서 두 방향을 따로 닫을 수 있다. 교수가 든 예는 '''정렬(sorting)''' 이다. client 가 정렬할 data 를 server 에 다 보내고 나면 자기 쪽 방향은 닫는다(FIN). server 는 FIN + ACK 대신 ACK 만 보내고, 정렬한 결과를 계속 보낸 뒤 마지막에 자기 FIN 을 보낸다(11/24 24:19–28:18).[* 이 예는 Forouzan 의 half close 그림과 같다. 슬라이드 p.60 에는 한 줄("one side stops sending but keeps receiving")만 있고 그림은 없다.]
 * '''RST''' (reset): 연결을 바로 끊는다(abort).
 
 {mini}
@@ -245,7 +249,7 @@ p.62 첫 줄이 숫자를 정한다. TCP 는 방향마다 window 를 두 개(sen
 [[img:L16-62.png|p.62 — a. Send window: 200 까지는 ACK 받음, 201–260 은 보냈지만 ACK 없음(Outstanding), 261–300 은 보낼 수 있음(Usable window). 아래 b. 왼쪽 벽이 오른쪽으로 가면 Closes, 오른쪽 벽이 오른쪽으로 가면 Opens, 왼쪽으로 가면 Shrinks|medium]]
 '''[[send window]]''' 는 위 그림 a 처럼 byte 줄 위의 구간이다.
 * 200 까지: ACK 를 받았다. buffer 에서 지워도 된다.
-* 201–260: 보냈지만 ACK 를 못 받았다(outstanding). 첫 outstanding byte 를 $S_f$ 라고 부른다.
+* 201–260: 보냈지만 ACK 를 못 받았다(outstanding). 첫 outstanding byte 를 $S_f$ 라고 부른다. 교수는 outstanding 이 보통 "뛰어난" 이라는 뜻이지만 여기서는 "remaining, unprocessed" 라고 다시 강조했다(11/24 31:46).
 * 261–300: 아직 안 보냈지만 보낼 수 있다(usable window). 다음에 보낼 byte 가 $S_n$ 이다.
 * 301 부터: right edge 가 오른쪽으로 움직이기 전에는 못 보낸다.
 send window 의 크기는 receiver 가 알려 준 값(advertised)으로 정한다. 그림 오른쪽 위 Timer 는 하나다.
@@ -254,7 +258,7 @@ p.63 이 send window 의 성질을 정리한다.
 * 크기는 receiver(flow control)와 congestion(congestion control) 두 쪽에서 정해진다.
 * open, close, shrink 할 수 있다.
 * 크기는 packet 개수가 아니라 '''byte''' 로 센다.
-* retransmission timer 는 연결당 '''하나'''다.[* [[CH09 전송 계층과 UDP]] 의 p.19 는 "Sender starts a timer for each packet sent" 였다. 일반론에서는 packet 마다 timer 지만, TCP 는 연결 하나에 timer 하나를 쓰고 가장 오래된 outstanding segment 를 기준으로 돌린다. 1절 sliding window 와 다른 점이 하나 더 있다. 1절은 packet 번호로 셌고 TCP 는 byte 로 센다.]
+* retransmission timer 는 연결당 '''하나'''다. 교수: "per connection, not per message or not per packet"(11/24 37:49–39:17).[* [[CH09 전송 계층과 UDP]] 의 p.19 는 "Sender starts a timer for each packet sent" 였다. 일반론에서는 packet 마다 timer 지만, TCP 는 연결 하나에 timer 하나를 쓰고 가장 오래된 outstanding segment 를 기준으로 돌린다. 1절 sliding window 와 다른 점이 하나 더 있다. 1절은 packet 번호로 셌고 TCP 는 byte 로 센다.]
 
 [[img:L16-64.png|p.64 — a. Receive window: 200 까지는 process 가 가져감, 201–260 은 받고 ACK 했지만 아직 안 가져감, 261–300 은 더 받을 수 있는 칸 = rwnd. b. 왼쪽 벽 → 오른쪽 Closes, 오른쪽 벽 → 오른쪽 Opens|medium]]
 '''[[receive window와 rwnd|receive window]]''' 는 receiver 쪽 buffer 위의 구간이다(p.64). 위 그림 a 에서 201–260 은 받았고 ACK 도 했지만 process 가 아직 가져가지 않은 byte 다. 그 뒤 261–300 이 앞으로 더 받을 수 있는 자리, 즉 '''rwnd''' 다.
@@ -276,7 +280,9 @@ $$\text{rwnd} = \text{buffer size} - \text{bytes waiting to be pulled}$$
 
 == 받는 쪽 속도에 맞추기: flow control (p.66–71) ==
 [[img:L16-66.png|p.66 — ① sender 의 Producer 가 Messages are pushed → ② Segments are pushed → ③ receiver 쪽 Messages are pulled. 빨간 ④ ⑤ Flow control feedback 이 거꾸로 올라간다|medium]]
-p.66 의 한 줄이 flow control 의 뜻이다. "Flow control balances the producer's rate with the consumer's rate." 위 그림은 [[CH09 전송 계층과 UDP]] p.15 의 push·pull 그림에 번호를 붙인 것이다. ①② 는 push 이고 ③ 은 pull 이다. 그래서 feedback 화살표 ④⑤ 는 push 구간에만 있다.
+p.66 의 한 줄이 flow control 의 뜻이다. "Flow control balances the producer's rate with the consumer's rate." 위 그림은 [[CH09 전송 계층과 UDP]] p.15 의 push·pull 그림에 번호를 붙인 것이다. ①② 는 push 이고 ③ 은 pull 이다. 그래서 feedback 화살표 ④⑤ 는 push 구간에만 있다. 교수는 11/17 에 이어 11/24 에도 이것을 다시 설명했다. "Remember that flow control is needed between these, while not these, because pull happens between these two."(45:22)
+
+{exam}flow control 은 '''push''' 구간(process → TL, TL → TL)에만 있고, receiver TL → process 는 '''pull''' 이라 없다. 11/17 과 11/24(44:04–46:24) 두 번 설명했고 두 번째에는 "Remember" 를 붙였다.{/exam}
 
 p.67 은 window 가 움직이는 방식을 말로 정리한다. buffer 크기는 연결할 때 정해지고 그 뒤 바뀌지 않는다. 대신 window 가 열리고 닫힌다.
 * '''receive window''': byte 가 도착하면 '''닫힌다'''(왼쪽 벽 → 오른쪽). process 가 byte 를 가져가면 '''열린다'''(오른쪽 벽 → 오른쪽).
@@ -299,7 +305,13 @@ p.68 의 예제 하나로 이 규칙들을 다 써 본다. 한 방향(client →
 ⑧  server → ACK  ackNo 601, rwnd 600            process 가 200 bytes 더 가져감, window opens
     client: send window 601–1200 (size 600) — window opens
 </pre>
+교수는 이 예제의 요점을 "window sizes should be synchronized between sender and receiver" 라고 했다. receiver 의 rwnd 가 바뀌면 그 값이 ACK 에 실려 바로 sender 의 send window 에 반영된다(11/24 54:53–56:15). 11/24 수업은 이 예제에서 끝났다.
+
+{exam}p.68 flow control 예제: rwnd 가 ACK 에 실려 오면 sender 의 send window 가 '''그 크기로 맞춰진다'''(synchronize). 교수가 "the key point" 라고 두 번 말했다(11/24 54:53, 56:15).{/exam}
+
 ⑦ 을 자세히 보자. server buffer 800 bytes 가운데 받은 것은 200 + 300 = 500 이다. process 가 앞쪽 100 을 가져갔으니 남아 있는 것은 400 이고, rwnd = 800 − 400 = 400 이다. ⑧ 에서는 200 을 더 가져가 남은 것이 200 이 되니 rwnd = 600 이다. 오른쪽 벽은 900 → 1000 → 1200 으로 계속 오른쪽으로 갔다.[* 오른쪽 벽 = ackNo + rwnd 다. ⑤ 301 + 600 = 901, ⑦ 601 + 400 = 1001, ⑧ 601 + 600 = 1201. 그림의 경계 숫자(901, 1001, 1201)는 window 바로 다음 byte 다. 이 계산이 p.69 의 shrink 규칙에 그대로 쓰인다.]
+
+p.69 부터는 11/26 수업 예정이라 아직 슬라이드 기준이다.
 
 p.69 는 send window 가 줄어드는(shrink) 경우다.
 * receive window 는 줄어들 수 없다.
@@ -496,8 +508,37 @@ UDP 부분(00:42–13:05)은 [[CH09 전송 계층과 UDP]] 의 🎙 절에 있�
 * '''36:57–37:25''' "we will make continuous discussions on TCP connection in the next presentation". 다음 수업(11/24 화)은 p.55 부터다.
 * 시험·과제 공지는 없었다.
 
-=== p.55–85 ===
-아직 수업 전이다(11/24 이후 예정). 녹음이 오면 여기에 붙인다.
+=== 11/24 (화) — p.55–68, 녹음 58분 ===
+17:30 이후 원래 전사는 한 단어씩 끊긴 상태라, 그 구간은 같은 녹음을 다시 전사한 것(`1124_컴네_재전사_1730-.txt`)으로 읽었다.
+* '''00:00–01:03''' 지난 시간 복습: segment format, sequence number, control flag. 오늘은 control flag 를 실제로 쓰는 three-way handshake.
+* '''01:03–03:50''' p.55: TCP connection 은 logical. IP 는 connection 을 관리하지 않고 TCP 가 관리한다. 사라지거나 손상되면 다시 보내고, 순서가 틀리면 hold.
+* '''04:00–05:30''' passive open(server, "ready to accept")과 active open(client).
+* '''06:08–07:30''' SYN = synchronization. 무작위 sequence number 로 client → server 방향을 맞춘다. SYN 은 번호 1 개를 쓴다.
+* '''08:00–09:50''' SYN + ACK: ack 8001. full-duplex 라 반대 방향도 무작위(15000)로 따로 맞춘다.
+* '''10:04''' "three-way handshake … this is very important".
+* '''10:58–12:00''' passive open 이 먼저. 준비된 server 만 응답한다. SYN flag = 1, SYN + ACK flag.
+* '''13:07–14:05''' rwnd = receive window size. 양쪽 receive window 크기를 맞추는 중요한 control 정보. "later in this lecture".
+* '''14:58–17:30''' SYN flooding attack: three-way handshake 의 "crucial drawback". 가짜 SYN 마다 자원 할당 → 진짜 client 를 못 받음 → DoS 의 한 예. 이 handshake 가 "fragile" 하다.
+* '''17:30–19:49''' 세 단계(setup, data transfer, teardown). data 는 양방향, ACK 를 data 에 얹는 piggyback.
+* '''19:49–23:06''' 종료: FIN(data 없으면 번호 1 개) → FIN + ACK → ACK. half close 도 가능.
+* '''24:19–28:18''' half close 예: 정렬(sorting). client 는 data 를 다 보내고 자기 방향을 닫고, server 는 ACK 만 보낸 뒤 정렬 결과를 보내고 나서 FIN.
+* '''28:18–30:41''' window 는 방향마다 send·receive 두 개, 양방향이면 넷. 그림은 단방향만.
+* '''30:41–34:17''' send window: $S_f$(first outstanding), outstanding = "remaining, unprocessed", $S_n$(261). 크기는 receiver 의 rwnd 로 맞춘다. timer.
+* '''34:17–37:49''' flow control 과 congestion control 둘 다 send window 를 조절한다. 왼쪽 벽 → 는 close, 오른쪽 벽 → 는 open, 오른쪽 벽 ← 는 shrink.
+* '''37:49–39:17''' window 는 byte 로 센다. retransmission timer 는 "per connection, not per message or not per packet".
+* '''39:17–42:46''' receive window 의 두 pointer. buffer 크기와 receive window 크기는 다르다.
+* '''42:46–46:24''' producer–consumer 세 쌍. push 두 곳에만 flow control, pull 은 필요 없음. "Remember that …"(45:22).
+* '''46:24–50:15''' buffer 크기는 고정, window 가 open·close. receive window 는 byte 가 오면 close, process 가 가져가면 open. send window 는 새 ACK 로 close, rwnd 가 허락하면 open. "four different events".
+* '''50:15–57:13''' p.68 예제: seq 100, rwnd 800, 다음 byte 101, window 끝 901. 200 bytes 보내고 rwnd 600 … "the key point is that window sizes should be synchronized between sender and receiver"(54:53, 56:15).
+* '''57:13–58:19''' 공지는 아래 상자에 있다.
+
+{warn}'''11/24 공지 (57:13–58:19)''': "we can finish [TCP on Thursday] and next week we can move on to the '''application layer, which is the last part''', and then we will see our final exam. And I think before final exam I would like to announce an '''additional problem set for your last assignment''', and I would like to recommend you to '''solve those assignments by your own''', because '''some problems could be originated from those problem sets''' … I highly recommend [you] do it on your own, in preparation for your final."
+* 11/26(목)에 TCP(p.69–85)를 끝낸다.
+* 다음 주(12/1 주)에는 application layer 를 한다. 이것이 마지막 부분이고 그 뒤가 기말고사다.
+* 기말 전에 마지막 과제를 낸다. 시험 문제 일부가 과제에서 나올 수 있다. PS1 도 다시 풀어 두자 → [[PS1 풀이 가이드]].{/warn}
+
+=== p.69–85 ===
+아직 수업 전이다(11/26 목 예정). 녹음이 오면 여기에 붙인다.
 
 == 시험 직전 체크 ==
 * TCP = connection-oriented, reliable. setup → data → teardown. byte stream(logical tube), 양쪽 buffer, segment, full-duplex.

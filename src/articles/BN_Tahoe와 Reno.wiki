@@ -2,7 +2,7 @@ key: Tahoe와 Reno
 title: Tahoe 와 Reno — 3 duplicate ACKs 에 대한 반응 차이
 category: 11강 TCP, 용어
 ---
-{info}이 절의 p.55 이후 내용은 11/24 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
+{info}이 문서의 내용(p.69 이후)은 11/26 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
 
 Tahoe TCP 와 Reno TCP 는 time-out 에는 똑같이 반응하고, 3 duplicate ACKs 에 다르게 반응한다. L16 p.81–85.
 

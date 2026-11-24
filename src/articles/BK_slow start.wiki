@@ -2,7 +2,7 @@ key: slow start
 title: slow start — cwnd 를 RTT 마다 두 배로
 category: 11강 TCP, 용어
 ---
-{info}이 절의 p.55 이후 내용은 11/24 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
+{info}이 문서의 내용(p.69 이후)은 11/26 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
 
 '''slow start''' 는 cwnd 를 1 MSS 에서 시작해 RTT 마다 두 배로 키우는 단계다. ssthresh 에 닿으면 congestion avoidance 로 넘어간다. L16 p.79, p.82.
 

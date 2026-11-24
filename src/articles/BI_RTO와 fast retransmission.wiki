@@ -2,7 +2,7 @@ key: RTO와 fast retransmission
 title: RTO 와 fast retransmission — TCP 가 다시 보내는 두 계기
 category: 11강 TCP, 용어
 ---
-{info}이 절의 p.55 이후 내용은 11/24 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
+{info}이 문서의 내용(p.69 이후)은 11/26 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
 
 TCP 는 두 경우에 segment 를 다시 보낸다. retransmission timer(RTO)가 끝났을 때, 그리고 duplicate ACK 가 세 번 왔을 때(fast retransmission). L16 p.72–77.
 

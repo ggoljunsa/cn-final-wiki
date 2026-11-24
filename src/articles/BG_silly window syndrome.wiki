@@ -2,7 +2,7 @@ key: silly window syndrome
 title: silly window syndrome — 1 byte 에 40 byte header
 category: 11강 TCP, 용어
 ---
-{info}이 절의 p.55 이후 내용은 11/24 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
+{info}이 문서의 내용(p.69 이후)은 11/26 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
 
 data 가 아주 느리게 만들어지거나 소비되면 TCP 가 아주 작은 segment 를 보내게 되어 overhead 가 커지는 현상이다. L16 p.71.
 

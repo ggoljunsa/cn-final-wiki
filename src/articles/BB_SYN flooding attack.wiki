@@ -2,8 +2,6 @@ key: SYN flooding attack
 title: SYN flooding attack — half-open 연결로 server 자원 고갈
 category: 11강 TCP, 용어
 ---
-{info}이 절의 p.55 이후 내용은 11/24 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
-
 공격자가 가짜 source IP 로 SYN 을 대량으로 보내 server 의 자원을 바닥내는 denial-of-service(DoS) 공격이다. L16 p.58.
 
 {def}"Attackers send many SYN segments with fake source IP addresses. Server allocates resources (TCB tables, timers) for each one. Its SYN+ACKs go to fake clients → never answered. Server runs out of resources → real clients are refused. → a denial-of-service (DoS) attack." (p.58){/def}
@@ -28,6 +26,8 @@ category: 11강 TCP, 용어
 # ② SYN+ACK 까지. ③ ACK 가 오지 않았다.
 # TCB tables, timers.
 {/answer}
+
+{exam}교수는 SYN flooding 을 three-way handshake 의 "crucial drawback" 이자 DoS 의 한 예라고 했다(11/24 14:58–17:30).{/exam}
 
 == 관련 문서 ==
 * [[three-way handshake]] · [[TCP]]

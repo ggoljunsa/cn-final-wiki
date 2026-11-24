@@ -2,8 +2,6 @@ key: receive window와 rwnd
 title: receive window 와 rwnd — 더 받을 수 있는 양
 category: 11강 TCP, 용어
 ---
-{info}이 절의 p.55 이후 내용은 11/24 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
-
 TCP 의 '''receive window''' 는 receiving buffer 에서 더 받을 수 있는 byte 범위이고, 그 크기가 '''rwnd''' 다. receiver 는 header 의 window size 칸으로 rwnd 를 알린다. L16 p.64–65, p.67.
 
 {def}"The receiving process pulls data at its own pace. Part of the buffer holds bytes already ACKed but not yet pulled. rwnd = buffer size − bytes waiting to be pulled. ACKs are mainly cumulative (next byte expected); newer TCP adds selective ACKs." (p.65){/def}
@@ -32,6 +30,8 @@ buffer 800. 200 bytes 받음 → rwnd 600. 300 bytes 더 받고 100 가져감 �
 # 1,500 B.
 # window size, 16 bits.
 {/answer}
+
+{exam}p.68 예제의 요점: "window sizes should be synchronized between sender and receiver". rwnd 가 바뀌면 ACK 에 실려 sender 의 send window 에 바로 반영된다(11/24 54:53, 56:15). 교수는 buffer 크기와 receive window 크기가 다르다는 점도 짚었다(41:36).{/exam}
 
 == 관련 문서 ==
 * [[send window]] · [[cwnd]] · [[window shutdown과 probing]] · [[전송 계층 flow control]]

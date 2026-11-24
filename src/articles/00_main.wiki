@@ -21,7 +21,8 @@ category: 안내
 # [[CH07 IPv6]] (11/10): 주소 표기, EUI-64, autoconfiguration, base header, 전환
 # [[CH08 라우팅]] (11/12): distance vector, link state, path vector, RIP·OSPF·BGP
 # [[CH09 전송 계층과 UDP]] (11/17·11/19): port, multiplexing, flow·error control, sliding window, UDP
-# [[CH09 TCP]] (11/19~): byte 번호, header, handshake, window, 재전송, cwnd. p.55 이후는 11/24 수업 전 선제 작성
+# [[CH09 TCP]] (11/19·11/24, 11/26 에 끝): byte 번호, header, handshake, window·flow control, 재전송, cwnd. p.69 이후는 11/26 수업 전 선제 작성
+# 다음 주(12/1 주): application layer. 교수는 이것이 마지막 부분이고 그 뒤가 기말고사라고 했다(11/24). 슬라이드는 아직 없다
 처음부터 읽으려면 [[읽는 순서]] 를 따라가면 된다.
 
 === 강의별 메인 문서 ===
@@ -56,6 +57,7 @@ category: 안내
 * 교수가 "시험에 나올 수 있다" 고 직접 말한 것은 IPv4 와 IPv6 의 fragmentation 차이다(11/10). 그 밖에 "key distinction", "please remember" 라고 짚은 곳은 각 메인 문서의 🎯 출제 포인트 박스에 모았다.
 * 교수 학습 지침(10/20): 세대별 구체적 숫자는 외우지 말고 trend 를 이해하라. uplink/downlink 는 외워라.
 * 마지막 정리용: [[공식 모음]] → [[자주 틀리는 함정 모음]] → 각 메인 문서 끝의 "시험 직전 체크".
+* '''11/24 공지''': 기말 전에 마지막 과제(problem set)를 낸다. 교수는 과제를 스스로 풀라고 하면서, 시험 문제 일부가 과제에서 나올 수 있다고 했다. PS1 부터 다시 풀어 두자.
 * 과제: [[PS1 풀이 가이드]] (Problem Set 1, 11/15 마감, 소문항별 풀이·해설)
 
 == 공통 문서 ==
