@@ -32,5 +32,7 @@ MSS 는 maximum segment size, segment 하나에 실을 수 있는 최대 data �
 # 1, 2, 4, 8, 10, 11. RTT 4 에 16 이 아니라 10 에서 멈추고 그 뒤 +1.
 {/answer}
 
+{info}📝 과제 연결: PS2 5(d)(i)(iii) 가 ssthresh 에서 멈추는 slow start 의 cwnd 를 RTT 별로 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[cwnd]] · [[congestion avoidance]] · [[Tahoe와 Reno]]

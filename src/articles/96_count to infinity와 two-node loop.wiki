@@ -48,5 +48,7 @@ Bellman-Ford 는 min 을 고른다. 더 싼 값은 바로 받아들이니 좋은
 # B 가 말한 X = 2 가 사실은 A 자신을 거치는 경로였는데, 그걸 모르고 새 길로 믿었다.
 {/answer}
 
+{info}📝 과제 연결: PS2 3(c) 가 X–A–B 에서 loop 가 생기는 과정과 split horizon·poison reverse 를 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[CH08 라우팅]] · [[distance vector routing]] · [[split horizon]] · [[poison reverse]] · [[three-node instability]] · [[RIP]]

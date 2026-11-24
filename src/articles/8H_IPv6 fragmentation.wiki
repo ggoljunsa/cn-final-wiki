@@ -38,5 +38,7 @@ IPv4 의 [[fragmentation]] 은 라우터가 할 일이 많았다. 나누고, hea
 # IPv6 라우터는 drop 한다(나누지 않음). IPv4 라우터는 fragmentation 해서 보낸다(D bit 가 1 이면 IPv4 도 버림).
 {/answer}
 
+{info}📝 과제 연결: PS2 2(c)(i) 가 IPv6 라우터가 MTU 보다 큰 datagram 을 받으면 무엇을 하는지, IPv4 와 어떻게 다른지 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[fragmentation]] · [[MTU]] · [[CH07 IPv4 데이터그램과 포워딩]] · [[extension header]] · [[IPv4와 IPv6 비교]] · [[CH07 IPv6]]

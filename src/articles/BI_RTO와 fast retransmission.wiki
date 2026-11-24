@@ -36,5 +36,7 @@ checksum, ACK, time-out. checksum 이 틀리면 버리고 '''사라진 것으로
 # 아니다. duplicate 가 2 개뿐이다. 하나 더 와야 한다.
 {/answer}
 
+{info}📝 과제 연결: PS2 5(c) 가 segment 하나가 빠졌을 때의 ACK 열, 재전송 시점, 마지막 ACK 를 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[acknowledgment number]] · [[cumulative ACK와 SACK]] · [[cwnd]] · [[ACK와 retransmission timer]]

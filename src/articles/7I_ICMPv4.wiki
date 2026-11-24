@@ -44,5 +44,7 @@ IPv4 에는 오류를 보고(정정)하는 장치와 질의 장치가 없다. IC
 
 {analogy}🎭 '''우편 시스템의 반송 안내문 + 수신 확인 서비스.''' 배달 실패하면 보낸 사람에게 안내문(error-reporting)이 가고, "받는 사람 집에 있나요?" 확인 전화(query: echo)도 할 수 있다. 안내문도 결국 '''같은 우편망(IP)''' 으로 배달된다.{/analogy}
 
+{info}📝 과제 연결: PS2 1(c)(ii)–(iv) 가 time exceeded 의 type·받는 사람·data section, echo 의 종류를 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[ICMP]] · [[ICMP error-reporting message]] · [[time exceeded와 traceroute]] · [[echo request와 ping]] · [[IP의 error control]] · [[보조 프로토콜]] · [[protocol field]]

@@ -219,6 +219,9 @@ main(대문) · 읽는 순서 · 시험 정보 · 자주 틀리는 함정 모음
 **사전**: TCP · stream delivery service · TCP 송수신 버퍼 · segment · TCP sequence number와 ISN · acknowledgment number · Example 다섯 segment의 sequence number · TCP segment format · control flags · three-way handshake · SYN flooding attack · connection termination과 half close · send window · receive window와 rwnd · window shutdown과 probing · silly window syndrome · cumulative ACK와 SACK · RTO와 fast retransmission · cwnd · slow start · congestion avoidance · fast recovery · Tahoe와 Reno
 (p.55 이후 사전 문서 맨 위에 "선제 작성" info. 11/24 녹음이 오면 메인 🎙 절·{exam} 추가, info 제거. 다음 덱은 L17, 그룹 `C0_`.)
 
+### 시험 (`시험`) [E1_–] — 과제 해설
+PS1 풀이 가이드 · PS2 풀이 가이드 (11/24 배포, 마감 12/4. 11-24 사용자 지시로 풀이·답까지 공개. 관련 사전 문서 31편에 `📝 과제 연결: PS2` info 박스)
+
 ### 기타 용어 (`용어`) [Z0_] — 해당 용어를 처음 쓰는 작성자가 만든다
 spread spectrum · 셀룰러와 WiFi 비교
 

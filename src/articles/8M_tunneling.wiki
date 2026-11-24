@@ -29,5 +29,7 @@ IPv4 구간의 라우터들은 바깥 IPv4 header 만 보고 전달한다. 안�
 # tunneling 은 양 끝이 IPv6 이고 IPv6 header 를 그대로 둔 채 IPv4 header 를 덧씌운다. header translation 은 받는 쪽이 IPv4 만 알아서 IPv6 header 를 IPv4 header 로 바꿔 쓴다.
 {/answer}
 
+{info}📝 과제 연결: PS2 2(c)(iv) 가 IPv4 전용 ISP 를 사이에 둔 두 IPv6 site 에 맞는 전환 방법을 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[dual stack]] · [[header translation]] · [[mid:캡슐화]] · [[CH07 IPv6]]

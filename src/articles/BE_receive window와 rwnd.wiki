@@ -33,5 +33,7 @@ buffer 800. 200 bytes 받음 → rwnd 600. 300 bytes 더 받고 100 가져감 �
 
 {exam}p.68 예제의 요점: "window sizes should be synchronized between sender and receiver". rwnd 가 바뀌면 ACK 에 실려 sender 의 send window 에 바로 반영된다(11/24 54:53, 56:15). 교수는 buffer 크기와 receive window 크기가 다르다는 점도 짚었다(41:36).{/exam}
 
+{info}📝 과제 연결: PS2 5(a) 가 rwnd 와 실제 send window 크기를 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[send window]] · [[cwnd]] · [[window shutdown과 probing]] · [[전송 계층 flow control]]

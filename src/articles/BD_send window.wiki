@@ -42,5 +42,7 @@ TCP 의 '''send window''' 는 sending buffer 위의 byte 범위다. 보냈지만
 
 {tip}11/24 수업(30:41–39:17): outstanding 은 보통 "뛰어난" 이지만 여기서는 "remaining, unprocessed" 다. send window 크기는 receiver 가 rwnd 로 알린 값에 맞춘다(synchronize). retransmission timer 는 "per connection, not per message or not per packet".{/tip}
 
+{info}📝 과제 연결: PS2 5(b) 가 shrink 여부와 shrink 를 막는 최소 rwnd 를 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[receive window와 rwnd]] · [[sliding window]] · [[cwnd]] · [[window shutdown과 probing]]

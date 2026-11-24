@@ -33,5 +33,7 @@ ICMP 메시지의 source 주소 = 그 라우터 → 경로가 한 hop 씩 드러
 
 {analogy}🎭 '''편도 승차권 거리를 1 정거장씩 늘려 가며 보내 보기.''' 1 정거장 표를 산 심부름꾼은 첫 역에서 쫓겨나 "1 역에서 내렸어요" 엽서를 보내고, 2 정거장 표는 둘째 역에서 … 엽서의 소인으로 노선도 전체를 그린다.{/analogy}
 
+{info}📝 과제 연결: PS2 1(c)(ii) 가 TTL 이 0 이 됐을 때 보내는 메시지 이름과 type 을 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[ICMP error-reporting message]] · [[TTL]] · [[echo request와 ping]] · [[reassembly]] · [[ICMPv4]]

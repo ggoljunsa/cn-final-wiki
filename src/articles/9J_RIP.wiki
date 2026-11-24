@@ -39,5 +39,7 @@ category: 9강 라우팅, 용어
 
 {info}RIP 가 UDP 를 쓰는 이유는 [[UDP를 쓰는 경우]] 에 있다. 관리·경로 갱신 메시지는 짧고 단순해서 연결을 맺을 필요가 없다(L16 p.39).{/info}
 
+{info}📝 과제 연결: PS2 3(d) 가 이웃 C 의 표를 받아 R 의 표를 갱신하고 적용한 규칙을 쓰라고 한다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[hop count]] · [[RIP forwarding table 예제]] · [[distance vector routing]] · [[OSPF]] · [[CH08 라우팅]]

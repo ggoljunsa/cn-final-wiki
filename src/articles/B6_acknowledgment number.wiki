@@ -28,5 +28,7 @@ header 의 ACK flag 가 1 일 때만 이 칸이 유효하다 → [[control flags
 # 7,000 번 byte 까지 모두 받았고 7,001 번을 기다린다.
 {/answer}
 
+{info}📝 과제 연결: PS2 4(c)(iii)·5(c) 가 segment 하나가 빠졌을 때의 cumulative ACK 를 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[TCP sequence number와 ISN]] · [[cumulative ACK와 SACK]] · [[RTO와 fast retransmission]]

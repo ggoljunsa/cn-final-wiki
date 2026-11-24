@@ -36,5 +36,7 @@ R2 의 표 (p.66)              140.24.7.200 도착             140.24.7.42 도�
 
 {info}📝 과제 연결: PS1 4(d) 가 aggregation 을 다룬다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
 
+{info}📝 과제 연결: PS2 1(b) 가 /22 줄을 /24 보다 먼저 보면 무엇이 틀어지는지 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[forwarding table]] · [[Example 7.19–7.21 R1 포워딩]] · [[address aggregation]] · [[hierarchical routing]] · [[address mask]] · [[CIDR]] · [[next hop]]

@@ -42,5 +42,7 @@ Reno  1 2 4 8 | 1 2 4 | 5 … 12 | 3dupACKs: ssthresh 6, cwnd 9 → FR 10 12 →
 # Tahoe (12, 1) → slow start. Reno (12, 15) → fast recovery.
 {/answer}
 
+{info}📝 과제 연결: PS2 5(d)(ii)(iv) 가 3 duplicate ACKs·time-out 뒤 Tahoe 와 Reno 의 ssthresh·cwnd 를 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[fast recovery]] · [[slow start]] · [[congestion avoidance]] · [[cwnd]] · [[CH09 TCP]]

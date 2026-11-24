@@ -44,5 +44,7 @@ L15 p.28 의 '''Comparison of Routing Algorithms''' 표다. p.6 에서 빈칸으
 # (a), (c).
 {/answer}
 
+{info}📝 과제 연결: PS2 3(e) 가 상황마다 RIP·OSPF·BGP 중 하나를 고르게 한다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[distance vector routing]] · [[link state routing]] · [[path vector routing]] · [[RIP]] · [[OSPF]] · [[BGP4]] · [[CH08 라우팅]]

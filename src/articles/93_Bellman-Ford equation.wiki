@@ -39,5 +39,7 @@ C 칸: min(5, 2 + ∞) = 5
 # min(∞, 4 + 2) = 6. B–E 의 cost 4 에 E 가 말한 F 까지 2 를 더했다.
 {/answer}
 
+{info}📝 과제 연결: PS2 3(b) 가 이웃 B·C·D 의 벡터로 A 의 벡터와 next hop 을 구하라고 한다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[distance vector routing]] · [[distance vector]] · [[Dijkstra algorithm]] · [[CH08 라우팅]]

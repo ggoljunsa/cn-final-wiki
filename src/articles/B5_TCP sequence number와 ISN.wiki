@@ -32,5 +32,7 @@ SYN 과 FIN 은 data 가 없어도 번호 1 개를 쓴다. 그래서 ISN 이 800
 # 32 bits.
 {/answer}
 
+{info}📝 과제 연결: PS2 4(c)(ii) 가 크기가 다른 data segment 세 개의 seq 와 마지막 byte 를 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[acknowledgment number]] · [[Example 다섯 segment의 sequence number]] · [[three-way handshake]] · [[TCP segment format]]

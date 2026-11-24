@@ -47,5 +47,7 @@ datagram header 에 있는 주소 = source, destination 둘뿐
 # 첫 8 bytes 에 transport header 의 port 번호가 들어 있다. source 는 그것으로 오류 난 패킷과 그 프로세스를 찾는다.
 {/answer}
 
+{info}📝 과제 연결: PS2 1(c)(iii) 가 error message 의 data section 에 무엇이 왜 들어가는지 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[ICMPv4]] · [[time exceeded와 traceroute]] · [[TTL]] · [[congestion control]] · [[IP의 error control]]

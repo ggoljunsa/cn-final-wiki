@@ -37,5 +37,7 @@ three-way = 세 번 오감, handshake = 악수. "안녕(SYN)" "안녕, 들었어
 
 {exam}교수: "three-way handshake … this is very important"(11/24 10:04). passive open 이 먼저 일어나야 하고, 준비된 server 만 SYN + ACK 로 답한다(11:00). SYN 은 synchronization, client → server 와 server → client 두 방향의 무작위 번호를 따로 맞춘다(full-duplex).{/exam}
 
+{info}📝 과제 연결: PS2 4(c)(i) 가 ISN 14,000 / 70,000 일 때 세 segment 의 seq·ack 를 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[control flags]] · [[TCP sequence number와 ISN]] · [[SYN flooding attack]] · [[CH09 TCP]]

@@ -35,5 +35,7 @@ f. port 13 = Daytime
 # `00359C400020` (src 53, dst 40000, total 32).
 {/answer}
 
+{info}📝 과제 연결: PS2 4(a) 가 같은 방식으로 다른 header(방향이 반대)를 읽게 한다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[UDP header]] · [[ephemeral port와 well-known port]] · [[CH09 전송 계층과 UDP]]

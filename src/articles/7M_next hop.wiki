@@ -24,5 +24,7 @@ Default            180.70.65.200    m2   ← 그 외 전부: 다음 라우터 18
 
 [[sim:forward_lookup]]
 
+{info}📝 과제 연결: PS2 1(a) 에서 next hop 이 "−"(직접 연결)인 줄과 라우터 주소인 줄을 구분해야 한다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[forwarding table]] · [[forwarding]] · [[Example 7.19–7.21 R1 포워딩]] · [[longest mask matching]] · [[routing]]

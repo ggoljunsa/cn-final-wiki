@@ -44,5 +44,7 @@ IPv6 는 link-layer 주소(MAC 주소)를 [[interface ID]] 로 바꿔 쓴다. �
 # 00 = 0000 0000 → 7 번째 bit 0 → 1 → 0000 0010 = 02. 가운데 FFFE → 021A:2BFF:FE3C:4D5E. link-local 은 FE80::21A:2BFF:FE3C:4D5E (leading zero 0 하나를 지움).
 {/answer}
 
+{info}📝 과제 연결: PS2 2(b) 가 Ethernet 주소에서 interface ID·link-local·global 주소를 차례로 만들라고 한다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[interface ID]] · [[Example 7.29]] · [[link-local address]] · [[mid:MAC 주소]] · [[mid:IP 주소와 MAC 주소]]

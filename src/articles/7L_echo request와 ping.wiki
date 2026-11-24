@@ -30,6 +30,8 @@ reply from B: seq=1 time=3.2 ms   ← echo reply, RTT
 
 {analogy}🎭 '''산 정상에서 "야호".''' 메아리가 돌아오면 건너편 산이 있다는 것이고, 돌아오는 시간이 거리다. 메아리가 없으면 상대가 없거나 소리가 중간에 막힌 것이다(destination unreachable 등).{/analogy}
 
+{info}📝 과제 연결: PS2 1(c)(iv) 가 echo 가 error-reporting 인지 query 인지, ping 이 무엇을 알려 주는지 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[ICMPv4]] · [[time exceeded와 traceroute]] · [[ICMP error-reporting message]]
 * 중간고사: [[mid:latency]]

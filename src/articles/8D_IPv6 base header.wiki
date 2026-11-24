@@ -52,5 +52,7 @@ payload length 16 bits → 최대 2^16 − 1 = 65,535 bytes
 # base header 가 항상 40 bytes 로 고정이라 길이를 따로 적을 필요가 없다. 옵션은 extension header 로 빠졌다.
 {/answer}
 
+{info}📝 과제 연결: PS2 2(c)(ii) 가 IPv4 의 TTL 역할을 하는 칸을 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[extension header]] · [[next header]] · [[traffic class와 flow label]] · [[IPv4 datagram format]] · [[IPv4와 IPv6 비교]]

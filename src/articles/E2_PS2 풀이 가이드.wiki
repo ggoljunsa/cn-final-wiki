@@ -1,0 +1,447 @@
+key: PS2 풀이 가이드
+title: PS2 풀이 가이드와 해설 (Problem Set 2, 마감 12/4 금)
+category: 시험, 과제
+---
+'''Problem Set 2''' 는 11/24 에 나온 과제이고 마감은 '''12/4(금)''' 이다. LMS 에 soft copy 로 내고, "Show all intermediate steps" 해야 한다. 계산기는 써도 된다. 문제는 다섯 개다.
+* 1번: IPv4 forwarding(longest prefix)과 TTL·ICMPv4 (CH07 (2) rev p.49–62, 7강)
+* 2번: IPv6 주소 축약, EUI-64·autoconfiguration, fragmentation·hop limit·ICMPv6·tunneling (CH07 (3), 8강)
+* 3번: Dijkstra, Bellman-Ford, two-node loop, RIP 갱신, RIP·OSPF·BGP 고르기 (CH08, 9강)
+* 4번: UDP header 읽기, UDP 를 쓰는 이유, TCP handshake·sequence number·ACK, SYN flooding (CH09, 10강·11강)
+* 5번: rwnd·send window, shrink, duplicate ACK·fast retransmission, cwnd·Tahoe·Reno (CH09, 11강)
+
+교수는 과제를 낸다고 예고하면서 이렇게 말했다. "I would like to recommend you to solve those assignments by your own, because some problems could be originated from those problem sets … in preparation for your final."[* 11/24 녹음 57:40–58:19. 같은 녹음에서 다음 주 application layer 가 "the last part" 이고 그 뒤가 기말고사라고 했다. 그러니 PS1·PS2 는 기말 문제의 원형으로 보고 직접 손으로 풀어 두는 편이 좋다.] 그래서 이 문서는 소문항마다 '''먼저 어디를 읽고 어떻게 푸는지''' 를 적고, 그 아래 '''풀이''' 를 접지 않고 끝까지 적었다. 직접 푼 다음 맞춰 보는 순서를 권한다. 절마다 끝의 ✏️ 새끼문제는 PS2 와 숫자가 다른 같은 유형이다. 숫자는 모두 Python 으로 검산했다.
+
+쪽 표기는 L13 = CH07 (2) '''rev''' 덱, L14 = CH07 (3), L15 = CH08, L16 = CH09 이다. 서술형 답에는 제출용 영어 문장을 붙였다. 문제가 애매한 곳은 '''가정''' 으로 적었으니 답안에도 그 한 줄을 같이 쓴다.
+
+== 소문항별로 어디를 보면 되나 ==
+{|
+! 소문항 || 강의 문서 || 사전 문서 || sim
+|-
+| 1(a)(b) || [[CH07 IPv4 데이터그램과 포워딩]] · forwarding 절 || [[Example 7.19–7.21 R1 포워딩]] · [[longest mask matching]] · [[next hop]] · [[forwarding table]] || `forward_lookup`
+|-
+| 1(c) || [[CH07 IPv4 데이터그램과 포워딩]] · ICMPv4 절 || [[TTL]] · [[ICMPv4]] · [[ICMP error-reporting message]] · [[time exceeded와 traceroute]] · [[echo request와 ping]] || —
+|-
+| 2(a) || [[CH07 IPv6]] · 주소 표기 절 || [[colon hexadecimal notation]] · [[zero compression]] || `ipv6_compress`
+|-
+| 2(b) || [[CH07 IPv6]] · EUI-64·autoconfiguration 절 || [[EUI-64]] · [[interface ID]] · [[link-local address]] · [[global unicast address]] · [[Example 7.29]] || `eui64`
+|-
+| 2(c) || [[CH07 IPv6]] · base header·ICMPv6·전환 절 || [[IPv6 fragmentation]] · [[IPv6 base header]] · [[neighbor discovery]] · [[MLD]] · [[tunneling]] || —
+|-
+| 3(a) || [[CH08 라우팅]] · link state 절 || [[Dijkstra algorithm]] · [[least-cost tree]] · [[forwarding table]] || `dijkstra_ls`
+|-
+| 3(b) || [[CH08 라우팅]] · Bellman-Ford 절 || [[Bellman-Ford equation]] · [[distance vector]] || `dv_update`
+|-
+| 3(c) || [[CH08 라우팅]] · two-node loop 절 || [[count to infinity와 two-node loop]] · [[split horizon]] · [[poison reverse]] || `dv_update`
+|-
+| 3(d)(e) || [[CH08 라우팅]] · 프로토콜 절 || [[RIP]] · [[RIP forwarding table 예제]] · [[OSPF]] · [[BGP4]] · [[라우팅 알고리즘 비교]] || —
+|-
+| 4(a)(b) || [[CH09 전송 계층과 UDP]] · UDP 절 || [[Example UDP header 읽기]] · [[port number 범위]] · [[UDP를 쓰는 경우]] || `udp_header_read`
+|-
+| 4(c)(d) || [[CH09 TCP]] · 번호·handshake 절 || [[TCP sequence number와 ISN]] · [[acknowledgment number]] · [[three-way handshake]] · [[SYN flooding attack]] || `tcp_seq_ack`
+|-
+| 5(a)(b) || [[CH09 TCP]] · window·flow control 절 || [[receive window와 rwnd]] · [[send window]] · [[cwnd]] || —
+|-
+| 5(c) || [[CH09 TCP]] · error control 절 || [[RTO와 fast retransmission]] · [[cumulative ACK와 SACK]] || —
+|-
+| 5(d) || [[CH09 TCP]] · Tahoe·Reno 절 || [[slow start]] · [[congestion avoidance]] · [[fast recovery]] · [[Tahoe와 Reno]] || `cwnd_tahoe_reno`
+|}
+
+== 1. IPv4: forwarding 과 ICMPv4 ==
+R1 의 forwarding table 은 이렇다. 행은 긴 prefix 부터 짧은 prefix 순서로 정렬돼 있다.
+{|
+! network address / mask || next hop || interface
+|-
+| 145.80.7.128/26 || − (직접 연결) || m1
+|-
+| 145.80.7.192/26 || − || m2
+|-
+| 145.80.7.0/25 || − || m0
+|-
+| 145.80.6.0/24 || 145.80.7.200 || m2
+|-
+| 145.80.4.0/22 || 145.80.7.10 || m0
+|-
+| default 0.0.0.0/0 || 145.80.7.130 || m1
+|}
+
+=== 1(a) 목적지 네 개 찾기 ===
+'''어떻게 푸나.''' L13 rev p.62 의 Example 7.21 과 똑같다. 위에서부터 한 줄씩, destination AND mask 를 계산해서 그 줄의 network address 와 같은지 본다. 처음 같아지는 줄에서 멈춘다. mask 가 /24 보다 길면 넷째 byte 만, /22 처럼 짧으면 셋째 byte 만 2진수로 바꿔 보면 된다. next hop 이 "−" 이면 직접 연결된 network 라서 목적지 주소로 바로 보낸다.
+
+'''함정.''' /26 의 mask 넷째 byte 는 192(1100 0000), /25 는 128, /22 의 셋째 byte 는 252(1111 1100)다. 그리고 default 줄은 모든 주소와 맞는다.
+
+'''풀이.'''
+<pre class="txt">
+(i) 145.80.7.150    150 = 1001 0110
+    /26: 150 AND 192 = 128 → 145.80.7.128 = 1번 줄 ✓  → 직접 전달(next hop 없음), m1
+(ii) 145.80.6.77
+    /26: 145.80.6.64 ✗   /25: 145.80.6.0 ≠ 145.80.7.0 ✗
+    /24: 145.80.6.0 = 145.80.6.0 ✓                    → next hop 145.80.7.200, m2
+(iii) 145.80.5.9
+    /26 ✗  /25 ✗  /24: 145.80.5.0 ≠ 145.80.6.0 ✗
+    /22: 5 = 0000 0101 AND 1111 1100 = 0000 0100 = 4 → 145.80.4.0 ✓
+                                                      → next hop 145.80.7.10, m0
+(iv) 8.8.8.8  위 다섯 줄 모두 ✗ → default         → next hop 145.80.7.130, m1
+</pre>
+검산 하나. next hop 주소는 R1 에 직접 붙은 network 안에 있어야 한다. 145.80.7.200 은 .192/26(m2), 145.80.7.10 은 .0/25(m0), 145.80.7.130 은 .128/26(m1) 안에 있다. 그래서 interface 가 서로 맞는다.
+
+[[sim:forward_lookup]]
+
+=== 1(b) /22 를 먼저 보면 ===
+'''어떻게 푸나.''' /22 block(145.80.4.0–145.80.7.255)이 /24 block(145.80.6.0–145.80.6.255)을 품고 있다는 데서 시작한다. 큰 block 을 먼저 보면 작은 block 의 주소도 거기서 먼저 걸린다.
+
+'''풀이.''' 145.80.6.77 AND 255.255.252.0 = 145.80.4.0 이다(6 = 0000 0110 → 0000 0100). /22 줄이 먼저 오면 여기서 맞아 버려서 145.80.7.10, m0 으로 나간다. 원래 가야 할 /24 줄(145.80.7.200, m2)은 보지도 못한다.
+'''제출용 답안 (영어)'''
+{def}If the /22 row were checked first, 145.80.6.77 AND 255.255.252.0 = 145.80.4.0 would already match it, so the router would send the datagram to 145.80.7.10 through m0. The correct, more specific /24 route (145.80.7.200 via m2) would never be reached, because the /22 block contains the /24 block. This is why rows are checked from the longest prefix to the shortest (longest mask matching).{/def}
+슬라이드 표현으로는 "Longer prefix = smaller range of addresses" 다(L13 rev p.61).[* /22 block 은 145.80.7.x 까지 덮는다. 그래서 /22 가 /26·/25 보다 위에 있으면 (i) 의 145.80.7.150 도 m0 으로 잘못 나간다. 답안에 한 줄 덧붙여도 된다.]
+
+=== 1(c) TTL 3 으로 5 라우터 너머에 보내면 ===
+'''어떻게 푸나.''' 라우터는 datagram 을 받을 때마다 [[TTL]] 을 1 줄이고, 0 이 되면 버린다. L13 rev p.54 그림이 바로 TTL = 3 인 이 장면이다. 버린 라우터는 ICMP error 를 원래 source 로 보낸다(p.52). 어떤 메시지가 error-reporting 이고 어떤 것이 query 인지는 p.50 의 두 묶음을 보면 된다.
+
+'''풀이.'''
+<pre class="txt">
+Host → R1: TTL 3 → 2
+R1 → R2:   TTL 2 → 1
+R2 → R3:   TTL 1 → 0  → R3 가 버린다 (R4, R5 는 못 받음)
+</pre>
+* (i) '''R3''' 가 버린다.
+* (ii) '''Time exceeded, type 11''' 을 '''원래 source host''' 에게 보낸다. datagram 에는 source 와 destination 주소만 있으니, 중간 라우터가 아니라 source 로 갈 수밖에 없다.
+* (iii) 원래 datagram 의 '''IP header 와 data 의 처음 8 bytes''' 가 들어 있다. 처음 8 bytes 에 port 번호가 있어서 source 가 어느 datagram, 어느 process 의 것인지 찾을 수 있다(p.52 "information for finding the original packet having the error").
+* (iv) echo request·echo reply 는 '''query message''' 다. ping 은 상대가 살아 있는지(reachable)와 RTT 를 알려 준다(p.55).
+'''제출용 답안 (영어)'''
+{def}(ii) R3 sends an ICMPv4 time-exceeded message (type 11) to the original source host. (iii) The data section carries the original IP header plus the first 8 bytes of the original data, which include the port numbers, so the source can identify which datagram (and which process) caused the error. (iv) They are query messages. ping tells the user whether the destination is alive (reachable) and the round-trip time.{/def}
+{tip}echo request 와 reply 의 type 번호(8, 0)는 슬라이드에 없다(Forouzan 보충). 슬라이드 표(p.53)에 있는 것은 error-reporting 쪽 3·4·5·11·12 다.{/tip}
+
+{mini}
+# 같은 R1 표로 145.80.7.70 과 145.80.7.230 의 next hop 과 interface 를 구하라.
+# 145.80.3.1 은 어느 줄에 맞는가?
+# TTL = 2 로 보낸 datagram 이 4 라우터 너머로 간다. 누가 버리고, 누가 무엇을 받는가?
+{/mini}
+{answer}
+# 145.80.7.70: 70 AND 192 = 64 ✗, 70 AND 128 = 0 → .0/25 ✓ → 직접, m0. 145.80.7.230: 230 AND 192 = 192 → 2번 줄 ✓ → 직접, m2.
+# 3 = 0000 0011 AND 1111 1100 = 0 → 145.80.0.0 ≠ 4.0 이라 /22 ✗ → default, 145.80.7.130, m1. /22 는 4.0–7.255 뿐이다.
+# R2 가 버린다(R1 에서 1, R2 에서 0). source host 가 time exceeded(type 11)를 받는다.
+{/answer}
+
+== 2. IPv6: 주소, autoconfiguration, 프로토콜 ==
+=== 2(a) 줄이고, 틀린 것 찾고, 다시 펴기 ===
+'''어떻게 푸나.''' L14 p.4 규칙 두 개다. section 앞의 0 을 지우고, 연속된 0 section 을 `::` 로 바꾸되 '''한 번만''' 쓴다. 다시 펼 때는 보이는 section 수를 세서 8 에서 뺀 만큼 0000 을 넣는다.
+
+'''함정.''' 길이가 같은 0 줄이 두 군데 있으면 어느 쪽을 줄일지 슬라이드에는 규칙이 없다. 관례(RFC 5952)는 앞쪽이다.
+
+'''풀이.'''
+<pre class="txt">
+2001:0DB8:0000:0000:00A0:0000:0000:0001
+① 앞의 0 제거: 2001:DB8:0:0:A0:0:0:1
+② 0 줄: 3–4 번째(2개), 6–7 번째(2개) → 길이가 같으니 앞쪽을 줄인다
+→ 2001:DB8::A0:0:0:1
+</pre>
+'''가정''' 한 줄: 2001:DB8:0:0:A0::1 도 길이가 같고 유효하다. 답안에 "both runs have the same length; by convention the first one is compressed" 라고 적으면 안전하다.
+
+2001:DB8::A0::1 은 `::` 를 두 번 썼다. 숨은 0 section 이 모두 4 개인데 앞뒤에 1+3, 2+2, 3+1 어떻게 나눠야 할지 알 수 없다. 그래서 `::` 는 한 번만 허용된다.
+
+FE80::4:1A 는 보이는 section 이 3 개라 0000 이 5 개 숨어 있다. → '''FE80:0000:0000:0000:0000:0000:0004:001A'''.
+
+[[sim:ipv6_compress]]
+
+=== 2(b) Ethernet 주소에서 global 주소까지 ===
+'''어떻게 푸나.''' L14 p.12 의 48-bit Ethernet 규칙과 Ex 7.29(p.19–21) 순서를 그대로 따른다. 첫 byte 를 2진수로 써서 '''왼쪽에서 7 번째 bit''' 를 뒤집고, 가운데에 FFFE 를 끼운다. link-local 은 FE80:: 뒤에 interface ID, global 은 prefix(48) + subnet(16) + interface ID(64)다.
+
+'''함정.''' 8 번째 bit(맨 오른쪽)를 뒤집는 실수. 4C 에서 그러면 4D 가 된다.
+
+'''풀이.'''
+<pre class="txt">
+4C-0A-7B-11-3D-E8
+① 4C = 0100 1100 → 7 번째 bit 를 뒤집어 0100 1110 = 4E
+② 4E 0A 7B | FF FE | 11 3D E8
+(i)   interface ID = 4E0A:7BFF:FE11:3DE8
+(ii)  link-local   = FE80::4E0A:7BFF:FE11:3DE8
+(iii) global       = 2401:4C20:1A0F : 0034 : 4E0A:7BFF:FE11:3DE8
+                   = 2401:4C20:1A0F:34:4E0A:7BFF:FE11:3DE8
+</pre>
+
+[[sim:eui64]]
+
+=== 2(c) 짧은 답 네 개 ===
+* (i) IPv6 라우터는 datagram 이 다음 MTU 보다 크면 '''나누지 않고 버린다'''. 나누는 것은 source 만 한다. IPv4 에서는 source 든 중간 라우터든 나눌 수 있었다(L14 p.26 표). 교수가 "may be asked in exams" 라고 한 바로 그 차이다(11/10).
+* (ii) '''hop limit''' 이다. 슬라이드 표현으로는 "Same as TTL in IPv4" 다(L14 p.24).
+* (iii) ARP 의 일은 '''neighbor discovery (ND)''', IGMP 의 일은 '''MLD''' 가 맡는다(L14 p.28).
+* (iv) '''tunneling'''. IPv4 구간에 들어갈 때 IPv6 packet 을 IPv4 packet 안에 통째로 넣고(encapsulate), 나올 때 꺼낸다(L14 p.31).
+'''제출용 답안 (영어)'''
+{def}(i) It drops the datagram (and the source is told, e.g. by an ICMPv6 packet-too-big message, so that the source fragments it). In IPv6 only the source fragments; in IPv4 the source or any router can fragment. (ii) Hop limit. (iii) Neighbor Discovery replaces ARP; Multicast Listener Discovery (MLD) replaces IGMP. (iv) Tunneling: at the entrance to the IPv4-only region the IPv6 packet is encapsulated as the payload of an IPv4 packet, forwarded as ordinary IPv4, and decapsulated at the exit.{/def}
+{tip}ICMPv6 "packet too big" 라는 메시지 이름은 슬라이드 밖 보충이다. 슬라이드 표는 "Drops it" 까지만 쓴다.{/tip}
+
+{mini}
+# 0000:0000:00F0:0000:0000:0000:0001:0000 을 가장 짧게 쓰라.
+# MAC 02-1B-44-AB-CD-0F 의 interface ID 는?
+# IPv6 header 에서 TTL 역할을 하는 칸과 그 크기는?
+{/mini}
+{answer}
+# 0:0:F0::1:0. 가운데 0 세 개가 가장 긴 줄이다. 앞의 0 두 개를 `::` 로 줄이면 더 짧아 보이지만 줄은 하나만 줄일 수 있고 가장 긴 줄을 고른다.
+# 02 = 0000 0010 → 7 번째 bit 를 뒤집으면 0000 0000 = 00 → 001B:44FF:FEAB:CD0F.
+# hop limit, 8 bits.
+{/answer}
+
+== 3. Routing: DV, LS, RIP, OSPF, BGP ==
+link cost 는 A–B 4, A–C 1, A–D 5, B–C 2, B–D 3, C–E 5, D–E 2, D–F 4, E–F 5 이다.
+
+=== 3(a) Dijkstra 로 A 의 least-cost tree ===
+'''어떻게 푸나.''' L15 p.20 의 Init → Select → Update 다. Init 에서 A 의 이웃 cost 를 적는다. 매번 tree 밖에서 가장 작은 것을 하나 넣고, 그 node 를 거치면 더 싸지는 이웃만 고친다. 표에는 cost 와 previous node 를 같이 적는다.
+
+'''풀이.'''
+{|
+! 넣은 node || A || B || C || D || E || F
+|-
+| init: A || '''0''' || 4 (A) || 1 (A) || 5 (A) || ∞ || ∞
+|-
+| C (1) || || 3 (C) ← 1+2 < 4 || '''1''' || 5 (A) || 6 (C) || ∞
+|-
+| B (3) || || '''3''' || || 5 (A), 3+3 = 6 > 5 || 6 (C) || ∞
+|-
+| D (5) || || || || '''5''' || 6 (C), 5+2 = 7 > 6 || 9 (D)
+|-
+| E (6) || || || || || '''6''' || 9 (D), 6+5 = 11 > 9
+|-
+| F (9) || || || || || || '''9'''
+|}
+들어간 순서는 A, C, B, D, E, F 다. A 의 forwarding table 은 tree 에서 A 다음 node 를 next hop 으로 적는다.
+{|
+! destination || next hop || cost
+|-
+| B || C || 3
+|-
+| C || C || 1
+|-
+| D || D || 5
+|-
+| E || C || 6
+|-
+| F || D || 9
+|}
+B 는 직접 link(4)보다 C 를 거치는 길(1 + 2 = 3)이 싸서 next hop 이 C 다. 이것이 이 문제의 함정이다.
+
+[[sim:dijkstra_ls]]
+
+=== 3(b) 이웃의 벡터로 Bellman-Ford ===
+'''어떻게 푸나.''' $D_{Ay} = \min\{c_{AB} + D_{By},\ c_{AC} + D_{Cy},\ c_{AD} + D_{Dy}\}$ 를 목적지마다 계산한다(L15 p.7). A 의 link cost 는 4, 1, 5 다.
+
+'''풀이.'''
+{|
+! y || via B (4 +) || via C (1 +) || via D (5 +) || 최소 || next hop
+|-
+| B || 4 || 3 || 8 || '''3''' || C
+|-
+| C || 6 || 1 || 10 || '''1''' || C
+|-
+| D || 7 || 6 || 5 || '''5''' || D
+|-
+| E || 9 || 6 || 7 || '''6''' || C
+|-
+| F || 11 || 10 || 9 || '''9''' || D
+|}
+A 의 벡터는 [0, 3, 1, 5, 6, 9] 이고 (a) 와 cost·next hop 이 모두 같다.
+
+=== 3(c) X–A–B 의 two-node loop ===
+'''어떻게 푸나.''' L15 p.13 의 그림을 숫자만 바꿔 그대로 쓴다. 고장 전 A 는 X 까지 2, B 는 3(A 경유)이다.
+
+'''풀이.''' X–A 가 끊기면 A 는 X 를 ∞ 로 바꾼다. 그런데 A 가 이 소식을 보내기 전에 B 의 옛 벡터 "X = 3" 이 도착하면, A 는 B 를 거치면 1 + 3 = 4 라고 믿는다. A 가 4 를 알리면 B(A 를 거쳐 가는)는 5, A 는 6, B 는 7 … 이렇게 1 씩 올라가 16(∞)이 될 때까지 14 번 주고받는다. 그동안 X 로 가는 packet 은 A 와 B 사이를 오간다.
+
+split horizon 은 B 가 X 길을 A 에게서 배웠으니 A 에게는 X 를 아예 알리지 않는 것이다. poison reverse 는 알리되 cost 를 ∞ 로 알리는 것이다. 어느 쪽이든 A 는 B 의 옛 값에 속지 않는다.
+'''제출용 답안 (영어)'''
+{def}(i) When X–A breaks, A sets X = ∞. If B's stale vector (X = 3) reaches A first, A thinks it can reach X via B with cost 1 + 3 = 4 and advertises it; B (which routes through A) updates to 5; A to 6; B to 7; … they count up until 16 (∞), and packets to X loop between A and B. (ii) Split horizon: B learned the route to X from A, so B does not advertise X back to A. Poison reverse: B advertises X to A with cost ∞, so A will not use B for X.{/def}
+
+[[sim:dv_update]]
+
+=== 3(d) RIP 표 갱신 ===
+'''어떻게 푸나.''' L15 p.32 규칙이다. 받은 cost 에 1 을 더하고 next router 를 C 로 적는다. 그다음 옛 줄과 비교해 ① 새 목적지면 추가 ② 더 싸면 교체 ③ 더 비싸도 '''같은 next router''' 에서 왔으면 교체, 셋 다 아니면 그대로 둔다.
+
+'''풀이.'''
+{|
+! dest || R 의 옛 줄 || C 경유 (+1) || 판정 || 새 줄
+|-
+| N1 || −, 1 || 3 || 더 비싸고 next router 다름 → 유지 || N1 − 1
+|-
+| N2 || C, 3 || 5 || 같은 next router → ③ 교체 || N2 C 5
+|-
+| N3 || B, 4 || 2 || 더 쌈 → ② 교체 || N3 C 2
+|-
+| N4 || C, 5 || 16 || 같은 next router → ③ 교체 || N4 C 16 (= ∞, unreachable)
+|-
+| N5 || 없음 || 7 || 새 목적지 → ① 추가 || N5 C 7
+|}
+N4 는 15 + 1 = 16 이라 ∞ 다. 우리 길이 C 를 거치는데 C 가 "나도 거의 못 간다" 고 했으니 받아들여야 한다. 이것이 규칙 ③ 이 있는 이유다.
+
+=== 3(e) 어떤 프로토콜을 쓰나 ===
+* (i) 작은 캠퍼스: '''RIP'''. 단순하고 cost 가 hop count(최대 15)라 작은 AS 에 맞는다.
+* (ii) link 마다 delay·throughput 기반 cost 가 있는 큰 AS: '''OSPF'''. link state 기반이고 link weight 를 쓰며 area 로 나눌 수 있다.
+* (iii) 두 ISP 사이, 싸더라도 untrusted AS 를 피해야 함: '''BGP (BGP4)'''. AS 사이의 유일한 프로토콜이고 path vector(policy)라 cost 보다 정책으로 길을 고른다.
+
+{mini}
+# 3(a) 그래프에서 D 를 root 로 하면 F 까지 cost 와 next hop 은?
+# A 의 link cost 가 A–B 2 로 바뀌었다(이웃 벡터는 그대로). B 로 가는 A 의 cost 와 next hop 은?
+# R 의 줄 (N7, B, 3) 에 C 가 "N7 1" 을 보냈다. 새 줄과 규칙은?
+{/mini}
+{answer}
+# 4, next hop F(직접). D–E–F 는 7 이다.
+# via B 2 + 0 = 2, via C 1 + 2 = 3 → 2, next hop B.
+# 1 + 1 = 2 < 3 → 규칙 ② 로 (N7, C, 2).
+{/answer}
+
+== 4. 전송 계층: UDP 와 TCP 기초 ==
+=== 4(a) UDP header 읽기 ===
+'''어떻게 푸나.''' [[Example UDP header 읽기]] 와 같은 순서다. 4 자리씩 끊고 10진수로 바꾼 다음 data = total − 8, 마지막으로 port 구간(L16 p.11)으로 방향을 정한다.
+
+'''풀이.'''
+<pre class="txt">
+0035 | E1A2 | 0034 | 7F3A
+(i)   source port      = 0x0035 = 53
+(ii)  destination port = 0xE1A2 = 14·4096 + 1·256 + 10·16 + 2 = 57762
+(iii) total length     = 0x0034 = 52 bytes
+(iv)  data             = 52 − 8 = 44 bytes
+(v)   53 → well-known (0–1,023, DNS), 57762 → dynamic/private (49,152–65,535)
+      source 가 well-known → server → client
+</pre>
+p.36 예제와 방향이 반대다. 그 예제는 destination 이 13 이라 client → server 였다.
+
+[[sim:udp_header_read]]
+
+=== 4(b) 영상 통화에 UDP 를 쓰는 이유 ===
+L16 p.39 의 세 줄 가운데 두 개를 쓰면 된다.
+'''제출용 답안 (영어)'''
+{def}(1) UDP is connectionless, so there is no connection setup (no handshake) and no setup delay. (2) UDP does no retransmission, so it never waits for a resent piece; in a real-time call a late packet is useless and waiting would cause stalls. (It also has no congestion control that would slow the sender down, and only an 8-byte header.){/def}
+
+=== 4(c) handshake 와 sequence number ===
+'''어떻게 푸나.''' SYN·SYN+ACK 는 번호 1 개를 쓰고 ③ ACK 는 쓰지 않는다(L16 p.56). 그래서 첫 data byte 는 ISN + 1 이다. 다음 seq = 앞 seq + 앞 bytes, ACK = 다음에 기다리는 byte(cumulative)다.
+
+'''풀이.'''
+<pre class="txt">
+(i)  ① SYN       seq 14,000
+     ② SYN+ACK   seq 70,000, ack 14,001
+     ③ ACK       seq 14,001, ack 70,001
+(ii) seg 1  seq 14,001  (14,001 – 16,000)
+     seg 2  seq 16,001  (16,001 – 17,500)
+     seg 3  seq 17,501  (17,501 – 18,500)   마지막 data byte 18,500
+(iii) seg 2 가 빠지면 server 는 16,000 까지만 연속으로 가졌다 → ACK 16,001
+</pre>
+(iii) 은 cumulative ACK 라서다. 셋째 segment 는 순서가 틀린 채 저장해 두고, 빈칸 앞 번호 16,001 을 다시 보낸다(duplicate ACK).
+
+[[sim:tcp_seq_ack]]
+
+=== 4(d) SYN flooding ===
+'''제출용 답안 (영어)'''
+{def}The attacker sends many SYN segments with fake source IP addresses. For each, the server allocates resources (TCB table entries, timers) and replies with SYN + ACK, which goes to a fake client and is never answered, so the connections stay half-open. When the resources run out, real clients' SYNs are refused (denial of service). The step that never completes is step ③, the client's final ACK.{/def}
+교수는 이것을 three-way handshake 의 "crucial drawback" 이라고 했다(11/24).
+
+{mini}
+# UDP header `C35000A1001C0000` 의 port 두 개, data 길이, 방향은?
+# client ISN 500, server ISN 9,000. ③ ACK 의 seq·ack 와 첫 data segment 의 seq 는?
+# 1,000 B segment 세 개(seq 501 부터)에서 첫째가 빠지고 둘째·셋째가 왔다. ACK 는?
+{/mini}
+{answer}
+# 0xC350 = 50000(dynamic), 0x00A1 = 161(well-known, SNMP), total 28 → data 20, client → server.
+# ③ seq 501, ack 9,001. 첫 data 도 seq 501.
+# 501 (둘 다 duplicate ACK). 첫 byte 부터 비었으니 하나도 확인할 수 없다.
+{/answer}
+
+== 5. TCP: flow, error, congestion control ==
+=== 5(a) rwnd 와 실제 window ===
+'''어떻게 푸나.''' rwnd = buffer − 아직 process 가 안 가져간 byte(L16 p.65), 실제 send window = min(rwnd, cwnd)(p.78).
+<pre class="txt">
+안 가져간 byte = 3,000 − 1,200 = 1,800
+rwnd = 5,000 − 1,800 = 3,200 bytes
+send window = min(3,200, 2,000) = 2,000 bytes
+</pre>
+
+=== 5(b) shrink 판정 ===
+'''어떻게 푸나.''' 오른쪽 벽 = ackNo + rwnd 다. 새 벽이 옛 벽보다 왼쪽이면 shrink 다(L16 p.69).
+<pre class="txt">
+옛 벽 2,001 + 3,000 = 5,001,  새 벽 3,001 + 1,500 = 4,501 < 5,001 → shrink
+금지 규칙: 3,001 + rwnd ≥ 5,001 → rwnd ≥ 2,000  → 최소 rwnd = 2,000 bytes
+</pre>
+
+=== 5(c) 1,501 이 사라지면 ===
+'''어떻게 푸나.''' 받을 때마다 ACK = 연속으로 받은 마지막 byte + 1 이다. 빈칸이 있으면 같은 번호가 반복된다. 원래 ACK + 같은 ACK 3 개면 fast retransmission 이다(L16 p.74·p.77).
+<pre class="txt">
+도착        receiver 상태                    보내는 ACK
+1,001       1,001–1,500                      1,501  (원래 ACK)
+(1,501 분실)
+2,001       빈칸, 2,001 저장                 1,501  duplicate 1
+2,501       저장                             1,501  duplicate 2
+3,001       저장                             1,501  duplicate 3 → sender 가 1,501 재전송
+3,501       저장                             1,501  duplicate 4
+재전송 1,501 도착 → 1,001–4,000 연속         4,001
+</pre>
+* (i) 1,501 다섯 번.
+* (ii) 셋째 duplicate ACK(3,001 에 대한 ACK)를 받는 즉시 seq 1,501 segment 를 다시 보낸다. duplicate ACK 가 계속 온다는 것은 뒤 segment 들은 도착하고 있다는 뜻이라 하나만 사라졌다고 볼 수 있다. 그래서 time-out 을 기다릴 필요가 없다.
+* (iii) '''4,001'''. 빈칸이 채워지자 저장해 둔 것까지 한 번에 확인한다.
+
+[[anim:fast_retransmit_anim|숫자는 다르지만 같은 장면이다. duplicate ACK 세 번째에서 바로 재전송하고 ACK 가 한 번에 뛰는 것을 보라]]
+
+=== 5(d) cwnd 따라가기 ===
+'''가정''' 한 줄: "RTT k 의 cwnd" 를 그 RTT 동안 쓰는 window 로 읽고 RTT 1 에 cwnd = 1 로 둔다. RTT 끝의 값으로 읽으면 한 칸씩 밀리니 답안에 가정을 적자.
+<pre class="txt">
+(i)  RTT : 1  2  3  4  5 | 6  7  8  9
+     cwnd: 1  2  4  8 16 | 17 18 19 20     RTT 5 에서 cwnd = ssthresh → slow start 끝
+(ii) cwnd 20 에서 3 duplicate ACKs → ssthresh = 20/2 = 10
+     Tahoe: cwnd = 1  → slow start
+     Reno : cwnd = 10 + 3 = 13 → fast recovery
+(iii) Tahoe 다음 6 RTT: 1, 2, 4, 8, 10 (16 대신 ssthresh 에서 멈춤), 11
+(iv) Reno 에서 cwnd 12 에 time-out → ssthresh = 6, cwnd = 1 (time-out 은 Tahoe 와 같다)
+</pre>
+
+[[sim:cwnd_tahoe_reno]]
+
+{mini}
+# buffer 8,000, 받고 ACK 한 byte 6,000, process 가 가져간 byte 4,500, cwnd 3,000. rwnd 와 실제 window 는?
+# 지난 ACK (ackNo 1,001, rwnd 4,000), 새 ACK ackNo 2,001. shrink 하지 않으려면 rwnd 는 최소 얼마인가?
+# ssthresh 8 로 slow start(cwnd 1). RTT 1–7 의 cwnd 와, cwnd 10 에서 3 dup ACKs 가 오면 Reno 의 새 값은?
+{/mini}
+{answer}
+# 안 가져간 byte 1,500 → rwnd 6,500, 실제 window min(6,500, 3,000) = 3,000.
+# 2,001 + rwnd ≥ 5,001 → 3,000.
+# 1, 2, 4, 8, 9, 10, 11. Reno: ssthresh 5, cwnd 8 → fast recovery.
+{/answer}
+
+== 최종 답 한눈에 ==
+{|
+! 소문항 || 답
+|-
+| 1(a) || (i) 직접, m1 (ii) 145.80.7.200, m2 (iii) 145.80.7.10, m0 (iv) 145.80.7.130, m1
+|-
+| 1(b) || /22 에 먼저 걸려 145.80.7.10, m0 으로 잘못 나감
+|-
+| 1(c) || (i) R3 (3→2→1→0) (ii) time exceeded type 11, source 로 (iii) 원래 IP header + data 8 B (iv) query, 살아 있는지·RTT
+|-
+| 2(a) || 2001:DB8::A0:0:0:1 / `::` 두 번 무효 / FE80:0000:0000:0000:0000:0000:0004:001A
+|-
+| 2(b) || 4E0A:7BFF:FE11:3DE8 / FE80::4E0A:7BFF:FE11:3DE8 / 2401:4C20:1A0F:34:4E0A:7BFF:FE11:3DE8
+|-
+| 2(c) || drop(source 만 fragment) / hop limit / ND·MLD / tunneling
+|-
+| 3(a) || A C B D E F; B–C–3, C–C–1, D–D–5, E–C–6, F–D–9
+|-
+| 3(b) || [0, 3, 1, 5, 6, 9], (a) 와 같음
+|-
+| 3(c) || 4, 5, 6 … 16 (14 번) / split horizon·poison reverse
+|-
+| 3(d) || N1 −1 · N2 C5 ③ · N3 C2 ② · N4 C16 ③ · N5 C7 ①
+|-
+| 3(e) || RIP / OSPF / BGP
+|-
+| 4(a) || 53, 57762, 52, 44; well-known·dynamic; server → client
+|-
+| 4(c) || 14,000 / 70,000·14,001 / 14,001·70,001; 14,001·16,001·17,501, 18,500; ACK 16,001
+|-
+| 4(d) || ③ ACK 가 안 옴
+|-
+| 5(a) || 3,200 / 2,000
+|-
+| 5(b) || shrink, 최소 2,000
+|-
+| 5(c) || 1,501 × 5 / 셋째 duplicate 뒤 1,501 재전송 / 4,001
+|-
+| 5(d) || 1 2 4 8 16 17 18 19 20 / ssthresh 10, Tahoe 1, Reno 13 / 1 2 4 8 10 11 / 6, 1
+|}
+
+== 관련 문서 ==
+* [[PS1 풀이 가이드]] · [[시험 정보]] · [[공식 모음]] · [[자주 틀리는 함정 모음]]
+* [[CH07 IPv4 데이터그램과 포워딩]] · [[CH07 IPv6]] · [[CH08 라우팅]] · [[CH09 전송 계층과 UDP]] · [[CH09 TCP]]

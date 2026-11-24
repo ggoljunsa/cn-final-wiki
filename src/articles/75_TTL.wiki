@@ -31,5 +31,7 @@ Ex 7.10: 9 번째 byte 01 → TTL 1 → 첫 라우터에서 0 → '''only 1 hop'
 
 {info}📝 과제 연결: PS1 5(a) 가 TTL 을 읽게 한다. 푸는 순서와 함정은 [[PS1 풀이 가이드]] 에 있다.{/info}
 
+{info}📝 과제 연결: PS2 1(c)(i) 가 TTL 3 으로 5 라우터 너머에 보낼 때 어느 라우터가 버리는지 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[IPv4 datagram format]] · [[time exceeded와 traceroute]] · [[ICMP error-reporting message]] · [[header checksum]] · [[Example 7.10 TTL과 protocol]]

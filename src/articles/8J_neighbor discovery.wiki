@@ -24,5 +24,7 @@ category: 8강 IPv6, 용어
 # ICMPv6 의 Neighbor Discovery(ND). IPv4 의 ARP 를 대신한다.
 {/answer}
 
+{info}📝 과제 연결: PS2 2(c)(iii) 가 ARP·IGMP 의 일을 넘겨받은 ICMPv6 메시지를 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[ICMPv6]] · [[MLD]] · [[router solicitation과 advertisement]] · [[mid:ARP]] · [[mid:IP 주소와 MAC 주소]]

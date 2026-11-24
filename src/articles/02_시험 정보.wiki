@@ -26,6 +26,8 @@ category: 안내
 |-
 | '''과제 PS1''' || '''Problem Set 1 — 11/4 배포, 마감 11/15(일), LMS 제출'''. 범위: CH05 (1)(2), CH07 (1), CH07 (2) addressing · header · fragmentation. [[PS1 풀이 가이드|PS1 풀이 가이드와 해설]] 에 소문항별 강의 문서 절 · 사전 문서 · 시뮬레이터 · 연습할 새끼문제 표, 푸는 순서·함정, 그리고 소문항마다 끝까지 푼 풀이·해설이 있다 || LMS (11/4)
 |-
+| '''과제 PS2''' || '''Problem Set 2 — 11/24 배포, 마감 12/4(금), LMS soft copy''', 중간 과정 전부, 계산기 허용. 1 IPv4 forwarding·TTL·ICMPv4 / 2 IPv6 주소·EUI-64·fragmentation·ICMPv6·tunneling / 3 Dijkstra·Bellman-Ford·two-node loop·RIP 갱신·RIP/OSPF/BGP / 4 UDP header·TCP handshake·seq·ACK·SYN flooding / 5 rwnd·shrink·fast retransmission·cwnd Tahoe/Reno → [[PS2 풀이 가이드|PS2 풀이 가이드와 해설]] || LMS (11/24)
+|-
 | '''마지막 과제 예고 (11/24)''' || "before final exam I would like to announce an '''additional problem set for your last assignment''' … I would like to recommend you to '''solve those assignments by your own''', because '''some problems could be originated from those problem sets'''." → 기말 문제 일부가 과제(PS1, 곧 나올 PS2)에서 나올 수 있다 || 11/24 녹음 57:13–58:19
 |-
 | '''범위 끝 (11/24)''' || "next week we can move on to the '''application layer, which is the last part''', and then we will see our final exam." → 기말 범위는 application layer 까지(마지막 부분). 11/26(목)에 TCP 를 끝낸다 || 11/24 녹음 57:13

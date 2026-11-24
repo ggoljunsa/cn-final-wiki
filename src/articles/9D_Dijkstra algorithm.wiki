@@ -42,5 +42,7 @@ $$D(v) = \min\{D(v),\ D(u) + c(u, v)\}$$
 # Select 는 tree 밖에서 cost 가 가장 작은 node 를 고른다. 7 < 8.
 {/answer}
 
+{info}📝 과제 연결: PS2 3(a) 가 6-node 그래프에서 A 를 root 로 한 단계별 표와 forwarding table 을 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[link state routing]] · [[LSDB]] · [[least-cost tree]] · [[Bellman-Ford equation]] · [[OSPF]]

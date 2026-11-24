@@ -29,5 +29,7 @@ category: 11강 TCP, 용어
 
 {exam}교수는 SYN flooding 을 three-way handshake 의 "crucial drawback" 이자 DoS 의 한 예라고 했다(11/24 14:58–17:30).{/exam}
 
+{info}📝 과제 연결: PS2 4(d) 가 공격이 진짜 client 를 막는 과정과 끝나지 않는 단계를 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[three-way handshake]] · [[TCP]]

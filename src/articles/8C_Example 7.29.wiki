@@ -48,5 +48,7 @@ python `ipaddress` 로 ②와 ④를 검산했다. global 주소에는 0 section
 # interface ID 는 그대로다. 앞부분만 바뀌어 2001:0DB8:00AB:0001:F7A9:23FF:FE11:9BE2 = 2001:DB8:AB:1:F7A9:23FF:FE11:9BE2.
 {/answer}
 
+{info}📝 과제 연결: PS2 2(b) 가 이 예제와 같은 순서를 다른 MAC·prefix 로 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[EUI-64]] · [[link-local address]] · [[router solicitation과 advertisement]] · [[global unicast address]] · [[CH07 IPv6]]

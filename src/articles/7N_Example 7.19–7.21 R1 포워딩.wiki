@@ -47,5 +47,7 @@ category: 7강 IPv4 데이터그램, 예제
 
 [[sim:forward_lookup]]
 
+{info}📝 과제 연결: PS2 1(a) 가 이 예제와 같은 절차(R1 표, 긴 mask 부터 AND)를 다른 주소로 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
 == 관련 문서 ==
 * [[longest mask matching]] · [[forwarding table]] · [[next hop]] · [[network address]] · [[address mask]] · [[CIDR]]
