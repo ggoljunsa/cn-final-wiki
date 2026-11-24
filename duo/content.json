@@ -132,7 +132,10 @@
        "wiki": "PSTN",
        "tags": [
         "PSTN"
-       ]
+       ],
+       "img": "duo/img/cn5-p10-pstn.png",
+       "imgAlt": "p.10 cellular system 그림 — MSC 아래 stationary phone 과 이어진 타원의 이름이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn5-p10-msc-pstn-ans.png"
       },
       {
        "id": "u1a-07",
@@ -247,6 +250,44 @@
         "셀룰러와 WiFi 비교"
        ],
        "diff": 1
+      },
+      {
+       "id": "u1a-13",
+       "type": "mc",
+       "q": "p.10 그림의 ① 과 ② 를 바르게 짝지은 것은?",
+       "choices": [
+        "① MSC, ② PSTN",
+        "① PSTN, ② MSC",
+        "① BS, ② MSC",
+        "① MSC, ② HLR"
+       ],
+       "answer": 0,
+       "explain": "① 은 BS(cell) 와 유선망 사이에서 모든 BS 를 조정하는 **Mobile Switching Center (MSC)**, ② 는 stationary phone 이 붙은 유선 공중망 **PSTN (Public Switched Telephone Network)**. 교수 필기: \"wired phone 도 wireless 에 연결 가능\" — MSC 가 그 다리다.",
+       "src": "CH05(1) p.10",
+       "wiki": "MSC",
+       "tags": [
+        "MSC"
+       ],
+       "img": "duo/img/cn5-p10-msc-pstn.png",
+       "imgAlt": "p.10 cellular system 그림 — MSC 자리 ①, PSTN 자리 ② 가 가려져 있다",
+       "explainImg": "duo/img/cn5-p10-msc-pstn-ans.png"
+      },
+      {
+       "id": "u1a-14",
+       "type": "sa",
+       "q": "[Term] \"A wireless WAN that provides any type of communication.\" Give the term.",
+       "answer": "cellular telephony",
+       "alts": [
+        "cellular",
+        "cellular network"
+       ],
+       "explain": "p.8 정의. \"any type\" 에 교수가 voice·text·data(image, video) 라고 적었다. 문제집 형식(영어 정의 → 용어).",
+       "src": "CH05(1) p.8",
+       "wiki": "cellular telephony",
+       "tags": [
+        "cellular telephony"
+       ],
+       "diff": 1
       }
      ]
     },
@@ -356,15 +397,18 @@
       {
        "id": "u1b-07",
        "type": "tf",
-       "q": "그림의 reuse pattern 예는 N = 4 와 N = 7 이다.",
+       "q": "p.11 그림 (b) 에서 같은 번호(= 같은 주파수 set)를 쓰는 cell 끼리는 서로 맞닿아 있지 않다.",
        "answer": true,
-       "explain": "p.11 그림은 N = 4, N = 7 패턴을 보여 준다. AMPS 는 reuse factor 7.",
+       "explain": "그림 (b) 는 1~7 번 cell 7 개가 한 묶음(reuse factor 7)이고, 같은 번호는 **다른 묶음**에만 있어 서로 떨어져 있다. 그래서 cell 경계의 사용자가 같은 주파수를 양쪽에서 받는 interference 가 없다. (a) 는 N = 4. 교수 필기: 각 숫자가 frequency set 하나, 이웃한 1-1 은 X.",
        "src": "CH05(1) p.11",
        "wiki": "frequency reuse",
        "tags": [
         "frequency reuse"
        ],
-       "diff": 1
+       "diff": 1,
+       "img": "duo/img/cn5-p11-reuse.png",
+       "imgAlt": "p.11 reuse pattern 그림 두 개 — 아래 caption 의 N 값이 가려져 있다",
+       "explainImg": "duo/img/cn5-p11-reuse-ans.png"
       },
       {
        "id": "u1b-08",
@@ -451,6 +495,63 @@
        "tags": [
         "reuse factor"
        ]
+      },
+      {
+       "id": "u1b-13",
+       "type": "num",
+       "q": "p.11 그림 (b) 의 reuse factor N 은? (한 묶음의 cell 수를 센다)",
+       "answer": 7,
+       "tol": 0,
+       "explain": "번호 1~7 이 한 묶음 → **N = 7** (AMPS 의 reuse factor). (a) 는 1~4 로 N = 4. reuse factor = \"configuration of N cells\" 의 N 이다.",
+       "src": "CH05(1) p.11",
+       "wiki": "reuse factor",
+       "tags": [
+        "reuse factor"
+       ],
+       "img": "duo/img/cn5-p11-reuse.png",
+       "imgAlt": "p.11 reuse pattern 그림 — 노랑·분홍·연두 묶음의 cell 에 1~7 번호, N 값은 가려져 있다",
+       "explainImg": "duo/img/cn5-p11-reuse-ans.png"
+      },
+      {
+       "id": "u1b-14",
+       "type": "num",
+       "q": "[Calc] A provider has 840 voice channels and uses a frequency reuse factor of 7. How many channels can each cell use?",
+       "answer": 120,
+       "unit": "개",
+       "tol": 0,
+       "explain": "cell 당 = 전체 / N = 840 / 7 = **120**. N 개 cell 이 전체 채널을 나눠 가진다.",
+       "src": "CH05(1) p.11",
+       "wiki": "reuse factor",
+       "tags": [
+        "reuse factor"
+       ]
+      },
+      {
+       "id": "u1b-15",
+       "type": "num",
+       "q": "[Calc] 같은 provider(840 채널)가 reuse factor 를 7 에서 4 로 줄이면 cell 당 채널은 몇 개 늘어나나?",
+       "answer": 90,
+       "unit": "개",
+       "tol": 0,
+       "explain": "N = 4 → 840 / 4 = 210, N = 7 → 120. 210 − 120 = **90** 개 증가. 대신 같은 주파수 cell 이 가까워져 co-channel interference 가 커진다 (trade-off).",
+       "src": "CH05(1) p.11",
+       "wiki": "reuse factor",
+       "tags": [
+        "reuse factor"
+       ],
+       "diff": 3
+      },
+      {
+       "id": "u1b-16",
+       "type": "tf",
+       "q": "[O/X] Increasing the reuse factor N reduces co-channel interference but also reduces the number of channels available in each cell.",
+       "answer": true,
+       "explain": "N↑ → 같은 주파수 cell 사이 거리↑(간섭↓), cell 당 채널 = 전체/N ↓. 둘을 한 문장에 묶은 문제집형 O/X.",
+       "src": "CH05(1) p.11",
+       "wiki": "reuse factor",
+       "tags": [
+        "reuse factor"
+       ]
       }
      ]
     },
@@ -475,7 +576,9 @@
        "tags": [
         "통화 발신 과정"
        ],
-       "prof": true
+       "prof": true,
+       "img": "duo/img/cn5-p12-call.png",
+       "imgAlt": "p.12 발신 그림 — MS, BS, MSC, Telephone central office, Called party 사이 ①~⑦ 화살표 (설명 목록은 잘라 냄)"
       },
       {
        "id": "u1c-02",
@@ -512,7 +615,9 @@
        "wiki": "통화 수신 과정",
        "tags": [
         "통화 수신 과정"
-       ]
+       ],
+       "img": "duo/img/cn5-p13-recv.png",
+       "imgAlt": "p.13 수신 그림 — Caller, central office, MSC, 세 cell 과 MS 사이 ①~⑦ 화살표 (설명 목록은 잘라 냄)"
       },
       {
        "id": "u1c-04",
@@ -577,7 +682,10 @@
        "tags": [
         "paging"
        ],
-       "diff": 1
+       "diff": 1,
+       "img": "duo/img/cn5-p13-paging.png",
+       "imgAlt": "p.13 수신 그림 — MSC 에서 세 cell 로 가는 빨간 점선 ② 의 이름표가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn5-p13-paging-ans.png"
       },
       {
        "id": "u1c-08",
@@ -650,6 +758,62 @@
         "통화 발신 과정"
        ],
        "prof": true
+      },
+      {
+       "id": "u1c-12",
+       "type": "sa",
+       "q": "p.12 발신 그림에서 가린 상자 ? 의 이름은? (약어)",
+       "answer": "MSC",
+       "alts": [
+        "Mobile Switching Center"
+       ],
+       "explain": "② BS 가 번호를 **MSC** 로 relay → ③ MSC 가 telephone central office 로 forward → ⑤ 결과가 MSC 로 돌아오고 → ⑥ MSC 가 voice channel 배정. 교수 필기: \"통신을 위해 BS, MSC, central office 등 infrastructure 필요\".",
+       "src": "CH05(1) p.12",
+       "wiki": "통화 발신 과정",
+       "tags": [
+        "통화 발신 과정"
+       ],
+       "img": "duo/img/cn5-p12-msc.png",
+       "imgAlt": "p.12 발신 그림 — BS 와 Telephone central office 사이 파란 상자가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn5-p12-msc-ans.png"
+      },
+      {
+       "id": "u1c-13",
+       "type": "mc",
+       "q": "p.13 수신 그림의 ④ 화살표(MSC → MS)로 MSC 가 보내는 것은?",
+       "choices": [
+        "ringing signal",
+        "paging query",
+        "가장 강한 setup channel 의 번호",
+        "roaming contract"
+       ],
+       "answer": 0,
+       "explain": "p.13 순서: ① central office → MSC ② paging(모든 cell) ③ MS 응답(위치 파악) ④ **MSC transmits a ringing signal** ⑤ MS answers ⑥ voice channel 배정 ⑦ 통화. ③⑤ 는 MS → MSC, ④⑥ 은 MSC → MS 화살표다.",
+       "src": "CH05(1) p.13",
+       "wiki": "통화 수신 과정",
+       "tags": [
+        "통화 수신 과정"
+       ],
+       "img": "duo/img/cn5-p13-recv.png",
+       "imgAlt": "p.13 수신 그림 — MS 와 MSC 사이 ③⑤(→)·④⑥(←) 화살표"
+      },
+      {
+       "id": "u1c-14",
+       "type": "mc",
+       "q": "[객관식] Which step appears when receiving a call but NOT when making a call?",
+       "choices": [
+        "MSC assigns a voice channel",
+        "MSC sends query signals to every cell (paging)",
+        "The telephone central office is involved",
+        "The MS communicates through a BS"
+       ],
+       "answer": 1,
+       "explain": "발신은 MS 가 먼저 BS 에 연락하니 위치를 이미 안다. 수신은 MSC 가 MS 위치를 몰라 **paging** 을 해야 한다. 나머지 셋은 양쪽에 다 있다.",
+       "src": "CH05(1) p.12–13",
+       "wiki": "paging",
+       "tags": [
+        "paging"
+       ]
       }
      ]
     },
@@ -717,7 +881,10 @@
        "wiki": "soft handoff",
        "tags": [
         "soft handoff"
-       ]
+       ],
+       "img": "duo/img/cn5-p16-handoff.png",
+       "imgAlt": "p.16 handoff 그림 두 개 — BS1·BS2 연결 시간 막대, 아래 설명과 caption 이 가려져 있다",
+       "explainImg": "duo/img/cn5-p16-handoff-ans.png"
       },
       {
        "id": "u1d-04",
@@ -788,7 +955,10 @@
        "wiki": "roaming",
        "tags": [
         "roaming"
-       ]
+       ],
+       "img": "duo/img/cn5-p17-roaming.png",
+       "imgAlt": "p.17 roaming 그림 — MSC A(Provider A home) 와 MSC B(Provider B neighbor) 사이 점선 위 이름표가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn5-p17-roaming-ans.png"
       },
       {
        "id": "u1d-08",
@@ -831,7 +1001,10 @@
        "tags": [
         "uplink와 downlink"
        ],
-       "prof": true
+       "prof": true,
+       "img": "duo/img/cn5-p19-amps-band.png",
+       "imgAlt": "p.19 AMPS bands 그림 — 두 band 사이 화살표 ①(BS 쪽 band → MS), ②(MS 쪽 band → BS) 의 이름이 가려져 있다",
+       "explainImg": "duo/img/cn5-p19-amps-band-ans.png"
       },
       {
        "id": "u1d-10",
@@ -878,6 +1051,74 @@
        "tags": [
         "handoff"
        ]
+      },
+      {
+       "id": "u1d-13",
+       "type": "mc",
+       "q": "p.16 그림 ①·② 중 오늘날(IS-95 이후) 쓰는 방식과, 가린 시간 막대 설명으로 옳은 것은?",
+       "choices": [
+        "① — break before make",
+        "② — make before break",
+        "① — make before break",
+        "② — break before make"
+       ],
+       "answer": 1,
+       "explain": "② 는 BS1·BS2 막대가 **겹친다** → 두 BS 와 동시에 통신 = soft handoff = make before break. ① 은 BS1 이 끝난 뒤 BS2 가 시작(빈틈) = hard handoff = break before make, early systems. 교수: \"nowadays we never use hard handoff\".",
+       "src": "CH05(1) p.16",
+       "wiki": "soft handoff",
+       "tags": [
+        "soft handoff"
+       ],
+       "prof": true,
+       "img": "duo/img/cn5-p16-handoff.png",
+       "imgAlt": "p.16 handoff 그림 — ①·② 각각 BS1·BS2 연결 시간 막대, 아래 설명이 가려져 있다",
+       "explainImg": "duo/img/cn5-p16-handoff-ans.png"
+      },
+      {
+       "id": "u1d-14",
+       "type": "cloze",
+       "q": "p.19 AMPS 그림: ① (BS 쪽 band → MS) 은 ___ communication = ___, ② (MS 쪽 band → BS) 는 ___ communication = ___ 이다.",
+       "answer": [
+        "Forward",
+        "downlink",
+        "Reverse",
+        "uplink"
+       ],
+       "bank": [
+        "Forward",
+        "downlink",
+        "Reverse",
+        "uplink",
+        "crosslink",
+        "sidelink"
+       ],
+       "explain": "① \"Forward communication: base to mobile\" = **downlink**, ② \"Reverse communication: mobile to base\" = **uplink**. 교수: 세대별 숫자는 외우지 말되 **uplink/downlink 는 외워라** (40:00). 교수 필기의 BS(△)·MS(□) 그림: Down ↓, up ↑.",
+       "src": "CH05(1) p.19 · 1020 녹음 40:00",
+       "wiki": "uplink와 downlink",
+       "tags": [
+        "uplink와 downlink"
+       ],
+       "prof": true,
+       "img": "duo/img/cn5-p19-amps-band.png",
+       "imgAlt": "p.19 AMPS bands 그림 — 화살표 ①·② 의 이름이 가려져 있다",
+       "explainImg": "duo/img/cn5-p19-amps-band-ans.png"
+      },
+      {
+       "id": "u1d-15",
+       "type": "sa",
+       "q": "[Term] \"Process of transferring an active call from one BS to another without interrupting service as a user moves across cells.\" Give the term.",
+       "answer": "handoff",
+       "alts": [
+        "handover",
+        "hand off"
+       ],
+       "explain": "p.14 정의 그대로. handover 와 같은 말이다 (교수 26:27).",
+       "src": "CH05(1) p.14",
+       "wiki": "handoff",
+       "tags": [
+        "handoff"
+       ],
+       "diff": 1
       }
      ]
     }
@@ -979,7 +1220,10 @@
        "wiki": "AMPS control channel",
        "tags": [
         "AMPS control channel"
-       ]
+       ],
+       "img": "duo/img/cn5-p20-amps-tx.png",
+       "imgAlt": "p.20 AMPS transmission 그림 — 3 kHz voice 와 10 kbps control 이 들어가는 변조 상자 ①·② 가 가려져 있다. 오른쪽은 30 kHz 채널을 나눈 FDMA 25-MHz band",
+       "explainImg": "duo/img/cn5-p20-amps-tx-ans.png"
       },
       {
        "id": "u2a-06",
@@ -996,7 +1240,7 @@
       {
        "id": "u2a-07",
        "type": "match",
-       "q": "AMPS 대역과 방향을 연결하시오",
+       "q": "AMPS bands 슬라이드(p.19)의 항목을 연결하시오",
        "pairs": [
         [
          "824–849 MHz",
@@ -1011,11 +1255,11 @@
          "채널 하나의 폭"
         ],
         [
-         "21 채널",
-         "provider 당 control 용"
+         "reuse factor 7",
+         "같은 주파수 set 을 7 cell 묶음마다 다시 씀"
         ]
        ],
-       "explain": "각 band 25 MHz, 30 kHz 채널. provider 당 416 채널 중 21 개가 control. 숫자 자체보다 **방향**이 핵심.",
+       "explain": "숫자 자체보다 **방향**이 핵심이다: MS 가 보내는 band(낮은 쪽) = reverse = uplink, BS 가 보내는 band = forward = downlink. 교수는 세대별 수치를 외울 필요는 없다고 했지만 uplink/downlink 는 외우라고 했다.",
        "src": "CH05(1) p.19",
        "wiki": "AMPS 대역과 채널",
        "tags": [
@@ -1029,7 +1273,7 @@
        "answer": 833,
        "unit": "개",
        "tol": 0,
-       "explain": "25,000 kHz / 30 kHz = 833.3 → 약 833. 슬라이드는 guard 를 빼고 **832** 채널, 두 provider 가 나눠 416 씩.",
+       "explain": "25,000 kHz / 30 kHz = 833.3 → 약 **833**. 슬라이드 표기는 \"made of 832 30-kHz analog channels\" (832 × 30 kHz = 24.96 MHz). 두 provider 가 나눠 416 씩. band 폭 ÷ 채널 폭 = 채널 수 라는 원리 확인용이고, 숫자 자체는 암기 대상이 아니다 (교수 41:54).",
        "src": "CH05(1) p.19",
        "wiki": "AMPS 대역과 채널",
        "tags": [
@@ -1120,6 +1364,47 @@
         "AMPS"
        ],
        "diff": 1
+      },
+      {
+       "id": "u2a-14",
+       "type": "tf",
+       "q": "[O/X] In AMPS, voice channels are digitized before transmission. (If X, correct it.)",
+       "answer": false,
+       "explain": "X. AMPS 의 voice 는 **FM** 으로 변조한 아날로그(3 kHz voice → 30 kHz analog). control channel 만 10 kbps 디지털을 FSK 로 싣는다 (p.20, 교수 필기 \"Digital communication\"). 음성 디지털화(7.95 kbps)는 D-AMPS 부터.",
+       "src": "CH05(1) p.20",
+       "wiki": "AMPS control channel",
+       "tags": [
+        "AMPS control channel"
+       ]
+      },
+      {
+       "id": "u2a-15",
+       "type": "cloze",
+       "q": "p.24 GSM: 890–915 MHz band(①)는 ___ band = ___, 935–960 MHz band(②)는 ___ band = ___ 이다.",
+       "answer": [
+        "Reverse",
+        "uplink",
+        "Forward",
+        "downlink"
+       ],
+       "bank": [
+        "Reverse",
+        "uplink",
+        "Forward",
+        "downlink",
+        "Paging",
+        "sidelink"
+       ],
+       "explain": "p.24 \"Forward (Downlink): BS → MS, Reverse (Uplink): BS ← MS\". AMPS(p.19)와 똑같이 **낮은 쪽 band 를 MS 가 보낸다**(uplink). 교수 필기도 위 band 옆 uplink, 아래 band 옆 downlink. 숫자 대신 방향을 외운다 (교수 40:00).",
+       "src": "CH05(1) p.24 · 1020 녹음 40:00",
+       "wiki": "uplink와 downlink",
+       "tags": [
+        "uplink와 downlink"
+       ],
+       "prof": true,
+       "img": "duo/img/cn5-p24-gsm-band.png",
+       "imgAlt": "p.24 GSM bands — 890–915 MHz band ① 과 935–960 MHz band ② 의 이름이 가려져 있다 (Band = 25 MHz = 124 channels, Channel 200 kHz)",
+       "explainImg": "duo/img/cn5-p24-gsm-band-ans.png"
       }
      ]
     },
@@ -1346,6 +1631,21 @@
        "tags": [
         "D-AMPS"
        ]
+      },
+      {
+       "id": "u2b-13",
+       "type": "num",
+       "q": "[Calc] D-AMPS 는 음성 3 개(각 7.95 kbps)를 TDMA 로 묶어 overhead 포함 48.6 kbps 로 보낸다. 48.6 kbps 중 순수 음성 데이터의 비율은 몇 %? (소수 첫째 자리)",
+       "answer": 49.1,
+       "unit": "%",
+       "tol": 0.002,
+       "explain": "3 × 7.95 = 23.85 kbps → 23.85 / 48.6 = 0.4907 → **49.1 %**. 나머지 절반은 overhead. PS1 1(c) 의 GSM 효율(38.4 %)과 같은 계산 틀이다.",
+       "src": "CH05(1) p.21",
+       "wiki": "D-AMPS",
+       "tags": [
+        "D-AMPS"
+       ],
+       "diff": 3
       }
      ]
     },
@@ -1412,7 +1712,10 @@
        "tags": [
         "GSM channel bit rate"
        ],
-       "prof": true
+       "prof": true,
+       "img": "duo/img/cn5-p25-gsm.png",
+       "imgAlt": "p.25 GSM 전송 그림 — 8 users 의 13 kbps digitizer, TDMA multiframe(26 frames, 120 ms), 그 출력 bit rate 가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn5-p25-gsm-ans.png"
       },
       {
        "id": "u2c-05",
@@ -1442,7 +1745,9 @@
        "tags": [
         "GSM channel bit rate"
        ],
-       "prof": true
+       "prof": true,
+       "img": "duo/img/cn5-p26-multiframe.png",
+       "imgAlt": "p.26 GSM multiframe components — 65 bits user data, 114 bits, 156.25 bits slot, frame = 8 slots, 1 multiframe = 26 frames (24 traffic + 2 control), 120 ms"
       },
       {
        "id": "u2c-07",
@@ -1612,7 +1917,128 @@
        "wiki": "GMSK",
        "tags": [
         "GMSK"
-       ]
+       ],
+       "img": "duo/img/cn5-p25-gmsk.png",
+       "imgAlt": "p.25 GSM 전송 그림 — 270.8 kbps 다음 변조 상자 ① 과 채널 폭 ② 가 가려져 있다",
+       "explainImg": "duo/img/cn5-p25-gmsk-ans.png"
+      },
+      {
+       "id": "u2c-16",
+       "type": "cloze",
+       "q": "p.26 그림: 65 bits = ①___, 114 bits = user data plus ②___, 156.25 bits = user data plus error control bits and ③___ 이다.",
+       "answer": [
+        "User data",
+        "error control bits",
+        "TDMA control bits"
+       ],
+       "bank": [
+        "User data",
+        "error control bits",
+        "TDMA control bits",
+        "pilot bits",
+        "guard bits"
+       ],
+       "explain": "안쪽부터 user data 65 → error control 을 붙여 114 → TDMA control 을 붙여 156.25 bits = slot 하나. PS1 1(c) 에서 \"65 of 156.25 bits are user data\" 가 이 그림이다.",
+       "src": "CH05(1) p.26",
+       "wiki": "GSM multiframe",
+       "tags": [
+        "GSM multiframe"
+       ],
+       "prof": true,
+       "img": "duo/img/cn5-p26-slot.png",
+       "imgAlt": "p.26 GSM multiframe components — 65·114·156.25 bits 상자 옆 설명 ①②③ 이 가려져 있다",
+       "explainImg": "duo/img/cn5-p26-slot-ans.png"
+      },
+      {
+       "id": "u2c-17",
+       "type": "num",
+       "q": "[PS1 1(a) 변형] A TDMA system uses 160 bits per slot, 8 slots per frame and 25 frames per multiframe. One multiframe lasts 100 ms. Find the channel bit rate (kbps).",
+       "answer": 320,
+       "unit": "kbps",
+       "tol": 0.001,
+       "explain": "1 multiframe = 25 × 8 × 160 = 32,000 bits. ÷ 0.100 s = 320,000 bps = **320 kbps**. 공식: (1/multiframe 시간) × frames × slots × bits/slot — PS1 1(a) 와 같은 틀.",
+       "src": "PS1 1(a) 변형",
+       "wiki": "GSM channel bit rate",
+       "tags": [
+        "GSM channel bit rate"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u2c-18",
+       "type": "num",
+       "q": "[PS1 1(b) 변형] 같은 시스템에서 한 사용자는 frame 마다 slot 1 개를 쓴다. overhead 를 빼기 전 사용자 한 명의 bit rate 는? (kbps)",
+       "answer": 40,
+       "unit": "kbps",
+       "tol": 0.001,
+       "explain": "25 frame × 1 slot × 160 bits = 4,000 bits / 0.100 s = 40,000 bps = **40 kbps** = 320 / 8.",
+       "src": "PS1 1(b) 변형",
+       "wiki": "GSM channel bit rate",
+       "tags": [
+        "GSM channel bit rate"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u2c-19",
+       "type": "num",
+       "q": "[PS1 1(c) 변형] slot 160 bits 중 60 bits 가 user data 이고, 25 frame 중 23 개가 traffic frame 이다. 사용자 한 명의 user data rate 는? (kbps)",
+       "answer": 13.8,
+       "unit": "kbps",
+       "tol": 0.001,
+       "explain": "user data bits / multiframe = 23 × 60 = 1,380 bits → ÷ 0.100 s = **13.8 kbps**. control frame 에는 user data 가 없으니 25 가 아니라 23 을 곱한다.",
+       "src": "PS1 1(c) 변형",
+       "wiki": "GSM channel bit rate",
+       "tags": [
+        "GSM channel bit rate"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u2c-20",
+       "type": "num",
+       "q": "[PS1 1(c) 변형] 위 user data rate(13.8 kbps)는 한 사용자 몫(40 kbps)의 몇 % 인가? (efficiency, 소수 첫째 자리)",
+       "answer": 34.5,
+       "unit": "%",
+       "tol": 0.002,
+       "explain": "13.8 / 40 = 0.345 → **34.5 %**. 검산: (60/160) × (23/25) = 0.375 × 0.92 = 0.345 ✓. 나머지는 error control·TDMA control bits·control frame.",
+       "src": "PS1 1(c) 변형",
+       "wiki": "GSM channel bit rate",
+       "tags": [
+        "GSM channel bit rate"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u2c-21",
+       "type": "order",
+       "q": "[PS1 1(a)] GSM channel bit rate 를 구하는 순서로 놓으시오",
+       "answer": [
+        "slot 하나 = 156.25 bits",
+        "frame = 8 slots → 1,250 bits",
+        "multiframe = 26 frames → 32,500 bits",
+        "÷ 120 ms → 270.8 kbps"
+       ],
+       "explain": "작은 단위부터 곱해 올라가고 마지막에 multiframe 시간으로 나눈다. 단위 포함 관계 slot ⊂ frame ⊂ multiframe 이 그대로 식이 된다.",
+       "src": "PS1 1(a) · CH05(1) p.25",
+       "wiki": "GSM channel bit rate",
+       "tags": [
+        "GSM channel bit rate"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u2c-22",
+       "type": "tf",
+       "q": "[PS1 1(a)] channel bit rate 를 구할 때는 26 frame 중 control frame 2 개를 빼고 24 개만 곱한다.",
+       "answer": false,
+       "explain": "X. control frame 도 채널 위를 지나가는 비트라 **channel rate 에는 26 개 모두** 넣는다 (270.8 kbps). 24 를 쓰는 것은 user data rate(1(c), 13 kbps)를 구할 때뿐이다.",
+       "src": "PS1 1(a)·(c)",
+       "wiki": "GSM multiframe",
+       "tags": [
+        "GSM multiframe"
+       ],
+       "prof": true
       }
      ]
     }
@@ -1690,7 +2116,7 @@
        "alts": [
         "Code Division Multiple Access"
        ],
-       "explain": "CDMA = Code-Division Multiple Access.",
+       "explain": "CDMA = Code-Division Multiple Access. 이름 그대로 사용자를 **code** 로 나누는(division) 다중 접속이다. FDMA 는 frequency, TDMA 는 time 으로 나눈다 — \"the name itself is very important\".",
        "src": "CH05(1) p.27",
        "wiki": "CDMA",
        "tags": [
@@ -1834,6 +2260,43 @@
         "CDMA"
        ],
        "diff": 1
+      },
+      {
+       "id": "u3a-13",
+       "type": "sa",
+       "q": "[Term] \"A signal-spreading modulation technique.\" Give the term.",
+       "answer": "Direct-Sequence Spread Spectrum",
+       "alts": [
+        "DSSS",
+        "Direct Sequence Spread Spectrum"
+       ],
+       "explain": "p.27 의 DSSS 정의. \"an MA method based on DSSS\" 는 CDMA 쪽 정의라 헷갈리지 않게 둘을 짝으로 기억한다.",
+       "src": "CH05(1) p.27",
+       "wiki": "DSSS",
+       "tags": [
+        "DSSS"
+       ]
+      },
+      {
+       "id": "u3a-14",
+       "type": "mc",
+       "q": "p.27 그림 ①②③ (세로축 power, 가로축 frequency·time) 의 multiple access 를 차례로 고른 것은?",
+       "choices": [
+        "FDMA, TDMA, CDMA",
+        "TDMA, FDMA, CDMA",
+        "CDMA, TDMA, FDMA",
+        "FDMA, CDMA, TDMA"
+       ],
+       "answer": 0,
+       "explain": "① frequency 축을 따라 칸이 나뉨 → FDMA. ② time 축을 따라 사용자(교수 필기 user 1·2·3)가 나뉨 → TDMA. ③ 같은 시간·같은 주파수에 층으로 겹침, 필기 code 1·2·3 → **CDMA**. \"무엇으로 나누나\" 가 세대 trend 의 축이다.",
+       "src": "CH05(1) p.27",
+       "wiki": "CDMA",
+       "tags": [
+        "CDMA"
+       ],
+       "img": "duo/img/cn5-p27-ma.png",
+       "imgAlt": "p.27 multiple access 그림 세 개 — 각 상자의 이름 ①②③ 이 가려져 있다 (교수 필기 user 1~3, code 1~3)",
+       "explainImg": "duo/img/cn5-p27-ma-ans.png"
       }
      ]
     },
@@ -1885,7 +2348,10 @@
        "wiki": "chip rate",
        "tags": [
         "chip rate"
-       ]
+       ],
+       "img": "duo/img/cn5-p29-chiprate.png",
+       "imgAlt": "p.29 IS-95 forward 그림 — Σ 출력·long code generator 출력의 chip rate 와 FDMA 채널 폭이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn5-p29-chiprate-ans.png"
       },
       {
        "id": "u3b-04",
@@ -1900,7 +2366,10 @@
        "tags": [
         "IS-95 reverse 전송"
        ],
-       "diff": 3
+       "diff": 3,
+       "img": "duo/img/cn5-p30-reverse.png",
+       "imgAlt": "p.30 IS-95 reverse 그림 — 6 to 64 symbol modulation 출력 rate 가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn5-p30-reverse-ans.png"
       },
       {
        "id": "u3b-05",
@@ -1955,7 +2424,10 @@
        "wiki": "pilot channel",
        "tags": [
         "pilot channel"
-       ]
+       ],
+       "img": "duo/img/cn5-p29-pilot.png",
+       "imgAlt": "p.29 IS-95 forward 그림 — Digital channel 0 (W0, all 1s) 옆 괄호 이름이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn5-p29-pilot-ans.png"
       },
       {
        "id": "u3b-08",
@@ -2044,6 +2516,63 @@
         "QPSK"
        ],
        "diff": 1
+      },
+      {
+       "id": "u3b-13",
+       "type": "mc",
+       "q": "p.29 forward 그림에서 W0–W63 을 곱해 합치는 점선 상자에 교수가 동그라미 친 이름 ? 는?",
+       "choices": [
+        "CDMA",
+        "DSSS",
+        "FDMA",
+        "TDMA"
+       ],
+       "answer": 0,
+       "explain": "forward 는 BS 가 64 개 digital channel 에 서로 다른 Walsh code(W0–W63)를 곱해 Σ 로 합친다 → 사용자를 code 로 나누는 **CDMA** 부분. 교수 필기 \"64 user\". 오른쪽 회색 상자가 FDMA(1.228 MHz 채널 20 개).",
+       "src": "CH05(1) p.29",
+       "wiki": "IS-95 forward 전송",
+       "tags": [
+        "IS-95 forward 전송"
+       ],
+       "img": "duo/img/cn5-p29-cdma.png",
+       "imgAlt": "p.29 IS-95 forward 그림 — W0·W1·…·W63 곱셈기를 둘러싼 점선 상자 위 이름이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn5-p29-cdma-ans.png"
+      },
+      {
+       "id": "u3b-14",
+       "type": "mc",
+       "q": "p.30 reverse 그림에서 QPSK 들을 둘러싼 점선 상자에 교수가 동그라미 친 이름 ? 는?",
+       "choices": [
+        "DSSS",
+        "CDMA",
+        "TDMA",
+        "GMSK"
+       ],
+       "answer": 0,
+       "explain": "reverse 는 각 MS 가 ESN 의 long code 로 신호를 퍼뜨려 1.228 Mcps 로 만든다 → **DSSS**. forward 의 \"CDMA\" 와 짝을 이룬다: forward 는 Walsh code 로 사용자 구분, reverse 는 long code(DSSS)로 구분. 왼쪽 아래 \"94 digital channels DSSS\".",
+       "src": "CH05(1) p.30",
+       "wiki": "IS-95 reverse 전송",
+       "tags": [
+        "IS-95 reverse 전송"
+       ],
+       "diff": 3,
+       "img": "duo/img/cn5-p30-dsss.png",
+       "imgAlt": "p.30 IS-95 reverse 그림 — QPSK 묶음을 둘러싼 점선 상자 위 이름이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn5-p30-dsss-ans.png"
+      },
+      {
+       "id": "u3b-15",
+       "type": "num",
+       "q": "[Calc 변형] forward 채널에서 digitizer 출력이 8 kbps, error correcting 단계가 symbol 수를 2 배로 늘리고, Walsh code 가 64 chips 이면 chip rate 는? (Mcps)",
+       "answer": 1.024,
+       "unit": "Mcps",
+       "tol": 0.0001,
+       "explain": "8 kbps × 2 = 16 ksps → × 64 chips = 1,024 kcps = **1.024 Mcps**. 실제 IS-95 는 9.6 kbps → 19.2 ksps → 1.2288 Mcps.",
+       "src": "CH05(1) p.29",
+       "wiki": "chip rate",
+       "tags": [
+        "chip rate"
+       ]
       }
      ]
     },
@@ -2157,15 +2686,15 @@
       {
        "id": "u3c-07",
        "type": "mc",
-       "q": "IS-95 에서 provider 가 가진 1.228 MHz 채널 수에 대한 설명은?",
+       "q": "IS-95 band 의 구조를 바르게 말한 것은?",
        "choices": [
-        "25 MHz 를 20 채널로 나누고 provider 당 10 개",
-        "채널 하나뿐",
-        "124 채널",
-        "832 채널"
+        "band 를 1.228 MHz 채널 여러 개로 나누고(FDMA), 채널 하나를 여러 사용자가 code 로 나눠 쓴다(CDMA)",
+        "채널 하나에 사용자 한 명",
+        "채널을 8 개 time slot 으로 나눈다",
+        "band 를 나누지 않고 모든 provider 가 한 채널을 쓴다"
        ],
        "answer": 0,
-       "explain": "대역을 1.228 MHz × 20 채널(FDMA)로, 두 provider 가 10 개씩 (참고 수치 — 암기보다 FDMA 위 CDMA 라는 구조가 핵심).",
+       "explain": "p.28: 각 band 를 guard band 로 떨어진 1.228 MHz 채널 20 개로 나누고(FDMA, provider 당 10 개), 그 채널 안을 Walsh code·long code 로 나눈다(CDMA). 숫자(20·10)보다 **FDMA 위의 CDMA** 라는 구조가 핵심이다.",
        "src": "CH05(1) p.28",
        "wiki": "IS-95 대역과 채널",
        "tags": [
@@ -2230,6 +2759,61 @@
         "pilot channel"
        ],
        "diff": 1
+      },
+      {
+       "id": "u3c-11",
+       "type": "mc",
+       "q": "[PS1 1(d)] IS-95 가 reuse factor 1 인 이유로 답안에 옮겨 써야 할 슬라이드 문장은?",
+       "choices": [
+        "The interference from neighboring cells cannot affect CDMA or DSSS transmission.",
+        "Neighboring cells cannot use the same set of frequencies for communication.",
+        "To provide synchronization, BSs use the service of GPS.",
+        "MSC monitors the level of the signal every few seconds."
+       ],
+       "answer": 0,
+       "explain": "p.31 의 Why? 답. 둘째 보기는 AMPS(FDMA)가 reuse 7 인 이유(p.11)라 반대쪽 근거다. PS1 해설: \"cannot affect\" 를 그대로 쓰고 \"간섭이 아예 없다\" 고 쓰지는 않는다.",
+       "src": "PS1 1(d) · CH05(1) p.31",
+       "wiki": "IS-95 frequency reuse",
+       "tags": [
+        "IS-95 frequency reuse"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u3c-12",
+       "type": "cloze",
+       "q": "[PS1 1(e)] IS-95 에서는 모든 BS 가 ___ channel 로 계속 방송하고, MS 가 자기 cell 과 ___ cell 의 그 신호를 감지할 수 있어서 soft handoff 가 가능하다.",
+       "answer": [
+        "pilot",
+        "neighboring"
+       ],
+       "bank": [
+        "pilot",
+        "neighboring",
+        "paging",
+        "control",
+        "home"
+       ],
+       "explain": "p.32 두 문장: \"Every BS continuously broadcasts signals using its pilot channel\" + \"MS can detect the pilot signal from its cell and neighboring cells\".",
+       "src": "PS1 1(e) · CH05(1) p.32",
+       "wiki": "IS-95 soft handoff",
+       "tags": [
+        "IS-95 soft handoff"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u3c-13",
+       "type": "tf",
+       "q": "[O/X] In a soft handoff, the MS releases the channel of the old BS before it connects to the new BS. (If X, correct it.)",
+       "answer": false,
+       "explain": "X. 설명한 것은 **hard handoff**(break before make). soft handoff 는 두 BS 와 동시에 통신하며 새 BS 를 먼저 잡고 옛 BS 를 놓는다(make before break).",
+       "src": "PS1 1(e) · CH05(1) p.16",
+       "wiki": "soft handoff",
+       "tags": [
+        "soft handoff"
+       ],
+       "prof": true
       }
      ]
     },
@@ -2466,6 +3050,44 @@
         "IMT-2000"
        ],
        "prof": true
+      },
+      {
+       "id": "u3d-14",
+       "type": "sa",
+       "q": "[Term] \"A blueprint of 3G issued by ITU.\" Give the term.",
+       "answer": "IMT-2000",
+       "alts": [
+        "IMT 2000",
+        "Internet Mobile Telecommunications 2000"
+       ],
+       "explain": "p.33. 교수 필기 \"blueprint, not actual standard\" — 실제 표준은 IMT-DS(W-CDMA)·IMT-MC(CDMA 2000) 등 다섯 개.",
+       "src": "CH05(1) p.33",
+       "wiki": "IMT-2000",
+       "tags": [
+        "IMT-2000"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u3d-15",
+       "type": "mc",
+       "q": "p.35 IMT-2000 다섯 표준 아래 가린 multiple access 중 IMT-DS 와 IMT-MC 의 것은?",
+       "choices": [
+        "둘 다 CDMA",
+        "IMT-DS 는 TDMA, IMT-MC 는 CDMA",
+        "둘 다 TDMA & FDMA",
+        "IMT-DS 는 CDMA & TDMA"
+       ],
+       "answer": 0,
+       "explain": "IMT-DS(W-CDMA, 한국 3G)·IMT-MC(CDMA 2000, IS-95 의 진화) 모두 **CDMA**. 교수가 빨간 상자로 묶은 두 개다. 나머지는 IMT-TC CDMA & TDMA, IMT-SC TDMA, IMT-FT TDMA & FDMA. 3G 의 주류가 CDMA 라는 trend 를 보는 그림.",
+       "src": "CH05(1) p.34–35",
+       "wiki": "IMT-2000 표준",
+       "tags": [
+        "IMT-2000 표준"
+       ],
+       "img": "duo/img/cn5-p35-imt.png",
+       "imgAlt": "p.35 Third generation 아래 IMT-DS·MC·TC·SC·FT 다섯 상자, 각 아래 multiple access 가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn5-p35-imt-ans.png"
       }
      ]
     }
@@ -2520,7 +3142,10 @@
        "wiki": "satellite network 구성",
        "tags": [
         "satellite network 구성"
-       ]
+       ],
+       "img": "duo/img/cn5b-p03-segments.png",
+       "imgAlt": "p.3 Starlink System Architecture — 세 segment 이름 ①②③ 이 가려져 있다",
+       "explainImg": "duo/img/cn5b-p03-segments-ans.png"
       },
       {
        "id": "u4a-03",
@@ -2564,7 +3189,10 @@
        "wiki": "orbit",
        "tags": [
         "orbit"
-       ]
+       ],
+       "img": "duo/img/cn5b-p04-orbits.png",
+       "imgAlt": "p.4 세 orbit 그림 — 아래 caption ①②③ 이 가려져 있다",
+       "explainImg": "duo/img/cn5b-p04-orbits-ans.png"
       },
       {
        "id": "u4a-05",
@@ -2665,7 +3293,10 @@
        "wiki": "UML과 GWL",
        "tags": [
         "UML과 GWL"
-       ]
+       ],
+       "img": "duo/img/cn5b-p21-links.png",
+       "imgAlt": "p.21 LEO 그림 — 위성끼리 ①, 위성–폰 ②, 위성–gateway ③ 링크 이름이 가려져 있다",
+       "explainImg": "duo/img/cn5b-p21-links-ans.png"
       },
       {
        "id": "u4a-10",
@@ -2696,7 +3327,9 @@
        "wiki": "SATCOM 주파수 대역",
        "tags": [
         "SATCOM 주파수 대역"
-       ]
+       ],
+       "img": "duo/img/cn5b-p15-satcom.png",
+       "imgAlt": "p.15 SATCOM 주파수 표 — Band L·S·C·Ku·Ka 의 Downlink GHz, Uplink GHz, Bandwidth MHz"
       },
       {
        "id": "u4a-12",
@@ -2737,6 +3370,43 @@
         "uplink와 downlink"
        ],
        "prof": true
+      },
+      {
+       "id": "u4a-14",
+       "type": "mc",
+       "q": "p.4 그림 ①②③ 의 orbit 이름을 차례로 고른 것은?",
+       "choices": [
+        "equatorial, inclined, polar",
+        "polar, inclined, equatorial",
+        "inclined, equatorial, polar",
+        "equatorial, polar, inclined"
+       ],
+       "answer": 0,
+       "explain": "① 적도를 따라 도는 **equatorial**(GEO 가 쓰는 면), ② 기울어진 **inclined**, ③ 남·북극을 지나는 **polar**. LEO 는 polar·inclined 를 쓴다 (p.20).",
+       "src": "CH05(2) p.4",
+       "wiki": "orbit",
+       "tags": [
+        "orbit"
+       ],
+       "img": "duo/img/cn5b-p04-orbits.png",
+       "imgAlt": "p.4 세 orbit 그림 — 아래 caption ①②③ 이 가려져 있다",
+       "explainImg": "duo/img/cn5b-p04-orbits-ans.png"
+      },
+      {
+       "id": "u4a-15",
+       "type": "sa",
+       "q": "[Term] \"A combination of nodes, including satellites, that provides communication from one point on the Earth to another.\" Give the term.",
+       "answer": "satellite network",
+       "alts": [
+        "satellite networks"
+       ],
+       "explain": "p.3 정의. node 에는 위성뿐 아니라 user terminal·gateway 도 들어간다는 점이 \"combination of nodes, including satellites\" 에 담겨 있다.",
+       "src": "CH05(2) p.3",
+       "wiki": "satellite network",
+       "tags": [
+        "satellite network"
+       ],
+       "diff": 1
       }
      ]
     },
@@ -2782,7 +3452,10 @@
        "tags": [
         "Example 5.1 달의 주기"
        ],
-       "prof": true
+       "prof": true,
+       "img": "duo/img/cn5b-p08-moon.png",
+       "imgAlt": "p.8 Example 5.1 풀이 — Period 식의 결과가 = ? 로 가려져 있다. 위쪽에 교수가 그린 r(지구 반지름) + d(고도) 그림",
+       "explainImg": "duo/img/cn5b-p08-moon-ans.png"
       },
       {
        "id": "u4b-03",
@@ -2797,7 +3470,10 @@
        "tags": [
         "Example 5.2 정지궤도 주기"
        ],
-       "prof": true
+       "prof": true,
+       "img": "duo/img/cn5b-p10-geo.png",
+       "imgAlt": "p.10 Example 5.2 풀이 — Period 식의 결과와 아래 해설 문단이 가려져 있다",
+       "explainImg": "duo/img/cn5b-p10-geo-ans.png"
       },
       {
        "id": "u4b-04",
@@ -2817,12 +3493,12 @@
       {
        "id": "u4b-05",
        "type": "num",
-       "q": "반지름을 빼먹고 달(384,000 km)을 계산하면 나오는 틀린 값은 약 몇 초?",
-       "answer": 2379561,
+       "q": "[함정] Starlink(550 km)의 주기를 반지름 6378 을 빼먹고 계산하면 약 몇 초가 나오나? (이 값으로 실수를 알아차리는 연습)",
+       "answer": 129,
        "unit": "s",
-       "tol": 0.001,
-       "explain": "384,000^1.5 / 100 ≈ 2,379,561 s — 슬라이드 답 2,439,090 s 와 다르다. 반지름 6378 을 꼭 더한다.",
-       "src": "CH05(2) p.8",
+       "tol": 0.01,
+       "explain": "550^1.5 / 100 ≈ **129 s** ≈ 2 분. 2 분에 지구를 한 바퀴 도는 궤도는 있을 수 없으니 반지름을 빼먹었다는 신호다. 올바른 값은 6,928^1.5 / 100 ≈ 5,766 s ≈ 96 min (PS1 2(a)). 교수 필기의 그림처럼 distance = r(지구 반지름) + d(고도), 지구 **중심**부터 잰다.",
+       "src": "CH05(2) p.6–8 · PS1 2(a)",
        "wiki": "Kepler's law",
        "tags": [
         "Kepler's law"
@@ -2970,6 +3646,90 @@
         "Example 5.2 정지궤도 주기"
        ],
        "prof": true
+      },
+      {
+       "id": "u4b-15",
+       "type": "num",
+       "q": "[PS1 2(a) 변형] A LEO satellite orbits at an altitude of 1,200 km. Using Kepler's law with C ≈ 1/100 and an Earth radius of 6,378 km, find its period in minutes. (소수 첫째 자리)",
+       "answer": 110,
+       "unit": "min",
+       "tol": 0.005,
+       "explain": "d = 1,200 + 6,378 = 7,578 km → √7,578 ≈ 87.05 → 7,578^1.5 ≈ 659,700 → ×1/100 ≈ 6,597 s → ÷60 ≈ **110 min**. LEO 의 90–120 min 안이라 검산이 된다.",
+       "src": "PS1 2(a) 변형",
+       "wiki": "Kepler's law",
+       "tags": [
+        "Kepler's law"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u4b-16",
+       "type": "num",
+       "q": "[PS1 2(b) 변형] 주기가 12 h(43,200 s) 인 위성의 지표면 위 고도는 약 몇 km? (C = 1/100, R = 6,378 km, 정수)",
+       "answer": 20147,
+       "unit": "km",
+       "tol": 0.002,
+       "explain": "d^1.5 = 43,200 × 100 = 4,320,000 → d = 4,320,000^(2/3) ≈ 26,525 km → h = 26,525 − 6,378 ≈ **20,147 km**. MEO(GPS 18,000 km 근처) 범위다. 구한 d 에서 반지름을 빼야 고도.",
+       "src": "PS1 2(b) 변형",
+       "wiki": "Kepler's law",
+       "tags": [
+        "Kepler's law"
+       ],
+       "prof": true,
+       "diff": 3
+      },
+      {
+       "id": "u4b-17",
+       "type": "num",
+       "q": "[PS1 2(c) 변형] 고도 20,000 km 위성이 두 지상국 바로 위에 있다. Earth → satellite → Earth one-way propagation delay 는 약 몇 ms? (c = 3×10^8 m/s, 소수 첫째 자리)",
+       "answer": 133.3,
+       "unit": "ms",
+       "tol": 0.002,
+       "explain": "거리 = 2 × 20,000 km = 4×10^7 m → ÷ 3×10^8 = 0.1333 s = **133.3 ms**. 지연은 지표면–위성 거리라 반지름을 더하지 않는다 (Kepler 식과 반대).",
+       "src": "PS1 2(c) 변형",
+       "wiki": "MEO",
+       "tags": [
+        "MEO"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u4b-18",
+       "type": "mc",
+       "q": "[PS1 2(c)] distance 에 지구 반지름 6,378 km 를 더해야 하는 계산은?",
+       "choices": [
+        "Kepler's law 로 주기 구하기",
+        "위성 바로 아래 지상국까지 propagation delay 구하기",
+        "둘 다",
+        "둘 다 아니다"
+       ],
+       "answer": 0,
+       "explain": "Kepler 식의 distance 는 지구 **중심**부터 잰 궤도 반지름이라 고도 + 6,378. propagation delay 는 전파가 실제로 지나가는 지표면–위성 거리(= 고도)를 쓴다. PS1 해설: \"Kepler 식에서는 지구 반지름을 더했고, 여기서는 더하지 않는다.\"",
+       "src": "PS1 2(a)·(c)",
+       "wiki": "Kepler's law",
+       "tags": [
+        "Kepler's law"
+       ],
+       "prof": true,
+       "diff": 3
+      },
+      {
+       "id": "u4b-19",
+       "type": "order",
+       "q": "[PS1 2(b)] 주기 24 h 로 GEO 고도를 구하는 순서",
+       "answer": [
+        "Period = 24 × 3,600 = 86,400 s",
+        "d^1.5 = 86,400 × 100 = 8,640,000",
+        "d = 8,640,000^(2/3) ≈ 42,106 km",
+        "h = d − 6,378 ≈ 35,728 km"
+       ],
+       "explain": "식을 거꾸로 풀고 마지막에 반지름을 뺀다. 35,786 km 와의 차이는 C ≈ 1/100 근사 때문이라는 한 줄을 답안에 적는다 (PS1 해설 ⚠️).",
+       "src": "PS1 2(b)",
+       "wiki": "Example 5.2 정지궤도 주기",
+       "tags": [
+        "Example 5.2 정지궤도 주기"
+       ],
+       "prof": true
       }
      ]
     },
@@ -3017,7 +3777,9 @@
        "wiki": "GEO",
        "tags": [
         "GEO"
-       ]
+       ],
+       "img": "duo/img/cn5b-p17-geo3.png",
+       "imgAlt": "p.17 지구(가운데 원)를 둘러싼 GEO 위성 그림"
       },
       {
        "id": "u4c-03",
@@ -3077,7 +3839,10 @@
        "wiki": "trilateration",
        "tags": [
         "trilateration"
-       ]
+       ],
+       "img": "duo/img/cn5b-p19-trilat.png",
+       "imgAlt": "p.19 GPS 위치 결정 그림 (a) 2차원 원 세 개, (b) 3차원 구 세 개 — caption 이 가려져 있다",
+       "explainImg": "duo/img/cn5b-p19-trilat-ans.png"
       },
       {
        "id": "u4c-07",
@@ -3137,7 +3902,10 @@
        "tags": [
         "footprint"
        ],
-       "diff": 3
+       "diff": 3,
+       "img": "duo/img/cn5b-p21-footprint.png",
+       "imgAlt": "p.21 LEO 그림 — 위성 아래 점선 타원 두 개의 이름이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn5b-p21-footprint-ans.png"
       },
       {
        "id": "u4c-10",
@@ -3185,7 +3953,10 @@
        "wiki": "위성 세 범주",
        "tags": [
         "위성 세 범주"
-       ]
+       ],
+       "img": "duo/img/cn5b-p11-categories.png",
+       "imgAlt": "p.11 Three categories of satellites — 고도축 위 위성 층 ①②③ 과 띠 ④⑤ 의 이름이 가려져 있다",
+       "explainImg": "duo/img/cn5b-p11-categories-ans.png"
       },
       {
        "id": "u4c-13",
@@ -3221,7 +3992,7 @@
        "type": "tf",
        "q": "IS-95 기지국은 GPS 위성의 시각을 받아 동기화한다.",
        "answer": true,
-       "explain": "3강 [GPS 동기화] 와 4강 GPS 의 연결.",
+       "explain": "p.28 \"To provide synchronization, BSs use the service of GPS.\" CDMA 는 모든 BS 가 같은 주파수를 쓰고 code 로 구분하므로 BS 들의 시각이 맞아야 한다. GPS 는 4강의 MEO 위성이다 (교수: 세부는 not that important).",
        "src": "CH05(1) p.28",
        "wiki": "GPS 동기화",
        "tags": [
@@ -3272,6 +4043,74 @@
        "tags": [
         "GPS"
        ]
+      },
+      {
+       "id": "u4c-17",
+       "type": "match",
+       "q": "p.11 그림의 ①~⑤ 를 연결하시오",
+       "pairs": [
+        [
+         "①",
+         "GEO"
+        ],
+        [
+         "②",
+         "MEO"
+        ],
+        [
+         "③",
+         "LEO"
+        ],
+        [
+         "④",
+         "Upper Van Allen belt"
+        ],
+        [
+         "⑤",
+         "Lower Van Allen belt"
+        ]
+       ],
+       "explain": "고도 0 위로 LEO(파랑) → Lower Van Allen belt(⑤) → MEO(초록, 5,000–15,000 km 띠) → Upper Van Allen belt(④) → GEO(35,786 km 점선). 범주는 두 방사능 띠를 피해 나뉜다. 교수 필기: GEO = 정지궤도.",
+       "src": "CH05(2) p.11–14",
+       "wiki": "위성 세 범주",
+       "tags": [
+        "위성 세 범주"
+       ],
+       "img": "duo/img/cn5b-p11-categories.png",
+       "imgAlt": "p.11 Three categories of satellites — ①~⑤ 이름이 가려져 있다",
+       "explainImg": "duo/img/cn5b-p11-categories-ans.png"
+      },
+      {
+       "id": "u4c-18",
+       "type": "tf",
+       "q": "[PS1 2(d)] [O/X] A LEO user who does not move stays in view of the same satellite during a long call, so no handoff is needed. (If X, correct it.)",
+       "answer": false,
+       "explain": "X. LEO 는 주기가 약 96 min 이라 사용자가 가만히 있어도 위성과 footprint 가 지나가 버린다. 연결을 다음 위성으로 넘기는 **handoff** 가 필요하다. 셀룰러는 MS 가 움직이고, LEO 는 위성(BS 역할)이 움직인다.",
+       "src": "PS1 2(d) · CH05(2) p.21",
+       "wiki": "LEO",
+       "tags": [
+        "LEO"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u4c-19",
+       "type": "mc",
+       "q": "[PS1 2(c)] video call 처럼 interactive 한 응용에 더 맞는 위성과 그 이유는?",
+       "choices": [
+        "GEO — 한 기로 넓게 덮어서",
+        "LEO — one-way 지연이 수 ms 로, GEO 의 약 239 ms 보다 훨씬 짧아서",
+        "GEO — 정지해 있어 handoff 가 없어서",
+        "MEO — GPS 가 있어서"
+       ],
+       "answer": 1,
+       "explain": "LEO(550 km) one-way ≈ 3.67 ms, GEO(35,786 km) ≈ 238.6 ms (왕복 ≈ 477 ms). 수백 ms 지연은 대화에서 느껴진다. 비율 ≈ 35,786 / 550 ≈ 65 배.",
+       "src": "PS1 2(c)",
+       "wiki": "LEO",
+       "tags": [
+        "LEO"
+       ],
+       "prof": true
       }
      ]
     }
@@ -3497,6 +4336,34 @@
        "tags": [
         "fragmentation"
        ]
+      },
+      {
+       "id": "u5a-13",
+       "type": "sa",
+       "q": "[Term] \"Delivers packets host-to-host, from source to destination; routers on the path choose the best route for each packet.\" Which layer?",
+       "answer": "network layer",
+       "alts": [
+        "network"
+       ],
+       "explain": "p.3 개관. host-to-host 가 열쇠말 — process-to-process 면 transport layer.",
+       "src": "CH07(1) p.3",
+       "wiki": "host-to-host delivery",
+       "tags": [
+        "host-to-host delivery"
+       ],
+       "diff": 1
+      },
+      {
+       "id": "u5a-14",
+       "type": "tf",
+       "q": "[O/X] IP is connectionless: there is no setup, and each datagram is handled independently.",
+       "answer": true,
+       "explain": "p.4 \"Connectionless: no setup; each datagram is handled independently\". 교수 필기가 이 줄과 best effort 줄에 형광펜.",
+       "src": "CH07(1) p.4",
+       "wiki": "connectionless",
+       "tags": [
+        "connectionless"
+       ]
       }
      ]
     },
@@ -3531,7 +4398,10 @@
        "wiki": "IP가 제공하는 서비스",
        "tags": [
         "IP가 제공하는 서비스"
-       ]
+       ],
+       "img": "duo/img/cn7-p17-ipservice.png",
+       "imgAlt": "p.17 Network-Layer Services 표 — Error control 행의 \"IP provides?\" 와 설명이 가려져 있고 아래 네 행은 비어 있다",
+       "explainImg": "duo/img/cn7-p17-ipservice-ans.png"
       },
       {
        "id": "u5b-02",
@@ -3543,7 +4413,10 @@
        "wiki": "IP의 error control",
        "tags": [
         "IP의 error control"
-       ]
+       ],
+       "img": "duo/img/cn7-p13-checksum.png",
+       "imgAlt": "p.13 IP datagram 그림 — Header 아래 ①, Payload 아래 ② 의 표시가 가려져 있다",
+       "explainImg": "duo/img/cn7-p13-checksum-ans.png"
       },
       {
        "id": "u5b-03",
@@ -3562,7 +4435,10 @@
        "tags": [
         "routing"
        ],
-       "prof": true
+       "prof": true,
+       "img": "duo/img/cn7-p11-fwd.png",
+       "imgAlt": "p.11 forwarding table 그림 — 왼쪽 설명 두 줄이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7-p11-fwd-ans.png"
       },
       {
        "id": "u5b-04",
@@ -3598,7 +4474,10 @@
        "wiki": "forwarding table",
        "tags": [
         "forwarding table"
-       ]
+       ],
+       "img": "duo/img/cn7-p24-dgram-table.png",
+       "imgAlt": "p.24 datagram 방식 forwarding table — 첫째 열 이름과 왼쪽 화살표 이름이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7-p24-dgram-table-ans.png"
       },
       {
        "id": "u5b-06",
@@ -3645,7 +4524,10 @@
        "wiki": "congestion control",
        "tags": [
         "congestion control"
-       ]
+       ],
+       "img": "duo/img/cn7-p14-cycle.png",
+       "imgAlt": "p.14 a vicious cycle 그림 — 세 상자 ①②③ 이 가려져 있다",
+       "explainImg": "duo/img/cn7-p14-cycle-ans.png"
       },
       {
        "id": "u5b-09",
@@ -3719,6 +4601,46 @@
         "forwarding table"
        ],
        "diff": 1
+      },
+      {
+       "id": "u5b-13",
+       "type": "mc",
+       "q": "[PS1 3(e)] payload 만 직전 링크에서 깨지고 header 는 멀쩡한 datagram 이 router 에 왔다. 옳은 것은?",
+       "choices": [
+        "IP 가 checksum 으로 찾아내 버린다",
+        "IP 는 못 찾는다 — checksum 은 header 만 덮고, payload 오류는 목적지 transport layer 가 찾는다",
+        "IP 가 찾아서 재전송을 요청한다",
+        "router 가 payload 를 decapsulate 해 고친다"
+       ],
+       "answer": 1,
+       "explain": "IPv4 checksum 은 **header only** (p.12 그림: header checked ✓, payload not checked by IP). header 는 매 hop 바뀌어(TTL 등) checksum 을 다시 계산해야 하니 작게 둔다. payload 는 TCP/UDP checksum(header + data)이 목적지에서 잡고, TCP 가 재전송한다.",
+       "src": "PS1 3(e) · CH07(1) p.12",
+       "wiki": "IP의 error control",
+       "tags": [
+        "IP의 error control"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u5b-14",
+       "type": "mc",
+       "q": "p.13 IP datagram 그림의 ① 과 ② 는?",
+       "choices": [
+        "① checked ✓ ② not checked by IP",
+        "① not checked ② checked by IP",
+        "① encrypted ② compressed",
+        "① checked ② checked by TCP only"
+       ],
+       "answer": 0,
+       "explain": "checksum 은 header 만 덮는다 → header 쪽 checked ✓, payload 쪽 not checked by IP. 그래서 IP 의 error control 은 △ Partly.",
+       "src": "CH07(1) p.12–13",
+       "wiki": "IP의 error control",
+       "tags": [
+        "IP의 error control"
+       ],
+       "img": "duo/img/cn7-p13-checksum.png",
+       "imgAlt": "p.13 IP datagram 그림 — Header 아래 ①, Payload 아래 ② 의 표시가 가려져 있다",
+       "explainImg": "duo/img/cn7-p13-checksum-ans.png"
       }
      ]
     },
@@ -3767,7 +4689,10 @@
        "tags": [
         "virtual-circuit approach"
        ],
-       "prof": true
+       "prof": true,
+       "img": "duo/img/cn7-p26-dg-vc.png",
+       "imgAlt": "p.26 Datagram vs Virtual-Circuit 표 — Virtual circuit 열 전체가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7-p26-dg-vc-ans.png"
       },
       {
        "id": "u5c-03",
@@ -3779,7 +4704,10 @@
        "wiki": "datagram approach",
        "tags": [
         "datagram approach"
-       ]
+       ],
+       "img": "duo/img/cn7-p23-dgram.png",
+       "imgAlt": "p.23 connectionless (datagram) packet-switched network — 1~4 번 packet 이 서로 다른 경로로 가고, Receiver 앞 도착 순서 아래 이름표가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7-p23-dgram-ans.png"
       },
       {
        "id": "u5c-04",
@@ -3878,7 +4806,7 @@
        "type": "tf",
        "q": "packet switching 에는 datagram approach 와 virtual-circuit approach 두 가지가 있다.",
        "answer": true,
-       "explain": "p.21–26. IP 는 datagram 쪽.",
+       "explain": "p.19–26: packet switching = datagram(connectionless, packet 마다 destination address 로 따로) vs virtual circuit(connection-oriented, setup 한 경로를 label 로). Internet 의 IP 는 datagram 쪽이다.",
        "src": "CH07(1) p.21",
        "wiki": "packet switching",
        "tags": [
@@ -3915,7 +4843,50 @@
        "tags": [
         "VCI"
        ],
+       "prof": true,
+       "img": "duo/img/cn7-p25-vc.png",
+       "imgAlt": "p.25 connection-oriented packet-switched network — 1~4 번 packet 이 모두 R1→R3→R4 의 같은 virtual circuit 을 따라간다"
+      },
+      {
+       "id": "u5c-12",
+       "type": "mc",
+       "q": "[PS1 3(d)] router 하나가 고장 났을 때, 그 router **안에** 있던 packet 은?",
+       "choices": [
+        "datagram 방식에서만 잃는다",
+        "VC 방식에서만 잃는다",
+        "두 방식 모두 잃는다 (network layer 는 다시 보내지 않음)",
+        "두 방식 모두 다른 경로로 살아난다"
+       ],
+       "answer": 2,
+       "explain": "고장 순간 router 안의 packet 은 어느 방식이든 잃는다. 차이는 **아직 도착하지 않은 packet**: datagram 은 다른 경로로, VC 는 새 circuit setup 뒤에. PS1 해설: 이 줄을 빼면 한쪽이 완벽한 것처럼 써진다.",
+       "src": "PS1 3(d)",
+       "wiki": "datagram approach",
+       "tags": [
+        "datagram approach"
+       ],
        "prof": true
+      },
+      {
+       "id": "u5c-13",
+       "type": "mc",
+       "q": "p.26 표에서 가린 Virtual circuit 열의 \"Router decides by\" 칸은?",
+       "choices": [
+        "Destination address",
+        "Label (VCI)",
+        "Source address",
+        "TTL"
+       ],
+       "answer": 1,
+       "explain": "VC: Connection-oriented · Setup Yes(path is set up first) · **Label (VCI)** · Same path for all packets · In order. 교수: 이것이 key difference (39:05).",
+       "src": "CH07(1) p.26 · 1027 녹음 39:05",
+       "wiki": "VCI",
+       "tags": [
+        "VCI"
+       ],
+       "prof": true,
+       "img": "duo/img/cn7-p26-dg-vc.png",
+       "imgAlt": "p.26 Datagram vs Virtual-Circuit 표 — Virtual circuit 열이 가려져 있다",
+       "explainImg": "duo/img/cn7-p26-dg-vc-ans.png"
       }
      ]
     },
@@ -4014,7 +4985,10 @@
        "tags": [
         "total delay 공식"
        ],
-       "prof": true
+       "prof": true,
+       "img": "duo/img/cn7-p33-total.png",
+       "imgAlt": "p.33 Total delay 공식 — Delay_qu 앞 계수가 ? 로 가려져 있다. 아래 Source–R1…Rn–Dest. 경로",
+       "explainImg": "duo/img/cn7-p33-total-ans.png"
       },
       {
        "id": "u5d-06",
@@ -4085,7 +5059,9 @@
        "wiki": "bottleneck",
        "tags": [
         "bottleneck"
-       ]
+       ],
+       "img": "duo/img/cn7-p36-bottleneck.png",
+       "imgAlt": "p.36 세 링크 경로(TR 200·100·150 Kbps)와 water-pipe analogy 의 Bottleneck"
       },
       {
        "id": "u5d-11",
@@ -4118,7 +5094,10 @@
        "wiki": "load와 성능",
        "tags": [
         "load와 성능"
-       ]
+       ],
+       "img": "duo/img/cn7-p38-load-a.png",
+       "imgAlt": "p.38 (a) Delay as a function of load — capacity 근처에서 delay 가 치솟는다 (throughput 그래프 (b) 는 해설에)",
+       "explainImg": "duo/img/cn7-p38-load.png"
       },
       {
        "id": "u5d-13",
@@ -4155,6 +5134,93 @@
        "tags": [
         "transmission delay"
        ]
+      },
+      {
+       "id": "u5d-15",
+       "type": "mc",
+       "q": "p.31 router 안의 ① input queue 와 ② output queue 에서 생기는 delay 는?",
+       "choices": [
+        "processing delay",
+        "queuing delay",
+        "propagation delay",
+        "transmission delay"
+       ],
+       "answer": 1,
+       "explain": "queue 에서 기다리는 시간 = **queuing delay** (Delay_qu). 가운데 Process 상자가 processing delay (Delay_pr). queuing 은 routers 에서만 생기고 traffic load 와 함께 늘어난다.",
+       "src": "CH07(1) p.31",
+       "wiki": "queuing delay",
+       "tags": [
+        "queuing delay"
+       ],
+       "prof": true,
+       "img": "duo/img/cn7-p31-router.png",
+       "imgAlt": "p.31 Inside a router — input·output queue 아래 이름이 ①② 로 가려져 있다",
+       "explainImg": "duo/img/cn7-p31-router-ans.png"
+      },
+      {
+       "id": "u5d-16",
+       "type": "num",
+       "q": "[PS1 3(a) 변형] A 1,000-byte packet crosses 2 routers. All links are 8 Mbps and 400 km long; propagation speed 2×10^8 m/s. Processing delay is 0.1 ms at each router and at the destination; queuing delay is 1 ms at each router. Total delay (ms)?",
+       "answer": 11.3,
+       "unit": "ms",
+       "tol": 0.001,
+       "explain": "n = 2 → 링크 3 개. tr = 8,000 bits / 8×10^6 = 1 ms, pg = 4×10^5 / 2×10^8 = 2 ms, pr = 0.1 ms. Total = 3 × (1 + 2 + 0.1) + 2 × 1 = 9.3 + 2 = **11.3 ms**. queuing 은 router 수(n = 2)만큼.",
+       "src": "PS1 3(a) 변형",
+       "wiki": "total delay 공식",
+       "tags": [
+        "total delay 공식"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u5d-17",
+       "type": "mc",
+       "q": "[PS1 3(b) 변형] 위 경로의 링크를 80 Mbps 로 바꾸면 가장 큰 delay 성분은?",
+       "choices": [
+        "transmission (3 × 0.1 = 0.3 ms)",
+        "propagation (3 × 2 = 6 ms)",
+        "processing (0.3 ms)",
+        "queuing (2 ms)"
+       ],
+       "answer": 1,
+       "explain": "rate 를 올리면 transmission 만 0.1 ms 로 준다. propagation 은 거리/속도라 rate 와 무관해 6 ms 그대로 → 가장 크다. 새 total = 3 × (0.1 + 2 + 0.1) + 2 = 8.6 ms.",
+       "src": "PS1 3(b) 변형",
+       "wiki": "propagation delay",
+       "tags": [
+        "propagation delay"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u5d-18",
+       "type": "num",
+       "q": "[PS1 3(c) 변형] Links of 50, 8 and 20 Mbps are in series. How many seconds to send a 12-MB file? (1 MB = 10^6 bytes)",
+       "answer": 12,
+       "unit": "s",
+       "tol": 0,
+       "explain": "throughput = min(50, 8, 20) = 8 Mbps (bottleneck). 12 × 10^6 × 8 = 9.6×10^7 bits ÷ 8×10^6 = **12 s**.",
+       "src": "PS1 3(c) 변형",
+       "wiki": "throughput",
+       "tags": [
+        "throughput"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u5d-19",
+       "type": "sa",
+       "q": "[Term] \"Time to put all bits of the packet on the link.\" Give the term.",
+       "answer": "transmission delay",
+       "alts": [
+        "transmission"
+       ],
+       "explain": "p.29 정의. 한 비트가 링크를 건너는 시간은 propagation delay (p.30). 교수 그림: tr = push all bits out, pg = one bit crosses the link.",
+       "src": "CH07(1) p.29",
+       "wiki": "transmission delay",
+       "tags": [
+        "transmission delay"
+       ],
+       "diff": 1
       }
      ]
     }
@@ -4290,7 +5356,10 @@
        "wiki": "classful addressing",
        "tags": [
         "classful addressing"
-       ]
+       ],
+       "img": "duo/img/cn7b-p07-classful.png",
+       "imgAlt": "p.7 classful 표 — 아래 \"Why 2^7 and not 2^8?\" 뒤 설명이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7b-p07-classful-ans.png"
       },
       {
        "id": "u6a-07",
@@ -4398,7 +5467,7 @@
        "type": "tf",
        "q": "prefix 는 network 를, suffix 는 그 network 안의 node 를 가리킨다 (two-level hierarchy).",
        "answer": true,
-       "explain": "p.5 two-level hierarchy.",
+       "explain": "p.5 two-level hierarchy (우편 주소처럼): 앞 n bits prefix 가 network 를, 뒤 32 − n bits suffix 가 그 안의 connection(node) 을 정한다. router 는 prefix 만 보고 network 까지 보낸다.",
        "src": "CH07(2) p.5",
        "wiki": "prefix와 suffix",
        "tags": [
@@ -4638,6 +5707,47 @@
        "tags": [
         "address mask"
        ]
+      },
+      {
+       "id": "u6b-15",
+       "type": "sa",
+       "q": "[PS1 4(a) 변형] For the address 10.20.30.150/26, find the address mask (dotted-decimal).",
+       "answer": "255.255.255.192",
+       "explain": "/26 → 26 개의 1: 11111111.11111111.11111111.11000000 = **255.255.255.192**. 마지막 byte 1100 0000 = 192.",
+       "src": "PS1 4(a) 변형",
+       "wiki": "address mask",
+       "tags": [
+        "address mask"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u6b-16",
+       "type": "num",
+       "q": "[PS1 4(a) 변형] 10.20.30.150/26 의 first address 마지막 byte 는? (2진수로 AND)",
+       "answer": 128,
+       "tol": 0,
+       "explain": "150 = 1001 0110, mask 1100 0000 → AND = 1000 0000 = **128**. first = 10.20.30.128. 검산: 128 ÷ 64 = 2 ✓, 128 ≤ 150.",
+       "src": "PS1 4(a) 변형",
+       "wiki": "block의 세 가지 정보",
+       "tags": [
+        "block의 세 가지 정보"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u6b-17",
+       "type": "num",
+       "q": "[PS1 4(a) 변형] 같은 block 의 last address 마지막 byte 는?",
+       "answer": 191,
+       "tol": 0,
+       "explain": "150 OR NOT(mask) = 1001 0110 OR 0011 1111 = 1011 1111 = **191**. 검산: 191 − 128 + 1 = 64 = 2^(32−26) ✓.",
+       "src": "PS1 4(a) 변형",
+       "wiki": "block의 세 가지 정보",
+       "tags": [
+        "block의 세 가지 정보"
+       ],
+       "prof": true
       }
      ]
     },
@@ -4685,7 +5795,7 @@
          "302,910,464 = 1024 × 295,811 → 규칙 ③ 만족"
         ]
        ],
-       "explain": "이 규칙을 subnet 에도 그대로 적용한다.",
+       "explain": "p.21: ① N 은 2 의 거듭제곱(suffix 비트로 딱 떨어지게) ② 주소가 빈틈없이 연속 ③ first address 가 N 으로 나누어떨어짐(= suffix 비트가 모두 0). ③ 을 어기면 first address AND mask 가 자기 자신이 아니게 된다. subnet 을 나눌 때도 같은 세 규칙.",
        "src": "CH07(2) p.21–22",
        "wiki": "CIDR",
        "tags": [
@@ -4704,7 +5814,10 @@
        "tags": [
         "Example 7.4"
        ],
-       "prof": true
+       "prof": true,
+       "img": "duo/img/cn7b-p22-ex74.png",
+       "imgAlt": "p.22 Example 7.4 풀이 — ② 의 n 값과 ③ 의 block 이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7b-p22-ex74-ans.png"
       },
       {
        "id": "u6c-04",
@@ -4763,7 +5876,10 @@
        "wiki": "Example 7.5 subnet 설계",
        "tags": [
         "Example 7.5 subnet 설계"
-       ]
+       ],
+       "img": "duo/img/cn7b-p25-ex75.png",
+       "imgAlt": "p.25 Example 7.5 표 — Need 120·60·10, Allocate 128·64·16 까지만 보이고 Prefix·First·Last address 열이 가려져 있다",
+       "explainImg": "duo/img/cn7b-p25-ex75-ans.png"
       },
       {
        "id": "u6c-08",
@@ -4790,7 +5906,10 @@
        "tags": [
         "Example 7.5 subnet 설계"
        ],
-       "diff": 3
+       "diff": 3,
+       "img": "duo/img/cn7b-p26-subblocks.png",
+       "imgAlt": "p.26 Example 7.5 subblock 그림 — 세 번째(16 개) subblock 아래 주소가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7b-p26-subblocks-ans.png"
       },
       {
        "id": "u6c-10",
@@ -4856,6 +5975,53 @@
        "tags": [
         "Example 7.5 subnet 설계"
        ]
+      },
+      {
+       "id": "u6c-14",
+       "type": "mc",
+       "q": "[PS1 4(b) 변형] Which address can be the first address of a CIDR block?",
+       "choices": [
+        "172.16.12.0/21",
+        "10.0.0.144/27",
+        "172.16.8.0/21",
+        "10.0.0.204/29"
+       ],
+       "answer": 2,
+       "explain": "first address 는 host 비트가 모두 0 = 주소가 block 크기로 나누어떨어져야 한다. /21 은 셋째 byte 기준 8 칸: 8 ÷ 8 ✓, 12 ÷ 8 ✗. /27 은 32 칸: 144 ÷ 32 = 4.5 ✗. /29 는 8 칸: 204 ÷ 8 = 25.5 ✗. → **172.16.8.0/21**.",
+       "src": "PS1 4(b) 변형",
+       "wiki": "CIDR",
+       "tags": [
+        "CIDR"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u6c-15",
+       "type": "sa",
+       "q": "[PS1 4(c) 변형] 200.10.32.0/22 를 250·120·60·30 개 요청에 큰 것부터 나눠 줄 때, 60 개 요청의 subblock 은? (x.x.x.x/n)",
+       "answer": "200.10.33.128/26",
+       "explain": "2 의 거듭제곱으로 올림: 256(/24) · 128(/25) · 64(/26) · 32(/27). 큰 것부터: 200.10.32.0/24 → 200.10.33.0/25 → **200.10.33.128/26** → 200.10.33.192/27. 시작 주소가 각 크기로 나누어떨어지는지 확인(33.128 = 8,576 ÷ 64 = 134 ✓).",
+       "src": "PS1 4(c) 변형",
+       "wiki": "subnetting",
+       "tags": [
+        "subnetting"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u6c-16",
+       "type": "num",
+       "q": "[PS1 4(c) 변형] 위 배치 뒤 /22 에 남는 주소 수는?",
+       "answer": 544,
+       "unit": "개",
+       "tol": 0,
+       "explain": "1,024 − (256 + 128 + 64 + 32) = 1,024 − 480 = **544**. 544 는 2 의 거듭제곱이 아니라 CIDR block 하나로 묶을 수 없다 (Ex 7.5 의 48 과 같은 상황, PS1 4(c) 의 64 와는 반대).",
+       "src": "PS1 4(c) 변형",
+       "wiki": "subnetting",
+       "tags": [
+        "subnetting"
+       ],
+       "prof": true
       }
      ]
     },
@@ -4892,7 +6058,10 @@
        "wiki": "Example 7.6",
        "tags": [
         "Example 7.6"
-       ]
+       ],
+       "img": "duo/img/cn7b-p28-ex76.png",
+       "imgAlt": "p.28 Example 7.6 — Block 1~4 (/26 네 개)가 ISP 로 모이고, ISP 가 광고하는 주소 범위가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7b-p28-ex76-ans.png"
       },
       {
        "id": "u6d-03",
@@ -4954,7 +6123,10 @@
        "wiki": "hierarchical routing",
        "tags": [
         "hierarchical routing"
-       ]
+       ],
+       "img": "duo/img/cn7b-p68-ex722.png",
+       "imgAlt": "p.68 Example 7.22 hierarchical routing — Regional ISP 의 prefix 길이와 Total 이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7b-p68-ex722-ans.png"
       },
       {
        "id": "u6d-07",
@@ -5047,6 +6219,38 @@
         "block의 세 가지 정보"
        ],
        "diff": 1
+      },
+      {
+       "id": "u6d-12",
+       "type": "sa",
+       "q": "[PS1 4(d) 변형] 10.1.1.0/27, 10.1.1.32/27, 10.1.1.64/27, 10.1.1.96/27 를 하나로 광고할 block 은? (x.x.x.x/n)",
+       "answer": "10.1.1.0/25",
+       "explain": "4 × 32 = 128 = 2^7 주소, 0 부터 연속, 0 ÷ 128 ✓ → prefix 32 − 7 = 25 → **10.1.1.0/25**. 넷째 byte 0·32·64·96 은 앞 1 bit(0)가 공통.",
+       "src": "PS1 4(d) 변형",
+       "wiki": "address aggregation",
+       "tags": [
+        "address aggregation"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u6d-13",
+       "type": "mc",
+       "q": "[PS1 4(d)(ii) 변형] 위에서 10.1.1.96/27 이 다른 ISP 로 옮겨 갔다. 나머지 셋을 정확히 덮는 가장 적은 block 집합은?",
+       "choices": [
+        "10.1.1.0/25",
+        "{10.1.1.0/26, 10.1.1.64/27}",
+        "{10.1.1.0/27, 10.1.1.32/26}",
+        "10.1.1.0/26"
+       ],
+       "answer": 1,
+       "explain": "96 개는 2 의 거듭제곱이 아니라 block 하나는 불가. .0 + .32 → 64 개, 0 ÷ 64 ✓ → 10.1.1.0/26. 남은 .64/27 은 혼자. /25 는 남의 .96/27 까지 덮어 \"exactly\" 위반. ③ 은 .32/26 의 시작이 64 로 안 나누어떨어져 틀린 block.",
+       "src": "PS1 4(d) 변형",
+       "wiki": "address aggregation",
+       "tags": [
+        "address aggregation"
+       ],
+       "prof": true
       }
      ]
     }
@@ -5175,7 +6379,10 @@
        "wiki": "protocol field",
        "tags": [
         "protocol field"
-       ]
+       ],
+       "img": "duo/img/cn7b-p36-protocol.png",
+       "imgAlt": "p.36 protocol field 그림 — Transport 의 TCP·UDP, Network 의 ICMP·IGMP·OSPF 가 Payload 로 내려온다. 왼쪽 \"Some protocol values\" 상자가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7b-p36-protocol-ans.png"
       },
       {
        "id": "u7a-06",
@@ -5284,6 +6491,42 @@
         "header checksum"
        ],
        "prof": true
+      },
+      {
+       "id": "u7a-13",
+       "type": "match",
+       "q": "p.32 header format 의 가린 필드 ①~⑤ 를 연결하시오",
+       "pairs": [
+        [
+         "① (16 bits)",
+         "Identification"
+        ],
+        [
+         "② (3 bits)",
+         "Flags"
+        ],
+        [
+         "③ (13 bits)",
+         "Fragmentation offset"
+        ],
+        [
+         "④ (8 bits)",
+         "Time-to-live"
+        ],
+        [
+         "⑤ (16 bits)",
+         "Header checksum"
+        ]
+       ],
+       "explain": "둘째 행 = fragmentation 3 형제(Identification 16 · Flags 3 · Fragmentation offset 13), 셋째 행 = TTL 8 · Protocol 8 · Header checksum 16. 비트 수가 행마다 32 로 맞는다.",
+       "src": "CH07(2) p.32",
+       "wiki": "IPv4 datagram format",
+       "tags": [
+        "IPv4 datagram format"
+       ],
+       "img": "duo/img/cn7b-p32-header.png",
+       "imgAlt": "p.32 IPv4 header format — 둘째·셋째 행 필드 이름 ①~⑤ 가 가려져 있다 (비트 수는 보인다)",
+       "explainImg": "duo/img/cn7b-p32-header-ans.png"
       }
      ]
     },
@@ -5322,7 +6565,10 @@
        "tags": [
         "Example 7.7 버전 판정"
        ],
-       "diff": 3
+       "diff": 3,
+       "img": "duo/img/cn7b-p39-ex77.png",
+       "imgAlt": "p.39 Example 7.7 — 첫 byte 0100 | 0010, VER = 4 ✓ 옆 HLEN 판정이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7b-p39-ex77-ans.png"
       },
       {
        "id": "u7b-03",
@@ -5486,7 +6732,78 @@
        "wiki": "Example 7.10 TTL과 protocol",
        "tags": [
         "Example 7.10 TTL과 protocol"
-       ]
+       ],
+       "img": "duo/img/cn7b-p41-hex.png",
+       "imgAlt": "p.41 Example 7.10 — 45 00 00 28 00 01 00 00 01 02 와 byte 번호 1~10, 9·10 번째 아래 이름이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7b-p41-hex-ans.png"
+      },
+      {
+       "id": "u7b-13",
+       "type": "num",
+       "q": "[PS1 5(a) 변형] An IPv4 header begins with 46 00 01 2C 3A 10 20 05 0A 11 (hex). What is the header length in bytes?",
+       "answer": 24,
+       "unit": "bytes",
+       "tol": 0,
+       "explain": "첫 byte 0x46 = 0100 0110 → VER 4, HLEN 6 → 6 × 4 = **24 bytes** (options 4 B 포함).",
+       "src": "PS1 5(a) 변형",
+       "wiki": "HLEN",
+       "tags": [
+        "HLEN"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u7b-14",
+       "type": "num",
+       "q": "[PS1 5(a) 변형] 같은 header 에서 data(payload) 는 몇 bytes?",
+       "answer": 276,
+       "unit": "bytes",
+       "tol": 0,
+       "explain": "byte 3–4 = 0x012C = 300 = total length (header 포함). data = 300 − 24 = **276 bytes**.",
+       "src": "PS1 5(a) 변형",
+       "wiki": "total length",
+       "tags": [
+        "total length"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u7b-15",
+       "type": "mc",
+       "q": "[PS1 5(a) 변형] 같은 header 의 byte 7–8 = 0x2005 이다. 이 datagram 은?",
+       "choices": [
+        "fragment 아님 (D = 1)",
+        "first fragment",
+        "middle fragment, 첫 data byte 40",
+        "last fragment, 첫 data byte 5"
+       ],
+       "answer": 2,
+       "explain": "0x2005 = 0010 0000 0000 0101 → 앞 3 bits 001 = (reserved 0, D 0, **M 1**), 나머지 13 bits = 5 → offset 5 → 첫 data byte 5 × 8 = 40. M = 1 이고 offset > 0 → **middle fragment**. offset 을 그대로 byte 번호로 쓰면 오답.",
+       "src": "PS1 5(a) 변형",
+       "wiki": "fragmentation offset",
+       "tags": [
+        "fragmentation offset"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u7b-16",
+       "type": "mc",
+       "q": "[PS1 5(a) 변형] 같은 header 의 9·10 번째 byte 가 0A 11 이다. 옳은 것은?",
+       "choices": [
+        "10 hops 더 갈 수 있고, payload 는 UDP",
+        "10 hops, TCP",
+        "1 hop, UDP",
+        "17 hops, ICMP"
+       ],
+       "answer": 0,
+       "explain": "TTL = 0x0A = **10** hops, protocol = 0x11 = 17 = **UDP** (p.36: ICMP 1, IGMP 2, TCP 6, UDP 17, OSPF 89).",
+       "src": "PS1 5(a) 변형",
+       "wiki": "protocol field",
+       "tags": [
+        "protocol field"
+       ],
+       "prof": true
       }
      ]
     },
@@ -5552,7 +6869,10 @@
        "wiki": "Example 7.14 fragment 위치 판정",
        "tags": [
         "Example 7.14 fragment 위치 판정"
-       ]
+       ],
+       "img": "duo/img/cn7b-p47-mbit.png",
+       "imgAlt": "p.47 Summary 표 — M bit·Offset 네 조합의 \"This packet is…\" 열이 가려져 있다",
+       "explainImg": "duo/img/cn7b-p47-mbit-ans.png"
       },
       {
        "id": "u7c-04",
@@ -5565,7 +6885,10 @@
        "wiki": "Example 7.16 첫·마지막 바이트",
        "tags": [
         "Example 7.16 첫·마지막 바이트"
-       ]
+       ],
+       "img": "duo/img/cn7b-p48-ex716.png",
+       "imgAlt": "p.48 Example 7.16 막대 — data of this fragment: 80 bytes, 양 끝 byte 번호가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7b-p48-ex716-ans.png"
       },
       {
        "id": "u7c-05",
@@ -5620,7 +6943,10 @@
        "wiki": "fragmentation offset",
        "tags": [
         "fragmentation offset"
-       ]
+       ],
+       "img": "duo/img/cn7b-p45-offset.png",
+       "imgAlt": "p.45 fragmentation offset 그림 — Byte 0000~3999 datagram 이 0000–1399, 1400–2799, 2800–3999 세 fragment 로 나뉘고 아래 두 offset 이 가려져 있다",
+       "explainImg": "duo/img/cn7b-p45-offset-ans.png"
       },
       {
        "id": "u7c-09",
@@ -5715,7 +7041,41 @@
        "wiki": "fragmentation offset",
        "tags": [
         "fragmentation offset"
-       ]
+       ],
+       "img": "duo/img/cn7b-p45-offset.png",
+       "imgAlt": "p.45 fragmentation offset 그림 — 아래 두 fragment 의 offset 이 가려져 있다",
+       "explainImg": "duo/img/cn7b-p45-offset-ans.png"
+      },
+      {
+       "id": "u7c-15",
+       "type": "num",
+       "q": "[PS1 5(b) 변형] A fragment has M = 0, offset = 300, HLEN = 5, total length = 820. What is the number of its last data byte?",
+       "answer": 3199,
+       "tol": 0,
+       "explain": "첫 byte = 300 × 8 = 2,400. data = 820 − 5 × 4 = 800 bytes. 마지막 = 2,400 + 800 − 1 = **3,199**. M = 0 이고 offset > 0 → **last fragment** 라 원래 datagram 의 data 는 3,200 bytes.",
+       "src": "PS1 5(b) 변형",
+       "wiki": "fragmentation offset",
+       "tags": [
+        "fragmentation offset"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u7c-16",
+       "type": "sa",
+       "q": "[Term] \"Maximum payload size of a frame\", set by the network hardware and software. Give the term (약어).",
+       "answer": "MTU",
+       "alts": [
+        "Maximum Transfer Unit",
+        "Maximum Transmission Unit"
+       ],
+       "explain": "p.42: MTU (Maximum Transfer Unit), 예: Ethernet LAN 1,500 bytes. datagram 이 MTU 보다 크면 fragmentation.",
+       "src": "CH07(2) p.42",
+       "wiki": "MTU",
+       "tags": [
+        "MTU"
+       ],
+       "diff": 1
       }
      ]
     },
@@ -5754,7 +7114,10 @@
        "wiki": "ICMP error-reporting message",
        "tags": [
         "ICMP error-reporting message"
-       ]
+       ],
+       "img": "duo/img/cn7b-p53-icmp.png",
+       "imgAlt": "p.53 ICMP error-reporting 표 — Type 3·4·5·11·12 의 Message 열이 가려져 있다",
+       "explainImg": "duo/img/cn7b-p53-icmp-ans.png"
       },
       {
        "id": "u7d-02",
@@ -5872,7 +7235,10 @@
        "wiki": "Example 7.19–7.21 R1 포워딩",
        "tags": [
         "Example 7.19–7.21 R1 포워딩"
-       ]
+       ],
+       "img": "duo/img/cn7b-p62-ex721.png",
+       "imgAlt": "p.62 Example 7.21 — /26·/25 행의 Destination AND mask 값과 Match? 열이 가려져 있다",
+       "explainImg": "duo/img/cn7b-p62-ex721-ans.png"
       },
       {
        "id": "u7d-09",
@@ -6000,6 +7366,43 @@
        "tags": [
         "ICMPv4"
        ]
+      },
+      {
+       "id": "u7d-16",
+       "type": "sa",
+       "q": "p.54 TTL running out 그림: TTL 이 0 이 된 R3 가 datagram 을 버리고 Host 로 보내는 ? 메시지의 이름은? (영문)",
+       "answer": "time exceeded",
+       "alts": [
+        "time exceeded message",
+        "Time exceeded (type 11)"
+       ],
+       "explain": "TTL 이 0 이 되면 router 가 datagram 을 discard 하고 **time exceeded (type 11)** ICMP error 를 original source 로 보낸다. traceroute 가 이것으로 경로를 알아낸다.",
+       "src": "CH07(2) p.54",
+       "wiki": "ICMP error-reporting message",
+       "tags": [
+        "ICMP error-reporting message"
+       ],
+       "img": "duo/img/cn7b-p54-ttl.png",
+       "imgAlt": "p.54 TTL running out — Host → R1(TTL=3) → R2(TTL=2) → R3(TTL=1 → 0, discard), R3 에서 Host 로 돌아가는 점선 메시지 이름이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7b-p54-ttl-ans.png"
+      },
+      {
+       "id": "u7d-17",
+       "type": "mc",
+       "q": "[변형] 같은 R1 표(/26 180.70.65.192 m2, /25 180.70.65.128 m0, /24 201.4.22.0 m3, /22 201.4.16.0 m1, default 180.70.65.200 m2)에서 180.70.65.90 의 출력은?",
+       "choices": [
+        "m0",
+        "m1",
+        "m2 (default, next hop 180.70.65.200)",
+        "m3"
+       ],
+       "answer": 2,
+       "explain": "/26: 90 AND 192 = 64 ≠ 192. /25: 90 AND 128 = 0 ≠ 128. /24·/22: 앞 두 byte 가 201.4 가 아니라 불일치. → 어느 행도 안 맞아 **default** (next hop 180.70.65.200, m2). 긴 mask 부터 차례로 비교한다.",
+       "src": "CH07(2) p.60–62",
+       "wiki": "longest mask matching",
+       "tags": [
+        "longest mask matching"
+       ]
       }
      ]
     }
@@ -6106,7 +7509,10 @@
        "wiki": "zero compression",
        "tags": [
         "zero compression"
-       ]
+       ],
+       "img": "duo/img/cn7c-p04-zero.png",
+       "imgAlt": "p.4 zero compression 그림 — Original FDEC:0074:0000:0000:0000:B0FF:0000:FFF0, Abbreviated FDEC:74:0:0:0:B0FF:0:FFF0, More abbreviated 가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7c-p04-zero-ans.png"
       },
       {
        "id": "u8a-07",
@@ -6220,6 +7626,18 @@
         "zero compression"
        ],
        "prof": true
+      },
+      {
+       "id": "u8a-14",
+       "type": "sa",
+       "q": "[변형] 2001:0DB8:0000:0000:0008:0800:200C:417A 를 가장 짧게 쓰면?",
+       "answer": "2001:DB8::8:800:200C:417A",
+       "explain": "section 앞쪽 0 지우기: 0DB8 → DB8, 0008 → 8, 0800 → 800 (뒤쪽 0 은 못 지운다). 연속 0 section 두 개 → `::` 한 번. → **2001:DB8::8:800:200C:417A**.",
+       "src": "CH07(3) p.4",
+       "wiki": "zero compression",
+       "tags": [
+        "zero compression"
+       ]
       }
      ]
     },
@@ -6278,7 +7696,10 @@
        "wiki": "global unicast address",
        "tags": [
         "global unicast address"
-       ]
+       ],
+       "img": "duo/img/cn7c-p08-parts.png",
+       "imgAlt": "p.8 global unicast 세 부분 — Global routing prefix (n), Subnet (m), Interface ID (q) 의 비트 수가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7c-p08-parts-ans.png"
       },
       {
        "id": "u8b-03",
@@ -6336,7 +7757,10 @@
        "wiki": "EUI-64",
        "tags": [
         "EUI-64"
-       ]
+       ],
+       "img": "duo/img/cn7c-p12-mac.png",
+       "imgAlt": "p.12 (b) 48-bit Ethernet MAC → 64-bit interface identifier 그림 — 가운데 added bits, 설명 문구가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7c-p12-mac-ans.png"
       },
       {
        "id": "u8b-07",
@@ -6352,7 +7776,10 @@
        "tags": [
         "Example 7.29"
        ],
-       "prof": true
+       "prof": true,
+       "img": "duo/img/cn7c-p20-ex729.png",
+       "imgAlt": "p.20 Example 7.29 풀이 — Interface ID 와 link-local address 가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7c-p20-ex729-ans.png"
       },
       {
        "id": "u8b-08",
@@ -6406,7 +7833,10 @@
        "tags": [
         "Example 7.29"
        ],
-       "prof": true
+       "prof": true,
+       "img": "duo/img/cn7c-p21-ex729.png",
+       "imgAlt": "p.21 Example 7.29 — 3A21:1216:2165 (48 bits) | 1232 (16 bits) | 64-bit interface ID 칸이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7c-p21-ex729-ans.png"
       },
       {
        "id": "u8b-11",
@@ -6437,6 +7867,39 @@
        ],
        "explain": "FE80::/10 + interface ID. Ex: FE80::F7A9:23FF:FE11:9BE2.",
        "src": "CH07(3) p.15",
+       "wiki": "link-local address",
+       "tags": [
+        "link-local address"
+       ],
+       "img": "duo/img/cn7c-p15-linklocal.png",
+       "imgAlt": "p.15 link-local address (128 bits) — 10 bits 칸과 64 bits 칸이 ? 로 가려져 있고 가운데는 54 zeros",
+       "explainImg": "duo/img/cn7c-p15-linklocal-ans.png"
+      },
+      {
+       "id": "u8b-13",
+       "type": "sa",
+       "q": "[Ex 7.29 변형] MAC 00-1A-2B-3C-4D-5E 의 64-bit interface ID 는? (colon hex 4 section)",
+       "answer": "021A:2BFF:FE3C:4D5E",
+       "alts": [
+        "21A:2BFF:FE3C:4D5E"
+       ],
+       "explain": "① 첫 byte 00 = 0000 0000 → 7 번째 bit 를 뒤집어 0000 0010 = 02. ② 앞 3 bytes 02-1A-2B 와 뒤 3 bytes 3C-4D-5E 사이에 FFFE. → 021A:2BFF:FE3C:4D5E. 7th bit 를 안 뒤집거나 FFFE 를 빼먹는 것이 대표 실수.",
+       "src": "CH07(3) p.12, 19–20",
+       "wiki": "EUI-64",
+       "tags": [
+        "EUI-64"
+       ]
+      },
+      {
+       "id": "u8b-14",
+       "type": "sa",
+       "q": "[Ex 7.29 변형] 위 interface ID 로 만든 link-local address 는? (줄여 쓰기)",
+       "answer": "FE80::21A:2BFF:FE3C:4D5E",
+       "alts": [
+        "FE80::021A:2BFF:FE3C:4D5E"
+       ],
+       "explain": "link-local = FE80::/10 + 54 zeros + 64-bit interface ID. 가운데 0 들을 `::` 로 줄이고 021A 의 앞 0 을 지우면 **FE80::21A:2BFF:FE3C:4D5E** (p.20 의 FE80::F7A9:23FF:FE11:9BE2 와 같은 꼴).",
+       "src": "CH07(3) p.15, 20",
        "wiki": "link-local address",
        "tags": [
         "link-local address"
@@ -6482,7 +7945,10 @@
        "wiki": "autoconfiguration",
        "tags": [
         "autoconfiguration"
-       ]
+       ],
+       "img": "duo/img/cn7c-p18-autoconf.png",
+       "imgAlt": "p.18 Host 와 Router 사이 메시지 ①(→)·②(←) 이름이 가려져 있고, 아래 Global prefix | Subnet ID | Interface ID (from host) = ③ Global unicast address",
+       "explainImg": "duo/img/cn7c-p18-autoconf-ans.png"
       },
       {
        "id": "u8c-03",
@@ -6570,7 +8036,10 @@
        "tags": [
         "IPv6 base header"
        ],
-       "diff": 1
+       "diff": 1,
+       "img": "duo/img/cn7c-p24-fields.png",
+       "imgAlt": "p.24 IPv6 base header fields 표 — \"Same as TTL in IPv4\" 행의 Field 이름이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7c-p24-fields-ans.png"
       },
       {
        "id": "u8c-08",
@@ -6670,6 +8139,42 @@
        "tags": [
         "autoconfiguration"
        ]
+      },
+      {
+       "id": "u8c-13",
+       "type": "match",
+       "q": "p.23 base header 의 가린 필드 ①~⑤ 를 연결하시오",
+       "pairs": [
+        [
+         "①",
+         "Traffic class"
+        ],
+        [
+         "②",
+         "Flow label"
+        ],
+        [
+         "③",
+         "Payload length"
+        ],
+        [
+         "④",
+         "Next header"
+        ],
+        [
+         "⑤",
+         "Hop limit"
+        ]
+       ],
+       "explain": "첫 행 Version 4 · Traffic class 8 · Flow label 20 = 32 bits, 둘째 행 Payload length 16 · Next header 8 · Hop limit 8 = 32 bits, 그 뒤 source·destination 128 bits 씩 → 40 bytes 고정. IPv4 와 달리 checksum·fragmentation 필드가 없다.",
+       "src": "CH07(3) p.23–24",
+       "wiki": "IPv6 base header",
+       "tags": [
+        "IPv6 base header"
+       ],
+       "img": "duo/img/cn7c-p23-base.png",
+       "imgAlt": "p.23 IPv6 base header — 비트 눈금 0·4·12·16·24·31 과 Version 만 보이고 ①~⑤ 필드 이름이 가려져 있다",
+       "explainImg": "duo/img/cn7c-p23-base-ans.png"
       }
      ]
     },
@@ -6731,13 +8236,16 @@
          "destination"
         ]
        ],
-       "explain": "교수 시험 힌트.",
+       "explain": "p.26 표: IPv4 는 source 또는 아무 router 가 쪼개고, IPv6 는 **source 만** 쪼갠다. IPv6 router 는 next MTU 보다 큰 packet 을 **drop** 하고(ICMPv6 로 알림), 재조립은 둘 다 destination. 교수 1110 39:06 \"may be asked in exams … please remember\".",
        "src": "CH07(3) p.26",
        "wiki": "IPv4와 IPv6 비교",
        "tags": [
         "IPv4와 IPv6 비교"
        ],
-       "prof": true
+       "prof": true,
+       "img": "duo/img/cn7c-p26-frag.png",
+       "imgAlt": "p.26 IPv4 vs IPv6 fragmentation 표 — IPv6 열이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn7c-p26-frag-ans.png"
       },
       {
        "id": "u8d-04",
@@ -6759,7 +8267,10 @@
        "wiki": "ICMPv6",
        "tags": [
         "ICMPv6"
-       ]
+       ],
+       "img": "duo/img/cn7c-p28-icmpv6.png",
+       "imgAlt": "p.28 ICMPv6 messages 네 그룹 — Neighbor discovery·Group membership 아래 protocol 이름과 아래 설명 상자가 가려져 있다",
+       "explainImg": "duo/img/cn7c-p28-icmpv6-ans.png"
       },
       {
        "id": "u8d-05",
@@ -6824,7 +8335,9 @@
        "wiki": "header translation",
        "tags": [
         "header translation"
-       ]
+       ],
+       "img": "duo/img/cn7c-p32-trans.png",
+       "imgAlt": "p.32 IPv6 host — IPv6 region — (변환 지점) — IPv4 region — IPv4 host. 변환 지점에서 IPv6 header 가 IPv4 header 로 바뀐다"
       },
       {
        "id": "u8d-08",
@@ -6838,7 +8351,9 @@
         "dual stack"
        ],
        "prof": true,
-       "diff": 1
+       "diff": 1,
+       "img": "duo/img/cn7c-p30-dual.png",
+       "imgAlt": "p.30 host 안에 IPv4 와 IPv6 가 나란히 있고 Upper layers 아래로 IPv4 system·IPv6 system 양쪽과 통신하는 그림"
       },
       {
        "id": "u8d-09",
@@ -6896,6 +8411,39 @@
        "wiki": "reassembly",
        "tags": [
         "reassembly"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u8d-13",
+       "type": "mc",
+       "q": "p.31 그림의 IPv4 → IPv6 전환 방법은?",
+       "choices": [
+        "dual stack",
+        "tunneling",
+        "header translation",
+        "NAT"
+       ],
+       "answer": 1,
+       "explain": "IPv6 host 둘 사이에 IPv4 region 이 있고, 그 구간에서 IPv6 packet 이 **IPv4 header 로 한 번 더 싸여**(encapsulated) Tunnel 을 지난 뒤 나올 때 벗겨진다 → tunneling. header translation 은 header 자체를 바꾸고(p.32), dual stack 은 host 가 두 스택을 다 가진다(p.30).",
+       "src": "CH07(3) p.31",
+       "wiki": "tunneling",
+       "tags": [
+        "tunneling"
+       ],
+       "img": "duo/img/cn7c-p31-tunnel.png",
+       "imgAlt": "p.31 IPv6 host 두 대 사이 IPv4 region, 가운데 Tunnel 위에 IPv4 header + IPv6 header + Payload"
+      },
+      {
+       "id": "u8d-14",
+       "type": "tf",
+       "q": "[O/X] In IPv6, a router that receives a packet larger than the next MTU drops it; only the source can fragment. (If X, correct it.)",
+       "answer": true,
+       "explain": "O. p.26 표: Who fragments? IPv6 = **Source only**, 큰 packet 을 받은 router 는 **Drops** it. 교수 1110 39:06: \"may be asked in exams … please remember\".",
+       "src": "CH07(3) p.26 · 1110 녹음 39:06",
+       "wiki": "IPv6 fragmentation",
+       "tags": [
+        "IPv6 fragmentation"
        ],
        "prof": true
       }
@@ -6992,7 +8540,10 @@
        "wiki": "Bellman-Ford equation",
        "tags": [
         "Bellman-Ford equation"
-       ]
+       ],
+       "img": "duo/img/cn8-p11-dv.png",
+       "imgAlt": "p.11 DV 갱신 표 두 개 — (a) Old B·A 벡터, (b) Old B·E 벡터, 두 New B 열이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn8-p11-dv-ans.png"
       },
       {
        "id": "u9a-06",
@@ -7005,7 +8556,10 @@
        "wiki": "Bellman-Ford equation",
        "tags": [
         "Bellman-Ford equation"
-       ]
+       ],
+       "img": "duo/img/cn8-p11-dv.png",
+       "imgAlt": "p.11 DV 갱신 표 두 개 — 두 New B 열이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn8-p11-dv-ans.png"
       },
       {
        "id": "u9a-07",
@@ -7109,6 +8663,32 @@
         "routing"
        ],
        "diff": 1
+      },
+      {
+       "id": "u9a-13",
+       "type": "num",
+       "q": "[Calc] x 의 이웃 a(c=2), b(c=5), c(c=1) 이고 $D_{ay}=6$, $D_{by}=2$, $D_{cy}=8$ 이다. Bellman-Ford 로 $D_{xy}$ 는?",
+       "answer": 7,
+       "tol": 0,
+       "explain": "이웃마다 c + D 를 더해 최소: a 2 + 6 = 8, b 5 + 2 = **7**, c 1 + 8 = 9 → min = 7 (b 경유). link cost 가 가장 작은 c 를 고르는 것은 함정.",
+       "src": "CH08 p.7",
+       "wiki": "Bellman-Ford equation",
+       "tags": [
+        "Bellman-Ford equation"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u9a-14",
+       "type": "tf",
+       "q": "[O/X] At boot, a node in distance-vector routing already knows the least cost to every node in the network. (If X, correct it.)",
+       "answer": false,
+       "explain": "X. 부팅 때는 **이웃**까지의 link cost 만 알고 나머지는 ∞ (rudimentary vector, p.10). 이웃과 벡터를 주고받으며(exchange) Bellman-Ford 로 채워 간다.",
+       "src": "CH08 p.10",
+       "wiki": "distance vector",
+       "tags": [
+        "distance vector"
+       ]
       }
      ]
     },
@@ -7154,7 +8734,9 @@
        "wiki": "count to infinity와 two-node loop",
        "tags": [
         "count to infinity와 two-node loop"
-       ]
+       ],
+       "img": "duo/img/cn8-p13-loop.png",
+       "imgAlt": "p.13 two-node loop 그림 (a) Before failure ~ (e) Finally — A·B 의 X 행 cost 가 1·2 → 16 → 3 → 4 … 로 바뀐다"
       },
       {
        "id": "u9b-03",
@@ -7218,7 +8800,10 @@
        "wiki": "poison reverse",
        "tags": [
         "poison reverse"
-       ]
+       ],
+       "img": "duo/img/cn8-p15-poison.png",
+       "imgAlt": "p.15 X–A 링크가 끊긴 뒤 B 가 A 에게 보내는 메시지 상자가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn8-p15-poison-ans.png"
       },
       {
        "id": "u9b-07",
@@ -7287,7 +8872,7 @@
          "두 대책의 한계"
         ]
        ],
-       "explain": "정리본 CH08 5–6 번.",
+       "explain": "split horizon = 배운 이웃에게는 그 경로를 말하지 않음, poison reverse = 말하되 ∞ 로(\"나를 거쳐 가지 마\"). RIP 은 16 을 ∞ 로 써서 count to infinity 를 16 에서 끊는다. 그래도 node 가 셋 이상이면 다른 이웃을 돌아오는 소식 때문에 three-node instability 가 남는다 (p.14–16).",
        "src": "CH08 p.13–16",
        "wiki": "split horizon",
        "tags": [
@@ -7336,7 +8921,9 @@
        "tags": [
         "LSDB"
        ],
-       "diff": 3
+       "diff": 3,
+       "img": "duo/img/cn8-p18-lsdb.png",
+       "imgAlt": "p.18 (a) weighted graph A–G 와 (b) Link state database 7×7 표 (노란 칸은 ∞)"
       },
       {
        "id": "u9c-03",
@@ -7353,7 +8940,9 @@
        "wiki": "flooding과 LSP",
        "tags": [
         "flooding과 LSP"
-       ]
+       ],
+       "img": "duo/img/cn8-p19-flood.png",
+       "imgAlt": "p.19 각 node 의 (Node, Cost) LSP 표가 빨간 화살표로 모든 interface 에 퍼지는 그림"
       },
       {
        "id": "u9c-04",
@@ -7406,7 +8995,10 @@
        "tags": [
         "Dijkstra algorithm"
        ],
-       "prof": true
+       "prof": true,
+       "img": "duo/img/cn8-p25-dijkstra.png",
+       "imgAlt": "p.25 Dijkstra root A — Initialization 과 Iteration 1~3 (Iteration 4~6 은 해설에)",
+       "explainImg": "duo/img/cn8-p25-dijkstra-full.png"
       },
       {
        "id": "u9c-07",
@@ -7460,7 +9052,9 @@
        "tags": [
         "Dijkstra algorithm"
        ],
-       "diff": 3
+       "diff": 3,
+       "img": "duo/img/cn8-p04-graph.png",
+       "imgAlt": "p.4 weighted graph — A–B 2, A–D 3, B–C 5, B–E 4, D–E 5, E–F 2, C–F 4, C–G 3, F–G 1"
       },
       {
        "id": "u9c-11",
@@ -7521,6 +9115,54 @@
        "tags": [
         "flooding과 LSP"
        ]
+      },
+      {
+       "id": "u9c-14",
+       "type": "num",
+       "q": "[Dijkstra 변형] p.4 그래프에서 root 를 D 로 하면 C 의 최종 cost 는?",
+       "answer": 10,
+       "tol": 0,
+       "explain": "D0 → A3 · E5 (이웃). A 추가 → B = 3 + 2 = 5. B·E(5 동점) 추가 → C = 5 + 5 = 10, F = 5 + 2 = 7. F 추가 → G = 8, C = min(10, 7 + 4) = 10. G 추가 → C = min(10, 8 + 3) = 10. → **C = 10**.",
+       "src": "CH08 p.20–25",
+       "wiki": "Dijkstra algorithm",
+       "tags": [
+        "Dijkstra algorithm"
+       ],
+       "diff": 3,
+       "img": "duo/img/cn8-p04-graph.png",
+       "imgAlt": "p.4 weighted graph — A–B 2, A–D 3, B–C 5, B–E 4, D–E 5, E–F 2, C–F 4, C–G 3, F–G 1"
+      },
+      {
+       "id": "u9c-15",
+       "type": "num",
+       "q": "[Dijkstra 변형] 같은 그래프 root D 에서 G 의 최종 cost 는?",
+       "answer": 8,
+       "tol": 0,
+       "explain": "D → E(5) → F(7) → G(8). 다른 길 D → A → B → C → G 는 3 + 2 + 5 + 3 = 13. → **8**.",
+       "src": "CH08 p.20–25",
+       "wiki": "Dijkstra algorithm",
+       "tags": [
+        "Dijkstra algorithm"
+       ],
+       "img": "duo/img/cn8-p04-graph.png",
+       "imgAlt": "p.4 weighted graph — A–B 2, A–D 3, B–C 5, B–E 4, D–E 5, E–F 2, C–F 4, C–G 3, F–G 1"
+      },
+      {
+       "id": "u9c-16",
+       "type": "sa",
+       "q": "[Term] \"A 2-D table: each cell = cost of that link (∞ if no link); every node keeps the same one.\" Give the term (약어).",
+       "answer": "LSDB",
+       "alts": [
+        "link-state database",
+        "link state database"
+       ],
+       "explain": "p.18 LSDB (link-state database). least cost 가 아니라 **link 하나의 cost** 가 들어간다. least cost 는 각 node 가 LSDB 로 Dijkstra 를 돌려 얻는다.",
+       "src": "CH08 p.18",
+       "wiki": "LSDB",
+       "tags": [
+        "LSDB"
+       ],
+       "diff": 1
       }
      ]
     },
@@ -7557,7 +9199,10 @@
        "wiki": "path vector routing",
        "tags": [
         "path vector routing"
-       ]
+       ],
+       "img": "duo/img/cn8-p27-policy.png",
+       "imgAlt": "p.27 S–A–C–D (파란 굵은 선) 와 S–B–D (빨간 점선) — 두 경로의 이름표가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn8-p27-policy-ans.png"
       },
       {
        "id": "u9d-03",
@@ -7640,12 +9285,15 @@
          "split horizon · poison reverse"
         ]
        ],
-       "explain": "비교표의 Weakness 행.",
+       "explain": "p.28 비교표 Weak point 행: DV 는 이웃의 오래된 벡터를 믿어 count to infinity, LS 는 LSP 를 모두에게 flooding 해서 traffic, PV 는 경로 전체를 실어 보내 메시지가 크다. \"무엇을·누구에게 보내나\" 행과 짝지어 보면 원인이 보인다.",
        "src": "CH08 p.28",
        "wiki": "라우팅 알고리즘 비교",
        "tags": [
         "라우팅 알고리즘 비교"
-       ]
+       ],
+       "img": "duo/img/cn8-p28-compare.png",
+       "imgAlt": "p.28 Comparison of Routing Algorithms 표 — Weak point 행이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn8-p28-compare-ans.png"
       },
       {
        "id": "u9d-06",
@@ -7830,7 +9478,10 @@
        "tags": [
         "hop count"
        ],
-       "diff": 3
+       "diff": 3,
+       "img": "duo/img/cn8-p31-rip.png",
+       "imgAlt": "p.31 Source(N1)–R1–N2–R2–N3–R3–Destination(N4) 그림 — R3·R2·R1 에서 N4 까지 세 화살표의 hop 수가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn8-p31-rip-ans.png"
       },
       {
        "id": "u9e-05",
@@ -7916,7 +9567,10 @@
        "wiki": "OSPF",
        "tags": [
         "OSPF"
-       ]
+       ],
+       "img": "duo/img/cn8-p34-ospf.png",
+       "imgAlt": "p.34 N1(cost 4)–R1–N2(5)–R2–N3(3)–R3–N4(4) 그림 — 세 Total cost 가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn8-p34-ospf-ans.png"
       },
       {
        "id": "u9e-10",
@@ -7980,12 +9634,15 @@
          "path vector routing"
         ]
        ],
-       "explain": "p.37.",
+       "explain": "p.37: eBGP 는 서로 다른 AS 의 border router 끼리(물리적으로 연결), iBGP 는 같은 AS 안 어느 router 쌍이든 — border 가 배운 경로를 AS 전체에 퍼뜨린다. 둘 다 TCP 179 위의 logical 연결이다.",
        "src": "CH08 p.37",
        "wiki": "eBGP와 iBGP",
        "tags": [
         "eBGP와 iBGP"
-       ]
+       ],
+       "img": "duo/img/cn8-p37-bgp.png",
+       "imgAlt": "p.37 AS 1(R1·R2·R3)과 AS 2(R4·R5·R6) — AS 안은 파란 점선, R1–R4 는 빨간 실선이고 그 이름이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn8-p37-bgp-ans.png"
       },
       {
        "id": "u9e-13",
@@ -8020,7 +9677,10 @@
        "wiki": "intra-AS와 inter-AS routing",
        "tags": [
         "intra-AS와 inter-AS routing"
-       ]
+       ],
+       "img": "duo/img/cn8-p30-as.png",
+       "imgAlt": "p.30 AS 1·AS 2 그림 — AS 안 routing 이름 두 개와 AS 사이 routing 이름이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn8-p30-as-ans.png"
       }
      ]
     }
@@ -8029,7 +9689,7 @@
   {
    "id": "u10",
    "title": "10강 Transport (CH09)",
-   "desc": "process-to-process · port·socket · error control·sliding window · UDP · TCP seq/ack·header · handshake · flow·congestion",
+   "desc": "process-to-process · port·socket · error control·sliding window · UDP · TCP seq/ack·header · handshake · FIN·half close · window · flow·congestion",
    "lessons": [
     {
      "id": "u10a",
@@ -8072,7 +9732,7 @@
          "client socket + server socket 한 쌍"
         ]
        ],
-       "explain": "p.10–12.",
+       "explain": "p.10–12: IP address 가 host 를, port number 가 그 host 안의 process 를 고른다. 둘을 합친 socket address 가 process 하나의 주소이고, 연결 하나는 client socket address + server socket address 한 쌍으로 정해진다.",
        "src": "CH09 p.10–12",
        "wiki": "socket address"
       },
@@ -8124,7 +9784,7 @@
          "Daytime server 의 well-known port"
         ]
        ],
-       "explain": "p.11.",
+       "explain": "p.11: 0–1023 well-known 은 ICANN 이 할당·관리(server 용), 1024–49,151 registered 는 할당은 안 하고 중복 방지를 위해 등록만, 49,152–65,535 dynamic/private 는 누구나 임시로(client 의 ephemeral port). Daytime 13 은 well-known.",
        "src": "CH09 p.11",
        "wiki": "CH09 전송 계층과 UDP"
       },
@@ -8153,6 +9813,9 @@
        "explain": "요청: src 52000(ephemeral) → dst 13(well-known). 응답은 거꾸로 src 13 → dst 52000 (p.9).",
        "src": "CH09 p.9",
        "prof": true,
+       "img": "duo/img/cn9-p10-daytime.png",
+       "imgAlt": "p.10 Daytime client(왼쪽)와 server(오른쪽) transport layer — 오가는 두 packet 의 port 칸이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn9-p10-daytime-ans.png",
        "wiki": "segment"
       },
       {
@@ -8240,6 +9903,40 @@
        "src": "CH09 p.5",
        "diff": 1,
        "wiki": "UDP"
+      },
+      {
+       "id": "u10a-13",
+       "type": "num",
+       "q": "[Ex 변형] UDP header 가 0045 E7A1 0024 A3F0 (hex) 이다. data 는 몇 bytes?",
+       "answer": 28,
+       "unit": "bytes",
+       "tol": 0,
+       "explain": "total length = 0x0024 = 36 bytes (header 포함). data = 36 − 8 = **28 bytes**. p.36 예제와 같은 순서(src·dst·length·checksum 각 2 bytes)로 끊어 읽는다.",
+       "src": "CH09 p.34–36",
+       "wiki": "Example UDP header 읽기",
+       "tags": [
+        "Example UDP header 읽기"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u10a-14",
+       "type": "mc",
+       "q": "[Ex 변형] 같은 header (src 0x0045 = 69, dst 0xE7A1 = 59,297) 의 방향은?",
+       "choices": [
+        "client → server",
+        "server → client",
+        "알 수 없다",
+        "router → host"
+       ],
+       "answer": 1,
+       "explain": "source port 69 가 well-known(0–1023), destination 59,297 은 dynamic(49,152–65,535, ephemeral) → **server → client** (응답). p.36 은 거꾸로 dst 가 13 이라 client → server 였다.",
+       "src": "CH09 p.9–11, 36",
+       "wiki": "port number 범위",
+       "tags": [
+        "port number 범위"
+       ],
+       "prof": true
       }
      ]
     },
@@ -8383,7 +10080,7 @@
          "load 를 capacity 아래로 유지"
         ]
        ],
-       "explain": "p.27–29.",
+       "explain": "p.27–29: connectionless(UDP)는 chunk 마다 독립이라 순서가 바뀌어 도착할 수 있다. connection-oriented(TCP)는 먼저 logical connection 을 세우고 순서대로 넘긴 뒤 끊는다(p.29 의 Message 2 hold). 둘 다 IP 위에서 돌지만 연결 관리는 transport layer 가 한다.",
        "src": "CH09 p.27–29",
        "wiki": "UDP"
       },
@@ -8410,12 +10107,15 @@
        "type": "tf",
        "q": "flow control 은 sending process ↔ sender TL, sender TL ↔ receiver TL 두 곳에서 buffer 로 구현된다.",
        "answer": true,
-       "explain": "p.15: buffer 가 차면 상대에게 멈추라고 알린다.",
-       "src": "CH09 p.15",
-       "wiki": "flow control",
+       "explain": "p.15: buffer 가 차면 상대에게 멈추라고 알린다. 두 곳 모두 **push** 구간이다. receiving TL → receiving process 는 process 가 가져가는(pull) 구간이라 flow control 이 필요 없다 — 교수 11/24: \"Remember that flow control is needed between these, while not these\".",
+       "src": "CH09 p.15 · 🎙 11/24 44:04–46:24",
+       "wiki": "전송 계층 flow control",
        "tags": [
-        "flow control"
-       ]
+        "전송 계층 flow control"
+       ],
+       "prof": true,
+       "img": "duo/img/cn9-p15-buffers.png",
+       "imgAlt": "p.15 Sender(Producer/Consumer)·Receiver buffer 그림 — Messages are pushed, Packets are pushed, Messages are pulled, 빨간 Flow control 화살표 두 개"
       }
      ]
     },
@@ -8464,8 +10164,11 @@
         "Total length",
         "Checksum"
        ],
-       "explain": "p.34–36. 각 16 bits.",
+       "explain": "p.34: 8-byte 고정 header = Source port · Destination port · Total length · Checksum, 각 16 bits. 그래서 hex 덤프를 4 자리씩 끊으면 이 순서대로 읽힌다(p.36 CB84 | 000D | 001C | 001C).",
        "src": "CH09 p.34",
+       "img": "duo/img/cn9-p34-udp.png",
+       "imgAlt": "p.34 UDP header format — 0·16·31 비트 눈금 아래 네 필드 ①~④ 이름이 가려져 있다",
+       "explainImg": "duo/img/cn9-p34-udp-ans.png",
        "wiki": "UDP header"
       },
       {
@@ -8477,6 +10180,9 @@
        "explain": "0xCB84 = 52,100 (ephemeral → client).",
        "src": "CH09 p.36",
        "prof": true,
+       "img": "duo/img/cn9-p36-udpsol.png",
+       "imgAlt": "p.36 UDP header CB84 | 000D | 001C | 001C 와 Solution a~f 의 답이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn9-p36-udpsol-ans.png",
        "wiki": "UDP header"
       },
       {
@@ -8489,6 +10195,9 @@
        "explain": "total length 0x001C = 28 − header 8 = **20 B**.",
        "src": "CH09 p.36",
        "prof": true,
+       "img": "duo/img/cn9-p36-udpsol.png",
+       "imgAlt": "p.36 UDP header 와 Solution a~f 의 답이 가려져 있다",
+       "explainImg": "duo/img/cn9-p36-udpsol-ans.png",
        "wiki": "UDP header"
       },
       {
@@ -8540,7 +10249,7 @@
          "yes (port)"
         ]
        ],
-       "explain": "p.37 표.",
+       "explain": "p.37: UDP 는 window 가 없어 flow control ✗, checksum 은 있지만 ACK·재전송이 없어 error control 은 검출만, 연결 설정이 없어 congestion control ✗. \"UDP = IP + port numbers + a checksum\" 이 그대로 표가 된다.",
        "src": "CH09 p.37",
        "wiki": "UDP"
       },
@@ -8575,7 +10284,7 @@
          "SNMP"
         ]
        ],
-       "explain": "p.39. RIP 이 UDP 520 을 쓰는 것과 이어진다.",
+       "explain": "p.39: 짧은 request-response(DNS)는 연결 설정이 오히려 부담, real-time(음성·영상)은 늦게 오는 재전송보다 손실이 낫다, RIP 같은 route update 는 주기적이라 하나쯤 잃어도 된다. 공통점: 신뢰성보다 단순함·지연이 중요.",
        "src": "CH09 p.39",
        "wiki": "RIP",
        "tags": [
@@ -8632,7 +10341,7 @@
          "byte stream → segments"
         ]
        ],
-       "explain": "p.40 비교표.",
+       "explain": "p.40 비교표: UDP header 8 B 고정 vs TCP 20–60 B, 단위는 user datagram(message 경계 유지) vs segment(byte stream). TCP 는 연결·순서·재전송·flow·congestion control 을 위해 header 가 크다.",
        "src": "CH09 p.40",
        "prof": true,
        "wiki": "user datagram"
@@ -8671,7 +10380,7 @@
         "data transfer (both directions)",
         "connection termination"
        ],
-       "explain": "p.42.",
+       "explain": "p.42: connection establishment(three-way handshake) → data transfer(양방향, piggyback) → connection termination(FIN, half close 가능). UDP 에는 앞뒤 두 phase 가 없다.",
        "src": "CH09 p.42",
        "diff": 1,
        "wiki": "TCP"
@@ -8694,6 +10403,9 @@
        "explain": "10,001 → 11,001 → **12,001** → 13,001 → 14,001 (p.48–49).",
        "src": "CH09 p.49",
        "prof": true,
+       "img": "duo/img/cn9-p49-seq.png",
+       "imgAlt": "p.49 다섯 segment 의 Sequence Number·Range 표 — Segment 3·5 의 값이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn9-p49-seq-ans.png",
        "wiki": "sequence number"
       },
       {
@@ -8705,6 +10417,9 @@
        "explain": "10,001 + 4 × 1,000 = **14,001**.",
        "src": "CH09 p.49",
        "prof": true,
+       "img": "duo/img/cn9-p49-seq.png",
+       "imgAlt": "p.49 다섯 segment 표 — Segment 3·5 의 값이 가려져 있다",
+       "explainImg": "duo/img/cn9-p49-seq-ans.png",
        "wiki": "sequence number"
       },
       {
@@ -8727,6 +10442,9 @@
        "explain": "ACK number = 다음에 기대하는 byte = **5,643** (cumulative, p.50).",
        "src": "CH09 p.50",
        "prof": true,
+       "img": "duo/img/cn9-p50-ack.png",
+       "imgAlt": "p.50 received: bytes … 5640, 5641, 5642 다음 칸(next expected)과 ACK number 가 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn9-p50-ack-ans.png",
        "wiki": "CH09 TCP"
       },
       {
@@ -8790,6 +10508,9 @@
        ],
        "explain": "6 개 1-bit flag: URG ACK PSH RST SYN FIN (p.53).",
        "src": "CH09 p.53",
+       "img": "duo/img/cn9-p53-flags.png",
+       "imgAlt": "p.53 URG·ACK·PSH·RST·SYN·FIN 여섯 flag 와 그 설명 열이 ? 로 가려진 표",
+       "explainImg": "duo/img/cn9-p53-flags-ans.png",
        "wiki": "sequence number"
       },
       {
@@ -8812,7 +10533,7 @@
        "type": "tf",
        "q": "TCP 는 full-duplex 라 양방향 데이터가 동시에 흐르고, 양 끝에 send·receive buffer 가 있다.",
        "answer": true,
-       "explain": "p.46.",
+       "explain": "p.46: full-duplex = 양방향 동시. 그래서 방향마다 send buffer 와 receive buffer 가 있고, window 도 방향마다 send·receive 두 개씩 모두 4 개다 (p.62, 교수 11/24 28:18).",
        "src": "CH09 p.46",
        "diff": 1,
        "wiki": "TCP"
@@ -8863,6 +10584,70 @@
        "explain": "p.48: seq = number of its first byte, next = previous seq + bytes carried.",
        "src": "CH09 p.48",
        "wiki": "sequence number"
+      },
+      {
+       "id": "u10d-15",
+       "type": "match",
+       "q": "p.51 TCP header 의 가린 필드 ①~⑤ 를 연결하시오",
+       "pairs": [
+        [
+         "① (32 bits)",
+         "Sequence number"
+        ],
+        [
+         "② (32 bits)",
+         "Acknowledgment number"
+        ],
+        [
+         "③ (4 bits)",
+         "HLEN"
+        ],
+        [
+         "④ (16 bits)",
+         "Window size"
+        ],
+        [
+         "⑤ (16 bits)",
+         "Urgent pointer"
+        ]
+       ],
+       "explain": "행 순서: ports(16+16) → sequence number 32 → acknowledgment number 32 → HLEN 4 · Reserved 6 · flags 6 · window size 16 → checksum 16 · urgent pointer 16 → options. 기본 20 bytes, 최대 60 bytes.",
+       "src": "CH09 p.51–54",
+       "wiki": "TCP segment format",
+       "tags": [
+        "TCP segment format"
+       ],
+       "img": "duo/img/cn9-p51-tcphdr.png",
+       "imgAlt": "p.51 TCP header — Source/Destination port 아래 필드 이름 ①~⑤ 가 가려져 있다 (비트 수는 보인다)",
+       "explainImg": "duo/img/cn9-p51-tcphdr-ans.png"
+      },
+      {
+       "id": "u10d-16",
+       "type": "num",
+       "q": "[p.49 변형] 3,000-byte file 을 첫 byte 번호 2,001 로, 1,000 bytes 씩 segment 3 개로 보낸다. 셋째 segment 의 sequence number 는?",
+       "answer": 4001,
+       "tol": 0,
+       "explain": "seq = 그 segment 의 첫 byte: 2,001 → 3,001 → **4,001**. 셋째 segment 는 4,001–5,000 을 싣는다.",
+       "src": "CH09 p.48–49",
+       "wiki": "TCP sequence number와 ISN",
+       "tags": [
+        "TCP sequence number와 ISN"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u10d-17",
+       "type": "num",
+       "q": "[p.50 변형] 위 세 segment 를 모두 받은 수신자가 보내는 ACK number 는?",
+       "answer": 5001,
+       "tol": 0,
+       "explain": "마지막 byte 5,000 까지 받았으니 다음에 기대하는 byte = **5,001** (cumulative).",
+       "src": "CH09 p.50",
+       "wiki": "acknowledgment number",
+       "tags": [
+        "acknowledgment number"
+       ],
+       "prof": true
       }
      ]
     },
@@ -8879,8 +10664,12 @@
         "server: SYN + ACK (seq = 15000, ack = 8001)",
         "client: ACK (seq = 8001, ack = 15001)"
        ],
-       "explain": "SYN 과 SYN+ACK 은 seq 번호 1 개씩 소비, 마지막 ACK 은 소비하지 않는다 (p.56).",
-       "src": "CH09 p.56",
+       "explain": "SYN 과 SYN+ACK 은 seq 번호 1 개씩 소비, 마지막 ACK 은 소비하지 않는다 (p.56). 교수: \"this is very important\" — SYN = synchronization, 방향마다 번호를 따로 맞춘다(full-duplex).",
+       "src": "CH09 p.56 · 🎙 11/24 10:04",
+       "prof": true,
+       "img": "duo/img/cn9-p56-handshake.png",
+       "imgAlt": "p.56 Client–Server 시퀀스 — ① SYN (seq = 8000), ② SYN + ACK (seq = 15000, ?), ③ ACK (seq ?) 로 일부가 가려져 있다",
+       "explainImg": "duo/img/cn9-p56-handshake-ans.png",
        "wiki": "three-way handshake"
       },
       {
@@ -8889,9 +10678,13 @@
        "q": "client SYN 의 seq 가 8000 이면 server SYN+ACK 의 ack number 는?",
        "answer": 8001,
        "tol": 0,
-       "explain": "SYN 이 seq 1 개를 쓰므로 8000 + 1 = **8001**.",
-       "src": "CH09 p.56",
+       "explain": "SYN 이 seq 1 개를 쓰므로 8000 + 1 = **8001**. 마지막 ACK 는 번호를 안 써서 client 의 첫 data 도 seq 8001 로 시작한다.",
+       "src": "CH09 p.56 · 🎙 11/24 10:04",
+       "prof": true,
        "diff": 3,
+       "img": "duo/img/cn9-p56-handshake.png",
+       "imgAlt": "p.56 three-way handshake 시퀀스 — ② 의 ack 와 ③ 의 값이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn9-p56-handshake-ans.png",
        "wiki": "CH09 TCP"
       },
       {
@@ -8899,8 +10692,9 @@
        "type": "tf",
        "q": "server 는 passive open, client 는 active open 을 한다.",
        "answer": true,
-       "explain": "server 는 받을 준비(passive), client 가 연결을 원함(active) (p.56).",
-       "src": "CH09 p.56",
+       "explain": "server 는 받을 준비(passive), client 가 연결을 원함(active) (p.56). 교수: passive open 이 먼저 — 준비된 server 만 응답할 수 있다 (11:00).",
+       "src": "CH09 p.56 · 🎙 11/24 11:00",
+       "prof": true,
        "diff": 1,
        "wiki": "CH09 전송 계층과 UDP"
       },
@@ -8915,8 +10709,12 @@
         "checksum 실패"
        ],
        "answer": 0,
-       "explain": "가짜 source IP 로 SYN 을 대량 전송 → server 가 TCB·timer 를 할당한 채 기다림 → table full (p.58).",
-       "src": "CH09 p.58",
+       "explain": "가짜 source IP 로 SYN 을 대량 전송 → server 가 TCB·timer 를 할당한 채 SYN+ACK 의 답을 기다림(half-open) → table full → 진짜 client 거절 (p.58). 교수: three-way handshake 의 **crucial drawback**, denial-of-service 의 한 예.",
+       "src": "CH09 p.58 · 🎙 11/24 14:58–17:30",
+       "prof": true,
+       "img": "duo/img/cn9-p58-synflood.png",
+       "imgAlt": "p.58 Attacker 가 SYN × many 를 Server 로 보내고 Real client 는 refused — Server 안 칸들의 이름이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn9-p58-synflood-ans.png",
        "wiki": "SYN flooding attack"
       },
       {
@@ -9014,7 +10812,7 @@
          "아주 작은 segment 가 오가는 문제"
         ]
        ],
-       "explain": "p.71.",
+       "explain": "p.71: sender 가 1 byte 씩 만들어 보내면 Nagle — 첫 조각은 보내고, 다음은 ACK 가 오거나 full segment 가 될 때까지 모은다. receiver 가 1 byte 씩 소비하면 Clark — full segment 나 buffer 절반이 빌 때까지 rwnd = 0, 또는 ACK 를 늦춘다(delayed ACK). 1 B data 에 header 40 B 면 overhead 97 %.",
        "src": "CH09 p.71",
        "wiki": "silly window syndrome"
       },
@@ -9055,7 +10853,7 @@
          "cwnd = cwnd + 1"
         ]
        ],
-       "explain": "p.81.",
+       "explain": "p.81: time-out 은 둘 다 강한 신호 → ssthresh = cwnd/2, cwnd = 1 MSS 로 slow start. 3 duplicate ACKs 는 Tahoe 는 time-out 과 똑같이, Reno 는 약한 신호로 보고 cwnd = ssthresh + 3 으로 fast recovery. 차이는 3 dup ACKs 쪽뿐이다.",
        "src": "CH09 p.81",
        "wiki": "fast recovery"
       },
@@ -9090,6 +10888,213 @@
        "explain": "time-out = strong sign (segment 들이 사라짐), 3 dup ACKs = lighter sign (p.78).",
        "src": "CH09 p.78",
        "wiki": "segment"
+      }
+     ]
+    },
+    {
+     "id": "u10f",
+     "title": "연결 관리 · window · flow control (11/24 수업)",
+     "items": [
+      {
+       "id": "u10f-01",
+       "type": "mc",
+       "q": "p.59 data transfer 에서 server 가 data(15001–17000)를 보내는 segment 에 ack 10001 을 함께 실었다. 이것을 무엇이라 하나?",
+       "choices": [
+        "piggybacking",
+        "half close",
+        "fast retransmission",
+        "probing"
+       ],
+       "answer": 0,
+       "explain": "\"an ACK can **piggyback** on a data segment going the same way\" (p.59). 따로 ACK segment 를 보내지 않고 같은 방향 data 에 얹어 보낸다. 교수 11/24 18:35.",
+       "src": "CH09 p.59 · 🎙 11/24 18:35",
+       "wiki": "CH09 TCP",
+       "tags": [
+        "CH09 TCP"
+       ],
+       "prof": true,
+       "img": "duo/img/cn9-p59-data.png",
+       "imgAlt": "p.59 Data transfer 시퀀스 — Connection Establishment 와 Termination 사이 client·server segment 네 개 (seq·ack·rwnd 표시)"
+      },
+      {
+       "id": "u10f-02",
+       "type": "cloze",
+       "q": "p.61 연결 종료: client FIN (seq x, ack y) → server FIN + ACK (seq y, ack ___) → client ACK (seq x + 1, ack ___).",
+       "answer": [
+        "x + 1",
+        "y + 1"
+       ],
+       "bank": [
+        "x + 1",
+        "y + 1",
+        "x",
+        "y",
+        "y + 2"
+       ],
+       "explain": "FIN 은 data 가 없어도 **번호 1 개**를 쓴다 → 상대는 x + 1 로 확인. server 의 FIN 도 1 개 → client 는 y + 1 로 확인. 마지막 ACK 는 번호를 안 쓰고 seq x + 1. 교수 11/24 19:49.",
+       "src": "CH09 p.60–61 · 🎙 11/24 19:49",
+       "wiki": "connection termination과 half close",
+       "tags": [
+        "connection termination과 half close"
+       ],
+       "prof": true,
+       "img": "duo/img/cn9-p61-fin.png",
+       "imgAlt": "p.61 종료 three-way handshake — FIN(seq x, ack y), FIN + ACK(seq y, ack ?), ACK(?) 로 가려져 있다",
+       "explainImg": "duo/img/cn9-p61-fin-ans.png"
+      },
+      {
+       "id": "u10f-03",
+       "type": "num",
+       "q": "[p.61 변형] client 가 보낸 마지막 data byte 번호가 2,000 이고 FIN 에 data 가 없다. server 의 FIN + ACK 에 적힐 ack number 는?",
+       "answer": 2002,
+       "tol": 0,
+       "explain": "FIN 의 seq = 다음 번호 2,001. FIN 이 번호 1 개를 쓰므로 ack = 2,001 + 1 = **2,002**. \"FIN 은 data 가 없으니 번호를 안 쓴다\" 고 생각하면 2,001 (오답).",
+       "src": "CH09 p.60 · 🎙 11/24 19:49",
+       "wiki": "connection termination과 half close",
+       "tags": [
+        "connection termination과 half close"
+       ],
+       "prof": true,
+       "diff": 3
+      },
+      {
+       "id": "u10f-04",
+       "type": "mc",
+       "q": "half close 의 예로 교수가 든 정렬(sorting) 상황에서 일어나는 일은?",
+       "choices": [
+        "server 가 먼저 FIN 을 보낸다",
+        "client 가 data 를 다 보내고 FIN → server 는 ACK 만 보내고 정렬 결과를 계속 보낸 뒤 자기 FIN",
+        "양쪽이 동시에 RST 를 보낸다",
+        "client 가 FIN 뒤에도 data 를 계속 보낸다"
+       ],
+       "answer": 1,
+       "explain": "half close = 한쪽만 보내기를 멈추고 받기는 계속. 정렬은 data 를 다 받아야 시작할 수 있으니 client 가 먼저 FIN(보내기 끝), server 는 ACK 로 그 방향만 닫고 결과를 보낸 뒤 자기 FIN. 교수 11/24 24:19.",
+       "src": "CH09 p.60 · 🎙 11/24 19:49–28:18",
+       "wiki": "connection termination과 half close",
+       "tags": [
+        "connection termination과 half close"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u10f-05",
+       "type": "num",
+       "q": "양방향(two-way) TCP 연결 하나에는 window 가 모두 몇 개인가?",
+       "answer": 4,
+       "unit": "개",
+       "tol": 0,
+       "explain": "\"TCP keeps two windows per direction (send + receive)\" → 방향 2 × window 2 = **4**. 교수 11/24 28:18.",
+       "src": "CH09 p.62 · 🎙 11/24 28:18",
+       "wiki": "send window",
+       "tags": [
+        "send window"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u10f-06",
+       "type": "mc",
+       "q": "TCP 의 retransmission timer 는 몇 개를 쓰나?",
+       "choices": [
+        "segment 마다 하나",
+        "message 마다 하나",
+        "connection 마다 하나",
+        "byte 마다 하나"
+       ],
+       "answer": 2,
+       "explain": "\"TCP uses **one** retransmission timer per connection\" (p.63). 교수: \"per connection, not per message or not per packet\" (11/24 37:49–38:30). p.62 그림의 Timer 하나.",
+       "src": "CH09 p.63 · 🎙 11/24 37:49",
+       "wiki": "ACK와 retransmission timer",
+       "tags": [
+        "ACK와 retransmission timer"
+       ],
+       "prof": true,
+       "img": "duo/img/cn9-p62-sendwin.png",
+       "imgAlt": "p.62 send window 그림 — 200 까지 acked, 201–260 outstanding(Sf), 261–300 usable(Sn), 오른쪽 위 Timer 하나, 아래 Left wall·Right wall 의 Closes·Shrinks·Opens"
+      },
+      {
+       "id": "u10f-07",
+       "type": "tf",
+       "q": "[O/X] Flow control is needed where data is pushed (sending process → sender TL, sender TL → receiver TL), but not where the receiving process pulls data from its TL. (If X, correct it.)",
+       "answer": true,
+       "explain": "O. push 하는 쪽은 받는 쪽 buffer 를 넘칠 수 있으니 feedback(①②→⑤④)이 필요하다. pull 은 받는 쪽이 자기 속도로 가져가니 필요 없다. 교수 11/24: \"Remember that flow control is needed between these, while not these\" (45:22).",
+       "src": "CH09 p.66 · 🎙 11/24 44:04–46:24",
+       "wiki": "전송 계층 flow control",
+       "tags": [
+        "전송 계층 flow control"
+       ],
+       "prof": true,
+       "img": "duo/img/cn9-p66-pushpull.png",
+       "imgAlt": "p.66 Producer/Consumer 그림 — Messages are pushed(1), Segments are pushed(2), Messages are pulled(3), Flow control feedback(4, 5)"
+      },
+      {
+       "id": "u10f-08",
+       "type": "match",
+       "q": "window 의 열림·닫힘 네 사건을 연결하시오 (p.67)",
+       "pairs": [
+        [
+         "receive window 닫힘 (왼벽 →)",
+         "수신 측에 byte 가 도착할 때"
+        ],
+        [
+         "receive window 열림 (오른벽 →)",
+         "process 가 byte 를 가져갈(pull) 때"
+        ],
+        [
+         "send window 닫힘 (왼벽 →)",
+         "새 ACK 가 도착할 때"
+        ],
+        [
+         "send window 열림 (오른벽 →)",
+         "광고된 rwnd 가 허락할 때"
+        ]
+       ],
+       "explain": "closes = left wall 이 오른쪽으로, opens = right wall 이 오른쪽으로. receive window 는 도착(close)·소비(open), send window 는 ACK(close)·rwnd(open). 교수 11/24 46:24–50:15.",
+       "src": "CH09 p.67 · 🎙 11/24 46:24–50:15",
+       "wiki": "receive window와 rwnd",
+       "tags": [
+        "receive window와 rwnd"
+       ],
+       "prof": true,
+       "img": "duo/img/cn9-p67-openclose.png",
+       "imgAlt": "p.67 window 그림 — 왼쪽 빨간 화살표와 오른쪽 파란 화살표의 이름이 ? 로 가려져 있다",
+       "explainImg": "duo/img/cn9-p67-openclose-ans.png"
+      },
+      {
+       "id": "u10f-09",
+       "type": "num",
+       "q": "[p.68] buffer 800 B. SYN+ACK 로 rwnd 800 을 알린 뒤 200 B 를 받고(아직 안 가져감), 다시 300 B 를 받으면서 process 가 100 B 를 가져갔다. 이때 알리는 rwnd 는?",
+       "answer": 400,
+       "unit": "B",
+       "tol": 0,
+       "explain": "rwnd = buffer − 아직 안 가져간 byte = 800 − (200 + 300 − 100) = **400** (p.68 ⑦ ACK 601, rwnd 400). 오른쪽 벽 = ackNo + rwnd = 601 + 400 = 1,001.",
+       "src": "CH09 p.65, 68 · 🎙 11/24 54:53",
+       "wiki": "receive window와 rwnd",
+       "tags": [
+        "receive window와 rwnd"
+       ],
+       "prof": true
+      },
+      {
+       "id": "u10f-10",
+       "type": "mc",
+       "q": "p.68 flow control 예제를 마치며 교수가 강조한 key point 는?",
+       "choices": [
+        "window size 는 sender 와 receiver 사이에 synchronize 되어야 한다",
+        "rwnd 는 항상 buffer 크기와 같다",
+        "sender 가 rwnd 를 정한다",
+        "window 는 segment 개수로 센다"
+       ],
+       "answer": 0,
+       "explain": "\"the key point is that window sizes should be **synchronized** between sender and receiver\" (11/24 54:53, 56:15). receiver 가 ACK 마다 rwnd 를 알리면 sender 가 그에 맞춰 send window 를 연다·닫는다. window 는 byte 단위.",
+       "src": "CH09 p.68 · 🎙 11/24 54:53",
+       "wiki": "receive window와 rwnd",
+       "tags": [
+        "receive window와 rwnd"
+       ],
+       "prof": true,
+       "img": "duo/img/cn9-p68-flowex.png",
+       "imgAlt": "p.68 flow control example — client(왼쪽)·server(오른쪽) 노란 칸에 ①~⑧ segment 와 window 변화"
       }
      ]
     }
