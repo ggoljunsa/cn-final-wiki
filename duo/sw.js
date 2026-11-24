@@ -1,6 +1,6 @@
 /* 한입 학습 service worker — scope is this duo/ folder only. */
 var PREFIX = 'duo-cn-';
-var CACHE = PREFIX + 'ae37bc93b6';
+var CACHE = PREFIX + 'aee1dc2847';
 var CORE = ['./', './index.html', './manifest.webmanifest', './icon.svg'];
 var CDN = 'https://cdn.jsdelivr.net/';
 var IMG = 'duo-img'; // question images, shared by all courses + hub; never purged by activate
