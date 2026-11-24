@@ -8474,6 +8474,181 @@
        "src": "CH07(2) p.62"
       }
      ]
+    },
+    {
+     "id": "u7e",
+     "title": "PS2 유형 연습 — forwarding · TTL · ICMP",
+     "items": [
+      {
+       "id": "u7e-01",
+       "type": "mc",
+       "q": "R2 표에서 목적지 172.30.9.100 의 처리는?",
+       "choices": [
+        "m0 로 직접 전달",
+        "m1 로 직접 전달",
+        "172.30.9.200 (m2)",
+        "default 172.30.9.140 (m1)"
+       ],
+       "answer": 0,
+       "explain": "/26 두 줄: 100 AND 192 = 64 → .64 ≠ .128, .192 ✗. /25: 100 AND 128 = 0 → 172.30.9.0 ✓ → next hop \"-\" 이므로 **m0 로 직접 전달**.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "Example 7.19–7.21 R1 포워딩",
+       "tags": [
+        "Example 7.19–7.21 R1 포워딩"
+       ],
+       "prof": true,
+       "img": "duo/img/cn7-ps2-r2.png",
+       "imgAlt": "R2 forwarding table: 172.30.9.128/26 m1, 172.30.9.192/26 m2, 172.30.9.0/25 m0 (직접), 172.30.10.0/24 → 172.30.9.200 m2, 172.30.8.0/22 → 172.30.9.20 m0, default → 172.30.9.140 m1",
+       "introCard": 0
+      },
+      {
+       "id": "u7e-02",
+       "type": "mc",
+       "q": "같은 R2 표에서 172.30.10.33 의 next hop 과 interface 는?",
+       "choices": [
+        "172.30.9.20, m0",
+        "172.30.9.200, m2",
+        "직접, m2",
+        "172.30.9.140, m1"
+       ],
+       "answer": 1,
+       "explain": "/26·/25: 셋째 byte 가 10 이라 ✗. /24: 172.30.10.0 ✓ → **172.30.9.200, m2**. /22 에도 맞지만 긴 prefix 가 먼저다.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "longest mask matching",
+       "tags": [
+        "longest mask matching"
+       ],
+       "prof": true,
+       "img": "duo/img/cn7-ps2-r2.png",
+       "imgAlt": "R2 forwarding table (위와 같음)",
+       "introCard": 0
+      },
+      {
+       "id": "u7e-03",
+       "type": "num",
+       "q": "같은 R2 표에서 172.30.11.5 를 /22 mask 로 AND 하면 셋째 byte 는?",
+       "answer": 8,
+       "tol": 0,
+       "explain": "11 = 0000 1011, 252 = 1111 1100 → 0000 1000 = **8** → 172.30.8.0 = /22 줄 ✓ → 172.30.9.20, m0.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "longest mask matching",
+       "tags": [
+        "longest mask matching"
+       ],
+       "prof": true,
+       "img": "duo/img/cn7-ps2-r2.png",
+       "imgAlt": "R2 forwarding table (위와 같음)",
+       "introCard": 0
+      },
+      {
+       "id": "u7e-04",
+       "type": "mc",
+       "q": "같은 R2 표에서 9.9.9.9 의 출력은?",
+       "choices": [
+        "m0",
+        "m2",
+        "default → 172.30.9.140, m1",
+        "버린다"
+       ],
+       "answer": 2,
+       "explain": "172.30.x.x 줄은 모두 ✗ → **default** 줄(모든 주소와 맞음) → 172.30.9.140, m1.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "forwarding table",
+       "tags": [
+        "forwarding table"
+       ],
+       "prof": true,
+       "img": "duo/img/cn7-ps2-r2.png",
+       "imgAlt": "R2 forwarding table (위와 같음)",
+       "introCard": 0
+      },
+      {
+       "id": "u7e-05",
+       "type": "mc",
+       "q": "R2 표에서 /22 줄을 /24 줄보다 먼저 검사하면 172.30.10.33 은 어디로 나가나?",
+       "choices": [
+        "172.30.9.200, m2 (그대로)",
+        "172.30.9.20, m0 (틀린 길)",
+        "default",
+        "직접 m2"
+       ],
+       "answer": 1,
+       "explain": "10 AND 252 = 8 → 172.30.8.0 이라 /22 에 먼저 걸린다 → **172.30.9.20, m0**. /22 block 이 /24 block 을 품고 있어서 긴 prefix 부터 봐야 한다(longest mask matching).",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "longest mask matching",
+       "tags": [
+        "longest mask matching"
+       ],
+       "prof": true,
+       "img": "duo/img/cn7-ps2-r2.png",
+       "imgAlt": "R2 forwarding table (위와 같음)",
+       "introCard": 0
+      },
+      {
+       "id": "u7e-06",
+       "type": "num",
+       "q": "TTL = 4 로 보낸 datagram 이 6 개 라우터를 지나야 한다. 몇 번째 라우터가 버리나?",
+       "answer": 4,
+       "unit": "번째",
+       "tol": 0,
+       "explain": "라우터마다 1 씩: R1 3, R2 2, R3 1, R4 **0** → R4 가 버리고 source 로 time exceeded(type 11).",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "TTL",
+       "tags": [
+        "TTL"
+       ],
+       "prof": true,
+       "introCard": 1
+      },
+      {
+       "id": "u7e-07",
+       "type": "mc",
+       "q": "그때 버린 라우터가 보내는 ICMP 메시지와 받는 쪽은?",
+       "choices": [
+        "destination unreachable → 목적지",
+        "time exceeded (type 11) → 원래 source",
+        "time exceeded → 직전 라우터",
+        "redirection → source"
+       ],
+       "answer": 1,
+       "explain": "TTL 0 → **time exceeded, type 11**. ICMP error 는 항상 원래 source 로 간다(datagram 에 source·destination 주소만 있으니까).",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "ICMPv4",
+       "tags": [
+        "ICMPv4"
+       ],
+       "prof": true,
+       "introCard": 1
+      },
+      {
+       "id": "u7e-08",
+       "type": "tf",
+       "q": "echo request / echo reply 는 ICMP error-reporting 메시지다.",
+       "answer": false,
+       "explain": "아니다. **query** 메시지다(ping). error-reporting 은 destination unreachable·source quench·redirection·time exceeded·parameter problem.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "echo request와 ping",
+       "tags": [
+        "echo request와 ping"
+       ],
+       "prof": true,
+       "introCard": 1
+      }
+     ],
+     "intro": [
+      {
+       "title": "PS2 1번과 같은 모양 — longest prefix",
+       "body": "표는 긴 prefix → 짧은 prefix 순서. 위에서부터 **destination AND mask** 를 그 줄의 network address 와 비교하고 처음 맞는 줄에서 멈춘다. next hop \"-\" = 직접 연결(목적지로 바로), default 0.0.0.0/0 은 모든 주소와 맞는다. 짧은 prefix(/22)를 먼저 보면 그 안에 든 /24 주소가 틀린 길로 간다.",
+       "img": "duo/img/cn7-ps2-r2.png",
+       "imgAlt": "R2 forwarding table",
+       "src": "CH07(2) rev p.56–62 · PS2 1(a)(b)"
+      },
+      {
+       "title": "TTL 과 ICMP",
+       "body": "라우터마다 TTL −1, **0 이 되면 버리고** 원래 source 로 **time exceeded (type 11)**. data section 에는 원래 IP header + data 앞 8 bytes(port). echo request / reply 는 **query** 메시지(ping: 살아 있나, RTT).",
+       "src": "CH07(2) rev p.50–55 · PS2 1(c)"
+      }
+     ]
     }
    ]
   },
@@ -9671,6 +9846,206 @@
        "img": "duo/img/cn7c-p31-tunnel.png",
        "imgAlt": "IPv4 region 의 tunnel",
        "src": "CH07(3) p.30–32"
+      }
+     ]
+    },
+    {
+     "id": "u8e",
+     "title": "PS2 유형 연습 — IPv6 주소 · EUI-64 · 차이점",
+     "items": [
+      {
+       "id": "u8e-01",
+       "type": "sa",
+       "q": "2001:0DB8:0000:00C0:0000:0000:0000:0F00 을 가장 짧게 쓰라.",
+       "answer": "2001:DB8:0:C0::F00",
+       "alts": [
+        "2001:db8:0:c0::f00"
+       ],
+       "explain": "앞의 0 제거 → 2001:DB8:0:C0:0:0:0:F00. 가장 긴 0 줄(5–7 번째, 3 개)을 `::` 로 → **2001:DB8:0:C0::F00**. 4 번째의 0 하나는 그대로 둔다.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "zero compression",
+       "tags": [
+        "zero compression"
+       ],
+       "prof": true,
+       "introCard": 0
+      },
+      {
+       "id": "u8e-02",
+       "type": "mc",
+       "q": "3FFE::12::7 이 잘못된 주소인 이유는?",
+       "choices": [
+        "16진수가 아니라서",
+        "`::` 를 두 번 써서 숨은 0 section 을 어떻게 나눌지 알 수 없어서",
+        "section 이 8 개보다 많아서",
+        "앞의 0 을 지워서"
+       ],
+       "answer": 1,
+       "explain": "`::` 는 주소에 **한 번만** 쓸 수 있다(L14 p.4).",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "zero compression",
+       "tags": [
+        "zero compression"
+       ],
+       "prof": true,
+       "introCard": 0
+      },
+      {
+       "id": "u8e-03",
+       "type": "sa",
+       "q": "FE80::A:2 를 줄이지 않은 형태로 쓰라.",
+       "answer": "FE80:0000:0000:0000:0000:0000:000A:0002",
+       "alts": [
+        "fe80:0000:0000:0000:0000:0000:000a:0002"
+       ],
+       "explain": "보이는 section 3 개 → 0000 이 5 개 숨어 있다 → **FE80:0000:0000:0000:0000:0000:000A:0002**.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "colon hexadecimal notation",
+       "tags": [
+        "colon hexadecimal notation"
+       ],
+       "prof": true,
+       "introCard": 0
+      },
+      {
+       "id": "u8e-04",
+       "type": "sa",
+       "q": "MAC 6A-1F-22-90-AB-07 의 interface ID(EUI-64)는?",
+       "answer": "681F:22FF:FE90:AB07",
+       "alts": [
+        "681f:22ff:fe90:ab07"
+       ],
+       "explain": "6A = 0110 1010 → 왼쪽 7 번째 bit 를 뒤집어 0110 1000 = 68. 가운데 FFFE → **681F:22FF:FE90:AB07**.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "EUI-64",
+       "tags": [
+        "EUI-64"
+       ],
+       "prof": true,
+       "introCard": 1
+      },
+      {
+       "id": "u8e-05",
+       "type": "mc",
+       "q": "같은 host 의 link-local 주소는?",
+       "choices": [
+        "FE80::6A1F:22FF:FE90:AB07",
+        "FE80::681F:22FF:FE90:AB07",
+        "FF02::681F:22FF:FE90:AB07",
+        "2001::681F:22FF:FE90:AB07"
+       ],
+       "answer": 1,
+       "explain": "link-local = FE80::/10 + 0 + interface ID → **FE80::681F:22FF:FE90:AB07**. 7 번째 bit 를 뒤집은 68 을 써야 한다.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "link-local address",
+       "tags": [
+        "link-local address"
+       ],
+       "prof": true,
+       "introCard": 0
+      },
+      {
+       "id": "u8e-06",
+       "type": "sa",
+       "q": "router 가 global prefix 2001:DB8:4A2 와 subnet ID 0007 을 알려 줬다. 같은 host 의 global unicast 주소는? (축약형)",
+       "answer": "2001:DB8:4A2:7:681F:22FF:FE90:AB07",
+       "alts": [
+        "2001:db8:4a2:7:681f:22ff:fe90:ab07"
+       ],
+       "explain": "prefix(48) + subnet(16) + interface ID(64) → 2001:0DB8:04A2:0007:681F:22FF:FE90:AB07 → **2001:DB8:4A2:7:681F:22FF:FE90:AB07**.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "global unicast address",
+       "tags": [
+        "global unicast address"
+       ],
+       "prof": true,
+       "introCard": 1
+      },
+      {
+       "id": "u8e-07",
+       "type": "mc",
+       "q": "IPv6 라우터가 다음 MTU 보다 큰 datagram 을 받으면?",
+       "choices": [
+        "조각내서 보낸다",
+        "버린다 (조각은 source 만 낸다)",
+        "destination 에 재조립을 요청한다",
+        "header 를 줄인다"
+       ],
+       "answer": 1,
+       "explain": "IPv6 는 **source 만** fragmentation 한다. 라우터는 **drop**. IPv4 는 source 나 아무 라우터나 나눈다(L14 p.26, 교수 \"may be asked in exams\").",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "IPv6 fragmentation",
+       "tags": [
+        "IPv6 fragmentation"
+       ],
+       "prof": true,
+       "introCard": 2
+      },
+      {
+       "id": "u8e-08",
+       "type": "match",
+       "q": "IPv4 의 역할과 IPv6 에서 그것을 맡은 것",
+       "pairs": [
+        [
+         "TTL",
+         "hop limit"
+        ],
+        [
+         "ARP",
+         "neighbor discovery (ND)"
+        ],
+        [
+         "IGMP",
+         "MLD"
+        ]
+       ],
+       "explain": "hop limit 은 base header 의 8-bit 칸(L14 p.24), ND·MLD 는 ICMPv6 메시지 묶음(p.28).",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "ICMPv6",
+       "tags": [
+        "ICMPv6"
+       ],
+       "prof": true,
+       "introCard": 2
+      },
+      {
+       "id": "u8e-09",
+       "type": "mc",
+       "q": "IPv6 망 두 곳이 IPv4 만 되는 ISP 로만 이어져 있다. 알맞은 전환 방법은?",
+       "choices": [
+        "dual stack",
+        "tunneling",
+        "header translation",
+        "NAT"
+       ],
+       "answer": 1,
+       "explain": "**tunneling**: IPv4 구간에 들어갈 때 IPv6 packet 을 IPv4 packet 에 넣고(encapsulate) 나올 때 꺼낸다(L14 p.31).",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "tunneling",
+       "tags": [
+        "tunneling"
+       ],
+       "prof": true,
+       "introCard": 2
+      }
+     ],
+     "intro": [
+      {
+       "title": "줄이기 · 펴기",
+       "body": "section 앞의 0 을 지우고, **가장 긴** 0 줄 하나만 `::`. `::` 두 번은 무효(숨은 0 개수를 나눌 수 없다). 펼 때는 8 − 보이는 section 수만큼 0000.",
+       "src": "CH07(3) p.4 · PS2 2(a)"
+      },
+      {
+       "title": "EUI-64 → link-local → global",
+       "body": "첫 byte 를 2진수로 써서 **왼쪽 7 번째 bit** 를 뒤집고 가운데 FFFE → interface ID. link-local = FE80:: + IID. global = prefix(48) + subnet(16) + IID(64).",
+       "img": "duo/img/cn7c-p12-mac-ans.png",
+       "imgAlt": "48-bit MAC → 64-bit interface ID",
+       "src": "CH07(3) p.10–21 · PS2 2(b)"
+      },
+      {
+       "title": "IPv4 와 다른 점",
+       "body": "IPv6 라우터는 큰 datagram 을 **버린다**(fragment 는 source 만). TTL → **hop limit**, ARP → **ND**, IGMP → **MLD**. IPv4 만 되는 구간을 건너려면 **tunneling**.",
+       "src": "CH07(3) p.24–31 · PS2 2(c)"
       }
      ]
     }
@@ -11098,6 +11473,235 @@
        "img": "duo/img/cn8-p37-bgp-ans.png",
        "imgAlt": "AS 1·AS 2 사이 eBGP, 안쪽 iBGP",
        "src": "CH08 p.34–37"
+      }
+     ]
+    },
+    {
+     "id": "u9f",
+     "title": "PS2 유형 연습 — Dijkstra · Bellman-Ford · RIP",
+     "items": [
+      {
+       "id": "u9f-01",
+       "type": "order",
+       "q": "그림의 그래프에서 A 를 root 로 Dijkstra 를 돌릴 때 tree 에 들어가는 순서",
+       "answer": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+       ],
+       "explain": "A(0) → B(2) → C(5: A–B–C, 직접 6 보다 쌈) → D(7: C 경유, B 경유 9) → E(9) → F(10: D 경유, E 경유 11).",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "Dijkstra algorithm",
+       "tags": [
+        "Dijkstra algorithm"
+       ],
+       "prof": true,
+       "img": "duo/img/cn9-ps2-graph.png",
+       "imgAlt": "6-router 그래프: A–B 2, A–C 6, B–C 3, B–D 7, C–D 2, C–E 4, D–E 5, D–F 3, E–F 2",
+       "introCard": 0
+      },
+      {
+       "id": "u9f-02",
+       "type": "num",
+       "q": "같은 그래프에서 A 에서 D 까지 least cost 는?",
+       "answer": 7,
+       "tol": 0,
+       "explain": "A–B–C–D = 2 + 3 + 2 = **7**. A–B–D = 9, A–C–D = 8.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "Dijkstra algorithm",
+       "tags": [
+        "Dijkstra algorithm"
+       ],
+       "prof": true,
+       "img": "duo/img/cn9-ps2-graph.png",
+       "imgAlt": "6-router 그래프 (위와 같음)",
+       "introCard": 0
+      },
+      {
+       "id": "u9f-03",
+       "type": "mc",
+       "q": "A 의 forwarding table 에서 C 로 가는 줄의 next hop 은?",
+       "choices": [
+        "C (직접 link 6)",
+        "B (A–B–C = 5)",
+        "D",
+        "E"
+       ],
+       "answer": 1,
+       "explain": "직접 link 6 보다 B 를 거치는 2 + 3 = 5 가 싸다 → next hop **B**. PS2 에서도 같은 함정이 나온다.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "least-cost tree",
+       "tags": [
+        "least-cost tree"
+       ],
+       "prof": true,
+       "img": "duo/img/cn9-ps2-graph.png",
+       "imgAlt": "6-router 그래프 (위와 같음)",
+       "introCard": 0
+      },
+      {
+       "id": "u9f-04",
+       "type": "num",
+       "q": "A 에서 F 까지 least cost 는?",
+       "answer": 10,
+       "tol": 0,
+       "explain": "A–B–C–D–F = 2 + 3 + 2 + 3 = **10**. E 를 거치면 9 + 2 = 11.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "Dijkstra algorithm",
+       "tags": [
+        "Dijkstra algorithm"
+       ],
+       "prof": true,
+       "img": "duo/img/cn9-ps2-graph.png",
+       "imgAlt": "6-router 그래프 (위와 같음)",
+       "introCard": 0
+      },
+      {
+       "id": "u9f-05",
+       "type": "num",
+       "q": "A 의 이웃은 B(cost 2)와 C(cost 6)뿐이다. B 의 벡터에서 E = 7, C 의 벡터에서 E = 4. Bellman-Ford 로 A 의 E 까지 cost 는?",
+       "answer": 9,
+       "tol": 0,
+       "explain": "min(2 + 7, 6 + 4) = min(9, 10) = **9**, next hop B.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "Bellman-Ford equation",
+       "tags": [
+        "Bellman-Ford equation"
+       ],
+       "prof": true,
+       "introCard": 1
+      },
+      {
+       "id": "u9f-06",
+       "type": "num",
+       "q": "X–A cost 3, A–B cost 2 인 줄에서 X–A 가 끊겼다. B 의 옛 값(X = 5)이 먼저 A 에 오면 A 가 새로 적는 X 까지 cost 는?",
+       "answer": 7,
+       "tol": 0,
+       "explain": "A 는 B 를 거치면 된다고 믿는다: 2 + 5 = **7**. 그 뒤 B 9, A 11 … 2 씩 올라가 16(∞)까지 간다(two-node loop). split horizon 이면 B 는 A 에게 X 를 알리지 않는다.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "count to infinity와 two-node loop",
+       "tags": [
+        "count to infinity와 two-node loop"
+       ],
+       "prof": true,
+       "introCard": 1
+      },
+      {
+       "id": "u9f-07",
+       "type": "mc",
+       "q": "RIP: R 의 줄 (N1, D, 2) 에 이웃 D 가 \"N1 3\" 을 보냈다. 새 줄은?",
+       "choices": [
+        "(N1, D, 2) 유지",
+        "(N1, D, 4) — 같은 next router 라 교체",
+        "(N1, D, 3)",
+        "(N1, -, 4)"
+       ],
+       "answer": 1,
+       "explain": "3 + 1 = 4 > 2 지만 **같은 next router(D)** 에서 온 소식이라 규칙 ③ 으로 받아들인다 → (N1, D, 4).",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "RIP",
+       "tags": [
+        "RIP"
+       ],
+       "prof": true,
+       "img": "duo/img/cn9-ps2-rip.png",
+       "imgAlt": "R 의 표와 D 가 보낸 cost: N1 D 2 / 3, N2 A 6 / 2, N3 - 1 / 4, N4 D 4 / 15, N6 없음 / 5",
+       "introCard": 2
+      },
+      {
+       "id": "u9f-08",
+       "type": "mc",
+       "q": "같은 표에서 N2 (A, 6) 와 N4 (D, 4) 는 각각 어떻게 되나?",
+       "choices": [
+        "N2 유지, N4 유지",
+        "N2 → (D, 3) 규칙 ②, N4 → (D, 16 = ∞) 규칙 ③",
+        "N2 → (D, 3), N4 유지",
+        "N2 유지, N4 → (D, 15)"
+       ],
+       "answer": 1,
+       "explain": "N2: 2 + 1 = 3 < 6 → 더 싸서 교체(②). N4: 15 + 1 = **16 = ∞**, 같은 next router D → 교체(③), unreachable.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "RIP",
+       "tags": [
+        "RIP"
+       ],
+       "prof": true,
+       "img": "duo/img/cn9-ps2-rip.png",
+       "imgAlt": "R 의 표와 D 가 보낸 cost (위와 같음)",
+       "introCard": 2
+      },
+      {
+       "id": "u9f-09",
+       "type": "mc",
+       "q": "같은 표에서 N3 (−, 1) 과 N6 은?",
+       "choices": [
+        "N3 → (D, 5), N6 추가 (D, 6)",
+        "N3 유지, N6 추가 (D, 6)",
+        "N3 유지, N6 무시",
+        "N3 → (D, 4), N6 (D, 5)"
+       ],
+       "answer": 1,
+       "explain": "N3: 4 + 1 = 5 > 1 이고 next router 도 다르니 유지. N6: 처음 보는 목적지 → 규칙 ① 로 **(N6, D, 6)** 추가.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "RIP",
+       "tags": [
+        "RIP"
+       ],
+       "prof": true,
+       "img": "duo/img/cn9-ps2-rip.png",
+       "imgAlt": "R 의 표와 D 가 보낸 cost (위와 같음)",
+       "introCard": 2
+      },
+      {
+       "id": "u9f-10",
+       "type": "match",
+       "q": "상황과 알맞은 라우팅 프로토콜",
+       "pairs": [
+        [
+         "router 몇 대인 작은 회사망",
+         "RIP"
+        ],
+        [
+         "link 마다 delay 기반 weight, area 로 나눈 큰 AS",
+         "OSPF"
+        ],
+        [
+         "두 ISP 사이, 특정 AS 를 정책으로 피해야 함",
+         "BGP"
+        ]
+       ],
+       "explain": "RIP = hop count(최대 15), OSPF = link state + weight + area, BGP = AS 사이 유일한 path vector(policy).",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "라우팅 알고리즘 비교",
+       "tags": [
+        "라우팅 알고리즘 비교"
+       ],
+       "prof": true,
+       "introCard": 2
+      }
+     ],
+     "intro": [
+      {
+       "title": "Dijkstra 표 만들기",
+       "body": "Init(root 의 이웃 cost) → tree 밖에서 가장 작은 것 Select → 그 node 를 거쳐 싸지는 이웃만 Update. 칸마다 cost(previous). next hop = tree 에서 root 다음 node — **직접 link 보다 돌아가는 길이 싼 경우**를 조심.",
+       "img": "duo/img/cn9-ps2-graph.png",
+       "imgAlt": "6-router 그래프",
+       "src": "CH08 p.20–25 · PS2 3(a)"
+      },
+      {
+       "title": "Bellman-Ford 와 two-node loop",
+       "body": "$D_{xy} = \\min(c_{xa} + D_{ay}, …)$ 를 목적지마다. link 가 끊기면 이웃의 옛(stale) 값을 믿어 link cost 씩 올라가 16 까지 간다. split horizon = 배운 이웃에게는 안 알림, poison reverse = ∞ 로 알림.",
+       "src": "CH08 p.7, 13–15 · PS2 3(b)(c)"
+      },
+      {
+       "title": "RIP 갱신 세 규칙",
+       "body": "받은 cost + 1, next router = 보낸 이웃. ① 새 목적지 → 추가 ② 더 쌈 → 교체 ③ 더 비싸도 **같은 next router** 면 교체. 15 + 1 = 16 = ∞.",
+       "img": "duo/img/cn9-ps2-rip.png",
+       "imgAlt": "R 의 표와 D 가 보낸 cost",
+       "src": "CH08 p.31–32 · PS2 3(d)"
       }
      ]
     }
@@ -12784,6 +13388,261 @@
        "img": "duo/img/cn9-p68-flowex.png",
        "imgAlt": "flow control example ①~⑧",
        "src": "CH09 p.65–68 · 1124 녹음 54:53"
+      }
+     ]
+    },
+    {
+     "id": "u10g",
+     "title": "PS2 유형 연습 — UDP · TCP 번호 · window · cwnd",
+     "items": [
+      {
+       "id": "u10g-01",
+       "type": "num",
+       "q": "UDP header 0050 C8A4 0040 0000 의 destination port 는? (10진)",
+       "answer": 51364,
+       "tol": 0,
+       "explain": "0xC8A4 = 12·4096 + 8·256 + 10·16 + 4 = **51364** → dynamic/private(49,152–65,535).",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "Example UDP header 읽기",
+       "tags": [
+        "Example UDP header 읽기"
+       ],
+       "prof": true,
+       "img": "duo/img/cn10-ps2-udp.png",
+       "imgAlt": "UDP header 네 칸: 0050 | C8A4 | 0040 | 0000",
+       "introCard": 0
+      },
+      {
+       "id": "u10g-02",
+       "type": "num",
+       "q": "같은 header 의 data 길이는? (bytes)",
+       "answer": 56,
+       "unit": "B",
+       "tol": 0,
+       "explain": "total 0x0040 = 64 → 64 − 8 = **56**. checksum 0000 은 계산하지 않았다는 뜻(optional).",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "UDP header",
+       "tags": [
+        "UDP header"
+       ],
+       "prof": true,
+       "img": "duo/img/cn10-ps2-udp.png",
+       "imgAlt": "UDP header 네 칸 (위와 같음)",
+       "introCard": 0
+      },
+      {
+       "id": "u10g-03",
+       "type": "mc",
+       "q": "같은 header 의 방향은?",
+       "choices": [
+        "client → server",
+        "server → client",
+        "알 수 없다",
+        "server → server"
+       ],
+       "answer": 1,
+       "explain": "source 0x0050 = 80 은 well-known(HTTP), destination 51364 는 ephemeral → **server → client**.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "ephemeral port와 well-known port",
+       "tags": [
+        "ephemeral port와 well-known port"
+       ],
+       "prof": true,
+       "img": "duo/img/cn10-ps2-udp.png",
+       "imgAlt": "UDP header 네 칸 (위와 같음)",
+       "introCard": 0
+      },
+      {
+       "id": "u10g-04",
+       "type": "num",
+       "q": "client ISN 3,500, server ISN 21,000. handshake 셋째 segment(ACK)의 ack number 는?",
+       "answer": 21001,
+       "tol": 0,
+       "explain": "① SYN seq 3,500 ② SYN+ACK seq 21,000 ack 3,501 ③ ACK seq 3,501 ack **21,001**. SYN 이 번호 1 개를 썼다.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "three-way handshake",
+       "tags": [
+        "three-way handshake"
+       ],
+       "prof": true,
+       "introCard": 0
+      },
+      {
+       "id": "u10g-05",
+       "type": "num",
+       "q": "이어서 client 가 1,200 · 800 · 2,000 bytes segment 를 보낸다. 셋째 segment 의 sequence number 는?",
+       "answer": 5501,
+       "tol": 0,
+       "explain": "첫 data byte = 3,501 (③ ACK 는 번호를 안 씀). 3,501 → 4,701 → **5,501**. 마지막 byte 는 7,500.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "TCP sequence number와 ISN",
+       "tags": [
+        "TCP sequence number와 ISN"
+       ],
+       "prof": true,
+       "introCard": 0
+      },
+      {
+       "id": "u10g-06",
+       "type": "num",
+       "q": "위에서 둘째 segment(800 B)만 사라졌다. 셋째를 받은 server 의 ACK number 는?",
+       "answer": 4701,
+       "tol": 0,
+       "explain": "cumulative ACK: 연속으로 받은 마지막 byte 4,700 → **4,701** (셋째는 out of order 로 저장).",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "acknowledgment number",
+       "tags": [
+        "acknowledgment number"
+       ],
+       "prof": true,
+       "introCard": 0
+      },
+      {
+       "id": "u10g-07",
+       "type": "mc",
+       "q": "SYN flooding 에서 끝내 오지 않는 handshake 단계는?",
+       "choices": [
+        "① SYN",
+        "② SYN + ACK",
+        "③ client 의 마지막 ACK",
+        "모두 온다"
+       ],
+       "answer": 2,
+       "explain": "가짜 source 라 SYN + ACK 에 아무도 답하지 않는다 → **③ ACK** 가 안 와서 half-open 이 쌓이고 자원이 바닥난다(DoS).",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "SYN flooding attack",
+       "tags": [
+        "SYN flooding attack"
+       ],
+       "prof": true,
+       "introCard": 0
+      },
+      {
+       "id": "u10g-08",
+       "type": "num",
+       "q": "receive buffer 6,000 B, 받고 ACK 한 byte 4,000, process 가 가져간 byte 2,500. rwnd 는?",
+       "answer": 4500,
+       "unit": "B",
+       "tol": 0,
+       "explain": "안 가져간 byte = 4,000 − 2,500 = 1,500 → rwnd = 6,000 − 1,500 = **4,500**. cwnd 가 3,000 이면 실제 window = min = 3,000.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "receive window와 rwnd",
+       "tags": [
+        "receive window와 rwnd"
+       ],
+       "prof": true,
+       "introCard": 1
+      },
+      {
+       "id": "u10g-09",
+       "type": "num",
+       "q": "지난 ACK (ackNo 4,001, rwnd 2,000). 새 ACK ackNo 가 5,001 이면 shrink 를 피하는 최소 rwnd 는?",
+       "answer": 1000,
+       "unit": "B",
+       "tol": 0,
+       "explain": "옛 오른쪽 벽 4,001 + 2,000 = 6,001. 5,001 + rwnd ≥ 6,001 → **1,000**.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "send window",
+       "tags": [
+        "send window"
+       ],
+       "prof": true,
+       "introCard": 1
+      },
+      {
+       "id": "u10g-10",
+       "type": "mc",
+       "q": "400 B segment seq 2,001 · 2,401 · 2,801 · 3,201 · 3,601 중 2,401 만 사라졌다. sender 는 언제 재전송하나?",
+       "choices": [
+        "2,801 의 ACK 를 받자마자",
+        "3,201 의 ACK(둘째 duplicate)를 받고",
+        "3,601 의 ACK(셋째 duplicate 2,401)를 받고",
+        "time-out 때만"
+       ],
+       "answer": 2,
+       "explain": "ACK 는 2,401(원래) → 2,401 dup1(2,801) → dup2(3,201) → dup3(3,601). 원래 + 같은 것 3 개 = **셋째 duplicate** 에서 fast retransmission. 재전송이 도착하면 ACK 4,001.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "RTO와 fast retransmission",
+       "tags": [
+        "RTO와 fast retransmission"
+       ],
+       "prof": true,
+       "introCard": 1
+      },
+      {
+       "id": "u10g-11",
+       "type": "num",
+       "q": "ssthresh 12, cwnd 1 로 시작(slow start 는 ssthresh 를 넘지 않음). RTT 1 의 cwnd 를 1 로 셀 때 RTT 7 의 cwnd 는?",
+       "answer": 14,
+       "unit": "MSS",
+       "tol": 0,
+       "explain": "1, 2, 4, 8, 12(ssthresh 에서 멈춤), 13, **14**.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "slow start",
+       "tags": [
+        "slow start"
+       ],
+       "prof": true,
+       "introCard": 2
+      },
+      {
+       "id": "u10g-12",
+       "type": "mc",
+       "q": "cwnd 14 에서 3 duplicate ACKs 가 왔다. Reno 의 새 ssthresh 와 cwnd 는?",
+       "choices": [
+        "7, 1",
+        "7, 10",
+        "14, 17",
+        "12, 15"
+       ],
+       "answer": 1,
+       "explain": "ssthresh = 14/2 = 7, Reno 는 cwnd = ssthresh + 3 = **10** → fast recovery. Tahoe 였다면 (7, 1) → slow start.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "Tahoe와 Reno",
+       "tags": [
+        "Tahoe와 Reno"
+       ],
+       "prof": true,
+       "introCard": 2
+      },
+      {
+       "id": "u10g-13",
+       "type": "mc",
+       "q": "Reno 에서 cwnd 10 일 때 time-out 이 났다. 새 값은?",
+       "choices": [
+        "ssthresh 5, cwnd 8",
+        "ssthresh 5, cwnd 1",
+        "ssthresh 10, cwnd 1",
+        "ssthresh 5, cwnd 5"
+       ],
+       "answer": 1,
+       "explain": "time-out 은 Tahoe 와 같다 → ssthresh = 10/2 = 5, **cwnd = 1**, slow start.",
+       "src": "PS2 유형 · 11/24 과제",
+       "wiki": "Tahoe와 Reno",
+       "tags": [
+        "Tahoe와 Reno"
+       ],
+       "prof": true,
+       "introCard": 2
+      }
+     ],
+     "intro": [
+      {
+       "title": "UDP header 와 TCP 번호",
+       "body": "UDP: 4 자리씩 끊어 10진 → data = total − 8 → 작은(well-known) port 쪽이 server. TCP: SYN·SYN+ACK 는 번호 1 개, ③ ACK 는 0 개 → 첫 data byte = ISN + 1. 다음 seq = 앞 seq + bytes, ACK = 연속 마지막 byte + 1.",
+       "img": "duo/img/cn10-ps2-udp.png",
+       "imgAlt": "UDP header 네 칸",
+       "src": "CH09 p.34–36, 47–58 · PS2 4"
+      },
+      {
+       "title": "window 와 재전송",
+       "body": "rwnd = buffer − 안 가져간 byte, 실제 window = min(rwnd, cwnd). 오른쪽 벽 = ackNo + rwnd 가 왼쪽으로 가면 shrink. 원래 ACK + 같은 ACK 3 개 = fast retransmission.",
+       "src": "CH09 p.65–77 · PS2 5(a)–(c)"
+      },
+      {
+       "title": "cwnd: Tahoe 와 Reno",
+       "body": "slow start 두 배(ssthresh 넘지 않음) → CA +1. time-out: ssthresh = cwnd/2, cwnd = 1 (둘 다). 3 dupACKs: Tahoe 는 cwnd 1, Reno 는 cwnd = ssthresh + 3 → fast recovery.",
+       "src": "CH09 p.78–85 · PS2 5(d)"
       }
      ]
     }
