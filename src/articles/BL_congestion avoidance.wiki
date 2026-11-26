@@ -2,8 +2,6 @@ key: congestion avoidance
 title: congestion avoidance — cwnd 를 RTT 마다 +1
 category: 11강 TCP, 용어
 ---
-{info}이 문서의 내용(p.69 이후)은 11/26 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
-
 '''congestion avoidance''' 는 cwnd 가 ssthresh 에 닿은 뒤 RTT 마다 1 MSS 씩만 늘리는 단계다(additive increase). L16 p.80, p.82.
 
 {def}"Congestion avoidance: once cwnd reaches ssthresh, add 1 MSS per RTT (additive)." (p.80){/def}
@@ -32,6 +30,9 @@ time-out 이나 3 dup ACKs. p.83 Tahoe 에서는 RTT 5–13 동안 4 → 12 로 
 {answer}
 # 10.1, 약 11.
 {/answer}
+
+== 11/26 수업에서 ==
+이름의 뜻은 교수 말로 "2 배씩 늘리지 않고 1 씩 더하니까 congestion 을 피한다" 다(11/26 44:43–45:24). 상태도의 ACK 마다 +1/cwnd 는 RTT 단위로 보면 +1 이다. "ACK 단위로 쓴 거다. 헷갈리지 마시고요"(64:10–64:40). p.83 그래프에서는 time-out 으로 ssthresh 가 4 로 내려가서 "4 에 도달하자마자 congestion avoidance 로 들어가 1 씩 지루하게 늘린다" 고 했다(65:46–66:16).
 
 == 관련 문서 ==
 * [[slow start]] · [[cwnd]] · [[Tahoe와 Reno]]

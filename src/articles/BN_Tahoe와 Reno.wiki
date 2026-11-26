@@ -2,8 +2,6 @@ key: Tahoe와 Reno
 title: Tahoe 와 Reno — 3 duplicate ACKs 에 대한 반응 차이
 category: 11강 TCP, 용어
 ---
-{info}이 문서의 내용(p.69 이후)은 11/26 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
-
 Tahoe TCP 와 Reno TCP 는 time-out 에는 똑같이 반응하고, 3 duplicate ACKs 에 다르게 반응한다. L16 p.81–85.
 
 [[img:L16-81.png|p.81 — Event / Tahoe TCP / Reno TCP 표|medium]]
@@ -43,6 +41,14 @@ Reno  1 2 4 8 | 1 2 4 | 5 … 12 | 3dupACKs: ssthresh 6, cwnd 9 → FR 10 12 →
 {/answer}
 
 {info}📝 과제 연결: PS2 5(d)(ii)(iv) 가 3 duplicate ACKs·time-out 뒤 Tahoe 와 Reno 의 ssthresh·cwnd 를 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
+== 11/26 수업에서 ==
+교수: "Tahoe 랑 Reno 는 딱 한 군데가 다르다. timeout 에 대해서는 둘이 똑같이 행동하고, 3 duplicate ACK 에서 둘의 액션이 다르다. Reno 가 조금 더 최근 것이다"(11/26 45:55–46:35).
+* time-out: Tahoe 도 Reno 도 ssthresh 를 cwnd 의 절반으로 줄이고 cwnd = 1 로 slow start 를 다시 한다. ssthresh 가 절반이 됐으니 금세 congestion avoidance 로 들어간다(46:43–47:44).
+* 3 dup ACKs: Tahoe 는 time-out 과 똑같이 위중하게 본다. 그런데 "701 은 못 갔더라도 801, 901, 1001 은 간 건데 확 깎아내리면 오히려 네트워크 자원을 낭비하는 것 아니냐." Reno 가 이것을 고친다(47:52–48:36).
+p.83 과 p.85 를 놓고 교수는 "이 페이지랑 이 페이지랑 엄청 다르죠" 라고 했다. Tahoe 는 cwnd 가 1 로 떨어진 gap 에서 throughput 을 살리지 못하고, Reno 는 throughput 을 유지한다. "fast recovery 나 Reno 같은 것이 최근 TCP 관련 알고리즘에서 주목하는 것" 이다(71:29–72:16).
+
+{exam}Tahoe 와 Reno 는 3 duplicate ACKs 에서만 다르다. time-out 반응은 같다(ssthresh = cwnd/2, cwnd = 1). 교수가 "딱 한 군데가 다르다" 고 짚었다(11/26 45:55).{/exam}
 
 == 관련 문서 ==
 * [[fast recovery]] · [[slow start]] · [[congestion avoidance]] · [[cwnd]] · [[CH09 TCP]]

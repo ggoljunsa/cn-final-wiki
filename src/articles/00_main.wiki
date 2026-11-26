@@ -21,8 +21,8 @@ category: 안내
 # [[CH07 IPv6]] (11/10): 주소 표기, EUI-64, autoconfiguration, base header, 전환
 # [[CH08 라우팅]] (11/12): distance vector, link state, path vector, RIP·OSPF·BGP
 # [[CH09 전송 계층과 UDP]] (11/17·11/19): port, multiplexing, flow·error control, sliding window, UDP
-# [[CH09 TCP]] (11/19·11/24, 11/26 에 끝): byte 번호, header, handshake, window·flow control, 재전송, cwnd. p.69 이후는 11/26 수업 전 선제 작성
-# 다음 주(12/1 주): application layer. 교수는 이것이 마지막 부분이고 그 뒤가 기말고사라고 했다(11/24). 슬라이드는 아직 없다
+# [[CH09 TCP]] (11/19·11/24·11/26, CH09 끝): byte 번호, header, handshake, window·flow control, 재전송, cwnd·Tahoe·Reno
+# 다음 주 화(12/1)·목(12/3): application layer. 교수는 이것이 마지막 부분이고 그 뒤가 기말고사라고 했다(11/24·11/26). 슬라이드는 아직 없다. 기말은 homework 1·2 와 비슷한 문제가 나온다(11/26)
 처음부터 읽으려면 [[읽는 순서]] 를 따라가면 된다.
 
 === 강의별 메인 문서 ===

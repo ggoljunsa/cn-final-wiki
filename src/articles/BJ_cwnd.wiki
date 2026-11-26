@@ -2,8 +2,6 @@ key: cwnd
 title: cwnd (congestion window) — 네트워크가 받아 줄 양
 category: 11강 TCP, 용어
 ---
-{info}이 문서의 내용(p.69 이후)은 11/26 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
-
 '''cwnd''' (congestion window)는 네트워크가 받아 줄 수 있다고 보는 byte 양이다. 실제 send window 는 rwnd 와 cwnd 중 작은 쪽이다. L16 p.78.
 
 {def}"Congestion window (cwnd): how many bytes the network can take. Send window size uses both: Actual window size = min (rwnd, cwnd). rwnd: receiver (flow), cwnd: network (congestion). TCP detects congestion by: Time-out: strong sign (segments are being lost). Three duplicate ACKs: lighter sign (one segment lost, others arrive)." (p.78){/def}
@@ -40,6 +38,15 @@ $$\text{Actual window size} = \min(\text{rwnd},\ \text{cwnd})$$
 # 4,000 B.
 # time-out.
 {/answer}
+
+== 11/26 수업에서 ==
+교수의 정의로 cwnd 는 "sender 가 볼 때 네트워크가 얼마나 감당할 수 있겠느냐에 대한 estimation" 이다. 단위는 receive window 와 같다. 네트워크가 널널하면 크게 잡고, 최근에 사건이 많이 벌어졌으면 혼잡하다는 뜻이니 낮춘다. 낮추기만 하면 비효율적이라 올리는 절차도 정해져 있다(11/26 33:16–34:54).
+
+"window 는 여전히 두 개다. send window 와 receive window. 그런데 send window 크기가 rwnd 와 cwnd 의 최솟값으로 결정된다." rwnd 는 receiver 의 capability, cwnd 는 medium(network)의 capability 다. 어느 쪽이든 bottleneck 에 맞춰야 한다(34:54–35:43).
+
+{exam}send window = min(rwnd, cwnd). 교수: "중요한 것은 congestion window 는 그 자체로 의미 있는 게 아니라 sender window 의 사이즈를 정할 때 receive window 와 함께 영향을 준다"(11/26 39:14).{/exam}
+
+time-out 과 3 duplicate ACKs 중 더 심각한 것은 time-out 이다. "timeout 은 대답조차 없는 상황이다. 3 duplicate ACK 는 그래도 뭐라도 전달된 거다. timeout 은 그냥 함흥차사다"(39:51–41:22).
 
 == 관련 문서 ==
 * [[slow start]] · [[congestion avoidance]] · [[fast recovery]] · [[Tahoe와 Reno]] · [[receive window와 rwnd]] · [[congestion control]]

@@ -2,8 +2,6 @@ key: cumulative ACK와 SACK
 title: cumulative ACK 와 SACK (selective ACK)
 category: 11강 TCP, 용어
 ---
-{info}이 문서의 내용(p.69 이후)은 11/26 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
-
 TCP ACK 는 기본이 cumulative(다음 기다리는 byte 하나)이고, 새 TCP 는 option 으로 SACK(받은 byte 덩어리 목록)을 더한다. L16 p.73, p.65.
 
 {def}"ACKs are mainly cumulative (next byte expected); newer TCP adds selective ACKs." (p.65){/def}
@@ -34,6 +32,9 @@ cumulative ACK 는 빈칸 앞까지만 말한다. 1–100, 201–300, 301–400 
 # TCP option.
 # X. SACK 은 cumulative ACK 에 더할 뿐 대신하지 않는다.
 {/answer}
+
+== 11/26 수업에서 ==
+교수는 ACK 701 의 뜻을 다시 풀었다. "다음에 네가 보내 줘야 할 게 701 이다. 즉 700 까지는 다 받았다." 지금까지 온 것은 다 OK 라는 축적된(cumulative) 의미로 ACK 를 운영하고, "이게 TCP 의 국룰이자 기본 메커니즘" 이다. SACK 은 특정 duplicate 나 순서가 망가진 블록을 따로 알려 주는 option 이고 "보조적인(complementary) 수단이라 기본 cumulative ACK 를 대체하지는 않는다. 기본은 cumulative ACK 다"(11/26 18:08–20:05).
 
 == 관련 문서 ==
 * [[acknowledgment number]] · [[RTO와 fast retransmission]] · [[TCP segment format]]

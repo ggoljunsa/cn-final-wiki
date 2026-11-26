@@ -2,8 +2,6 @@ key: silly window syndrome
 title: silly window syndrome — 1 byte 에 40 byte header
 category: 11강 TCP, 용어
 ---
-{info}이 문서의 내용(p.69 이후)은 11/26 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
-
 data 가 아주 느리게 만들어지거나 소비되면 TCP 가 아주 작은 segment 를 보내게 되어 overhead 가 커지는 현상이다. L16 p.71.
 
 {def}"Silly window syndrome: data is produced or consumed very slowly. TCP may send tiny segments: a 41-byte datagram for 1 byte of data. Created by the sender → Nagle's algorithm: send the first piece at once, even 1 byte; then accumulate until an ACK arrives or a full segment is ready. Created by the receiver: Clark's solution: advertise rwnd = 0 until a full segment or half the buffer is free. Or delay the ACK (less traffic, but may cause needless retransmissions)." (p.71){/def}
@@ -35,6 +33,13 @@ silly = 바보 같은. window 가 바보같이 작게(1 byte) 열리고 닫히�
 # Nagle's algorithm.
 # 장점: ACK 트래픽이 준다. 단점: ACK 가 늦어 sender timer 가 끝나면 쓸데없는 재전송이 생긴다.
 {/answer}
+
+== 11/26 수업에서 ==
+교수는 silly window syndrome 을 지금까지 본 flow control 구조의 '''부작용'''으로 소개했다. "silly 는 바보 같은, window 를 바보같이 쓴다는 뜻이다." 1 byte 를 보내려고 TCP·IP header 40 bytes 를 붙이는 것은 공짜가 아니다. "데이터 통신이라는 게 결국 자원을 쓰는 거다. 무선이면 전력을 쓰면서 하는 거다"(11/26 11:25–13:42).
+
+* Nagle: "네이글이라고 합니다. 어떻게 읽는지 모르겠으면 구글 찾아보세요." 첫 번째는 그냥 보내고, 두 번째부터는 ACK 가 올 때까지 또는 segment 가 꽉 찰 때까지 쌓아 둔다. "디테일은 더 복잡한데 key idea 는 이거다"(13:58–15:27).
+* Clark: receiver 가 늦게 가져가서 생기는 경우다. 교수는 "full segment 가 될 때까지 혹은 receive buffer 가 아예 비어 있을 때까지 잠가 둔다, 혹은 ACK 를 늦게 준다" 고 말했다(15:34–16:24).[* 슬라이드 p.71 은 "half of the buffer is empty" 다. 교수의 "아예 비어 있을 때까지" 는 말로 줄인 것으로 보고, 답안에는 슬라이드 문구를 쓰자.]
+* 대책은 여러 가지가 있지만 "대표적인 게 Nagle 이랑 Clark" 이다(16:34).
 
 == 관련 문서 ==
 * [[receive window와 rwnd]] · [[window shutdown과 probing]] · [[TCP segment format]]

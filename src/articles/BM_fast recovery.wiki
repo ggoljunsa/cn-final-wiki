@@ -2,8 +2,6 @@ key: fast recovery
 title: fast recovery — 3 duplicate ACKs 뒤 Reno 의 셋째 상태
 category: 11강 TCP, 용어
 ---
-{info}이 문서의 내용(p.69 이후)은 11/26 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
-
 '''fast recovery''' 는 3 duplicate ACKs(가벼운 congestion)가 왔을 때 Reno TCP 가 들어가는 상태다. cwnd 를 1 로 떨어뜨리지 않고 ssthresh + 3 에서 이어 간다. L16 p.81, p.84–85.
 
 {def}"Fast recovery: optional, used by newer TCPs (e.g., Reno). Starts on three duplicate ACKs (light congestion). Additive increase, but on each duplicate ACK: cwnd = cwnd + 1." (p.81){/def}
@@ -31,6 +29,17 @@ RTT 13 에 cwnd 12 에서 3dupACKs → ssthresh 6, cwnd 9 → 10, 12 → new ACK
 # ssthresh 10, cwnd 13.
 # new ACK → congestion avoidance(cwnd = ssthresh), time-out → slow start(cwnd = 1).
 {/answer}
+
+== 11/26 수업에서 ==
+교수는 Reno 의 +3 이유를 학생들에게 물었다. "왜 하필 3 이냐?"(11/26 49:13) 답은 이렇다. 3 duplicate ACK 가 왔다는 것은 빠진 segment 하나 뒤의 세 segment 가 receiver 에 정상적으로 도착했다는 뜻이다. 그런데 그 셋은 sender 의 send window 안에 아직 자리를 차지하고 있다. 잘 간 것을 이미 아니까 그 세 칸만큼 방을 빼 줘서 data 를 더 보낼 수 있게 한다. "만약 5 duplicate 였으면 +5 여야죠"(49:22–50:59). 1 로 낮추는 것보다 훨씬 적정한 상태에서 다시 시작해서 fast recovery 라고 부른다(49:00).
+
+fast recovery 안에서는 사건이 세 가지다(67:45–70:20).
+* time-out: 예외다. 원래대로 ssthresh 절반, slow start.
+* duplicate ACK 가 또 옴: cwnd + 1. 도착한 segment 가 send window 에 자리를 차지하고 있으니 한 칸 빼 준다.
+* new ACK: 빠진 segment 가 receiver 에서 복구됐다는 뜻이다(예: 1101 에 대한 ACK). cwnd = ssthresh 로 congestion avoidance.
+"duplicate ACK 사건을 해결할 때까지 빠르게 회복하도록 도와주는 단계" 라는 것이 교수의 정리다.
+
+{exam}Reno 의 3 dup ACKs: ssthresh = cwnd/2, cwnd = ssthresh + 3. +3 은 duplicate ACK 를 만든 segment 세 개가 이미 도착했으니 send window 에서 그만큼 자리를 빼 주는 것. 교수가 "왜 하필 3이냐" 를 직접 묻고 답했다(11/26 49:13–50:59).{/exam}
 
 == 관련 문서 ==
 * [[Tahoe와 Reno]] · [[cwnd]] · [[RTO와 fast retransmission]]

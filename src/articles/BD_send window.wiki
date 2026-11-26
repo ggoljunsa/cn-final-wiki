@@ -24,7 +24,7 @@ TCP 의 '''send window''' 는 sending buffer 위의 byte 범위다. 보냈지만
 == 움직임 ==
 * '''closes''': 새 ACK 가 와서 왼쪽 벽이 오른쪽으로.
 * '''opens''': receiver 가 광고한 rwnd 가 허락해 오른쪽 벽이 오른쪽으로.
-* '''shrinks''': 오른쪽 벽이 왼쪽으로. 많은 구현이 금지한다(p.69) → $\text{new ackNo} + \text{new rwnd} \ge \text{last ackNo} + \text{last rwnd}$.
+* '''shrinks''': 오른쪽 벽이 왼쪽으로. 많은 구현이 금지한다(p.69) → $\text{new ackNo} + \text{new rwnd} \ge \text{last ackNo} + \text{last rwnd}$. 11/26 수업에서 교수는 "receive window 는 shrink 가 없고 send window 에서만 일어날 수 있다. 어떤 구현들은 아예 새 right wall 이 old right wall 보다 작아지지 않도록 하는 공식을 지킨다" 고 설명했다(05:02–06:35).
 크기 = min(rwnd, [[cwnd]]).
 
 {tip}1절의 [[sliding window]] 와 같은 생각이다. 차이는 TCP 가 byte 로 세고, timer 를 연결당 하나 쓴다는 것이다.{/tip}

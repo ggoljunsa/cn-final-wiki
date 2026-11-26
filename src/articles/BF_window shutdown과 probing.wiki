@@ -2,8 +2,6 @@ key: window shutdown과 probing
 title: window shutdown 과 probing — rwnd = 0 과 1-byte probe
 category: 11강 TCP, 용어
 ---
-{info}이 문서의 내용(p.69 이후)은 11/26 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
-
 receiver 가 rwnd = 0 을 보내면 sender 는 멈춘다(window shutdown). 그래도 sender 는 가끔 1-byte segment 를 보내 본다(probing). deadlock 을 막기 위해서다. L16 p.70.
 
 {def}"Window shutdown: receiver sends rwnd = 0. Sender stops sending until a new advertisement arrives. Probing: the sender may still send a 1-byte segment. Prevents a deadlock (e.g., the new advertisement was lost)." (p.70){/def}
@@ -29,6 +27,11 @@ probe 를 보내면 receiver 가 거기에 ACK 하면서 최신 rwnd 를 다시 
 # 1 byte.
 # deadlock.
 {/answer}
+
+== 11/26 수업에서 ==
+교수는 receiver 와 sender 의 대화로 풀었다. receiver 가 어떤 사건 때문에 "지금 하나도 오면 안 된다" 싶으면 ACK 와 함께 receive window 크기를 0 으로 닫아 버린다. sender 는 "ACK 에 온 window 가 0 이네, shutdown 해야겠다" 하고 멈춘다. 그다음 sender 가 1 byte 로 "아직 괜찮아? 이제 보내도 돼?" 하고 물으면, 아직이면 rwnd = 0 이 다시 오고, 풀렸으면 커진 window 가 온다(11/26 08:07–09:42).
+
+deadlock 은 교수 말로 "문제의 원인이 해결됐는데도 복원이 안 돼서 못 쓰는 상태" 다. rwnd 2000 을 보냈는데 "그 메시지가 또 재수 없게 소실될 수 있다. 그러면 sender 나 receiver 가 영영 죽은 줄 알고 가만히 있을 거다. 그런 일이 벌어지지 말라고 주기적으로 probe 한다"(10:02–10:57).[* probe 라는 단어 설명으로 스타크래프트 프로토스의 일꾼 Probe 와 머신러닝의 linear probing 을 들었다. 둘 다 "찔러서 상태를 알아본다" 는 뜻이다(07:01–08:03).]
 
 == 관련 문서 ==
 * [[receive window와 rwnd]] · [[send window]] · [[silly window syndrome]]

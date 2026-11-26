@@ -8647,6 +8647,11 @@
        "title": "TTL 과 ICMP",
        "body": "라우터마다 TTL −1, **0 이 되면 버리고** 원래 source 로 **time exceeded (type 11)**. data section 에는 원래 IP header + data 앞 8 bytes(port). echo request / reply 는 **query** 메시지(ping: 살아 있나, RTT).",
        "src": "CH07(2) rev p.50–55 · PS2 1(c)"
+      },
+      {
+       "title": "ICMP error-reporting 과 query",
+       "body": "ICMPv4 메시지는 두 갈래다. **error-reporting**(destination unreachable, time exceeded, parameter problem, redirection)은 라우터·host 가 문제를 원래 source 에 알린다. **query**(echo request/reply 등)는 문제 없이 상태를 묻고 답한다. ping 은 echo 를 쓰는 query 이고, traceroute 는 TTL 을 1 씩 늘려 time exceeded 를 받아 경로를 찾는다.",
+       "src": "CH07(2) rev p.50–55"
       }
      ]
     }
@@ -9997,6 +10002,10 @@
         [
          "IGMP",
          "MLD"
+        ],
+        [
+         "라우터도 하던 fragmentation",
+         "source 만 (라우터는 큰 datagram 을 버림)"
         ]
        ],
        "explain": "hop limit 은 base header 의 8-bit 칸(L14 p.24), ND·MLD 는 ICMPv6 메시지 묶음(p.28).",
@@ -11671,6 +11680,10 @@
         [
          "두 ISP 사이, 특정 AS 를 정책으로 피해야 함",
          "BGP"
+        ],
+        [
+         "같은 AS 안 border router 끼리 바깥에서 배운 경로를 나눔",
+         "iBGP"
         ]
        ],
        "explain": "RIP = hop count(최대 15), OSPF = link state + weight + area, BGP = AS 사이 유일한 path vector(policy).",
@@ -12931,11 +12944,12 @@
         "RTO"
        ],
        "explain": "rwnd = 수신자(flow), cwnd = 망(congestion) (p.78).",
-       "src": "CH09 p.78",
+       "src": "CH09 p.78 · 🎙 11/26 수업",
        "wiki": "congestion control",
        "tags": [
         "congestion control"
        ],
+       "prof": true,
        "introCard": 2
       },
       {
@@ -12946,7 +12960,8 @@
        "unit": "bytes",
        "tol": 0,
        "explain": "min(3000, 2000) = **2000** — 이번엔 망 쪽(cwnd)이 제한.",
-       "src": "CH09 p.78",
+       "src": "CH09 p.78 · 🎙 11/26 수업",
+       "prof": true,
        "wiki": "cwnd",
        "introCard": 2
       },
@@ -12977,7 +12992,8 @@
        ],
        "answer": 1,
        "explain": "window shutdown → probing (p.70). 새 광고가 잃어버려졌을 때를 대비.",
-       "src": "CH09 p.70",
+       "src": "CH09 p.70 · 🎙 11/26 수업",
+       "prof": true,
        "wiki": "segment",
        "introCard": 2
       },
@@ -13016,7 +13032,8 @@
         ]
        ],
        "explain": "p.71: sender 가 1 byte 씩 만들어 보내면 Nagle — 첫 조각은 보내고, 다음은 ACK 가 오거나 full segment 가 될 때까지 모은다. receiver 가 1 byte 씩 소비하면 Clark — full segment 나 buffer 절반이 빌 때까지 rwnd = 0, 또는 ACK 를 늦춘다(delayed ACK). 1 B data 에 header 40 B 면 overhead 97 %.",
-       "src": "CH09 p.71",
+       "src": "CH09 p.71 · 🎙 11/26 수업",
+       "prof": true,
        "wiki": "silly window syndrome",
        "introCard": 2
       },
@@ -13032,7 +13049,8 @@
        ],
        "answer": 1,
        "explain": "duplicate ACK 는 뒤의 segment 는 도착했고 하나만 빠졌다는 신호 → time-out 을 기다리지 않고 바로 재전송 (p.74, 77).",
-       "src": "CH09 p.74",
+       "src": "CH09 p.74 · 🎙 11/26 수업",
+       "prof": true,
        "wiki": "segment",
        "introCard": 3
       },
@@ -13059,7 +13077,8 @@
         ]
        ],
        "explain": "p.81: time-out 은 둘 다 강한 신호 → ssthresh = cwnd/2, cwnd = 1 MSS 로 slow start. 3 duplicate ACKs 는 Tahoe 는 time-out 과 똑같이, Reno 는 약한 신호로 보고 cwnd = ssthresh + 3 으로 fast recovery. 차이는 3 dup ACKs 쪽뿐이다.",
-       "src": "CH09 p.81",
+       "src": "CH09 p.81 · 🎙 11/26 수업",
+       "prof": true,
        "wiki": "fast recovery",
        "introCard": 4
       },
@@ -13071,7 +13090,8 @@
        "unit": "MSS",
        "tol": 0,
        "explain": "ssthresh = 16/2 = 8, cwnd = 8 + 3 = **11** → fast recovery.",
-       "src": "CH09 p.81",
+       "src": "CH09 p.81 · 🎙 11/26 수업",
+       "prof": true,
        "diff": 3,
        "wiki": "fast recovery",
        "introCard": 4
@@ -13084,7 +13104,8 @@
        "unit": "MSS",
        "tol": 0,
        "explain": "매 RTT 2 배: 1 → 2 → 4 → **8** (exponential). ssthresh 에 닿으면 congestion avoidance(+1 MSS/RTT).",
-       "src": "CH09 p.79–80",
+       "src": "CH09 p.79–80 · 🎙 11/26 수업",
+       "prof": true,
        "wiki": "congestion avoidance",
        "introCard": 4
       },
@@ -13094,7 +13115,8 @@
        "q": "TCP 는 time-out 을 three duplicate ACKs 보다 더 강한 congestion 신호로 본다.",
        "answer": true,
        "explain": "time-out = strong sign (segment 들이 사라짐), 3 dup ACKs = lighter sign (p.78).",
-       "src": "CH09 p.78",
+       "src": "CH09 p.78 · 🎙 11/26 수업",
+       "prof": true,
        "wiki": "segment",
        "introCard": 4
       }
@@ -13561,7 +13583,7 @@
        ],
        "answer": 2,
        "explain": "ACK 는 2,401(원래) → 2,401 dup1(2,801) → dup2(3,201) → dup3(3,601). 원래 + 같은 것 3 개 = **셋째 duplicate** 에서 fast retransmission. 재전송이 도착하면 ACK 4,001.",
-       "src": "PS2 유형 · 11/24 과제",
+       "src": "PS2 유형 · 11/24 과제 · 🎙 11/26 수업",
        "wiki": "RTO와 fast retransmission",
        "tags": [
         "RTO와 fast retransmission"
@@ -13597,7 +13619,7 @@
        ],
        "answer": 1,
        "explain": "ssthresh = 14/2 = 7, Reno 는 cwnd = ssthresh + 3 = **10** → fast recovery. Tahoe 였다면 (7, 1) → slow start.",
-       "src": "PS2 유형 · 11/24 과제",
+       "src": "PS2 유형 · 11/24 과제 · 🎙 11/26 수업",
        "wiki": "Tahoe와 Reno",
        "tags": [
         "Tahoe와 Reno"
@@ -13617,7 +13639,7 @@
        ],
        "answer": 1,
        "explain": "time-out 은 Tahoe 와 같다 → ssthresh = 10/2 = 5, **cwnd = 1**, slow start.",
-       "src": "PS2 유형 · 11/24 과제",
+       "src": "PS2 유형 · 11/24 과제 · 🎙 11/26 수업",
        "wiki": "Tahoe와 Reno",
        "tags": [
         "Tahoe와 Reno"
@@ -13643,6 +13665,303 @@
        "title": "cwnd: Tahoe 와 Reno",
        "body": "slow start 두 배(ssthresh 넘지 않음) → CA +1. time-out: ssthresh = cwnd/2, cwnd = 1 (둘 다). 3 dupACKs: Tahoe 는 cwnd 1, Reno 는 cwnd = ssthresh + 3 → fast recovery.",
        "src": "CH09 p.78–85 · PS2 5(d)"
+      }
+     ]
+    },
+    {
+     "id": "u10h",
+     "title": "TCP 후반 정리 — window 사건 · 재전송 · Tahoe와 Reno (11/26 수업)",
+     "items": [
+      {
+       "id": "u10h-01",
+       "type": "tf",
+       "q": "TCP 에서 오른쪽 벽이 왼쪽으로 가는 shrink 는 send window 에서만 생길 수 있고, receive window 는 shrink 하지 않는다.",
+       "answer": true,
+       "explain": "receive window 는 byte 가 도착하면 닫히고(왼벽 →) process 가 가져가면 열릴(오른벽 →) 뿐 오른벽이 돌아오지 않는다. send window 는 receiver 가 rwnd 를 줄이면 shrink 할 수 있어서, 많은 구현이 new ackNo + new rwnd ≥ last ackNo + last rwnd 를 지킨다. 교수 11/26: \"receive window 는 shrinking 하는 게 없다\".",
+       "src": "CH09 p.69 · 🎙 11/26 05:02–06:35",
+       "wiki": "send window",
+       "tags": [
+        "send window"
+       ],
+       "prof": true,
+       "introCard": 0
+      },
+      {
+       "id": "u10h-02",
+       "type": "mc",
+       "q": "TCP sender 가 rwnd = 0 을 받고 멈춘 뒤에도 가끔 1-byte segment 를 보내는 이유는?",
+       "choices": [
+        "receiver 가 다시 열었다는 광고(rwnd > 0)가 사라지면 양쪽이 영원히 기다리는 deadlock 을 막으려고",
+        "1 byte 는 window 와 상관없이 항상 보내야 해서",
+        "congestion 을 알아보려고",
+        "checksum 을 확인하려고"
+       ],
+       "answer": 0,
+       "explain": "window shutdown 뒤 receiver 가 보낸 \"rwnd = 2000\" 이 사라지면 sender 는 0 이라 믿고, receiver 는 data 를 기다린다. 그래서 sender 가 1-byte probe 로 \"아직 괜찮아?\" 하고 물어 최신 rwnd 를 받는다. 교수 11/26: \"그 메시지가 재수 없게 소실될 수 있다 … 그런 일이 벌어지지 말라고 주기적으로 probe 한다\".",
+       "src": "CH09 p.70 · 🎙 11/26 09:08–10:57",
+       "wiki": "window shutdown과 probing",
+       "tags": [
+        "window shutdown과 probing"
+       ],
+       "prof": true,
+       "introCard": 0
+      },
+      {
+       "id": "u10h-03",
+       "type": "order",
+       "q": "Nagle's algorithm 으로 sender 가 data 를 보내는 순서",
+       "answer": [
+        "process 가 만든 첫 조각은 1 byte 라도 바로 보낸다",
+        "그다음 조각들은 sender buffer 에 쌓아 둔다",
+        "보낸 것의 ACK 가 오거나 segment 하나가 꽉 차면 모인 것을 한 segment 로 보낸다"
+       ],
+       "explain": "sender 쪽이 원인인 silly window syndrome 의 대책. 교수 11/26: \"디테일은 더 복잡한데 key idea 는 첫 번째는 그냥 보내고, 두 번째부터는 ACK 가 올 때까지 또는 segment 가 꽉 찰 때까지 쌓아 둔다\". receiver 쪽 대책은 Clark(full segment 나 buffer 절반이 빌 때까지 rwnd = 0)·ACK 지연.",
+       "src": "CH09 p.71 · 🎙 11/26 13:58–15:27",
+       "wiki": "silly window syndrome",
+       "tags": [
+        "silly window syndrome"
+       ],
+       "prof": true,
+       "introCard": 0
+      },
+      {
+       "id": "u10h-04",
+       "type": "mc",
+       "q": "TCP receiver 가 ACK number 701 을 보냈다. 이 ACK 가 sender 에게 알리는 것은?",
+       "choices": [
+        "700 번 byte 까지 빠짐없이 다 받았고 다음에는 701 번부터 기다린다",
+        "701 번 byte 하나만 받았다",
+        "701 bytes 를 받았다",
+        "701 번 segment 가 손상됐다"
+       ],
+       "answer": 0,
+       "explain": "cumulative ACK: \"다음에 보내 줘야 할 게 701\" = \"700 까지는 다 받았다\". 교수 11/26: 이것이 \"TCP 의 국룰이자 기본 메커니즘\" 이고 SACK 은 보조 수단이라 대체하지 않는다.",
+       "src": "CH09 p.73 · 🎙 11/26 18:08–20:05",
+       "wiki": "cumulative ACK와 SACK",
+       "tags": [
+        "cumulative ACK와 SACK"
+       ],
+       "prof": true,
+       "introCard": 1
+      },
+      {
+       "id": "u10h-05",
+       "type": "tf",
+       "q": "fast retransmission 이 duplicate ACK \"세 번\" 에서 일어나는 것은 이론적으로 3 이어야만 하기 때문이 아니라 설계에서 고른 값이다.",
+       "answer": true,
+       "explain": "교수 11/26: \"이 3 은 어떻게 보면 hyperparameter, design choice 다. 10 번 해도 되고 4 번 해도 되는데 특별히 3 번\" (22:42). 같은 ACK 가 계속 온다는 것은 뒤 segment 들이 도착하고 있다는 뜻이라 time-out 을 기다리지 않고 빠진 것을 다시 보낸다.",
+       "src": "CH09 p.74 · 🎙 11/26 21:38–22:50",
+       "wiki": "RTO와 fast retransmission",
+       "tags": [
+        "RTO와 fast retransmission"
+       ],
+       "prof": true,
+       "introCard": 1
+      },
+      {
+       "id": "u10h-06",
+       "type": "mc",
+       "q": "TCP receiver 가 순서대로 온 segment 하나의 ACK 를 아직 보내지 않고(최대 500 ms 지연 중) 기다리는데 다음 segment 가 순서대로 도착했다. receiver 는?",
+       "choices": [
+        "두 segment 를 한 번에 확인하는 ACK 를 바로 보낸다",
+        "500 ms 가 끝날 때까지 더 기다린다",
+        "두 ACK 를 따로 보낸다",
+        "아무것도 보내지 않는다"
+       ],
+       "answer": 0,
+       "explain": "ACK 생성 규칙 Rule 3: 아직 ACK 하지 않은 in-order segment 가 있을 때 다음 in-order segment 가 오면 즉시 ACK(cumulative 라 둘을 한 번에 확인). Rule 2 는 보낼 data 가 없을 때 500 ms 까지 늦추는 것. 교수는 Rule 1–6 을 하나씩 읽지 않고 그림을 따라가며 설명했고 이런 프로토콜을 \"rule-based protocol\" 이라 불렀다.",
+       "src": "CH09 p.75 · 🎙 11/26 25:37–28:49",
+       "wiki": "RTO와 fast retransmission",
+       "tags": [
+        "RTO와 fast retransmission"
+       ],
+       "prof": true,
+       "introCard": 1
+      },
+      {
+       "id": "u10h-07",
+       "type": "mc",
+       "q": "TCP congestion window(cwnd) 는 누가 무엇을 추정한 값인가?",
+       "choices": [
+        "sender 가, 네트워크가 감당할 수 있는 양을 추정한 값",
+        "receiver 가, 자기 buffer 의 빈 공간을 잰 값",
+        "라우터가, 자기 queue 길이를 알려 준 값",
+        "receiver 가, 네트워크 속도를 잰 값"
+       ],
+       "answer": 0,
+       "explain": "교수 11/26: cwnd 는 \"sender 가 볼 때 네트워크가 얼마나 감당할 수 있겠느냐에 대한 estimation\". rwnd 는 receiver 가 정해 ACK 로 알려 주는 값이다. 그래도 window 는 여전히 send·receive 두 개이고, send window = min(rwnd, cwnd).",
+       "src": "CH09 p.78 · 🎙 11/26 33:16–35:43",
+       "wiki": "cwnd",
+       "tags": [
+        "cwnd"
+       ],
+       "prof": true,
+       "introCard": 2
+      },
+      {
+       "id": "u10h-08",
+       "type": "num",
+       "q": "rwnd 가 12,000 B 이고 sender 가 추정한 cwnd 가 8 MSS(MSS = 1,000 B)다. sender 가 ACK 없이 보낼 수 있는 최대 byte 수는?",
+       "answer": 8000,
+       "unit": "B",
+       "tol": 0,
+       "explain": "send window = min(rwnd, cwnd) = min(12,000, 8 × 1,000) = **8,000 B**. 이번엔 network 쪽(cwnd)이 bottleneck. 교수 11/26: \"중요한 것은 congestion window 는 그 자체로 의미 있는 게 아니라 send window 사이즈를 정할 때 receive window 와 함께 영향을 준다\".",
+       "src": "CH09 p.78 · 🎙 11/26 34:54–39:40",
+       "wiki": "cwnd",
+       "tags": [
+        "cwnd"
+       ],
+       "prof": true,
+       "introCard": 2
+      },
+      {
+       "id": "u10h-09",
+       "type": "mc",
+       "q": "time-out 과 3 duplicate ACKs 가운데 TCP 가 더 심각한 congestion 신호로 보는 것과 그 이유는?",
+       "choices": [
+        "time-out — 보낸 것에 대해 아무 응답도 없어 segment 들이 사라지고 있다는 뜻이라서",
+        "3 duplicate ACKs — ACK 가 세 번이나 와서",
+        "둘은 똑같이 본다",
+        "time-out — timer 가 하나뿐이라서"
+       ],
+       "answer": 0,
+       "explain": "3 duplicate ACKs 는 \"701 이 안 왔다\" 는 말이라도 돌아온 것이고 그 뒤 segment 들은 도착했다. time-out 은 대답조차 없다. 교수 11/26: \"timeout 은 그냥 함흥차사 … 3 duplicate ACK 가 timeout 보다 덜한 상황이라는 데는 모두가 동의한다\".",
+       "src": "CH09 p.78 · 🎙 11/26 39:51–41:22",
+       "wiki": "cwnd",
+       "tags": [
+        "cwnd"
+       ],
+       "prof": true,
+       "introCard": 2
+      },
+      {
+       "id": "u10h-10",
+       "type": "mc",
+       "q": "Reno 가 3 duplicate ACKs 를 받으면 cwnd = ssthresh + 3 으로 두는데, 여기서 \"+3\" 의 이유는?",
+       "choices": [
+        "duplicate ACK 세 개를 만든 segment 세 개는 이미 receiver 에 도착했으니 send window 에서 그만큼 자리를 빼 주려고",
+        "ssthresh 를 넘지 않게 하려고",
+        "TCP header 가 3 개 필드라서",
+        "RTT 3 번을 기다리려고"
+       ],
+       "answer": 0,
+       "explain": "세 segment 는 잘 갔지만 sender 는 아직 ACK 를 못 받아 send window 안에 자리를 차지하고 있다. 이미 잘 간 것을 아니까 그 세 칸만큼 방을 빼 data 를 더 보내게 한다. 교수 11/26: \"왜 하필 3 이냐? … 만약 5 duplicate 였으면 +5 여야죠\".",
+       "src": "CH09 p.81 · 🎙 11/26 49:13–50:59",
+       "wiki": "fast recovery",
+       "tags": [
+        "fast recovery"
+       ],
+       "prof": true,
+       "introCard": 3
+      },
+      {
+       "id": "u10h-11",
+       "type": "match",
+       "q": "Reno 가 fast recovery 상태에 있을 때 일어나는 사건과 반응",
+       "pairs": [
+        [
+         "duplicate ACK 가 또 옴",
+         "cwnd = cwnd + 1"
+        ],
+        [
+         "new ACK 가 옴(빠진 segment 복구)",
+         "cwnd = ssthresh 로 congestion avoidance"
+        ],
+        [
+         "time-out",
+         "ssthresh = cwnd/2, cwnd = 1 로 slow start"
+        ],
+        [
+         "3 duplicate ACKs 로 들어올 때",
+         "ssthresh = cwnd/2, cwnd = ssthresh + 3"
+        ]
+       ],
+       "explain": "duplicate ACK 하나 = segment 하나가 또 도착했으니 send window 에서 한 칸 빼 준다(+3 과 같은 이유). new ACK 는 빠졌던 segment 가 receiver 에서 채워졌다는 뜻이라 fast recovery 를 끝낸다. time-out 은 예외로 원래대로 slow start. 교수 11/26 67:45–70:20.",
+       "src": "CH09 p.84 · 🎙 11/26 67:45–70:20",
+       "wiki": "fast recovery",
+       "tags": [
+        "fast recovery"
+       ],
+       "prof": true,
+       "introCard": 3
+      },
+      {
+       "id": "u10h-12",
+       "type": "num",
+       "q": "congestion avoidance 에서 cwnd = 10 MSS 이다. ACK 하나마다 cwnd 를 1/cwnd 씩 늘린다면, ACK 10 개를 받은 뒤 cwnd 는 대략 몇 MSS 인가? (정수)",
+       "answer": 11,
+       "unit": "MSS",
+       "tol": 0,
+       "explain": "ACK 마다 +1/10 → 10 개면 +1 → **11**. 한 RTT 에 cwnd 개의 ACK 가 오니 RTT 단위로는 +1 이다. slow start 의 \"ACK 마다 +1\" 이 RTT 마다 ×2 인 것과 짝. 교수 11/26: ACK 단위로 쓴 것과 RTT 단위를 \"헷갈리지 마시고요\".",
+       "src": "CH09 p.80, 82 · 🎙 11/26 61:56–64:40",
+       "wiki": "congestion avoidance",
+       "tags": [
+        "congestion avoidance"
+       ],
+       "prof": true,
+       "introCard": 2
+      },
+      {
+       "id": "u10h-13",
+       "type": "tf",
+       "q": "Tahoe 와 Reno 는 time-out 에 대한 반응도 서로 다르다.",
+       "answer": false,
+       "explain": "X. time-out 에는 둘 다 ssthresh = cwnd/2, cwnd = 1 로 slow start. 다른 곳은 3 duplicate ACKs 하나뿐이다(Tahoe 는 time-out 과 같게, Reno 는 fast recovery). 교수 11/26: \"Tahoe 랑 Reno 는 딱 한 군데가 다르다\".",
+       "src": "CH09 p.81 · 🎙 11/26 45:55–47:44",
+       "wiki": "Tahoe와 Reno",
+       "tags": [
+        "Tahoe와 Reno"
+       ],
+       "prof": true,
+       "introCard": 3
+      },
+      {
+       "id": "u10h-14",
+       "type": "mc",
+       "q": "같은 cwnd 그래프에서 3 duplicate ACKs 직후 Tahoe 와 Reno 의 throughput 차이를 바르게 말한 것은?",
+       "choices": [
+        "Tahoe 는 cwnd 가 1 로 떨어져 slow start 를 다시 하는 동안 throughput 이 크게 빈다. Reno 는 ssthresh 근처에서 이어 가 throughput 을 유지한다",
+        "둘은 똑같다",
+        "Reno 가 1 로 떨어지고 Tahoe 가 유지한다",
+        "Tahoe 는 cwnd 를 두 배로 늘린다"
+       ],
+       "answer": 0,
+       "explain": "교수 11/26: Tahoe 그래프와 Reno 그래프를 놓고 \"엄청 다르죠\" — Tahoe 는 그 gap 에서 throughput 을 못 살리고, Reno 는 유지한다. \"fast recovery 나 Reno 같은 것이 최근 TCP 관련 알고리즘에서 주목하는 것\".",
+       "src": "CH09 p.83, 85 · 🎙 11/26 70:28–72:16",
+       "wiki": "Tahoe와 Reno",
+       "tags": [
+        "Tahoe와 Reno"
+       ],
+       "prof": true,
+       "introCard": 3
+      }
+     ],
+     "intro": [
+      {
+       "title": "window 가 멈출 때",
+       "body": "receive window 는 shrink 하지 않고, send window 의 shrink 는 많은 구현이 막는다(new ackNo + new rwnd ≥ last ackNo + last rwnd). rwnd = 0 이면 sender 는 멈추지만 1-byte **probe** 로 \"아직 괜찮아?\" 하고 물어 deadlock 을 막는다. 1 byte 씩 오가는 silly window 는 flow control 의 부작용 → Nagle(sender), Clark·ACK 지연(receiver).",
+       "img": "duo/img/cn9-p71-silly.png",
+       "imgAlt": "Silly window syndrome 과 97% overhead",
+       "src": "CH09 p.69–71 · 11/26 녹음"
+      },
+      {
+       "title": "ACK 와 재전송",
+       "body": "ACK 701 = \"700 까지 다 받았다\"(cumulative, TCP 의 기본). 재전송 사건은 두 가지: **time-out(RTO)** 과 **3 duplicate ACKs**(fast retransmission — 3 은 설계에서 고른 값). receiver 는 Rule 1–6(piggyback, 500 ms 지연, 두 번째 in-order 에 즉시 ACK …)에 따라 ACK 를 만든다.",
+       "img": "duo/img/cn9-p77-fastrx.png",
+       "imgAlt": "세 번째 duplicate ACK 뒤 fast retransmission",
+       "src": "CH09 p.72–77 · 11/26 녹음"
+      },
+      {
+       "title": "cwnd = sender 의 network 추정",
+       "body": "cwnd 는 sender 가 네트워크가 감당할 양을 추정한 값. window 는 여전히 send·receive 둘이고 **send window = min(rwnd, cwnd)**. time-out 은 응답조차 없는 더 심각한 신호, 3 dup ACKs 는 그보다 약한 신호.",
+       "src": "CH09 p.78 · 11/26 녹음 33:16–41:22"
+      },
+      {
+       "title": "Tahoe 와 Reno",
+       "body": "둘은 **3 dup ACKs 에서만** 다르다. Reno: ssthresh = cwnd/2, cwnd = ssthresh + 3(도착한 세 segment 만큼 send window 자리 빼 주기) → fast recovery: dup ACK 마다 +1, new ACK 면 cwnd = ssthresh 로 CA, time-out 이면 slow start. ACK 마다 +1 = RTT 마다 ×2, ACK 마다 +1/cwnd = RTT 마다 +1.",
+       "img": "duo/img/cn9-p79-slowstart.png",
+       "imgAlt": "slow start: cwnd 1 → 2 → 4 → 8",
+       "src": "CH09 p.79–85 · 11/26 녹음"
       }
      ]
     }

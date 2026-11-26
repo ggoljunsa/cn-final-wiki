@@ -2,8 +2,6 @@ key: RTO와 fast retransmission
 title: RTO 와 fast retransmission — TCP 가 다시 보내는 두 계기
 category: 11강 TCP, 용어
 ---
-{info}이 문서의 내용(p.69 이후)은 11/26 수업 전에 슬라이드만 보고 쓴 것이다. 녹음이 오면 교수 강조를 더한다.{/info}
-
 TCP 는 두 경우에 segment 를 다시 보낸다. retransmission timer(RTO)가 끝났을 때, 그리고 duplicate ACK 가 세 번 왔을 때(fast retransmission). L16 p.72–77.
 
 {def}"Two triggers for retransmission: ① Time-out (RTO): one retransmission timer per connection; expires → resend the first unACKed segment, restart the timer; RTO is dynamic, updated from the RTT. ② Three duplicate ACKs: original ACK + 3 identical copies → resend the next segment right away, without waiting for the time-out = fast retransmission. Duplicate ACKs hint that later segments got through, so only one was lost: no need to wait." (p.74){/def}
@@ -37,6 +35,14 @@ checksum, ACK, time-out. checksum 이 틀리면 버리고 '''사라진 것으로
 {/answer}
 
 {info}📝 과제 연결: PS2 5(c) 가 segment 하나가 빠졌을 때의 ACK 열, 재전송 시점, 마지막 ACK 를 묻는다. 풀이는 [[PS2 풀이 가이드]] 에 있다.{/info}
+
+== 11/26 수업에서 ==
+교수는 재전송이 일어나는 사건을 "크게 보면 두 가지" 로 묶었다(11/26 20:27).
+# time-out: sender 는 segment 를 보내면 timer 를 잰다. timer 가 다 소진될 때까지 ACK 를 못 받으면 다시 보낸다. retransmission time-out 의 앞 글자를 따서 RTO(21:04).
+# 같은 번호의 ACK 가 세 번 연속: 701 이 깨지고 801, 901, 1001 이 도착하면 receiver 는 매번 "701 줘" 라고 한다. 세 번 받으면 sender 는 "701 에 문제가 있나 보다" 하고 다시 보낸다(21:38–22:39).
+"3 번" 은 "어떻게 보면 hyperparameter, design choice 다. 10 번 해도 되고 4 번 해도 된다"(22:42). 세 번 같은 ACK 가 왔다는 것은 "700 번대는 안 갔지만 800, 900, 1000 번대는 잘 갔다" 는 뜻이다(22:50). 그래서 time-out 을 기다릴 필요가 없다. p.77 의 300 번대 예에서 세 번째 ACK 301 이 들어오는 순간 바로 보내는 것을 fast retransmission 이라고 부른다(31:47–32:34).
+
+{exam}재전송 두 사건: RTO time-out, 3 duplicate ACKs(fast retransmission). 교수가 이 두 사건을 congestion control 에서 "가장 중요하게 생각하는 두 네트워크 이벤트" 로 다시 썼다(11/26 20:27, 39:40).{/exam}
 
 == 관련 문서 ==
 * [[acknowledgment number]] · [[cumulative ACK와 SACK]] · [[cwnd]] · [[ACK와 retransmission timer]]
