@@ -5999,30 +5999,30 @@
       {
        "id": "u6a-05",
        "type": "match",
-       "q": "class 와 첫 byte 범위",
+       "q": "classful 표가 주어졌다: A 0–127 (/8) · B 128–191 (/16) · C 192–223 (/24) · D 224–239 (multicast) · E 240–255 (reserved). 각 주소의 classful network address 를 연결하시오",
        "pairs": [
         [
-         "A",
-         "0–127 (첫 bit 0)"
+         "126.45.7.9",
+         "126.0.0.0"
         ],
         [
-         "B",
-         "128–191 (10)"
+         "128.45.7.9",
+         "128.45.0.0"
         ],
         [
-         "C",
-         "192–223 (110)"
+         "191.45.7.9",
+         "191.45.0.0"
         ],
         [
-         "D",
-         "224–239 multicast (1110)"
+         "192.45.7.9",
+         "192.45.7.0"
         ],
         [
-         "E",
-         "240–255 reserved (1111)"
+         "224.45.7.9",
+         "없음 — multicast 주소"
         ]
        ],
-       "explain": "classful: 첫 비트들로 class 가 정해진다 (p.6).",
+       "explain": "첫 byte 로 class 를 정하고, 그 class 의 prefix 길이만큼 남기고 나머지(suffix)를 0 으로 만든다. 126 → A(/8) → 126.0.0.0. 128·191 → B(/16) → 앞 2 byte 유지. 192 → C(/24) → 앞 3 byte 유지. 191 과 192 는 한 칸 차이지만 경계를 넘어 /16 → /24 로 바뀐다. 224 는 class D multicast 라 netid/hostid 구분이 없어 network address 를 만들지 않는다 (p.6–7).",
        "src": "CH07(2) p.6",
        "wiki": "classful addressing",
        "tags": [
