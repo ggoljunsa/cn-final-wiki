@@ -6086,7 +6086,7 @@
       {
        "id": "u6a-09",
        "type": "mc",
-       "q": "주소 145.14.20.8 의 class 는?",
+       "q": "class 는 첫 byte 의 앞 bit 로 정한다: A 0 · B 10 · C 110 · D 1110 · E 1111. 주소 145.14.20.8 의 class 는?",
        "choices": [
         "A",
         "B",
@@ -6094,7 +6094,7 @@
         "D"
        ],
        "answer": 1,
-       "explain": "첫 byte 145 는 128–191 → **class B**.",
+       "explain": "145 = 1001 0001 → 앞 두 bit 10 → **class B** (첫 byte 범위로는 128–191).",
        "src": "CH07(2) p.6",
        "wiki": "classful addressing",
        "tags": [
@@ -6139,7 +6139,7 @@
       {
        "id": "u6a-12",
        "type": "cloze",
-       "q": "class A 는 주소 공간의 ___, class B 는 ___ 를 차지한다.",
+       "q": "class A 는 첫 bit 가 0, class B 는 첫 두 bit 가 10 으로 고정된다. 그래서 A 는 주소 공간의 ___, B 는 ___ 를 차지한다.",
        "answer": [
         "50%",
         "25%"
@@ -6151,7 +6151,7 @@
         "6.25%",
         "75%"
        ],
-       "explain": "A 50% · B 25% · C 12.5% · D·E 6.25% 씩.",
+       "explain": "bit 하나를 고정할 때마다 절반: 1 bit 고정 → 1/2 = 50%, 2 bits 고정 → 1/4 = 25%. 같은 식으로 C 12.5% · D·E 6.25% 씩.",
        "src": "CH07(2) p.7",
        "wiki": "classful addressing",
        "tags": [
@@ -7166,10 +7166,6 @@
         [
          "fragmentation offset",
          "8-byte 단위"
-        ],
-        [
-         "TTL",
-         "hop 수 (라우터마다 −1)"
         ]
        ],
        "explain": "HLEN ×4, total ×1, offset ×8 — 단위가 다 다르다.",
@@ -7222,30 +7218,30 @@
       {
        "id": "u7a-05",
        "type": "match",
-       "q": "protocol field 값",
+       "q": "(protocol 값: ICMP 1 · IGMP 2 · TCP 6 · UDP 17 · OSPF 89) hex 덤프의 protocol byte 가 다음과 같으면 payload 는?",
        "pairs": [
         [
-         "1",
+         "0x01",
          "ICMP"
         ],
         [
-         "2",
+         "0x02",
          "IGMP"
         ],
         [
-         "6",
+         "0x06",
          "TCP"
         ],
         [
-         "17",
+         "0x11",
          "UDP"
         ],
         [
-         "89",
+         "0x59",
          "OSPF"
         ]
        ],
-       "explain": "protocol field = datagram 이 싣고 있는 상위 프로토콜.",
+       "explain": "hex → 10진으로 바꿔 표에서 찾는다: 0x11 = 16 + 1 = 17 → UDP, 0x59 = 5 × 16 + 9 = 89 → OSPF. protocol field = datagram 이 싣고 있는 상위 프로토콜.",
        "src": "CH07(2) p.36",
        "wiki": "protocol field",
        "tags": [
@@ -7254,7 +7250,7 @@
        "img": "duo/img/cn7b-p36-protocol.png",
        "imgAlt": "p.36 protocol field 그림 — Transport 의 TCP·UDP, Network 의 ICMP·IGMP·OSPF 가 Payload 로 내려온다. 왼쪽 \"Some protocol values\" 상자가 ? 로 가려져 있다",
        "explainImg": "duo/img/cn7b-p36-protocol-ans.png",
-       "introCard": 0
+       "introCard": 2
       },
       {
        "id": "u7a-06",
@@ -7382,38 +7378,37 @@
       {
        "id": "u7a-13",
        "type": "match",
-       "q": "그림은 IPv4 header format 이다. 가린 필드 ①~⑤ 를 연결하시오",
+       "q": "그림은 IPv4 header format 이다. 2·3 행이 hex 로 1C 46 40 00 · 40 06 B1 E6 일 때 각 필드 값은?",
        "pairs": [
         [
-         "① (16 bits)",
-         "Identification"
+         "Identification",
+         "0x1C46"
         ],
         [
-         "② (3 bits)",
-         "Flags"
+         "Flags (3 bits)",
+         "010 → D = 1, M = 0"
         ],
         [
-         "③ (13 bits)",
-         "Fragmentation offset"
+         "Fragmentation offset",
+         "0"
         ],
         [
-         "④ (8 bits)",
-         "Time-to-live"
+         "Time-to-live",
+         "64"
         ],
         [
-         "⑤ (16 bits)",
-         "Header checksum"
+         "Protocol",
+         "6 (TCP)"
         ]
        ],
-       "explain": "둘째 행 = fragmentation 3 형제(Identification 16 · Flags 3 · Fragmentation offset 13), 셋째 행 = TTL 8 · Protocol 8 · Header checksum 16. 비트 수가 행마다 32 로 맞는다.",
+       "explain": "2 행: 1C 46 = Identification. 40 00 = 0100 0000 0000 0000 → 앞 3 bits 010 = flags (D = 1, M = 0), 나머지 13 bits = offset 0. 3 행: 40 = TTL 64, 06 = protocol 6 = TCP, B1 E6 = checksum.",
        "src": "CH07(2) p.32",
        "wiki": "IPv4 datagram format",
        "tags": [
         "IPv4 datagram format"
        ],
-       "img": "duo/img/cn7b-p32-header.png",
-       "imgAlt": "p.32 IPv4 header format — 둘째·셋째 행 필드 이름 ①~⑤ 가 가려져 있다 (비트 수는 보인다)",
-       "explainImg": "duo/img/cn7b-p32-header-ans.png",
+       "img": "duo/img/cn7b-p32-header-ans.png",
+       "imgAlt": "p.32 IPv4 header format — VER·HLEN·Service type·Total length / Identification·Flags·Fragmentation offset / Time-to-live·Protocol·Header checksum / Source / Destination",
        "introCard": 0
       }
      ],
@@ -7522,7 +7517,7 @@
       {
        "id": "u7b-05",
        "type": "mc",
-       "q": "PS1 5(a): 10 번째 byte(protocol) 가 0x06 이면?",
+       "q": "PS1 5(a): 10 번째 byte(protocol) 가 0x06 이면? (protocol 값: ICMP 1 · IGMP 2 · TCP 6 · UDP 17 · OSPF 89)",
        "choices": [
         "ICMP",
         "UDP",
@@ -7586,7 +7581,7 @@
        "type": "tf",
        "q": "IPv4 header 의 TTL 필드(9 번째 byte)가 0x01 이면 이 datagram 은 한 hop 만 더 갈 수 있다.",
        "answer": true,
-       "explain": "TTL 1 → 다음 라우터에서 0 → discard. Ex 7.10 은 TTL 1, protocol 2(IGMP).",
+       "explain": "TTL 1 → 다음 라우터에서 0 → discard. 그림의 덤프는 9·10 번째 byte 가 01 11 → TTL 1, protocol 17(UDP). (Ex 7.10 원본은 01 02 → TTL 1, IGMP.)",
        "src": "CH07(2) p.41",
        "wiki": "Example 7.10 TTL과 protocol",
        "tags": [
@@ -7633,16 +7628,16 @@
       {
        "id": "u7b-11",
        "type": "order",
-       "q": "IPv4 header 의 앞 두 행 필드를 순서대로",
+       "q": "header 그림: 1 행 VER 4 · HLEN 4 · Service type 8 · Total length 16 / 2 행 Identification 16 · Flags 3 · Fragmentation offset 13 / 3 행 TTL 8 · Protocol 8 · Header checksum 16 (bits). hex 덤프 45 00 00 54 1C 46 40 00 을 앞에서부터 읽을 때 나오는 값을 순서대로",
        "answer": [
-        "VER",
-        "HLEN",
-        "Service type",
-        "Total length",
-        "Identification",
-        "Flags + Fragmentation offset"
+        "VER 4",
+        "HLEN 5 → header 20 B",
+        "Service type 0x00",
+        "Total length 0x0054 = 84 B",
+        "Identification 0x1C46",
+        "Flags 010 · offset 0"
        ],
-       "explain": "1 행: VER·HLEN·Service type·Total length / 2 행: Identification·Flags·Offset. 3 행 TTL·Protocol·Checksum.",
+       "explain": "4 bits 씩: 4 = VER, 5 = HLEN(×4 = 20 B). 다음 1 byte 00 = service type, 다음 2 bytes 00 54 = total length 84. 2 행: 1C 46 = Identification, 40 00 → flags 010 (D = 1) + offset 0.",
        "src": "CH07(2) p.32",
        "wiki": "IPv4 datagram format",
        "tags": [
@@ -7653,7 +7648,7 @@
       {
        "id": "u7b-12",
        "type": "cloze",
-       "q": "hex 덤프에서 TTL 은 ___ 번째 byte, protocol 은 ___ 번째 byte 다.",
+       "q": "header 그림: 1 행 VER 4 · HLEN 4 · Service type 8 · Total length 16 / 2 행 Identification 16 · Flags 3 · Fragmentation offset 13 / 3 행 TTL 8 · Protocol 8 · Header checksum 16 (bits). 그래서 hex 덤프에서 TTL 은 ___ 번째 byte, protocol 은 ___ 번째 byte 다.",
        "answer": [
         "9",
         "10"
@@ -7737,7 +7732,7 @@
       {
        "id": "u7b-16",
        "type": "mc",
-       "q": "[PS1 5(a) 변형] IPv4 header 가 46 00 01 2C 3A 10 20 05 0A 11 (hex) 로 시작한다. 9·10 번째 byte 가 0A 11 이다. 옳은 것은?",
+       "q": "[PS1 5(a) 변형] IPv4 header 가 46 00 01 2C 3A 10 20 05 0A 11 (hex) 로 시작한다. 9·10 번째 byte 가 0A 11 이다. 옳은 것은? (protocol 값: ICMP 1 · IGMP 2 · TCP 6 · UDP 17 · OSPF 89)",
        "choices": [
         "10 hops 더 갈 수 있고, payload 는 UDP",
         "10 hops, TCP",
@@ -8010,12 +8005,12 @@
        "q": "fragmentation 때 라우터가 하는 일",
        "answer": [
         "datagram 이 다음 MTU 보다 큼을 확인",
-        "data 를 8 의 배수 크기로 나눔",
-        "header 를 각 fragment 에 복사",
+        "D bit 가 0 인지 확인 (1 이면 버리고 ICMP 로 알림)",
+        "data 를 8 의 배수 크기로 나누고 각 조각에 header 를 복사",
         "flags·offset·total length 를 고치고 checksum 재계산",
         "각 fragment 를 따로 forwarding"
        ],
-       "explain": "바뀌는 것: flags, offset, total length + checksum.",
+       "explain": "크면 → D = 1 이면 못 쪼개니 버림 → 쪼개서 header 를 붙임 → 바뀌는 칸(flags, offset, total length)을 고치고 checksum 다시 → 각자 보냄.",
        "src": "CH07(2) p.43",
        "wiki": "fragmentation",
        "tags": [
@@ -8105,38 +8100,37 @@
       {
        "id": "u7d-01",
        "type": "match",
-       "q": "ICMP type",
+       "q": "ICMP type 표: 3 destination unreachable · 5 redirection · 11 time exceeded · 8 / 0 echo request / reply · 13 / 14 timestamp request / reply. 각 상황에서 보내는 메시지의 type 은?",
        "pairs": [
         [
-         "3",
-         "destination unreachable"
+         "TTL 이 0 이 되어 라우터가 datagram 을 버림",
+         "11"
         ],
         [
-         "5",
-         "redirection"
+         "목적지 host 에 닿을 수 없어 버림",
+         "3"
         ],
         [
-         "11",
-         "time exceeded"
+         "source 에게 더 나은 next hop 을 알려 줌",
+         "5"
         ],
         [
-         "8 / 0",
-         "echo request / reply"
+         "ping 이 처음 보내는 요청",
+         "8"
         ],
         [
-         "13 / 14",
-         "timestamp request / reply"
+         "두 장비 사이 왕복 시간·시계 차를 재는 요청",
+         "13"
         ]
        ],
-       "explain": "error-reporting: 3·4·5·11·12, query: 8/0, 13/14.",
+       "explain": "상황 → 메시지 이름 → 표에서 type. error-reporting (3·4·5·11·12) 은 항상 original source 로, query (8/0, 13/14) 는 요청·응답 쌍이다.",
        "src": "CH07(2) p.50–55",
        "wiki": "ICMP error-reporting message",
        "tags": [
         "ICMP error-reporting message"
        ],
-       "img": "duo/img/cn7b-p53-icmp.png",
-       "imgAlt": "p.53 ICMP error-reporting 표 — Type 3·4·5·11·12 의 Message 열이 가려져 있다",
-       "explainImg": "duo/img/cn7b-p53-icmp-ans.png",
+       "img": "duo/img/cn7b-p53-icmp-ans.png",
+       "imgAlt": "p.53 ICMP error-reporting 표 — Type 3·4·5·11·12 와 Message 이름",
        "introCard": 0
       },
       {
@@ -8416,7 +8410,9 @@
        "answer": "time exceeded",
        "alts": [
         "time exceeded message",
-        "Time exceeded (type 11)"
+        "Time exceeded (type 11)",
+        "ICMP time exceeded",
+        "time exceeded (ICMP type 11)"
        ],
        "explain": "TTL 이 0 이 되면 router 가 datagram 을 discard 하고 **time exceeded (type 11)** ICMP error 를 original source 로 보낸다. traceroute 가 이것으로 경로를 알아낸다.",
        "src": "CH07(2) p.54",
@@ -8943,10 +8939,6 @@
         [
          "multicast",
          "group 의 모든 멤버에게"
-        ],
-        [
-         "broadcast",
-         "multicast 의 특수한 경우"
         ]
        ],
        "explain": "IPv6 에는 별도 broadcast 가 없다. anycast 주소는 unicast block 에서 받는다 (p.5–7).",
@@ -9032,14 +9024,14 @@
       {
        "id": "u8b-06",
        "type": "order",
-       "q": "48-bit MAC 을 64-bit interface ID 로 바꾸는 순서",
+       "q": "MAC F5-A9-23-11-9B-E2 인 host 가 autoconfiguration 으로 주소를 만드는 순서",
        "answer": [
-        "MAC 을 앞 3 bytes / 뒤 3 bytes 로 나눈다",
-        "첫 byte 의 7 번째 bit(왼쪽부터)를 뒤집는다",
-        "가운데에 FFFE 를 넣는다",
-        "16-bit 씩 colon 으로 쓴다"
+        "MAC 으로 64-bit interface ID F7A9:23FF:FE11:9BE2 를 만든다",
+        "앞에 FE80::/64 를 붙여 link-local 주소를 만든다",
+        "그 주소가 link 에서 unique 한지 확인한 뒤 router solicitation 을 보낸다",
+        "router advertisement 로 받은 prefix + subnet ID 를 interface ID 앞에 붙여 global unicast 주소를 만든다"
        ],
-       "explain": "F5-A9-23-11-9B-E2 → F7A9:23FF:FE11:9BE2.",
+       "explain": "앞 단계 결과가 있어야 다음 단계를 할 수 있다: interface ID → link-local (FE80::F7A9:23FF:FE11:9BE2) → 그 주소로 router 에게 물음 → 받은 prefix 로 global. interface ID 는 F5 = 1111 0101 의 7 번째 bit 를 뒤집어 F7, 가운데 FFFE.",
        "src": "CH07(3) p.11–12",
        "wiki": "EUI-64",
        "tags": [
@@ -9048,7 +9040,7 @@
        "img": "duo/img/cn7c-p12-mac.png",
        "imgAlt": "p.12 (b) 48-bit Ethernet MAC → 64-bit interface identifier 그림 — 가운데 added bits, 설명 문구가 ? 로 가려져 있다",
        "explainImg": "duo/img/cn7c-p12-mac-ans.png",
-       "introCard": 1
+       "introCard": 2
       },
       {
        "id": "u8b-07",
@@ -9404,30 +9396,26 @@
       {
        "id": "u8c-09",
        "type": "match",
-       "q": "next header 코드",
+       "q": "next header 코드표: 00 hop-by-hop · 02 ICMPv6 · 06 TCP · 17 UDP · 43 source routing · 44 fragmentation · 59 no next header. 한 IPv6 packet 에서 각 header 의 next header 값이 아래와 같을 때, 바로 뒤에 오는 것은?",
        "pairs": [
         [
-         "06",
-         "TCP"
+         "base header (next header = 00)",
+         "hop-by-hop option header"
         ],
         [
-         "17",
-         "UDP"
+         "hop-by-hop header (next header = 43)",
+         "source routing header"
         ],
         [
-         "44",
-         "fragmentation"
+         "source routing header (next header = 44)",
+         "fragmentation header"
         ],
         [
-         "02",
-         "ICMPv6"
-        ],
-        [
-         "59",
-         "no next header"
+         "fragmentation header (next header = 06)",
+         "TCP segment (payload)"
         ]
        ],
-       "explain": "슬라이드 p.25: 00 hop-by-hop, 02 ICMPv6, 06 TCP, 17 UDP, 43 source routing, 44 fragmentation, 50 ESP, 51 AH, 59 null, 60 destination.",
+       "explain": "next header 는 바로 다음에 붙은 것의 종류다. 사슬: base → hop-by-hop → source routing → fragmentation → TCP. 코드표는 슬라이드 p.25 기준 (실제 RFC 에서 ICMPv6 는 58).",
        "src": "CH07(3) p.25",
        "wiki": "next header",
        "tags": [
@@ -9553,15 +9541,15 @@
       {
        "id": "u8d-01",
        "type": "mc",
-       "q": "IPv4 와 IPv6 의 key difference 로 시험에 나올 수 있는 것은?",
+       "q": "IPv4 와 IPv6 의 fragmentation 차이로 옳은 것은?",
        "choices": [
-        "주소 길이",
-        "fragmentation — IPv6 는 source 만 쪼개고 라우터는 drop",
-        "checksum",
-        "TTL"
+        "IPv6 도 IPv4 처럼 라우터가 큰 datagram 을 쪼갠다",
+        "IPv6 는 source 만 쪼개고, 라우터는 MTU 보다 큰 datagram 을 버린다",
+        "IPv6 에는 fragmentation 이 아예 없다",
+        "IPv6 는 목적지 쪽 라우터가 다시 합쳐서 보낸다"
        ],
        "answer": 1,
-       "explain": "\"may be asked in exams … please remember\" (1110 녹음 39:06–39:45).",
+       "explain": "IPv6 는 **source 만** fragmentation 하고, 라우터는 큰 datagram 을 drop 한다 (fragmentation header 는 source 가 붙인다). 교수: \"may be asked in exams … please remember\" (1110 녹음 39:06–39:45).",
        "src": "1110 녹음 39:19",
        "wiki": "IPv6 fragmentation",
        "tags": [
@@ -9679,10 +9667,6 @@
         [
          "header translation",
          "IPv6 sender → IPv4-only receiver, 경계 라우터가 header 번역"
-        ],
-        [
-         "dual stack 의 교수 평",
-         "simple but stupid, very effective"
         ]
        ],
        "explain": "tunneling 은 덧씌우고, translation 은 바꿔 쓴다 (p.30–32).",
@@ -9696,7 +9680,7 @@
       {
        "id": "u8d-07",
        "type": "mc",
-       "q": "수신자가 IPv4 만 이해할 때 쓰는 전환 방법은?",
+       "q": "IPv6 만 쓰는 송신자가 IPv4 만 이해하는 수신자에게 보낼 때 경계에서 쓰는 전환 방법은?",
        "choices": [
         "dual stack",
         "tunneling",
@@ -9898,7 +9882,7 @@
       {
        "id": "u8e-03",
        "type": "sa",
-       "q": "FE80::A:2 를 줄이지 않은 형태로 쓰라.",
+       "q": "FE80::A:2 를 줄이지 않은 형태(section 8 개, 각 4 자리 hex, 앞 0 포함)로 쓰라.",
        "answer": "FE80:0000:0000:0000:0000:0000:000A:0002",
        "alts": [
         "fe80:0000:0000:0000:0000:0000:000a:0002"
@@ -10004,11 +9988,11 @@
          "MLD"
         ],
         [
-         "라우터도 하던 fragmentation",
-         "source 만 (라우터는 큰 datagram 을 버림)"
+         "options",
+         "extension header"
         ]
        ],
-       "explain": "hop limit 은 base header 의 8-bit 칸(L14 p.24), ND·MLD 는 ICMPv6 메시지 묶음(p.28).",
+       "explain": "hop limit 은 base header 의 8-bit 칸(L14 p.24), ND·MLD 는 ICMPv6 메시지 묶음(p.28), IPv4 header 안의 options 는 base header 뒤에 붙는 extension header 로 빠졌다(p.25).",
        "src": "PS2 유형 · 11/24 과제",
        "wiki": "ICMPv6",
        "tags": [
