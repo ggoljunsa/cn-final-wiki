@@ -9932,7 +9932,7 @@
       {
        "id": "u8e-05",
        "type": "mc",
-       "q": "같은 host 의 link-local 주소는?",
+       "q": "MAC 6A-1F-22-90-AB-07 을 가진 host 의 link-local 주소는?",
        "choices": [
         "FE80::6A1F:22FF:FE90:AB07",
         "FE80::681F:22FF:FE90:AB07",
@@ -9947,7 +9947,7 @@
         "link-local address"
        ],
        "prof": true,
-       "introCard": 0
+       "introCard": 1
       },
       {
        "id": "u8e-06",
